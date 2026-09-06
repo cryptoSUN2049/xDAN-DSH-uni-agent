@@ -217,3 +217,22 @@ scoped todo 和验收标准更新。每次新实验结束同步本快照的日�
 [source-acceptance]: ../../../xDAN-DSH-Exp/.Codex/worktrees/dsh-official-training/docs/worktree-tasks/dsh-official-training/online-rl-acceptance-standard.zh.md
 [source-v3]: ../../../xDAN-DSH-Exp/.Codex/worktrees/dsh-official-training/docs/dsh-official-training/data-v3-plan.zh.md
 [source-research]: ../../../xDAN-DSH-Exp/.Codex/worktrees/dsh-official-training/docs/dsh-official-training/五篇Harness自进化论文-深度研究与总结.html
+
+## 8. Git 交付记录
+
+2026-09-06 用户追加要求保存 commit、同名分支推送和 PR，并记录关键文档。
+
+- 本地状态、交接、经验与 README 入口已形成提交 `104b53d`
+  `docs(dsh): add local project status and handoff`，并推送到自有仓库的 `dsh-adapter`。
+- 已创建 [Draft PR #1](https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/1)：
+  `dsh-adapter → main`。它覆盖此前整套 adapter 实现及本次文档，尚未合并。
+- PR head `104b53d` 的首次 CI 查询（2026-09-06 23:35 +08:00）：metadata 通过；
+  Python 3.11/3.12、docs、pre-commit、secrets-scan 仍在运行。
+  这是带 revision 的查询快照；后续文档提交会触发新的检查，以 PR 页面为准。
+- 此后以 `docs(dsh): record branch delivery and draft PR` 保存本节及交接的交付记录；
+  其准确提交 SHA 由 Git 历史确定，避免在提交本身内写入自引用 HEAD。
+- Sibling DSH 的同名远端仍为 `7840bced35`，本地为 `4553c835ba`，
+  三个研究文档提交及两份未提交身份更新保持原状。本轮没有替它 push 或创建 PR；
+  其历史 docs/doc-sync/lint 基线失败仍须在该 worktree 的交付流程处理。
+- 所有 GitHub 操作显式指定自有仓库；没有向 `deepseek-ai/deepseek-harness`
+  或 `verl-project/uni-agent` 的上游仓库提交 PR。

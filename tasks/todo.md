@@ -20,3 +20,11 @@
 文档只同步当前事实与来源；没有执行 GPU 训练、查询控制面或升级历史实验资格。
 独立复核通过：P0–P6、执行顺序、来源 revision/哈希与实际分支一致。
 文档链接、代码块语法、行数和空白检查通过；后续用户授权 Git 交付，状态见 handoff。
+
+## Git 交付追加
+
+- [x] 提交本项目状态、handoff、lessons、todo 和 README：`104b53d`。
+- [x] 通过两项 Ruff 门禁后推送同名 `dsh-adapter`，确认本地与 tracking ref 相等。
+- [x] 在自有仓库创建 Draft PR #1（`dsh-adapter → main`），记录完整分支范围与测试限制。
+- [x] 在状态快照和交接中记录 PR、首次 CI 查询及 sibling 未同步状态。
+- [ ] 完整 PR CI、八类真实 process smoke 与新 C4 run evidence；完成前保持 Draft。

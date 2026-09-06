@@ -4,7 +4,7 @@
 
 ## 1. TL;DR
 
-- 当前实现是独立 `xDAN-DSH-uni-agent` 仓库的 `dsh-adapter` 分支；代码基线 `ea06d5a`。
+- 当前实现是独立 `xDAN-DSH-uni-agent` 的 `dsh-adapter`；代码基线 `ea06d5a`，文档提交 `104b53d` 已推送，Draft PR #1 已建立。
 - 已有真实 online RL 四步参数更新与独立 checkpoint reload；P3 credible 未通过，P4 core 通过，P5/P6 未完成。
 - v3 catalog、24-case CPU gate、live-contract verifier 已落地；八类真实 process smoke 最新记录为 **0/8**。
 - 下一步先补八组 envelope/trace/fresh receipt，再做 v3 release、预算约束、同预算对照与 paired uplift。
@@ -17,9 +17,9 @@
 | 路径（仓库根目录起） | 行数 | 说明 |
 | --- | ---: | --- |
 | `README.md` | 116 | 增加本地交接、状态快照和 DSH runbook 入口 |
-| `docs/dsh-adapter/project-status.md` | 219 | 分支身份、架构、开发/测试状态、P0–P6、全局/短期目标、来源与同步规则 |
-| `tasks/dsh-adapter/handoff.md` | 71 | 本仓库冷启动入口 |
-| `tasks/todo.md` | 22 | 本次回顾和资料落盘的完成记录 |
+| `docs/dsh-adapter/project-status.md` | 238 | 分支身份、架构、开发/测试状态、P0–P6、全局/短期目标、来源与同步规则 |
+| `tasks/dsh-adapter/handoff.md` | 72 | 本仓库冷启动入口 |
+| `tasks/todo.md` | 30 | 本次回顾和资料落盘的完成记录 |
 | `tasks/lessons.md` | 14 | 跨仓项目记忆、证据分层和旧 clone 识别规则 |
 
 本轮仅修改文档，不修改 Agent、训练代码或历史实验。
@@ -56,9 +56,10 @@
 
 ## 6. 分支 / 部署状态
 
-- 本仓库：`dsh-adapter`；本轮开始 `HEAD=ea06d5a8522b54febc206ad039b9c3097b0aa122`，干净且与本地 tracking ref 相等。文档提交用 `docs(dsh): add local project status and handoff` 定位。
+- 本仓库：`dsh-adapter`；本轮开始代码基线 `ea06d5a`，文档提交 `104b53d` 已推送到同名分支。交付记录提交用 `docs(dsh): record branch delivery and draft PR` 定位。
 - Sibling DSH：`worktree-dsh-official-training / 4553c835ba`，本地领先 tracking ref 3 个文档提交，handoff/todo 有未提交更新，保留原状。
-- 用户后续已授权 commit、同名分支 push 和 PR 整理；本地文档先提交，随后补记远端 SHA 与 PR。没有部署或启动 GPU，RunPod 未实时查询。
+- 已创建 [Draft PR #1](https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/1)，`dsh-adapter → main`，覆盖整套 adapter；没有合并、部署或启动 GPU。
+- 首次 CI 查询（23:35 +08:00，head `104b53d`）metadata 通过，其他检查仍运行；后续 head 以 PR 实时状态为准。两项本机 Ruff 通过，完整 GPU 环境测试未复跑。
 - 远端历史 run、版本、P4 结果及来源 digest 均见本地状态文档；不能据旧 manifest 的 `running` 判断当前作业。
 
 ## 7. 冷启动 checklist
