@@ -39,8 +39,10 @@
 - [x] 定位 PR 两类 CPU 失败：旧 VERL 的测试替身、Ruff first-party 分类。
 - [x] 比较 CPU 直连与现有 Gateway 路径，完成带架构、接口、测试和费用约束的设计。
 - [x] 独立复审设计：截止停费优先于导出；明确 Pod 内部同 UID 隔离尚未证明。
+- [x] 查询 head `55ed21f` CI 终态，保存失败日志 hash；核对 runtime 来源、备份和官方停费能力。
 - [ ] 用户确认设计、不可用 EnterWorktree 的替代方式与有界 GPU 预算。
 - [ ] M0：隔离 worktree 内复现、修复并验证两个 CI 问题。
+- [ ] 恢复可重建 DSH source/runtime，明确新 run 的 node/exe 身份与 Linux x64 CPU 构建方式。
 - [ ] M1 CPU 准备：八条输入、启动命令、持久化证据和审计；验证停止 watchdog。
 - [ ] M1 有界 GPU：单卡 inference-only smoke，逐 family 验收，导出并按截止时间释放资源。
 - [ ] 更新真实结果、handoff、来源及 PR；通过后进入 v3 release。

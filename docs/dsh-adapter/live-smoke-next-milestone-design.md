@@ -26,6 +26,12 @@ M1 使用既有 `parallel_infer_verl.py` 推理路径，不执行 optimizer upda
 | PR #1 其他 | docs、secrets、metadata 通过；Python 3.12 cancelled | 不把 cancelled 记为通过 |
 | 本机 SDK | 现有 macOS ARM64 runtime 已无模型初始化并关闭成功 | 只证明可启动，不是八类 smoke |
 | 已有模型端点 | 模型列表可读；一次无副作用工具调用返回 `diagnostic_echo({text: ping})`，HTTP 200 | 端点可用，不等于 DSH/Gateway/token 路径已验证 |
+| 历史 DSH pin / Linux runtime | 本机 Git 对象缺失，自有与官方 GitHub commit API 均返回 422；限定目录未找到 Linux 部署包 | 先恢复来源或明确冻结新 baseline，不能直接宣称按旧 pin 重建 |
+| 停费机制 | CLI 与官方公开 API 未发现 Pod TTL；现有 teardown 只停进程 | 原设计的独立到期停费条件尚未满足，不创建 GPU |
+
+head `55ed21f` 的 CI 已验证相同失败（Python 3.11 为 565/1/3；3.12 cancelled）。
+详细来源、日志 hash、runtime 模式歧义及备份核查范围见
+[审批前预检笔记](../../tasks/dsh-adapter/notes.md)。
 
 最后一项探测使用现有 `gpt-5.6-luna-cpa` alias，消耗 363 input / 19 output tokens；
 没有执行返回工具，不作为 Qwen3-4B、DSH 或模型能力证据。当前 key 可见模型列表
@@ -125,13 +131,16 @@ CLI 退出码拟定：0 表示全部 contract 通过；1 表示有效但未全�
 
 ## 7. 预算、环境与 GPU 开启条件
 
-GPU 创建前必须完成 M0、CPU matrix、八条输入/配置/hash 检查、命令 dry-run、
+GPU 创建前必须恢复可重建的 DSH 源与实际 Linux runtime，完成 M0、CPU matrix、八条输入/配置/hash 检查、命令 dry-run、
 artifact 路径检查，以及可验证的计时停止/导出机制。它是一次新的 inference-only
 G1 运行，需在本设计批准中明确允许；不沿用旧实验的环境 digest 或训练授权。
 
 - 固定模型：`Qwen/Qwen3-4B`，revision `1cfa9a7208912126459214e8b04321603b3df60c`。
-- VERL：`483b8a009ba3a97563edee3a19887e4862b8094a`；DSH/Linux build 按原 runbook
-  的 `3b8fad1e32fd9d62acdfdb3ccbd8c8074c22d2ea` 重建并校验实际 binary hash。
+- VERL：`483b8a009ba3a97563edee3a19887e4862b8094a`。DSH 原 runbook 的
+  `3b8fad1e32fd9d62acdfdb3ccbd8c8074c22d2ea` 目前不可取得；先恢复该来源，或明确
+  冻结可重建的新 baseline 并单独验收，不默认用当前 HEAD 替代。Linux x64 CPU
+  可以承担预构建；构建机尚未选定。原 runbook 实际设置 `DSH_RUNTIME_MODE=node`，
+  因而须确认真实运行模式并校验 node closure 或 exe 的实际身份，不能只 hash 未执行的 exe。
 - 单张 RTX 4090 24GB；优先比较可用 Community 报价，必要时 Secure。
   官方 `runpod-torch-v240` 是 Python 3.11 / Ubuntu 22.04 模板候选；host driver
   要求至少支持 CUDA 12.8，ML wheel 按既有兼容组合单独安装并实测，模板名称不等于预检通过。
@@ -153,6 +162,8 @@ G1 运行，需在本设计批准中明确允许；不沿用旧实验的环境 d
 如果无法保证时限，则保持未创建并报告，不把 workload timeout 冒充 GPU 停费。
 官方存储/停止说明已通过 Context7 核对：停止保留 volume disk 且继续收存储费，
 删除会丢失非 network-volume 数据。来源为 RunPod 官方 `pods/manage-pods.mdx`。
+后续只读核查确认公开 API 也没有 Pod 到期字段，官方定时停止示例依赖客户端 sleep。
+目前没有已验证的常驻可信控制器；原设计的独立停止条件尚未满足，不能开卡。
 
 ## 8. 测试计划
 

@@ -258,3 +258,10 @@ Git 交付记录提交为 `00520c5`，已推送；以下核查不代表新增训
 具体设计、文件变更、测试与批准范围见
 [下一里程碑设计](live-smoke-next-milestone-design.md)。本轮只有文档变更，
 未创建新 worktree、修复实现或启动 GPU；等待用户确认设计及 worktree 替代方式。
+
+后续预检（head `55ed21f`）确认 CI 仍为上述两类失败，3.12 cancelled；没有新类型故障。
+另发现 GPU 前置缺口：旧 DSH pin 在本机与两个 GitHub 来源未取得，限定目录未找到
+Linux 部署包；独立到期停费机制未验证。旧 P4 仅找到远端 hash 清单，尚无本机备份实体
+或导出回执。恢复 source/runtime 与停费准备先于开卡；细节见
+[审批前预检笔记](../../tasks/dsh-adapter/notes.md)。这些发现不追溯改变历史 P4 测量结果，
+但当前不能声称能够从备份立即恢复运行。
