@@ -236,3 +236,25 @@ scoped todo 和验收标准更新。每次新实验结束同步本快照的日�
   其历史 docs/doc-sync/lint 基线失败仍须在该 worktree 的交付流程处理。
 - 所有 GitHub 操作显式指定自有仓库；没有向 `deepseek-ai/deepseek-harness`
   或 `verl-project/uni-agent` 的上游仓库提交 PR。
+
+## 9. 2026-09-07 CI 与 GPU 决策更新
+
+Git 交付记录提交为 `00520c5`，已推送；以下核查不代表新增训练或 smoke 成果。
+
+- PR #1 该 head 的 Python 3.11：565 passed、1 skipped、3 failed。三项均因
+  RLInsight fixture 假定冻结 VERL 有可选 `trace_span` API；产品本来有降级路径。
+- pre-commit 的 Ruff 0.12.2 报 import 分类问题；本机 0.15.8 通过。需声明
+  `uni_agent` 为 first-party 并验证两版；format/mypy/compileall 已通过。
+  docs、secrets、metadata 通过，Python 3.12 cancelled，不能记为通过。
+- RunPod 实时查询：Pod、network volume、endpoint 均为 0，当前每小时支出 0。
+  历史 Pod 无法直接恢复；当前也未证明历史 checkpoint 仍有可用备份。
+- RTX 4090 目录报价为 Community $0.34/h、Secure $0.74/h，存储另计、创建时重查。
+  当前不创建；先完成 CI 与八条 smoke 输入、命令、证据审计和独立停止机制。
+- 拟议新窗口为单卡、最多两小时、含存储总费用不超过 $2，仅推理；需要明确授权。
+  正常结束导出并校验证据；截止停费优先于导出，磁盘保留也有费用与时间截止。
+- 已验证本机 DSH runtime 无模型启动/关闭和一次现有 API 工具调用兼容性；
+  均不属于八类真实 Gateway smoke。最新进度仍为 **0/8**。
+
+具体设计、文件变更、测试与批准范围见
+[下一里程碑设计](live-smoke-next-milestone-design.md)。本轮只有文档变更，
+未创建新 worktree、修复实现或启动 GPU；等待用户确认设计及 worktree 替代方式。

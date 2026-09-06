@@ -1,13 +1,13 @@
 # dsh-adapter 交接
 
-更新时间：2026-09-06。新 session 首先读取本文件，再读本地状态快照。
+更新时间：2026-09-07。新 session 首先读取本文件，再读本地状态快照及下一里程碑设计。
 
 ## 1. TL;DR
 
-- 当前实现是独立 `xDAN-DSH-uni-agent` 的 `dsh-adapter`；代码基线 `ea06d5a`，文档提交 `104b53d` 已推送，Draft PR #1 已建立。
+- 当前实现是独立 `xDAN-DSH-uni-agent` 的 `dsh-adapter`；代码基线 `ea06d5a`，已推送文档 head `00520c5`，Draft PR #1 已建立。
 - 已有真实 online RL 四步参数更新与独立 checkpoint reload；P3 credible 未通过，P4 core 通过，P5/P6 未完成。
 - v3 catalog、24-case CPU gate、live-contract verifier 已落地；八类真实 process smoke 最新记录为 **0/8**。
-- 下一步先补八组 envelope/trace/fresh receipt，再做 v3 release、预算约束、同预算对照与 paired uplift。
+- 下一步先修两类 CPU CI 问题，完成 smoke 准备；单张 4090、两小时/$2 的 inference-only 窗口待批准，RunPod 当前无 Pod。
 - 详情、测试命令和跨仓来源见 [项目状态与目标](../../docs/dsh-adapter/project-status.md)。
 
 ## 2. 本轮交付物
@@ -17,10 +17,11 @@
 | 路径（仓库根目录起） | 行数 | 说明 |
 | --- | ---: | --- |
 | `README.md` | 116 | 增加本地交接、状态快照和 DSH runbook 入口 |
-| `docs/dsh-adapter/project-status.md` | 238 | 分支身份、架构、开发/测试状态、P0–P6、全局/短期目标、来源与同步规则 |
-| `tasks/dsh-adapter/handoff.md` | 72 | 本仓库冷启动入口 |
-| `tasks/todo.md` | 30 | 本次回顾和资料落盘的完成记录 |
-| `tasks/lessons.md` | 14 | 跨仓项目记忆、证据分层和旧 clone 识别规则 |
+| `docs/dsh-adapter/project-status.md` | 260 | 分支身份、架构、开发/测试状态、P0–P6、全局/短期目标、来源、CI 与 GPU 决策 |
+| `docs/dsh-adapter/live-smoke-next-milestone-design.md` | 184 | M0/M1 设计、真实 API 路径、文件清单、验证与费用边界，等待明确批准 |
+| `tasks/dsh-adapter/handoff.md` | 76 | 本仓库冷启动入口 |
+| `tasks/todo.md` | 46 | 回顾、资料交付及下一里程碑清单 |
+| `tasks/lessons.md` | 30 | 跨仓记忆、证据分层、CPU/GPU 路径选择、预算和隔离边界 |
 
 本轮仅修改文档，不修改 Agent、训练代码或历史实验。
 
@@ -40,12 +41,15 @@
 - v2 的 64 rollouts / 4 steps 真实发生，但完整组 14/16、variance 组 9/16 未达 90%/75%；unfinished reward 污染 group statistics，旧 artifact 无法由新 C4 追认。
 - P4 加载 504 个 LoRA key 和 trainer state，8 条 holdout 执行完成，平均 reward 0.8125；不是 100% success 或 paired uplift。
 - 本次 CPU 子集 82 passed、1 skipped（含 v3 26 项）；另外两个审计文件缺 ray/tensordict 无法 collection，macOS 跳过 Linux `/proc` teardown。
-- 历史 RunPod 117-test 结果只属于 `d604458`；本次未查控制面或远端 checkpoint，Pod stopped 是 9 月 2 日记录。
+- 历史 RunPod 117-test 结果只属于 `d604458`；9 月 7 日控制面无 Pod/volume/endpoint，旧 Pod 无法直接恢复，checkpoint 备份未验证。
 - `max_tokens_per_turn` 不等于 episode 总预算；YAML reasoning 值应为字符串 `"off"`。
 - validation-only reload 不继续 optimizer；六个操作入口没有单独的安全 optimizer resume。
+- RunPod 新 Pod 隔离本机，不证明同 UID 的模型代码与 verifier/fixture 隔离；停费截止优先于证据导出，停止后仍有存储费。
 
 ## 5. 下一里程碑任务清单
 
+- [ ] 批准 [M0/M1 设计](../../docs/dsh-adapter/live-smoke-next-milestone-design.md)、EnterWorktree 缺失时的手工替代方式及有界 GPU 预算。
+- [ ] 修复 RLInsight fixture / Ruff 分类，完成八条输入、审计与停止 watchdog，再创建 GPU。
 - [ ] 八个 family 各做一次真实 DSH process smoke，保存 envelope/trace/fresh receipt，清除 live-contract pending。
 - [ ] 生成并单测 96 candidate、独立预封存 32 holdout、24 verified demonstrations。
 - [ ] Frozen-base 校准并冻结 48 train / 16 validation；完成 M3 字段对齐、泄漏审计和 eligible release。
@@ -56,17 +60,17 @@
 
 ## 6. 分支 / 部署状态
 
-- 本仓库：`dsh-adapter`；本轮开始代码基线 `ea06d5a`，文档提交 `104b53d` 已推送到同名分支。交付记录提交用 `docs(dsh): record branch delivery and draft PR` 定位。
+- 本仓库：`dsh-adapter`；代码基线 `ea06d5a`，文档 `104b53d`、交付记录 `00520c5` 已推送。最新设计/控制面核查的提交以 Git 历史为准。
 - Sibling DSH：`worktree-dsh-official-training / 4553c835ba`，本地领先 tracking ref 3 个文档提交，handoff/todo 有未提交更新，保留原状。
 - 已创建 [Draft PR #1](https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/1)，`dsh-adapter → main`，覆盖整套 adapter；没有合并、部署或启动 GPU。
-- 首次 CI 查询（23:35 +08:00，head `104b53d`）metadata 通过，其他检查仍运行；后续 head 以 PR 实时状态为准。两项本机 Ruff 通过，完整 GPU 环境测试未复跑。
+- CI head `00520c5`：Python 3.11 为 565 passed / 1 skipped / 3 failed（RLInsight fixture）；pre-commit Ruff import 分类失败；Python 3.12 cancelled。其余详情见状态 §9；M0 尚未修复。
 - 远端历史 run、版本、P4 结果及来源 digest 均见本地状态文档；不能据旧 manifest 的 `running` 判断当前作业。
 
 ## 7. 冷启动 checklist
 
-1. 读本文件 → [项目状态](../../docs/dsh-adapter/project-status.md) → [项目经验](../lessons.md)。
+1. 读本文件 → [项目状态](../../docs/dsh-adapter/project-status.md) → [下一里程碑设计](../../docs/dsh-adapter/live-smoke-next-milestone-design.md) → [项目经验](../lessons.md)。
 2. 执行 `git status --short --branch`、`git rev-parse HEAD`、`git worktree list`、`git diff --stat`、`git stash list`；确认实际根目录与 branch。
 3. 跨仓验收按状态文档的 DSH scoped handoff、todo、验收标准和 v3 计划核对，勿用旧 clone 或总 todo 推翻新证据。
 4. 重跑所需 CPU gate；缺依赖时记录环境限制，不将 collection failure 当作业务回归或全套通过。
-5. 从八类 process smoke 继续；涉及新实验/资源启动时按现有授权、release 和预算条件执行，并先查控制面实时状态。
+5. 从 M0 CI 和八类 process smoke 准备继续；涉及新代码/资源启动时核对设计及预算授权，不将用户询价当作创建授权，并先查控制面实时状态。
 6. 新证据完成后更新本地状态、交接和 scoped todo；提交前按变更范围验证，push 前必须通过两项 Ruff 门禁。
