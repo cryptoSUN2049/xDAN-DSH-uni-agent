@@ -12,6 +12,10 @@ Uni-Agent is a framework for training long-horizon agents:
 - Unify diverse agent tasks through one extensible interface.
 - Run agents concurrently at scale and collect traceable trajectories as training-ready data (SFT and RL).
 
+DSH adapter development: start with the [local handoff](tasks/dsh-adapter/handoff.md)
+and [project status, test evidence, and goals](docs/dsh-adapter/project-status.md).
+The [DSH runbook](examples/dsh/README.md) contains the executable integration steps.
+
 <p>
   <img src="./assets/uni-agent.png" width="80%" alt="Uni-Agent architecture overview">
 </p>
