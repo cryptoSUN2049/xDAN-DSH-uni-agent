@@ -43,10 +43,30 @@
 - [x] 用户“好的 看看怎么继续”后，按已讨论路线推进 CPU 修复与执行器准备；GPU 独立确认。
 - [x] 创建临时 CPU venv，复现 RLInsight 3 failed / 1 passed 及 CI Ruff I001；原缺依赖的两个审计文件 20 passed。
 - [x] 核清既有产物接口与 inference CLI 最小差异：严格配置、UID 预登记、TQ 读回记录和时间 freshness。
-- [ ] 明确允许 EnterWorktree 不可用时的手工替代方式，随后创建隔离 worktree。
-- [ ] M0：隔离 worktree 内复现、修复并验证两个 CI 问题。
+- [x] 用户明确允许手工替代方式，已创建隔离 worktree。
+- [x] M0：隔离 worktree 内复现、修复并验证两个 CI 问题；a197ead 已推送，五项 CI 成功。
 - [ ] 恢复可重建 DSH source/runtime，明确新 run 的 node/exe 身份与 Linux x64 CPU 构建方式。
 - [ ] M1 CPU 准备：八条输入、启动命令、持久化证据和审计；不依赖 GPU 购买或旧 checkpoint 恢复。
 - [ ] 实际付费运行前单独确认 GPU/模型预算并验证停止机制。
 - [ ] M1 有界 GPU：单卡 inference-only smoke，逐 family 验收，导出并按截止时间释放资源。
 - [ ] 更新真实结果、handoff、来源及 PR；通过后进入 v3 release。
+
+
+## 当前 worktree 执行计划：dsh-v3-live-smoke
+
+- [x] 用户明确批准 git worktree add；创建隔离分支并初始化固定 VERL。
+- [x] 本 worktree 保存设计与冷启动入口，CPU 基线来自实际失败/通过报告。
+- [x] M0：最小修复旧 VERL 测试替身与 Ruff first-party 配置，验证后独立提交 a197ead。
+- [x] M1a：冻结八条输入、任务配置与 manifest；CPU 验证 bundle 和字节身份。
+- [x] M1b：既有推理 CLI 开启严格校验，预登记 UID 并保存真实 TQ 读回。
+- [x] M1c：有界启动/失败收尾和独立证据审计，覆盖 fresh/replay/tamper/缺失等拒绝。
+- [ ] Review：必要回归、coverage、自查、交接，推送本分支并记录 PR。
+- [ ] 另行确认真实模型和 GPU，完成八类 process smoke。
+
+### 本 worktree Review
+
+代码提交 `27f7efa` / `3220216`。208 项聚焦 CPU 测试通过，四模块 coverage
+87%–99%；独立审计 review 的三项问题均有实际 RED→GREEN 记录。
+全量本机尝试 744 passed / 7 failed / 2 skipped，不宣称完整 CI 通过；其中
+6 个缺 vLLM/Pillow 失败已在基线复现，localhost 502 去除代理后基线通过。
+详见 `docs/dsh-v3-live-smoke/verification.json`。
