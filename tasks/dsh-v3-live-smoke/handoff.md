@@ -14,7 +14,7 @@
 | --- | ---: | --- |
 | `README.md` | 117 | 交接、验证或操作文档 |
 | `docs/dsh-v3-live-smoke/design.md` | 229 | 交接、验证或操作文档 |
-| `docs/dsh-v3-live-smoke/progress.md` | 63 | 交接、验证或操作文档 |
+| `docs/dsh-v3-live-smoke/progress.md` | 65 | 交接、验证或操作文档 |
 | `docs/dsh-v3-live-smoke/runbook.md` | 108 | 交接、验证或操作文档 |
 | `docs/dsh-v3-live-smoke/verification.json` | 77 | 交接、验证或操作文档 |
 | `examples/dsh/ops/README.md` | 113 | 交接、验证或操作文档 |
@@ -24,7 +24,7 @@
 | `pyproject.toml` | 114 | 固定 Ruff first-party 分类 |
 | `tasks/dsh-v3-live-smoke/handoff.md` | 95 | 交接、验证或操作文档 |
 | `tasks/dsh-v3-live-smoke/notes.md` | 62 | 交接、验证或操作文档 |
-| `tasks/todo.md` | 72 | 交接、验证或操作文档 |
+| `tasks/todo.md` | 74 | 交接、验证或操作文档 |
 | `tests/uni_agent/deployment/test_host_runtime.py` | 133 | CI import 分类 |
 | `tests/uni_agent/framework/test_dsh_episode_workspace.py` | 168 | CPU 回归测试 |
 | `tests/uni_agent/tasks/test_dsh_v3_live_smoke_audit.py` | 515 | CPU 回归测试 |
@@ -65,7 +65,7 @@
 - [x] 八条冻结输入、命令 dry-run、独立目录、严格推理证据。
 - [x] 运行监督、输入复验、离线审计及产物 SHA 封存。
 - [x] 208 项聚焦测试、独立 review 修复、四模块 coverage≥80%。
-- [ ] 推送同名新分支并创建 scoped Draft PR，回填实际 URL。
+- [x] 推送同名新分支并创建 Draft PR #2：https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/2 。
 - [ ] 完整 Linux 依赖 CI；本机未安装 vLLM，不能声称全仓绿。
 - [ ] 恢复旧 DSH source/Linux carrier，或明确批准冻结可复建新 baseline。
 - [ ] 核准模型/TransferQueue 来源，验证独立 Pod 截止停机/存储删除。
@@ -73,9 +73,9 @@
 
 ## 6. 分支 / 部署状态
 
-实现提交截至 `3220216`；当前 HEAD 另查 git log。M1 两实现提交尚待同名远端 push，本任务不合并 main。
+实现提交截至 `3220216`；当前 HEAD 另查 git log。M1 两实现提交和文档已推送同名远端，本任务不合并 main。
 父分支 PR #1：https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/1 。
-新 PR 拟以 dsh-adapter 为 base，保持可审查范围；CI backend 只对 main PR 自动触发，
+新 Draft PR #2：https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/2 ，base=dsh-adapter；CI backend 只对 main PR 自动触发，
 故不能将父分支 M0 的 CI 成功当作 M1 验证。
 
 CPU venv `/private/tmp/uni-agent-cpu-20260907`，Python 3.12.12。

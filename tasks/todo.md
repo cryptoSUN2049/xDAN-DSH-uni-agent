@@ -46,7 +46,7 @@
 - [x] 用户明确允许手工替代方式，已创建隔离 worktree。
 - [x] M0：隔离 worktree 内复现、修复并验证两个 CI 问题；a197ead 已推送，五项 CI 成功。
 - [ ] 恢复可重建 DSH source/runtime，明确新 run 的 node/exe 身份与 Linux x64 CPU 构建方式。
-- [ ] M1 CPU 准备：八条输入、启动命令、持久化证据和审计；不依赖 GPU 购买或旧 checkpoint 恢复。
+- [x] M1 CPU 准备：八条输入、启动命令、持久化证据和审计；不依赖 GPU 购买或旧 checkpoint 恢复。
 - [ ] 实际付费运行前单独确认 GPU/模型预算并验证停止机制。
 - [ ] M1 有界 GPU：单卡 inference-only smoke，逐 family 验收，导出并按截止时间释放资源。
 - [ ] 更新真实结果、handoff、来源及 PR；通过后进入 v3 release。
@@ -60,7 +60,7 @@
 - [x] M1a：冻结八条输入、任务配置与 manifest；CPU 验证 bundle 和字节身份。
 - [x] M1b：既有推理 CLI 开启严格校验，预登记 UID 并保存真实 TQ 读回。
 - [x] M1c：有界启动/失败收尾和独立证据审计，覆盖 fresh/replay/tamper/缺失等拒绝。
-- [ ] Review：必要回归、coverage、自查、交接，推送本分支并记录 PR。
+- [x] Review：必要回归、coverage、自查、交接，推送本分支并记录 Draft PR #2。
 - [ ] 另行确认真实模型和 GPU，完成八类 process smoke。
 
 ### 本 worktree Review
@@ -70,3 +70,5 @@
 全量本机尝试 744 passed / 7 failed / 2 skipped，不宣称完整 CI 通过；其中
 6 个缺 vLLM/Pillow 失败已在基线复现，localhost 502 去除代理后基线通过。
 详见 `docs/dsh-v3-live-smoke/verification.json`。
+
+本分支已推送；Draft PR #2：https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/2 ，base=dsh-adapter，main 未合并。

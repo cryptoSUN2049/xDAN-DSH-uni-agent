@@ -1,6 +1,6 @@
 # 八类真实 smoke：进度与 GPU 决策
 
-核查日期：2026-09-07。当前工作分支 `worktree-dsh-v3-live-smoke`，
+核查日期：2026-09-07。当前工作分支 `worktree-dsh-v3-live-smoke`（已推送），
 目录 `.Codex/worktrees/dsh-v3-live-smoke`。冷启动先读
 [本 worktree handoff](../../tasks/dsh-v3-live-smoke/handoff.md)。
 
@@ -19,6 +19,8 @@ episode 仍为 **0/8**，没有启动本轮训练、部署或付费调用。
 
 M0 CI：[Python Backend CI](https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/actions/runs/34084230958)。
 该结果只覆盖 `a197eadae3b3f4150f12044faa1c0b1c4e62c9fe`；不代替新提交 CI。
+
+已创建 [Draft PR #2](https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/2)（worktree-dsh-v3-live-smoke → dsh-adapter）；父 PR #1 保留。
 
 本轮实现提交：`27f7efa`（严格推理与 episode 目录）、`3220216`（CPU 编排及审计）。
 四个修改模块含分支覆盖率分别为：runner 87%、auditor 99%、inference CLI 95%、
