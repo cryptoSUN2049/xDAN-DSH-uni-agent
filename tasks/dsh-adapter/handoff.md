@@ -7,7 +7,7 @@
 - 当前实现是独立 `xDAN-DSH-uni-agent` 的 `dsh-adapter`；代码基线 `ea06d5a`，最新预检基线 `55ed21f`，Draft PR #1 已建立。
 - 已有真实 online RL 四步参数更新与独立 checkpoint reload；P3 credible 未通过，P4 core 通过，P5/P6 未完成。
 - v3 catalog、24-case CPU gate、live-contract verifier 已落地；八类真实 process smoke 最新记录为 **0/8**。
-- 下一步先修两类 CPU CI 问题，完成 smoke 准备；单张 4090、两小时/$2 的 inference-only 窗口待批准，RunPod 当前无 Pod。
+- CPU 路线已确认：本机复现 CI 失败，原缺依赖的两个审计文件 20 passed；待允许手工 worktree 后修改。GPU/付费运行另行确认。
 - 详情、测试命令和跨仓来源见 [项目状态与目标](../../docs/dsh-adapter/project-status.md)。
 
 ## 2. 本轮交付物
@@ -17,11 +17,11 @@
 | 路径（仓库根目录起） | 行数 | 说明 |
 | --- | ---: | --- |
 | `README.md` | 116 | 增加本地交接、状态快照和 DSH runbook 入口 |
-| `docs/dsh-adapter/project-status.md` | 291 | 分支、开发/测试状态、目标、来源、CI/GPU 决策及 DSH `1af5b00d68` 对比 |
-| `docs/dsh-adapter/live-smoke-next-milestone-design.md` | 195 | M0/M1 设计、真实 API 路径、文件清单、验证与费用边界，等待明确批准 |
-| `tasks/dsh-adapter/handoff.md` | 79 | 本仓库冷启动入口 |
-| `tasks/dsh-adapter/notes.md` | 65 | 最新 CI 终态、runtime 来源与备份缺口、官方停费能力核查 |
-| `tasks/todo.md` | 48 | 回顾、资料交付及下一里程碑清单 |
+| `docs/dsh-adapter/project-status.md` | 300 | 分支、开发/测试状态、目标、来源、跨仓对比及新 CPU 基线 |
+| `docs/dsh-adapter/live-smoke-next-milestone-design.md` | 212 | M0/M1 设计、CLI 最小差异与证据合同；CPU 与 GPU 阶段分开 |
+| `tasks/dsh-adapter/handoff.md` | 80 | 本仓库冷启动入口 |
+| `tasks/dsh-adapter/notes.md` | 92 | CI、runtime/停费核查、临时 CPU 环境与报告哈希 |
+| `tasks/todo.md` | 52 | 回顾、资料交付及下一里程碑清单 |
 | `tasks/lessons.md` | 30 | 跨仓记忆、证据分层、CPU/GPU 路径选择、预算和隔离边界 |
 
 本轮仅修改文档，不修改 Agent、训练代码或历史实验。
@@ -47,10 +47,11 @@
 - validation-only reload 不继续 optimizer；六个操作入口没有单独的安全 optimizer resume。
 - RunPod 新 Pod 隔离本机，不证明同 UID 的模型代码与 verifier/fixture 隔离；停费截止优先于证据导出，停止后仍有存储费。
 - 旧 DSH pin 未取得、Linux runtime 部署包缺失、旧 P4 本机备份未证明，详见 [预检笔记](notes.md)；runbook node 模式不能由未执行的 exe hash 证明。
+- 临时 CPU venv `/private/tmp/uni-agent-cpu-20260907` 可复现 RLInsight 3 failed / 1 passed；两个原缺依赖审计文件 20 passed。它不是 GPU 环境验证。
 
 ## 5. 下一里程碑任务清单
 
-- [ ] 批准 [M0/M1 设计](../../docs/dsh-adapter/live-smoke-next-milestone-design.md)、EnterWorktree 缺失时的手工替代方式及有界 GPU 预算。
+- [ ] CPU 路线已确认，继续 [M0/M1 设计](../../docs/dsh-adapter/live-smoke-next-milestone-design.md)；先明确允许 EnterWorktree 缺失时的手工替代方式，GPU 预算单独确认。
 - [ ] 修复 RLInsight fixture / Ruff 分类，完成八条输入、审计与停止 watchdog，再创建 GPU。
 - [ ] 恢复可重建 source/runtime；明确实际 node/exe 载体与 Linux CPU 构建方式，不静默替换历史 baseline。
 - [ ] 八个 family 各做一次真实 DSH process smoke，保存 envelope/trace/fresh receipt，清除 live-contract pending。

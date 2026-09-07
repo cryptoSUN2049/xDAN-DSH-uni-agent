@@ -289,3 +289,12 @@ pyproject 与 pre-commit 配置对象完全一致，中间提交只改文档。
 
 [source-smoke-design]: ../../../xDAN-DSH-Exp/.Codex/worktrees/dsh-official-training/docs/dsh-official-training/v3-process-smoke-design.html
 [source-readiness]: ../../../xDAN-DSH-Exp/.Codex/worktrees/dsh-official-training/tasks/dsh-official-training/data-readiness-verification.json
+
+## 11. CPU 阶段已具备修改前基线
+
+用户确认继续 CPU 阶段后，在独立临时 venv 补齐依赖；以 `eb7f040` 代码实际复现
+RLInsight 3 failed / 1 passed 和 CI Ruff 0.12.2 的 I001。原本缺 Ray/TensorDict 的
+两个 DSH 审计文件现为 **20 passed**，它们与前述 82 项是不同文件，但执行环境不同，
+不将两次结果合称一次全套通过。报告、冻结依赖及哈希见 [预检笔记](../../tasks/dsh-adapter/notes.md)。
+下一步进入 M0 修改及单一执行器开发；手工 worktree 替代方式待明确允许。
+GPU 授权、真实 8/8 smoke 和 optimizer 训练均未发生。

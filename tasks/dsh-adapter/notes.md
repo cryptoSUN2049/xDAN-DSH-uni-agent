@@ -63,3 +63,30 @@
    不将新版本冒充历史运行来源；明确 node/exe 与实际 Linux 构建载体。
 3. 完成 CPU smoke 准备和停止机制验证，再进入授权额度内的单卡推理。
 4. 历史 P4 证据与新运行保持分开；备份实体缺失不能被 hash 清单替代。
+
+## CPU 阶段继续：基线 `eb7f040`
+
+用户在进度对比后回复“好的 看看怎么继续”；本轮按该回复推进 CPU 阶段，GPU 另行确认。
+唯一仍需明确的工作区例外是手工 `git worktree add`，异步问题已发出且尚未收到答案。
+没有修改产品/测试代码；依赖安装只进入临时 venv，不改全局 Python 或项目依赖文件。
+
+- venv：`/private/tmp/uni-agent-cpu-20260907`；Python 3.12.12，torch 2.10.0、Ray 2.58.0、
+  TensorDict 0.10.0、Transformers 4.57.6；以 `PYTHONPATH=.:verl` 使用仓库内固定 VERL。
+- 依赖冻结：`/private/tmp/uni-agent-cpu-20260907-requirements.txt`，SHA-256
+  `2388272f24b5c77c3a2f6b6593334bc1ec2a702fa1debe8f090478c8ea5efe8b`。
+- RLInsight 现有四项测试：3 failed / 1 passed，准确复现 CI 的可选 trace_span fixture 问题。
+  JUnit `/private/tmp/uni-agent-m0-baseline.xml`，SHA-256
+  `03c796628535644d2e151b5e248a9fcd5c11836282bb3d2b0d9bba60786496e9`。
+- Ruff 0.12.2 对 `tests/uni_agent/deployment/test_host_runtime.py` 报 I001；其 format check 通过。
+- 两个此前无法 collection 的文件 `test_dsh_trajectory_audit.py`、`test_dsh_ops_audit.py`
+  现为 20 passed / 1 Ray 弃用警告；JUnit `/private/tmp/uni-agent-audit-baseline.xml`，SHA-256
+  `f122b1084b9b7bc2b90b961b9f9bea79b7ed72290112e73f7b415b095a8498b1`。
+  初次补包后仍缺 codetiming，已补齐并重跑通过；没有通过跳过测试绕过依赖。
+
+复用的实际证据链：Framework log_dir/GatewaySession 下写 trajectory.json/npz；DSH
+trace_root/sha256(GatewaySession)[:24] 下写 session.jsonl/result.json；Task
+result_root/sha256(DSHSession+NUL+traceDigest)[:24] 下写 envelope/receipt。
+inference 没有 step_* 子目录，global_steps=null；TQ session_id 是整数，非 Gateway ID。
+新 CLI 需预登记 UID/family，透传现有严格审计配置，保留实际 final TQ keys 与读回分数；
+auditor 补 run 时间窗口与 receipt 唯一性，并从真实 trace 重算 observation。
+不把 inference 读回记录冒充 optimizer 消费证据，不让 GPU 条件阻塞 CPU 实现。

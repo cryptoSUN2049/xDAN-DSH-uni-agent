@@ -1,6 +1,6 @@
 # 下一里程碑设计：CI 修复与八类真实 Gateway smoke
 
-日期：2026-09-07（核查开始于 9 月 6 日晚）。状态：设计待用户确认；尚未修改实现、创建 worktree 或购买 GPU。
+日期：2026-09-07。用户确认继续 CPU 阶段；手工 worktree 替代方式待明确允许，GPU 另行确认。尚未修改实现或创建资源。
 实现基线：`dsh-adapter / 00520c5`。全局目标仍由 [状态文档](project-status.md) 定义。
 
 ## 1. 目标和范围
@@ -94,12 +94,14 @@ flowchart TD
 | `examples/dsh/ops/run_v3_live_smoke.py`（新增） | 校验 bundle、准备八条推理输入/任务配置、生成受控命令、启动既有 CLI、收尾 manifest |
 | `examples/dsh/ops/audit_v3_live_smoke.py`（新增） | 逐 family 校验结果、trace、receipt、运行身份和 digest，生成独立 smoke report |
 | `tests/uni_agent/tasks/test_dsh_v3_live_smoke_ops.py`（新增） | 数据、启动、预算/超时、证据篡改与汇总判定测试 |
+| `examples/inference/parallel_infer_verl.py` | 透传现有严格 DSH 审计配置，预登记输入 UID，持久化实际 TQ 读回记录；保持普通推理默认行为 |
 | `examples/dsh/ops/README.md` | CPU 准备、GPU 推理、审计、导出与停止入口 |
 | `docs/<worktree>/`、`tasks/<worktree>/` | 审批后在隔离 worktree 内保存设计、计划、实际结果与 handoff |
 
 优先复用现有 ops manifest / supervisor / audit 函数，不改变 DSH Agent 的 Gateway
-要求，不重新实现 verifier 或 receipt。若现有 inference CLI 缺少必要 dump/admission
-配置，则先给出具体最小差异及测试，再决定是否修改该文件。
+要求，不重新实现 verifier 或 receipt。现已核对 inference CLI 的最小缺口：严格模式下
+透传 trace/result roots、启用已有 admission/dump 要求；engine 启动前登记 UID/family，
+保存 `_read_rm_scores()` 已返回的 final keys、UID 状态和分数，不改 Framework 核心。
 
 ## 6. CLI 与证据合同（拟新增，当前不可执行）
 
@@ -180,7 +182,7 @@ episode 目录重置和可信文件变动拒绝、导出卡住时仍按时停止
 
 ## 9. 工作区与确认要求
 
-计划隔离目录：`.Codex/worktrees/dsh-v3-live-smoke`；从当前 `00520c5` 派生
+计划隔离目录：`.Codex/worktrees/dsh-v3-live-smoke`；从创建时已保存的 `dsh-adapter` HEAD 派生
 `worktree-dsh-v3-live-smoke`。本会话没有 `EnterWorktree` / `ExitWorktree` 工具。
 用户原规则禁止手工 `git worktree add`，因此需要明确允许这次等价的手工创建方式，
 随后所有代码、测试及新里程碑文档都在该隔离目录内完成。
@@ -189,7 +191,22 @@ episode 目录重置和可信文件变动拒绝、导出卡住时仍按时停止
 
 > Present the design to the user. Do NOT start implementation until explicit approval.
 
-确认范围：批准 M0/M1；允许上述 worktree 替代方式；M0/CPU 预检通过后可进行
-单卡、最多 2 小时、总费用不超过 $2 的 inference-only GPU smoke；不启动 optimizer。
+用户在两份记录对比后回复“好的 看看怎么继续”，本轮据此推进 CPU 修复与执行器准备。
+剩余单独确认：允许上述 worktree 替代方式；模型服务与 GPU 实际运行不包含在 CPU 阶段内。
+GPU 的单卡、两小时/$2 方案仍是待确认建议，不自动授权 optimizer 或付费调用。
 每个 slice 独立 commit，按用户此前授权推送同名分支并记录 PR。
 M0 验证后将其整合进 `dsh-adapter` 以刷新 PR #1；本任务不合并到 `main`。
+
+## 10. CPU 执行准备补充
+
+本机临时 venv 已准确复现 RLInsight 3 failed / 1 passed，Ruff 0.12.2 I001 亦复现；
+此前无法 collection 的两个 DSH 审计文件现为 20 passed，说明现有审计函数可以在 CPU
+测试环境复用。路径、依赖冻结与报告哈希见 [预检笔记](../../tasks/dsh-adapter/notes.md)。
+
+M1 新审计额外检查：receipt.issued_at 位于本次运行窗口、预登记 UID 与实际 Gateway
+session 对应、八类 receipt 不重复。TQ 的 session_id 是整数 rollout index，不能当 Gateway ID。
+inference 的 global_steps=null，训练审计入口要求整数 step，因此复用底层校验函数，
+不伪造 trainer consumption；单独报告 `inference_readback_verified`。
+verifier 的 observation 目前只在内存中，可用既有 `evaluate_live_trace()` 从已校验
+trace/scenario/fixture 重算。严格拒绝发生在 token dump 之前时，保留已有证据并标为
+incomplete/rejected，不放松 admission 以获得一份看似完整的报告。
