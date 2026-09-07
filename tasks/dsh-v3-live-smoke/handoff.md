@@ -10,15 +10,18 @@
 
 新增学习与调研入口：[Harbor 与 Agent RL 专题 HTML](../../docs/dsh-v3-live-smoke/harbor-agent-rl-guide.html)。
 包含官方新闻、教程和开源桥接核查；仅文档交付，DSH × Harbor × VERL 尚未实跑。
+整体方案入口：[Uni-Agent 系统架构与 Modal / Harbor 集成](../../docs/dsh-v3-live-smoke/uni-agent-system-plan.html)。
+原总体 Pipeline HTML 位于 DSH sibling docs/master，本页已保留来源与旧规划边界。
 
 ## 2. 本轮交付物
 
 | 文件 | 行数 | 说明 |
 | --- | ---: | --- |
-| `README.md` | 117 | 交接、验证或操作文档 |
+| `README.md` | 120 | 交接、验证或操作文档 |
 | `docs/dsh-v3-live-smoke/design.md` | 229 | 交接、验证或操作文档 |
-| `docs/dsh-v3-live-smoke/harbor-agent-rl-guide.html` | 183 | Agent RL 科普、长流程、5 篇官方新闻、开源集成证据与接入提案 |
-| `docs/dsh-v3-live-smoke/progress.md` | 68 | 交接、验证或操作文档 |
+| `docs/dsh-v3-live-smoke/uni-agent-system-plan.html` | 62 | 当前整体入口；两种环境路径、Modal/Harbor接线、接口与H0–H4验收提案 |
+| `docs/dsh-v3-live-smoke/harbor-agent-rl-guide.html` | 184 | Agent RL 科普、长流程、5 篇官方新闻、开源集成证据与接入提案 |
+| `docs/dsh-v3-live-smoke/progress.md` | 70 | 交接、验证或操作文档 |
 | `docs/dsh-v3-live-smoke/runbook.md` | 108 | 交接、验证或操作文档 |
 | `docs/dsh-v3-live-smoke/verification.json` | 77 | 交接、验证或操作文档 |
 | `examples/dsh/ops/README.md` | 113 | 交接、验证或操作文档 |
@@ -26,9 +29,9 @@
 | `examples/dsh/ops/run_v3_live_smoke.py` | 777 | prepare/runtime预检/监督/封存 |
 | `examples/inference/parallel_infer_verl.py` | 621 | 严格 flags、UID 预登记及实际读回 |
 | `pyproject.toml` | 114 | 固定 Ruff first-party 分类 |
-| `tasks/dsh-v3-live-smoke/handoff.md` | 115 | 交接、验证或操作文档 |
+| `tasks/dsh-v3-live-smoke/handoff.md` | 125 | 交接、验证或操作文档 |
 | `tasks/dsh-v3-live-smoke/notes.md` | 62 | 交接、验证或操作文档 |
-| `tasks/todo.md` | 93 | 交接、验证或操作文档 |
+| `tasks/todo.md` | 110 | 交接、验证或操作文档 |
 | `tasks/lessons.md` | 42 | 补充本地适配与生态能力、任务格式与训练连接的区分 |
 | `tests/uni_agent/deployment/test_host_runtime.py` | 133 | CI import 分类 |
 | `tests/uni_agent/framework/test_dsh_episode_workspace.py` | 168 | CPU 回归测试 |
@@ -70,6 +73,10 @@
   rLLM Harbor 0.3.0 与多步骤首次要求 ≥0.5.0 存在版本差异，不能直接套用。
 - HarborTask 绕过 Uni-Agent Agent registry；agent.name=dsh 不会自动接入 DshAgent。
   现有 dsh-strict-audit 只接受 dsh_architecture，须设计 bridge 与审计合同适配。
+- HarborTask 的 sandbox=None；Harbor 路线通过 harbor_env: modal 管理环境，不能
+  再叠加 Uni-Agent ModalSandbox。DSH bridge 应只包装已有环境 exec/file 能力。
+- endpoint 环境变量不建立网络通路；Modal 内 DSH 必须实际访问带 session 路由的
+  Gateway。现有严格 episode staging 限定 local，不能直接切 provider 追认为 v3 已验收。
 
 ## 5. 下一里程碑任务清单
 
@@ -79,6 +86,7 @@
 - [x] 208 项聚焦测试、独立 review 修复、四模块 coverage≥80%。
 - [x] 推送同名新分支并创建 Draft PR #2：https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/2 。
 - [x] Harbor 入门与集成专题 HTML、新闻阅读、上游代码核查及交接入口。
+- [x] 当前整体方案 HTML 与 README / progress / 专题互链；Modal + Harbor 仍为设计提案。
 - [ ] 若推进 Harbor 实现：固定版本、选单 CPU 任务验证 oracle；呈现 DSH bridge
   具体设计后，依据实现范围取得批准。当前 HTML 请求只授权调研与文档。
 - [ ] 完整 Linux 依赖 CI；本机未安装 vLLM，不能声称全仓绿。
@@ -102,11 +110,13 @@ CPU venv `/private/tmp/uni-agent-cpu-20260907`，Python 3.12.12。
 Harbor 专题以独立本地文档提交交付，本轮未推送；具体提交查 git log/status。
 HTML 已核查桌面 1440×1000、手机 390×844，无页面横向溢出；
 内部锚点与本地来源路径通过检查，独立内容审阅的 3 项问题已修正。
+整体方案为另一独立本地文档提交，本轮同样未推送。8 章节、9 锚点、24 本地路径
+已验证，桌面/手机预览与目录跳转通过；独立审阅确认沙箱归属与 bridge 接线。
 
 ## 7. 冷启动 checklist
 
 1. 读本文件、progress.md、runbook.md、notes.md、tasks/todo.md。
-   Harbor 相关工作再读专题 HTML；沿固定源码链接核实动态 PR 状态和依赖。
+   先看整体方案 HTML 定位职责；Harbor 相关再读专题，核实动态 PR 状态和依赖。
 2. 核对 git status / HEAD / worktree / submodule，检查实际 PR 与 CI，保护在途文件。
 3. 使用临时 CPU venv、`PYTHONPATH=.:verl`、HF_HUB_OFFLINE=1；pytest 使用 --tb=short。
 4. 用 verification.json 中五个文件重跑聚焦范围；coverage 按目录配置。

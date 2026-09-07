@@ -6,6 +6,8 @@
 
 学习与接入调研：[Harbor 与 Agent RL 专题 HTML](harbor-agent-rl-guide.html)。
 覆盖角色分工、长流程、官方新闻和教程、开源桥接证据；不改变下列运行状态。
+整体方案入口：[Uni-Agent / DSH / Harbor / Modal 架构与接入设计](uni-agent-system-plan.html)。
+Harbor 路线由 Harbor 管理 Modal 环境，DSH bridge、远端 Gateway 与严格 reward 合同仍待实现验证。
 
 ## 当前结论
 

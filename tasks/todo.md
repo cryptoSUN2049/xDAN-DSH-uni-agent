@@ -91,3 +91,20 @@
 独立审阅已修正三点：DSH registry / strict CLI 不能直接复用、完整 benchmark
 命令不是单任务首跑、Tinker recipe 只证明其具体 Agent / 后端组合可训练。
 当前未实现 Harbor bridge、未复跑外部训练 recipe、未增加 smoke 或 GPU 运行结果。
+
+## Uni-Agent 整体方案与 Modal / Harbor：2026-09-07
+
+范围：定位已有总方案，新增本 worktree 的统一 HTML 入口与集成设计，不实现 bridge 或创建云资源。
+
+- [x] 查找本仓与 DSH sibling HTML，区分早期架构、当前状态和 Harbor 专题。
+- [x] 核查两条沙箱生命周期、DSH 执行位置与官方 Harbor → Modal 示例。
+- [x] 形成 `docs/dsh-v3-live-smoke/uni-agent-system-plan.html`：目标、总体架构、接口、改动范围、验收计划。
+- [x] README / progress / Harbor 专题 / handoff 互相链接，保留历史来源与版本边界。
+- [x] 检查链接、桌面/手机显示、内容审阅和 Git diff；独立本地提交文档，本轮未推送。
+
+### 整体方案 Review
+
+8 章节、9 内部锚点、24 本地路径（含两条跨仓历史来源）检查通过；Harbor 专题互链有效。
+桌面 1440×1000 / 手机 390×844 浏览器预览通过，目录跳转正常、手机无页面横向溢出。
+独立代码审阅确认双路径生命周期、Gateway 网络与严格审计缺口；修正评分字段表述，
+明确是本仓适配层缺口而非 Harbor 框架限制。本次仅文档验证，不新增云端执行或训练证据。
