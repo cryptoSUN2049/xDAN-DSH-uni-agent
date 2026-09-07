@@ -30,15 +30,17 @@ endpoint is the gateway session, bound by the runner, not a flag.
 import argparse
 import json
 import logging
+import math
 import os
+import tempfile
 import time
 from collections import defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
 
 import numpy as np
 import ray
-from datasets import load_dataset
 from omegaconf import OmegaConf
 
 import verl
@@ -48,10 +50,8 @@ try:
 except ImportError:  # fall back to verl's shim (mock raises a clear error if TQ is missing)
     from verl.utils.transferqueue_utils import tq
 
-from uni_agent.framework.entry import AgentFrameworkRolloutAdapter
 from uni_agent.tasks import TaskConfigResolver
 from verl.utils import tensordict_utils as tu
-from verl.workers.rollout.llm_server import LLMServerManager
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
 logger = logging.getLogger(__name__)
@@ -157,6 +157,22 @@ def init_config(args: argparse.Namespace, *, task_configs: list[dict], served_mo
         },
     }
     agent_framework_cfg["log_dir"] = args.log_dir
+    runner_kwargs = agent_framework_cfg["agent_runners"]["task"]["runner_kwargs"]
+    if args.dsh_trace_root is not None or args.dsh_result_root is not None:
+        runner_kwargs.update(dsh_trace_root=args.dsh_trace_root, dsh_result_root=args.dsh_result_root)
+    if args.dsh_strict_audit:
+        runner_kwargs["require_reward_post"] = True
+        agent_framework_cfg.update(
+            use_reward_loop_worker=False,
+            fail_on_rollout_error=True,
+            require_finished_episode=True,
+            require_verifier_reward=True,
+            require_trajectory_dump=True,
+            trajectory_postprocessor_fqn="uni_agent.tasks.dsh.trajectory_audit.validate_trajectories",
+            trajectory_postprocessor_pass_context=True,
+            trajectory_postprocessor_kwargs={"trace_root": args.dsh_trace_root, "result_root": args.dsh_result_root},
+        )
+    runner_kwargs.update(_episode_runner_kwargs(args))
     OmegaConf.update(config, "actor_rollout_ref.rollout.custom.agent_framework", agent_framework_cfg, force_add=True)
 
     # TransferQueue carries the rollout trajectories (and their rm_scores).
@@ -291,7 +307,144 @@ def _report(
         logger.info(f"wrote result file to: {result_path}")
 
 
-def main() -> None:
+def _load_samples(args: argparse.Namespace) -> list:
+    from datasets import load_dataset
+
+    samples = load_dataset("parquet", data_files=args.data_path, split="train").to_list()
+    return samples[: args.limit] if args.limit is not None else samples
+
+
+def _generate(config, samples: list, uids: list) -> float:
+    """Initialize the real engine and run the pre-registered inputs through TQ."""
+    from uni_agent.framework.entry import AgentFrameworkRolloutAdapter
+    from verl.workers.rollout.llm_server import LLMServerManager
+
+    ray.init()
+    tq.init(config.transfer_queue)
+    llm_server_manager = LLMServerManager.create(config=config)
+    adapter = AgentFrameworkRolloutAdapter.create(
+        config=config,
+        llm_client=llm_server_manager.get_client(),
+    )
+    prompts = _build_prompts(samples, uids)
+    logger.info("starting inference...")
+    begin_time = time.time()
+    adapter.generate_sequences_and_wait(prompts)
+    return time.time() - begin_time
+
+
+def _validate_evidence_args(args: argparse.Namespace) -> None:
+    if args.dsh_strict_audit:
+        for field in ("dsh_trace_root", "dsh_result_root", "inference_evidence_path", "log_dir", "result_path"):
+            value = getattr(args, field)
+            if not isinstance(value, str) or not value.strip():
+                raise ValueError(f"--dsh-strict-audit requires --{field.replace('_', '-')}")
+        if args.n != 1:
+            raise ValueError("--dsh-strict-audit requires --n=1")
+    roots = (args.dsh_trace_root, args.dsh_result_root)
+    if any(value is not None for value in roots):
+        for field, value in zip(("dsh_trace_root", "dsh_result_root"), roots, strict=True):
+            if not value or not Path(value).is_absolute() or ".." in Path(value).parts:
+                raise ValueError(f"--{field.replace('_', '-')} must be an absolute traversal-free path")
+    if args.inference_evidence_path:
+        path = Path(args.inference_evidence_path).expanduser()
+        if os.path.lexists(path):
+            raise FileExistsError("--inference-evidence-path already exists")
+        if args.result_path and path.resolve() == Path(args.result_path).expanduser().resolve():
+            raise ValueError("--inference-evidence-path must differ from --result-path")
+    _validate_episode_args(args)
+
+
+def _validate_episode_args(args: argparse.Namespace) -> None:
+    episode_fields = ("dsh_episode_workdir_root", "dsh_episode_source_root", "dsh_episode_files")
+    if any(getattr(args, field) is not None for field in episode_fields):
+        if not args.dsh_strict_audit:
+            raise ValueError("DSH episode workdirs require --dsh-strict-audit")
+        if not all(getattr(args, field) for field in episode_fields):
+            raise ValueError("DSH episode workdir root, source root and files must be configured together")
+        for field in episode_fields:
+            path = Path(getattr(args, field))
+            if not path.is_absolute() or ".." in path.parts:
+                raise ValueError(f"--{field.replace('_', '-')} must be an absolute traversal-free path")
+
+
+def _episode_runner_kwargs(args: argparse.Namespace) -> dict:
+    _validate_episode_args(args)
+    if args.dsh_episode_files is None:
+        return {}
+    from uni_agent.framework.task_runner import _dsh_episode_path, _read_dsh_episode_files, _validate_dsh_episode_files
+
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("duplicate DSH episode file field")
+            result[key] = value
+        return result
+
+    files_path = _dsh_episode_path(args.dsh_episode_files)
+    files = _validate_dsh_episode_files(
+        json.loads(files_path.read_text(encoding="utf-8"), object_pairs_hook=unique_object)
+    )
+    _dsh_episode_path(args.dsh_episode_workdir_root)
+    # Verify source bytes before the inference engine starts, and again in each runner.
+    _read_dsh_episode_files(args.dsh_episode_source_root, files)
+    return {
+        "dsh_episode_workdir_root": args.dsh_episode_workdir_root,
+        "dsh_episode_source_root": args.dsh_episode_source_root,
+        "dsh_episode_files": files,
+    }
+
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="microseconds").replace("+00:00", "Z")
+
+
+def _write_evidence(path: Path, payload: dict, *, create: bool = False) -> None:
+    """Publish complete JSON atomically; initial creation never replaces an existing run."""
+    data = json.dumps(payload, ensure_ascii=False, sort_keys=True, allow_nan=False) + "\n"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent, delete=False) as output:
+        temporary = Path(output.name)
+        try:
+            output.write(data)
+            output.flush()
+            os.fsync(output.fileno())
+            if create:
+                os.link(temporary, path)
+            else:
+                os.replace(temporary, path)
+        finally:
+            temporary.unlink(missing_ok=True)
+
+
+def _registered_samples(samples: list, uids: list, resolver: TaskConfigResolver, *, strict: bool) -> list:
+    rows = []
+    for index, (sample, uid) in enumerate(zip(samples, uids, strict=True)):
+        task = sample["extra_info"]["tools_kwargs"]["task"]
+        if strict and task.get("name") != "dsh_architecture":
+            raise ValueError("--dsh-strict-audit requires dsh_architecture tasks")
+        metadata = resolver.resolve(task).get("metadata", {})
+        if not isinstance(metadata, dict):
+            raise ValueError("Task metadata must be an object")
+        # Freeze the input identity without copying model configuration or credentials.
+        rows.append({"uid": uid, "sample_index": index, "metadata": json.loads(json.dumps(metadata, allow_nan=False))})
+    return rows
+
+
+def _require_complete_readback(read: dict, uids: list, n: int) -> None:
+    sessions = [key.rsplit("_", 2)[:2] for key in read["final_keys"]]
+    expected = sorted((uid, str(index)) for uid in uids for index in range(n))
+    if (
+        sorted(map(tuple, sessions)) != expected
+        or len(read["scores"]) != len(expected)
+        or any(not math.isfinite(score) for score in read["scores"])
+        or any(read["uid_status"].get(uid) != "finished" for uid in uids)
+    ):
+        raise RuntimeError("strict inference readback is incomplete or invalid")
+
+
+def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Parallel agent inference over a verl-launched engine (framework + TQ)."
     )
@@ -391,50 +544,77 @@ def main() -> None:
         default=os.getenv("UNI_AGENT_LOG_DIR", "/tmp/uni_agent_logs"),
         help="Root directory for per-session logs and trajectories; use an empty value to disable.",
     )
-
-    args = parser.parse_args()
-
-    ray.init()
-
-    resolver = TaskConfigResolver.from_file(args.task_config)
-    served_model_name = args.served_model_name or os.path.basename(os.path.expanduser(args.model_path).rstrip("/"))
-
-    dataset = load_dataset("parquet", data_files=args.data_path, split="train")
-    samples = dataset.to_list()
-    if args.limit is not None:
-        samples = samples[: args.limit]
-    if not samples:
-        logger.warning("no samples selected; exiting")
-        return
-    n = max(1, args.n)
-
-    task_configs = list(resolver.defaults_by_name.values())
-
-    logger.info(f"loaded {len(samples)} prompts (x n={n} sessions each) from {args.data_path}")
-
-    # 1. TransferQueue + verl inference engine (Ray auto-inits via the actors below).
-    logger.info("initializing configuration, TransferQueue, and LLMServerManager...")
-    config = init_config(args, task_configs=task_configs, served_model_name=served_model_name)
-    tq.init(config.transfer_queue)
-    llm_server_manager = LLMServerManager.create(config=config)
-
-    # 2. Framework rollout adapter over the engine.
-    adapter = AgentFrameworkRolloutAdapter.create(
-        config=config,
-        llm_client=llm_server_manager.get_client(),
+    parser.add_argument(
+        "--dsh-strict-audit", action="store_true", help="Require DSH admission and persistent evidence."
     )
+    parser.add_argument(
+        "--dsh-trace-root", help="Absolute root for DSH trace artifacts; configure with --dsh-result-root."
+    )
+    parser.add_argument("--dsh-result-root", help="Absolute root for DSH Task envelopes and verifier receipts.")
+    parser.add_argument(
+        "--inference-evidence-path", help="New JSON file for input identity and actual TQ readback evidence."
+    )
+    parser.add_argument("--dsh-episode-workdir-root", help="Strict-only root for new Gateway-session task directories.")
+    parser.add_argument("--dsh-episode-source-root", help="Strict-only root containing the frozen episode input files.")
+    parser.add_argument(
+        "--dsh-episode-files", help="Strict-only absolute path to the operator's JSON file/digest list."
+    )
+    return parser.parse_args(argv)
 
-    # 3. Submit the batch and wait for every trajectory to land in TQ.
-    uids = [str(uuid4()) for _ in samples]
-    prompts = _build_prompts(samples, uids)
-    logger.info("starting inference...")
-    begin_time = time.time()
-    adapter.generate_sequences_and_wait(prompts)
-    wall = time.time() - begin_time
 
-    # 4. Read rm_scores back from TQ and report.
-    read = _read_rm_scores(uids, partition_id=PARTITION_ID)
-    _report(read, wall=wall, num_prompts=len(samples), n=n, args=args, served_model_name=served_model_name)
+def main() -> None:
+    args = _parse_args()
+    _validate_evidence_args(args)
+    evidence_path = Path(args.inference_evidence_path).expanduser() if args.inference_evidence_path else None
+    evidence = {
+        "schema": "dsh.inference-evidence.v1",
+        "status": "running",
+        "started_at": _utc_now(),
+        "finished_at": None,
+        "partition_id": PARTITION_ID,
+        "global_steps": None,
+        "samples": [],
+        "readback": None,
+    }
+    if evidence_path is not None:
+        _write_evidence(evidence_path, evidence, create=True)
+    try:
+        resolver = TaskConfigResolver.from_file(args.task_config)
+        served_model_name = args.served_model_name or os.path.basename(os.path.expanduser(args.model_path).rstrip("/"))
+        samples = _load_samples(args)
+        if not samples:
+            if args.dsh_strict_audit:
+                raise ValueError("strict inference requires at least one sample")
+            logger.warning("no samples selected; exiting")
+            evidence["status"] = "completed"
+            return
+        n = max(1, args.n)
+        uids = [str(uuid4()) for _ in samples]
+        if evidence_path is not None:
+            evidence["samples"] = _registered_samples(samples, uids, resolver, strict=args.dsh_strict_audit)
+            _write_evidence(evidence_path, evidence)
+        logger.info(f"loaded {len(samples)} prompts (x n={n} sessions each) from {args.data_path}")
+        config = init_config(
+            args, task_configs=list(resolver.defaults_by_name.values()), served_model_name=served_model_name
+        )
+        wall = _generate(config, samples, uids)
+        read = _read_rm_scores(uids, partition_id=PARTITION_ID)
+        if evidence_path is not None and read["final_keys"]:
+            readback = {key: read[key] for key in ("final_keys", "scores", "uid_status", "traj_keys")}
+            # Reject non-JSON scores before claiming that a usable readback exists.
+            json.dumps(readback, allow_nan=False)
+            evidence["readback"] = readback
+        if args.dsh_strict_audit:
+            _require_complete_readback(read, uids, n)
+        _report(read, wall=wall, num_prompts=len(samples), n=n, args=args, served_model_name=served_model_name)
+        evidence["status"] = "completed"
+    except BaseException as exc:
+        evidence.update(status="failed", error_type=type(exc).__name__)
+        raise
+    finally:
+        if evidence_path is not None:
+            evidence["finished_at"] = _utc_now()
+            _write_evidence(evidence_path, evidence)
 
 
 if __name__ == "__main__":
