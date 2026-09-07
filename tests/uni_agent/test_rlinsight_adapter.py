@@ -22,7 +22,7 @@ def _capture_trace_span(monkeypatch: pytest.MonkeyPatch):
     def trace_span(**kwargs):
         captured.append(kwargs)
 
-    monkeypatch.setattr(rlinsight_adapter.RLInsightLogger, "trace_span", staticmethod(trace_span))
+    monkeypatch.setattr(rlinsight_adapter, "RLInsightLogger", SimpleNamespace(trace_span=trace_span))
     return captured
 
 
