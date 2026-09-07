@@ -1,0 +1,77 @@
+{
+  "verified_at": "2026-09-07",
+  "implementation_commits": [
+    "27f7efa",
+    "3220216"
+  ],
+  "base_commit": "a197eadae3b3f4150f12044faa1c0b1c4e62c9fe",
+  "focused": {
+    "passed": 208,
+    "failed": 0,
+    "warnings": 1,
+    "scope": [
+      "tests/uni_agent/tasks/test_dsh_v3_live_smoke_ops.py",
+      "tests/uni_agent/tasks/test_dsh_v3_live_smoke_audit.py",
+      "tests/uni_agent/tasks/test_parallel_infer_verl_evidence.py",
+      "tests/uni_agent/framework/test_dsh_episode_workspace.py",
+      "tests/uni_agent/framework/test_task_runner.py"
+    ]
+  },
+  "full_local_attempt": {
+    "passed": 744,
+    "failed": 7,
+    "skipped": 2,
+    "subtests_passed": 19,
+    "limitations": "5 missing vllm; 1 missing Pillow through VERL; 1 localhost request affected by proxy"
+  },
+  "unchanged_base_recheck": {
+    "passed": 9,
+    "failed": 6,
+    "scope": "debug fake gateway test + full tool-dispatch test file",
+    "proxy_disabled": true,
+    "limitations": "same 5 vllm and 1 Pillow dependency failures; debug gateway passes"
+  },
+  "modules": {
+    "examples/dsh/ops/run_v3_live_smoke.py": {
+      "sha256": "fa402dfab421414dbef591d52e1f4cd14e7167f74cf4812cfc03c9be42d87922",
+      "coverage_percent": 87.35440931780366
+    },
+    "examples/dsh/ops/audit_v3_live_smoke.py": {
+      "sha256": "946ef080587ed19d6b38942bbc70398bae57b49965514e34dab910758aa26fc6",
+      "coverage_percent": 98.96373056994818
+    },
+    "examples/inference/parallel_infer_verl.py": {
+      "sha256": "8071bdc5ca4a9b91da7053305697e0c8988d97ca22482b79cedcb7dafa55e48c",
+      "coverage_percent": 95.03722084367246
+    },
+    "uni_agent/framework/task_runner.py": {
+      "sha256": "d97cb466f153c4d104c787014152a62536f2844307a9c2e905fbf7e820c27bea",
+      "coverage_percent": 90.17094017094017
+    }
+  },
+  "report_files": [
+    {
+      "path": "/private/tmp/uni-agent-live-focused.xml",
+      "sha256": "853c1202d64b123f93fea65e17a6739f1bbf41d9f196e768acca19388ba056a7"
+    },
+    {
+      "path": "/private/tmp/uni-agent-live-focused-coverage.json",
+      "sha256": "5dcff9c555929355562a3cac2fc55c828589e647381da14d6f6b7a640f62b5a8"
+    },
+    {
+      "path": "/private/tmp/uni-agent-live-full-no-cov.xml",
+      "sha256": "0df9a976691f9381a0b3a1d26030ef4d68ebdb36e9d6e7141d38739406100d9c"
+    },
+    {
+      "path": "/private/tmp/uni-agent-baseline-gateway.xml",
+      "sha256": "34b15c59f0536304389b962c7f96c9d5714ef5c870aaf3d9048b8dbdf883b100"
+    }
+  ],
+  "live_episodes_completed": 0,
+  "live_episodes_required": 8,
+  "gpu_created": false,
+  "model_calls": 0,
+  "optimizer_updates": 0,
+  "training_eligible": false,
+  "review": "Three independent auditor findings fixed and regression-tested: invalid token IDs, truncated NPZ, registry resolved from caller cwd."
+}

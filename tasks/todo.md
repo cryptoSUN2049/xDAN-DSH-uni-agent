@@ -43,10 +43,68 @@
 - [x] 用户“好的 看看怎么继续”后，按已讨论路线推进 CPU 修复与执行器准备；GPU 独立确认。
 - [x] 创建临时 CPU venv，复现 RLInsight 3 failed / 1 passed 及 CI Ruff I001；原缺依赖的两个审计文件 20 passed。
 - [x] 核清既有产物接口与 inference CLI 最小差异：严格配置、UID 预登记、TQ 读回记录和时间 freshness。
-- [ ] 明确允许 EnterWorktree 不可用时的手工替代方式，随后创建隔离 worktree。
-- [ ] M0：隔离 worktree 内复现、修复并验证两个 CI 问题。
+- [x] 用户明确允许手工替代方式，已创建隔离 worktree。
+- [x] M0：隔离 worktree 内复现、修复并验证两个 CI 问题；a197ead 已推送，五项 CI 成功。
 - [ ] 恢复可重建 DSH source/runtime，明确新 run 的 node/exe 身份与 Linux x64 CPU 构建方式。
-- [ ] M1 CPU 准备：八条输入、启动命令、持久化证据和审计；不依赖 GPU 购买或旧 checkpoint 恢复。
+- [x] M1 CPU 准备：八条输入、启动命令、持久化证据和审计；不依赖 GPU 购买或旧 checkpoint 恢复。
 - [ ] 实际付费运行前单独确认 GPU/模型预算并验证停止机制。
 - [ ] M1 有界 GPU：单卡 inference-only smoke，逐 family 验收，导出并按截止时间释放资源。
 - [ ] 更新真实结果、handoff、来源及 PR；通过后进入 v3 release。
+
+
+## 当前 worktree 执行计划：dsh-v3-live-smoke
+
+- [x] 用户明确批准 git worktree add；创建隔离分支并初始化固定 VERL。
+- [x] 本 worktree 保存设计与冷启动入口，CPU 基线来自实际失败/通过报告。
+- [x] M0：最小修复旧 VERL 测试替身与 Ruff first-party 配置，验证后独立提交 a197ead。
+- [x] M1a：冻结八条输入、任务配置与 manifest；CPU 验证 bundle 和字节身份。
+- [x] M1b：既有推理 CLI 开启严格校验，预登记 UID 并保存真实 TQ 读回。
+- [x] M1c：有界启动/失败收尾和独立证据审计，覆盖 fresh/replay/tamper/缺失等拒绝。
+- [x] Review：必要回归、coverage、自查、交接，推送本分支并记录 Draft PR #2。
+- [ ] 另行确认真实模型和 GPU，完成八类 process smoke。
+
+### 本 worktree Review
+
+代码提交 `27f7efa` / `3220216`。208 项聚焦 CPU 测试通过，四模块 coverage
+87%–99%；独立审计 review 的三项问题均有实际 RED→GREEN 记录。
+全量本机尝试 744 passed / 7 failed / 2 skipped，不宣称完整 CI 通过；其中
+6 个缺 vLLM/Pillow 失败已在基线复现，localhost 502 去除代理后基线通过。
+详见 `docs/dsh-v3-live-smoke/verification.json`。
+
+本分支已推送；Draft PR #2：https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/2 ，base=dsh-adapter，main 未合并。
+
+## Harbor 专题：2026-09-07
+
+范围：用户要求调研、入门科普与独立 HTML 文档；不实现训练适配、不部署或付费运行。
+
+- [x] 阅读用户指定的 Terminal-Bench 教程、Hub 数据集和新闻页五篇正文。
+- [x] 对照 Uni-Agent、VERL PR、rLLM 与官方训练示例，区分代码、合并状态与实跑证据。
+- [x] 在 `docs/dsh-v3-live-smoke/harbor-agent-rl-guide.html` 汇总角色、长流程、教程和本项目接入路线。
+- [x] 从 progress 与 handoff 链接专题；记录本地 eval-only 与上游生态能力的区别。
+- [x] 验证 HTML 的桌面/手机显示、内部锚点与本地来源链接；外部来源经调研读取。
+- [x] 完成最终 Git diff 检查；专题与交接以独立本地文档提交交付，本轮未推送。
+
+### Harbor 专题 Review
+
+单文件 HTML，无外部字体、脚本与样式；9 个章节、10 个内部锚点、11 条本地文件
+链接检查通过。桌面 1440×1000 与手机 390×844 真实浏览器预览，无页面横向溢出。
+独立审阅已修正三点：DSH registry / strict CLI 不能直接复用、完整 benchmark
+命令不是单任务首跑、Tinker recipe 只证明其具体 Agent / 后端组合可训练。
+当前未实现 Harbor bridge、未复跑外部训练 recipe、未增加 smoke 或 GPU 运行结果。
+
+## Uni-Agent 整体方案与 Modal / Harbor：2026-09-07
+
+范围：定位已有总方案，新增本 worktree 的统一 HTML 入口与集成设计，不实现 bridge 或创建云资源。
+
+- [x] 查找本仓与 DSH sibling HTML，区分早期架构、当前状态和 Harbor 专题。
+- [x] 核查两条沙箱生命周期、DSH 执行位置与官方 Harbor → Modal 示例。
+- [x] 形成 `docs/dsh-v3-live-smoke/uni-agent-system-plan.html`：目标、总体架构、接口、改动范围、验收计划。
+- [x] README / progress / Harbor 专题 / handoff 互相链接，保留历史来源与版本边界。
+- [x] 检查链接、桌面/手机显示、内容审阅和 Git diff；独立本地提交文档，本轮未推送。
+
+### 整体方案 Review
+
+8 章节、9 内部锚点、24 本地路径（含两条跨仓历史来源）检查通过；Harbor 专题互链有效。
+桌面 1440×1000 / 手机 390×844 浏览器预览通过，目录跳转正常、手机无页面横向溢出。
+独立代码审阅确认双路径生命周期、Gateway 网络与严格审计缺口；修正评分字段表述，
+明确是本仓适配层缺口而非 Harbor 框架限制。本次仅文档验证，不新增云端执行或训练证据。

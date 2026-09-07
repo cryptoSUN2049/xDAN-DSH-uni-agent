@@ -12,9 +12,13 @@ Uni-Agent is a framework for training long-horizon agents:
 - Unify diverse agent tasks through one extensible interface.
 - Run agents concurrently at scale and collect traceable trajectories as training-ready data (SFT and RL).
 
-DSH adapter development: start with the [local handoff](tasks/dsh-adapter/handoff.md)
-and [project status, test evidence, and goals](docs/dsh-adapter/project-status.md).
+DSH adapter development: start with the [current smoke handoff](tasks/dsh-v3-live-smoke/handoff.md)
+and [progress, goals, and GPU readiness](docs/dsh-v3-live-smoke/progress.md).
+The [historical status and test evidence](docs/dsh-adapter/project-status.md) preserves earlier experiment limits.
 The [DSH runbook](examples/dsh/README.md) contains the executable integration steps.
+Read the [DSH / Uni-Agent system plan](docs/dsh-v3-live-smoke/uni-agent-system-plan.html)
+for the overall architecture and proposed Harbor / Modal integration, or the
+[Harbor learning guide](docs/dsh-v3-live-smoke/harbor-agent-rl-guide.html) for concepts and tutorials.
 
 <p>
   <img src="./assets/uni-agent.png" width="80%" alt="Uni-Agent architecture overview">

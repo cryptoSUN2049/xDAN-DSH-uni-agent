@@ -98,6 +98,12 @@ RAY_STOP=1 examples/dsh/ops/teardown_qwen3_4b_online_rl.sh \\
 集群；确认服务器没有其他作业后才设置 `RAY_STOP=1`。GPU 为空、`teardown_at`
 和 manifest 状态写入后，才算清理完成。
 
+## v3 八类 inference-only smoke
+
+新入口、CPU prepare/dry-run、部署 manifest、审计退出码及导出边界见
+[v3 smoke 操作说明](../../../docs/dsh-v3-live-smoke/runbook.md)。
+该轮真实模型执行仍为 0/8；CPU 测试通过不代表 GPU 部署或训练资格。
+
 ## 已知坑
 
 - Task config 使用 `runner_python: python`，必须让 `$DSH_VENV/bin` 位于 `PATH`；否则 Ray worker 可能落到 `/usr/bin/python` 并报 `No module named pydantic`。
