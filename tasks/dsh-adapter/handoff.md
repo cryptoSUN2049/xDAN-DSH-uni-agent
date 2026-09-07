@@ -17,7 +17,7 @@
 | 路径（仓库根目录起） | 行数 | 说明 |
 | --- | ---: | --- |
 | `README.md` | 116 | 增加本地交接、状态快照和 DSH runbook 入口 |
-| `docs/dsh-adapter/project-status.md` | 267 | 分支身份、架构、开发/测试状态、P0–P6、全局/短期目标、来源、CI 与 GPU 决策 |
+| `docs/dsh-adapter/project-status.md` | 291 | 分支、开发/测试状态、目标、来源、CI/GPU 决策及 DSH `1af5b00d68` 对比 |
 | `docs/dsh-adapter/live-smoke-next-milestone-design.md` | 195 | M0/M1 设计、真实 API 路径、文件清单、验证与费用边界，等待明确批准 |
 | `tasks/dsh-adapter/handoff.md` | 79 | 本仓库冷启动入口 |
 | `tasks/dsh-adapter/notes.md` | 65 | 最新 CI 终态、runtime 来源与备份缺口、官方停费能力核查 |
@@ -64,7 +64,7 @@
 ## 6. 分支 / 部署状态
 
 - 本仓库：`dsh-adapter`；代码基线 `ea06d5a`，文档 `104b53d`、交付记录 `00520c5` 已推送。最新设计/控制面核查的提交以 Git 历史为准。
-- Sibling DSH：`worktree-dsh-official-training / 4553c835ba`，本地领先 tracking ref 3 个文档提交，handoff/todo 有未提交更新，保留原状。
+- Sibling DSH：最新复核为 `worktree-dsh-official-training / 1af5b00d68`，领先 tracking ref 4 个文档提交；新增 CPU 一致性回执与执行器设计，handoff/todo 未提交更新保留。对比见状态 §10。
 - 已创建 [Draft PR #1](https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/1)，`dsh-adapter → main`，覆盖整套 adapter；没有合并、部署或启动 GPU。
 - CI head `55ed21f`：Python 3.11 为 565 passed / 1 skipped / 3 failed（RLInsight fixture）；pre-commit Ruff import 分类失败；Python 3.12 cancelled。其余详情见状态 §9 和预检笔记；M0 尚未修复。
 - 远端历史 run、版本、P4 结果及来源 digest 均见本地状态文档；不能据旧 manifest 的 `running` 判断当前作业。

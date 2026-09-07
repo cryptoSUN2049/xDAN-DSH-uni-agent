@@ -265,3 +265,27 @@ Linux 部署包；独立到期停费机制未验证。旧 P4 仅找到远端 has
 或导出回执。恢复 source/runtime 与停费准备先于开卡；细节见
 [审批前预检笔记](../../tasks/dsh-adapter/notes.md)。这些发现不追溯改变历史 P4 测量结果，
 但当前不能声称能够从备份立即恢复运行。
+
+## 10. 与 DSH `1af5b00d68` 记录对比
+
+2026-09-07 用户提供新记录后复核：DSH `worktree-dsh-official-training` 已到
+`1af5b00d6802db7acbc742c9b832f2b514297e97`（9 月 6 日 23:52:28 +08:00 提交），
+比本仓此前引用的 `4553c835ba` 多一个文档提交。当前领先 tracking ref 四个提交，
+handoff/todo 的两份未提交更新仍保留；此信息更新当前状态，不替换 §7 历史来源哈希。
+
+该提交包含 [执行器设计][source-smoke-design] 与 [CPU 验证回执][source-readiness]：
+26 项通过、两次生成逐字节一致、8 family / 8 seed / 24 cases，verifier 为
+16 eligible / 8 passed / 8 rejected。回执核验的是 Uni-Agent `00520c5`；本次比较
+确认其与当前 `4f9537c` 的 examples/dsh、inference 入口、uni_agent、tests、VERL、
+pyproject 与 pre-commit 配置对象完全一致，中间提交只改文档。
+
+因此核心开发阶段相同：live bundle/verifier 已实现，执行器只有设计，真实 smoke
+均为 0/8。82 项本机回归包含上述 26 项，不表示多完成了一个功能里程碑；v2 四步训练
+与 P4 reload 是共享历史成果。Uni-Agent 侧额外完成 CI 故障定位、部署可恢复性与停费
+核查、同名分支推送和 Draft PR；DSH 侧补充了明确的生成一致性回执。
+
+下一步只实现一套执行器：近期边界为执行器与 CPU 验证，GPU/模型运行另行确认。
+部署前置条件不阻塞纯 CPU 实现；保留两份设计的来源，避免分别实现重复入口。
+
+[source-smoke-design]: ../../../xDAN-DSH-Exp/.Codex/worktrees/dsh-official-training/docs/dsh-official-training/v3-process-smoke-design.html
+[source-readiness]: ../../../xDAN-DSH-Exp/.Codex/worktrees/dsh-official-training/tasks/dsh-official-training/data-readiness-verification.json
