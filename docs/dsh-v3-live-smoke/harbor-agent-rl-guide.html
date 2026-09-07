@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="从零理解 Agent RL、长流程任务与 Harbor 的分工；含官方教程、新闻、开源集成核查和 DSH 项目接入建议。">
+  <title>Harbor 与 Agent RL · 从任务环境到长流程能力</title>
+  <style>
+    :root{color-scheme:light;--bg:#f4f3ee;--paper:#fff;--ink:#182b35;--muted:#53646d;--line:#d9e1df;--blue:#234ac2;--teal:#096c60;--soft:#edf5f2;--amber:#75520f}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.85 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+    a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:4px;overflow-wrap:anywhere}a:hover{text-decoration-thickness:2px}a:focus-visible,summary:focus-visible{outline:3px solid #e0a123;outline-offset:5px}
+    .hero{background:#142d37;color:#fff;padding:64px max(24px,calc((100vw - 1160px)/2)) 54px;border-bottom:5px solid #83c7b8}.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#b7dccf;font-weight:700}.hero h1{font-size:clamp(32px,4.7vw,54px);line-height:1.22;letter-spacing:-1.5px;max-width:880px;margin:20px 0}.hero p{max-width:850px;color:#d8e8e9;font-size:18px}.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}.meta span{font-size:12px;padding:5px 12px;border:1px solid #54717a;border-radius:20px;color:#dfedee}
+    .layout{max-width:1212px;margin:auto;padding:36px 26px 72px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:38px}.toc{align-self:start;position:sticky;top:24px}.toc strong{display:block;font-size:12px;color:var(--muted);letter-spacing:1px;margin-bottom:14px}.toc a{display:block;color:var(--muted);text-decoration:none;font-size:14px;padding:8px 0;border-bottom:1px solid var(--line)}.toc a:hover{color:var(--blue)}main{min-width:0}section{margin-bottom:28px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:32px;scroll-margin-top:24px}h2{font-size:26px;letter-spacing:-.5px;line-height:1.4;margin:0 0 18px}h3{font-size:18px;margin:26px 0 10px}p{margin:12px 0}li{margin:8px 0}ul,ol{padding-left:23px}.kicker{color:var(--teal);font-size:12px;font-weight:750;letter-spacing:1.2px;margin:0 0 10px}.lead{font-size:21px;line-height:1.75}.small{font-size:13px;color:var(--muted)}.callout{padding:18px 20px;background:var(--soft);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;margin:22px 0}.callout p:first-child{margin-top:0}.callout p:last-child{margin-bottom:0}.caution{background:#fcf6e8;border-color:#b78219;color:#624813}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{padding:20px;border:1px solid var(--line);border-radius:10px;background:#fbfcfb}.card h3{margin:0 0 8px}.card p{margin:0;font-size:15px}.num{font-size:12px;font-weight:750;color:var(--teal);display:block;margin-bottom:5px}.table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:8px}table{border-collapse:collapse;width:100%;font-size:14px;min-width:510px}th{text-align:left;background:#eef2f1;font-weight:700}td,th{vertical-align:top;padding:13px 15px;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}.status{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;background:#eaf2ee;border-radius:4px;color:#145d50}.pending{background:#fff1d5;color:#78510c}
+    .flow{background:#f5f7fb;border:1px solid #dce3f0;border-radius:12px;padding:22px;margin:22px 0}.flow-row{display:flex;gap:10px;align-items:stretch;justify-content:center}.node{flex:1;min-width:0;padding:15px 10px;text-align:center;background:white;border:1px solid #bbc9e2;border-radius:9px;line-height:1.6;font-size:14px}.node strong{display:block}.node span{font-size:12px;color:var(--muted)}.arrow{align-self:center;color:var(--blue);font-size:23px}.bridge{text-align:center;font-size:14px;padding:13px;color:var(--blue)}.caption{margin:14px 0 0;font-size:13px;color:var(--muted)}code{font: .88em/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;background:#edf1f4;border-radius:4px;padding:2px 5px;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#182e39;color:#e4efee;padding:20px;border-radius:8px;line-height:1.7;font-size:13px}pre code{background:none;color:inherit;padding:0}.steps{counter-reset:stage;list-style:none;padding:0}.steps>li{counter-increment:stage;border-top:1px solid var(--line);padding:18px 0 8px 42px;position:relative}.steps>li:before{content:counter(stage);position:absolute;left:0;top:20px;background:#e9eeff;color:var(--blue);width:27px;height:27px;border-radius:50%;text-align:center;font-weight:700;line-height:27px}.steps strong{display:block}.steps p{margin:7px 0}.news{padding:16px 0;border-bottom:1px solid var(--line)}.news:last-child{border:0}.news time{font-size:12px;color:var(--teal);font-weight:700}.news h3{margin:3px 0 8px}.news p{margin:0}.news a{font-size:14px}details{border-top:1px solid var(--line);padding:14px 0}summary{cursor:pointer;font-weight:700}details p{padding-left:18px}.footer{font-size:13px;color:var(--muted);padding:6px 0}.source-list{font-size:14px}.source-list li{margin:12px 0}.skip{position:absolute;left:16px;top:-100px;background:white;padding:10px;z-index:10}.skip:focus{top:12px}
+    @media(max-width:900px){.layout{grid-template-columns:1fr;gap:22px}.toc{position:static;display:flex;flex-wrap:wrap;gap:4px 16px}.toc strong{width:100%;margin:0}.toc a{border:0;padding:3px 0}.hero{padding-top:40px}}
+    @media(max-width:600px){.layout{padding:22px 14px 40px}section{padding:23px 18px}h2{font-size:23px}.hero{padding:35px 22px}.hero p{font-size:16px}.grid{grid-template-columns:1fr}.lead{font-size:18px}.flow{padding:14px}.flow-row{flex-direction:column}.arrow{transform:rotate(90deg)}.node{padding:12px}.table-wrap{margin-left:-4px;margin-right:-4px}.meta{gap:7px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    @media print{body{background:white;font-size:11pt}.hero{background:white;color:#182b35;padding:20px 0;border-bottom:2px solid #182b35}.hero p,.eyebrow,.meta span{color:#182b35}.hero h1{font-size:28pt}.layout{display:block;padding:20px 0}.toc,.skip{display:none}section{border:0;border-bottom:1px solid #ccc;border-radius:0;padding:18px 0;break-inside:auto}.card,.flow,.news{break-inside:avoid}a{color:#182b35}.table-wrap{overflow:visible}table{min-width:0}.grid{grid-template-columns:1fr 1fr}details>p{display:block}}
+  </style>
+</head>
+<body>
+<a class="skip" href="#start">跳转到正文</a>
+<header class="hero">
+  <div class="eyebrow">DSH / Uni-Agent · Learning &amp; Integration Brief</div>
+  <h1>Harbor 与 Agent RL<br>从任务环境到长流程能力</h1>
+  <p>先理解系统里谁负责什么，再判断哪些能力已经存在、哪些还需要接通，以及怎样证明训练真的有效。</p>
+  <div class="meta"><span>调研日期 2026-09-07</span><span>适合初次接触 Agent RL</span><span>含 5 篇官方新闻解读</span><span>研究与接入提案 · 未执行训练</span></div>
+</header>
+<div class="layout">
+  <nav class="toc" aria-label="专题目录">
+    <strong>阅读路线 · 从概念到行动</strong>
+    <a href="#start">01 先认识五个角色</a><a href="#rl">02 Agent 如何通过 RL 学习</a><a href="#long">03 长流程能力如何提升</a><a href="#news">04 官方新闻透露了什么</a><a href="#ecosystem">05 开源集成核查</a><a href="#integration">06 本项目怎么接</a><a href="#learn">07 入门教程与使用顺序</a><a href="#status">08 当前进度与 GPU 决策</a><a href="#sources">09 来源与文档归属</a>
+  </nav>
+  <main>
+    <section id="start">
+      <p class="kicker">01 / 建立分工</p><h2>Harbor 提供可反复练习、验收的任务世界</h2>
+      <p class="lead">可以把整个系统想成一所职业学校：模型是学生的“大脑”，Agent 是工作的方式，Harbor 组织实训场地和考试，VERL 根据成绩更新模型。</p>
+      <p>Harbor 把任务描述、工具环境、验收程序和运行记录组织在一起，让不同 Agent 在相同条件下完成任务。它可以服务评测、训练数据生成和强化学习；模型权重的梯度更新由训练框架承担。<a href="https://www.harborframework.com/docs">[Harbor 官方概览]</a></p>
+      <div class="table-wrap"><table><thead><tr><th>角色</th><th>通俗解释</th><th>本项目对应</th></tr></thead><tbody>
+        <tr><td><strong>模型 / Policy</strong></td><td>根据当前信息决定下一步说什么、做什么。</td><td>Qwen3-4B；RL 主要更新其可训练参数。</td></tr>
+        <tr><td><strong>Agent / Harness</strong></td><td>把模型、工具、记忆、循环和停止规则组织成能工作的程序。</td><td>DSH Agent；决定如何调用模型和执行工具。</td></tr>
+        <tr><td><strong>Harbor</strong></td><td>准备可执行任务与环境，运行 Agent，调用验收程序，收集产物和成绩。</td><td>拟作为标准任务、环境与验收层接入。</td></tr>
+        <tr><td><strong>Uni-Agent / Gateway</strong></td><td>协调 Agent 执行与模型服务，采集训练所需的请求和轨迹。</td><td>现有接入骨架；还有 token、session 与 TransferQueue 证据链。</td></tr>
+        <tr><td><strong>VERL</strong></td><td>根据轨迹和奖励计算训练信号，更新模型，再提供新模型继续尝试。</td><td>现有 RL 训练后端。</td></tr>
+      </tbody></table></div>
+      <div class="callout"><p><strong>你截图中的 Harbor Hub，是“可执行任务包”的分发目录。</strong>一个任务可能包括代码仓库、文件、数据库、容器镜像和验收脚本。多个带版本的任务组成 dataset。Terminal-Bench 是其中一套 benchmark；Harbor 负责把它运行起来。<a href="https://www.harborframework.com/news/harbor-registry">[任务与数据集版本机制]</a></p></div>
+      <p>因此，看到 Hub 上有很多 dataset，意味着可以获得更多工作场景；这些场景是否适合我们的模型能力、预算和目标，还需要筛选。</p>
+    </section>
+    <section id="rl">
+      <p class="kicker">02 / 学习闭环</p><h2>一次任务怎样变成一次强化学习？</h2>
+      <p>例如让 Agent 修复一个订单服务：读取需求 → 检查代码 → 修改实现 → 运行测试 → 根据报错继续修改 → 提交结果。完整的一次尝试称为 <strong>episode / rollout</strong>；过程记录称为 <strong>trajectory</strong>；验收成绩称为 <strong>reward</strong>。</p>
+      <div class="flow" role="img" aria-label="训练闭环：Harbor准备任务环境；DSH Agent调用当前模型完成任务；Harbor verifier验收；Gateway关联轨迹和奖励；VERL更新模型；新模型回到下一轮任务。">
+        <div class="flow-row"><div class="node"><strong>Harbor 任务环境</strong><span>任务、文件、终端或服务</span></div><span class="arrow" aria-hidden="true">↔</span><div class="node"><strong>DSH Agent</strong><span>循环观察、决策、调用工具</span></div><span class="arrow" aria-hidden="true">↔</span><div class="node"><strong>当前模型</strong><span>经 Gateway 生成下一步动作</span></div></div>
+        <div class="bridge">↓ 执行完成：交付物、完整轨迹、任务与会话身份</div>
+        <div class="flow-row"><div class="node"><strong>Harbor Verifier</strong><span>检查真实结果并评分</span></div><span class="arrow" aria-hidden="true">→</span><div class="node"><strong>训练连接层</strong><span>对齐 token、mask、reward 与模型版本</span></div><span class="arrow" aria-hidden="true">→</span><div class="node"><strong>VERL 更新参数</strong><span>新模型进入下一轮尝试 ↺</span></div></div>
+        <p class="caption">这是目标接线示意；图中的 DSH × Harbor 训练连接尚未在本项目完成实跑验收。</p>
+      </div>
+      <ol>
+        <li><strong>尝试：</strong>同一任务可以采样多种解法，得到成功、失败和不同成本的轨迹。</li>
+        <li><strong>验收：</strong>任务作者设计的 verifier 检查结果，例如业务测试是否通过。Harbor 负责调用它；评分的质量仍取决于验收标准。</li>
+        <li><strong>训练：</strong>以 GRPO 类方法为例，比较多次尝试的奖励，形成更新信号；通常提高更好行为的概率。真实训练还包含长度、KL、mask 等约束，不能简化成“把成功答案背下来”。</li>
+        <li><strong>复测：</strong>使用没有参与训练的任务，对比训练前后模型，确认提升能迁移到新工作。</li>
+      </ol>
+      <p>Harbor 官方 RL 文档要求把 rollout 的 token 与奖励交给训练框架。可读日志有助于审计；训练还需要准确的 token IDs、参与损失计算的位置，以及后端所需的概率和版本信息。<a href="https://www.harborframework.com/docs/training-workflows/rl">[官方 RL 接口说明]</a></p>
+      <div class="grid"><div class="card"><span class="num">同一次工作内</span><h3>反思、重试、读记忆</h3><p>改变当前决策所依据的上下文。模型参数可以完全不变，这也是有价值的 Agent 能力。</p></div><div class="card"><span class="num">多次练习之间</span><h3>训练、更新、重新评测</h3><p>由优化器修改模型参数，希望改善以后遇到类似问题时的行为。是否有效要通过新任务验证。</p></div></div>
+    </section>
+    <section id="long">
+      <p class="kicker">03 / LONG-HORIZON</p><h2>长流程训练，关键是把事情做完并做对</h2>
+      <p>这里把 long-loop 理解为：一个目标需要多轮观察、工具操作、纠错和阶段交付，前面的行动会影响后面的工作。运行时间长只是现象；我们真正希望提升的是规划、恢复、记忆使用和最终完成率。</p>
+      <div class="table-wrap"><table><thead><tr><th>需要提升什么</th><th>如何构造练习</th><th>Harbor 能帮助什么</th></tr></thead><tbody>
+        <tr><td>依赖顺序与规划</td><td>先建立服务，再扩展功能，最后集成测试。</td><td>共享环境中的有序步骤、阶段指令与验收。</td></tr>
+        <tr><td>错误恢复</td><td>遇到测试失败、格式错误或服务异常后继续完成任务。</td><td>可重置环境、固定故障场景、保留运行记录。</td></tr>
+        <tr><td>继承已有工作</td><td>后一阶段必须使用前一阶段写出的文件或服务。</td><td>步骤之间保留环境状态和产物。</td></tr>
+        <tr><td>可信完成与成本控制</td><td>在同样时间、token 和工具预算下通过最终验收。</td><td>验收结果、超时和产物记录；累计预算与训练资格还需连接层落实。</td></tr>
+      </tbody></table></div>
+      <p>上述是面向本项目的任务设计建议。Harbor 的多步骤机制可以承载这类实验，但不会自动生成正确的教学顺序或奖励函数。</p>
+      <div class="callout caution"><p><strong>特别注意：环境连续，默认不等于对话连续。</strong>当前官方文档说明，多步骤任务共享环境，但每一步默认开始新对话；开启 <code>--resume-trajectory</code> 需要 Agent 原生支持会话恢复。接入 DSH 时必须验证其恢复能力，不能只加一个参数。<a href="https://www.harborframework.com/docs/tasks/multi-step">[多步骤与会话恢复]</a></p></div>
+      <p>同一任务也可以只给一个总目标，让 Agent 自己完成几十次工具操作；这仍然是长流程任务。把步骤预先拆好，会帮助定位失败，也可能降低自主规划难度。建议同时保留“分阶段练习”和“只给总目标的最终考试”。</p>
+      <p><strong>阶段奖励也需要设计。</strong>当前多步骤奖励默认取已执行步骤的平均值，也可使用最终结果策略；早停会影响聚合。我们应要求最终成果达标，避免“做完几个容易阶段”被误算成整个任务成功。<a href="https://www.harborframework.com/docs/tasks/multi-step">[奖励聚合与早停]</a></p>
+    </section>
+    <section id="news">
+      <p class="kicker">04 / 官方新闻逐条阅读</p><h2>Harbor 正在补齐训练环境的基础设施</h2>
+      <p class="small">本次阅读了新闻索引列出的全部 5 篇正文。发布日期如下；对 DSH 的意义属于本专题分析。</p>
+      <article class="news"><time datetime="2026-05-27">2026.05.27</time><h3>运行结果可上传、共享</h3><p>Job 结果可上传到 Hub，默认私有，也可授权分享。对我们有助于交接运行证据和复查成绩；上传日志本身不证明训练有效。<a href="https://www.harborframework.com/news/job-result-sharing">阅读官方发布 →</a></p></article>
+      <article class="news"><time datetime="2026-05-15">2026.05.15</time><h3>Agent 与 verifier 可以使用不同沙箱</h3><p>通过明确列出的 artifact 路径，把产物交给另一环境评分。这与我们避免 Agent 干扰验收的需求高度相关。但评分只能检查复制出的产物，无法直接读取原容器里的活跃进程等完整状态；不能据此宣称 DSH 的全部隔离要求已满足。<a href="https://www.harborframework.com/news/separate-verifier-sandboxes">阅读官方发布 →</a></p></article>
+      <article class="news"><time datetime="2026-04-23">2026.04.23</time><h3>多步骤任务成为任务格式的一部分</h3><p>每一步可有自己的指令与 verifier，同时共享环境。官方明确提及长流程、记忆方法和复用先前工作；首次发布要求 Harbor ≥0.5.0，当前高级接口仍须按选定版本核验。<a href="https://www.harborframework.com/news/multi-step-tasks">阅读官方发布 →</a></p></article>
+      <article class="news"><time datetime="2026-03-27">2026.03.27</time><h3>Cookbook：从单容器到优化循环</h3><p>提供多容器、MCP、模拟用户、计算机操作、多奖励等例子，也包含 GEPA 优化 Agent harness 和 Tinker RL 的路线。前者调整工作方式，后者连接模型训练；阅读时要分清优化对象。<a href="https://www.harborframework.com/news/harbor-cookbook">阅读官方发布 →</a></p></article>
+      <article class="news"><time datetime="2026-03-27">2026.03.27</time><h3>Registry：按版本分发任务与数据集</h3><p>任务是最小分发单位，dataset 引用特定版本的任务，可公开或私有。对训练尤其有用：固定任务版本后，才容易重现实验并做公平的前后对比。<a href="https://www.harborframework.com/news/harbor-registry">阅读官方发布 →</a></p></article>
+    </section>
+    <section id="ecosystem">
+      <p class="kicker">05 / 有开源方法，但成熟度不同</p><h2>“应该已经有人接过 VERL”——确实有</h2>
+      <p><strong>需要修正之前的判断范围：</strong>本仓库的 Harbor 适配标为 eval-only，不能据此推断整个生态没有 Harbor RL。以下同时核查了官方文档、代码与 PR 状态；本次没有复跑这些外部项目。</p>
+      <div class="table-wrap"><table><thead><tr><th>路线</th><th>查到的实证</th><th>对我们意味着什么</th></tr></thead><tbody>
+        <tr><td><strong>Uni-Agent 上游</strong><br><span class="status">评估适配已存在</span></td><td>Harbor Task 标注 evaluation-only；Gateway 例子写明尚未端到端验证。当前文件与本 worktree 一致。</td><td>保留既有适配，补运行验证与 DSH 连接。<a href="https://github.com/verl-project/uni-agent/blob/89733ec81a69c3cc93ac90479de7ea7f01e51c1f/docs/source/quickstart/harbor-integration.md">官方教程</a> · <a href="https://github.com/verl-project/uni-agent/issues/60#issuecomment-5280525111">维护者说明</a></td></tr>
+        <tr><td><strong>VERL PR #6444</strong><br><span class="status pending">已关闭 · 未合并</span></td><td>有 Harbor Trial → AgentLoop → fully_async GRPO 实现、启动脚本和测试；作者报告 GPU 训练实验。</td><td>可借鉴直接桥接；没有自动进入 VERL main，本项目也未复现。<a href="https://github.com/verl-project/verl/pull/6444">PR 状态及讨论</a> · <a href="https://github.com/myjlyjly/verl/blob/2a45033c742a608ba400a50558ed2c55e14066eb/verl/experimental/agentic_rl_harbor/README.md">固定版本实现</a></td></tr>
+        <tr><td><strong>rLLM</strong><br><span class="status">可组合训练实现</span></td><td>HarborRuntime、Gateway token 采集、reward 合流与 VERL update_actor 均有代码；现成 Harbor recipe 使用 Tinker。</td><td>可参考 session 与训练批次对齐。切换到 VERL 还需修改配置、满足后端限制并实跑。<a href="https://github.com/rllm-org/rllm/blob/3b40c37cf6a262cf4d28cc987ebe4f4cf797956c/rllm/trainer/unified_trainer.py#L248-L279">训练接线</a> · <a href="https://github.com/rllm-org/rllm/blob/3b40c37cf6a262cf4d28cc987ebe4f4cf797956c/examples/harbor_swe/train_harbor.py">Harbor 示例入口</a></td></tr>
+        <tr><td><strong>Harbor 官方 Cookbook</strong><br><span class="status">提供训练示例</span></td><td>指向 Thinking Machines 的 Tinker recipe：有 rollout、奖励、梯度、optimizer step 和 checkpoint，使用 Harbor 格式任务与自己的 bash Agent。</td><td>完整训练参考，后端是 Tinker。官方另介绍 SkyRL 接口合作。<a href="https://github.com/thinking-machines-lab/tinker-cookbook/blob/1f962eda3a2cec8de284725f2adc9978e93dfcd3/tinker_cookbook/recipes/harbor_rl/README.md">实际 Tinker recipe</a> · <a href="https://www.harborframework.com/docs/training-workflows/rl">官方 RL 文档</a></td></tr>
+        <tr><td><strong>TMax / VERL recipe #141</strong><br><span class="status pending">PR 未合并</span></td><td>使用 Harbor 格式的训练环境、自建 Bash AgentLoop 与 Modal；作者报告训练提升。</td><td>说明任务格式可复用；不是通用 Harbor Trial 连接器，默认实验规模也不适合我们的最小验证。<a href="https://github.com/verl-project/verl-recipe/pull/141">PR 与作者实验</a></td></tr>
+      </tbody></table></div>
+      <div class="callout caution"><p><strong>版本兼容是实际工作。</strong>本项目固定 VERL <code>483b8a0</code>。审计的 rLLM 提交固定 Harbor 0.3.0、VERL 0.8.0；#6444 则使用 Harbor 0.6.1。不能把新版多步骤文档中的所有能力直接套在旧版依赖上。<a href="https://github.com/rllm-org/rllm/blob/3b40c37cf6a262cf4d28cc987ebe4f4cf797956c/pyproject.toml">[rLLM 依赖]</a></p></div>
+      <details><summary>开发者补充：为什么不能直接 cherry-pick #6444？</summary><p>该实现不支持 partial rollout；策略版本字段有填零处理；多轮 token 前缀不一致时会分组选择；直接读取 Harbor reward，没有我们的 fresh receipt 审计。这些都需要对照当前 Gateway、VERL pin 和训练资格标准重新设计。关闭原因未获明确说明，不能推断为已合并迁移或技术否决。<a href="https://github.com/myjlyjly/verl/blob/2a45033c742a608ba400a50558ed2c55e14066eb/verl/experimental/agentic_rl_harbor/harbor_agent_loop.py">[AgentLoop 源码]</a></p></details>
+      <details><summary>开发者补充：rLLM 能否直接整套嵌入？</summary><p>rLLM 拥有自己的 Gateway 与训练循环，会和当前架构重叠。其 Harbor 示例开启 partial_rollout，而对应 VERL remote runtime 模式存在不支持组合。更适合先复用接线经验，整体替换应单独比较收益与迁移成本。<a href="https://github.com/rllm-org/rllm/blob/3b40c37cf6a262cf4d28cc987ebe4f4cf797956c/rllm/trainer/verl/verl_backend.py#L353-L376">[后端限制]</a></p></details>
+      <details><summary>开发者补充：Tinker 教程的入口也需要按版本核实</summary><p>Harbor Cookbook 的 tinker_rl 目录主要是指针；实际实现位于 tinker-cookbook。旧指针里的 launch_terminal_bench 命令与当前源码不同，应按实际 README 使用 scripts/train_terminal_bench.py。该路线需要 Tinker 服务访问权限，默认使用 Modal sandbox，不代表支持 Harbor 的全部原生 Agent、多步骤任务或 DSH。<a href="https://github.com/thinking-machines-lab/tinker-cookbook/blob/1f962eda3a2cec8de284725f2adc9978e93dfcd3/tinker_cookbook/recipes/harbor_rl/README.md#L88-L107">[实际入口]</a> · <a href="https://github.com/thinking-machines-lab/tinker-cookbook/blob/1f962eda3a2cec8de284725f2adc9978e93dfcd3/tinker_cookbook/rl/train.py#L334-L358">[参数更新]</a></p></details>
+      <p><strong>比较方案时先确认接入层级：</strong>复用 Harbor 任务格式、调用 Harbor 原生 Trial、训练 DSH Agent，是三个不同层次。一个层次可用，不能自动证明另外两个已经接通。</p>
+    </section>
+    <section id="integration">
+      <p class="kicker">06 / 本项目接入提案</p><h2>保留现有训练骨架，复用 Harbor 的环境与验收</h2>
+      <p>本项目要证明的是 <strong>DSH 驱动的 Agent</strong> 经训练后更会工作。训练 Harbor 内置 Terminus-2 可以验证基础设施；DSH 的工具、记忆、循环和停止行为仍需自己的验证。</p>
+      <ol class="steps">
+        <li><strong>先验证一个小任务的环境与验收。</strong><p>选明确不需要 GPU 的单容器任务，运行 oracle 参考解，确认环境能启动、评分能生成、产物可检查。Oracle 是任务作者提供的解法，不代表模型已经解出任务。</p></li>
+        <li><strong>让 DSH 在这个环境里真正工作。</strong><p>按 Harbor 自定义 Agent 接口适配 DSH 生命周期、工具访问和停止行为。模型请求通过现有 Uni-Agent Gateway；检查容器能否访问 endpoint，以及 artifact 是否来自本次运行。<a href="https://www.harborframework.com/docs/agents">[自定义 Agent 教程]</a></p></li>
+        <li><strong>把轨迹、评分与训练资格对齐。</strong><p>以 task / trial / session 为关联键，绑定真实 token、模型版本、最终验收和新鲜回执。基础设施失败、数据缺失和正常任务失败要分开处理，不能统一伪装为有效零分样本。</p></li>
+        <li><strong>做最小训练与独立复测。</strong><p>真实调用 VERL 更新参数，保存并重新加载 checkpoint，再用冻结的未见任务与相同预算比较 base 和 trained。先验证训练闭环与结果可信，再增加任务数量和流程长度。</p></li>
+      </ol>
+      <h3>连接层需要约定的接口</h3>
+      <p class="small">以下是设计要求，不代表已经添加了同名 API 或字段。</p>
+      <div class="table-wrap"><table><thead><tr><th>边界</th><th>必须传递 / 验证</th></tr></thead><tbody>
+        <tr><td>任务 → Harbor</td><td>固定 task 版本、环境身份、输入、资源与时间预算；任务可独立重建。</td></tr>
+        <tr><td>Harbor → DSH</td><td>instruction、环境执行能力、模型 endpoint、会话上下文、超时与完成状态。</td></tr>
+        <tr><td>Gateway → 训练</td><td>prompt / response token IDs、有效 response mask、后端所需 logprobs、策略版本、trial/session 关联。</td></tr>
+        <tr><td>Verifier → 准入审计</td><td>reward、异常类型、产物身份；保留 DSH 新鲜回执与资格检查，拒绝错配和重放。</td></tr>
+        <tr><td>VERL → 验收</td><td>真实 optimizer update、checkpoint 可独立加载、未见任务的同预算对比结果。</td></tr>
+      </tbody></table></div>
+      <h3>实现时预计涉及的范围</h3>
+      <p>已有 <code>uni_agent/tasks/harbor/task.py</code>、<code>reward.py</code> 和 <code>preprocess.py</code> 是复用起点。需评估新增 Harbor-compatible DSH Agent 适配、训练配置与真实联调测试；准确文件清单和版本锁定应在实现设计中确认。本专题只新增文档与交接链接。</p>
+      <p class="small">现有 HarborTask 将 agent 名称交给 Harbor CLI，绕过 Uni-Agent Agent registry；因此填入 agent.name: dsh 不会自动加载我们的 DshAgent。当前 --dsh-strict-audit 也限定 dsh_architecture，需新增 bridge 并适配审计合同。见 <a href="../../uni_agent/tasks/harbor/task.py">当前 Task 实现</a> 与 <a href="../../examples/inference/parallel_infer_verl.py">推理入口</a>。</p>
+      <p>验证顺序：任务与 oracle → DSH 生命周期 / timeout → Gateway token 与 trial 对齐 → fresh reward 与失败分类 → 一次真实参数更新 → checkpoint reload → sealed holdout。CPU 合同测试和真实运行证据分别记录。</p>
+    </section>
+    <section id="learn">
+      <p class="kicker">07 / 入门教程</p><h2>从一个能看懂的任务开始</h2>
+      <p>建议依次阅读和实践以下内容。入门命令仅供理解，本文档生成时没有安装 Harbor、执行任务或调用付费模型。</p>
+      <ol class="steps">
+        <li><strong>认识任务、Agent 和评分。</strong><p>读 <a href="https://www.harborframework.com/docs">官方入门概览</a>，再看 <a href="https://github.com/harbor-framework/harbor-cookbook/tree/main/harbor_cookbook/recipes/simple-task">Cookbook 的 simple-task</a>。先看它要求什么、环境有什么、tests 如何判定成功。</p></li>
+        <li><strong>使用 oracle 了解一次运行的全过程。</strong><p><a href="https://www.harborframework.com/docs/tutorials/running-terminal-bench">你提供的 Terminal-Bench 教程</a>要求先安装并运行 Docker，然后使用 oracle 验证环境。它展示的是 benchmark 运行流程。</p></li>
+        <li><strong>再用真实 Agent 完成同一任务。</strong><p>比较 oracle 与 Agent 的日志、产物和评分；理解模型为什么失败。可查看 <a href="https://www.harborframework.com/docs/agents">Agent 接入教程</a>，随后再接我们的 DSH。</p></li>
+        <li><strong>学习长流程任务的组织方式。</strong><p>读 <a href="https://www.harborframework.com/docs/tasks/multi-step">Multi-step Tasks</a>，设计两个或三个有依赖关系的步骤。分别测试环境状态延续、会话恢复和最终成功条件。</p></li>
+        <li><strong>最后理解训练连接层。</strong><p>读 <a href="https://www.harborframework.com/docs/training-workflows/rl">Harbor RL 工作流</a> 与 <a href="https://github.com/harbor-framework/harbor-cookbook/tree/main/harbor_cookbook/tinker_rl">Tinker RL 示例</a>，把“生成轨迹”和“更新模型”两段代码对照起来。</p></li>
+      </ol>
+      <h3>首次实践：运行一个已确认的 CPU 任务</h3>
+      <pre><code># 先准备并启动 Docker；以下是使用示意，没有在本项目执行。
+uv tool install harbor
+
+# 将占位路径换成已准备好的单个 CPU 任务目录，且该任务须提供 oracle 解法。
+harbor run -p /path/to/cpu-task -a oracle</code></pre>
+      <p class="small">-p 本地任务用法来自官方 Cookbook；oracle 用法见 Terminal-Bench 教程。这里的组合是单任务入门建议，具体任务尚未选定或实跑。</p>
+      <details><summary>官方 Terminal-Bench 完整数据集命令（并非单任务首跑）</summary><p>官方教程使用下列命令运行整个数据集的 oracle 解法；这会启动多个任务，应先了解资源需求：<code>harbor run -d terminal-bench/terminal-bench-2 -a oracle</code>。</p></details>
+      <div class="callout caution"><p><strong>你提供的 Hub latest 与旧教程指向不同任务集。</strong>本次访问 <a href="https://hub.harborframework.com/datasets/terminal-bench/terminal-bench/latest">terminal-bench/terminal-bench/latest</a>，显示 revision 4 / 4.0.0、66 个任务，并明确包含 GPU 与多容器任务。小规模入门应先选单个 CPU 任务；实验时固定 revision / digest，避免 latest 变化让两次成绩不可比。</p></div>
+      <p>多容器、MCP、模拟用户、技能和计算机操作的进一步教程集中在 <a href="https://github.com/harbor-framework/harbor-cookbook">官方 Cookbook</a>。无需一开始就把所有能力都接入。</p>
+    </section>
+    <section id="status">
+      <p class="kicker">08 / 回到我们的目标</p><h2>Harbor 值得纳入；完整 Agent RL 仍需逐层验收</h2>
+      <div class="table-wrap"><table><thead><tr><th>证据层级</th><th>本项目状态</th></tr></thead><tbody>
+        <tr><td>有实现与 CPU 测试</td><td>M1 执行器与审计已有实现，历史本轮记录为 208 项聚焦 CPU 测试通过；本专题未重跑该测试集。</td></tr>
+        <tr><td>当前 v3 真实任务执行</td><td><strong>0/8</strong>；本专题没有增加模型运行结果。</td></tr>
+        <tr><td>当前 v3 参数更新</td><td><strong>0</strong>；历史 v2 训练证据保留其原有资格限制。</td></tr>
+        <tr><td>Harbor × DSH × VERL</td><td>已有通用 Harbor 评估适配，尚无这条组合的端到端验收。</td></tr>
+        <tr><td>训练后能力提升</td><td>仍需独立 reload 与未见任务上的 base / trained 同预算对比。</td></tr>
+      </tbody></table></div>
+      <p><strong>全局目标：</strong>证明 Qwen3-4B 在固定 DSH / Uni-Agent / VERL 条件下训练后，对未见任务的完成能力优于 frozen base；进一步验证长流程、隔离和可复用工作方式。</p>
+      <p><strong>短期建议：</strong>继续恢复可复建 Linux / DSH runtime，完成现有八类真实 smoke；同时把一个 CPU Harbor 任务作为独立环境与验收验证点。待版本、接线与成本明确后，再决定是否把训练任务迁入 Harbor。</p>
+      <div class="callout"><p><strong>不需要为了阅读教程或生成这份专题先租 GPU。</strong>简单 CPU 任务与 oracle 可先验证 Harbor。真实模型推理可用 API 或自托管模型；本项目固定 Gateway / VERL 链路的实跑与权重训练要单独准备算力。Hub 中某些任务本身也需要 GPU，因此资源需求必须按任务和训练方案判断。</p></div>
+      <p>具体状态与现有 GPU 前置条件以 <a href="progress.md">本 worktree 进度</a>、<a href="runbook.md">运行手册</a> 和 <a href="../dsh-adapter/project-status.md">历史目标账本</a> 为准。这份专题不改变既有 smoke 或训练资格。</p>
+      <details><summary>为什么不能直接拿 benchmark 反复训练，再报更高成绩？</summary><p>这样容易把对训练题目的熟悉误认为通用能力提升。可以使用 Harbor 格式的任务训练，但应分开训练集与封存评测集，并冻结版本、预算和 verifier。最终关心的是模型在新任务上是否更可靠。</p></details>
+      <details><summary>Harbor 会自动让 Agent 学会记忆、规划和自我进化吗？</summary><p>它提供承载和测量这些能力的任务环境。具体学什么取决于任务分布、Agent 的可用操作、奖励以及训练算法。修改提示词、技能和记忆机制也能提升表现，但应单独归因，避免与模型参数更新混淆。</p></details>
+    </section>
+    <section id="sources">
+      <p class="kicker">09 / 可追溯与归档</p><h2>专题归当前 worktree，结果归运行证据</h2>
+      <p>存放路径：<code>docs/dsh-v3-live-smoke/harbor-agent-rl-guide.html</code>。独立成页，并由 progress 与 handoff 引用，便于阅读、共享和未来独立 PR。实现范围确定后如需新 worktree，应在新目录保存实现设计，并链接本专题，避免维护两份独立更新的事实记录。</p>
+      <p>核查基线：本项目分支 <code>worktree-dsh-v3-live-smoke</code>，文档工作开始时 HEAD <code>1089e847</code>；Uni-Agent 上游 <code>89733ec8</code>，rLLM <code>3b40c37c</code>，VERL #6444 参考实现 <code>2a45033c</code>。动态 PR 状态与 Hub latest 均是 2026-09-07 的查询快照。</p>
+      <ul class="source-list">
+        <li>官方入口：<a href="https://www.harborframework.com/docs">Docs</a> · <a href="https://www.harborframework.com/news">News</a> · <a href="https://hub.harborframework.com/datasets/terminal-bench/terminal-bench/latest">用户提供的 Hub 数据集</a>。</li>
+        <li>教程：<a href="https://www.harborframework.com/docs/tutorials/running-terminal-bench">运行 Terminal-Bench</a> · <a href="https://www.harborframework.com/docs/tasks/multi-step">多步骤任务</a> · <a href="https://www.harborframework.com/docs/training-workflows/rl">RL 工作流</a> · <a href="https://github.com/harbor-framework/harbor-cookbook">Cookbook</a>。</li>
+        <li>本地实现：<a href="../../uni_agent/tasks/harbor/task.py">Harbor Task</a> · <a href="../../uni_agent/tasks/harbor/reward.py">reward 解析</a> · <a href="../source/quickstart/harbor-integration.md">本仓库 Harbor 教程</a>。</li>
+        <li>交接入口：<a href="../../tasks/dsh-v3-live-smoke/handoff.md">handoff</a> · <a href="../../tasks/todo.md">执行计划</a> · <a href="../../tasks/lessons.md">项目经验</a>。</li>
+      </ul>
+      <p class="small">检索包含用户指定的 uni-agent harborframework 与 verl harbor framework；结论以一手文档、固定源码与 PR 元数据为依据。未合并代码、作者报告的实验、我们自己的验证分别标注。本次仅调研和文档交付，未部署、未执行外部训练示例。</p>
+    </section>
+    <footer class="footer">DSH / Uni-Agent 项目专题 · 2026-09-07 · 单文件 HTML，无外部字体、脚本或样式依赖；支持手机阅读与浏览器打印。</footer>
+  </main>
+</div>
+</body>
+</html>

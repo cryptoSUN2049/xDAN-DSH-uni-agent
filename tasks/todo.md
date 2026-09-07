@@ -72,3 +72,22 @@
 详见 `docs/dsh-v3-live-smoke/verification.json`。
 
 本分支已推送；Draft PR #2：https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/pull/2 ，base=dsh-adapter，main 未合并。
+
+## Harbor 专题：2026-09-07
+
+范围：用户要求调研、入门科普与独立 HTML 文档；不实现训练适配、不部署或付费运行。
+
+- [x] 阅读用户指定的 Terminal-Bench 教程、Hub 数据集和新闻页五篇正文。
+- [x] 对照 Uni-Agent、VERL PR、rLLM 与官方训练示例，区分代码、合并状态与实跑证据。
+- [x] 在 `docs/dsh-v3-live-smoke/harbor-agent-rl-guide.html` 汇总角色、长流程、教程和本项目接入路线。
+- [x] 从 progress 与 handoff 链接专题；记录本地 eval-only 与上游生态能力的区别。
+- [x] 验证 HTML 的桌面/手机显示、内部锚点与本地来源链接；外部来源经调研读取。
+- [x] 完成最终 Git diff 检查；专题与交接以独立本地文档提交交付，本轮未推送。
+
+### Harbor 专题 Review
+
+单文件 HTML，无外部字体、脚本与样式；9 个章节、10 个内部锚点、11 条本地文件
+链接检查通过。桌面 1440×1000 与手机 390×844 真实浏览器预览，无页面横向溢出。
+独立审阅已修正三点：DSH registry / strict CLI 不能直接复用、完整 benchmark
+命令不是单任务首跑、Tinker recipe 只证明其具体 Agent / 后端组合可训练。
+当前未实现 Harbor bridge、未复跑外部训练 recipe、未增加 smoke 或 GPU 运行结果。

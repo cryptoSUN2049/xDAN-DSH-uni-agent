@@ -4,6 +4,9 @@
 目录 `.Codex/worktrees/dsh-v3-live-smoke`。冷启动先读
 [本 worktree handoff](../../tasks/dsh-v3-live-smoke/handoff.md)。
 
+学习与接入调研：[Harbor 与 Agent RL 专题 HTML](harbor-agent-rl-guide.html)。
+覆盖角色分工、长流程、官方新闻和教程、开源桥接证据；不改变下列运行状态。
+
 ## 当前结论
 
 **现在不需要购买 GPU。** 当前交付目标是完成 CPU 执行准备；八类真实模型
