@@ -400,3 +400,13 @@
 - 本轮重新SSH原端口仍exit255（握手前关闭），用户当前连接信息请求仍待回复；不购买/重建Pod。训练完整验收仍未完成。
 - deployment/versions/g1-deployment-lock.json集中固定源码/我方分支commit/配对VERL/DSH双wheel发布/Harbor镜像/模型/data/verifier与依赖清单引用，状态显式pinned-candidate-training-acceptance-incomplete。source-lock与旧first-gpu-candidate指向此入口；不是训练通过证明。
 - 镜像私有归档代理verl_six_month_audit仍收尾，当前产物/private/tmp/harbor-image-release-ie278j_0/harbor-dsh-0.1.3a2-1263ff5-linux-amd64.docker.tar.gz（212260885bytes）；须等最终发布和回读验证再写URL/hash。原image ID是OCI index digest，不能混用config digest，精确load目标Docker29.2.0+containerd snapshotter。
+
+## 第三轮连接核验与停止条件
+
+- 同一216.243.220.244:14682在第三个连续goal turn仍SSH握手前exit255；未收到当前Pod/新SSH地址。固定镜像归档回下载已核验，代理正在实际docker load，完成其发布交付后主进程将按阻塞规则标G1 blocked，而不是complete。
+- 恢复所需：用户提供当前可用SSH连接/Pod状态。恢复后先读本文→核持久盘和原始失败证据→核实际node IP/私有权限→用新run及有效deadline重建spec→从GitHub固定修复代码→M2更新/audit/reload→M1新版留出训练/reload→最终GPU复建验收。旧r2/r3 spec期限可能过期，不能直接复用。
+
+## 本地交付已收尾，G1等待恢复GPU
+
+- 原始Harbor846b46镜像私有archive prerelease已发布，URL/hash写入g1-deployment-lock.json。6assets回下载逐字节验证、22blobs/16layers、真实docker load保持原imageID通过；报告harbor-v2-private-image-release-result.json。上传/下载/load均已终态，无遗留live handle。
+- 剩余核心任务仍是M2修复后真实更新/独立reload、M1新版留出训练/reload、GPU侧最终复建。相同SSH阻塞连续三轮，且用户未提供新连接，主进程将标goal blocked（不是complete），恢复后继续原G1不缩小范围。

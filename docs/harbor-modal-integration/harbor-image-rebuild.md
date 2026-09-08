@@ -87,3 +87,27 @@ docker run --rm --platform linux/amd64 --network none \
 ## 私有发布验收（2026-09-08）
 
 GitHub确认repository visibility为private，发布为prerelease且非latest，tag目标完整匹配b236969。上传SDK/runtime双wheel、原始build-info.json、独立release-manifest.json与相对文件名SHA256SUMS。先draft上传，再将5个asset全部下载到新目录逐字节校验，通过后发布；发布后的GitHub asset digest再次与本地SHA256一致。原始build-info保留打包时的status，后续安装/Harbor验证范围写在release-manifest和说明中。未上传秘密，未覆盖已有Release，未修改运行中的模型/任务manifest。
+
+## 精确原镜像部署：私有 archive load
+
+源码context的19个文件hash一致，**不等于Docker镜像bit-identical**。文件模式、构建器元数据、attestation等均可能影响身份；本轮不把差异锁定到单一原因。重新build应记录新的image ID，不静默替换当前任务pin。
+
+原始已验收镜像现已单独发布为私有 prerelease：[harbor-dsh-0.1.3a2-1263ff5-amd64](https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/tag/harbor-dsh-0.1.3a2-1263ff5-amd64)。它与双wheel Release分开，含原镜像docker-save gzip、source/wheel manifest、archive manifest、LOAD说明及SHA256SUMS；私有源码随镜像分发，必须保留私有访问。
+
+- 原始镜像/OCI index：`sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97`。
+- amd64 manifest：`sha256:94e60a910230b5c8982fb31a94e0fd5cbb021da68ac40ba820b475a39d3143ef`。
+- amd64 config：`sha256:e245406b1a1c5106b83e7cc2be7fdafee388f22acce8dcbbbaa09b1b51c5e159`。
+- gzip archive SHA256：`d226359b3ae009b40323541c67010e1350452a08bb690cc2e25fc012468d5d3e`，212,260,885 bytes。
+
+```sh
+gh release download harbor-dsh-0.1.3a2-1263ff5-amd64 \
+  --repo cryptoSUN2049/xDAN-DSH-Exp --dir /srv/artifacts/harbor-original-image
+cd /srv/artifacts/harbor-original-image
+sha256sum -c SHA256SUMS
+docker load --input harbor-dsh-0.1.3a2-1263ff5-linux-amd64.docker.tar.gz
+docker image inspect uni-agent-dsh:0.1.3a2-1263ff5-amd64 --format '{{.Id}} {{.Os}}/{{.Architecture}}'
+```
+
+macOS可用`shasum -a 256 -c SHA256SUMS`。本轮6项asset重新下载后全部hash吻合；22个content-addressed blob及index→manifest→config/layers关系已核验；下载archive经真实Docker load，保持原846b46镜像ID和linux/amd64。
+
+精确load验证环境为Docker Server **29.2.0**、containerd image store（`driver-type=io.containerd.snapshotter.v1`）。复用了已有image store，未声称独立空daemon冷导入。classic/legacy store可能不保留OCI index/attestation身份；加载后若预期ID不存在应停下核验，不直接把config digest当作原ID。详情见[私有镜像发布回执](harbor-v2-private-image-release-result.json)。没有更改当前任务原镜像pin，也没有新的GPU/模型训练运行。

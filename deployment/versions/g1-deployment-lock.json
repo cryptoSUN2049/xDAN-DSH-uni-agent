@@ -28,7 +28,16 @@
     "verified_docker_server": "29.2.0",
     "verified_image_store": "io.containerd.snapshotter.v1",
     "execution_manifest": "deployment/versions/harbor-execution-image.json",
-    "execution_manifest_sha256": "sha256:9d6f8f7c38048494979d4e540ef59b2344a6608811ce1f0d1ab61ac672511c99"
+    "execution_manifest_sha256": "sha256:9d6f8f7c38048494979d4e540ef59b2344a6608811ce1f0d1ab61ac672511c99",
+    "private_archive": {
+      "release_url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/tag/harbor-dsh-0.1.3a2-1263ff5-amd64",
+      "filename": "harbor-dsh-0.1.3a2-1263ff5-linux-amd64.docker.tar.gz",
+      "sha256": "sha256:d226359b3ae009b40323541c67010e1350452a08bb690cc2e25fc012468d5d3e",
+      "size_bytes": 212260885,
+      "image_id_kind": "OCI image index digest including amd64 manifest and attestation",
+      "load_verification": "passed on Docker29.2.0/containerd with existing image store",
+      "report": "docs/harbor-modal-integration/harbor-v2-private-image-release-result.json"
+    }
   },
   "gpu_python": {
     "version": "3.12.3",

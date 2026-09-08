@@ -14,5 +14,9 @@
   "r2_training_started": false,
   "r3_local_spec": "/private/tmp/m2v2-20260908-r3/run-spec.json",
   "r3_remote_spec_transfer_succeeded": false,
-  "action_needed": "Verify current Pod state and SSH endpoint or account; do not buy or recreate automatically"
+  "action_needed": "Verify current Pod state and SSH endpoint or account; do not buy or recreate automatically",
+  "latest_recheck_at": "2026-09-08T08:20:31.252626+00:00",
+  "consecutive_goal_turns_with_same_blocker": 3,
+  "latest_ssh_exit_code": 255,
+  "pending_user_clarification": "Current Pod state/account and working SSH connection command"
 }

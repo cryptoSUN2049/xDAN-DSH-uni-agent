@@ -1,0 +1,213 @@
+{
+  "schema": "dsh.harbor-private-image-release.v1",
+  "repository": "cryptoSUN2049/xDAN-DSH-Exp",
+  "repository_visibility": "private",
+  "release": {
+    "assets": [
+      {
+        "apiUrl": "https://api.github.com/repos/cryptoSUN2049/xDAN-DSH-Exp/releases/assets/550126868",
+        "contentType": "application/json",
+        "createdAt": "2026-09-08T08:18:13Z",
+        "digest": "sha256:b4faeeab681a93f58428ecb071f201d27103d5986f618dfc1a9bef74163ec454",
+        "downloadCount": 0,
+        "id": "RA_kwDOUIrees4gykUU",
+        "label": "",
+        "name": "archive-manifest.json",
+        "size": 3968,
+        "state": "uploaded",
+        "updatedAt": "2026-09-08T08:18:13Z",
+        "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/download/harbor-dsh-0.1.3a2-1263ff5-amd64/archive-manifest.json"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/cryptoSUN2049/xDAN-DSH-Exp/releases/assets/550126865",
+        "contentType": "application/json",
+        "createdAt": "2026-09-08T08:18:13Z",
+        "digest": "sha256:9d6f8f7c38048494979d4e540ef59b2344a6608811ce1f0d1ab61ac672511c99",
+        "downloadCount": 0,
+        "id": "RA_kwDOUIrees4gykUR",
+        "label": "",
+        "name": "execution-image-manifest.json",
+        "size": 4347,
+        "state": "uploaded",
+        "updatedAt": "2026-09-08T08:18:13Z",
+        "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/download/harbor-dsh-0.1.3a2-1263ff5-amd64/execution-image-manifest.json"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/cryptoSUN2049/xDAN-DSH-Exp/releases/assets/550126872",
+        "contentType": "application/x-gtar",
+        "createdAt": "2026-09-08T08:18:13Z",
+        "digest": "sha256:d226359b3ae009b40323541c67010e1350452a08bb690cc2e25fc012468d5d3e",
+        "downloadCount": 0,
+        "id": "RA_kwDOUIrees4gykUY",
+        "label": "",
+        "name": "harbor-dsh-0.1.3a2-1263ff5-linux-amd64.docker.tar.gz",
+        "size": 212260885,
+        "state": "uploaded",
+        "updatedAt": "2026-09-08T08:18:46Z",
+        "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/download/harbor-dsh-0.1.3a2-1263ff5-amd64/harbor-dsh-0.1.3a2-1263ff5-linux-amd64.docker.tar.gz"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/cryptoSUN2049/xDAN-DSH-Exp/releases/assets/550126876",
+        "contentType": "application/octet-stream",
+        "createdAt": "2026-09-08T08:18:13Z",
+        "digest": "sha256:99a270c3e60703b0c8345ce3d39d4a3716556602f654323b55f7db91a397508b",
+        "downloadCount": 0,
+        "id": "RA_kwDOUIrees4gykUc",
+        "label": "",
+        "name": "LOAD.md",
+        "size": 2335,
+        "state": "uploaded",
+        "updatedAt": "2026-09-08T08:18:13Z",
+        "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/download/harbor-dsh-0.1.3a2-1263ff5-amd64/LOAD.md"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/cryptoSUN2049/xDAN-DSH-Exp/releases/assets/550126924",
+        "contentType": "application/octet-stream",
+        "createdAt": "2026-09-08T08:18:15Z",
+        "digest": "sha256:b78d76429246b18765a29c3b080c5374df7f595de7026ce408e31f11518268c9",
+        "downloadCount": 0,
+        "id": "RA_kwDOUIrees4gykVM",
+        "label": "",
+        "name": "SHA256SUMS",
+        "size": 471,
+        "state": "uploaded",
+        "updatedAt": "2026-09-08T08:18:15Z",
+        "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/download/harbor-dsh-0.1.3a2-1263ff5-amd64/SHA256SUMS"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/cryptoSUN2049/xDAN-DSH-Exp/releases/assets/550126867",
+        "contentType": "application/json",
+        "createdAt": "2026-09-08T08:18:13Z",
+        "digest": "sha256:2bc61f77ce7d9521275ba998731c8511c72cc244d434c22d63fa02b9058993cd",
+        "downloadCount": 0,
+        "id": "RA_kwDOUIrees4gykUT",
+        "label": "",
+        "name": "wheel-release-manifest.json",
+        "size": 1506,
+        "state": "uploaded",
+        "updatedAt": "2026-09-08T08:18:13Z",
+        "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/download/harbor-dsh-0.1.3a2-1263ff5-amd64/wheel-release-manifest.json"
+      }
+    ],
+    "isDraft": false,
+    "isPrerelease": true,
+    "publishedAt": "2026-09-08T08:20:50Z",
+    "tagName": "harbor-dsh-0.1.3a2-1263ff5-amd64",
+    "targetCommitish": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+    "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/tag/harbor-dsh-0.1.3a2-1263ff5-amd64"
+  },
+  "source_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+  "image_id": "sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97",
+  "image_id_kind": "OCI image index digest including amd64 manifest and attestation",
+  "archive_sha256": "d226359b3ae009b40323541c67010e1350452a08bb690cc2e25fc012468d5d3e",
+  "archive_size_bytes": 212260885,
+  "archive_manifest": {
+    "schema": "dsh.harbor-exact-image-archive.v1",
+    "source_repository": "cryptoSUN2049/xDAN-DSH-Exp",
+    "repository_visibility": "private",
+    "dsh_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+    "integration_revision": "1263ff59bfd06a36bf99122694de0df5869370ba",
+    "python_distribution_version": "0.1.3a2",
+    "platform": "linux/amd64",
+    "image_id": "sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97",
+    "image_id_kind": "OCI image index digest including amd64 manifest and attestation",
+    "image_tag": "uni-agent-dsh:0.1.3a2-1263ff5-amd64",
+    "amd64_manifest_digest": "sha256:94e60a910230b5c8982fb31a94e0fd5cbb021da68ac40ba820b475a39d3143ef",
+    "amd64_config_digest": "sha256:e245406b1a1c5106b83e7cc2be7fdafee388f22acce8dcbbbaa09b1b51c5e159",
+    "archive_filename": "harbor-dsh-0.1.3a2-1263ff5-linux-amd64.docker.tar.gz",
+    "archive_sha256": "d226359b3ae009b40323541c67010e1350452a08bb690cc2e25fc012468d5d3e",
+    "archive_size_bytes": 212260885,
+    "archive_manifest": {
+      "Config": "blobs/sha256/e245406b1a1c5106b83e7cc2be7fdafee388f22acce8dcbbbaa09b1b51c5e159",
+      "RepoTags": [
+        "uni-agent-dsh:0.1.3a2-1263ff5-amd64"
+      ],
+      "Layers": [
+        "blobs/sha256/6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be",
+        "blobs/sha256/dbd0b7849e6c06b61e1fa6b7ffe053f246ce0075890620e3db64b47bb662433a",
+        "blobs/sha256/1560cfed01dc4c72c07f789d860078d74466a1f9a26b33a2e35d887b5f90dd3f",
+        "blobs/sha256/56235e4245636e401a28cf88944d543b29ee028ae3b6c27e03d6b43e7b4eac5f",
+        "blobs/sha256/633abbe5bf1612c8dee60ad878acca807313fa64ab8d8901f0a1e7a66eafd74a",
+        "blobs/sha256/bd0f828af6d80c7972c0739682b3869a4dedb2a7cebe315e53b8951e5750c9a4",
+        "blobs/sha256/7bdc333ae3a03c2d80a2974a5971fa558b8fd10fe4cd28576ef76a027ad3a5ea",
+        "blobs/sha256/c4212ff5faf4c78053b90ee2dee4b97451b2906e8ef5c61ddd57fa0ef97c2228",
+        "blobs/sha256/db97ae363fb323b3bb346dd81d404fa81de688c48dcba81ee9847f2458f1dd5a",
+        "blobs/sha256/c542897f1a23e90bcd723a25da3f72da98030ea8a90b5f997b3ffa398a7a4ef4",
+        "blobs/sha256/6e8fa38d134eba64cb48f25666f1acc53eac3eb5d6fd3838a241245272e14c91",
+        "blobs/sha256/f71b8000620eccb0acfd6a316d8ca11058bf03b42e795bd7a3e4d1e97b313bf2",
+        "blobs/sha256/90b11545e98adcfd2272df23148649eb071822b7e6f0d672b1d87025c8f78a30",
+        "blobs/sha256/d0905184112d60f7a3cc670700495fdbcc1b36c0aba04a7ab695c64380fec2b8",
+        "blobs/sha256/dd8bfbc93fd3434ef98d4d6c477c7c60dea11817e5d120904f52dc5f9b7ebf03",
+        "blobs/sha256/a4c49b379e692a902288dbe2a9e45da7c40b283cdf7068cb719a2e7215f146ea"
+      ]
+    },
+    "oci_root_index": {
+      "schemaVersion": 2,
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "manifests": [
+        {
+          "mediaType": "application/vnd.oci.image.manifest.v1+json",
+          "digest": "sha256:94e60a910230b5c8982fb31a94e0fd5cbb021da68ac40ba820b475a39d3143ef",
+          "size": 3325,
+          "platform": {
+            "architecture": "amd64",
+            "os": "linux"
+          }
+        },
+        {
+          "mediaType": "application/vnd.oci.image.manifest.v1+json",
+          "digest": "sha256:b9d53db1b6e580e0f8a6fe1680748717c8affdc445d493b010e8d7e1f9db3b5a",
+          "size": 566,
+          "annotations": {
+            "vnd.docker.reference.digest": "sha256:94e60a910230b5c8982fb31a94e0fd5cbb021da68ac40ba820b475a39d3143ef",
+            "vnd.docker.reference.type": "attestation-manifest"
+          },
+          "platform": {
+            "architecture": "unknown",
+            "os": "unknown"
+          }
+        }
+      ]
+    },
+    "verified_blob_count": 22,
+    "all_blob_digests_verified": true,
+    "exact_load_environment": {
+      "docker_server_version": "29.2.0",
+      "driver_status": [
+        [
+          "driver-type",
+          "io.containerd.snapshotter.v1"
+        ]
+      ]
+    },
+    "note": "Docker save of original verified local image. Fresh source rebuild is not bit-identical; filesystem modes, builder metadata and attestations can affect identities. No single cause asserted."
+  },
+  "downloaded_assets_sha256": {
+    "harbor-dsh-0.1.3a2-1263ff5-linux-amd64.docker.tar.gz": "d226359b3ae009b40323541c67010e1350452a08bb690cc2e25fc012468d5d3e",
+    "archive-manifest.json": "b4faeeab681a93f58428ecb071f201d27103d5986f618dfc1a9bef74163ec454",
+    "execution-image-manifest.json": "9d6f8f7c38048494979d4e540ef59b2344a6608811ce1f0d1ab61ac672511c99",
+    "wheel-release-manifest.json": "2bc61f77ce7d9521275ba998731c8511c72cc244d434c22d63fa02b9058993cd",
+    "LOAD.md": "99a270c3e60703b0c8345ce3d39d4a3716556602f654323b55f7db91a397508b",
+    "SHA256SUMS": "b78d76429246b18765a29c3b080c5374df7f595de7026ce408e31f11518268c9"
+  },
+  "download_verification": "All six draft assets independently downloaded and byte-verified before publication; final published asset digests checked again.",
+  "docker_load_verification": {
+    "exit_code": 0,
+    "image_id_after_load": "sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97",
+    "platform_after_load": "linux/amd64",
+    "docker_server_version": "29.2.0",
+    "driver_status": [
+      [
+        "driver-type",
+        "io.containerd.snapshotter.v1"
+      ]
+    ],
+    "source": "independently downloaded release draft archive",
+    "existing_image_store_reused": true,
+    "fresh_empty_daemon_verified": false
+  },
+  "private_image_registry_publication": false,
+  "no_existing_release_overwritten": true,
+  "gpu_model_training_executed": false,
+  "no_task_image_pin_changed": true
+}
