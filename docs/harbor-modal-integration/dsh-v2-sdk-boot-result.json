@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "scope": "latest-built-cli-sdk-initialize-shutdown-only",
+  "revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+  "server": {"name": "deepseek-harness-sdk-runtime", "version": "0.0.1"},
+  "not_verified": ["Linux wheel", "model rollout", "GPU update"]
+}

@@ -1,0 +1,109 @@
+{
+  "schema": "dsh.harbor-host-archive-check.v1",
+  "passed": true,
+  "model_called": false,
+  "transport": "host Docker CLI tar stream",
+  "stdout_limit": 65536,
+  "stderr_limit": 4096,
+  "answer_limit": 4096,
+  "runs": [
+    {
+      "source": "/private/tmp/dsh-harbor-isolation-archive-v1/isolation-smoke.json",
+      "sha256": "b9145b49e5fb8162516ebb63016027e222252c9dd65403de01c5255f993de747",
+      "result": {
+        "passed": true,
+        "model_called": false,
+        "cases": [
+          {
+            "mode": "oracle",
+            "expected_reward": 1,
+            "agent_container": "96228b2d4317a3e27c6c3de63d2fc1c13551d38006e916f2deca43895ccfe3cb",
+            "agent_mounts": [],
+            "exception": null,
+            "rewards": {
+              "reward": 1.0
+            },
+            "agent_cleanup_verified": true
+          },
+          {
+            "mode": "nop",
+            "expected_reward": 0,
+            "agent_container": "9cc19dfdd0b2902b24b7716437ed1202e06b43188a8e43724fec330e525fb270",
+            "agent_mounts": [],
+            "exception": null,
+            "rewards": {
+              "reward": 0.0
+            },
+            "agent_cleanup_verified": true
+          },
+          {
+            "mode": "tamper",
+            "expected_reward": 0,
+            "agent_container": "42f2813065f0d1f7441fbb73be0d901442667765940ac524a536549fb1caf37a",
+            "agent_mounts": [],
+            "forged_agent_score": true,
+            "exception": null,
+            "rewards": {
+              "reward": 0.0
+            },
+            "agent_cleanup_verified": true
+          }
+        ],
+        "host_verifier_sha256": "bbe5540ad6700aee6a39b9ab91f4eb5fa40ae9bbc7f0dcb4448575038cc11e98"
+      }
+    },
+    {
+      "source": "/private/tmp/dsh-harbor-boundaries-archive-v1/isolation-smoke.json",
+      "sha256": "5bf8b193bc605739f1f71881e6ba1d819ce94a451ceb23a8cebede77e3c3abf0",
+      "result": {
+        "passed": true,
+        "model_called": false,
+        "cases": [
+          {
+            "mode": "symlink",
+            "expected_reward": null,
+            "agent_container": "ba8903c3436670e7bc3c46660c78e332f931e616a86fd95587693b596d7dfd58",
+            "agent_mounts": [],
+            "exception": {
+              "exception_type": "AnswerArtifactError",
+              "exception_message": "Rejected unsafe or malformed answer artifact",
+              "occurred_at": "2026-09-08T14:30:39.129872"
+            },
+            "rewards": null,
+            "artifact_rejection_verified": true,
+            "agent_cleanup_verified": true
+          },
+          {
+            "mode": "directory",
+            "expected_reward": null,
+            "agent_container": "31476568e927dcfca3aebad9b0215df8114b2e4ad781ac1bab6a9234a8ce5a6e",
+            "agent_mounts": [],
+            "exception": {
+              "exception_type": "AnswerArtifactError",
+              "exception_message": "Rejected unsafe or malformed answer artifact",
+              "occurred_at": "2026-09-08T14:30:51.299378"
+            },
+            "rewards": null,
+            "artifact_rejection_verified": true,
+            "agent_cleanup_verified": true
+          },
+          {
+            "mode": "oversize",
+            "expected_reward": null,
+            "agent_container": "fba8f7466bf353f1645e650dc997ef7d2898f59a512fc3f61ce174f82ce44d7d",
+            "agent_mounts": [],
+            "exception": {
+              "exception_type": "AnswerArtifactError",
+              "exception_message": "Rejected unsafe or malformed answer artifact",
+              "occurred_at": "2026-09-08T14:31:07.720852"
+            },
+            "rewards": null,
+            "artifact_rejection_verified": true,
+            "agent_cleanup_verified": true
+          }
+        ],
+        "host_verifier_sha256": "bbe5540ad6700aee6a39b9ab91f4eb5fa40ae9bbc7f0dcb4448575038cc11e98"
+      }
+    }
+  ]
+}

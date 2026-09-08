@@ -501,11 +501,74 @@ async def test_agent_runners_registry_materializes_runners_and_selects_by_agent_
     assert all(call["base_url"].endswith("/v1") for call in calls)
     assert [call["sample_index"] for call in calls] == [0, 1]
     runner_tools_kwargs = [
-        {key: value for key, value in call["kwargs"]["tools_kwargs"].items() if key != "_trace_identity"}
+        {
+            key: value
+            for key, value in call["kwargs"]["tools_kwargs"].items()
+            if key not in {"_trace_identity", "_runner_context"}
+        }
         for call in calls
     ]
     assert runner_tools_kwargs == [{"tool": 0}, {"tool": 1}]
     assert all("gateway_manager" not in call["kwargs"] for call in calls)
+
+
+@pytest.mark.cpu
+@pytest.mark.level0
+@pytest.mark.asyncio
+@pytest.mark.parametrize("dispatch_mode", ["inline_async", "ray_task"])
+@pytest.mark.parametrize("global_steps", [None, 17])
+async def test_runner_context_overrides_sample_identity_without_mutating_source(
+    monkeypatch, dispatch_mode, global_steps
+):
+    from uni_agent.framework import framework as framework_module
+
+    _POSTPROCESSOR_CALLS.clear()
+    observed = []
+    source_tools = {"tool": "search", "_runner_context": {"group_uid": "forged"}}
+
+    async def runner(*, tools_kwargs, session, **kwargs):
+        observed.append((dict(tools_kwargs["_runner_context"]), session.session_id))
+        assert tools_kwargs is not source_tools
+        # A runner must not change the independent postprocessor's trusted identity.
+        tools_kwargs["_runner_context"]["group_uid"] = "runner-mutated"
+        return TaskResult()
+
+    async def remote_runner(**kwargs):
+        return await runner(**kwargs)
+
+    monkeypatch.setattr(framework_module._run_agent_runner_ray_task, "remote", remote_runner)
+    runtime = _FakeGatewayManager({"session-sample-3-rollout-2": [_trajectory()]})
+    framework = await _build_framework_with_agent_runners(
+        agent_runners={"runner": _inline_runner_config(runner, dispatch_mode=dispatch_mode)},
+        gateway_manager=runtime,
+        trajectory_postprocessor_fqn=f"{__name__}._context_recording_trajectory_postprocessor",
+        trajectory_postprocessor_pass_context=True,
+    )
+    await framework._run_agent_episode(
+        partition_id="val",
+        group_size=4,
+        sample_fields={"raw_prompt": [], "uid": "trusted-group", "tools_kwargs": source_tools},
+        sample_index=3,
+        session_index=2,
+        global_steps=global_steps,
+        runner_name="runner",
+        runner_config=framework.runner_registry["runner"],
+        sampling_params={},
+    )
+    context, session_id = observed[0]
+    expected = {
+        "partition_id": "val",
+        "gateway_session_id": session_id,
+        "global_steps": global_steps,
+        "group_uid": "trusted-group",
+        "group_size": 4,
+        "sample_index": 3,
+        "session_index": 2,
+    }
+    assert context == expected
+    assert session_id == runtime.created_sessions[0]
+    assert _POSTPROCESSOR_CALLS[0][1] == expected
+    assert source_tools == {"tool": "search", "_runner_context": {"group_uid": "forged"}}
 
 
 @pytest.mark.cpu

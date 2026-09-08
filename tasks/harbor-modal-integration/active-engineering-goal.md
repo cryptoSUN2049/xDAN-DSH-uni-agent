@@ -27,6 +27,19 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 原始候选JSON仍有null和旧集成revision，仅用于报告缺口；启动实验前生成该run的完整resolved manifest，不把旧候选文件当最终锁。
 新修复允许产生新commit；运行中的checkout不更新。代码通过GitHub分发，模型/数据/checkpoint在外部持久目录。
 
+### Session v2 候选升级（用户最新执行顺序）
+
+先验新版DSH架构/SDK，再将通过验证的候选用于后续M2；7840保留作已验收M1基线。
+候选：b2369692ea530007075ebcd18d39fdba0bbd3982，0.1.3-alpha.2；upstream c389f96bf3a9b6807cb71ed6bdad5849be0df6d8。
+
+- [x] 独立审计转换器归属与Session v2差异；DSH-Exp已修converter，本仓在线SDK不调用它，不重复复制。
+- [x] 新版Session/转换器388项、built migration worker1项实测通过；本仓DSH适配与审计84项通过。
+- [x] 本机built CLI+新版SDK initialize/shutdown、官方sdk-minimal与sdk-restart通过；后两者使用替身模型，不是训练。
+- [ ] 新版commit发布到GitHub，Linux独立候选wheel/镜像部署；本轮GitHub API对该SHA返回422，不可拉取。
+- [ ] 新runtime的Harbor trace/receipt/Gateway token绑定、实际GPU更新/reload；通过后更新默认部署pin。
+
+完整顺序与仓库/远程职责：docs/harbor-modal-integration/dsh-session-v2-upgrade-plan.md。ContextPilot专题仍有独立消费者迁移缺口，不把SDK测试当记忆能力验收。
+
 ## 3. 当前事实
 
 - [x] GitHub分支维护与固定checkout入口。

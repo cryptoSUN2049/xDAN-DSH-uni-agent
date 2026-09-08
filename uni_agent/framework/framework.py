@@ -922,6 +922,17 @@ class GatewayAgentFramework(AgentFramework):
         tools_kwargs = sample_fields.get("tools_kwargs")
         tools_kwargs = dict(tools_kwargs or {})
         tools_kwargs["_trace_identity"] = trace_identity
+        runner_context = {
+            "partition_id": partition_id,
+            "gateway_session_id": session_id,
+            "global_steps": global_steps,
+            "group_uid": uid,
+            "group_size": group_size,
+            "sample_index": sample_index,
+            "session_index": session_index,
+        }
+        # Framework identity overrides sample input and stays independent of runner mutation.
+        tools_kwargs["_runner_context"] = dict(runner_context)
         async with _log_scope(parent_log):
             session = await self.gateway_manager.create_session(
                 session_id,
@@ -1040,15 +1051,7 @@ class GatewayAgentFramework(AgentFramework):
             if self._trajectory_postprocessor is not None:
                 session_trajectories = await self._apply_trajectory_postprocessor(
                     session_trajectories,
-                    context={
-                        "partition_id": partition_id,
-                        "gateway_session_id": session_id,
-                        "global_steps": global_steps,
-                        "group_uid": uid,
-                        "group_size": group_size,
-                        "sample_index": sample_index,
-                        "session_index": session_index,
-                    },
+                    context=runner_context,
                 )
 
             if not session_trajectories:

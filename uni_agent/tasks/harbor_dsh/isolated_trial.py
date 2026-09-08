@@ -9,12 +9,10 @@ separate verifier lifecycle and host-side DSH bridge evidence collection.
 from __future__ import annotations
 
 import asyncio
-import base64
-import binascii
 import importlib.metadata
-import json
+import io
 import re
-import shlex
+import tarfile
 from pathlib import Path
 
 from harbor.models.environment_type import EnvironmentType
@@ -45,33 +43,105 @@ class AnswerArtifactError(RuntimeError):
     """The fixed answer artifact failed bounded snapshot admission."""
 
 
-_ANSWER_READ_SCRIPT = """import base64, json, os, stat, sys
-def snapshot():
-    parent = os.open(sys.argv[1], os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+async def _run_bounded_command(argv: list[str], *, timeout: float = 30) -> tuple[int, bytes, bytes]:
+    """Read host CLI pipes incrementally; kill and reap on cap/timeout/cancel."""
+
+    async def read(stream, limit):
+        output = bytearray()
+        while chunk := await stream.read(min(8192, limit - len(output) + 1)):
+            if len(output) + len(chunk) > limit:
+                raise AnswerArtifactError("Docker answer stream exceeds byte limit")
+            output.extend(chunk)
+        return bytes(output)
+
+    process = None
+    readers = []
     try:
-        try:
-            fd = os.open('answer.txt', os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent)
-        except FileNotFoundError:
-            return {'status': 'missing'}
-        with os.fdopen(fd, 'rb') as stream:
-            before = os.fstat(stream.fileno())
-            if not stat.S_ISREG(before.st_mode) or before.st_size > 4096:
-                raise ValueError('not a bounded regular file')
-            content = stream.read(4097)
-            after = os.fstat(stream.fileno())
-            if (len(content) > 4096 or len(content) != before.st_size
-                or before.st_size != after.st_size or before.st_mtime_ns != after.st_mtime_ns
-                or before.st_ctime_ns != after.st_ctime_ns):
-                raise ValueError('file changed during snapshot')
-            return {'status': 'ok', 'content': base64.b64encode(content).decode('ascii')}
+        async with asyncio.timeout(timeout):
+            process = await asyncio.create_subprocess_exec(
+                *argv,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+                limit=8192,
+            )
+            readers = [
+                asyncio.create_task(read(process.stdout, 65536)),
+                asyncio.create_task(read(process.stderr, 4096)),
+            ]
+            stdout, stderr = await asyncio.gather(*readers)
+            return await process.wait(), stdout, stderr
     finally:
-        os.close(parent)
-try:
-    result = snapshot()
-except (OSError, ValueError):
-    result = {'status': 'rejected'}
-print(json.dumps(result, separators=(',', ':')))
-"""
+        for reader in readers:
+            reader.cancel()
+        await asyncio.gather(*readers, return_exceptions=True)
+        if process is not None:
+            if process.returncode is None:
+                try:
+                    process.kill()
+                except ProcessLookupError:
+                    pass
+
+            # A paused full StreamReader can otherwise keep process.wait()
+            # pending even after kill. Drain discarded bytes without buffering.
+            async def discard(stream):
+                while await stream.read(8192):
+                    pass
+
+            await asyncio.gather(discard(process.stdout), discard(process.stderr), process.wait())
+
+
+def _answer_from_tar(raw: bytes) -> bytes:
+    """Parse bounded uncompressed bytes without extracting archive paths."""
+    try:
+        if not raw or len(raw) > 65536:
+            raise ValueError("invalid archive size")
+        with tarfile.open(fileobj=io.BytesIO(raw), mode="r:") as archive:
+            entries = archive.getmembers()
+            if len(entries) != 1:
+                raise ValueError("expected one file")
+            member = entries[0]
+            if (
+                member.name != "answer.txt"
+                or member.type not in {tarfile.REGTYPE, tarfile.AREGTYPE}
+                or member.linkname
+                or member.sparse is not None
+                or not 0 <= member.size <= MAX_ANSWER_BYTES
+                or len(raw) - archive.offset < 1024
+                or any(raw[archive.offset :])
+            ):
+                raise ValueError("invalid answer entry")
+            stream = archive.extractfile(member)
+            if stream is None:
+                raise ValueError("missing file body")
+            content = stream.read(MAX_ANSWER_BYTES + 1)
+            if len(content) != member.size:
+                raise ValueError("truncated answer")
+            return content
+    except (tarfile.TarError, ValueError, OSError, OverflowError) as error:
+        raise AnswerArtifactError("Rejected unsafe or malformed answer artifact") from error
+
+
+async def _docker_answer(source_env) -> bytes | None:
+    # This goes through the host Docker CLI, not an exec in the candidate's
+    # container. The frozen Compose project scopes the lookup to this job.
+    async with asyncio.timeout(30):
+        result = await source_env._run_docker_compose_command(["ps", "-q", "main"], timeout_sec=10)
+        container_id = result.stdout.strip()
+        if result.return_code != 0 or not re.fullmatch(r"[0-9a-f]{64}", container_id):
+            raise AnswerArtifactError("Cannot resolve the job's answer container")
+        code, stdout, stderr = await _run_bounded_command(
+            ["docker", "cp", f"{container_id}:/app/answer.txt", "-"],
+        )
+    if code != 0:
+        # Only this exact daemon response means absence. Locale/version drift,
+        # container disappearance and permission/transport failures fail closed.
+        missing = f"Error response from daemon: Could not find the file /app/answer.txt in container {container_id}"
+        if not stdout and stderr.strip() == missing.encode():
+            return None
+        raise AnswerArtifactError("Docker could not retrieve the answer artifact")
+    if stderr:
+        raise AnswerArtifactError("Unexpected Docker answer diagnostic")
+    return _answer_from_tar(stdout)
 
 
 class _BoundedAnswerArtifacts(ArtifactHandler):
@@ -85,28 +155,7 @@ class _BoundedAnswerArtifacts(ArtifactHandler):
                 artifact=artifact,
                 convention_source=convention_source,
             )
-        result = await asyncio.wait_for(
-            source_env.exec(
-                command=shlex.join(["python", "-c", _ANSWER_READ_SCRIPT, "/app"]),
-                timeout_sec=30,
-                user="root",
-            ),
-            timeout=30,
-        )
-        if result.return_code != 0 or len(result.stdout) > 6000:
-            raise AnswerArtifactError("Invalid bounded answer snapshot response")
-        try:
-            envelope = json.loads(result.stdout)
-            if envelope == {"status": "missing"}:
-                content = None
-            elif isinstance(envelope, dict) and set(envelope) == {"status", "content"} and envelope["status"] == "ok":
-                content = base64.b64decode(envelope["content"], validate=True)
-                if len(content) > MAX_ANSWER_BYTES:
-                    raise ValueError("answer too large")
-            else:
-                raise ValueError("answer is not a bounded regular file")
-        except (ValueError, TypeError, binascii.Error) as error:
-            raise AnswerArtifactError("Rejected unsafe or malformed answer artifact") from error
+        content = await _docker_answer(source_env)
         target = artifacts_dir / "app" / "answer.txt"
         if target.is_symlink() or target.exists() or target.parent.is_symlink():
             raise AnswerArtifactError("Refusing to overwrite an existing answer artifact")

@@ -278,3 +278,18 @@ Review：本批只新增部署目录与设计；不将其标记为安装或部�
 - [x] 单文件同fd读取与真实容器异常产物拒绝；宿主硬限传输仍待替换。
 - [ ] HTTP worker + Harbor executor + Task回传与现有receipt准入。
 - Review：账本重启不重跑旧任务；它不代替实际进程清理或训练消费证据。
+
+### M2 宿主传输与worker接线
+
+- [x] 宿主Docker archive增量硬限；真实六例复验通过，正常1/0/0，异常三项拒绝无评分。
+- [x] executor证据/清理合同、worker/HTTP组合回归：198 passed；尚未运行真实学生executor任务。
+- [ ] Gateway动态端口登记/隧道，训练侧Task与receipt绑定；M2真实训练/reload。
+- Review：不依赖agent容器Python读取；不解包归档路径。当前HTTP已编写，尚未部署真实模型任务。
+
+### 最新 DSH 架构兼容性复核
+
+- [x] 确认当前训练 pin 仍为7840bced，runner读取Python SDK result.events，不调用离线TypeScript converter。
+- [x] 独立subagent核对最新架构入口、Session v2与converter修复、ContextPilot事件坐标兼容性；报告已落盘。
+- [x] Session/转换器388项、built migration worker 1项、本仓DSH回归84项通过；最新built CLI SDK boot通过。
+- [ ] 新版SDK完整事件/restart、Linux候选部署及真实训练准入；随后继续M2。
+- Review：新版源码审计与固定版本训练验收分开；未通过候选版本回归前不替换现有runtime。

@@ -1,12 +1,21 @@
 #!/usr/bin/env bash
 # Native Linux build from a pinned, already authenticated GitHub checkout.
+# Opt in to the v2 candidate with DSH_BUILD_REVISION and a separate checkout.
 set -euo pipefail
 : "${DSH_SOURCE_ROOT:?Absolute DSH checkout required}"
 : "${DSH_TOOLS_ROOT:?Absolute build tools directory required}"
+DSH_BUILD_REVISION="${DSH_BUILD_REVISION-7840bced35ee07ebefbdce0106b56dbc00bdc3ef}"
+case "$DSH_BUILD_REVISION" in
+  7840bced35ee07ebefbdce0106b56dbc00bdc3ef|b2369692ea530007075ebcd18d39fdba0bbd3982) ;;
+  *) printf 'Unsupported DSH_BUILD_REVISION\n' >&2; exit 2 ;;
+esac
 [[ "$DSH_SOURCE_ROOT" = /* && "$DSH_TOOLS_ROOT" = /* ]] || exit 2
 [[ "$(uname -s)" == Linux && "$(uname -m)" == x86_64 ]] || exit 2
-[[ "$(git -C "$DSH_SOURCE_ROOT" rev-parse HEAD)" == 7840bced35ee07ebefbdce0106b56dbc00bdc3ef ]] || exit 2
-[[ -z "$(git -C "$DSH_SOURCE_ROOT" status --porcelain --untracked-files=no)" ]] || exit 2
+dsh_checkout_revision="$(git -C "$DSH_SOURCE_ROOT" rev-parse HEAD)"
+[[ "$dsh_checkout_revision" == "$DSH_BUILD_REVISION" ]] || exit 2
+# Keep command failure distinct from an empty, clean status response.
+dsh_checkout_status="$(git -C "$DSH_SOURCE_ROOT" status --porcelain --untracked-files=no)"
+[[ -z "$dsh_checkout_status" ]] || exit 2
 mkdir -p "$DSH_TOOLS_ROOT"
 cd "$DSH_TOOLS_ROOT"
 archive=node-v24.20.0-linux-x64.tar.xz

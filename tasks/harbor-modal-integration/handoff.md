@@ -306,3 +306,21 @@
 - 本轮154相关测试通过。容器内同fd收集器三项真实symlink/directory/oversize精确AnswerArtifactError，未评分/未落host答案；正常v3仍1/0/0，证据harbor-artifact-boundary-result.json和harbor-isolation-v3-result.json。
 - 明确剩余边界：当前收集器依赖agent容器内python且exec全量缓冲，尚非敌对进程硬传输限制。子代理unia_capability_audit已接下一批任务：可信宿主docker cp archive流硬限并解析单个普通answer.txt，不extractall。接班先核验agent状态及当前diff，勿覆盖它的代码。
 - 后续主线必须实现实际HTTP worker/Harbor executor/Task回传并跑M2模型更新，不能长期停留在边界单测。GPU本轮未启动新训练，G1仍active。
+
+## M2 worker组合回归与DSH再审计（2026-09-08）
+
+- 宿主docker archive有界传输已替代容器Python收集器；真实六例正常1/0/0、异常三例拒绝，证据harbor-host-archive-result.json。不是并发写文件的事务快照。
+- executor.py、worker.py、worker_http.py及deployment/services/harbor_worker.py已实现但尚未提交部署；组合198 tests passed，两项Ruff通过。executor测试使用替身，不代表真实学生经过worker。
+- HTTP bearer、SQLite幂等与证据回传已测；失败/取消未证明清理时保留unconfirmed，不虚报终态。动态Gateway独立登记、训练Task/receipt、真实M2更新/reload仍待完成。
+- 训练侧复用现有Gateway token和TaskResult管线；framework持有group/partition/sample身份但尚未完整传给runner，不能从prompt猜测。无需另建执行循环或修改VERL。
+- 最新DSH架构再次由unia_capability_audit独立核对；固定runtime仍7840bced。引用的旧Session converter问题已在3e93373修复，不能把该离线问题推断为现有在线路径失败。最新报告入口：docs/harbor-modal-integration/dsh-latest-architecture-impact-audit.md（代理完成后核验）。
+- 用户最新DSH交接：架构入口对应upstream c389f96bf3a9、0.1.3-alpha.2；构建/lint/转换器测试/架构核验/页面检查通过。主进程核实本地HEAD b2369692ea530007075ebcd18d39fdba0bbd3982且工作区干净；未推送为用户报告。此前报告的旧构建失败不能覆盖这次新交接；本仓最新runtime兼容及训练回归仍未运行。
+
+## Session v2 实测与训练接线批次
+
+- 新版DSH源码388tests、built migration worker1test；本仓DSH84tests通过。最新built CLI+SDK boot和官方minimal/restart真实runtime情景通过（本机替身模型，非Linux wheel/GPU训练）。详见dsh-session-v2-test-results.md和dsh-v2-sdk-scenarios.md。
+- 用户要求先候选新版验证再继续M2，已更新active-engineering-goal与dsh-session-v2-upgrade-plan.md。当前GitHub API对b236969返回422，已请用户由DSH会话发布；不复制离线converter到本仓。
+- build-dsh-runtime.sh默认保留7840，显式DSH_BUILD_REVISION支持b236969；未知SHA/dirty/平台/查询失败均拒绝，18输入测试通过。新版candidate JSON尚无产物hash、not-deployed。
+- Framework将7字段_runner_context覆盖样本输入，独立副本防runner修改污染postprocessor；framework目录158tests通过，Ray分支只测CPU提交参数。
+- worker取消改为独立executor Task、幂等cancel和shield等待；双取消/HTTP等待方取消/timeout后再取消三个测试先红后绿。最新Harbor+部署组合219tests通过；全仓Ruff check/format通过（195 files）。
+- GPU实查仍dcbd323+DSH7840、SDK/runtime均0.1.2a1，无计算进程。尚未部署新版；worker Task/Gateway动态登记/真正M2更新仍待做，G1不能complete。

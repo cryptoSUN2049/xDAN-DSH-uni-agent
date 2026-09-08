@@ -1,9 +1,9 @@
 import asyncio
+import io
 import json
 import os
-import shlex
-import subprocess
 import sys
+import tarfile
 from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
@@ -242,21 +242,31 @@ def test_log_directory_transport_failure_does_not_start_agent(task_dir, monkeypa
 
 def answer_transport(trial, monkeypatch, folder):
     calls = []
+    container_id = "a" * 64
 
-    async def execute(**kwargs):
-        argv = shlex.split(kwargs["command"])
-        assert argv == ["python", "-c", isolated_trial._ANSWER_READ_SCRIPT, "/app"]
-        calls.append(kwargs)
-        result = subprocess.run(
-            [sys.executable, "-c", isolated_trial._ANSWER_READ_SCRIPT, str(folder)],
-            capture_output=True,
-            text=True,
-            timeout=5,
-        )
-        return SimpleNamespace(return_code=result.returncode, stdout=result.stdout, stderr=result.stderr)
+    async def archive(argv, **kwargs):
+        assert argv == ["docker", "cp", f"{container_id}:/app/answer.txt", "-"]
+        calls.append(argv)
+        answer = folder / "answer.txt"
+        if not answer.exists() and not answer.is_symlink():
+            message = (
+                f"Error response from daemon: Could not find the file /app/answer.txt in container {container_id}\n"
+            )
+            return 1, b"", message.encode()
+        stream = io.BytesIO()
+        with tarfile.open(fileobj=stream, mode="w", dereference=False) as tar:
+            tar.add(answer, arcname="answer.txt")
+        return 0, stream.getvalue(), b""
 
-    monkeypatch.setattr(trial.agent_environment, "exec", execute)
-    for name in ("service_download_file", "service_download_dir", "service_is_dir"):
+    monkeypatch.setattr(isolated_trial, "_run_bounded_command", archive)
+    monkeypatch.setattr(
+        trial.agent_environment,
+        "_run_docker_compose_command",
+        AsyncMock(
+            return_value=SimpleNamespace(return_code=0, stdout=container_id + "\n", stderr=""),
+        ),
+    )
+    for name in ("exec", "service_download_file", "service_download_dir", "service_is_dir"):
         monkeypatch.setattr(trial.agent_environment, name, AsyncMock(side_effect=AssertionError("unsafe copy")))
     return calls
 
@@ -281,12 +291,11 @@ def test_bounded_answer_collection_copies_only_snapshot_bytes(task_dir, monkeypa
         assert answer["status"] == ("empty" if content is None else "ok")
         asyncio.run(trial._collect_artifacts())
         assert len(calls) == 1
-        assert calls[0]["timeout_sec"] == 30
     finally:
         close(trial)
 
 
-@pytest.mark.parametrize("kind", ["symlink", "dangling", "directory", "oversize", "fifo", "parent_symlink"])
+@pytest.mark.parametrize("kind", ["symlink", "dangling", "directory", "oversize", "fifo"])
 def test_unsafe_answer_is_rejected_and_recovery_cannot_retry_collection(task_dir, monkeypatch, kind):
     trial = create_isolated_trial(config(task_dir), allowed_task_dir=task_dir)
     folder = task_dir.parent / "agent-app"
@@ -303,10 +312,6 @@ def test_unsafe_answer_is_rejected_and_recovery_cannot_retry_collection(task_dir
         answer.write_bytes(b"x" * 4097)
     elif kind == "fifo":
         os.mkfifo(answer)
-    else:
-        real_folder = folder.with_name("real-app")
-        folder.rename(real_folder)
-        folder.symlink_to(real_folder, target_is_directory=True)
     calls = answer_transport(trial, monkeypatch, folder)
     trial._init_result()
     monkeypatch.setattr(trial, "_sync_agent_output", AsyncMock())
@@ -323,14 +328,11 @@ def test_unsafe_answer_is_rejected_and_recovery_cannot_retry_collection(task_dir
         close(trial)
 
 
-@pytest.mark.parametrize(
-    "reply", ["{}", '{"status":"ok","content":"!!!!"}', '{"status":"ok","content":""}' + "x" * 6000]
-)
-def test_malformed_or_oversized_answer_envelope_is_rejected(task_dir, monkeypatch, reply):
+@pytest.mark.parametrize("reply", [b"", b"not-a-tar", b"x" * 65537])
+def test_malformed_or_oversized_answer_archive_is_rejected(task_dir, monkeypatch, reply):
     trial = create_isolated_trial(config(task_dir), allowed_task_dir=task_dir)
-    monkeypatch.setattr(
-        trial.agent_environment, "exec", AsyncMock(return_value=SimpleNamespace(return_code=0, stdout=reply))
-    )
+    answer_transport(trial, monkeypatch, task_dir)
+    monkeypatch.setattr(isolated_trial, "_run_bounded_command", AsyncMock(return_value=(0, reply, b"")))
     try:
         with pytest.raises(RuntimeError, match="answer"):
             asyncio.run(trial._collect_artifacts())
@@ -356,3 +358,110 @@ def test_trial_run_records_artifact_error_and_never_scores_or_retries(task_dir, 
     verifier.assert_not_awaited()
     assert len(calls) == 1
     assert not (trial.paths.artifacts_dir / "app/answer.txt").exists()
+
+
+@pytest.mark.parametrize("channel", ["stdout", "stderr"])
+def test_stream_limit_terminates_and_reaps_real_subprocess(channel, monkeypatch):
+    processes = []
+    original = asyncio.create_subprocess_exec
+
+    async def spawn(*args, **kwargs):
+        process = await original(*args, **kwargs)
+        processes.append(process)
+        return process
+
+    monkeypatch.setattr(asyncio, "create_subprocess_exec", spawn)
+    script = f"import sys,time; sys.{channel}.write('x'*100000); sys.{channel}.flush(); time.sleep(30)"
+    with pytest.raises(isolated_trial.AnswerArtifactError, match="limit"):
+        asyncio.run(isolated_trial._run_bounded_command([sys.executable, "-c", script], timeout=2))
+    assert len(processes) == 1
+    assert processes[0].returncode is not None
+
+
+def test_command_timeout_is_bounded():
+    with pytest.raises(TimeoutError):
+        asyncio.run(
+            isolated_trial._run_bounded_command(
+                [sys.executable, "-c", "import time; time.sleep(30)"],
+                timeout=0.1,
+            )
+        )
+
+
+def test_small_command_preserves_binary_output_and_exit_code():
+    result = asyncio.run(
+        isolated_trial._run_bounded_command(
+            [
+                sys.executable,
+                "-c",
+                "import sys; sys.stdout.buffer.write(b'\\x00\\xff'); sys.stderr.write('error'); sys.exit(3)",
+            ],
+            timeout=2,
+        )
+    )
+    assert result == (3, b"\x00\xff", b"error")
+
+
+@pytest.mark.parametrize(
+    "error", [b"permission denied", b"No such container", b"Could not find the file /app/answer.txt", b""]
+)
+def test_docker_failure_is_not_assumed_missing(task_dir, monkeypatch, error):
+    trial = create_isolated_trial(config(task_dir), allowed_task_dir=task_dir)
+    answer_transport(trial, monkeypatch, task_dir)
+    monkeypatch.setattr(isolated_trial, "_run_bounded_command", AsyncMock(return_value=(1, b"", error)))
+    try:
+        with pytest.raises(isolated_trial.AnswerArtifactError):
+            asyncio.run(trial._collect_artifacts())
+    finally:
+        close(trial)
+
+
+def test_command_cancellation_reaps_child(monkeypatch):
+    async def scenario():
+        spawned = asyncio.Event()
+        processes = []
+        original = asyncio.create_subprocess_exec
+
+        async def spawn(*args, **kwargs):
+            process = await original(*args, **kwargs)
+            processes.append(process)
+            spawned.set()
+            return process
+
+        monkeypatch.setattr(asyncio, "create_subprocess_exec", spawn)
+        task = asyncio.create_task(
+            isolated_trial._run_bounded_command(
+                [
+                    sys.executable,
+                    "-c",
+                    "import time; time.sleep(30)",
+                ]
+            )
+        )
+        await spawned.wait()
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await task
+        assert processes[0].returncode is not None
+
+    asyncio.run(scenario())
+
+
+@pytest.mark.parametrize("case", ["traversal", "hardlink", "second_file", "trailing_archive", "no_end_markers"])
+def test_archive_parser_never_extracts_unapproved_entries(case):
+    output = io.BytesIO()
+    with tarfile.open(fileobj=output, mode="w", format=tarfile.USTAR_FORMAT) as archive:
+        entry = tarfile.TarInfo("../answer.txt" if case == "traversal" else "answer.txt")
+        if case == "hardlink":
+            entry.type = tarfile.LNKTYPE
+            entry.linkname = "/etc/passwd"
+        archive.addfile(entry)
+        if case == "second_file":
+            archive.addfile(tarfile.TarInfo("other"))
+    raw = output.getvalue()
+    if case == "trailing_archive":
+        raw += raw
+    elif case == "no_end_markers":
+        raw = raw[:512]
+    with pytest.raises(isolated_trial.AnswerArtifactError):
+        isolated_trial._answer_from_tar(raw)

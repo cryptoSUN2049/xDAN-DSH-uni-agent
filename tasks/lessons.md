@@ -100,3 +100,4 @@
 - 用户提醒旧 Session API 转换器依赖；不能仅比较 Python SDK 签名就宣称 runtime 兼容。必须追踪 converter、ContextPilot runner/exporter、事件坐标与 flush/snapshot 生命周期。
 - 版本以精确源码 catalog 为准，README 可能滞后；聚焦测试与完整构建分别记录 revision、退出状态，不把旧失败日志归因于新 HEAD。
 - 已通过的固定 runtime 继续工程验证；候选版本单独迁移，不直接改变进行中的训练基线。
+- 跨会话截图中的“本项目”必须回到绝对路径和commit核实。DSH-Exp离线converter修复不等于Uni-Agent在线SDK需要复制相同改动；先查调用链，避免重复适配。用户要求先验新版再继续时，更新执行顺序，但保留旧pin作为对照。
