@@ -8,7 +8,8 @@
 - 2026-09-09：`8ff2f3a`已commit/push，GPU checkout `/workspace/rebuild/uni-agent-native-n0-r1`同步该提交。主线复用 `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，通过PYTHONPATH使用新checkout。不要修改运行中checkout。
 - 四例上下文GPU r1已于325秒exit1：4题finished，reward全0，3eligible/1ineligible。原因是引用basename而非完整source ID，另有一次读表外路径；保留原失败，修订prompt消除歧义，不降低rubric。
 - 容量对照r2已300秒exit0，单条真实轨迹回读、finished=true、reward=0；扩大窗口只解除容量阻断，未解决Tool查询。报告native-grounding-capacity-r2-result.json。
-- 当前GPU `/root/runs/dsh-context-baseline-r2`，supervisor PID107665，源8ff2f3a，prompt_revision=2，四例n1/并发2/1800秒上限。冷启动重查PID和supervisor-result.json；仍是推理评估，无optimizer。
+- context r2已完成：4/4严格执行与轨迹回读，奖励均0，引用为绝对路径或缺失，不满足原合同。报告native-context-baseline-r2-result.json；未训练，不宣称能力提升。
+- 当前GPU `/root/runs/t2-exploration-r1`，supervisor PID111366，源8ff2f3a；一个公开dev题复制4行分别采样，strict n1/并发1/2700秒上限，窗口32768。不是4独立任务或GRPO训练组；冷启动须查进程与supervisor-result.json。
 
 ### 最新 N0/N1/P1 检查点
 
@@ -206,3 +207,5 @@ _hydra允许经过白名单校验的相对路径键；仍拒绝分隔符/插值�
 
 - context提示修订：只列本题存在源，完整citations.source ID；原评分不变，独立r2待部署。
 - 真实学生记忆链设计native-memory-student-chain-design.md经主线程审阅，CPU实现进行中：A回执验真→freeze→独立B，先评估，不伪造跨session训练credit。
+
+- 已结束诊断归档 `/workspace/reports/native-capability-diagnostics-r1-r2.tar.gz`（不含context r2），135398 bytes，SHA256 e99f85967faef859b1f229eaba9fe2b6f8ee2d6208f3755ae01a7cdf5903844d。

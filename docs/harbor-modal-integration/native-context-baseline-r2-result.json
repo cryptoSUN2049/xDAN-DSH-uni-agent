@@ -1,0 +1,320 @@
+{
+  "schema": "dsh.context-baseline-result.v1",
+  "run": "/root/runs/dsh-context-baseline-r2",
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 275.006,
+    "pid": 107666,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "launch": {
+    "schema": "dsh.native-capability-baseline.v1",
+    "source_commit": "8ff2f3aac8470783830a51c904396145a35cb6ef",
+    "scope": "four file evidence tasks; inference only; no optimizer",
+    "command": [
+      "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+      "examples/inference/parallel_infer_verl.py",
+      "--data-path",
+      "/root/runs/dsh-context-baseline-r2-data/eval.parquet",
+      "--task-config",
+      "/root/runs/dsh-context-baseline-r2-data/task.yaml",
+      "--n",
+      "1",
+      "--limit",
+      "4",
+      "--dsh-strict-audit",
+      "--require-result",
+      "--dsh-trace-root",
+      "/root/runs/dsh-context-baseline-r2/artifacts/traces",
+      "--dsh-result-root",
+      "/root/runs/dsh-context-baseline-r2/artifacts/results",
+      "--log-dir",
+      "/root/runs/dsh-context-baseline-r2/agent-logs",
+      "--result-path",
+      "/root/runs/dsh-context-baseline-r2/result.json",
+      "--inference-evidence-path",
+      "/root/runs/dsh-context-baseline-r2/inference-evidence.json",
+      "--model-path",
+      "/workspace/models/Qwen3-4B-1cfa9a7",
+      "--served-model-name",
+      "Qwen/Qwen3-4B",
+      "--engine",
+      "vllm",
+      "--nnodes",
+      "1",
+      "--n-gpus-per-node",
+      "1",
+      "--tensor-parallel-size",
+      "1",
+      "--gpu-memory-utilization",
+      "0.40",
+      "--max-model-len",
+      "8192",
+      "--gateway-count",
+      "1",
+      "--concurrency",
+      "2",
+      "--tool-parser",
+      "hermes"
+    ],
+    "cwd": "/workspace/rebuild/uni-agent-native-n0-r1",
+    "python": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+    "wall_clock_seconds": 1800,
+    "preparation_sha256": "sha256:99c9fd2965ed41f63a0d6b488e73a0aa0aaec56e01c99ccba4b9b63261416ed8",
+    "environment": {
+      "PATH": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+      "PYTHONPATH": "/workspace/rebuild/uni-agent-native-n0-r1:/workspace/rebuild/uni-agent-native-n0-r1/verl",
+      "PYTHONNOUSERSITE": "1",
+      "HF_HUB_OFFLINE": "1",
+      "CUDA_VISIBLE_DEVICES": "0",
+      "RAY_TMPDIR": "/root/ray-context-r2",
+      "DSH_RUNTIME_MODE": "exe"
+    }
+  },
+  "inference": {
+    "finished_at": "2026-09-08T17:30:30.993183Z",
+    "global_steps": null,
+    "partition_id": "val",
+    "readback": {
+      "final_keys": [
+        "1ae3c158-f8fa-4594-85d4-4cc641e79241_0_0",
+        "290d7f76-029f-4519-bcda-dfe3534e71f4_0_0",
+        "4bc19bab-cd48-43e6-95f6-b9c287f16eb6_0_0",
+        "f3c41297-d6cb-44d0-9230-d404e03f7812_0_0"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "traj_keys": [
+        "290d7f76-029f-4519-bcda-dfe3534e71f4_0_0",
+        "1ae3c158-f8fa-4594-85d4-4cc641e79241_0_0",
+        "4bc19bab-cd48-43e6-95f6-b9c287f16eb6_0_0",
+        "f3c41297-d6cb-44d0-9230-d404e03f7812_0_0"
+      ],
+      "uid_status": {
+        "1ae3c158-f8fa-4594-85d4-4cc641e79241": "finished",
+        "290d7f76-029f-4519-bcda-dfe3534e71f4": "finished",
+        "4bc19bab-cd48-43e6-95f6-b9c287f16eb6": "finished",
+        "f3c41297-d6cb-44d0-9230-d404e03f7812": "finished"
+      }
+    },
+    "samples": [
+      {
+        "metadata": {
+          "capability_scope": "file-evidence-only",
+          "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+          "fixture_path": "/root/runs/dsh-context-baseline-r2-data/cases/directed-present/contract.json",
+          "fixture_sha256": "sha256:124f65416683ab8a21e30458003c5d1796fdf9c15874b0f1263d8ad10c5e6314",
+          "prompt_revision": "2",
+          "split": "test",
+          "task_id": "dsh/context/directed-present",
+          "task_version": "1",
+          "verifier_code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "verifier_id": "dsh-context-file-evidence",
+          "verifier_version": "1"
+        },
+        "sample_index": 0,
+        "uid": "1ae3c158-f8fa-4594-85d4-4cc641e79241"
+      },
+      {
+        "metadata": {
+          "capability_scope": "file-evidence-only",
+          "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+          "fixture_path": "/root/runs/dsh-context-baseline-r2-data/cases/directed-missing/contract.json",
+          "fixture_sha256": "sha256:3ac97c534db7aae5fe646b8fdd6e275db51faa5d584431f5be93105816be65a7",
+          "prompt_revision": "2",
+          "split": "test",
+          "task_id": "dsh/context/directed-missing",
+          "task_version": "1",
+          "verifier_code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "verifier_id": "dsh-context-file-evidence",
+          "verifier_version": "1"
+        },
+        "sample_index": 1,
+        "uid": "290d7f76-029f-4519-bcda-dfe3534e71f4"
+      },
+      {
+        "metadata": {
+          "capability_scope": "file-evidence-only",
+          "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+          "fixture_path": "/root/runs/dsh-context-baseline-r2-data/cases/conflict-present/contract.json",
+          "fixture_sha256": "sha256:41f306320ff4584e7a009490aac1a9eebc77629bcf7424af8bb7048f6ac70590",
+          "prompt_revision": "2",
+          "split": "test",
+          "task_id": "dsh/context/conflict-present",
+          "task_version": "1",
+          "verifier_code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "verifier_id": "dsh-context-file-evidence",
+          "verifier_version": "1"
+        },
+        "sample_index": 2,
+        "uid": "4bc19bab-cd48-43e6-95f6-b9c287f16eb6"
+      },
+      {
+        "metadata": {
+          "capability_scope": "file-evidence-only",
+          "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+          "fixture_path": "/root/runs/dsh-context-baseline-r2-data/cases/conflict-missing/contract.json",
+          "fixture_sha256": "sha256:83401cc375010a507dc80ce148803921f9beebeda5daae6e4ffbd935c569030e",
+          "prompt_revision": "2",
+          "split": "test",
+          "task_id": "dsh/context/conflict-missing",
+          "task_version": "1",
+          "verifier_code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "verifier_id": "dsh-context-file-evidence",
+          "verifier_version": "1"
+        },
+        "sample_index": 3,
+        "uid": "f3c41297-d6cb-44d0-9230-d404e03f7812"
+      }
+    ],
+    "schema": "dsh.inference-evidence.v1",
+    "started_at": "2026-09-08T17:26:18.458316Z",
+    "status": "completed"
+  },
+  "tasks": [
+    {
+      "task_id": "dsh/context/conflict-missing",
+      "response": "{\n  \"status\": \"insufficient_evidence\",\n  \"value\": null,\n  \"citations\": [\n    {\n      \"source\": \"/root/runs/dsh-context-baseline-r2-data/cases/conflict-missing/sources/current.txt\",\n      \"line\": 2,\n      \"quote\": \"status=not_specified\"\n    },\n    {\n      \"source\": \"/root/runs/dsh-context-baseline-r2-data/cases/conflict-missing/sources/previous.txt\",\n      \"line\": 2,\n      \"quote\": \"max_attempts=9\"\n    }\n  ]\n}",
+      "finished": true,
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:fd2e66dba60af202c3c2b62bef739f961b149abbc48afbee65241d617b0df0ed",
+        "dsh_session_id": "dsh-session-sample-3-rollout-0-529f0dd9351348b59606887ea3ebe78f",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:83401cc375010a507dc80ce148803921f9beebeda5daae6e4ffbd935c569030e",
+          "sha256:7aed54f344322ca043e52e02ee80ff7b9840f7771a0bbf8c095e4201abaffbcc"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:30:30.926Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:1094439d30013e4de548e73644dde1d5baf3b82ebe0cf1223410a0a1a68dcaed",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context/conflict-missing",
+        "task_version": "1",
+        "trace_sha256": "sha256:7aed54f344322ca043e52e02ee80ff7b9840f7771a0bbf8c095e4201abaffbcc",
+        "verifier": {
+          "code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "id": "dsh-context-file-evidence",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "task_id": "dsh/context/directed-missing",
+      "response": "{\n  \"status\": \"insufficient_evidence\",\n  \"value\": null,\n  \"citations\": []\n}",
+      "finished": true,
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:4e2cb5820d8fccd142e9e1ac5857cb59541c4ec82bd6bb4fb726cb79b312e61d",
+        "dsh_session_id": "dsh-session-sample-1-rollout-0-d9fe636f7f9a48fe8185134a7f204b48",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:3ac97c534db7aae5fe646b8fdd6e275db51faa5d584431f5be93105816be65a7",
+          "sha256:ef4b878977bf3d97bd2fce9f32cf507299d1811b0fb0d50f9870b6c88974d7d2"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:30:27.834Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:3af3be605e8bb261f0a7d926543df45cfb980ddb51e0f3032b23193f2778e528",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context/directed-missing",
+        "task_version": "1",
+        "trace_sha256": "sha256:ef4b878977bf3d97bd2fce9f32cf507299d1811b0fb0d50f9870b6c88974d7d2",
+        "verifier": {
+          "code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "id": "dsh-context-file-evidence",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "task_id": "dsh/context/conflict-present",
+      "response": "{\n  \"status\": \"answer\",\n  \"value\": \"3\",\n  \"citations\": [\n    {\n      \"source\": \"/root/runs/dsh-context-baseline-r2-data/cases/conflict-present/sources/current.txt\",\n      \"line\": 2,\n      \"quote\": \"max_attempts=3\"\n    }\n  ]\n}",
+      "finished": true,
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:fada88b0160c25daf1b46dce6bd9554c9e81096bea113d07795eed8058392470",
+        "dsh_session_id": "dsh-session-sample-2-rollout-0-57338383ca424741a424f68483d700bb",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:41f306320ff4584e7a009490aac1a9eebc77629bcf7424af8bb7048f6ac70590",
+          "sha256:a5733eeb3b3c45ca12df824867c76493b1761cb285d2605fb6fc4d3a6e4259c4"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:30:30.205Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:978a66c4fe511f10d646f0158f49e52a9182711b0cffb30bb5b5dae467b7a531",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context/conflict-present",
+        "task_version": "1",
+        "trace_sha256": "sha256:a5733eeb3b3c45ca12df824867c76493b1761cb285d2605fb6fc4d3a6e4259c4",
+        "verifier": {
+          "code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "id": "dsh-context-file-evidence",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "task_id": "dsh/context/directed-present",
+      "response": "{\n  \"status\": \"answer\",\n  \"value\": \"3\",\n  \"citations\": [\n    {\n      \"source\": \"/root/runs/dsh-context-baseline-r2-data/cases/directed-present/sources/current.txt\",\n      \"line\": 2,\n      \"quote\": \"max_attempts=3\"\n    }\n  ]\n}",
+      "finished": true,
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:53007d8022cbb024920512552f601017206ab6f8d081f2bec1676debe76debac",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-16fb467b5f9d435baee2815b4a725953",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:124f65416683ab8a21e30458003c5d1796fdf9c15874b0f1263d8ad10c5e6314",
+          "sha256:59ab2614aae499fd072b7e2aa45bd41a613b122f53a428e119bae95f587f5baa"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:30:28.170Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:54f62ea939115c35d44763f269d689df09bb8869239fdd845360e64871c4b549",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context/directed-present",
+        "task_version": "1",
+        "trace_sha256": "sha256:59ab2614aae499fd072b7e2aa45bd41a613b122f53a428e119bae95f587f5baa",
+        "verifier": {
+          "code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "id": "dsh-context-file-evidence",
+          "version": "1"
+        }
+      }
+    }
+  ],
+  "training": false,
+  "interpretation": "All four completed strict inference; reward zero. Responses still violate citation contract; no learned improvement."
+}
