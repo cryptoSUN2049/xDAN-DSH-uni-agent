@@ -84,3 +84,15 @@
 - 当前目标见 docs/harbor-modal-integration/4b-harness-capability-plan.md；Harness RL为必要范围，Modal为可选环境。
 - 导航数据资料已读五份；ContextPilot HTML和规范已读，源hash在contextpilot-source-identity.json，源工作区有未提交修改。
 - Uni-Agent已有MemAgent训练recipe；DSH训练adapter拒绝teacher_client，OPD待接入。本轮没有新增运行证据。
+
+## RSI路线补充
+
+- docs/harbor-modal-integration/rsi-plan.html：R0—R5、候选合同、奖励与评估、跨仓实施归属；rsi-source-identity.json保存指定研读报告hash。
+- R1技能使用进入近期核心；R2冻结模型独立测Harness改进；R5单独检验改进机制增强。均未实施/训练，不与既有历史RL结果混同。
+- 下一具体设计为技能发现/遵循与跨Session记忆两个任务，现有H0执行范围不变。
+
+## 统一工程路线图
+
+- 用户要求形成可复用训练体系：docs/harbor-modal-integration/engineering-roadmap.html为当前权威执行顺序，S0—S11含依赖、验收和产物。index.html已置顶链接。
+- 不重新搭历史底座，优先复用；Harness策略RL在S5，候选演化在S9—S11。Modal/OPD不是首个闭环的前置。
+- 新session先读路线图与已有能力审计，再执行S0/S1；本轮仅规划，无新增运行。

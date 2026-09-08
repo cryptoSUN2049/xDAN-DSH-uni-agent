@@ -1,5 +1,7 @@
 # Uni-Agent 项目状态回顾与本地交接
 
+当前权威执行顺序：[工程路线图 S0—S11](../docs/harbor-modal-integration/engineering-roadmap.html)。下方旧计划保留阶段来源，冲突时以此路线的依赖与证据范围为准。
+
 仓库职责以 [用户确认的项目记忆](lessons.md) 为准：本仓负责训练集成，DSH-Exp 负责 DSH 本体与历史研究。
 
 当前 worktree：`harbor-modal-integration`。先读 [当前交接](harbor-modal-integration/handoff.md)。
@@ -156,3 +158,18 @@ Review：本轮总览补全，不升级任何运行状态；付费云端、模�
 - [ ] 下一步为DSH可复建环境与Harbor单任务验证；继而细化学生Harness动作和跨Session评估合同。
 
 Review：HTML本地链接与diff检查通过；未复跑源码测试、模型、GPU或上游报告成绩。
+
+### RSI专题规划
+
+- [x] 完整读取指定研读报告，保存来源hash并补R0—R5 HTML。
+- [x] 明确archive/parent/deploy资格、三层split、独立reload/rollback与2×2归因。
+- [ ] 逐批冻结实际DSH工具映射、候选API/文件清单和运行测试后实施。
+
+Review：仅新增设计与来源索引，验证HTML链接及diff；未执行论文代码、模型或训练。
+
+### 可复用工程训练体系
+
+- [x] 汇总S0—S11、依赖、验收与可复用资产；链接总览。
+- [ ] S0/S1复建和单任务执行证据。
+- [ ] S2/S3合同和基线 → 按需S4 → S5更新与独立评估。
+- [ ] 分支推进S6 OPD、S7记忆、S8异步、S9—S11 RSI与复用发布。
