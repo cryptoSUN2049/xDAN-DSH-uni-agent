@@ -2,6 +2,8 @@
 
 ## 当前状态覆盖（新 Pod 恢复，优先于下方历史记录）
 
+- **当前能力基线**：dsh-capability-grounding-r1，GPU supervisor24448，/root/runs/dsh-capability-grounding-r1；代码c04ff2dcdb32eadf78a5bd41e3fabc3dbcc26fb2，VAL_ONLY=True，最多1200秒。用真实新版DSH查询Tool能力，无步骤答案；尚未验收，先查eval.log/exit-code。Harbor r6已结束，不再重复toy RL。
+
 - 用户最新优先级：全异步/Modal/云端沙盒扩容延后至性能阶段；当前只推进固定版本训练、reload和评估。
 
 - **r6已结束exit1（历史运行）**：GPU supervisor17184，/root/runs/m2-v2-r6；Mac controller工具60798，/private/tmp/m2-recovery-r6/run-spec.json。r5已失败并清理。实际命令已确认两个旧DSH artifact roots=null，基线1+训练4条完成且全奖励1；第一步optimizer step=1但1008个动量张量全0，后评估Harbor等待超时。无有效学习证明；controller60798已关闭。
@@ -452,3 +454,9 @@
 - 用户要求推进真正有价值的任务，文件写入不再重复作为能力训练；trim不等于上下文管理。优先真实DSH运行时发现与依赖故障恢复，再建立关键事实/跨会话记忆任务。
 - r6真实执行5次均reward1，已保存step1，optimizer state541项、step全1、1008个一/二阶矩全0且有限。不能宣称有效学习；step1后评估等待Harbor完成超时，832.744秒exit1，GPU已0MiB。
 - 末次任务DSH finished但无reward；trial日志显示收集产物后verifier镜像inspect退出1、最终cancel。控制器60798已停止，不能把此归因于SSH已证实再次断线。后续需排查verifier生命周期，但不再反复开无差异奖励的toy RL。
+
+## 能力基线入口
+
+- examples/dsh/prepare_capability_eval.py及5项测试通过，c04ff2d已push并GPU固定；实际exe摘要d1a467已核验。
+- 新目录task.yaml/eval.parquet/run-manifest.json与launch-manifest.json，16384 prompt/2048 response，4工具调用/6turn，VAL_ONLY只做一次真实eval；同一Parquet作为train loader占位明确不代表训练。
+- supervisor24448，结束归档/workspace/reports/dsh-capability-grounding-r1-evidence.tar.gz；不依赖Mac controller，不引入Modal。
