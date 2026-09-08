@@ -190,3 +190,17 @@
 - HotpotQA原生数据repo固定27275ff4fee67ac0acb6478e405e7ac07efbdc1a；先小型dev文件用于明确标记的工程诊断，不冒充正式benchmark泛化。
 - 下一批实现单卡native smoke配置、固定小批数据、真实采样及update/reload；DSH与Harbor验收尚未通过。
 - 模型下载已完成（MODEL_READY）；原生hotpotqa_dev.parquet已下载，128行。含旧模型回答/评分列，现有adapter只读五个必需列，继续保持此隔离。
+
+## 递进与正在运行的诊断
+
+- 用户确认原生训练→DSH记忆/上下文真实轨迹→Harbor长任务→动态Harness/RSI→性能。
+- native-train-v1已启动：/workspace/reports/native-train-v1.log，结束码native-train-v1.exit；30分钟timeout，2步上限，先val。未出结果前不可启动重复GPU作业。
+- DSH runtime恢复找到更短路径：GitHub可拉取7840bced35ee07ebefbdce0106b56dbc00bdc3ef，与本地1af5b00的python/packages/apps/native/scripts/lock/package无diff；无需发布研究文档即可准备构建。
+
+## DSH源码恢复与Linux构建
+
+- GitHub私有仓库已添加RunPod G1只读Deploy Key（ID162606530），私钥仅在服务器/root/.ssh/dsh_runtime_readonly；不将私钥/PAT写入仓库。
+- /workspace/src/dsh-runtime已从GitHub成功拉取并固定7840bced35ee07ebefbdce0106b56dbc00bdc3ef。
+- Node24.20.0官方tarball SHA256已核验，pnpm固定11.7.0；RunPod网络盘不允许恢复tar UID/GID，使用--no-same-owner。
+- 构建入口deployment/bootstrap/build-dsh-runtime.sh；依赖安装进行中，尚未产生Linux runtime验收。
+- 原生训练v1仍在同一进程运行，Actor初始化完成、vLLM加载并完成autotune；当前不重启，不追认更新成功。

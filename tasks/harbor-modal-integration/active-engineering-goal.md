@@ -102,3 +102,9 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 ## 7. 平台Goal建议文本
 
 在当前harbor-modal-integration worktree和用户现有RTX PRO 6000上完成G1工程验收，严格按tasks/harbor-modal-integration/active-engineering-goal.md推进：固定Uni-Agent/VERL配对版本及完整部署身份，复用原生小任务作有界诊断；完成M1 DSH→Uni-Agent→VERL真实轨迹/评分/更新/独立reload/留出eval，完成M2固定Harbor单任务的DSH训练增量，最后交付GitHub可复建入口与可审计证据。未满足全部必需验收不得complete；不把历史训练、CPU测试或文件hash变化代替本次运行。第二阶段能力提升、第三阶段性能规模另立目标。
+
+## 8. 用户确认的任务递进（2026-09-08）
+
+原生Uni-Agent最简单训练 → 带DSH真实运行轨迹的记忆/上下文任务 → Harbor长任务与泛化 → 动态Harness/RSI → 性能规模。原生diagnostic不变为长期主线。
+M1优先检查已有ContextPilot证据合同和DSH记忆动作能否承载首批任务；先通过真实观测/动作/结果/奖励到更新的工程门，再进入C2效果验收。若记忆runtime尚缺实现，明确列缺口并先复建DSH调用基础，不以普通任务假称记忆能力已经完成。
+M2 Harbor端到端验收仍为G1必需范围；完整RSI和显著效果保持后续Goal。

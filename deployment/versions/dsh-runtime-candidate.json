@@ -1,0 +1,12 @@
+{
+  "status": "source-frozen-build-in-progress",
+  "repository": "cryptoSUN2049/xDAN-DSH-Exp",
+  "revision": "7840bced35ee07ebefbdce0106b56dbc00bdc3ef",
+  "package_version": "0.1.2-alpha.1",
+  "node": "24.20.0",
+  "node_linux_x64_sha256": "2f2c0da162318f0de47665410c7c8c2ed3d36c8f3105de4bbc61176c70a7cbf2",
+  "pnpm": "11.7.0",
+  "target": "node24-linux-x64",
+  "runtime_digest": null,
+  "sdk_smoke_passed": false
+}
