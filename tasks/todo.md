@@ -73,3 +73,15 @@
 - 浏览器1440×1000与390×844无页面横向溢出；166个链接的本地路径/锚点有效；筛选/重置/目录跳转通过，无本页console error；A4打印导出成功。
 - 独立内容审阅未发现重大事实错误。未运行模型/GPU/云资源或修改产品代码。
 - 产物：`docs/dsh-adapter/uni-agent系统架构.html`、同目录`uni-agent-architecture-evidence.json`。
+
+
+## 2026-09-08：Qwen3.5-4B 能力与快速训练收益分析
+
+- [x] 核对官方模型卡 benchmark、测试设置及Qwen3-4B区别。
+- [x] 对照最新Uni-Agent模型专用recipe、MemAgent和DSH准入。
+- [x] 按数据成本、接线成本和可验证收益排序最小实验。
+- [x] 核验来源，给出结论和无法由当前证据承诺的边界。
+
+本轮为研究分析，不启动训练或付费资源，不修改产品代码。
+
+Review：官方模型卡分数按表格列核对；最新代码9b7dbdb明确旧DSH launcher拒绝qwen3_5，Qwen3.5 recipe默认64卡、MemAgent默认8卡。推荐区分“最快训练验证”（MemAgent）与“DSH业务优先”（工具/恢复）；OPD/SFT边界和GRPO组内方差信号已注明。详细结果：docs/dsh-adapter/qwen3.5-4b-capability-and-training-analysis.md。本轮没有训练或模型推理。
