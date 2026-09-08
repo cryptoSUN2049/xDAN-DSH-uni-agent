@@ -23,3 +23,7 @@ separate_async留待独立采样与训练资源，另验证权重同步、stalen
 ## 优先复用MemAgent脚本
 
 examples/mem_agent/train_mem_agent.sh作为separate_async资源与trainer模板；当前DSH脚本作为任务/证据合同模板。保留TRAIN_BATCH_SIZE = PARAMETER_SYNC_STEP × PPO_MINI_BATCH_SIZE约束，默认4训练GPU+4rollout GPU不能直接用于当前单卡。HotpotQA/MemAgent Task须替换为DSH/Harbor数据和任务契约，不在DSH外增加执行循环。mini_swe_agent脚本有NPU配置，不能原样使用；不另走experimental/fully_async_policy入口。
+
+## 当前授权
+
+用户明确允许有机会在同步闭环通过后设置异步。允许现有单卡上有界colocate_async对照，无需重复询问；不授权新增GPU或中途修改当前同步run。开始前固定独立设计/参数和验收门，保留sync结果；不能原样运行4+4 separate_async配置。

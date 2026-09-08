@@ -1,0 +1,61 @@
+{
+  "scope": "same public holdout; no evidence of improvement because baseline already full score",
+  "rows": [
+    {
+      "run": "dsh-redact-m1-v2-r4",
+      "file": "/root/runs/dsh-redact-m1-v2-r4/validation/dsh-redact-execute/m1-v2-r4/0.jsonl",
+      "step": 0,
+      "uid": "74025f05-1d33-47e2-8300-0a94b794d783_0_0",
+      "score": 1.0
+    },
+    {
+      "run": "dsh-redact-m1-v2-r4",
+      "file": "/root/runs/dsh-redact-m1-v2-r4/validation/dsh-redact-execute/m1-v2-r4/0.jsonl",
+      "step": 0,
+      "uid": "ce25589f-1327-4fa0-8349-4bd80d65ac3c_0_0",
+      "score": 1.0
+    },
+    {
+      "run": "dsh-redact-m1-v2-r4",
+      "file": "/root/runs/dsh-redact-m1-v2-r4/validation/dsh-redact-execute/m1-v2-r4/1.jsonl",
+      "step": 1,
+      "uid": "34141565-c330-4831-af0e-9b897cd0d8b4_0_0",
+      "score": 1.0
+    },
+    {
+      "run": "dsh-redact-m1-v2-r4",
+      "file": "/root/runs/dsh-redact-m1-v2-r4/validation/dsh-redact-execute/m1-v2-r4/1.jsonl",
+      "step": 1,
+      "uid": "97bfb849-a386-41a3-86be-7f97fa89edf9_0_0",
+      "score": 1.0
+    },
+    {
+      "run": "dsh-redact-m1-v2-r4",
+      "file": "/root/runs/dsh-redact-m1-v2-r4/validation/dsh-redact-execute/m1-v2-r4/2.jsonl",
+      "step": 2,
+      "uid": "3be18efa-fd24-4399-9d77-75520c55a7ea_0_0",
+      "score": 1.0
+    },
+    {
+      "run": "dsh-redact-m1-v2-r4",
+      "file": "/root/runs/dsh-redact-m1-v2-r4/validation/dsh-redact-execute/m1-v2-r4/2.jsonl",
+      "step": 2,
+      "uid": "b8901640-cae4-4387-a6c9-d64f7d14bfb0_0_0",
+      "score": 1.0
+    },
+    {
+      "run": "dsh-redact-m1-v2-r4-reload",
+      "file": "/root/runs/dsh-redact-m1-v2-r4-reload/validation/dsh-redact-execute/m1-v2-r4-reload/2.jsonl",
+      "step": 2,
+      "uid": "bf18570a-9d58-439e-8c0f-ffbd549d3ecb_0_0",
+      "score": 1.0
+    },
+    {
+      "run": "dsh-redact-m1-v2-r4-reload",
+      "file": "/root/runs/dsh-redact-m1-v2-r4-reload/validation/dsh-redact-execute/m1-v2-r4-reload/2.jsonl",
+      "step": 2,
+      "uid": "c3e95da6-f795-46db-84e6-e04ad1d4405a_0_0",
+      "score": 1.0
+    }
+  ]
+}

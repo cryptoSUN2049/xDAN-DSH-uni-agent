@@ -175,3 +175,7 @@ _hydra允许经过白名单校验的相对路径键；仍拒绝分隔符/插值�
 ### Harbor学生r1已提交启动
 
 代码be8237ed9b8d22d06bc28195441aa7a28a23a8a0，GPU/root/runs/harbor-evolution-m2-v2-r1，supervisor85930；Mac控制器69461，私有目录/private/tmp/harbor-evolution-m2-v2-r1。2steps/2700秒，4条同题工程重复train+1同题eval，n4/batch2，base Qwen3-4B新LoRA16，无SFT。checkpoint=/workspace/uni-agent-g1/checkpoint/harbor-evolution-m2-v2-r1。不能当独立泛化评估；初始化/训练验收仍待确认。
+
+### 视觉验收与异步授权
+
+两HTML移动端长词溢出及旧进度已修复，实际浏览器桌面/移动复验通过，45本地链接有效，console无错；报告g1-visual-audit.md。用户允许同步M2完整通过后，在已有单卡上有界colocate_async对照，无需再次确认；不改当前run、不新增GPU。
