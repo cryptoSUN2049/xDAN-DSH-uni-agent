@@ -228,6 +228,7 @@ async def run_task(
     raw_prompt: Any = None,
     sample_index: int | None = None,
     task_config_path: str | None = None,
+    harbor_route_registration: dict[str, Any] | None = None,
     api_key: str = "EMPTY",
     model_name: str | None = None,
     require_result: bool = False,
@@ -262,6 +263,10 @@ async def run_task(
     if not isinstance(sample_config, dict):
         raise ValueError("run_task requires tools_kwargs['task'] (the serialized Task Config)")
     sample_config = dict(sample_config)
+    if "harbor_route_registration" in sample_config:
+        raise ValueError("Harbor sample cannot provide route registration configuration")
+    if harbor_route_registration is not None and sample_config.get("name") != "harbor_dsh":
+        raise ValueError("Harbor route registration requires a harbor_dsh task")
     harbor_runtime = None
     if sample_config.get("name") == "harbor_dsh":
         if {"gateway_base_url", "runner_context"}.intersection(sample_config):
@@ -296,6 +301,17 @@ async def run_task(
     if harbor_runtime is not None:
         # Operator config is resolved first; only the live Framework supplies
         # these fields. Harbor owns its Agent and needs no local model binding.
+        if harbor_route_registration is not None:
+            from uni_agent.tasks.harbor_dsh.registration import ensure_harbor_route
+
+            policy = await ensure_harbor_route(
+                session=session,
+                runner_context=harbor_runtime["runner_context"],
+                run_id=task["run_id"],
+                policy_template=task["policy"],
+                registration=harbor_route_registration,
+            )
+            task = {**task, "policy": policy.model_dump(mode="json")}
         task = {**task, **harbor_runtime}
     task = _inject_dsh_artifact_roots(
         task,

@@ -351,3 +351,10 @@
 - package-dsh-runtime.sh复用官方build-python-release.py，固定b236/Linux，检查binary与-rg、拒复用output、记录uv与SHA256SUMS。未直接build占位版本pyproject。
 - 主进程Task/client/新旧runner/构建+打包组合131tests通过，1个既有Ray deprecation warning；全仓Ruff双项通过201files。
 - 下一项：unia_capability_audit正在新增Harbor trajectory postprocessor；verl_six_month_audit只读细化动态Gateway port独立登记方案。两者均不能以Task测试替代真实M2采样/更新/reload。
+
+## 新版 Linux wheel 验收通过
+
+- 首轮 build PID30463 exit1：node-gyp在RunPod网络盘下载解压headers遇到EPERM fchown。1263ff5改用固定Node发行包已有headers，未改DSH核心。第二轮PID30603已exit0；日志/workspace/reports/dsh-g1-v2-build-r2.log，退出文件同前缀.exit。
+- 官方package脚本已成功生成0.1.3a2 SDK/runtime与SHA256SUMS，目录/workspace/artifacts/dsh-g1-v2-b236969；精确哈希见deployment/versions/dsh-session-v2-candidate.json。
+- 独立venv /workspace/venvs/dsh-g1-v2-b236969-sdk，离开源码目录运行官方installed-wheel sdk-minimal和sdk-restart均通过。日志/workspace/reports/dsh-g1-v2-b236969-sdk/{minimal,restart}.log。真实新版runtime+替身模型，不是GPU训练证明。
+- Harbor新镜像由upstream_harbor_verl推进；controller/tunnel由verl_six_month_audit完成待主审；registration/trajectory audit由unia_capability_audit收尾。请勿覆盖代理未完成文件。旧生产训练环境尚未升级，G1继续active。

@@ -1,6 +1,6 @@
 {
   "schema": "dsh.g1-source-lock.v1",
-  "status": "sources-pinned-artifacts-pending",
+  "status": "sources-and-dsh-wheels-pinned-harbor-training-pending",
   "verified_date": "2026-09-08",
   "uni_agent_upstream": "89733ec81a69c3cc93ac90479de7ea7f01e51c1f",
   "verl_paired_gitlink": "fefb080262e1c015a0ea05f958822a6a512dc795",
@@ -8,7 +8,7 @@
   "dsh_source": "b2369692ea530007075ebcd18d39fdba0bbd3982",
   "dsh_published_branch_head_observed": "e4a628ed3eeb993e3081c37e63561f0b539a8c3e",
   "dsh_version": "0.1.3-alpha.2",
-  "integration_build_entry": "a6ad775a6179e036428bc87258fc7fe07ac4103c",
+  "integration_build_entry": "1263ff59bfd06a36bf99122694de0df5869370ba",
   "policy": "Freeze upstream dependencies for G1. Record subsequent integration fixes and resolved artifact hashes per run; do not follow branch HEAD automatically.",
   "verification": "Official Uni-Agent main and DSH default master read via git ls-remote; VERL gitlink read from the exact Uni-Agent tree. Published private DSH branch independently confirmed.",
   "deployment_complete": false

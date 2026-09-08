@@ -56,3 +56,5 @@ Task 不从 prompt/metadata 推测身份。`prompt_from_messages(prompt)` 必须
 重新验证 request 的 hash / task / release /资源与路由 policy，绑定 run_id 和 Framework 全部七字段；重读 manifest、receipt、所有 artifact，复用 Task.verify_downloaded_evidence。receipt body 必须与这些可信输入重新构造的完整字段相等，自身 canonical hash 与 TaskResult reward_info.harbor_dsh 相等。历史 request 的资源合同按其记录的执行窗口校验，不因审核发生在 deadline 后就伪称新运行，也不通过文件 mtime 猜测 freshness；独立 worker ledger 的 session/nonce 一次性规则仍是重放边界。
 
 复用现有 DSH `_validate_token_evidence` 检查真实响应 tokens、mask 与 logprobs 对齐；严格绑定 typed finished/reward 和完整 dsh_reward_info.harbor_dsh。返回原 Trajectory 对象，不改 token/mask/logprobs、reward 或元数据。失败抛 TrajectoryAuditError，不能退化成 reward=0。测试覆盖磁盘篡改、全部 context 错位、跨 worker/run/task/policy、路径与 symlink/hardlink/非私有权限、token 证据无效，以及对象与数组保持原样。
+
+本接点验证：新增 47 项 audit 测试通过，含真实 Framework FQN/kwargs/context 调用合同与 0 分准入；audit + Task + HTTP client + 旧 DSH audit 回归共 124 passed。新 audit 模块语句覆盖率 96%，Ruff check / format 通过。测试使用 Task 实际写出的私有文件；Task 的 HTTP 返回由受控 fixture 提供，并未运行模型、Docker 或 GPU。token 测试使用显式测试 token 数组，仅验证原样保留与非法证据拒绝，不能当成真实 Gateway rollout 证据。

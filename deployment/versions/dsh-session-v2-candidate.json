@@ -1,6 +1,6 @@
 {
-  "status": "not-deployed",
-  "build_status": "not-built",
+  "status": "installed-wheel-verified-harbor-pending",
+  "build_status": "built-and-packaged",
   "repository": "cryptoSUN2049/xDAN-DSH-Exp",
   "revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
   "upstream_revision": "c389f96bf3a9b6807cb71ed6bdad5849be0df6d8",
@@ -10,13 +10,18 @@
   "node_linux_x64_sha256": "2f2c0da162318f0de47665410c7c8c2ed3d36c8f3105de4bbc61176c70a7cbf2",
   "pnpm": "11.7.0",
   "target": "node24-linux-x64",
-  "runtime_digest": null,
-  "runtime_wheel_sha256": null,
-  "sdk_wheel_sha256": null,
+  "runtime_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+  "runtime_wheel_sha256": "59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+  "sdk_wheel_sha256": "6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
   "image_digest": null,
   "python_distribution_version": "0.1.3a2",
-  "sdk_smoke_passed": false,
-  "verified_scenarios": [],
+  "sdk_smoke_passed": true,
+  "verified_scenarios": [
+    "sdk-minimal --installed-wheel",
+    "sdk-restart --installed-wheel"
+  ],
   "model_training_verified": false,
-  "validation_scope": "Linux candidate artifacts and deployment remain unverified; local source and built CLI checks are recorded separately."
+  "validation_scope": "Linux x86_64 wheels installed in an independent Python 3.12.3 venv outside the source checkout; official minimal/restart scenarios passed with local mock model. Harbor image and GPU training on this release remain pending.",
+  "build_entry_revision": "1263ff59bfd06a36bf99122694de0df5869370ba",
+  "artifact_directory": "/workspace/artifacts/dsh-g1-v2-b236969"
 }
