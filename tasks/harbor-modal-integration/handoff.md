@@ -2,7 +2,11 @@
 
 ## 当前状态覆盖（新 Pod 恢复，优先于下方历史记录）
 
-- Worktree/分支：harbor-modal-integration / worktree-harbor-modal-integration；运行代码固定44542b04168c696d39c3b704495a38a088dd2c80（已push）。
+- 用户最新优先级：全异步/Modal/云端沙盒扩容延后至性能阶段；当前只推进固定版本训练、reload和评估。
+
+- **r6已结束exit1（历史运行）**：GPU supervisor17184，/root/runs/m2-v2-r6；Mac controller工具60798，/private/tmp/m2-recovery-r6/run-spec.json。r5已失败并清理。实际命令已确认两个旧DSH artifact roots=null，基线1+训练4条完成且全奖励1；第一步optimizer step=1但1008个动量张量全0，后评估Harbor等待超时。无有效学习证明；controller60798已关闭。
+
+- Worktree/分支：harbor-modal-integration / worktree-harbor-modal-integration；运行代码固定f368708e7848501b1045b8eee4a6aa8d4a49a578（已push）。
 - 用户确认旧Pod停止，已提供新Pod：SSH root@216.243.220.178 -p14465 -i~/.ssh/id_ed25519；hostname c54bc4bb224c，节点172.26.0.2，同RTX PRO6000/97887MiB/driver595.91.07。
 - 云盘完整保留源码/venv/模型/data/artifacts/checkpoints。新节点复用venv验证257包兼容、CUDA合成梯度12、DSH runtime binary哈希匹配；无需重装模型或生成数据。旧/root目录已丢失，新凭据/运行证据用本地私有目录，结束时归档到云盘。
 - 后续DSH统一b236969/0.1.3a2；Uni-Agent89733ec、VERLfefb080、原始Harbor镜像846b46。完整固定清单deployment/versions/g1-deployment-lock.json；SDK/wheel与镜像均有私有Release。
@@ -437,3 +441,14 @@
 
 - r5 exit1，378.318秒；真实Gateway注册通过，control/model双隧道建立，此次不是SSH故障。任务尚未执行便被旧DSH artifact roots注入拒绝。
 - controller95012已SIGINT退出130，cleanup_errors为空；无训练更新。M2薄入口显式将dsh_trace_root/dsh_result_root置null，保留Harbor自己的artifact_root。新增真实Hydra覆盖+Task runner检查回归先红后绿；相关38项通过。
+
+## r6启动
+
+- f368708e7848501b1045b8eee4a6aa8d4a49a578已GitHub push及GPU固定；修复旧DSH专属参数冲突。r5GPU显存归零后串行启动r6。
+- 新私有spec/令牌/运行目录；命令print核对null overrides通过；监督17184，controller60798。每5秒健康监测，最多2步/2700秒，结果/root/runs/m2-v2-r6/exit-code及supervisor-result.json，归档/workspace/reports/m2-v2-r6-evidence.tar.gz。
+
+## 有价值任务优先级与r6终态
+
+- 用户要求推进真正有价值的任务，文件写入不再重复作为能力训练；trim不等于上下文管理。优先真实DSH运行时发现与依赖故障恢复，再建立关键事实/跨会话记忆任务。
+- r6真实执行5次均reward1，已保存step1，optimizer state541项、step全1、1008个一/二阶矩全0且有限。不能宣称有效学习；step1后评估等待Harbor完成超时，832.744秒exit1，GPU已0MiB。
+- 末次任务DSH finished但无reward；trial日志显示收集产物后verifier镜像inspect退出1、最终cancel。控制器60798已停止，不能把此归因于SSH已证实再次断线。后续需排查verifier生命周期，但不再反复开无差异奖励的toy RL。

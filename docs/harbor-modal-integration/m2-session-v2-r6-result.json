@@ -1,0 +1,27 @@
+{
+  "run_id": "m2-v2-r6",
+  "integration_revision": "f368708e7848501b1045b8eee4a6aa8d4a49a578",
+  "exit_code": 1,
+  "elapsed_seconds": 832.744,
+  "successful_task_rewards": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "successful_sessions_scope": "baseline validation 1, training sample group 4",
+  "checkpoint_step_saved": 1,
+  "optimizer_step_min": 1,
+  "optimizer_step_max": 1,
+  "optimizer_moment_tensor_count": 1008,
+  "nonzero_optimizer_moment_tensors": 0,
+  "effective_learning_verified": false,
+  "post_update_evaluation": "timeout waiting for Harbor terminal job",
+  "batch_audit": {
+    "passed": false,
+    "error": "Trainer row missing, duplicated, or reward mismatched"
+  },
+  "controller_stopped": true,
+  "next_task_direction": "DSH meaningful capability baseline, no repeated constant reward toy RL"
+}

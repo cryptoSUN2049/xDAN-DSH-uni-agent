@@ -109,3 +109,7 @@
 - 2026-09-08 单卡M2入口必须显式保留已验证M1的ROLLOUT_LAYERED_SUMMON=False。仅复制LoRA/显存参数而沿用底座layered=True会使collect_lora_params空收集fallback调用offload_to_cpu=True，Torch NO_SHARD拒绝；ACTOR_PARAM_OFFLOAD=True本身不是该异常的充分原因。必须把实际生效配置与参考run逐项比较。
 
 - 用户确认旧Runpod停止并换新Pod：云盘保留不代表/root、SSH部署key、Ray/运行凭据保留。先验持久资产与venv，再重建本地身份/节点IP；最终日志应排除凭据后归档到持久盘。handoff顶部“当前状态”必须更新，不能让旧优先覆盖段与后文新事实冲突。
+
+- 用户再次明确：全异步、Modal和云端沙盒扩容属于后续性能阶段，当前不急、不推进。优先固定版本工程闭环、真实更新/reload/评估，再讨论能力效果与性能。不得因可选基础设施研究分散主线。
+
+- 用户明确要求跑有价值的真实任务。文件写入仅限连接诊断，trim仅是字符串工具练习，不可包装为上下文/记忆能力训练。后续任务必须定义真实DSH动作、独立可核验结果和留出输入；奖励全相同应停止堆训练步数，记录无学习信号。

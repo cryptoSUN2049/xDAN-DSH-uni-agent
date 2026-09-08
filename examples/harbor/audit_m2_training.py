@@ -59,13 +59,25 @@ def _rows(directory):
     return rows
 
 
-def audit_training(*, launch_path, agent_log_dir, rollout_data_dir, validation_data_dir, train_n, validation_n):
+def audit_training(
+    *,
+    launch_path,
+    agent_log_dir,
+    validation_data_dir,
+    validation_n,
+    rollout_data_dir=None,
+    train_n=None,
+    val_only=False,
+):
     """Report batch correspondence; optimizer verification remains a separate gate."""
     report = dict(
         schema="dsh.harbor-training-batch-audit.v1", passed=False, groups=[], errors=[], optimizer_update_verified=False
     )
     try:
-        if any(type(n) is not int or n <= 0 for n in (train_n, validation_n)):
+        if type(val_only) is not bool:
+            raise ValueError("val_only must be a boolean")
+        required_counts = (validation_n,) if val_only else (train_n, validation_n)
+        if any(type(n) is not int or n <= 0 for n in required_counts):
             raise ValueError("Expected rollout counts must be positive integers")
         raw_launch = _read(Path(launch_path))
         launch = _json(raw_launch)
@@ -75,8 +87,11 @@ def audit_training(*, launch_path, agent_log_dir, rollout_data_dir, validation_d
         kwargs = launch["postprocessor"]
         if "context" in kwargs:
             raise ValueError("Operator kwargs must not supply runtime context")
-        counts = dict(train=train_n, val=validation_n)
-        rows = dict(train=_rows(Path(rollout_data_dir)), val=_rows(Path(validation_data_dir)))
+        report["mode"] = "validation-only" if val_only else "training-and-validation"
+        counts = dict(val=validation_n) if val_only else dict(train=train_n, val=validation_n)
+        rows = dict(val=_rows(Path(validation_data_dir)))
+        if not val_only:
+            rows["train"] = _rows(Path(rollout_data_dir))
         log_root = Path(agent_log_dir)
         if not log_root.is_dir() or log_root.is_symlink():
             raise ValueError("Agent log directory missing")
@@ -87,6 +102,8 @@ def audit_training(*, launch_path, agent_log_dir, rollout_data_dir, validation_d
             meta = _json(_read(path))
             if meta["schema"] != "uni-agent.trajectory-dump.v2":
                 raise ValueError("Unsupported trajectory dump schema")
+            if val_only and meta.get("partition_id") == "train":
+                continue
             context = RunnerContext.model_validate({field: meta[field] for field in RunnerContext.model_fields})
             partition = context.partition_id
             if partition not in counts or context.global_steps is None:
@@ -141,8 +158,9 @@ def audit_training(*, launch_path, agent_log_dir, rollout_data_dir, validation_d
             group["status"] = "admitted-and-training-batch-matched" if key[0] == "train" else "admitted-and-evaluated"
             group["has_reward_variance"] = len(set(group["rewards"])) > 1
             report["groups"].append(group)
-        if not any(group["partition_id"] == "train" for group in report["groups"]):
-            raise ValueError("No training groups")
+        required_partition = "val" if val_only else "train"
+        if not any(group["partition_id"] == required_partition for group in report["groups"]):
+            raise ValueError("No " + required_partition + " groups")
         for partition in counts:
             if set(rows[partition]) != known[partition]:
                 raise ValueError(f"Unexpected trainer rows: {partition}")
@@ -154,10 +172,12 @@ def audit_training(*, launch_path, agent_log_dir, rollout_data_dir, validation_d
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ("launch-path", "agent-log-dir", "rollout-data-dir", "validation-data-dir"):
+    for name in ("launch-path", "agent-log-dir", "validation-data-dir"):
         parser.add_argument("--" + name, type=Path, required=True)
-    for name in ("train-n", "validation-n"):
-        parser.add_argument("--" + name, type=int, required=True)
+    parser.add_argument("--rollout-data-dir", type=Path)
+    parser.add_argument("--train-n", type=int)
+    parser.add_argument("--validation-n", type=int, required=True)
+    parser.add_argument("--val-only", action="store_true")
     args = parser.parse_args()
     report = audit_training(**vars(args))
     print(json.dumps(report, sort_keys=True, indent=2, allow_nan=False))

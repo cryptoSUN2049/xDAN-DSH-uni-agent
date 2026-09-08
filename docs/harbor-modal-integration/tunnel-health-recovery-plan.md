@@ -9,3 +9,8 @@
 API：GET /v1/runs/{run_id}/status，沿用独立 registration bearer，不返回凭据；返回run_id/controller_id/run_spec_sha256/state/healthy。错误身份404，未授权401，断隧道healthy=false。不会绑定Gateway或修改任务。
 
 验收：认证/身份/未注册/已注册/断线状态测试；控制器退出原因测试；本地双向HTTP探针；远程启动前健康检查。训练最终仍需token/reward/optimizer/reload独立验收。保活10秒/2次保持不变，未证实根因不靠调大数值掩盖。
+
+## 独立 reload 的离线验收增量
+
+文件仅 `examples/harbor/audit_m2_training.py` 与对应 `test_harbor_offline_audit.py`。
+API 增加显式 `val_only=False` / CLI `--val-only`；默认仍要求训练组。显式模式只读取验证目录与 val 轨迹，必须有至少一个完整 val 组，不读取训练输出目录；继续复验独立 registration、原始 artifacts、NPZ、身份、TQ key 与 reward。报告仍不宣称 optimizer 更新。测试覆盖正常纯验证、默认拒绝纯验证、验证缺失或分数篡改拒绝，以及不存在的 train 目录不影响显式模式。

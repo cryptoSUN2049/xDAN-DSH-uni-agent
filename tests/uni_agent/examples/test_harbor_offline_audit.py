@@ -177,7 +177,8 @@ def test_validation_cannot_supply_training_consumption(audit_case):
 
 
 @pytest.mark.asyncio
-async def test_validation_is_reported_as_evaluated(audit_case, tmp_path):
+@pytest.mark.parametrize("mode", ["mixed", "val-only", "bad-score", "missing-val", "default-val-only"])
+async def test_validation_is_reported_as_evaluated(audit_case, tmp_path, mode):
     from examples.harbor.audit_m2_training import audit_training
 
     kwargs, _, dump, _ = audit_case
@@ -202,9 +203,24 @@ async def test_validation_is_reported_as_evaluated(audit_case, tmp_path):
     (kwargs["validation_data_dir"] / "4.jsonl").write_text(
         json.dumps(dict(step=4, uid="val-group_0_0", score=1.0)) + "\n"
     )
+    if mode != "mixed":
+        dump.unlink()
+        if mode != "default-val-only":
+            kwargs.update(val_only=True, rollout_data_dir=None, train_n=None)
+        if mode == "bad-score":
+            (kwargs["validation_data_dir"] / "4.jsonl").write_text(
+                json.dumps(dict(step=4, uid="val-group_0_0", score=0.0)) + "\n"
+            )
+        if mode == "missing-val":
+            (val_dump / "trajectory.json").unlink()
+            (kwargs["validation_data_dir"] / "4.jsonl").unlink()
     report = audit_training(**kwargs)
-    assert report["passed"], report
-    assert {group["status"] for group in report["groups"]} == {
-        "admitted-and-training-batch-matched",
-        "admitted-and-evaluated",
-    }
+    assert report["passed"] == (mode in {"mixed", "val-only"}), report
+    if mode == "val-only":
+        assert report["optimizer_update_verified"] is False
+        assert [group["status"] for group in report["groups"]] == ["admitted-and-evaluated"]
+    if mode == "mixed":
+        assert {group["status"] for group in report["groups"]} == {
+            "admitted-and-training-batch-matched",
+            "admitted-and-evaluated",
+        }
