@@ -4,6 +4,8 @@ from pathlib import Path
 
 from examples.dsh.capabilities.memory_verifier import canonical, sha
 
+WRITER_PROMPT_REVISION = "2"
+
 
 def writer_fixture(root: Path, chain_id: str, family: str):
     if family == "constraints":
@@ -21,6 +23,7 @@ def writer_fixture(root: Path, chain_id: str, family: str):
         "schema": "dsh.memory-stage.v1",
         "chain_id": chain_id,
         "role": "writer",
+        "prompt_revision": WRITER_PROMPT_REVISION,
         "family": family,
         "source_version": source_version,
         "source_path": str(root / "source.json"),
@@ -33,11 +36,18 @@ def writer_fixture(root: Path, chain_id: str, family: str):
 
 def writer_prompt(fixture):
     return (
-        f"Read {fixture['source_path']} with str_replace_editor. Preserve the current authoritative facts, "
+        f'Use str_replace_editor with command="view" to read {fixture["source_path"]}. '
+        "This source is read-only: never create, str_replace, or insert there, even a no-op edit. "
+        "Preserve the current authoritative facts, "
         "including the forbidden action; superseded facts must not replace current facts. "
         f"Write {fixture['memory_path']} as a JSON object with exactly source_version and facts. "
         f"Use source_version={fixture['source_version']!r}; copy the source's current facts object faithfully. "
-        "Use file tools to write persistent memory for a new independent session. Finish after writing."
+        f"The only writable target is {fixture['memory_path']}; it is a new file. "
+        f'Use str_replace_editor with command="create", path={fixture["memory_path"]!r}, '
+        "and file_text containing the serialized JSON string, not a nested tool-argument object. "
+        "In the outer JSON tool arguments, escape quotes and any newlines inside file_text correctly. "
+        "Do not use str_replace or insert to create the new file, and do not access other paths. "
+        "This persistent memory will be read by a new independent session. Finish after successful creation."
     )
 
 

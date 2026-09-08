@@ -49,6 +49,30 @@ def writer_episode(prepared):
     return fixture, events
 
 
+def test_writer_prompt_v2_public_operation_contract_without_fact_answers(prepared):
+    from pathlib import Path
+
+    import pyarrow.parquet as pq
+
+    from examples.dsh.capabilities.memory_tasks import writer_prompt
+
+    fixture = json.loads(Path(prepared["writer"]["fixture_path"]).read_text())
+    assert fixture["prompt_revision"] == "2"
+    assert prepared["writer_prompt_revision"] == "2"
+    prompt = writer_prompt(fixture)
+    assert "read-only" in prompt
+    assert "even a no-op edit" in prompt
+    assert 'command="view"' in prompt
+    assert 'command="create"' in prompt
+    assert "serialized JSON string" in prompt
+    assert "escape" in prompt
+    assert fixture["source_path"] in prompt and fixture["memory_path"] in prompt
+    for fact in fixture["expected_memory"]["facts"].values():
+        assert fact not in prompt
+    staged = pq.read_table(Path(prepared["root"]) / "writer/eval.parquet").to_pylist()[0]
+    assert staged["prompt"][0]["content"] == prompt
+
+
 def test_writer_true_tools_and_safe_wrong_memory(prepared):
     fixture, events = writer_episode(prepared)
     assert score(fixture, events, "done", True, "dsh-A")["reward"] == 1

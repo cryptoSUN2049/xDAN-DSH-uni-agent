@@ -2,6 +2,8 @@
 
 ## 1. TL;DR
 
+- 当前唯一GPU作业：context-v2-baseline-r3，PID128980；remote checkout固定a9c7b0a155da9b8d29da3d4d46a7c337156a54f3。4公开dev各1次真实strict推理，无optimizer。目录/root/runs/context-v2-baseline-r3，配套新-data。前轮writer已结束；本地memory初始协议提示修订并行中。运行中不切remote源码。
+
 - 最新终态：memory writer r2已270秒exit1，4steps/3工具调用；只读源修改被拒一次后成功create正确memory，因原合同unapproved_action硬拒，未freeze/B。PID125477已退出，先前运行状态已过时。
 - context view_range适配已完成：83项v2+v1回归通过，下一步新prepare与4dev真实准入验证，再短程RL诊断真实n4组。
 

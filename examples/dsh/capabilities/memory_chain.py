@@ -239,6 +239,7 @@ def prepare_writer(
     ]
     manifest = {
         "schema": "dsh.memory-chain-preparation.v1",
+        "writer_prompt_revision": fixture["prompt_revision"],
         "root": str(root),
         "chain_id": chain_id,
         "family": family,
