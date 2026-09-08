@@ -10,13 +10,13 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 用户再次明确最终交付：各核心组件版本、我方仓库分支/完整commit、部署产物摘要、模型/数据/评分输入与运行参数一并固定；提供可重复部署和运行的全链路工程包，并以实际复建验证。分支用于维护，完整commit用于复现；不得只提供版本说明或安装脚本而缺真实运行证据。
 本轮不以显著提分、全面记忆能力或完整RSI为完成条件。没有真实运行证明时不得标记通过。
 
-平台状态：用户提交新版目标后，get_goal已确认本会话新G1为active。按本文推进，不需要再次创建或恢复。
+执行状态：用户已明确持续推进原G1，当前新Pod连接恢复并正在真实运行。get_goal仍保留旧SSH故障时的blocked状态；现工具仅支持complete/blocked，不能据此重复创建目标或宣称完成。以下以新版证据为准。
 
 ## 2. 固定身份与更新规则
 
 | 对象 | 当前候选/要求 |
 | --- | --- |
-| 集成代码 | M1 v3运行固定dcbd323；验收工具3bb1b46；每次run保存完整40位commit |
+| 集成代码 | 当前T2部署代码2c7281ff23ce72462e6ed240603110b41686bf67；每次run保存实际完整40位commit，维护分支worktree-harbor-modal-integration |
 | 上游Uni-Agent | 89733ec81a69c3cc93ac90479de7ea7f01e51c1f |
 | 配对VERL | fefb080262e1c015a0ea05f958822a6a512dc795 |
 | GPU依赖 | 复用此VERL的uv.lock，fsdp+vllm；记录lock SHA256和实际安装清单 |
@@ -49,7 +49,8 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 - [x] 只读部署预检与3项边界测试。
 - [x] VERL frozen安装预演及254包隔离安装成功。
 - [x] CUDA前后向、模块导入检查通过；torch2.11+cu130、vLLM0.24，loss254.692459、gradient norm8.884957；不代表模型训练。
-- [ ] 模型/数据下载与身份冻结、原生训练、M1、M2、新效果验收。
+- [x] 固定Qwen3-4B模型/Tokenizer、T2四train与两public-dev及verifier身份。
+- [ ] 新版M1/M2有效在线RL更新、独立留出与最终复建验收。
 
 历史4步训练、64rollout、独立reload属于旧版本证据，不挪作本次完成证明。
 
@@ -58,7 +59,7 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 ### G1.0 环境可运行
 
 - [x] 固定GPU依赖和安装工具版本，执行CUDA有限数值前后向；vLLM/Ray/Transformers/TransferQueue/Uni-Agent/VERL可导入。
-- [ ] 运行选定模型的真实推理，验证Tokenizer、解析、结束原因和输出预算。
+- [x] 固定模型真实推理、Tokenizer/解析/预算诊断已执行；T2 baseline与SFT后eval保留真实失败证据。
 - [x] 确定DSH Linux runtime可分发来源，构建后跑不调用模型的SDK协议检查。
 - [x] 确定Harbor任务环境：RunPod无Docker；复用Mac Docker，固定amd64镜像实测SDK/Harbor setup与模型方向网络探针，无新付费服务。
 - 产物：安装log、uv.lock hash、package清单、GPU检查JSON、模型身份、DSH构建与smoke报告。
@@ -78,9 +79,9 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 - [ ] 固定模型与Harness先做留出基线eval，记录预算与完整失败分类。
 - [ ] 真实DSH进程经Gateway产生token/轨迹；任务、会话、模型、环境及fresh verifier receipt一一关联。
 - [ ] 严格准入完整rollout group；基础设施错误不冒充正常任务零分，unfinished/tamper/replay拒绝证据可审计。
-- [x] 小步训练：初始目标最多4个optimizer step；只有有效样本进入更新，loss/gradient有限。
-- [x] 比较同名可训练张量数值delta；LoRA只要求adapter变化，base冻结正确。checkpoint文件hash变化仅为辅助。
-- [x] 新进程加载明确checkpoint，核对键与模型身份，执行同一留出集同预算eval。
+- [ ] 新版在线RL小步训练：初始目标最多4个optimizer step；只有有效样本进入更新，loss/gradient有限。旧版通过记录不迁作新版；本轮SFT数值更新单列。
+- [ ] 新版在线RL同名可训练张量数值delta；LoRA只要求adapter变化，base冻结正确。checkpoint文件hash变化仅为辅助。
+- [ ] 新版在线RL checkpoint独立加载及同一留出集同预算eval；已完成的SFT独立加载与public-dev评估不替代此项。
 - 通过标准：轨迹确被优化器消费、更新有效、reload成功、前后评估均可复核；不要求4步显著提分。明显退化必须分析，不能作为能力发布。
 
 ### G1.3 M2：Harbor单任务训练增量
@@ -130,3 +131,16 @@ M2 Harbor端到端验收仍为G1必需范围；完整RSI和显著效果保持后
 - M1 v2因指标字典聚合异常exit1，仍为失败。v3独立运行exit0、两步非零梯度、504 LoRA张量变化/399 base冻结、10/10组消费审计通过；独立reload exit0、2/2组审计通过。同预算两题留出accuracy仍为0，不声称效果提升。详见docs/harbor-modal-integration/m1-v3-results.md。
 - M2 bridge提交eb536fb；真实borrowed Docker与控制隧道探针通过，模型通路/真实训练尚未完成。
 - 独立复建cf2d3f5新checkout+新venv安装及CUDA前后向通过，复用缓存/既有DSH wheel；完整交付审计尚未完成。
+
+## 当前 T2 证据与下一步（2026-09-08 新版运行）
+
+- [x] 新DSH runtime真实6case、18业务调用与完整注册/清理生命周期（脚本策略）。
+- [x] 来源绑定的56train/28dev决策；原生SFT累计56步，base399冻结、LoRA504数值更新；独立加载。
+- [x] SFT后学生public-dev 0/2，非法JSON/错误注册API；正确保留失败与fresh receipt，未改判据。
+- [x] 四条原注册决策补课64步，父BF16→FP32规范后LoRA504真实更新、optimizer64；不是新增示范。
+- [ ] 注册课程后独立完整学生评估（/root/runs/t2-registration-student-eval-r1进行中）。
+- [x] Harbor T2固定双镜像四Docker正反例：1/0/0/篡改拒绝，全部清理；私有Release回下载hash通过。
+- [ ] 新学生经Gateway→Harbor→Task业务重算→trajectory audit的完整准入。
+- [ ] 新版M1/M2真实在线RL消费和有效数值更新、独立reload、未参与训练的留出前后评估。
+
+当前任务范围是log-tool注册/调用/撤销的DSH能力子集，不宣称全面熟悉架构、跨会话记忆或RSI已训练完成。

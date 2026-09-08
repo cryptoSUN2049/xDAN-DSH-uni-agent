@@ -1,0 +1,33 @@
+{
+  "schema": "dsh.t2-registration-cpu-audit.v1",
+  "scope": "CPU checkpoint and original-course-row audit; no inference or RL claim",
+  "parent_checkpoint": "/workspace/runs/t2-sft-warm-r1/global_step_56",
+  "child_checkpoint": "/workspace/runs/t2-sft-registration-r1/global_step_64",
+  "base_tensors_bitwise_unchanged": 399,
+  "adapter_tensors": 504,
+  "adapter_dtype_transitions": {
+    "torch.bfloat16->torch.float32": 504
+  },
+  "adapter_comparison": "Parent BF16->FP32 exact embedding; compare values after lossless cast. Cast alone is not an update.",
+  "adapter_tensors_changed_after_normalization": 504,
+  "adapter_delta_max_abs": 0.003340101335197687,
+  "adapter_delta_l2": 4.467457958830768,
+  "optimizer_state_count": 504,
+  "optimizer_steps": [
+    64.0
+  ],
+  "optimizer_moment_tensors_finite": 1008,
+  "optimizer_moment_tensors_nonzero": 1008,
+  "curriculum_train_rows": 4,
+  "curriculum_source_ids": [
+    "log-tool-train-01:2",
+    "log-tool-train-02:2",
+    "log-tool-train-03:2",
+    "log-tool-train-04:2"
+  ],
+  "curriculum_original_rows_exact": true,
+  "curriculum_manifest_sha256": "sha256:7bf2ce4dbfc5d50cefa438d0ee66315e3da3a1af2fb31bf85b14092e9b51e3d2",
+  "parent_adapter_weights_sha256": "sha256:cbcfb9ddb2dd0ac4eeec61c980229d0216b28f0055b2a946a80846e2ef556d32",
+  "launch_manifest_sha256": "sha256:663c1c9404e55d7237ce3a48960a1d2ef876681188693e207f043b77f9a8b93a",
+  "script_sha256": "sha256:e81a103e08e12cd4bef805670044af097410b18a02dde087d5e788afa78fb57c"
+}

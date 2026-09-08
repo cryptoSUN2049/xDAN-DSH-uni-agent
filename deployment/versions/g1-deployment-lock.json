@@ -4,7 +4,7 @@
   "integration": {
     "repository": "https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent",
     "maintenance_branch": "worktree-harbor-modal-integration",
-    "code_revision": "79efaead0f7cefda1fea933e8e57138a18c636ff",
+    "code_revision": "2c7281ff23ce72462e6ed240603110b41686bf67",
     "upstream_revision": "89733ec81a69c3cc93ac90479de7ea7f01e51c1f",
     "verl_revision": "fefb080262e1c015a0ea05f958822a6a512dc795"
   },
@@ -101,5 +101,28 @@
     "New DSH M1 real updates and independent holdout reload evaluation",
     "GPU-side clean deployment/rebuild and evidence archive after connection recovery"
   ],
-  "historical_evidence_rule": "Old M1 success and local deployment checks are not evidence that the new full training combination passed."
+  "historical_evidence_rule": "Old M1 success and local deployment checks are not evidence that the new full training combination passed.",
+  "harbor_t2": {
+    "status": "scripted-integration-passed-student-training-pending",
+    "integration_revision": "2c7281ff23ce72462e6ed240603110b41686bf67",
+    "task_ref": {
+      "id": "t2-log-tool-dev-01",
+      "sha256": "sha256:3504fcb2fc4f8d02bb0dd9eee3a0f6812bc17f080ae154a926cd92618eff0d67",
+      "version": "v1"
+    },
+    "task_package_command": "python -m examples.harbor.prepare_t2_task --root <fixed-checkout> --output <new-output> --agent-image-digest sha256:b016c85140a58f7d842eadb0238925ee1c347143cc7bede5b9b35bfa38747dca --verifier-image-digest sha256:2d504ede65261caa1b16432508d20752c36f8df873b0e3ddf482ed11017c27fb",
+    "agent_image_id": "sha256:b016c85140a58f7d842eadb0238925ee1c347143cc7bede5b9b35bfa38747dca",
+    "verifier_image_id": "sha256:2d504ede65261caa1b16432508d20752c36f8df873b0e3ddf482ed11017c27fb",
+    "parent_agent_image_id": "sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97",
+    "patch": {
+      "path": "/opt/dsh-patches/evolution.patch.yml",
+      "paths_sha256": "sha256:20d51a73b697f36f397b22f408401cce14625238a95ae2d83aff317de6dd906d",
+      "sha256": "sha256:edace17a8096ec41e572c10fc7ad96f0d9a62c0a6ff9c8271694b4c1b1024aeb"
+    },
+    "private_release_url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/tag/harbor-t2-dsh-0.1.3a2-b016c851",
+    "archive_manifest": "docs/harbor-modal-integration/t2-image-release-manifest.json",
+    "archive_download_verification": "docs/harbor-modal-integration/t2-image-release-download-verification.json",
+    "scripted_verification": "docs/harbor-modal-integration/t2-harbor-scripted-r2-result.json",
+    "evaluation_scope": "public-development-not-hidden"
+  }
 }

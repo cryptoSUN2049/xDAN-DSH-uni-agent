@@ -1,0 +1,26 @@
+{
+  "release_url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/tag/harbor-t2-dsh-0.1.3a2-b016c851",
+  "passed": true,
+  "assets": [
+    {
+      "asset": "agent.tar.gz",
+      "sha256": "9db070fe5c6f5186718a2f6c81b140af1a1c39858a4c0f8f341e40d4a3a5846e",
+      "download_matches_original": true
+    },
+    {
+      "asset": "verifier.tar.gz",
+      "sha256": "641b53ea340a4d943dba012ff818a50e94f0bc6b7f2af4253937c92ee45aa4e8",
+      "download_matches_original": true
+    },
+    {
+      "asset": "manifest.json",
+      "sha256": "d4a0d6dbc4640113fcc55597e84b61f93915677e2a729b54be027f59617b520f",
+      "download_matches_original": true
+    },
+    {
+      "asset": "SHA256SUMS",
+      "sha256": "0e6a6504c1643cb6a77c9ac98f5529ed7a0efd5de0d4e2944af5102b2807b520",
+      "download_matches_original": true
+    }
+  ]
+}

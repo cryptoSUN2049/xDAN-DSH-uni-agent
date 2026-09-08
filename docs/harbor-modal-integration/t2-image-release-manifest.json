@@ -1,0 +1,24 @@
+{
+  "schema": "dsh.harbor-t2-image-archive.v1",
+  "release": "harbor-t2-dsh-0.1.3a2-b016c851",
+  "images": [
+    {
+      "tag": "uni-agent-dsh:t2-log-tool-r1",
+      "image_id": "sha256:b016c85140a58f7d842eadb0238925ee1c347143cc7bede5b9b35bfa38747dca",
+      "artifact": "agent.tar.gz",
+      "sha256": "9db070fe5c6f5186718a2f6c81b140af1a1c39858a4c0f8f341e40d4a3a5846e",
+      "bytes": 212260354,
+      "docker_config_sha256": "sha256:2fc040df55a7195365c48714d7b1c0f5cdc50385a2e8a4bcb5fcf13c23b5cf17",
+      "archive_identity_verified": true
+    },
+    {
+      "tag": "uni-agent-t2-verifier:r1",
+      "image_id": "sha256:2d504ede65261caa1b16432508d20752c36f8df873b0e3ddf482ed11017c27fb",
+      "artifact": "verifier.tar.gz",
+      "sha256": "641b53ea340a4d943dba012ff818a50e94f0bc6b7f2af4253937c92ee45aa4e8",
+      "bytes": 45833595,
+      "docker_config_sha256": "sha256:b57489abf8a4b00665a1ada97b6ca07b5c030cbb94f4db254c250ec3a952355e",
+      "archive_identity_verified": true
+    }
+  ]
+}
