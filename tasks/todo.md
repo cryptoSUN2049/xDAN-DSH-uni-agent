@@ -246,5 +246,13 @@ Review：本批只新增部署目录与设计；不将其标记为安装或部�
 
 - [x] 原生两步采样/评分/checkpoint及504个LoRA张量差异审计。
 - [x] DSH Linux runtime、官方wheels、安装后minimal/restart keyless smoke。
-- [ ] M1真实DSH奖励与有效更新、独立reload。
+- [x] M1真实DSH奖励与有效更新、独立reload（v3；详见m1-v3-results.md，未证明提分）。
 - Review：原生梯度零，不能记为有效更新；M2与整体G1仍未完成。
+
+### Harbor M2 执行环境增量（2026-09-08）
+
+- [x] BaseAgent bridge 与 borrowed adapter；相关59项复核通过，eb536fb已推送。
+- [x] 固定amd64 Python镜像实际仿真启动；DSH wheel校验与GitHub固定源下载。
+- [x] 离线构建DSH执行镜像，真实SDK initialize/shutdown与Harbor setup。
+- [ ] Docker到Gateway模型网络、任务结果绑定与真实VERL更新/reload。
+- Review：当前先验证部署兼容性；网络控制探针与SDK boot都不能代替M2模型训练。

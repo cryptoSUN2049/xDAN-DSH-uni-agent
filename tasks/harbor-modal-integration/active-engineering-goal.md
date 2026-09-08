@@ -64,14 +64,14 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 - [ ] 固定模型与Harness先做留出基线eval，记录预算与完整失败分类。
 - [ ] 真实DSH进程经Gateway产生token/轨迹；任务、会话、模型、环境及fresh verifier receipt一一关联。
 - [ ] 严格准入完整rollout group；基础设施错误不冒充正常任务零分，unfinished/tamper/replay拒绝证据可审计。
-- [ ] 小步训练：初始目标最多4个optimizer step；只有有效样本进入更新，loss/gradient有限。
-- [ ] 比较同名可训练张量数值delta；LoRA只要求adapter变化，base冻结正确。checkpoint文件hash变化仅为辅助。
-- [ ] 新进程加载明确checkpoint，核对键与模型身份，执行同一留出集同预算eval。
+- [x] 小步训练：初始目标最多4个optimizer step；只有有效样本进入更新，loss/gradient有限。
+- [x] 比较同名可训练张量数值delta；LoRA只要求adapter变化，base冻结正确。checkpoint文件hash变化仅为辅助。
+- [x] 新进程加载明确checkpoint，核对键与模型身份，执行同一留出集同预算eval。
 - 通过标准：轨迹确被优化器消费、更新有效、reload成功、前后评估均可复核；不要求4步显著提分。明显退化必须分析，不能作为能力发布。
 
 ### G1.3 M2：Harbor单任务训练增量
 
-- [ ] 一个固定的轻量任务，oracle验证环境/评分/产物/清理。
+- [x] 一个固定的轻量任务，oracle验证环境/评分/产物/清理。
 - [ ] DSH bridge使用Harbor拥有的环境，不重复创建sandbox；真实Gateway endpoint连通。
 - [ ] 保留trial/session/token/policy/verifier身份；正常任务失败与环境失败分开。
 - [ ] 对此组合执行真实VERL更新、数值变化检查、独立reload和小规模复评。
@@ -113,4 +113,6 @@ M2 Harbor端到端验收仍为G1必需范围；完整RSI和显著效果保持后
 
 - 原生诊断与DSH安装：docs/harbor-modal-integration/native-v1-and-dsh-runtime-results.md。
 - Harbor H0：本机Docker固定文件任务oracle=1/nop=0，无exception且专用容器/网络清理；不代替M2 DSH桥接/训练。
-- M1 v2基线实际产生两条fresh verifier回执，reward各0.25，但指标字典聚合异常exit1；修复后的v3正在独立复验，未追认有效更新。
+- M1 v2因指标字典聚合异常exit1，仍为失败。v3独立运行exit0、两步非零梯度、504 LoRA张量变化/399 base冻结、10/10组消费审计通过；独立reload exit0、2/2组审计通过。同预算两题留出accuracy仍为0，不声称效果提升。详见docs/harbor-modal-integration/m1-v3-results.md。
+- M2 bridge提交eb536fb；真实borrowed Docker与控制隧道探针通过，模型通路/真实训练尚未完成。
+- 独立复建cf2d3f5新checkout+新venv安装及CUDA前后向通过，复用缓存/既有DSH wheel；完整交付审计尚未完成。

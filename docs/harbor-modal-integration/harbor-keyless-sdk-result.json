@@ -1,0 +1,16 @@
+{
+  "architecture": "x86_64",
+  "runner_sha256": "sha256:a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+  "runtime_executable": "/usr/local/lib/python3.12/site-packages/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-linux-x64",
+  "schema": "dsh.keyless-sdk-smoke.v1",
+  "scope": "initialize-shutdown-only",
+  "status": "passed",
+  "versions": {
+    "deepseek-harness-runtime-bin": "0.1.2a1",
+    "deepseek-harness-sdk": "0.1.2a1",
+    "pydantic": "2.12.5"
+  },
+  "image_id": "sha256:9ab3e43d3c3c35070668d1d0fca60e31516727df431f00aedfd875479855fb37",
+  "container_cleanup_verified": true,
+  "model_rollout_verified": false
+}

@@ -273,3 +273,12 @@
 - 实际Harbor borrowed容器测试通过并清理；SSH控制reverse-forward探针通过，模型通路尚未验证。
 - 独立复建已启动：工具52307，/workspace/rebuild/uni-agent-cf2d3f5 + /workspace/venvs/uni-agent-rebuild-cf2d3f5；日志/reports/rebuild-cf2d3f5.log（实际完整路径/workspace/reports/），退出码rebuild-cf2d3f5.exit；先查询，不重复启动。
 - 用户提醒DSH最新架构入口及旧Session API转换器构建问题；upstream_harbor_verl子代理正在独立只读审计，报告dsh-session-api-impact-audit.md。不升级固定7840。
+
+## M2 容器执行部署通过（2026-09-08）
+
+- bridge已提交推送eb536fb；本轮59相关测试复核通过。
+- deployment/harbor/Dockerfile离线安装固定DSH7840双wheel与Pydantic2.12.5；最小8源码来自GitHub eb536fb完整SHA。版本及哈希在deployment/versions/harbor-execution-image.json。
+- 镜像9ab3e43d…为linux/amd64，在Mac ARM64仿真；真实keyless SDK启动/关闭与Harbor bridge.setup均通过，测试环境已清理。无模型调用，不是M2训练证据。
+- 实际构建上下文/private/tmp/dsh-harbor-image-eb536fb，wheel原件/private/tmp/dsh-harbor-runtime-7840，构建日志/private/tmp/dsh-harbor-image-build.log；镜像只在本机未发布registry。
+- 可重跑入口：deployment/checks/keyless_sdk_smoke.py（镜像内）、harbor_dsh_setup_smoke.py（Harbor宿主）；参数见deployment/harbor/README.md。
+- 下一步D2完整Gateway模型网络探针，再实现远程Task/结果绑定与M2真实更新/reload。当前GPU无计算进程（本轮查询），M1 v3与reload已结束；勿重复启动旧run。
