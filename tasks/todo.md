@@ -142,3 +142,10 @@ Review：main本地/远端均d723b5f；正常快进无force，未修改集成工
 - [x] 核查路径和事实、保存版本/来源摘要，更新本分支handoff并提交；不修改另一会话工作区或远端服务。
 
 Review：参考MD共222行，已核对所有本地Markdown链接；独立源码复核补充Task注册、Gateway生命周期、训练身份与TQ接续入口。GPU和测试数字引用既有报告，本轮未复跑；未修改目标工作区或远端服务。
+
+## 2026-09-08：DSH源码推送增量影响核查
+
+- [x] 比较b2369692ea→e4a628ed3e提交和Python AST，核查Harbor仍固定7840。
+- [x] 在参考MD补充9.1节，明确source/wheel/image/run边界和升级交付链；更新lessons。
+
+Review：只读本地DSH与Harbor代码，未查询远端Release、构建运行时或变更运行环境；远端发布状态明确引用用户回执。

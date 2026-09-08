@@ -190,6 +190,16 @@ GKD与on-policy distillation有重叠；text-only教师可先用于示范/纠错
 
 优先来源：[最新架构影响审计](../../.Codex/worktrees/harbor-modal-integration/docs/harbor-modal-integration/dsh-latest-architecture-impact-audit.md)、[Session v2实测结果](../../.Codex/worktrees/harbor-modal-integration/docs/harbor-modal-integration/dsh-session-v2-test-results.md)。这些文件本次读取时部分尚未提交；使用前核查当前diff和最终归档。
 
+### 9.1 后续增量：DSH源码推送至e4a628ed3e
+
+用户随后提供源码推送回执截图；本机DSH HEAD已核对为`e4a628ed3e`，包含此前`b2369692ea`。两者之间新增`7405a7cc9d`（Python Ruff整理）和`e4a628ed3e`（架构/推送基线文档）。本轮没有重新查询GitHub或Release，远端推送及尚未发布新版Linux产物的状态以用户回执为来源。
+
+- 影响参考版本与后续构建身份，不改变既有G1目标或M2接线结论。新版Session v2及转换器修复已在前一基线存在，并非这两个增量提交新引入。
+- 独立比较26个修改的Python文件：22个AST完全一致；其余4个涉及bootstrap导入位置、SDK测试与文档renderer清理。SDK客户端、runtime打包入口和DSH adapter在这次比较中AST一致；AST检查不替代Linux运行回归。
+- 当前Harbor的`deployment/versions/dsh-runtime-candidate.json`及`harbor-execution-image.json`仍固定`7840bced`。源码推送不会更新已安装wheel、已构建镜像或正在运行的进程。
+- 若另行选择升级，交付链应为：固定完整source SHA → Linux构建配套SDK/runtime wheels → 保存SHA256/平台/依赖manifest → 干净环境安装与启动退出验证 → 发布可下载产物 → 更新Harbor版本清单与镜像 → 真实Gateway/trace/receipt回归 → update及独立reload。保留旧版产物供回退。
+- 本文件版本表保留最初读取快照；后续新版构建应选最终确认的提交，不能继续将`b2369692ea`称为最新HEAD。DSH内的旧`verification.json`还含`publication.pushed=false`和prepared状态，不能用历史字段否定用户后续推送回执。
+
 ### 10. G1最终证据包最小清单
 
 - [ ] resolved run manifest：完整Git/verl/DSH/model/tokenizer/template/镜像/task/verifier版本与预算。
