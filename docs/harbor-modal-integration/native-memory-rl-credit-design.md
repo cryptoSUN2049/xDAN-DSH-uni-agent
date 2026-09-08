@@ -213,3 +213,13 @@ constraints/updates两个简单诊断可能使所有A/B满分。严格A reward1�
 修改memory_credit `_trajectory`，严格要求complete=true、两个正整数count一致；仍要求min=max=expected实际版本。默认其他任务不改变准入。测试先验证混合缺失被旧min/max遮蔽的红例，再覆盖全缺失/全同版/跨版/独立context/容量materialization/rollback，明确context追加不新增generation计数；更新既有extra_fields精确字典断言以容纳观测字段。此批不改Framework或TQ。
 
 该增量已实现：4项新增Gateway用例先因字段缺失失败；完成后Gateway完整文件、memory credit和固定GRPO数学测试合计108项CPU通过。额外覆盖容量已满的未发送请求不计数、独立context不互相补齐、rollback删除缺版本旧响应后计数正确。全仓Ruff check/format-check通过。Gateway types文档同步；现有合法min/max行为保留，缺失/非法mark不伪造版本。未运行GPU或调整Framework/TQ。
+
+### 独立训练 stage verifier 增量（已批准）
+
+新增 `examples/dsh/capabilities/memory_training_verifier.py`，ID=dsh-memory-file-chain-training-stage、version=1，独立bundle摘要包含旧memory verifier bundle与新入口源码。新fixture附 `training_stage`（schema=dsh.memory-training-stage.v1、split=train/validation、run_id/group_uid/sibling/checkpoint_identity），与metadata逐项一致；task_id为dsh/memory-training/<chain>/<role>。仅新入口接受train/validation，test一律拒绝；原eval入口不变。
+
+verify完整验证env身份、envelope摘要、fixture摘要、trace与session，再复用原score。输出scope=training-stage、credit_assignment=stage-only（不含跨会话信用）；eligible/finished/unsafe/reward不变。训练身份写入回执extra_info与evidence供控制端审核；训练split和validation split不互换。新CPU测试用真实DshArchitectureTask处理新入口subprocess回执，再接真实trajectory_audit训练/验证partition，agent轨迹明确为合成fixture，不冒充模型运行。负例覆盖旧test回执/fixture身份混用、hash/代码版本/未完成/越权；不改A reward1冻结门或Framework。
+
+此增量已实现，新增13项CPU入口测试，与旧DSH Task/audit及memory chain回归共91项通过；全仓Ruff通过。实际CPU接线路径为合成writer动作→真实DSH Task→真实新verifier子进程→新回执文件→真实trajectory_audit(train/val)，没有伪造verifier stdout。测试还覆盖validation回执不可进train、test被新入口拒绝、fixture split与metadata不一致、进程版本/digest/trace/split篡改、未完成和越权。旧memory_verifier文件未改。
+
+接线注意：DSH Task不把verifier extra_info平铺在TaskResult.extra_info；具体位置为 `result.extra_info['verifier']['extra_info']`，其中含training_stage与credit_assignment。原reward_info.dsh仍承载标准session/receipt身份。元数据中的environment_digest/verifier_id/verifier_version/verifier_code_digest必须显式与operator配置一致；仅在config设置而metadata遗漏，会被独立入口的身份核验拒绝。chain/runtime字段身份来源与回执核验仍由下一控制端完成，本入口不接受仅凭policy版本标签便宣称on-policy。
