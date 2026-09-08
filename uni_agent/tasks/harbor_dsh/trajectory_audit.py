@@ -14,6 +14,7 @@ from uni_agent.tasks.dsh.trajectory_audit import TrajectoryAuditError, _require_
 
 from .client import DownloadedJob
 from .evolution_scoring import EvolutionBinding, FrozenEvolution, load_evolution_binding
+from .evolution_scoring_v2 import EvolutionV2Binding, FrozenEvolutionV2, load_evolution_v2_binding
 from .protocol import JobRequest, OpaqueId, RequestPolicy, TaskRef, validate_manifest, validate_request
 from .task import (
     FrozenT2Fixture,
@@ -22,6 +23,7 @@ from .task import (
     _canonical,
     _digest,
     _evolution_receipt,
+    _evolution_receipt_key,
     _fixture_lane,
     _json,
     _object,
@@ -80,7 +82,7 @@ def _verify_saved(
     policy: RequestPolicy,
     instruction: str,
     t2_fixture: FrozenT2Fixture | None = None,
-    evolution: FrozenEvolution | None = None,
+    evolution: FrozenEvolution | FrozenEvolutionV2 | None = None,
 ) -> tuple[dict, str, float]:
     request_data, _ = _read_object(directory, "request.json")
     parsed = JobRequest.model_validate(request_data)
@@ -128,7 +130,7 @@ def _verify_saved(
     if t2_fixture is not None:
         expected["t2_fixture_sha256"] = t2_fixture.sha256
     if evolution is not None:
-        expected["evolution_binding"] = _evolution_receipt(evolution)
+        expected[_evolution_receipt_key(evolution)] = _evolution_receipt(evolution)
     # Canonical comparison also distinguishes bool/int/float substitutions.
     if _canonical(body) != _canonical(expected):
         raise TrajectoryAuditError("Harbor receipt does not bind the verified evidence and Framework context")
@@ -150,6 +152,7 @@ def validate_trajectories(
     instruction: str,
     t2_fixture: Mapping[str, object] | T2FixtureBinding | None = None,
     evolution_binding: Mapping[str, object] | EvolutionBinding | None = None,
+    evolution_v2_binding: Mapping[str, object] | EvolutionV2Binding | None = None,
 ) -> list[Trajectory]:
     """FQN postprocessor; all kwargs except context must be operator configured.
 
@@ -162,6 +165,8 @@ def validate_trajectories(
         trusted_context = RunnerContext.model_validate(dict(context))
         trusted_policy = RequestPolicy.model_validate(policy)
         trusted_task = TaskRef.model_validate(task_ref)
+        if sum(value is not None for value in (t2_fixture, evolution_binding, evolution_v2_binding)) > 1:
+            raise TrajectoryAuditError("T2 and evolution v1/v2 bindings are mutually exclusive")
         fixture = (
             load_t2_fixture(T2FixtureBinding.model_validate(t2_fixture), trusted_task)
             if t2_fixture is not None
@@ -176,6 +181,12 @@ def validate_trajectories(
             if evolution_binding is not None
             else None
         )
+        if evolution_v2_binding is not None:
+            evolution = load_evolution_v2_binding(
+                EvolutionV2Binding.model_validate(evolution_v2_binding),
+                trusted_task,
+                repository_root=Path(__file__).resolve().parents[3],
+            )
         _fixture_lane(trusted_policy.dsh_release, trusted_task, fixture, evolution)
         TypeAdapter(OpaqueId).validate_python(run_id)
         TypeAdapter(OpaqueId).validate_python(worker_id)

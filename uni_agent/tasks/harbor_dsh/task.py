@@ -36,6 +36,14 @@ from .evolution_scoring import (
     require_evolution_admission,
     score_evolution,
 )
+from .evolution_scoring_v2 import (
+    EVOLUTION_V2_KIND,
+    EvolutionV2Binding,
+    FrozenEvolutionV2,
+    load_evolution_v2_binding,
+    require_evolution_v2_admission,
+    score_evolution_v2,
+)
 from .protocol import (
     Contract,
     JobRequest,
@@ -113,7 +121,7 @@ def _fixture_lane(release, task_ref, fixture, evolution=None):
     if evolution is not None:
         metadata = _object(_json(evolution.metadata_raw))
         if (
-            evolution.kind != EVOLUTION_KIND
+            evolution.kind not in (EVOLUTION_KIND, EVOLUTION_V2_KIND)
             or evolution.task_ref != task_ref
             or _digest(evolution.fixture_raw) != evolution.fixture_sha256
             or _digest(evolution.metadata_raw) != evolution.metadata_sha256
@@ -124,13 +132,20 @@ def _fixture_lane(release, task_ref, fixture, evolution=None):
             raise ValueError("Frozen evolution TaskRef/deployment identity mismatch")
 
 
+def _evolution_receipt_key(frozen):
+    return "evolution_v2_binding" if frozen.kind == EVOLUTION_V2_KIND else "evolution_binding"
+
+
 def _evolution_receipt(frozen):
-    return {
+    value = {
         "kind": frozen.kind,
         "fixture_sha256": frozen.fixture_sha256,
         "metadata_sha256": frozen.metadata_sha256,
         "source_sha256s": dict(frozen.source_sha256s),
     }
+    if frozen.kind == EVOLUTION_V2_KIND:
+        value["verifier_bundle_sha256"] = frozen.verifier_bundle_sha256
+    return value
 
 
 def _verify_t2_business(trace: bytes, reward: float, fixture: FrozenT2Fixture):
@@ -156,7 +171,10 @@ class HarborDshTaskConfig(TaskConfig):
     task_ref: TaskRef
     t2_fixture: T2FixtureBinding | None = None
     evolution_binding: EvolutionBinding | None = None
-    task_config_optional_only_fields: ClassVar[frozenset[str]] = frozenset({"t2_fixture", "evolution_binding"})
+    evolution_v2_binding: EvolutionV2Binding | None = None
+    task_config_optional_only_fields: ClassVar[frozenset[str]] = frozenset(
+        {"t2_fixture", "evolution_binding", "evolution_v2_binding"}
+    )
     policy: RequestPolicy
     worker_url: str
     worker_token: SecretStr = Field(exclude=True, repr=False)
@@ -230,7 +248,7 @@ def verify_downloaded_evidence(
     *,
     worker_id: str,
     t2_fixture: FrozenT2Fixture | None = None,
-    evolution: FrozenEvolution | None = None,
+    evolution: FrozenEvolution | FrozenEvolutionV2 | None = None,
 ) -> float:
     """Pure second-side evidence check; does not attest worker or Gateway tokens."""
     _fixture_lane(request.dsh_release, request.task_ref, t2_fixture, evolution)
@@ -308,7 +326,11 @@ def verify_downloaded_evidence(
     if t2_fixture is not None:
         _verify_t2_business(by_kind["dsh_trace"], float(reward["reward"]), t2_fixture)
     if evolution is not None:
-        evaluation = score_evolution(
+        scorer = score_evolution_v2 if evolution.kind == EVOLUTION_V2_KIND else score_evolution
+        admission = (
+            require_evolution_v2_admission if evolution.kind == EVOLUTION_V2_KIND else require_evolution_admission
+        )
+        evaluation = scorer(
             frozen=evolution,
             task_ref=request.task_ref,
             trace=by_kind["dsh_trace"],
@@ -317,7 +339,7 @@ def verify_downloaded_evidence(
             run_sha256=_digest(by_kind["dsh_result"]),
             gateway_session_id=session,
         )
-        require_evolution_admission(evaluation, float(reward["reward"]))
+        admission(evaluation, float(reward["reward"]))
     return float(reward["reward"])
 
 
@@ -349,8 +371,14 @@ class HarborDshTask(Task):
     config_model = HarborDshTaskConfig
 
     def __init__(self, config: HarborDshTaskConfig):
-        if config.t2_fixture is not None and config.evolution_binding is not None:
-            raise ValueError("T2 and evolution bindings are mutually exclusive")
+        if (
+            sum(
+                value is not None
+                for value in (config.t2_fixture, config.evolution_binding, config.evolution_v2_binding)
+            )
+            > 1
+        ):
+            raise ValueError("T2 and evolution v1/v2 bindings are mutually exclusive")
         super().__init__(config.model_copy(deep=True))
         self._fixture = load_t2_fixture(config.t2_fixture, config.task_ref) if config.t2_fixture is not None else None
         self._evolution = (
@@ -360,6 +388,10 @@ class HarborDshTask(Task):
             if config.evolution_binding is not None
             else None
         )
+        if config.evolution_v2_binding is not None:
+            self._evolution = load_evolution_v2_binding(
+                config.evolution_v2_binding, config.task_ref, repository_root=Path(__file__).resolve().parents[3]
+            )
         _fixture_lane(config.policy.dsh_release, config.task_ref, self._fixture, self._evolution)
         self._ran = False
 
@@ -465,7 +497,7 @@ class HarborDshTask(Task):
             if self._fixture is not None:
                 body["t2_fixture_sha256"] = self._fixture.sha256
             if self._evolution is not None:
-                body["evolution_binding"] = _evolution_receipt(self._evolution)
+                body[_evolution_receipt_key(self._evolution)] = _evolution_receipt(self._evolution)
             receipt_id = _digest(_canonical(body))
             _write(directory, "receipt.json", _canonical({**body, "receipt_id": receipt_id}))
             os.fsync(directory)

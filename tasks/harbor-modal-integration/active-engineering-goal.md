@@ -2,6 +2,9 @@
 
 更新：2026-09-08。训练集成主线：worktree-harbor-modal-integration。
 
+> 当前运行：固定代码2df91d7，v2-r4已提交GPU启动（supervisor70864），待运行验收。用户云盘已扩到500 GB，写入通过；r1/r2配额失败、r3启动命令错误均保留。checkpoint=/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4。
+> 验收索引：[acceptance-tracker.md](acceptance-tracker.md)。历史运行更新不替代此处当前状态。
+
 ## 1. 目标与完成边界
 
 在用户现有 RTX PRO 6000 GPU 服务器，以固定代码、依赖、模型、任务和评分版本，交付通过 GitHub 可复建的 DSH → Uni-Agent → VERL 训练闭环，并完成一个 Harbor 任务的端到端训练增量。必须有真实执行、可信奖励、优化器更新、可训练张量数值变化、独立 checkpoint reload 和训练前后留出评估证据。
@@ -155,6 +158,18 @@ M2 Harbor端到端验收仍为G1必需范围；完整RSI和显著效果保持后
 - [ ] 新v2 GPU采样/有效数值更新/独立reload与留出评估。
 - [ ] Harbor新课程真实Docker和学生M2更新，再完成可复建交付。
 
-本检查点为工程进行中，不将CPU通过、SFT更新或自然exit0替代完整G1验收。当前服务器没有本会话训练进程；新版代码尚未部署。
+本检查点为工程进行中，不将CPU通过、SFT更新或自然exit0替代完整G1验收。此句原为提交时状态；最新部署和进程以本文顶部当前运行状态为准。
 
 检查点验证：611项组合CPU测试通过，无skip；Ruff check/format与diff空白检查通过。新增真实Docker执行尚未运行，不以CPU结果代替。
+
+当前执行覆盖：2df91d7已拉取GPU，v2源/配置哈希核验通过，/root/runs/dsh-redact-m1-v2-r1（supervisor63737）已启动两步/2700秒回归；尚未验收通过。旧“未部署/无训练进程”只描述提交检查点时刻。
+
+### 2026-09-08 checkpoint持久目录与容量阻塞
+
+- 用户要求统一`/workspace/uni-agent-g1/checkpoint/<run-name>`，启动设置`CKPTS_DIR`，不再默认临时本地盘。
+- v2-r1首次保存失败；v2-r2在Hydra写配置时退出，未启动有效训练。实际1 MiB写入返回errno122，云盘全局df空闲不代表用户配额。
+- 恢复至少25 GiB可用配额后新run重试；历史有效checkpoint不删除，G1未完成。
+
+### 容量恢复与v2-r3实跑
+
+用户将网络云盘扩至500 GB；1 MiB实际写入落盘通过。已启动r3（PID70820，2steps/2700秒），checkpoint=/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r3。未删除历史文件。待梯度、数值、消费审计和独立reload验收。

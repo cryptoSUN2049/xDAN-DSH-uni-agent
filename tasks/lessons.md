@@ -120,3 +120,7 @@
 - 修复准入必须独立版本、绑定父源码与新数据身份，失败仍得0；不改旧reward/receipt或将安全门整体放开。
 - exit0、保存checkpoint与有效参数更新不同；逐张量检查无变化时明确失败，不能因留出基线满分宣称训练提升。
 - 短SSH探针成功不能代表训练周期的长连接稳定；记录完整观测窗和断后证据，有限抖动容忍不等于根因已解决。
+
+- GPU checkpoint按用户指定持久目录`/workspace/<project>/checkpoint/<run>`保存。配额不足先实际write+fsync核验，不能用共享文件系统df推断用户配额；不能只迁checkpoint而遗漏Hydra等写入，或静默切换到易失/root。
+
+- SSH远端heredoc须对整个远端命令作正确shell引用；内嵌Python引号可能被外层shell吃掉。后台PID返回不代表训练启动成功，必须检查supervisor.log、train.log及持续存活。

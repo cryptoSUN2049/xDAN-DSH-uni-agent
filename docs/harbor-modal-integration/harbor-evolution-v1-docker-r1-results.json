@@ -1,0 +1,182 @@
+{
+  "scope": "scripted Harbor/DSH integration; no student, Gateway tokens or training",
+  "passed": true,
+  "process_exit_code": 0,
+  "task_ref": {
+    "id": "evolution-redact-train-01",
+    "version": "v1",
+    "sha256": "sha256:c1863007130a2894bc064356d89771acced9dfdd54e8d8832c62718a51d28609"
+  },
+  "source_commit": "2df91d7de31b9ecacefeaad1c54dbea80028eead",
+  "source_dirty": false,
+  "agent_image_digest": "sha256:93db845150fccdd2b5cc34714087138056045f50f09fdb1ab6d48e92a856b3bf",
+  "verifier_image_digest": "sha256:30f0fa534c18e82843a76fa93bf2affb98b15fbd9117307b1acbdd2f2fc7c726",
+  "runtime_sha256": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+  "source_manifest_sha256": "sha256:1e22ec154e30d1d3394c394b837be6cddcb5067da32ab895058d5347298854d7",
+  "fixture_sha256": "sha256:7bee382f0329b19c6194780532262aa244f66fa5b34e31e3fa48d7e7dddeda04",
+  "metadata_sha256": "sha256:dc392171e4b58c6ed52eb65d35a1141ca3c56742c2d1ba13e680202156c44e79",
+  "source_sha256s": {
+    "examples/dsh/evolution_verifier.py": "sha256:067668803e5f6fdb5f64cd44a17e2f4baef8835e4681a02cdf35d9f6bb4e3748",
+    "examples/dsh/verifier.py": "sha256:eb5e0d68779739d04e1038534e5f2799a44cf299e7325ba2f6bef5c793ecf2cd"
+  },
+  "policy_source_sha256": "6db060ff9b5d1b20c98ee68f57c434dafb4b2ab4b2720af35e0088f8bcf69852",
+  "local_artifact_root": "/private/tmp/harbor-evolution-v1-docker-r1",
+  "remote_package_root": "/root/runs/harbor-evolution-v1-package-r1",
+  "scripted_smoke_sha256": "sha256:b346549f73c8b125eadf36d34232bb54d4ff25b0bf1f8ba6de7389cb22f5772d",
+  "package_manifest_sha256": "sha256:c2908020e95d8ea1444d15c2f544c1e79522157cfd571d96ca8278f2b8880bad",
+  "package_tar_sha256": "sha256:a1e1cacae164a83b22e09e064a03d12a3bf38f4623e314ff7213e52776fa8344",
+  "cases": [
+    {
+      "mode": "positive",
+      "gateway_session_id": "evolution-a9af627792c444189785b7528df0b7b8",
+      "cleanup_confirmed": true,
+      "exception": null,
+      "rewards": {
+        "reward": 1.0
+      },
+      "passed": true,
+      "request_count": 8,
+      "server_errors": [],
+      "event_count": 48,
+      "dsh_finished": true,
+      "setup": {
+        "patches": [
+          {
+            "path": "/opt/dsh-patches/evolution.patch.yml",
+            "sha256": "sha256:edace17a8096ec41e572c10fc7ad96f0d9a62c0a6ff9c8271694b4c1b1024aeb"
+          }
+        ],
+        "runner_sha256": "sha256:a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+        "runtime_version": "0.1.3a2",
+        "sdk_version": "0.1.3a2"
+      },
+      "artifact_sha256s": {
+        "agent/dsh/agent-result.json": "sha256:2323d9f234ece972f9f27624b79cfdf9f962a5b0549d556a6191fb0d70412698",
+        "agent/dsh/run.json": "sha256:e4c71ec64f94b70e229588d4cf4ad4188890053475c742eeaf93e798db321c37",
+        "agent/dsh/session.jsonl": "sha256:c380335bd8acf7a3ba020e4347671faa666895a81718ddfaf453ae8099085579",
+        "agent/dsh/setup.json": "sha256:81e746b5278aaea63fe4745cecdf39728b28dd07a5352230d6969db6a85eab26",
+        "agent/dsh/status.json": "sha256:1de9ad985a189ed25f69615af937979203c45eff601a84a845f8792b8b7fdb65",
+        "result.json": "sha256:f923cf10a7cee26d07a4099a2fefce6952ac65ade6f7d7427275bf2586e4afd1",
+        "trial.log": "sha256:5868e519b78e4f2f267470e411fb5e62ab85729eb3642ffbddd64e569930f993",
+        "verifier/evolution-report.json": "sha256:0bfb18d9b030fcb679388cdf3dc9f9447df4ab3e7351df6a05e9c1f652cf51bc",
+        "verifier/reward.txt": "sha256:5717e7c840171019a4eeab5b79a7f894a4986eaff93d04ec5b12c9a189f594bf",
+        "verifier/test-stdout.txt": "sha256:fc4b1cc8604b6dfe88a20113e393151f22aff50e78c7865e1cc14e5bfa5447ad"
+      }
+    },
+    {
+      "mode": "partial",
+      "gateway_session_id": "evolution-3efba573a42740e19c1ef3396e53bc75",
+      "cleanup_confirmed": true,
+      "exception": null,
+      "rewards": {
+        "reward": 0.25
+      },
+      "passed": true,
+      "request_count": 7,
+      "server_errors": [],
+      "event_count": 43,
+      "dsh_finished": true,
+      "setup": {
+        "patches": [
+          {
+            "path": "/opt/dsh-patches/evolution.patch.yml",
+            "sha256": "sha256:edace17a8096ec41e572c10fc7ad96f0d9a62c0a6ff9c8271694b4c1b1024aeb"
+          }
+        ],
+        "runner_sha256": "sha256:a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+        "runtime_version": "0.1.3a2",
+        "sdk_version": "0.1.3a2"
+      },
+      "artifact_sha256s": {
+        "agent/dsh/agent-result.json": "sha256:c847107c0cde0a5af58e2f53ec7e72fc5f9e3f04bdb1a77524cf181e59740240",
+        "agent/dsh/run.json": "sha256:ed0fc82af21f448df46e7b9fd007ff093b7acf2370c560a268f3cb93b66b4ed0",
+        "agent/dsh/session.jsonl": "sha256:601c0ef1cf601911528a4e359dc30616d5f32fb308188907f9bd46993ac54c92",
+        "agent/dsh/setup.json": "sha256:81e746b5278aaea63fe4745cecdf39728b28dd07a5352230d6969db6a85eab26",
+        "agent/dsh/status.json": "sha256:f038aaf5fd23c4dbc53bf6032672c79c611569274537f7bd4723dd30bda0215d",
+        "result.json": "sha256:787a155cec1916415e49859ec99279bd2cb1e630a5bfe60e2d982ce385d362a8",
+        "trial.log": "sha256:5868e519b78e4f2f267470e411fb5e62ab85729eb3642ffbddd64e569930f993",
+        "verifier/evolution-report.json": "sha256:0794d1e351b9f9b5460984185450a769966f0b7e92c736bb19873b68ca9128ff",
+        "verifier/reward.txt": "sha256:7747240b40ef7064f499d4ddd256767cba251ce7c2cc4b26faf542d9a2c5c104",
+        "verifier/test-stdout.txt": "sha256:a5d35b086c58ff1909d97fd65573da0e674a5bf70ae16248fe854dffaa75e712"
+      }
+    },
+    {
+      "mode": "missing_define",
+      "gateway_session_id": "evolution-ef3c5959c89b44ad934c66aef4d0cd9a",
+      "cleanup_confirmed": true,
+      "exception": {
+        "exception_type": "RewardFileNotFoundError",
+        "exception_message": "No reward file found at /private/tmp/harbor-evolution-v1-docker-r1/smoke-r1/evolution-ef3c5959c89b44ad934c66aef4d0cd9a/verifier/reward.txt or /private/tmp/harbor-evolution-v1-docker-r1/smoke-r1/evolution-ef3c5959c89b44ad934c66aef4d0cd9a/verifier/reward.json",
+        "exception_traceback": "Traceback (most recent call last):\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/trial.py\", line 345, in run\n    await self._run()\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/single_step.py\", line 46, in _run\n    await self._run_verifier()\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/single_step.py\", line 92, in _run_verifier\n    self.result.verifier_result = await self._run_separate_verifier(\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/trial.py\", line 589, in _run_separate_verifier\n    return await asyncio.wait_for(\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/tasks.py\", line 520, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/verifier/verifier.py\", line 232, in verify\n    raise RewardFileNotFoundError(\nharbor.verifier.verifier.RewardFileNotFoundError: No reward file found at /private/tmp/harbor-evolution-v1-docker-r1/smoke-r1/evolution-ef3c5959c89b44ad934c66aef4d0cd9a/verifier/reward.txt or /private/tmp/harbor-evolution-v1-docker-r1/smoke-r1/evolution-ef3c5959c89b44ad934c66aef4d0cd9a/verifier/reward.json\n",
+        "occurred_at": "2026-09-08T21:26:43.835097"
+      },
+      "rewards": null,
+      "passed": true,
+      "request_count": 3,
+      "server_errors": [],
+      "event_count": 21,
+      "dsh_finished": true,
+      "setup": {
+        "patches": [
+          {
+            "path": "/opt/dsh-patches/evolution.patch.yml",
+            "sha256": "sha256:edace17a8096ec41e572c10fc7ad96f0d9a62c0a6ff9c8271694b4c1b1024aeb"
+          }
+        ],
+        "runner_sha256": "sha256:a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+        "runtime_version": "0.1.3a2",
+        "sdk_version": "0.1.3a2"
+      },
+      "artifact_sha256s": {
+        "agent/dsh/agent-result.json": "sha256:c200cc57a04fd4b6ac42f94db88571a5885d04081819f2130ff060fe6b805c14",
+        "agent/dsh/run.json": "sha256:8b0b89e6afd72d5628615342b602a249091467e02c9c0df0240b34e7b43a4e0c",
+        "agent/dsh/session.jsonl": "sha256:9cfcae4cc9285a1bd16549a8b489e07ba680937a6270f640d624e83dfdddc6f7",
+        "agent/dsh/setup.json": "sha256:81e746b5278aaea63fe4745cecdf39728b28dd07a5352230d6969db6a85eab26",
+        "agent/dsh/status.json": "sha256:3894492332c40796c15fd806a793ebf7e8286e16fb77793b9cabc04e02f99ac9",
+        "exception.txt": "sha256:2aec5a182a774c8ced9aeb885763ba4994305c763745b1dbe9012ec66bd9d203",
+        "result.json": "sha256:fdb12a545f46524ddca69176217e9fecf201c3d04104f489c461dadce87ee82e",
+        "trial.log": "sha256:3d04d1221c041505914cb7e8ad17a0b2f8ff4e31e3c75a4f63996b788b678506",
+        "verifier/test-stdout.txt": "sha256:28871f45d3c154b6c322db91c80ce10c1d5549397c04927fc84bce77e2763dbf"
+      }
+    },
+    {
+      "mode": "tamper",
+      "gateway_session_id": "evolution-8684a9af20b1419e86fecbf1918e030c",
+      "cleanup_confirmed": true,
+      "exception": {
+        "exception_type": "ValueError",
+        "exception_message": "Bridge trace/status/session identity mismatch",
+        "exception_traceback": "Traceback (most recent call last):\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/trial.py\", line 345, in run\n    await self._run()\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/single_step.py\", line 46, in _run\n    await self._run_verifier()\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/single_step.py\", line 92, in _run_verifier\n    self.result.verifier_result = await self._run_separate_verifier(\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/trial.py\", line 555, in _run_separate_verifier\n    await self._artifact_handler.upload_artifacts(\n  File \"/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/tasks/harbor_dsh/trace_artifacts.py\", line 174, in upload_artifacts\n    files = self.snapshot()\n            ^^^^^^^^^^^^^^^\n  File \"/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/tasks/harbor_dsh/trace_artifacts.py\", line 155, in snapshot\n    raise ValueError(\"Bridge trace/status/session identity mismatch\")\nValueError: Bridge trace/status/session identity mismatch\n",
+        "occurred_at": "2026-09-08T21:27:02.593996"
+      },
+      "rewards": null,
+      "passed": true,
+      "request_count": 8,
+      "server_errors": [],
+      "event_count": 48,
+      "dsh_finished": true,
+      "setup": {
+        "patches": [
+          {
+            "path": "/opt/dsh-patches/evolution.patch.yml",
+            "sha256": "sha256:edace17a8096ec41e572c10fc7ad96f0d9a62c0a6ff9c8271694b4c1b1024aeb"
+          }
+        ],
+        "runner_sha256": "sha256:a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+        "runtime_version": "0.1.3a2",
+        "sdk_version": "0.1.3a2"
+      },
+      "artifact_sha256s": {
+        "agent/dsh/agent-result.json": "sha256:598a0852934fc48da28631d8adacf26c2bb9f6f89ef3cc222fea826afffaccdc",
+        "agent/dsh/run.json": "sha256:b05c19f11c4d4c08e8ff55cd180beafabec6af5bcd073f4b31529603bbf3d665",
+        "agent/dsh/session.jsonl": "sha256:da2e65a47d65e1e90a3dbb066cb5c7ed15d6aee49a495c1b87359eb83b059fa8",
+        "agent/dsh/setup.json": "sha256:81e746b5278aaea63fe4745cecdf39728b28dd07a5352230d6969db6a85eab26",
+        "agent/dsh/status.json": "sha256:5acad6c3811d39e718ef02b9d72f6b0cfd444755729f8405b566c0eb6e6912cb",
+        "exception.txt": "sha256:2e03bbdc882c544af6d7e101d51ba925b47dbfdec6f757f4bf7befc3936b6673",
+        "result.json": "sha256:508066523d71a829e8ba874fac4689bf0eef62d70b6bd5cfcb206838b0920963",
+        "trial.log": "sha256:8581d4685d7bc02b9d2c7eb287807964282f2c32480ec6136ce97762f1af2831"
+      }
+    }
+  ],
+  "evidence_archive_sha256": "sha256:c9a3e40e3544a0b512ac9dd40ad7a26303fe76b2d9a53d1400fdb2e7b8a4c1ef"
+}

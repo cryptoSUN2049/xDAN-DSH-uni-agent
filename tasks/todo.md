@@ -359,3 +359,13 @@ Review：SFT参数审计不等同于在线RL打通；开发loss下降不等于�
 Review：SFT数值更新通过但任务0/2；Harbor脚本策略四例通过不等于学生RL通过。
 
 检查点review：611项组合CPU回归通过（包含新增smoke，无skip），M1真实零更新结果和SSH复现已归档；当前以handoff.md与active-engineering-goal.md为准。
+
+## G1 检查点：Harbor v2准入与持久存储
+
+- [x] Harbor v2薄adapter及Task/audit CPU实现，635项相关回归通过；Ruff双门通过。
+- [x] 新增验收追踪MD，记录500 GB云盘与标准checkpoint目录。
+- [x] r4第一步真实0/1奖励和checkpoint云盘保存成功。
+- [ ] 第二步数值/消费审计、独立reload和留出评估。
+- [ ] Harbor v2 worker/packer接线与真实学生M2。
+
+Review：本提交为进行中检查点；不将first checkpoint或CPU通过当成G1完成。

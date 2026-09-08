@@ -4,7 +4,7 @@
   "integration": {
     "repository": "https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent",
     "maintenance_branch": "worktree-harbor-modal-integration",
-    "code_revision": "f0979706cf2001f23d54dfef93ca12eee9c6a3bb",
+    "code_revision": "2df91d7de31b9ecacefeaad1c54dbea80028eead",
     "upstream_revision": "89733ec81a69c3cc93ac90479de7ea7f01e51c1f",
     "verl_revision": "fefb080262e1c015a0ea05f958822a6a512dc795"
   },
@@ -124,5 +124,17 @@
     "archive_download_verification": "docs/harbor-modal-integration/t2-image-release-download-verification.json",
     "scripted_verification": "docs/harbor-modal-integration/t2-harbor-scripted-r2-result.json",
     "evaluation_scope": "public-development-not-hidden"
+  },
+  "storage": {
+    "project_root": "/workspace/uni-agent-g1",
+    "checkpoint_root": "/workspace/uni-agent-g1/checkpoint",
+    "checkpoint_run_layout": "<checkpoint_root>/<unique-run-name>/global_step_<step>",
+    "launch_environment_variable": "CKPTS_DIR",
+    "minimum_free_quota_gib_for_two_step_run": 25,
+    "status": "write-verified-training-r3-started",
+    "last_write_probe": "1 MiB write/fsync passed before r3 launch",
+    "private_run_root": "/root/runs",
+    "note": "Do not silently redirect checkpoints to ephemeral storage; df reports shared filesystem capacity, not account quota.",
+    "user_reported_volume_gb": 500
   }
 }

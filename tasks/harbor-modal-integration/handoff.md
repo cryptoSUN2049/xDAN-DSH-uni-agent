@@ -4,8 +4,9 @@
 
 - 当前 worktree：`.Codex/worktrees/harbor-modal-integration`；分支 `worktree-harbor-modal-integration`。训练主仓为本仓，DSH-Exp 负责 DSH 本体。
 - G1 **未完成**。本检查点保存新版 DSH 零梯度失败证据、独立 verifier v2 修复、Harbor evolution 接线与有限网络抖动处理。
-- GPU 最后运行代码 `74b253bfe2f580d4c6175672b5bdc0b3ccf623a8`；M1 r1 自然 exit0，但两步梯度均0、LoRA无变化。进程已退出、GPU空；没有启动新版v2训练。
-- 下一步：GitHub拉取本检查点精确commit → 发布新v2课程 → 新run两步RL → 真实数值/消费审计 → 独立reload。Harbor的真实Docker新课程与学生RL仍待验收。
+- **v2-r4已启动待验收**：GPU代码`2df91d7de31b9ecacefeaad1c54dbea80028eead`，run=`/root/runs/dsh-redact-m1-v2-r4`，supervisor PID70864，2steps/2700秒；第一步已完成，checkpoint保存成功，reward min0/max1/mean0.875，第二步运行中。v2-r1/r2因配额失败；r3监管命令引号错误，未进入训练。r4修正启动方式，保留所有失败证据。
+- 用户已将/workspace网络云盘扩到500 GB；新目录1 MiB write/fsync通过。checkpoint=`/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4`。未清理任何历史产物。
+- 下一步：监控新run → 训练奖励/梯度与checkpoint数值/消费审计 → 继承r3完整环境独立reload；运行中不更换GPU代码。
 - 平台get_goal仍显示旧SSH故障时的blocked；用户已明确持续推进原G1，工具只能complete/blocked，不能自行改active或重复创建。权威任务见active-engineering-goal.md，不宣称完成。
 
 ## 2. 本轮交付物
@@ -57,7 +58,7 @@
 | `tasks/todo.md` | 361 | 目标/交接/流程记录 |
 | `tasks/lessons.md` | 122 | 目标/交接/流程记录 |
 
-本检查点最终组合回归：611 passed，0 skipped；一个已有Ray弃用警告。Ruff check/format及git diff --check通过。新增evolution scripted smoke只完成CPU验证，真实四mode尚未执行。
+本检查点组合回归：635 passed，0 skipped；一个已有Ray弃用警告。Ruff check/format通过。Harbor evolution v1真实Docker四mode已通过，见harbor-evolution-v1-docker-r1-results.json；新v2薄adapter仅CPU通过，尚待worker/packer接线和真实Docker。
 
 ## 3. 设计约束
 
@@ -67,7 +68,7 @@
 - 镜像摘要、runtime二进制摘要、patch字节摘要、有序patch路径摘要分别绑定，不混为同一身份。
 - 旧v1评分与旧产物不修改。v2只修复可信已完成失败的准入：分数仍0，不将失败改为成功；其他hard-veto仍拒绝。
 - Harbor当前只支持一个TaskRef；重复train/heldout行是同题工程复验，不是4/2不同任务或隐藏集泛化。
-- 当前Harbor evolution scorer仍复用原v1七组件准入；原生新verifier v2尚未迁入Harbor。先验证两者明确版本，不能宣称完全相同准入。
+- Harbor已有独立v2薄adapter及Task/audit CPU验证；worker/packer实际链路仍为v1。先验证两者明确版本，不能宣称完全相同准入。
 - 不新增付费GPU/Modal/教师API；全异步与规模性能后置。现有GPU作业必须有步数与wall-clock上限。
 - 远端源码从GitHub拉取精确commit，不scp源码；运行中不切换checkout。
 
@@ -88,15 +89,15 @@
 
 ### v2修复边界
 
-`evolution_verifier_v2.py`固定两个父源码SHA，自身+父源码组成bundle。新prepare_redact_curriculum_v2.py从原4/2可信manifest发布新task/verifier version2、原prompt保持，生成新task-config.yaml。CPU真实CLI→生产fresh receipt→原trajectory audit已测试；尚未GPU执行。
+`evolution_verifier_v2.py`固定两个父源码SHA，自身+父源码组成bundle。新prepare_redact_curriculum_v2.py从原4/2可信manifest发布新task/verifier version2、原prompt保持，生成新task-config.yaml。CPU真实CLI→生产fresh receipt→原trajectory audit已测试；v2-r4正在GPU验证，第一步已有0/1奖励并成功保存；数值及reload待验收。
 
 ### Harbor与网络
 
 - 旧T2真实Docker脚本策略4mode均通过，显式双镜像与私有Release回下载hash通过；见t2-harbor-scripted-r2-result.json和t2-image-release-download-verification.json。
 - 学生Harbor r1 `/root/runs/t2-harbor-student-r1`在任务开始前SSH超时，supervisor exit -6 /controller-health-failed；无有效评分/更新。控制器已结束。
 - 600秒只读SSH探针在592秒复现255退出：末收包至退出约29.793秒，随后新短SSH恢复。不能断言GPU节点持续宕机，也不能把短探针成功等同长连接稳定。
-- 当前补丁SSH15秒×6；仅运行期明确传输异常容忍连续90秒，成功清零。认证/身份/格式/healthy=false立即失败；预检失败不启动、无自动重连、不复用旧run。尚未对新版容忍做真实长连接回归。
-- 新Harbor evolution：固定fixture/metadata/原scorer hash与TaskRef；第四个controller-owned binding文件送独立verifier；训练Task与audit重算同小数reward。CPU通过不代表真实容器已通过。
+- 当前补丁SSH15秒×6；仅运行期明确传输异常容忍连续90秒，成功清零。认证/身份/格式/healthy=false立即失败；预检失败不启动、无自动重连、不复用旧run。15×6配置600秒探针通过，但该窗口未出现故障，不能证明恢复机制已实测。
+- 新Harbor evolution：固定fixture/metadata/原scorer hash与TaskRef；第四个controller-owned binding文件送独立verifier；训练Task与audit重算同小数reward。v1真实容器四mode通过，不代表v2或学生RL已通过。
 - 原T2独立verifier是纯stdlib；新evolution复用固定b016父镜像内Pydantic2.12.5（离线实际探针已验证），单独network none，不联网安装。
 
 ### 已有SFT证据与边界
@@ -119,8 +120,8 @@
 
 - 本地分支worktree-harbor-modal-integration；本次检查点commit在当前HEAD，用git rev-parse HEAD与origin核验。主目录main未修改。
 - 远端`root@216.243.220.178:14465`、key `~/.ssh/id_ed25519`；RTX PRO6000。已停止的是训练进程，不代表Pod停止计费。
-- GPU repo `/workspace/rebuild/uni-agent-g1-v2`仍74b253b；venv `/workspace/venvs/uni-agent-rebuild-cf2d3f5`；模型`/workspace/models/Qwen3-4B-1cfa9a7`。
-- 本检查点的新代码未同步GPU、未启动新训练；不要把本地push当远端部署完成。
+- GPU repo `/workspace/rebuild/uni-agent-g1-v2`已2df91d7；venv `/workspace/venvs/uni-agent-rebuild-cf2d3f5`；模型`/workspace/models/Qwen3-4B-1cfa9a7`。
+- v2数据=/root/runs/dsh-redact-execute-v2-r1-data；评分bundle SHA60f49dcb519576bbe09839371ec3220775aa42aaf5e780a7f5d843c71552ea82；训练完成后必须归档/root证据并核数值/消费，再考虑独立reload。
 - `/workspace` MFS不执行chmod私有权限；凭据和运行临时目录放`/root/runs`0700。Pod更换会丢/root，因此无凭据证据归档到/workspace。
 - 本地Harbor完整测试环境必须CPU site-packages优先，再Harbor site-packages；单独CPU环境缺Harbor会skip，顺序反过来会tokenizers冲突。
 - push前必须ruff check .与ruff format --check .通过。CI远端状态另查，不从本地测试推断。
@@ -133,3 +134,9 @@
 4. 按redact-m1-runbook.md继承预算，但新run改用v2生成配置/数据与新commit；旧文档的reload gate针对失败r1不能直接执行。
 5. 先M1有效更新门，Harbor参考evolution-harbor-wiring-plan.md与harbor-transport-jitter-tolerance.md。
 6. 更早历史按需读handoff-history-20260908.md；其中running/旧地址/旧pin均为历史，不覆盖本页。
+
+## 本次提交补充
+
+- 新增evolution_scoring_v2.py、Task/audit绑定与24项测试：调用原固定verifier CLI，不复制准入规则。
+- 新增acceptance-tracker.md、checkpoint-storage-layout.md、v1 Docker与SSH探针报告；版本锁保留GPU实际代码2df91d7，提交版本与运行版本分别记录。
+- r3监管启动引号错误，未进入训练；r4已修正。下次启动应确认train.log和持续存活，而非仅PID。
