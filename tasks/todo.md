@@ -124,3 +124,10 @@
 
 Review：HTML 5 条本地链接和 baseline 链接检查通过；手机 390×844 实际预览无页面横向溢出。
 VERL 已检出固定 pin；复制完整对象并解除父 worktree 借用后，git fsck 连通性检查通过。
+
+### 2026-09-08 上游专题核查
+- [x] 查阅 VERL 多轮/沙盒/全异步源码与 Context7 官方文档。
+- [x] 核查近六个月相关 PR 的 merged 状态及本地祖先关系，保存专题 HTML 与时间线。
+- [ ] 继续 H0 单任务 Docker 正反例运行及资源清理验收。
+
+Review：本次只交付文档，未执行训练；Harbor runtime、任务格式与 Modal 服务已分开标记。

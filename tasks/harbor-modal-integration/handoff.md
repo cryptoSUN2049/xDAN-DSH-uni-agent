@@ -64,3 +64,11 @@
 4. 先固定 Harbor / task / image 版本，在隔离环境做 H0，不升级全局工具。
 5. 保存 H0 原始结果与失败原因；oracle 成功不等于 DSH 或 RL 成功。
 6. 付费运行明确范围；push 前必须 ruff check . 与 ruff format --check .。
+
+## 2026-09-08 上游能力核查补充
+
+- 新增 docs/harbor-modal-integration/verl-capabilities.html（HTML 专题）及 verl-six-month-audit.md（时间线与版本证据），index.html 已链接。
+- #117 是 Harbor 评估；#128 是 mini-swe-agent 训练；不能合并推断 Harbor RL 已接通。
+- 隔离 Harbor 0.16.1 安装于 /private/tmp/harbor-h0-20260908；尚未运行 H0。
+- H0 已查明 network_mode=no-network 会启用 egress sidecar；delete 会执行 compose down --rmi local，执行前需限定本任务资源。
+- 本轮转入用户要求的上游调研，下一执行步骤仍为 H0，不将调研算作运行验收。
