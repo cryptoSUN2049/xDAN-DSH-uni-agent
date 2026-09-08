@@ -1,5 +1,8 @@
 # Uni-Agent 项目状态回顾与本地交接
 
+当前 worktree：`harbor-modal-integration`。先读 [当前交接](harbor-modal-integration/handoff.md)。
+旧章节保留历史；当前计划位于文末 Harbor / Modal 初始化段。
+
 日期：2026-09-06；9 月 7 日追加 CI、GPU 核查与下一里程碑设计。
 
 - [x] 核对当前仓库、分支、HEAD、worktree、工作区及 stash。
@@ -108,3 +111,16 @@
 桌面 1440×1000 / 手机 390×844 浏览器预览通过，目录跳转正常、手机无页面横向溢出。
 独立代码审阅确认双路径生命周期、Gateway 网络与严格审计缺口；修正评分字段表述，
 明确是本仓适配层缺口而非 Harbor 框架限制。本次仅文档验证，不新增云端执行或训练证据。
+
+## 当前 Harbor / Modal worktree：2026-09-08
+
+- [x] 用户允许 git worktree add，从 41694e2 创建 worktree-harbor-modal-integration。
+- [x] 初始化固定 VERL；独立 baseline、HTML 入口与 handoff；README 指向当前工作区。
+- [x] 检查文档链接与 Git diff，保存初始化本地提交。
+- [ ] 固定隔离 Harbor 依赖与单 CPU 任务；Docker oracle → 同任务 Modal oracle。
+- [ ] DSH bridge / Gateway / 严格合同 → VERL update / reload → paired holdout。
+
+本次只完成工作区初始化，不把继承测试记录当成本分支实跑。
+
+Review：HTML 5 条本地链接和 baseline 链接检查通过；手机 390×844 实际预览无页面横向溢出。
+VERL 已检出固定 pin；复制完整对象并解除父 worktree 借用后，git fsck 连通性检查通过。
