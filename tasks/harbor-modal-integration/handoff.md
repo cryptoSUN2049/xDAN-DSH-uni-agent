@@ -12,6 +12,14 @@
 - 下一步：Harbor v2 worker/packer接线 → Docker正反例 → 同任务学生M2在线RL与reload → 可复建交付。数据生产由用户安排另一会话。
 - 平台get_goal已核实为新版原生四能力目标，status=active。当前未完成，按active-engineering-goal.md推进。
 
+### N0/N1/P1 实施检查点
+
+- 新原生checkout已由GitHub创建：/workspace/rebuild/uni-agent-native-n0-r1，初始49c05e2，VERL fefb080；尚未安装新venv/启动新训练。
+- 旧venv editable指旧checkout，且numpy与上游lock存在已验证overlay差异；bootstrap现落实numpy2.3.5 wheel SHA及独立import来源门，真实安装待执行。
+- P1入口透传50ef90c已推送，23项通过/1旧Linux测试跳过；GPU异步未验收。
+- N1单文件记忆freeze/load合同37项通过；未接入A/B真实Task或reward，不能称记忆能力训练通过。
+- v3设计/Goal/视觉审计49c05e2已推送；Harbor暂停，原生新目标active。
+
 ### 最新检查点：M2 r1 失败与清理修复
 
 - Harbor v2 已完成真实 Docker 正例、部分分、合法零分、篡改拒绝四模式；镜像已发布私有 Release，见 `docs/harbor-modal-integration/harbor-evolution-v2-image-release.json`。

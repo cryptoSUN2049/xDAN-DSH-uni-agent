@@ -94,3 +94,11 @@ DSH源码按固定 `b2369692ea530007075ebcd18d39fdba0bbd3982` 使用 `git show` 
 - `load_memory_artifact`：控制端传冻结目录、独立保存的expected_manifest_sha256、chain/writer/source_version、新reader_session_id及预算；严格JSON与文件hash/大小/身份检查。reader不得等于writer；返回不可变bytes与reader绑定记录，不自动写到B、不调用SDK、不评分。
 - manifest不是自签可信来源，必须由控制端持有外部摘要；只改manifest+文件不能自我通过。source_version也是控制端声明身份，不声称读取仓库自动证明发布版本。
 - 用dirfd/O_NOFOLLOW逐级打开目录与文件，O_NONBLOCK避免FIFO阻塞；拒绝绝对/../空白名单、软/硬链接、重用目标、错误chain/version/writer/reader、内容/manifest篡改及并发读期间变化。B真正fresh Session/工作区仍由后续Task控制端负责，字符串不等于进程隔离；本模块不是安全沙盒。
+
+### N1单文件合同实现结果
+
+已新增`uni_agent/tasks/dsh/memory_artifacts.py`及`tests/uni_agent/tasks/test_dsh_memory_artifacts.py`。先红测试缺模块失败，再实现；37项合同测试通过，与既有Dsh Task回归合计49项通过，Ruff双检查通过。覆盖读期间源文件变化、嵌套目录软链接、硬链接/FIFO、目标复用、冻结后源文件变化不影响快照、manifest重复键/额外字段/NaN/布尔size、源版本/chain/writer不符、reader=writer及源/读端预算。
+
+Linux/Mac用真实文件权限检查，不假定chmod成功就安全；目标创建后立即复核私有目录/文件权限。类似已知RunPod共享盘不能保证私有权限时拒绝，不静默降级。macOS应传`/private/tmp/...`或实际目录，`/tmp`软链接会按明确无软链接规则拒绝。
+
+写入失败可能保留本次新建但未完成的目录，调用者不会获得成功receipt，load无独立manifest摘要也无法验收；不自动覆盖或重试该目录。控制端可保留诊断后选择全新目录。此模块只返回读端已验证bytes，不自动拷贝到B工作区；仍未接Task链编排、模型采样或跨阶段RL。
