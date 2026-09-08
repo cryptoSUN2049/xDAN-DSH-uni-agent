@@ -1,6 +1,6 @@
 # Context v2 原生入口
 
-2026-09-09：代码/CPU接线完成，尚未运行本 v2 GPU 实验。v2 与原 v1 四题评估完全分开。新测试连同 v1 回归 56 passed；已验证 16 题 oracle、评分反例、真实 verifier→Task 回执、strict CLI 的四个 dev 注册、原生训练脚本命令构造。没有声称真实 GRPO 信号或学习提升。
+2026-09-09：v2真实训练及独立reload已完成工程验收，实际仅消费2条train题；首步非零任务梯度，第二步同分零advantage。14组消费/数值审计、独立reload4组通过，严格dev准确率0。详见[训练审计](context-v2-train-r1-cpu-audit.md)和[reload报告](context-v2-train-r1-reload-report.md)。v1四题保留独立合同，不能据此宣称学习提升。
 
 ## 固定工作目录后准备
 
@@ -74,3 +74,9 @@ bash examples/dsh/ops/reload_qwen3_4b_checkpoint.sh \
 ```
 
 reload wrapper 设置 `resume_path`、`VAL_ONLY=True`；从父 checkpoint 读取的事实须见运行日志与独立评估证据。仍需另跑完全不改的原 v1 准备器/四题，报告 v1 公开回归准确率。v2 的 `read_coverage`、`semantic_accuracy`、`citation_coverage`、严格 `v2_task_accuracy` 和总 reward 分列。该课程只覆盖文件证据能力，不宣称多 context 或跨会话记忆已训练。
+
+## 后续课程覆盖运行（计划，尚未执行）
+
+当两族记忆工程任务结束、GPU空闲时，可用新run ID在相同固定模型/评分器上覆盖整个12题课程。保持batch1、n4、单epoch，设`TOTAL_TRAINING_STEPS=12`、`SAVE_FREQ=6`、`TEST_FREQ=6`，避免每步保存完整权重占盘；仍使用既有监督器和/workspace checkpoint目录。实际是否覆盖12个唯一task_id，以消费审计为准，不能仅凭配置值宣布覆盖完成。
+
+验收分别记录12题中实际消费数量、48个计划尝试中的有效数量、非零advantage组数、分族奖励/严格准确率、base冻结、optimizer状态及独立reload。组失败或数据丢失不能用补零当完成；连续无信号时先诊断，不能无限重复。此运行扩大已定义课程的实际训练覆盖，仍不等于足够的泛化数据；四题dev保持公开开发身份，不改称封存测试。

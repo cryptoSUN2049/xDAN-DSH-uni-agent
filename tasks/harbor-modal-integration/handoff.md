@@ -3,7 +3,7 @@
 ## 1. TL;DR
 
 - 当前worktree `harbor-modal-integration` / 分支 `worktree-harbor-modal-integration`。Goal active；四能力与结果复现优先，Harbor后置，SFT不属本轮。权威目标active-engineering-goal.md，总方案uni-agent-system-plan-v3.html。
-- **当前GPU作业**：第二族 `/root/runs/dsh-memory-updates-r1` writer，监督PID156033；remote固定d3084f2、已验收venv，短独占 `RAY_TMPDIR=/tmp/dsh-mu-r1a`。不修改运行中checkout；独立检查真实回执后才freeze/B。
+- **当前GPU作业**：第二族 `/root/runs/dsh-memory-updates-r1` writer已288.039秒exit0/评分1；freeze严格通过，独立reader已启动（监督PID159302）。remote固定d3084f2、已验收venv，reader短独占 `RAY_TMPDIR=/tmp/dsh-mu-r1b`。不修改运行中checkout；reader通过后运行finalize并归档。
 - **最新GPU完成作业**：`/root/runs/dsh-memory-constraints-r3`，reader监督PID152851；remote checkout `/workspace/rebuild/uni-agent-native-n0-r1` 固定 `d3084f2a771804f011c4e641ecf0986c7166bc86`，旧已验收venv，writer prompt revision2 已282.038秒exit0/score1，freeze严格通过；B已326.049秒exit0/reward1，主线程finalize整链passed。该run已完成，无训练。
 - **context独立reload已完成**：`context-v2-train-r1-reload` 415.009秒exit0，model/optimizer/RNG/lr_scheduler真实从step2加载；4/4fresh评估组被消费，无新增训练更新。reward均值.241875、严格准确率0；与训练dev均值.255不同，只证明结果重跑，非精确数值复现或效果提升。报告context-v2-train-r1-reload-report.md/result.json。
 - 母context训练595.014秒exit0：实际2个训练任务/n4，step1非零梯度，step2零adv；CPU审计14/14组消费通过，252 LoRA变化/399 base冻结，dev严格准确率0。step2一阶/二阶moment分别精确等于step1×.9/.999，不能称新增任务学习信号。
@@ -246,3 +246,8 @@ _hydra允许经过白名单校验的相对路径键；仍拒绝分隔符/插值�
 - daa7073已推送，12train/4dev结构课程、独立v2奖励及现有RL启动接线，root30项测试通过；v1评估不改。
 - GPU context-v2-exploration-r1在参数解析阶段exit2（不支持--temperature），未加载模型；修复后新run context-v2-exploration-r2，复用r1-data固定输入，16采样来自4个公开dev结构，每题4次，非trainer GRPO组。最终PID见远端supervisor.pid。
 - 当前使用committed sampler配置，CLI默认温度0.8；runroot/root/runs/context-v2-exploration-r2，最长3600秒，每任务900秒。禁止更新运行中checkout；源码daa7073。
+
+### 最新已推送实现补充
+
+- 00e4bc5包含首个memory整链审计与HTML视觉状态；5ef4e07修复未来stage短Ray目录，尚未部署当前d3084f2链。cef2f19为纯CPU跨session credit合同，不是Framework训练接线。
+- 后续context 12题完整课程覆盖计划见context-online-rl-v2-runbook.md末节；12步/n4计划48尝试，实际覆盖与有效组必须审计，不能宣称已执行。
