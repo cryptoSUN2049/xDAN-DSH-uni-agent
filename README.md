@@ -15,6 +15,9 @@ Uni-Agent is a framework for training long-horizon agents:
 Project ownership: **training integration lives in xDAN-DSH-uni-agent; DSH core and historical research live in xDAN-DSH-Exp**.
 Read the [confirmed cross-repository rules](tasks/lessons.md) before starting cross-repository work.
 
+Current architecture: [Uni-Agent system plan v2](docs/harbor-modal-integration/uni-agent-system-plan-v2.html).
+Implementation order: [engineering roadmap](docs/harbor-modal-integration/engineering-roadmap.html).
+
 Harbor / Modal development: start with the [current worktree page](docs/harbor-modal-integration/index.html)
 and [Harbor integration handoff](tasks/harbor-modal-integration/handoff.md).
 

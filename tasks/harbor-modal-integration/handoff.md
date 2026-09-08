@@ -2,6 +2,9 @@
 
 ## 1. TL;DR
 
+- 架构规范更新为docs/harbor-modal-integration/uni-agent-system-plan-v2.html；
+  engineering-roadmap.html负责执行顺序，index.html只作导航，当前状态仍读本交接。
+
 - 当前优先级：工程贯通 → 任务效果 → 性能与规模。全异步/Modal优化在第三阶段；
   Harness RL/RSI属于第二阶段效果目标。S编号不是严格顺序，先读路线图三阶段说明。
 
@@ -111,3 +114,9 @@
 - 用户要求同步最新Uni-Agent及对应VERL并避免冲突。目标89733ec + fefb080，当前VERL483b8a0；相差52提交，不能只看Uni-Agent5提交。
 - merge-tree预演8文件冲突，工作区未进入merge。version-sync-design.md与version-sync-preview.json为具体设计与清单；按Human Gate等待设计确认后实施。
 - 未checkout新VERL、未跑兼容测试、未push；历史GPU结果不代表新版本通过。
+
+## 系统规划v2交付
+
+- 完整读取旧v1，保留两环境路径与分层设计，新增学习/记忆/RSI、三阶段、成对版本同步状态。
+- system-plan-v2-source.json记录原始来源hash；旧worktree未修改。README、首页、路线图与交接已链接v2。
+- 本轮仅文档，无代码合并、模型调用或运行状态升级。
