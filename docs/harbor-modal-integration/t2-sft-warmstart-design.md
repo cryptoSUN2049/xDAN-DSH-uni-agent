@@ -161,3 +161,11 @@ class DshDecisionSFTDataset:
 - DSH `scripts/trace-training/converter.ts:298,424,455` 原生持久化恢复与目标投影。当前 Python 逻辑 events 与原生 session 文件须区分。
 
 本页验证范围仅为源码与接口只读核查；没有运行新增 converter、数据类、SFT、merger 或 adapter→GRPO 实验。
+
+## G1 注册决策补课（筛选原数据，不合成）
+
+目标：针对实际注册失败，从已验证 `dsh.t2-sft-dataset.v1` 中只保留 target structured tool_calls 唯一调用 `cordis_define` 的 4 条 train 决策（每个固定公开 train case 恰好一条），原 28 条公开 dev 原字节保留。不得改 target、sample ID、request、provenance；不标成新数据或隐藏测试。
+
+新增 `examples/dsh/capability_tasks/log_tool/prepare_sft_curriculum.py` 和对应 CPU tests。API `prepare(manifest_path, manifest_sha256, output)`；CLI `--manifest --manifest-sha256 --output-dir`。外部 hash 固定原 manifest，原 manifest 的 hash/rows 固定两份 parquet；严格验证 row schema、case/split/session/sample 唯一性，拒来源缺失/重复、未知 case、hash 错误及覆盖。课程 train 用 Arrow take 保留原 schema/值和原顺序；dev 原 bytes 复制。输出 owned 0700 新目录，sidecar 记录原 manifest 全体与 hash、输入/输出 hash、筛选 source IDs、目的 `registration-curriculum-not-new-data`；所有输入验证通过才创建输出。
+
+测试：精确 4 原 rows/28 原 dev bytes，重复/缺失定义，错 split/schema/hash，目录权限/覆盖，确定性产物与原目标不变。后续训练计划是原 SFT step56 adapter warmstart、新 optimizer、lr 5e-5、16 epochs（4×16=64 steps）、1800 秒；复用 native 尾参 `model.lora_adapter_path` 与 `trainer.total_epochs=16`，不改 launcher 的 64-step cap。此入口不启动训练，也不证明补课有效。

@@ -1,0 +1,11 @@
+{
+  "scope": "independent CPU adapter reload, not task evaluation",
+  "matched_adapter_tensors": 504,
+  "trainable_dtypes": {
+    "torch.float32": 504
+  },
+  "frozen_dtypes": {
+    "torch.bfloat16": 398
+  },
+  "adapter_sha256": "d6254f00a3d50c28aaefb6fc8e945b16c66515f2020d5ee3669dc09c5b276cb5"
+}

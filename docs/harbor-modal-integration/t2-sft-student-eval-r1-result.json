@@ -1,0 +1,42 @@
+{
+  "schema": "dsh.t2-sft-student-eval.v1",
+  "exit_code": 0,
+  "scope": "public-development evaluation; no RL optimizer",
+  "source_commit": "7561821354194b2389d2e78edf04b13e79d836b7",
+  "adapter_sha256": "cbcfb9ddb2dd0ac4eeec61c980229d0216b28f0055b2a946a80846e2ef556d32",
+  "cases": [
+    {
+      "uid": "a63dc13d-7905-4734-8941-54eee511b4d7_0_0",
+      "score": 0.0,
+      "reward": 0.0,
+      "verifier_reward": 0.0,
+      "acc": 0.0
+    },
+    {
+      "uid": "e21eae50-1a1e-4a92-959a-23bf4aff8e67_0_0",
+      "score": 0.0,
+      "reward": 0.0,
+      "verifier_reward": 0.0,
+      "acc": 0.0
+    }
+  ],
+  "failure": "cordis_define remained invalid JSON text; invented registration API",
+  "trace_evidence": [
+    {
+      "path": "/root/runs/t2-sft-student-eval-r1/artifacts/traces/90b8ec735542824fd363455f/session.jsonl",
+      "sha256": "6d48a73822b8fd6ebf55fc8e5377435d3057b63c33996c7d42ff93f525037334",
+      "calls": [
+        "cordis_inspect_self",
+        "cordis_inspect_query"
+      ]
+    },
+    {
+      "path": "/root/runs/t2-sft-student-eval-r1/artifacts/traces/ac86a16f051b5e786d4573c6/session.jsonl",
+      "sha256": "0c108ef03f4ed2cea3755d1a795e657db57e9ec8b9f54558d1204b7f7b4b9082",
+      "calls": [
+        "cordis_inspect_self",
+        "cordis_inspect_query"
+      ]
+    }
+  ]
+}

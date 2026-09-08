@@ -1,0 +1,33 @@
+{
+  "scope": "controlled teacher-prefix diagnostic, not autonomous task evaluation",
+  "sample_id": "log-tool-dev-01:2",
+  "input_tokens": 8887,
+  "target": {
+    "content": "",
+    "role": "assistant",
+    "tool_calls": [
+      {
+        "function": {
+          "arguments": {
+            "code": {
+              "host": "\nreturn {inject:['tools'],apply(ctx){return harness.registerTool(ctx,harness.defineTool({\n name:'filter_redact_logs',description:'Filter logs and redact email addresses',\n parameters:{records:{type:'array',items:{type:'json'},required:true},\n severity:{oneOf:[{type:'string'},{type:'null'}]},service:{oneOf:[{type:'string'},{type:'null'}]}},\n output:{schema:{type:'array',items:{type:'json'}},render:(_a,v)=>[{type:'text',text:JSON.stringify(v)}]},\n execute(a){const keys=['timestamp','service','severity','message'];\n const email=/(?<![\\w.%+@-])[A-Za-z0-9_%+-]+(?:\\.[A-Za-z0-9_%+-]+)*@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*\\.[A-Za-z]{2,}(?![\\w@-]|\\.[A-Za-z0-9])/g;\n return a.records.filter(r=>r&&keys.every(k=>typeof r[k]==='string')&&\n (a.severity==null||r.severity===a.severity)&&(a.service==null||r.service===a.service))\n .map(r=>Object.fromEntries(keys.map(k=>[k,k==='message'?r[k].replace(email,'[REDACTED_EMAIL]'):r[k]])));}\n}));}};\n"
+            },
+            "name": "log",
+            "plugin": {
+              "idPrefix": "log",
+              "kind": "new"
+            },
+            "purpose": "Scripted-policy smoke"
+          },
+          "name": "cordis_define"
+        },
+        "id": "scripted-3",
+        "type": "function"
+      }
+    ]
+  },
+  "outputs": {
+    "adapter": "<tool_call>\n{\"name\": \"cordis_define\", \"arguments\": {\"code\": {\"host\": \"return { inject: ['Tool'], apply(ctx) { ctx.Tool.filter_redact_logs = (records, severity, service) => { const filtered = []; for (const record of records) { if (record.message && record.message.includes('private-extra')) continue; if (record.message && record.message.includes('email')) { const emailRegex = /(?<![\\w.%+@-])[A-Za-z0-9_%+-]+(?:\\.[A-Za-z0-9_%+-]+)*@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*\\\\.[A-Za-z]{2,}(?![\\\\w@-]|\\\\.[A-Za-z0-9])/g; const redacted = record.message.replace(emailRegex, '[REDACTED_EMAIL]'); filtered.push({ ...record, message: redacted }); } else { filtered.push(record); } } if (severity && service) { filtered = filtered.filter(r => r.severity === severity && r.service === service); } else if (severity) { filtered = filtered.filter(r => r.severity === severity); } else if (service) { filtered = filtered.filter(r => r.service === service); } return filtered; } } }, name: \"filter_redact_logs\", plugin: {\"kind\": \"new\", \"idPrefix\": \"filter_redact_logs\"}, purpose: \"Filter and redact logs\"}}\n</tool_call><|im_end|>",
+    "base": "<tool_call>\n{\"name\": \"cordis_define\", \"arguments\": {\"plugin\": {\"kind\": \"new\", \"idPrefix\": \"filter_redact_logs\"}, \"name\": \"Filter Redact Logs\", \"purpose\": \"Process logs by filtering, redacting, and formatting\", \"code\": {\"host\": \"async (ctx) => {\\n  return {\\n    inject: ['logService'],\\n    apply(ctx) {\\n      // Define the tool function\\n      const tool = {\\n        name: 'filter_redact_logs',\\n        execute: async (records, severity, service) => {\\n          // Filter records based on timestamp, service, severity, and message\\n          const filteredRecords = records.filter(record => {\\n            // Check if all required fields are strings\\n            if (typeof record.timestamp !== 'string' ||\\n                typeof record.service !== 'string' ||\\n                typeof record.severity !== 'string' ||\\n                typeof record.message !== 'string') {\\n              return false;\\n            }\\n\\n            // Apply case-sensitive exact severity and service filters\\n            const severityFilter = severity === null || record.severity === severity;\\n            const serviceFilter = service === null || record.service === service;\\n\\n            return severityFilter && serviceFilter;\\n          });\\n\\n          // Redact email addresses in messages\\n          const redactedRecords = filteredRecords.map(record => {\\n            const message = record.message;\\n            // Use a regular expression to find and replace email addresses\\n            const redactedMessage = message.replace(/(?<![\\w.%+@-])[A-Za-z0-9_%+-]+(?:\\.[A-Za-z0-9_%+-]+)*@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*\\.[A-Za-z]{2,}(?![\\w@-]|\\.[A-Za-z0-9])/g, '[REDACTED_EMAIL]');\\n\\n            return {\\n              ...record,\\n              message: redactedMessage\\n            };\\n          });\\n\\n          return redactedRecords;\\n        }\\n      };\\n\\n      // Register the tool with the host\\n      ctx.logService.registerTool(tool);\\n    }\\n  };\\n}\"}}\n</tool_call><|im_end|>"
+  }
+}

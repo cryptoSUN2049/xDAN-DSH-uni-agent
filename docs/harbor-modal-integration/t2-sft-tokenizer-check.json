@@ -1,0 +1,21 @@
+{
+  "train": {
+    "rows": 56,
+    "min_length": 5664,
+    "max_length": 17037,
+    "total_target_tokens": 5108,
+    "min_target_tokens": 7,
+    "max_target_tokens": 412
+  },
+  "dev": {
+    "rows": 28,
+    "min_length": 5662,
+    "max_length": 17001,
+    "total_target_tokens": 2550,
+    "min_target_tokens": 7,
+    "max_target_tokens": 412
+  },
+  "tokenizer_config_sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+  "status": "all-real-tokenizer-prefix-and-target-mask-checks-passed",
+  "duration_seconds": 4.65091733308509
+}
