@@ -37,6 +37,7 @@ def test_context_eval_strict_task_identity_and_hashes(inputs):
         assert identity["verifier_code_digest"] == manifest["verifier_bundle"]["sha256"]
     assert manifest["context_switch_verified"] is False
     assert manifest["training"] is False
+    assert manifest["prompt_revision"] == "2"
     assert not inputs["run_root"].exists()
     assert "--dsh-strict-audit" in manifest["inference_arguments"]
     for relative, digest in manifest["files"].items():

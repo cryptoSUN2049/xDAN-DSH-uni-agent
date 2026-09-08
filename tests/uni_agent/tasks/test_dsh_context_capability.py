@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -163,3 +164,45 @@ def test_context_unfinished_cannot_admit(tmp_path):
     c, events, answer = episode(tmp_path / "data", "directed-present")
     value = score(c, tmp_path / "data/directed-present", events, json.dumps(answer), False)
     assert value["reward"] == 0 and value["eligible"] is False
+
+
+@pytest.mark.parametrize("case_index", range(4))
+def test_context_prompt_ids_match_only_actual_contract_sources(tmp_path, case_index):
+    import re
+
+    rows = prepare(tmp_path / "data")
+    row = rows[case_index]
+    metadata = row["metadata"]
+    contract = json.loads(Path(metadata["fixture_path"]).read_text())
+    prompt = row["messages"][0]["content"]
+    ids = {source["path"] for source in contract["sources"]}
+    assert set(re.findall(r"sources/[a-z]+\.txt", prompt)) == ids
+    assert "citations.source MUST exactly equal a full source ID" in prompt
+    assert "Do not guess, probe, or read paths outside this allowlist" in prompt
+    assert '"source": "sources/current.txt"' in prompt
+    assert metadata["prompt_revision"] == "2"
+    absent = "previous.txt" if contract["family"] == "directed" else "unrelated.txt"
+    assert absent not in prompt
+
+
+def test_real_r1_basename_citations_remain_zero(tmp_path):
+    prepare(tmp_path / "data")
+    c, events, answer = episode(tmp_path / "data", "directed-present")
+    for citation in answer["citations"]:
+        citation["source"] = Path(citation["source"]).name
+    result = score(c, tmp_path / "data/directed-present", events, json.dumps(answer), True)
+    assert result["reward"] == 0
+    assert result["eligible"] is True
+
+
+def test_real_r1_unlisted_missing_path_remains_rejected(tmp_path):
+    prepare(tmp_path / "data")
+    c, events, answer = episode(tmp_path / "data", "conflict-missing")
+    root = tmp_path / "data/conflict-missing"
+    events[-1:-1] = [
+        _call("extra", "str_replace_editor", {"command": "view", "path": str(root / "sources/unrelated.txt")}, seq=3),
+        _result("extra", "Error: path does not exist", error=True),
+    ]
+    result = score(c, root, events, json.dumps(answer), True)
+    assert result["reward"] == 0
+    assert result["eligible"] is False

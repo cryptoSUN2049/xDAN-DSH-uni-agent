@@ -407,8 +407,10 @@ Review：本提交为进行中检查点；不将first checkpoint或CPU通过当�
 
 - [x] 保存并推送0fdcbeb记忆边界与context准备器；22项复核与Ruff双门通过。
 - [x] GPU从GitHub同步0fdcbeb，复用已验收venv，启动四例context真实基线。
-- [ ] 验收context实际结果，记录失败、Gateway token和可信receipt。
-- [ ] 固定Linux runtime记忆边界canary，再接真实模型A/B。
+- [x] context r1真实结果已核：4完成/0奖励/1准入拒绝，证据保存；未验收通过。
+- [ ] 修订prompt歧义并独立r2复跑，评分标准不变。
+- [x] 固定Linux runtime记忆边界canary14请求通过。
+- [ ] 接真实模型A/B，严格freeze与双方回执身份。
 - [ ] 查明grounding截断预算并独立复跑；不修改旧证据。
 - [ ] 按四能力覆盖设计独立训练/评估任务，完成RL更新及reload；四例诊断不算能力训练完成。
 

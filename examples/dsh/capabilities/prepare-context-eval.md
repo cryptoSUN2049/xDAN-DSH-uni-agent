@@ -46,3 +46,15 @@ runtime package 探针在 CPU 测试中为 fixture，不代表远端部署已验
 
 范围始终是 file-evidence-only，context_switch_verified=false。四例没有独立训练 split，
 不是大规模训练数据，也不证明泛化、真实 context 切换或跨会话记忆能力。
+
+## Prompt-only 修订 2
+
+真实 context baseline r1 四题最终值/弃答正确，但引用把完整 source ID 缩写为 basename，
+因此全部业务评分为 0；第四题还猜读了该题不存在且不在白名单的 source，eligible=false。
+真实 runtime 行号输出与 verifier 支持格式一致，没有通过放宽解析来修正评分。
+
+修订 2 只明确提示：逐题完整 allowlist、source ID 与绝对 view 路径的区别、引用不得省略
+`sources/`、不得猜读表外路径；每题说明不再提及该题不存在的另一类 source。
+行 metadata 与准备 manifest 显式记录 prompt_revision=2。数据/源码/manifest摘要变化，
+评分器源码、任务和 verifier 版本 1、verifier bundle 及 fixture 业务规则保持不变。
+旧 r1 结果继续保留失败，不追认。新实验必须用新目录，新提示正确执行仍需真实运行验证。

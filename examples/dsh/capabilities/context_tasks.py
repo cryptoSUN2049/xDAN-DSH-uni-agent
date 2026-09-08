@@ -41,17 +41,21 @@ def prepare(output: Path):
             raw = (json.dumps(contract, sort_keys=True) + "\n").encode()
             fixture = root / "contract.json"
             fixture.write_bytes(raw)
+            secondary = next(path for path in texts if path != contract["authoritative_source"])
+            secondary_role = "is superseded" if family == "conflict" else "describes another project"
             prompt = (
-                "Read each listed source with str_replace_editor view (full file). "
-                "Do not read other files or modify anything. "
-                "Report max_attempts using current.txt as the only current authority. "
-                "previous.txt is superseded; unrelated.txt describes another project. "
-                "Never fill a missing current value from them. "
+                "Read each allowlisted source with str_replace_editor view (full file). Do not modify anything. "
+                "Do not guess, probe, or read paths outside this allowlist. "
+                f"Report max_attempts using {contract['authoritative_source']} as the only current authority. "
+                f"{secondary} {secondary_role}; never use it to fill a missing current value. "
                 "Return ONLY JSON with status (answer or insufficient_evidence), value (string or null), "
-                "citations (one {source,line,quote} for line 2 of EACH listed source; source is the relative label). "
-                "If current.txt lacks max_attempts, return insufficient_evidence with null. "
-                "Use these exact absolute paths to view the sources:\n"
-                + "\n".join(f"{path}: {root / path}" for path in texts)
+                "and citations (one {source,line,quote} for line 2 of EACH allowlisted source). "
+                "citations.source MUST exactly equal a full source ID from the allowlist, including sources/. "
+                'For example, use "source": "sources/current.txt"; do not shorten the ID to a basename. '
+                "Use source IDs in citations and the associated absolute paths for view calls. "
+                f"If {contract['authoritative_source']} lacks max_attempts, return insufficient_evidence with null. "
+                "The following is the complete source allowlist for THIS task; no other source is authorized:\n"
+                + "\n".join(f"source ID: {path}; absolute view path: {root / path}" for path in texts)
             )
             rows.append(
                 {
@@ -65,6 +69,7 @@ def prepare(output: Path):
                         "fixture_path": str(fixture),
                         "fixture_sha256": _sha256_bytes(raw),
                         "capability_scope": "file-evidence-only",
+                        "prompt_revision": "2",
                     },
                 }
             )

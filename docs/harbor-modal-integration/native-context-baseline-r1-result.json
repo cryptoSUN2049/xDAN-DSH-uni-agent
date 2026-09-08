@@ -1,0 +1,225 @@
+{
+  "schema": "dsh.context-baseline-result.v1",
+  "run": "/root/runs/dsh-context-baseline-r1",
+  "supervisor": {
+    "exit_code": 1,
+    "reason": "training-exited",
+    "elapsed_seconds": 325.008,
+    "pid": 99964,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "launch": {
+    "schema": "dsh.native-capability-baseline.v1",
+    "source_commit": "0fdcbeb4511ef91c39bd74cadad5b77ff650f31f",
+    "scope": "four file evidence tasks; inference only; no optimizer",
+    "command": [
+      "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+      "examples/inference/parallel_infer_verl.py",
+      "--data-path",
+      "/root/runs/dsh-context-baseline-r1-data/eval.parquet",
+      "--task-config",
+      "/root/runs/dsh-context-baseline-r1-data/task.yaml",
+      "--n",
+      "1",
+      "--limit",
+      "4",
+      "--dsh-strict-audit",
+      "--require-result",
+      "--dsh-trace-root",
+      "/root/runs/dsh-context-baseline-r1/artifacts/traces",
+      "--dsh-result-root",
+      "/root/runs/dsh-context-baseline-r1/artifacts/results",
+      "--log-dir",
+      "/root/runs/dsh-context-baseline-r1/agent-logs",
+      "--result-path",
+      "/root/runs/dsh-context-baseline-r1/result.json",
+      "--inference-evidence-path",
+      "/root/runs/dsh-context-baseline-r1/inference-evidence.json",
+      "--model-path",
+      "/workspace/models/Qwen3-4B-1cfa9a7",
+      "--served-model-name",
+      "Qwen/Qwen3-4B",
+      "--engine",
+      "vllm",
+      "--nnodes",
+      "1",
+      "--n-gpus-per-node",
+      "1",
+      "--tensor-parallel-size",
+      "1",
+      "--gpu-memory-utilization",
+      "0.40",
+      "--max-model-len",
+      "8192",
+      "--gateway-count",
+      "1",
+      "--concurrency",
+      "2",
+      "--tool-parser",
+      "hermes"
+    ],
+    "cwd": "/workspace/rebuild/uni-agent-native-n0-r1",
+    "python": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+    "wall_clock_seconds": 1800,
+    "preparation_sha256": "sha256:a329ce3b586c8c24e997de8c34c5511dae2e92c89e323493342573f8fe5eacd8",
+    "environment": {
+      "PATH": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+      "PYTHONPATH": "/workspace/rebuild/uni-agent-native-n0-r1:/workspace/rebuild/uni-agent-native-n0-r1/verl",
+      "PYTHONNOUSERSITE": "1",
+      "HF_HUB_OFFLINE": "1",
+      "CUDA_VISIBLE_DEVICES": "0",
+      "RAY_TMPDIR": "/root/ray-context-r1",
+      "DSH_RUNTIME_MODE": "exe"
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "dsh/context/directed-missing",
+      "finished": true,
+      "finish_reason": "completed",
+      "response": "{\n  \"status\": \"insufficient_evidence\",\n  \"value\": null,\n  \"citations\": [\n    {\n      \"source\": \"current.txt\",\n      \"line\": 2,\n      \"quote\": \"status=not_specified\"\n    },\n    {\n      \"source\": \"unrelated.txt\",\n      \"line\": 2,\n      \"quote\": \"max_attempts=7\"\n    }\n  ]\n}",
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:48718eb93ed91c2c4f5aa1555aea43ba47b0d14fe82ef550cc0f2a0e91484fea",
+        "dsh_session_id": "dsh-session-sample-1-rollout-0-b389615e19c6462489be3dfd4b223779",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:3ac97c534db7aae5fe646b8fdd6e275db51faa5d584431f5be93105816be65a7",
+          "sha256:fffe623be05a6090fc8960ee19322302b15f8119da30664d27a504630ed9f362"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:17:53.271Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:735886398b828d68cd121958697476678987ec2ca7162378514c3e7aec25fccb",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context/directed-missing",
+        "task_version": "1",
+        "trace_sha256": "sha256:fffe623be05a6090fc8960ee19322302b15f8119da30664d27a504630ed9f362",
+        "verifier": {
+          "code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "id": "dsh-context-file-evidence",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "task_id": "dsh/context/directed-present",
+      "finished": true,
+      "finish_reason": "completed",
+      "response": "{\n  \"status\": \"answer\",\n  \"value\": \"3\",\n  \"citations\": [\n    {\n      \"source\": \"current.txt\",\n      \"line\": 2,\n      \"quote\": \"max_attempts=3\"\n    },\n    {\n      \"source\": \"unrelated.txt\",\n      \"line\": 2,\n      \"quote\": \"max_attempts=7\"\n    }\n  ]\n}",
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:d6cb10fed37be7051ad23bd88298821adff30da12c9d6fceb715657df78b542b",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-caf02a600e444c95add84c6b02130a99",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:124f65416683ab8a21e30458003c5d1796fdf9c15874b0f1263d8ad10c5e6314",
+          "sha256:889ffe912369811db4b8d7f8009b58c28f222460c651e7f14fb693aa958831ad"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:17:53.177Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:35e8af2698e325e201025f5e7778c6b4d2b65b8f59b02aee5f40fa91fb51c69a",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context/directed-present",
+        "task_version": "1",
+        "trace_sha256": "sha256:889ffe912369811db4b8d7f8009b58c28f222460c651e7f14fb693aa958831ad",
+        "verifier": {
+          "code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "id": "dsh-context-file-evidence",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "task_id": "dsh/context/conflict-present",
+      "finished": true,
+      "finish_reason": "completed",
+      "response": "{\n  \"status\": \"answer\",\n  \"value\": \"3\",\n  \"citations\": [\n    {\n      \"source\": \"current.txt\",\n      \"line\": 2,\n      \"quote\": \"max_attempts=3\"\n    },\n    {\n      \"source\": \"previous.txt\",\n      \"line\": 2,\n      \"quote\": \"max_attempts=9\"\n    }\n  ]\n}",
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:6426a58ba9820cd534c624b0f2860d98094ee927b67d3435a163de0c5cbece83",
+        "dsh_session_id": "dsh-session-sample-2-rollout-0-baaf6d3c52934d6c943bd655fbabb39f",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:41f306320ff4584e7a009490aac1a9eebc77629bcf7424af8bb7048f6ac70590",
+          "sha256:9c73e8664cbfe31b00ecfb72bf4cb1a0fb7a236cdffc42f7a06afea76d6887ab"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:17:55.662Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:f227f2ab16db91976def14aafb91079c74f7141b70d06c3e64067ce7821a8a8e",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context/conflict-present",
+        "task_version": "1",
+        "trace_sha256": "sha256:9c73e8664cbfe31b00ecfb72bf4cb1a0fb7a236cdffc42f7a06afea76d6887ab",
+        "verifier": {
+          "code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "id": "dsh-context-file-evidence",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "task_id": "dsh/context/conflict-missing",
+      "finished": true,
+      "finish_reason": "completed",
+      "response": "{\n  \"status\": \"insufficient_evidence\",\n  \"value\": null,\n  \"citations\": [\n    {\n      \"source\": \"current.txt\",\n      \"line\": 2,\n      \"quote\": \"status=not_specified\"\n    },\n    {\n      \"source\": \"previous.txt\",\n      \"line\": 2,\n      \"quote\": \"max_attempts=9\"\n    }\n  ]\n}",
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:09de75f8192cd3b9bc2a69f6a733c410f18da0211ef1e0c2d048abd6073a7615",
+        "dsh_session_id": "dsh-session-sample-3-rollout-0-a33bcbf47ad74fcfae03110ab0ef40d8",
+        "eligible": false,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:83401cc375010a507dc80ce148803921f9beebeda5daae6e4ffbd935c569030e",
+          "sha256:3a4b701a37761ec1fa757757664066ea05abe0505f52a0e44a3806eb17eb0b08"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:17:56.141Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:543dd94d9e7dd7ed11f0d888d325a135ce361154ee48981b1abf0ed8b5344593",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context/conflict-missing",
+        "task_version": "1",
+        "trace_sha256": "sha256:3a4b701a37761ec1fa757757664066ea05abe0505f52a0e44a3806eb17eb0b08",
+        "verifier": {
+          "code_digest": "sha256:3b115189bc46745b9255068bc073cc57d02597d77abdb359c7dc594baeb6119c",
+          "id": "dsh-context-file-evidence",
+          "version": "1"
+        }
+      }
+    }
+  ],
+  "training": false,
+  "accepted_e2e": false,
+  "diagnosis": {
+    "reward_zero": "All responses used basename citations instead of required sources/<name> labels.",
+    "ineligible": "conflict-missing additionally attempted unlisted sources/unrelated.txt; policy correctly rejected.",
+    "action": "Clarify labels and per-case allowed sources; preserve original rubric and this failure."
+  }
+}

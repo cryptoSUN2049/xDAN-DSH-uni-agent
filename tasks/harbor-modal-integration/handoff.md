@@ -6,7 +6,8 @@
 - Goal active，未完成。当前顺序：DSH/记忆/上下文/受控RSI真实任务与训练效果 → 独立结果复现；Harbor训练后置。SFT与大规模数据生产由其他会话承担。
 - M1 v2-r4真实两步RL、消费审计、504 LoRA更新/399 base冻结及独立reload已验收；两条公开题基线满分，不能宣称能力提升。
 - 2026-09-09：`0fdcbeb`已commit/push，GPU checkout `/workspace/rebuild/uni-agent-native-n0-r1`同步该提交。主线复用 `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，通过PYTHONPATH使用新checkout。不要修改运行中checkout。
-- 四例上下文 GPU 推理基线已启动 `/root/runs/dsh-context-baseline-r1`，supervisor PID99963，30分钟上限、并发2、strict audit。这不是训练更新，也不是实际context切换验收；冷启动须重新查进程及supervisor-result.json。
+- 四例上下文GPU r1已于325秒exit1：4题finished，reward全0，3eligible/1ineligible。原因是引用basename而非完整source ID，另有一次读表外路径；保留原失败，修订prompt消除歧义，不降低rubric。
+- 当前GPU容量对照 `/root/runs/dsh-grounding-capacity-r2`，supervisor PID104118，源0fdcbeb，单题n1/并发1/1800秒上限；窗口24576、总预算20480、perturn2048，保持题目与rubric。仅预算敏感性推理，不是同预算提升或RL更新。冷启动重查PID和supervisor-result.json。
 
 ### 最新 N0/N1/P1 检查点
 
@@ -14,7 +15,7 @@
 - 新venv `/workspace/venvs/uni-agent-native-n0-r1` 已安装完成：257 packages、pip check、固定runtime摘要及隔离import检查通过。仅CPU安装验收，不替代GPU复建/能力结果。
 - 原M1 optimizer独立CPU复核通过：2→4，504 active/37 empty，1008 moment tensors变化；报告 `native-r4-optimizer-result-replay.json`。不是新增训练。
 - 记忆freeze/load合同已通过；新closed policy及Mac SDK canary14真实工具调用通过。固定Linux runtime canary14请求通过；尚无模型A/B记忆训练验收。
-- 上下文两族四例与准备器已落盘，独立verifier/manifest/严格runner接线通过。本轮复核22项测试，Ruff双门通过；四例仅文件证据诊断，不证明泛化。
+- 上下文两族四例与准备器已落盘，独立verifier/manifest/严格runner接线通过。本轮复核22项测试，Ruff双门通过；真实r1结果见native-context-baseline-r1-result.json。四例仅文件证据诊断，不证明泛化。
 - P1 sync/colocate_async入口已实现，GPU异步对照尚未执行。
 - 用户已澄清无其他会话占GPU；保留运行前占用核验，不再据过期歧义阻塞。禁止全局Ray清理。优先真实任务与独立结果重跑，不重复安装。
 - 用户提醒数据量；四例仅调试入口，正式RL必须覆盖各能力场景、独立训练/评估身份，并报告有效组与奖励差异，不能将重复采样当任务多样性。
@@ -199,3 +200,8 @@ _hydra允许经过白名单校验的相对路径键；仍拒绝分隔符/插值�
 ### 视觉验收与异步授权
 
 两HTML移动端长词溢出及旧进度已修复，实际浏览器桌面/移动复验通过，45本地链接有效，console无错；报告g1-visual-audit.md。用户允许同步M2完整通过后，在已有单卡上有界colocate_async对照，无需再次确认；不改当前run、不新增GPU。
+
+### 进行中的下一批实现
+
+- context提示修订：只列本题存在源，完整citations.source ID；原评分不变，独立r2待部署。
+- 真实学生记忆链设计native-memory-student-chain-design.md经主线程审阅，CPU实现进行中：A回执验真→freeze→独立B，先评估，不伪造跨session训练credit。

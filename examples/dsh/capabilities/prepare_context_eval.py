@@ -131,6 +131,7 @@ def prepare(*, repository_root, output_dir, eval_id, runtime_executable, environ
         "status": "prepared-not-run",
         "eval_id": eval_id,
         "training": False,
+        "prompt_revision": cases[0]["metadata"]["prompt_revision"],
         "split": "test",
         "instances": 4,
         "context_switch_verified": False,
