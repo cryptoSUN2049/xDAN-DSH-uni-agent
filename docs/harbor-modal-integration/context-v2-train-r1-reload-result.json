@@ -1,0 +1,292 @@
+{
+  "schema": "dsh.context-independent-reload-audit.v1",
+  "run_root": "/root/runs/context-v2-train-r1-reload",
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 415.009,
+    "pid": 143487,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "run_manifest": {
+    "command": "env TRAINER_MODE=sync NUM_WARMUP_BATCHES=1 PATH=/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin:/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin PYTHONPATH=/workspace/rebuild/uni-agent-native-n0-r1:/workspace/rebuild/uni-agent-native-n0-r1/verl:/workspace/rebuild/uni-agent-native-n0-r1:/workspace/rebuild/uni-agent-native-n0-r1/verl PYTHON_BIN=/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python MODEL_LICENSE_APPROVED=1 LOW_VRAM=1 MODEL_ID=Qwen/Qwen3-4B MODEL_PATH=/workspace/models/Qwen3-4B-1cfa9a7 TRAIN_FILE=/root/runs/context-v2-train-r1-reload-data/train.parquet TEST_FILE=/root/runs/context-v2-train-r1-reload-data/validation.parquet TASK_CONFIG=/root/runs/context-v2-train-r1-reload-data/task.yaml RUN_ROOT=/root/runs/context-v2-train-r1-reload PROJECT_NAME=dsh-context-v2 EXP_NAME=context-v2-train-r1-reload MAX_PROMPT_LENGTH=8192 MAX_RESPONSE_LENGTH=8192 PPO_MAX_TOKEN_LEN_PER_GPU=16384 ROLLOUT_N=1 VAL_ROLLOUT_N=1 ROLLOUT_MAX_NUM_SEQS=1 TRAIN_BATCH_SIZE=1 TOTAL_TRAINING_STEPS=1 SAVE_FREQ=1 TEST_FREQ=1 TRAIN_MAX_SAMPLES=12 VAL_MAX_SAMPLES=4 DATA_SHUFFLE=True TOOL_PARSER=hermes GPU_MEMORY_UTILIZATION=0.30 ROLLOUT_ENFORCE_EAGER=True ROLLOUT_FREE_CACHE_ENGINE=True ROLLOUT_LAYERED_SUMMON=False ROLLOUT_CPU_OFFLOAD_GB=0 ACTOR_PARAM_OFFLOAD=True ACTOR_OPTIMIZER_OFFLOAD=True RESUME_MODE=resume_path RESUME_FROM_PATH=/workspace/uni-agent-g1/checkpoint/context-v2-train-r1/global_step_2 VAL_ONLY=True AGENT_LOG_DIR=/root/runs/context-v2-train-r1-reload/agent-logs ROLLOUT_DATA_DIR=/root/runs/context-v2-train-r1-reload/rollouts VALIDATION_DATA_DIR=/root/runs/context-v2-train-r1-reload/validation DSH_TRACE_ROOT=/root/runs/context-v2-train-r1-reload/artifacts/traces DSH_RESULT_ROOT=/root/runs/context-v2-train-r1-reload/artifacts/results PYTORCH_CUDA_ALLOC_CONF= bash /workspace/rebuild/uni-agent-native-n0-r1/examples/dsh/train_qwen3_4b_online_rl.sh trainer.default_local_dir=/workspace/uni-agent-g1/checkpoint/context-v2-train-r1-reload",
+    "command_file": "/root/runs/context-v2-train-r1-reload/command.txt",
+    "dataset": {
+      "counts": {
+        "train": 12,
+        "validation": 4
+      },
+      "dataset_id": "context-v2-train-r1-reload",
+      "source_commit": null
+    },
+    "exit_code": 0,
+    "finished_at": "2026-09-08T19:00:59.679389+00:00",
+    "model": "/workspace/models/Qwen3-4B-1cfa9a7",
+    "model_id": "Qwen/Qwen3-4B",
+    "paths": {
+      "agent_log_dir": "/root/runs/context-v2-train-r1-reload/agent-logs",
+      "dataset_manifest": "/root/runs/context-v2-train-r1-reload-data/manifest.json",
+      "holdout_parquet": "/root/runs/context-v2-train-r1-reload-data/validation.parquet",
+      "result_root": "/root/runs/context-v2-train-r1-reload/artifacts/results",
+      "rollout_data_dir": "/root/runs/context-v2-train-r1-reload/rollouts",
+      "task_config": "/root/runs/context-v2-train-r1-reload-data/task.yaml",
+      "trace_root": "/root/runs/context-v2-train-r1-reload/artifacts/traces",
+      "train_parquet": "/root/runs/context-v2-train-r1-reload-data/train.parquet",
+      "validation_data_dir": "/root/runs/context-v2-train-r1-reload/validation"
+    },
+    "pid": 143487,
+    "rollout": {
+      "train_n": 1,
+      "validation_n": 1
+    },
+    "run_root": "/root/runs/context-v2-train-r1-reload",
+    "schema": "dsh.online-rl.run-manifest.v1",
+    "sha256": {
+      "dataset_manifest": "sha256:9e9f45f9ac42a99efe27c863bd0ceee952061f3e820056c6a7be77571af1ed64",
+      "holdout_parquet": "sha256:aa30c65e977c85946b47e44d31948870439e78115436921d0c1880c942a12a04",
+      "model_config": "sha256:8ba006f74fecfaaeb392872a60f4a480e7ec9860153d2e1b769ec81f9a147f8a",
+      "task_config": "sha256:8f5657325eb741cee39c4ed098404c7aa28b4468d42c21054bd4fd49a5204022",
+      "train_parquet": "sha256:a7bd2391ac01321223bb92a095a0fdeaaa8988fb7eba1ec9f274e487143ab6e5"
+    },
+    "started_at": "2026-09-08T18:54:21.765040+00:00",
+    "status": "completed",
+    "uni_agent_sha": "a9c7b0a155da9b8d29da3d4d46a7c337156a54f3",
+    "updated_at": "2026-09-08T19:00:59.679389+00:00",
+    "verl_sha": "fefb080262e1c015a0ea05f958822a6a512dc795"
+  },
+  "trajectory_audit": {
+    "eligible": true,
+    "groups": [
+      {
+        "eligible": true,
+        "expected_sessions": 1,
+        "global_steps": 2,
+        "group_uid": "32cd2290-7f48-4acb-b020-b5b95b2e1c96",
+        "has_reward_variance": false,
+        "missing_consumed_keys": [],
+        "observed_sessions": 1,
+        "partition_id": "val",
+        "reasons": [],
+        "reward_values": [
+          0.1
+        ],
+        "status": "eligible-and-consumed",
+        "transfer_queue_keys": [
+          "32cd2290-7f48-4acb-b020-b5b95b2e1c96_0_0"
+        ]
+      },
+      {
+        "eligible": true,
+        "expected_sessions": 1,
+        "global_steps": 2,
+        "group_uid": "4cbee612-784a-427f-bb37-ca47c30b746b",
+        "has_reward_variance": false,
+        "missing_consumed_keys": [],
+        "observed_sessions": 1,
+        "partition_id": "val",
+        "reasons": [],
+        "reward_values": [
+          0.1
+        ],
+        "status": "eligible-and-consumed",
+        "transfer_queue_keys": [
+          "4cbee612-784a-427f-bb37-ca47c30b746b_0_0"
+        ]
+      },
+      {
+        "eligible": true,
+        "expected_sessions": 1,
+        "global_steps": 2,
+        "group_uid": "4cdad9b3-6cf9-4ab4-9327-2f3d8c5e5818",
+        "has_reward_variance": false,
+        "missing_consumed_keys": [],
+        "observed_sessions": 1,
+        "partition_id": "val",
+        "reasons": [],
+        "reward_values": [
+          0.1
+        ],
+        "status": "eligible-and-consumed",
+        "transfer_queue_keys": [
+          "4cdad9b3-6cf9-4ab4-9327-2f3d8c5e5818_0_0"
+        ]
+      },
+      {
+        "eligible": true,
+        "expected_sessions": 1,
+        "global_steps": 2,
+        "group_uid": "91fc7330-9028-4c53-b063-4ee9db36483c",
+        "has_reward_variance": false,
+        "missing_consumed_keys": [],
+        "observed_sessions": 1,
+        "partition_id": "val",
+        "reasons": [],
+        "reward_values": [
+          0.6675
+        ],
+        "status": "eligible-and-consumed",
+        "transfer_queue_keys": [
+          "91fc7330-9028-4c53-b063-4ee9db36483c_0_0"
+        ]
+      }
+    ],
+    "legacy_unjoinable": [],
+    "run_manifest_sha256": "sha256:9223fd22929838301fe546717aa82f23fffcc5da920b0e90e2a3d50be846707c",
+    "run_status": "completed",
+    "schema": "dsh.trajectory-group-audit.v1",
+    "summary": {
+      "eligible_groups": 4,
+      "groups": 4,
+      "legacy_unjoinable_files": 0,
+      "rejected_groups": 0,
+      "run_completed": true,
+      "unexpected_consumed_rows": 0,
+      "variance_groups": 0
+    },
+    "unexpected_consumed": {
+      "train": [],
+      "val": []
+    }
+  },
+  "load_log_evidence": [
+    {
+      "line": 1098,
+      "text": "\u001b[36m(TaskRunnerV1 pid=145618)\u001b[0m INFO:2026-09-08 18:58:56,462:Resuming from /workspace/uni-agent-g1/checkpoint/context-v2-train-r1/global_step_2, setting global step to 2"
+    },
+    {
+      "line": 1103,
+      "text": "\u001b[36m(WorkerDict pid=146580)\u001b[0m INFO:2026-09-08 18:58:59,587:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/context-v2-train-r1/global_step_2/actor/model_world_size_1_rank_0.pt"
+    },
+    {
+      "line": 1104,
+      "text": "\u001b[36m(WorkerDict pid=146580)\u001b[0m INFO:2026-09-08 18:58:59,670:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/context-v2-train-r1/global_step_2/actor/optim_world_size_1_rank_0.pt"
+    },
+    {
+      "line": 1107,
+      "text": "\u001b[36m(WorkerDict pid=146580)\u001b[0m INFO:2026-09-08 18:58:59,684:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/context-v2-train-r1/global_step_2/actor/extra_state_world_size_1_rank_0.pt"
+    },
+    {
+      "line": 1108,
+      "text": "\u001b[36m(WorkerDict pid=146580)\u001b[0m INFO:2026-09-08 18:58:59,684:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/context-v2-train-r1/global_step_2/actor/extra_state_world_size_1_rank_0.pt"
+    }
+  ],
+  "receipts": [
+    {
+      "task_id": "dsh/context-v2/dev-C",
+      "reward": 0.1,
+      "accuracy": 0.0,
+      "eligible": true,
+      "finished": true,
+      "fresh": true,
+      "receipt_id": "sha256:6341f014a7e62b5481ddfe3e7c1cda975b8097b3048c5279e5c0da7d536f50b6",
+      "receipt_sha256": "d54908bf975e332571be5532053ae727a62c090fb616c4a339e6415eeb196d99",
+      "trace_sha256": "sha256:9a7aa1f2d722c3ed26bfc8f954c317ee7888093a0069d7163572a51244607d1e",
+      "artifact_sha256": "sha256:fc44b35c39430f77ed8a17d43b8ee2ab8597f738091952a293cd98dc7d12aee6",
+      "verifier": {
+        "code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+        "id": "dsh-context-file-evidence-v2",
+        "version": "2"
+      }
+    },
+    {
+      "task_id": "dsh/context-v2/dev-D",
+      "reward": 0.1,
+      "accuracy": 0.0,
+      "eligible": true,
+      "finished": true,
+      "fresh": true,
+      "receipt_id": "sha256:7f44ccc08697eba9065fa3b782e3fafabd49207fe8e262807e9c89567f212bb9",
+      "receipt_sha256": "d188c34b3c1535820e3b2d7fd76cac09fb86d9039eacb5cdd4388432f416deca",
+      "trace_sha256": "sha256:1a453d267c62c15a9a92e5729f3268138e08eaaa8f047e5d833be17539169ac6",
+      "artifact_sha256": "sha256:1f353c11e4d0a2800f09f11bf2f275409e85d0845369a6ede34b0519a13a2c3f",
+      "verifier": {
+        "code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+        "id": "dsh-context-file-evidence-v2",
+        "version": "2"
+      }
+    },
+    {
+      "task_id": "dsh/context-v2/dev-V",
+      "reward": 0.6675,
+      "accuracy": 0.0,
+      "eligible": true,
+      "finished": true,
+      "fresh": true,
+      "receipt_id": "sha256:fa7d0309331c22303f3b2007a06eedd61d7e792599c7f6fde3ff02a655890062",
+      "receipt_sha256": "bb08704bfc3e8ad27a5c7c5d015cd045291031aa1220f98aaa71e19fd5f5de1b",
+      "trace_sha256": "sha256:91b566a0699115efa506f6e43d4b9be081130ea9e504f2884d4f475039ec067f",
+      "artifact_sha256": "sha256:38059b812adc2792687c4bd72f6b263d217953cba413da8cfff89f083e185575",
+      "verifier": {
+        "code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+        "id": "dsh-context-file-evidence-v2",
+        "version": "2"
+      }
+    },
+    {
+      "task_id": "dsh/context-v2/dev-M",
+      "reward": 0.1,
+      "accuracy": 0.0,
+      "eligible": true,
+      "finished": true,
+      "fresh": true,
+      "receipt_id": "sha256:c990e341f6d6322266fb0598c65d811bf31b4c28cdf6528d9608602fc253fc46",
+      "receipt_sha256": "933269902a2bfd1704249b8d5ec8051552daa7dd5eca0291626893598c3f5243",
+      "trace_sha256": "sha256:5d8e7aac666fe7f08b7497da2154c11df90f7ff547e687ac3966e40bdf2707b1",
+      "artifact_sha256": "sha256:3015b2fb2e732cf8d89cd514a36acb5e121381539a61ab501d3d0b9bce5213e7",
+      "verifier": {
+        "code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+        "id": "dsh-context-file-evidence-v2",
+        "version": "2"
+      }
+    }
+  ],
+  "metrics": [
+    {
+      "step": 2,
+      "data": {
+        "val-aux/dsh/context-v2/context-v2-train-r1-reload/reward/mean@1": 0.24187500588595867,
+        "val-aux/dsh/context-v2/context-v2-train-r1-reload/verifier_reward/mean@1": 0.241875,
+        "val-core/dsh/context-v2/context-v2-train-r1-reload/acc/mean@1": 0.0,
+        "val-aux/num_turns/min": 4,
+        "val-aux/num_turns/max": 4,
+        "val-aux/num_turns/mean": 4.0
+      }
+    }
+  ],
+  "no_update_checks": {
+    "no_train_consumed": true,
+    "no_new_checkpoint": true,
+    "no_actor_update_metrics": true
+  },
+  "task_comparison": [
+    {
+      "case": "dev-D",
+      "contract_equal": true,
+      "sources_equal": true
+    },
+    {
+      "case": "dev-C",
+      "contract_equal": true,
+      "sources_equal": true
+    },
+    {
+      "case": "dev-M",
+      "contract_equal": true,
+      "sources_equal": true
+    },
+    {
+      "case": "dev-V",
+      "contract_equal": true,
+      "sources_equal": true
+    }
+  ],
+  "files": {
+    "train.log": "6f3651db5ff7526ee5aa461b7451168f3fcc2fa0fcec0ef5c8b694d725a51f91",
+    "run-manifest.json": "9223fd22929838301fe546717aa82f23fffcc5da920b0e90e2a3d50be846707c",
+    "reload-audit.json": "125af66964be3bc75cd67a533dafa7ffdd4c3e73d33641c94f89a2318ed7c7d1",
+    "supervisor-result.json": "6d164e7bdf63d6000791cdcba5d83d195c858ba9b1856d73afe76701bbb103de"
+  },
+  "metrics_sha256": "cd4e98ccb75da6c3bc6d128fb378a7cd0ca8cdeba448c7710688f6f676e782a0",
+  "interpretation": "Independent checkpoint reload and fresh evaluated result rerun; not exact numeric reproduction or improvement"
+}

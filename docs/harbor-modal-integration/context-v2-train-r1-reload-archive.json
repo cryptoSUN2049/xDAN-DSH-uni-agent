@@ -1,0 +1,8 @@
+{
+  "path": "/workspace/reports/context-v2-train-r1-reload-20260909.tar.gz",
+  "size_bytes": 243041,
+  "sha256": "2ad0166c77cf97579ca64e951ba8ea23aa8b2bf43ee05bca937aa105ce14b2f5",
+  "members": 523,
+  "gzip_crc_passed": true,
+  "scope": "Only context-v2-train-r1 and independent reload logs/data/CPU audits/metrics. Checkpoints already under /workspace and not duplicated."
+}
