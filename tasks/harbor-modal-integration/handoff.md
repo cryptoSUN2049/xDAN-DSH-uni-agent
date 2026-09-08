@@ -204,3 +204,11 @@
 - Node24.20.0官方tarball SHA256已核验，pnpm固定11.7.0；RunPod网络盘不允许恢复tar UID/GID，使用--no-same-owner。
 - 构建入口deployment/bootstrap/build-dsh-runtime.sh；依赖安装进行中，尚未产生Linux runtime验收。
 - 原生训练v1仍在同一进程运行，Actor初始化完成、vLLM加载并完成autotune；当前不重启，不追认更新成功。
+
+## Subagent：DSH最新版本审计完成
+
+- docs/harbor-modal-integration/dsh-latest-audit.md：官方master c389f96/0.1.3-alpha.2；当前7840/0.1.2-alpha.1；最新tag82a5fd6。
+- SDK三核心文件AST相同，但新版SessionHandle/flush、日志v1、seq索引/冷读取变化需专门迁移验证。
+- ContextPilot远端71ca762确有source/fs/runner实际代码；runner可执行真实三工具file-memory阶段，不只是离线compiler。旧设计HTML是早期快照，不能覆盖最新源码结论。
+- 下一步记忆接入优先复用fs+runner及依赖闭包，维持edit/read/write-only独立profile；不能直接混入Cordis完整catalog。当前未升级DSH。
+- 原生train-v1实际生成global_step_1文件和validation/0、1；仍需检查更新指标、step2及独立reload，未宣称本次训练验收完成。
