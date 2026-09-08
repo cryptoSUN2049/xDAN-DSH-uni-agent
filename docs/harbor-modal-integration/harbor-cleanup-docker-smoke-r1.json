@@ -1,0 +1,98 @@
+{
+  "passed": true,
+  "scope": "real Docker scripted cleanup; no GPU/student/training",
+  "cases": [
+    {
+      "mode": "truncated",
+      "job_id": "job-cleanup-fb184a4e24b4464d81cf6c7fe1199ef6",
+      "state": "cancelled",
+      "manifest": {
+        "schema": "dsh.harbor-job-manifest.v1",
+        "job_id": "job-cleanup-fb184a4e24b4464d81cf6c7fe1199ef6",
+        "request_sha256": "sha256:5eeb65246849de1295a4fbccc7fd6f98de32dd6400d63e0894d85656b4d9b9ab",
+        "gateway_session_id": "cleanup-fb184a4e24b4464d81cf6c7fe1199ef6",
+        "nonce": "36c39556d0be4b768c1f677088f85c37",
+        "worker_id": "local-cleanup-worker",
+        "trial_id": "d2649273-0932-4b23-8afa-bade6a6b1e7d",
+        "status": "cancelled",
+        "sealed_at_unix": 1788882928.4740238,
+        "error_code": "evidence-rejected-after-cleanup",
+        "artifacts": []
+      },
+      "request_count": 1,
+      "server_errors": [],
+      "dsh_finished": false,
+      "dsh_finish_reason": "max-tokens"
+    },
+    {
+      "mode": "positive",
+      "job_id": "job-cleanup-df4d27d76db4441d98050b0eab04d1e7",
+      "state": "succeeded",
+      "manifest": {
+        "schema": "dsh.harbor-job-manifest.v1",
+        "job_id": "job-cleanup-df4d27d76db4441d98050b0eab04d1e7",
+        "request_sha256": "sha256:c15bb50f6ffb3c301217cdaf931533474ff1b007c0e0c6a323bcf2eafd4814da",
+        "gateway_session_id": "cleanup-df4d27d76db4441d98050b0eab04d1e7",
+        "nonce": "f8d1cc1088004b78b0047347a8608dc2",
+        "worker_id": "local-cleanup-worker",
+        "trial_id": "6fb4eef8-b515-431d-bafb-e5903f66a4f3",
+        "status": "succeeded",
+        "sealed_at_unix": 1788882950.028428,
+        "error_code": null,
+        "artifacts": [
+          {
+            "id": "object-0",
+            "kind": "dsh_result",
+            "size_bytes": 627,
+            "sha256": "sha256:42d3e8303cbe269830b9fe6fee5c4989c22f241300a003419f251cd4417362d6"
+          },
+          {
+            "id": "object-1",
+            "kind": "dsh_trace",
+            "size_bytes": 90615,
+            "sha256": "sha256:2694df1aca30db4d9754749d5ab6c7b34a45917966e78f5bebf994c02e0b03cd"
+          },
+          {
+            "id": "object-2",
+            "kind": "harbor_result",
+            "size_bytes": 5296,
+            "sha256": "sha256:d5920c4c096b7f75d72737bb749c49a72fd86cef5182d34c8760255c145a0bed"
+          },
+          {
+            "id": "object-3",
+            "kind": "reward",
+            "size_bytes": 4,
+            "sha256": "sha256:5717e7c840171019a4eeab5b79a7f894a4986eaff93d04ec5b12c9a189f594bf"
+          },
+          {
+            "id": "object-4",
+            "kind": "verifier_log",
+            "size_bytes": 2314,
+            "sha256": "sha256:c3553da2e4e7e86a6111d2b120a3547786c53bb7931fc09de0136d6b86e0a42e"
+          }
+        ]
+      },
+      "request_count": 8,
+      "server_errors": [],
+      "dsh_finished": true,
+      "dsh_finish_reason": "completed",
+      "reward": 1.0
+    }
+  ],
+  "task_ref": {
+    "id": "evolution-redact-train-01",
+    "sha256": "sha256:3cf73f11ef23772c61c243f830e04e095914573740c52be2176c75c68716c3ef",
+    "version": "v2"
+  },
+  "source_sha256": "821cf7bd905162b694b999aa2e78cc81ea71c7683a522e4dbea17ef3b623fee0",
+  "ledger_statuses": [
+    [
+      "cancelled",
+      1
+    ],
+    [
+      "succeeded",
+      1
+    ]
+  ]
+}

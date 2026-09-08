@@ -65,7 +65,7 @@ def check_result(mode, result):
         raise RuntimeError("Unexpected trial exception or reward")
 
 
-def start_server(policy, session):
+def start_server(policy, session, *, api_key=KEY):
     errors = []
     requests = []
     route = f"/sessions/{session}/v1/chat/completions"
@@ -73,7 +73,7 @@ def start_server(policy, session):
     class Handler(BaseHTTPRequestHandler):
         def do_POST(self):
             self.connection.settimeout(15)
-            if self.path != route or self.headers.get("Authorization") != f"Bearer {KEY}":
+            if self.path != route or self.headers.get("Authorization") != f"Bearer {api_key}":
                 self.send_error(403)
                 return
             try:
