@@ -342,3 +342,12 @@
 - Harbor Dockerfile/keyless检查/README已改为0.1.3a2；尚未构建新镜像，旧镜像和task摘要暂保留为历史实际状态，不填假摘要。
 - 客户端client.py已实现；client+worker/HTTP主进程43tests通过，代理client+协议组合112通过；全仓Ruff通过197files。真实HTTP+SQLite，executor为fake；不冒充学生训练。
 - unia_capability_audit现正在实现task.py、独立Harbor receipt绑定及测试，设计harbor-task-binding-design.md；不覆盖其未完成文件。下一步runner/config注册、Gateway独立路由登记、真实M2仍必须实施。
+
+## Linux构建已启动 / Task入口完成
+
+- 专属流程工具49380已exit0：GitHub fetch成功、DSH checkout精确b236969，集成build入口checkout精确a6ad775；Linux构建后台PID30463已启动。日志/workspace/reports/dsh-g1-v2-build.log，退出文件同前缀.exit，2400秒截止。先查进程与exit，不重复启动。
+- 废弃旧包装及clone/SSH子进程已清理；旧工具31983最终exit255，不是新版构建失败。用户处理的30106也已确认退出。
+- 新Task和runner入口完成：Harbor独占sandbox；operator-only字段拒样本覆盖，live context和URL注入，instruction精确匹配，原始五artifact复核并生成独立Harbor receipt。receipt只标task-evidence-verified，不能直接冒称Gateway token准入。
+- package-dsh-runtime.sh复用官方build-python-release.py，固定b236/Linux，检查binary与-rg、拒复用output、记录uv与SHA256SUMS。未直接build占位版本pyproject。
+- 主进程Task/client/新旧runner/构建+打包组合131tests通过，1个既有Ray deprecation warning；全仓Ruff双项通过201files。
+- 下一项：unia_capability_audit正在新增Harbor trajectory postprocessor；verl_six_month_audit只读细化动态Gateway port独立登记方案。两者均不能以Task测试替代真实M2采样/更新/reload。

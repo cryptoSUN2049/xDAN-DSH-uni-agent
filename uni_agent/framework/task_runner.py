@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import logging
 import re
+from copy import deepcopy
 from pathlib import Path, PurePosixPath
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urlparse
@@ -261,17 +262,41 @@ async def run_task(
     if not isinstance(sample_config, dict):
         raise ValueError("run_task requires tools_kwargs['task'] (the serialized Task Config)")
     sample_config = dict(sample_config)
+    harbor_runtime = None
+    if sample_config.get("name") == "harbor_dsh":
+        if {"gateway_base_url", "runner_context"}.intersection(sample_config):
+            raise ValueError("Harbor sample cannot provide runtime gateway_base_url or runner_context")
+        context = tools_kwargs.get("_runner_context")
+        base_url = getattr(session, "base_url", None)
+        session_id = getattr(session, "session_id", None)
+        if (
+            not isinstance(context, dict)
+            or not context
+            or not isinstance(base_url, str)
+            or not base_url
+            or not session_id
+            or context.get("gateway_session_id") != session_id
+            or urlparse(base_url).path != f"/sessions/{session_id}/v1"
+        ):
+            raise ValueError("Harbor requires matching live Gateway session and Framework runner context")
+        harbor_runtime = {"gateway_base_url": base_url, "runner_context": deepcopy(context)}
     sample_config["prompt"] = raw_prompt
 
     resolver = TaskConfigResolver.from_file(task_config_path) if task_config_path else TaskConfigResolver()
     task = resolver.resolve(
         sample_config,
-        runtime_model={
+        runtime_model=None
+        if harbor_runtime is not None
+        else {
             "base_url": session.base_url,
             "api_key": api_key,
             "model_name": model_name,
         },
     )
+    if harbor_runtime is not None:
+        # Operator config is resolved first; only the live Framework supplies
+        # these fields. Harbor owns its Agent and needs no local model binding.
+        task = {**task, **harbor_runtime}
     task = _inject_dsh_artifact_roots(
         task,
         trace_root=dsh_trace_root,
