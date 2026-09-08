@@ -1,0 +1,976 @@
+{
+  "captured_at": "2026-09-08T11:27:37.774776+08:00",
+  "report_scope": "read-only code architecture audit; no merge or runtime deployment",
+  "root_branch": "dsh-adapter",
+  "root_head": "a197eadae3b3f4150f12044faa1c0b1c4e62c9fe",
+  "latest_worktree": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration",
+  "latest_head": "7139f57eae3797d3179abb4e96a11da7cdc3037e",
+  "status_porcelain": [
+    "M tasks/harbor-modal-integration/handoff.md",
+    "?? deployment/versions/",
+    "?? docs/harbor-modal-integration/first-gpu-acceptance.md"
+  ],
+  "unmerged_files": [],
+  "verl_committed_pin": "160000 commit fefb080262e1c015a0ea05f958822a6a512dc795\tverl",
+  "verl_checkout": "fefb080262e1c015a0ea05f958822a6a512dc795",
+  "files": {
+    "examples/dsh/README.md": {
+      "sha256": "9a12804a8a186fb9d20cdf4b5dee85a9eaf0ec67dc9c0a760ce819f0df30e660",
+      "lines": 267
+    },
+    "examples/dsh/evolution.patch.yml": {
+      "sha256": "edace17a8096ec41e572c10fc7ad96f0d9a62c0a6ff9c8271694b4c1b1024aeb",
+      "lines": 10
+    },
+    "examples/dsh/evolution_bootstrap_scenarios.jsonl": {
+      "sha256": "004d0c72dc335549dd17e34c03cbd98fb3b1f70f889cf6b444683692e9a03ef7",
+      "lines": 4
+    },
+    "examples/dsh/evolution_scenarios.jsonl": {
+      "sha256": "b2216436e7ed15ff1474f94de9b038d764ea04811a6c04d093fd178390eba95e",
+      "lines": 4
+    },
+    "examples/dsh/evolution_scenarios_v2.jsonl": {
+      "sha256": "79689d637b5350b183a007d7aa0d2870c7fbaa62300c8cad5263d8aacd89473c",
+      "lines": 24
+    },
+    "examples/dsh/evolution_task_config.yaml": {
+      "sha256": "297a14281c535caed030bcd898c648ec1f1bed5f483d8f458680438e7187eb09",
+      "lines": 37
+    },
+    "examples/dsh/evolution_task_config_v2_fast.yaml": {
+      "sha256": "33eff7c295c027dc11e1a0e81bd8da3b04aa03b727800716c331dda0e8ee373b",
+      "lines": 34
+    },
+    "examples/dsh/evolution_task_config_v3_live.yaml": {
+      "sha256": "d09c9dffcdcde2ac3e3f46c032c23419b2c60d7a341a4e48f875385cb2ee61d3",
+      "lines": 36
+    },
+    "examples/dsh/evolution_v3_catalog.json": {
+      "sha256": "38da1d08ff1c929df326afc39b6c56991be34a9f9e0af81d98b8a3683afd5afb",
+      "lines": 233
+    },
+    "examples/dsh/evolution_v3_catalog.py": {
+      "sha256": "3b9a81e2fb0ebdc98b70d7ee0529d38fe70c56f688eed131b4ff690342dbdc92",
+      "lines": 315
+    },
+    "examples/dsh/evolution_v3_live.py": {
+      "sha256": "f0d528e441ba902e16051b817edf94cd322c46a14b50b662a87a441891b2dd11",
+      "lines": 485
+    },
+    "examples/dsh/evolution_v3_live_scenarios.jsonl": {
+      "sha256": "7785795df04d54cb66f9d93ec2826207b679da855816e52fdad12f5c278ac5b5",
+      "lines": 8
+    },
+    "examples/dsh/evolution_v3_live_verifier.py": {
+      "sha256": "27b0ab1be834fe86ba24646d373a157e1d591b3795c34e66c0b35d98b4a3863e",
+      "lines": 628
+    },
+    "examples/dsh/evolution_v3_verifier.py": {
+      "sha256": "a6ad3b1e3695c7aa290b4d210c4ac21e1a6f1fbe5c59e689935ce380787b4a0a",
+      "lines": 314
+    },
+    "examples/dsh/evolution_verifier.py": {
+      "sha256": "067668803e5f6fdb5f64cd44a17e2f4baef8835e4681a02cdf35d9f6bb4e3748",
+      "lines": 480
+    },
+    "examples/dsh/fixtures/evolution-v2/mask-holdout-01.json": {
+      "sha256": "2b09bf93defa774bf6069a33c6aa87c80390cbe1e348a0eab8dbaa2d42a79420",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/mask-holdout-02.json": {
+      "sha256": "39d8691bec7d9fb49d2675681ff6e6f55f0065ef63aa1cf04a2cf28d3e4ad999",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/mask-train-01.json": {
+      "sha256": "0ec0101dee5b8539c0d604e5546775606a13fe39647302a47859ca120cd42a8c",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/mask-train-02.json": {
+      "sha256": "9d2a926ed9528ac9b419bd7b15033620a4e5711846ae902f98cbc24c9a1ae17a",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/mask-train-03.json": {
+      "sha256": "cc57303f813ad51ff905959439d40d736fc58233fa22677af30b6852ba97776c",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/mask-train-04.json": {
+      "sha256": "be0470e82261cffc41c2a617fb7c8295e637042d832d42ae4b7cad11e10fd766",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/normalize-holdout-01.json": {
+      "sha256": "d843ce59d6fad8b00bb5f032bcb318df66757fbbdf4ee1d45ac75418d90dd0d4",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/normalize-holdout-02.json": {
+      "sha256": "89b11c7d839da4bbc101fa3a021503c44346d281bd544352c1673444ddb9d868",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/normalize-train-01.json": {
+      "sha256": "238d132b7c77a0b8ee9f5065130c482d846104e80c4ed37f2c3c8487ea198879",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/normalize-train-02.json": {
+      "sha256": "fdede99050d0039b2208b476385f8f01d22ccaaf6bcf06d1f103e710b171f434",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/normalize-train-03.json": {
+      "sha256": "dc44a1bef4c07507870a3596f6f19092697fb9095e0d1f072c312c54ca3b4fd8",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/normalize-train-04.json": {
+      "sha256": "01afdbb0a54688d8294d22418b9be9b15689b35c819c0c6f1b86fd489e15f7bb",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/redact-holdout-01.json": {
+      "sha256": "a4b6a08fbcebac031aee39fdddc782847d4e833b0944888fc202b677ca7cd841",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/redact-holdout-02.json": {
+      "sha256": "d853528248c7070746eeb2586dedf05bfafd9d05dde37da7f3211a572661e550",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/redact-train-01.json": {
+      "sha256": "7bee382f0329b19c6194780532262aa244f66fa5b34e31e3fa48d7e7dddeda04",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/redact-train-02.json": {
+      "sha256": "6f17b981e8475d50903fff130dab6d89a0aa86768293021a4027ea3842d60bef",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/redact-train-03.json": {
+      "sha256": "40adfec4316b2f36ae6f7e6c231c107d07ca9c206ac8f9d6ac2fa6e79afedd47",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/redact-train-04.json": {
+      "sha256": "b22ef0b1e534aabc7a1e7e67559e760f80d24b2646ff0095d93a5886a85d5c79",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/trim-holdout-01.json": {
+      "sha256": "961c62261e0be8c4d907301ff52578bacbd1954891845bbfc33bcadee069f791",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/trim-holdout-02.json": {
+      "sha256": "93883fad5a2dc9ed8bf045ebdc48978bac3889a710df34e4e94c4b3ce0930248",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/trim-train-01.json": {
+      "sha256": "eaf2ea89a1802cc9a2a4746397a67b3b1389181b9cdbd2459ce7c088e4232931",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/trim-train-02.json": {
+      "sha256": "4fde269df07dcfc52ff4b0972714d330af20c64b7e8f8f0fb653be53865150ef",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/trim-train-03.json": {
+      "sha256": "d5c7d0eca672c0d42f8bfa48335c76e25deae2541e6854f33b938ddf74f73661",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v2/trim-train-04.json": {
+      "sha256": "81b232ed1cc1de57efd41c29396e2a0c0f973ffa8d2840fa1cb826bdda109831",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v3-live/diagnostic-recovery.json": {
+      "sha256": "39ebc3785a2a311736b953cc47fae9c7bb1a8b5cc3974e0d812f7ae8e06b3e53",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v3-live/lifecycle-composition.json": {
+      "sha256": "df694efeb462d0cb3b0f37cb5b9a0c230bbfa0609c65c0c1e71bcca4c637933e",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v3-live/multi-step-configuration.json": {
+      "sha256": "2499477beff2b6d2869e0f863af1682d75da429a033ac8a6eab27cc33ac47c1f",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v3-live/permission-abstention.json": {
+      "sha256": "0b5470fcaa97b11697f17d0fa7a105dc6a14724754e344661af492335bb4a022",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v3-live/reward-hacking-resistance.json": {
+      "sha256": "39bbd019c8c6f25659f4609ce10f46eca5c3fc7eba73a237dfa59aed4e042c4b",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v3-live/runtime-grounding.json": {
+      "sha256": "d5e5e77c6374b30022d6c35efec605928ab2dc8a728cd202f11cb58b0a7a7ad5",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v3-live/timeout-cleanup.json": {
+      "sha256": "93bd964ca2d46c982bffcba966533a8420c99fd04b507dd4bc416d47df33dac1",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution-v3-live/transfer-composition.json": {
+      "sha256": "0cbaeab42aa7070d437f9439cc67afb503e08b16339a6b7644b4d97bd18f9a65",
+      "lines": 1
+    },
+    "examples/dsh/fixtures/evolution/mask-heldout-01.json": {
+      "sha256": "e0cd29e25ae1e61d502ccf54211caf1e4183c0cdc1d1993b341210de9f2ccefa",
+      "lines": 5
+    },
+    "examples/dsh/fixtures/evolution/normalize-basic-01.json": {
+      "sha256": "c26b453a0b808afe03b463aa2f3953cf29399c038f16345535e80ae68f88d07d",
+      "lines": 5
+    },
+    "examples/dsh/fixtures/evolution/normalize-basic-02.json": {
+      "sha256": "5bf5385f8628e8f5daf31dbdb17db7978c9d6b19fdb0080847b596d90904aea1",
+      "lines": 5
+    },
+    "examples/dsh/fixtures/evolution/redact-heldout-01.json": {
+      "sha256": "06348819eee4db8d7432799d848f8c5c9d4011339eeca5cdf4555b0e85e88932",
+      "lines": 5
+    },
+    "examples/dsh/fixtures/evolution/trim-bootstrap-01.json": {
+      "sha256": "42e5de641c9055d0171fe2a2905324a6b672327e99db154a7145ebb9bd274988",
+      "lines": 5
+    },
+    "examples/dsh/fixtures/evolution/trim-bootstrap-02.json": {
+      "sha256": "538d7b001dcf540f3d45cae33f1455c075e39668d62d2e6f584d3b3f75370308",
+      "lines": 5
+    },
+    "examples/dsh/fixtures/evolution/trim-bootstrap-heldout-01.json": {
+      "sha256": "4a67d867028909be79e6a7bebbcb69e9a6c6f54f6d5cd7eb51c0fe1afd050442",
+      "lines": 5
+    },
+    "examples/dsh/fixtures/evolution/trim-bootstrap-heldout-02.json": {
+      "sha256": "2d4f57295e2bb176973ddd959b790152c7a65d6dfc1c75a91bbdba5be07ea1d1",
+      "lines": 5
+    },
+    "examples/dsh/ops/README.md": {
+      "sha256": "24feafd5951ecb85e7637f134ba5ad5eaffdc2d2b9c7fd9b47af09964ef02006",
+      "lines": 113
+    },
+    "examples/dsh/ops/audit_qwen3_4b_online_rl.py": {
+      "sha256": "8a66aa4c0d405e65e5a58e830c07e85efdacb80028b4ed0c01d53409092b03c9",
+      "lines": 414
+    },
+    "examples/dsh/ops/audit_v3_live_smoke.py": {
+      "sha256": "946ef080587ed19d6b38942bbc70398bae57b49965514e34dab910758aa26fc6",
+      "lines": 299
+    },
+    "examples/dsh/ops/launch_qwen3_4b_online_rl.sh": {
+      "sha256": "7f6356e9864a5c33e60219f3ef33c3a448e1dfad4bd820f2a3285c31cfce44da",
+      "lines": 204
+    },
+    "examples/dsh/ops/lib.sh": {
+      "sha256": "f9c991957bd547c14fb33ef110b148aba96f41f9eddf52378bf7be9390d90890",
+      "lines": 38
+    },
+    "examples/dsh/ops/prepare_qwen3_4b_data.sh": {
+      "sha256": "769f31a87818f0890442af34f82f57257274db81c087ab4cd542e439d8bef557",
+      "lines": 36
+    },
+    "examples/dsh/ops/reload_qwen3_4b_checkpoint.sh": {
+      "sha256": "d0d5e89be8d400be57fe4971cbecad01844f2ef01b2e65fee14d9e4129cce0bb",
+      "lines": 25
+    },
+    "examples/dsh/ops/run_v3_live_smoke.py": {
+      "sha256": "fa402dfab421414dbef591d52e1f4cd14e7167f74cf4812cfc03c9be42d87922",
+      "lines": 777
+    },
+    "examples/dsh/ops/status_qwen3_4b_online_rl.sh": {
+      "sha256": "5b68db740960fab7d1581bb58b4a136f9c4f31871a2ecea351aaadcc7763f291",
+      "lines": 93
+    },
+    "examples/dsh/ops/summarize_parser_telemetry.py": {
+      "sha256": "0aa0177c704a6731bf8c74d2d3d907254221e5c9627029178b8d775de971296e",
+      "lines": 82
+    },
+    "examples/dsh/ops/supervise_qwen3_4b_online_rl.sh": {
+      "sha256": "6525064a13acb4b2a0086844f1e8b599686664ddbc360e84f69daa6508e208d5",
+      "lines": 85
+    },
+    "examples/dsh/ops/teardown_qwen3_4b_online_rl.sh": {
+      "sha256": "1a54f4147d6aa4314548367d3aa88222cb216100d60c66342a302f5909630700",
+      "lines": 57
+    },
+    "examples/dsh/ops/write_dataset_manifest.py": {
+      "sha256": "8cadce71ecfb3875fa1f23fd5f59eef1b1093e0e38a17e2569af4828f9ca93a3",
+      "lines": 116
+    },
+    "examples/dsh/ops/write_run_manifest.py": {
+      "sha256": "b35fc38f6df89dbbfebb7fa49bc822821c5e36d01e32217379b70357fd6e1589",
+      "lines": 169
+    },
+    "examples/dsh/prepare_dataset.py": {
+      "sha256": "2610e909330385d31c257017ce6abf87fb81969ec14fdc42dac00baa8d101104",
+      "lines": 432
+    },
+    "examples/dsh/prepare_evolution_dataset.py": {
+      "sha256": "8b97838da262e6dec4818911342f2f2f2517b3a16e171259df272f2e69ef85fb",
+      "lines": 254
+    },
+    "examples/dsh/task_config.yaml": {
+      "sha256": "4c12f0e1ca269c2703d23d5aef1e2832c8e803c73b7fae5c380293c4d995e246",
+      "lines": 46
+    },
+    "examples/dsh/train_qwen3_27b.sh": {
+      "sha256": "4696da753cedc37e17d1b4384edd88a751b00378033917b9ed2e8c812cfe482e",
+      "lines": 37
+    },
+    "examples/dsh/train_qwen3_4b_online_rl.sh": {
+      "sha256": "b6211b74870996948b2642354e81567e9d25b1108229b4498f147ebe48d4eb84",
+      "lines": 318
+    },
+    "examples/dsh/verifier.py": {
+      "sha256": "eb5e0d68779739d04e1038534e5f2799a44cf299e7325ba2f6bef5c793ecf2cd",
+      "lines": 143
+    },
+    "examples/inference/README.md": {
+      "sha256": "9a189e15fa3cb8b023f205381f9ec442a41c017640a8bd3b633e0afca12c8431",
+      "lines": 24
+    },
+    "examples/inference/parallel_infer_api.py": {
+      "sha256": "170f8582694820a83f432de341437f475e28d7cf2d36fd88b51e25ec4c72f673",
+      "lines": 276
+    },
+    "examples/inference/parallel_infer_verl.py": {
+      "sha256": "2082e38120062c4c89342ea85ffef288c6b115e0614bfc096fc50968673aa34d",
+      "lines": 623
+    },
+    "examples/inference/parallel_run_oracle.py": {
+      "sha256": "6d52166da9186765cb737669f6a422ef167989659c44a063c8dac65b32314725",
+      "lines": 233
+    },
+    "tests/uni_agent/__init__.py": {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "lines": 1
+    },
+    "tests/uni_agent/agents/test_claude_code_agent.py": {
+      "sha256": "9774cab7429fc9fefd53f55e4f5672aed574c5130599867f74e56cbc8d9c1880",
+      "lines": 303
+    },
+    "tests/uni_agent/agents/test_dsh_agent.py": {
+      "sha256": "9fee852108ef14ddaef665e7d335efb557caa48b6c65fcbc3930a028805563c8",
+      "lines": 222
+    },
+    "tests/uni_agent/agents/test_dsh_runner.py": {
+      "sha256": "04c12e5224e5e1bef6e16c3b722dd907352dfe8d92b2b98fa957c864708ad6ec",
+      "lines": 117
+    },
+    "tests/uni_agent/agents/test_mini_swe_agent_agent.py": {
+      "sha256": "18a10d9a1b2ef4730714fd043e8a55d944dbe2b4c7b189803684a9458ed0633e",
+      "lines": 212
+    },
+    "tests/uni_agent/agents/test_model_config.py": {
+      "sha256": "0fec9f35125df57b995d0ec11f330ef564e6a5c9c911ec5a3f4e482398f0ce9d",
+      "lines": 26
+    },
+    "tests/uni_agent/agents/test_react_agent.py": {
+      "sha256": "12c29a6e8124fa258e0fc9881e4ce658a3352b08cfaffd236ae7ca38d8a9425b",
+      "lines": 309
+    },
+    "tests/uni_agent/deployment/test_host_runtime.py": {
+      "sha256": "88b905117d16f309e0ae868a6bd4fb35a7e3b7736908dddb3a558fada9dabb9a",
+      "lines": 145
+    },
+    "tests/uni_agent/framework/test_dsh_episode_workspace.py": {
+      "sha256": "52e7d282463876308ca839ed0101dfd38fb5887886502230a37bafb8852dc061",
+      "lines": 161
+    },
+    "tests/uni_agent/framework/test_dsh_reward_lineage.py": {
+      "sha256": "5a0c871ad3732b0aff7d6fbca6e1f8d36387eff5b797c3a22ddd5db9f8ffb5ab",
+      "lines": 45
+    },
+    "tests/uni_agent/framework/test_generate_sequences_on_cpu.py": {
+      "sha256": "d76c628b191e86eba7851e10f27072a4cf4a386cd3a44f5f584714cfb7de1379",
+      "lines": 2270
+    },
+    "tests/uni_agent/framework/test_multi_modal_postprocess_on_cpu.py": {
+      "sha256": "3e9a06e38cdb33b07190450ac8de871626ae7e1168e5132833b9dc637b06aa29",
+      "lines": 85
+    },
+    "tests/uni_agent/framework/test_task_config_merge.py": {
+      "sha256": "2cea023265bed43515922c1334d68bd606c22743ac0af3c0f820a26ce9d54677",
+      "lines": 289
+    },
+    "tests/uni_agent/framework/test_task_runner.py": {
+      "sha256": "951e4107a4d3c2c93873a47d216bae76996c959c75c2c32031137dffee45b056",
+      "lines": 270
+    },
+    "tests/uni_agent/gateway/adapters/test_anthropic_adapter.py": {
+      "sha256": "7e66188e66cc19c34c746ed559159c5a9e411ed004e236925b7e47a7bbb6272c",
+      "lines": 645
+    },
+    "tests/uni_agent/gateway/adapters/test_openai_adapter.py": {
+      "sha256": "d864bcff1410ae95a39920ce1f327d2025f630c882fa05d1fdce10d977603f1c",
+      "lines": 135
+    },
+    "tests/uni_agent/gateway/test_debug_launcher.py": {
+      "sha256": "3580479704299abaf63eeba8188eda614357bef02d49859994eb9e27d8248223",
+      "lines": 654
+    },
+    "tests/uni_agent/gateway/test_gateway_actor_on_cpu.py": {
+      "sha256": "0c5fd985d5bf8165c059e3806ae68896ec4d95df27055d41073be2dd0e36790e",
+      "lines": 1745
+    },
+    "tests/uni_agent/gateway/test_gateway_manager_on_cpu.py": {
+      "sha256": "80ea9dae9166ee1c003bacbaaa5ead151d7c755c73eda75538c0349f820106da",
+      "lines": 301
+    },
+    "tests/uni_agent/gateway/test_message_codec_continuous_token.py": {
+      "sha256": "dd5f07185a9fa976b42cd928cb27298eed8a3377e798e8be78f36b12b625daf5",
+      "lines": 487
+    },
+    "tests/uni_agent/gateway/test_message_codec_initialization.py": {
+      "sha256": "e7f3ac6aeec896a559784f3d1e3899988fa7b5a5e7f9c83b2c74989f2411e38b",
+      "lines": 25
+    },
+    "tests/uni_agent/gateway/test_message_codec_parser_cache.py": {
+      "sha256": "dbdec6ab223d9b526fa0f7d37ba381b2e4a1d98cac8b24abc3cbb089208e8291",
+      "lines": 232
+    },
+    "tests/uni_agent/gateway/test_message_codec_tool_dispatch.py": {
+      "sha256": "2e769835b7a3f07528b793ad92e80a0548974144a55647ed995111a7ad55d709",
+      "lines": 387
+    },
+    "tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py": {
+      "sha256": "00e4c4bbec2cdf1209c008a6034ed2cb79e052b99da480a6d2106210bf82e613",
+      "lines": 1975
+    },
+    "tests/uni_agent/logging/test_redaction.py": {
+      "sha256": "dd07f94fbb9b63c4940b5b2ce5456e85b346804e1f4bf45a8ff4d6a1c65439cb",
+      "lines": 55
+    },
+    "tests/uni_agent/sandbox/test_docker_sandbox.py": {
+      "sha256": "ad60ed034099c1407231cf75ca6306b1580eff02d4f39379393127c86537a318",
+      "lines": 232
+    },
+    "tests/uni_agent/sandbox/test_exec_error_policy.py": {
+      "sha256": "68eea02a195263459db538a71a3a18b7b3ffabb3973443a11b9683d007d576bd",
+      "lines": 400
+    },
+    "tests/uni_agent/support.py": {
+      "sha256": "52a5f593dbce6c115d48fa8c259bd5f15dfede9c23b2f930363f54c27461042b",
+      "lines": 381
+    },
+    "tests/uni_agent/tasks/test_base.py": {
+      "sha256": "b25a88ad72a41b2b0a5b978911d13c6e297ebbcb2e917d1e9bd98353a99c3c10",
+      "lines": 43
+    },
+    "tests/uni_agent/tasks/test_dsh_evolution_v3_catalog.py": {
+      "sha256": "d8f3baaf758ded01d47993ddb2944f753902d1e58be76ec8b8bd21bb1c38bd21",
+      "lines": 143
+    },
+    "tests/uni_agent/tasks/test_dsh_evolution_v3_live.py": {
+      "sha256": "ab1fd4c83c375ea4966205c49e5ecc709783991867157a03daab9a03c69da967",
+      "lines": 144
+    },
+    "tests/uni_agent/tasks/test_dsh_evolution_v3_live_verifier.py": {
+      "sha256": "59938cdbea8579aee83aeace8ae913351baf1d685ddc9f9e4e29b4271e5baa0d",
+      "lines": 487
+    },
+    "tests/uni_agent/tasks/test_dsh_evolution_verifier.py": {
+      "sha256": "a401a8ab5aa8c9bcee2fadc172ba57d6ce36bc4bad241b6328255bae4edb9647",
+      "lines": 271
+    },
+    "tests/uni_agent/tasks/test_dsh_ops_audit.py": {
+      "sha256": "182aa695d03396f210bed9b33c0a5d472ed4456f4d81b167dafbccae288b7021",
+      "lines": 198
+    },
+    "tests/uni_agent/tasks/test_dsh_ops_launcher.py": {
+      "sha256": "e22dca25c23f059975b4984e28fd0f389623a2b6ed32b09fee78125fa13624b9",
+      "lines": 289
+    },
+    "tests/uni_agent/tasks/test_dsh_task.py": {
+      "sha256": "858c845982222c41752738382730db1343a5c10d2c886052cba0caf67be4f51a",
+      "lines": 286
+    },
+    "tests/uni_agent/tasks/test_dsh_training_launcher.py": {
+      "sha256": "1e324211f9b25922c8e1ff2572139c327219673a5f1db5f8c8de2c1e7da9fcec",
+      "lines": 86
+    },
+    "tests/uni_agent/tasks/test_dsh_trajectory_audit.py": {
+      "sha256": "2187aa3e5a8f535efec4b34eaa360e5a96ddb96deaca73529a6faad377eddda5",
+      "lines": 273
+    },
+    "tests/uni_agent/tasks/test_dsh_v3_live_smoke_audit.py": {
+      "sha256": "0839c98f97ef1ecb6d55d82b10d4e5cb88457ca4fe19ed13a232a5a8e25889e6",
+      "lines": 515
+    },
+    "tests/uni_agent/tasks/test_dsh_v3_live_smoke_ops.py": {
+      "sha256": "20d248bb9d9b743b926ccf2f5ab3e945a6a173f20d3898443e609541e6647ba8",
+      "lines": 789
+    },
+    "tests/uni_agent/tasks/test_dsh_verifier.py": {
+      "sha256": "8498dfd8cd7f0aa9ab2c82278412c102c5207de9116cd61030422f922e5b5b03",
+      "lines": 92
+    },
+    "tests/uni_agent/tasks/test_inference_task_routing.py": {
+      "sha256": "6d3345907bd990a749f31e0dcceeb914382a155481bffef0a79ddb05758b91f9",
+      "lines": 95
+    },
+    "tests/uni_agent/tasks/test_parallel_infer_api.py": {
+      "sha256": "f0962cadfbd309fe16ce2e34144415fc2d4168f5418eefeb4294123f7cb7398a",
+      "lines": 117
+    },
+    "tests/uni_agent/tasks/test_parallel_infer_verl_evidence.py": {
+      "sha256": "c846d98c17f18415b99fef5ff2682e55e81327f2f31723f7be89b6a5d27889f0",
+      "lines": 452
+    },
+    "tests/uni_agent/tasks/test_prepare_dsh_dataset.py": {
+      "sha256": "26fec3f050914cfef72081d4b61ad12e009aa555cfe72cb04da8d5ea556653e7",
+      "lines": 187
+    },
+    "tests/uni_agent/tasks/test_swe_prompt_preprocess.py": {
+      "sha256": "7b0a20017bbbd423766f675dc0dfcabe9f78e7bb24ebf62ff66fd5c7d832a34b",
+      "lines": 146
+    },
+    "tests/uni_agent/test_rlinsight_adapter.py": {
+      "sha256": "55f4697a01399a766ecdae4e9f6c483f6b34929baf907a461d1263699f594e06",
+      "lines": 139
+    },
+    "tests/uni_agent/tools/test_edit_file_arguments.py": {
+      "sha256": "463f7f9457657071469008ad442a10f2734b58b5dcf6b342c7f20e00538813f0",
+      "lines": 47
+    },
+    "tests/uni_agent/tools/test_shell_channel.py": {
+      "sha256": "de630ea2a692ad261664c88096c5c1397a6c3e9380a11b3b6861df53c3fa2b79",
+      "lines": 121
+    },
+    "tests/uni_agent/tools/test_toolbox_call_errors.py": {
+      "sha256": "d15148add4858d1b8cd747343f674e5802c3b1eb2f46ce58bc0ff7689ada3b67",
+      "lines": 224
+    },
+    "uni_agent/__init__.py": {
+      "sha256": "60a11cd8a9c8c3ecdbd25ad0dbdebd5eae84aaf7bd2aecf0be729116bea2315b",
+      "lines": 10
+    },
+    "uni_agent/agents/__init__.py": {
+      "sha256": "6b25c6382b034dc4b0ef4b32b0c41f082bd5f4d07ea1e3713ed0d572e6963a6e",
+      "lines": 31
+    },
+    "uni_agent/agents/base.py": {
+      "sha256": "73e24adc94a9819203bfb0a5943dd2343be62ecdc9cb423bdaad0c6b9f60e924",
+      "lines": 122
+    },
+    "uni_agent/agents/claude_code/__init__.py": {
+      "sha256": "498b384ffc0df66e49824603b346e736ff78f8b290e5f76bb8bb167bc1959755",
+      "lines": 7
+    },
+    "uni_agent/agents/claude_code/agent.py": {
+      "sha256": "238608af8f3936fbd2a626c5d8a37a681bec5b9a1a2681397c641da8b3edfc2a",
+      "lines": 219
+    },
+    "uni_agent/agents/dsh/__init__.py": {
+      "sha256": "57afdc2162a9f5de5d2a504b6ed548c6966af6cc468049c358a089393c333e50",
+      "lines": 5
+    },
+    "uni_agent/agents/dsh/agent.py": {
+      "sha256": "a3a90a1ad2158e3bc30f5140f7690670f1c4ec9beac4c5c946a4403d7531704b",
+      "lines": 318
+    },
+    "uni_agent/agents/dsh/runner.py": {
+      "sha256": "a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+      "lines": 134
+    },
+    "uni_agent/agents/mem_agent/__init__.py": {
+      "sha256": "880ddea719964592777a1596705ce06438a22816bf985f07a06a127c0f73267a",
+      "lines": 7
+    },
+    "uni_agent/agents/mem_agent/agent.py": {
+      "sha256": "8298f1f9d4fc4528195826c713ab8701dc57297f08543d868f8b437e790e6bc7",
+      "lines": 341
+    },
+    "uni_agent/agents/mini_swe_agent/__init__.py": {
+      "sha256": "599aa698068b031273827047732532df8890c09f0821a650a59bcc7dd7e38d4f",
+      "lines": 7
+    },
+    "uni_agent/agents/mini_swe_agent/agent.py": {
+      "sha256": "25e887581b0e6d2d32defe2bf8024199a68635c37d0caac13d7a474268999836",
+      "lines": 168
+    },
+    "uni_agent/agents/react/__init__.py": {
+      "sha256": "07fedf67b71d1e3e506f0b28ae5ae841bbef873504d07a35f0e35a17cc9b1535",
+      "lines": 7
+    },
+    "uni_agent/agents/react/agent.py": {
+      "sha256": "4be4f4ba58e5f53b5b176af81f2e78edcf4216eccb258008e9a90cd61c4fb7b8",
+      "lines": 213
+    },
+    "uni_agent/agents/react/model.py": {
+      "sha256": "15b9c1646b1a80f514e29cec4001f29f568f69a455381fc1237a990a39d35283",
+      "lines": 180
+    },
+    "uni_agent/agents/registry.py": {
+      "sha256": "f088743b5d7e42055ae62bdf74c78473d109aad11b25ee97311eccdbd854f586",
+      "lines": 68
+    },
+    "uni_agent/framework/__init__.py": {
+      "sha256": "d7d595d8172dab57acdb2db572f05b27e175cd8c8ec9775bf9fe55a669414982",
+      "lines": 8
+    },
+    "uni_agent/framework/base.py": {
+      "sha256": "27b566152d34f9abbb2dab9ae9199bcd69fbdf92a80b0b27225dd0849dff8e79",
+      "lines": 41
+    },
+    "uni_agent/framework/entry.py": {
+      "sha256": "d5f0fcf3cfb36224e14bb2bdb1a27cdb20d64cfb413288913da62627d3630401",
+      "lines": 163
+    },
+    "uni_agent/framework/framework.py": {
+      "sha256": "1dbcc9eacf4cece791d27258c7a9d7201ca4856cb2c05cc03c421410c89acf17",
+      "lines": 1528
+    },
+    "uni_agent/framework/multi_modal_postprocess.py": {
+      "sha256": "49e236eff357e5e35feed531a31a8c761b80b96288a8b54d902761cfbae6f4b1",
+      "lines": 94
+    },
+    "uni_agent/framework/task_runner.py": {
+      "sha256": "609c6fc9e5c173346deaf4f3fc8f200fd3c33c01b2d04f5bc9298dcd50fe99c1",
+      "lines": 323
+    },
+    "uni_agent/framework/trajectory_identity.py": {
+      "sha256": "ea23a7a90191950c39bc3f4a02f9af764ca9bde13ba732af92202d6c0602947d",
+      "lines": 6
+    },
+    "uni_agent/gateway/__init__.py": {
+      "sha256": "db98198195be281b1f7ba5f91ef09513dfd7dbb4befa90cdb5134d07f93180a7",
+      "lines": 7
+    },
+    "uni_agent/gateway/adapters/__init__.py": {
+      "sha256": "248d2d57c51c270fa4248b2185c326bf3ec1dae7446989b93fba4a9f098e15f8",
+      "lines": 20
+    },
+    "uni_agent/gateway/adapters/anthropic.py": {
+      "sha256": "5973b6657439709c16a67a7d7eb7d5c03232810784216855e4b21c68bb89a457",
+      "lines": 552
+    },
+    "uni_agent/gateway/adapters/openai.py": {
+      "sha256": "e07e7a266f6688981d376aead68b68937b3736baab9a00dc8266d52be14f78ae",
+      "lines": 220
+    },
+    "uni_agent/gateway/adapters/types.py": {
+      "sha256": "4f90565c85918d92f0b1d6c1645c2a0bf9911275e1e6b6c88381ba9054294d92",
+      "lines": 131
+    },
+    "uni_agent/gateway/config.py": {
+      "sha256": "ccb426b474327b8f4d6139c9a9216af06cb6ff0e4cc29b173557a51bfb1e2688",
+      "lines": 66
+    },
+    "uni_agent/gateway/gateway.py": {
+      "sha256": "61b681767dc58db1e0b8d17fe1d54a756103e92ca3f93fd05502cf7e43caa0d1",
+      "lines": 273
+    },
+    "uni_agent/gateway/manager.py": {
+      "sha256": "fe6cd9d751556f740996a1ac1665009a80d215236c83c5ed21427a58f284a91e",
+      "lines": 116
+    },
+    "uni_agent/gateway/session/__init__.py": {
+      "sha256": "7adf9c2143a2b2a3565be311c3b23c91d8082c740ffb1f618607eeb11c34014b",
+      "lines": 20
+    },
+    "uni_agent/gateway/session/codec.py": {
+      "sha256": "04dc26324d430b254df55f84b682833694fc64ce0ff57e22bc73880921c1cb44",
+      "lines": 539
+    },
+    "uni_agent/gateway/session/session.py": {
+      "sha256": "01aa7d26a8655bc2394711565ee7b9e1e19cb3ca7fef4f5dae7c6ce2317d7221",
+      "lines": 863
+    },
+    "uni_agent/gateway/session/types.py": {
+      "sha256": "9b6aad3984d2534bfdfb7c838e4c7e6eab3b871d8eb44969a93d5dd8bb694d9c",
+      "lines": 79
+    },
+    "uni_agent/logging/__init__.py": {
+      "sha256": "c6a595bebec781a6cf6791224a64cdb5ba48bef3a6f28c9ba73d972a97065527",
+      "lines": 20
+    },
+    "uni_agent/logging/context.py": {
+      "sha256": "f071d0101738068f6236c057dc6893416ff721e192e9cbf03340e01fdaea6d6f",
+      "lines": 55
+    },
+    "uni_agent/logging/handlers.py": {
+      "sha256": "8fade1163c41fe1027e8ebd390872c7a008e77a4a3ca74b1daa2055f42e5c20f",
+      "lines": 262
+    },
+    "uni_agent/logging/redaction.py": {
+      "sha256": "fa803e032a95a435569a37ed41a59d8ad7d60fb3f382e3a04a4fc177ef0e9a07",
+      "lines": 45
+    },
+    "uni_agent/logging/session.py": {
+      "sha256": "8a0b8fcf1ae8b1d61aac2e4f55682d2990c2a8bc1d1075e587fa32ff4ac75ee0",
+      "lines": 83
+    },
+    "uni_agent/rlinsight_adapter.py": {
+      "sha256": "657aa9a8de4e7eb37d3e7e18569dfb7de4c567605bca23b60648e77edb28b458",
+      "lines": 328
+    },
+    "uni_agent/sandbox/__init__.py": {
+      "sha256": "7a74e9f1b408f8ee701bfd4c6de22a3b35189cd513cc33087ba107712d12c6eb",
+      "lines": 25
+    },
+    "uni_agent/sandbox/base.py": {
+      "sha256": "258cb472b50196eb158976c5cb259cf32cf2e4288753d92abed126fc65496bda",
+      "lines": 492
+    },
+    "uni_agent/sandbox/docker.py": {
+      "sha256": "9c100d7a02095ea2d9ca83e067fcb5cc068f63324239c09e7bae7d9c71458ead",
+      "lines": 158
+    },
+    "uni_agent/sandbox/local.py": {
+      "sha256": "37cded40f782e7c5e3491273b66d55cc3e031a2e2f4fa54e53b26b2e7c73aa33",
+      "lines": 65
+    },
+    "uni_agent/sandbox/modal.py": {
+      "sha256": "2a62378b814fa9402b7cf0f5a8c4b78060d700bd53eceb67e6582b9a1fcabdb4",
+      "lines": 131
+    },
+    "uni_agent/sandbox/openyuanrong.py": {
+      "sha256": "3673419e9f6c23ffa2322c367eb23ce4ad174f4fb4cf992dd2ef88c82de9fcf4",
+      "lines": 271
+    },
+    "uni_agent/sandbox/registry.py": {
+      "sha256": "e4e1b6272925178d7f4436544ab4bf83196e7229096d10dd57b19a499ead883d",
+      "lines": 66
+    },
+    "uni_agent/sandbox/utils.py": {
+      "sha256": "9f3d0359b74a7f02f12693290655cd24f62aa0786a94d47a2440d747affaa69a",
+      "lines": 58
+    },
+    "uni_agent/sandbox/vefaas.py": {
+      "sha256": "a094127cf7d5bb3959d605e4841c624c6db4d896414e41a93731ecc2049453d5",
+      "lines": 403
+    },
+    "uni_agent/tasks/__init__.py": {
+      "sha256": "3fbab60b0794418760d8ed40512fe1c88cad539e8204c14f8f1fa9b9cbc82c50",
+      "lines": 30
+    },
+    "uni_agent/tasks/base.py": {
+      "sha256": "f3e7c74e1616f73cb4299453203d698ac8795e47960688f13db21fb8c5233fe6",
+      "lines": 214
+    },
+    "uni_agent/tasks/config.py": {
+      "sha256": "e2d2cfb3f88297de4de10e78fcee92ae9bb0a9d35c4021369bd34bedfa0c259b",
+      "lines": 154
+    },
+    "uni_agent/tasks/dsh/__init__.py": {
+      "sha256": "e409d68c8664eee1197824195a3138e879683c5a3b92a84753a63c517c17d2a9",
+      "lines": 5
+    },
+    "uni_agent/tasks/dsh/task.py": {
+      "sha256": "7985f6597a7f9a855fe82c689d0a707db8161eb3c09d62e9017d4dae8bf53cfe",
+      "lines": 474
+    },
+    "uni_agent/tasks/dsh/trajectory_audit.py": {
+      "sha256": "d3e231d5ad38e841432ed72397295337d9570a6b4ef4623ada86d3f59cbb3e77",
+      "lines": 280
+    },
+    "uni_agent/tasks/harbor/__init__.py": {
+      "sha256": "3a913358341c1f12256825d47f217c6c2fc7a75d672874376b3b28fb1192c5af",
+      "lines": 1
+    },
+    "uni_agent/tasks/harbor/preprocess.py": {
+      "sha256": "c710ec5a99cf4cc77ff79db90a53b2ee693efa45cf47ce9bee920830674e5827",
+      "lines": 116
+    },
+    "uni_agent/tasks/harbor/reward.py": {
+      "sha256": "eabf290ebf00fd0571ddba7153fbd8f1cb09297a1695883881fd610b5e0e9200",
+      "lines": 128
+    },
+    "uni_agent/tasks/harbor/task.py": {
+      "sha256": "e0751f22aa2a292b7eea651224b0c53fafb7f1403ccbe67225a13730a5010248",
+      "lines": 301
+    },
+    "uni_agent/tasks/hotpotqa/__init__.py": {
+      "sha256": "518e4de47ac8bd67e9258548762ebb661fe4f5db56cc29bee377f9ee40a4a29d",
+      "lines": 8
+    },
+    "uni_agent/tasks/hotpotqa/preprocess.py": {
+      "sha256": "0f39d1cf59bd9db7af8b3c506d994b69f6ce21b97f4ea7d9e8fbb514bc162ea5",
+      "lines": 141
+    },
+    "uni_agent/tasks/hotpotqa/reward.py": {
+      "sha256": "35896a159275ae3746013255b23e08e4ab2b47f41f92c7039aa41b7a1aeb9550",
+      "lines": 73
+    },
+    "uni_agent/tasks/hotpotqa/task.py": {
+      "sha256": "3734319019e6d0016a9b42575c7d4966c72182e5600e8c9e7afb736ec8dcd3e9",
+      "lines": 74
+    },
+    "uni_agent/tasks/registry.py": {
+      "sha256": "04552455b34e50b26f1c250b823318edf821123b382c1fc9f11d18754f1ef0ea",
+      "lines": 72
+    },
+    "uni_agent/tasks/swe_bench/__init__.py": {
+      "sha256": "335b3f10940051da39d1172aa872e4d9f59a22fdf7785835de72bb794b9c9642",
+      "lines": 1
+    },
+    "uni_agent/tasks/swe_bench/preprocess.py": {
+      "sha256": "cf13058042f38b8cb9c5c9de75521fb986e95be7fa1f914af1837c6b433a5547",
+      "lines": 87
+    },
+    "uni_agent/tasks/swe_bench/reward.py": {
+      "sha256": "3ef1e5fd5b6e5aae862f9e5c93756050ee2eb5ba729df6a389b5759868f4b0f2",
+      "lines": 157
+    },
+    "uni_agent/tasks/swe_bench/task.py": {
+      "sha256": "06d4cbd2c1a4449eded373404667aff1386c59da5ead9cb3697e7dcac7ef3c74",
+      "lines": 70
+    },
+    "uni_agent/tasks/swe_bench_multilingual/__init__.py": {
+      "sha256": "6877ff9f10a6d17ba36ab4098afda442720139ad2c124d09e13f4608583c46d9",
+      "lines": 1
+    },
+    "uni_agent/tasks/swe_bench_multilingual/preprocess.py": {
+      "sha256": "98a49d0cdf334b6866448db74b1bf734a8ce950d73291ccbf16641c33f0dbe97",
+      "lines": 97
+    },
+    "uni_agent/tasks/swe_bench_multilingual/reward.py": {
+      "sha256": "a65773225e964393e39a59c5d83f2066033f139207d132267044740432d66c00",
+      "lines": 185
+    },
+    "uni_agent/tasks/swe_bench_multilingual/task.py": {
+      "sha256": "7dfebbf46ec150c8ab6c0a26b886e03100a93347b2e5d47a25e23065cdb25fb5",
+      "lines": 99
+    },
+    "uni_agent/tasks/swe_rebench/__init__.py": {
+      "sha256": "2011443a5cedf67d38ccdcf59111e8d6f164c012b57b888f4943dc064fc2f04b",
+      "lines": 1
+    },
+    "uni_agent/tasks/swe_rebench/preprocess.py": {
+      "sha256": "0358a8a5f1afdfdf2e9ac98b21e0c5afca4bedb676bec4fc211b4a497e4902b9",
+      "lines": 88
+    },
+    "uni_agent/tasks/swe_rebench/reward.py": {
+      "sha256": "9bf084b5b265da6bbab7233c2eb8155185d9094aa1e61d6902e7093bc5661571",
+      "lines": 215
+    },
+    "uni_agent/tasks/swe_rebench/task.py": {
+      "sha256": "91699cc9a39543e83bccb71cdbd725fa6241c0d9def836e22be41c3029508cfb",
+      "lines": 129
+    },
+    "uni_agent/tasks/terminal_bench/__init__.py": {
+      "sha256": "fe44e92f281f0167ca61b8663a38ea990cd128b57a6e37f49a9a274bedea001f",
+      "lines": 1
+    },
+    "uni_agent/tasks/terminal_bench/preprocess.py": {
+      "sha256": "efaaaff4554da2c9b744ecffe9ce52c59769d95f5470de0ae30f42d081e39533",
+      "lines": 298
+    },
+    "uni_agent/tasks/terminal_bench/reward.py": {
+      "sha256": "a7f4737e9db71c27643709e2a7d055eb905687f8410f2fd8434374e115099975",
+      "lines": 202
+    },
+    "uni_agent/tasks/terminal_bench/task.py": {
+      "sha256": "cbec77ba502f08ae37c91b72212118cc9c705b1694b29aa5909b6750930cbee6",
+      "lines": 204
+    },
+    "uni_agent/tools/__init__.py": {
+      "sha256": "30e8d252a6ae3043613f4ed66e16c273907cb5ea231edafcf46f56d5dc5f6246",
+      "lines": 41
+    },
+    "uni_agent/tools/base.py": {
+      "sha256": "573c70d2af63effbb7bfa508aab9c334ae4997e1464ffa58300f0a74287d8d73",
+      "lines": 452
+    },
+    "uni_agent/tools/edit_file.py": {
+      "sha256": "79496df69159fdd4299e041747d48f281f6438e56617bd5b387611a479b1390e",
+      "lines": 314
+    },
+    "uni_agent/tools/finish.py": {
+      "sha256": "ceb9a4e9ad185b1fb658e4b45f39ab49d263422693ddeb88d13924f67537b3ad",
+      "lines": 34
+    },
+    "uni_agent/tools/shell.py": {
+      "sha256": "8528692bd39f183f134cdbdf81122a3894b3762402c76501a7eb33840c63bbc5",
+      "lines": 469
+    },
+    "uni_agent/tools/submit.py": {
+      "sha256": "f282fbf11afad07e844dd5f9ff887b7f2fe6557dcad696dcac26ce988252c2d2",
+      "lines": 36
+    },
+    "uni_agent/utils.py": {
+      "sha256": "4a883f3bf463284ef4fe71ba3e3f080cdd634147190a564d7aee551fe6999a25",
+      "lines": 78
+    },
+    "uni_agent/version/version": {
+      "sha256": "e61af3189dfe5f92f60e65d185e63092fb6278a4fa12e429577887f6c31f8bfd",
+      "lines": 1
+    },
+    "README.md": {
+      "sha256": "8778d65509beb12fce1421a8b7e37a337febd139c890b18e6550bf8a2d9fb3db",
+      "lines": 130
+    },
+    "deployment/README.md": {
+      "sha256": "c955a20ba9942f0b9bacc553fd65c415844d4be9fb464e15946dbc922706f845",
+      "lines": 36
+    },
+    "deployment/versions/first-gpu-candidate.json": {
+      "sha256": "66a7bf2558a088bc43d9716eb8b87e282cead6c5fed5e6605f2f6829fc0d8a2c",
+      "lines": 21
+    },
+    "docs/harbor-modal-integration/first-gpu-acceptance.md": {
+      "sha256": "7bc2e948d9a4660668662f29b1ca6014424371bdb1e63d1c77dd70bb89134017",
+      "lines": 38
+    }
+  },
+  "initial_observation": {
+    "captured_at": "2026-09-08T11:16:49.126338+08:00",
+    "latest_head": "00ab478288c7c3090d7bbb847fd2dfa4be1c32a9",
+    "unmerged_files": [
+      "docs/source/concepts/gateway-and-trajectories.md",
+      "examples/inference/parallel_infer_verl.py",
+      "tests/uni_agent/framework/test_generate_sequences_on_cpu.py",
+      "tests/uni_agent/framework/test_task_runner.py",
+      "tests/uni_agent/gateway/test_message_codec_tool_dispatch.py",
+      "uni_agent/framework/framework.py",
+      "uni_agent/framework/task_runner.py",
+      "uni_agent/tasks/base.py"
+    ],
+    "verl_committed_pin": "160000 commit 483b8a009ba3a97563edee3a19887e4862b8094a\tverl",
+    "verl_checkout": "fefb080262e1c015a0ea05f958822a6a512dc795"
+  },
+  "audit_cpu_validation": {
+    "v3_tests_passed": 26,
+    "elapsed_seconds": 0.17,
+    "tests": [
+      "test_dsh_evolution_v3_catalog.py",
+      "test_dsh_evolution_v3_live.py",
+      "test_dsh_evolution_v3_live_verifier.py"
+    ],
+    "matrix": {
+      "cases": 24,
+      "eligible": 16,
+      "passed": 8,
+      "rejected": 8
+    },
+    "scope": "CPU contracts only; no model calls, no GPU, no product writes",
+    "latest_head": "7139f57eae3797d3179abb4e96a11da7cdc3037e",
+    "focused_dsh": {
+      "passed": 79,
+      "warnings": 1,
+      "test_files": 8
+    },
+    "strict_framework": {
+      "passed": 28,
+      "deselected": 52,
+      "warnings": 1,
+      "selection": "strict or postprocessor or verifier_reward"
+    },
+    "nonduplicated_passed": 107,
+    "note": "The earlier 26 v3 tests are included in the 79-file-group test count; do not add them again."
+  },
+  "artifact": {
+    "path": "docs/dsh-adapter/uni-agent系统架构.html",
+    "sha256": "750078e4038cfbf9ca181ccc985415d0ff395cdc715cd2b6dc8307d20d61c886",
+    "bytes": 69144,
+    "lines": 100
+  },
+  "html_validation": {
+    "desktop": "1440x1000",
+    "mobile": "390x844",
+    "horizontal_document_overflow": false,
+    "links_checked": 166,
+    "broken_local_links": 0,
+    "broken_anchors": 0,
+    "duplicate_ids": 0,
+    "capability_rows": 18,
+    "filter_search_OPD_matches": 1,
+    "filter_gap_matches": 3,
+    "reset_passed": true,
+    "navigation_target_top_px": 24,
+    "console_errors": 0,
+    "external_assets": 0,
+    "a4_print_export_succeeded": true,
+    "independent_content_review": "passed"
+  }
+}

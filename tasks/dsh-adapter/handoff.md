@@ -1,5 +1,7 @@
 # dsh-adapter 交接
 
+> 2026-09-08 架构审计补充：当前最新产品代码已在 `harbor-modal-integration / 7139f57`，配对 VERL `fefb080`。先读 [真实代码系统架构](../../docs/dsh-adapter/uni-agent系统架构.html) 及该 worktree 的交接；下列早期状态保留为历史，不应覆盖新 Git / 运行证据。
+
 更新时间：2026-09-07。新 session 首先读取本文件，再读本地状态快照及下一里程碑设计。
 
 ## 1. TL;DR
@@ -78,3 +80,12 @@
 4. 重跑所需 CPU gate；缺依赖时记录环境限制，不将 collection failure 当作业务回归或全套通过。
 5. 从 M0 CI 和八类 process smoke 准备继续；涉及新代码/资源启动时核对设计及预算授权，不将用户询价当作创建授权，并先查控制面实时状态。
 6. 新证据完成后更新本地状态、交接和 scoped todo；提交前按变更范围验证，push 前必须通过两项 Ruff 门禁。
+
+## 2026-09-08：真实代码架构文档交付
+
+- 本轮仅在根分支 `dsh-adapter` 新增架构文档与证据清单，未修改产品代码或合并其他worktree。
+- 已读用户指定旧HTML、最新README及三个worktree源码；审计期间另一工作流提交 `7139f57`，本页已复核typed TaskResult奖励链与部署目录的真实边界。
+- HTML：`docs/dsh-adapter/uni-agent系统架构.html`；来源/版本/验证清单：同目录 `uni-agent-architecture-evidence.json`。
+- 107项相关CPU测试通过；桌面/手机、本地来源链接、筛选、目录和打印验证通过。非全仓CI或GPU验证。
+- 代码已具备DSH→Gateway→Framework→TQ→VERL训练接线；历史v2更新/reload存在，但升级后GPU组合、Harbor DSH bridge、OPD、paired uplift与自动RSI未验收。
+- 后续实施仍进入最新worktree，先读其handoff与实际Git状态；不要在根分支依旧历史todo重复修已完成的迁移。
