@@ -159,3 +159,11 @@
 ### Harbor v2完整接线检查点
 
 新增examples/harbor/evolution_verifier_v2.py，更新executor/isolated_trial/trace_artifacts、prepare_evolution_task/prepare_m2_training/registration和scripted smoke。原三份DSH verifier源码不变。668项组合测试通过、Ruff双门通过。实际Docker v2尚待构建与四mode验收，尚未跑M2学生训练。手动说明见docs/harbor-modal-integration/manual-gpu-runbook.md。
+
+### Harbor v2真实Docker通过
+
+代码a17940d已同步GPU，最终TaskRef=evolution-redact-train-01/v2/sha256:3cf73f11ef23772c61c243f830e04e095914573740c52be2176c75c68716c3ef。四mode真实Docker通过：1/.25/0/篡改拒绝，分别8/7/3/8次真实DSH请求，全部清理核验通过；报告docs/harbor-modal-integration/harbor-evolution-v2-docker-r1-result.json。本轮脚本策略无GPU学生，不代表M2训练通过。GPU任务包/root/runs/harbor-evolution-v2-package-r1；本机同名包位于/private/tmp/harbor-evolution-v2-docker-r1。正在准备新controller身份与学生两步训练。
+
+### 检查点纪律与下一阻塞
+
+用户要求每个完成环节commit/push。Harbor v2 Docker四mode已通过，本次先保存；M2学生尚未启动。CPU启动预检发现train_m2_online_rl._hydra拒绝source_sha256s路径键，需局部修复及真实Hydra parser回归。私有准备目录/private/tmp/harbor-evolution-m2-v2-r1，deadline有时效，启动前重新核验。

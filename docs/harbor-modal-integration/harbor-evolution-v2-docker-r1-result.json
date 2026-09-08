@@ -1,0 +1,75 @@
+{
+  "passed": true,
+  "scope": "scripted Harbor/DSH integration; no student, Gateway tokens or training",
+  "task_ref": {
+    "id": "evolution-redact-train-01",
+    "version": "v2",
+    "sha256": "sha256:3cf73f11ef23772c61c243f830e04e095914573740c52be2176c75c68716c3ef"
+  },
+  "admission_kind": "evolution-v2-lifecycle-admission-v2",
+  "fixture_sha256": "sha256:7bee382f0329b19c6194780532262aa244f66fa5b34e31e3fa48d7e7dddeda04",
+  "metadata_sha256": "sha256:e98fe6cb5c9620aac462c1ceb36e59f783768da74bce4295a26943b717c77ced",
+  "source_sha256s": {
+    "examples/dsh/evolution_verifier.py": "sha256:067668803e5f6fdb5f64cd44a17e2f4baef8835e4681a02cdf35d9f6bb4e3748",
+    "examples/dsh/evolution_verifier_v2.py": "sha256:310460e0ef7a7f9876a5b7069f351f080d990d05fef526c71b3af03975ac0934",
+    "examples/dsh/verifier.py": "sha256:eb5e0d68779739d04e1038534e5f2799a44cf299e7325ba2f6bef5c793ecf2cd"
+  },
+  "policy_source_sha256": "8cc22b7e0dbcc2bfe67d66ad9aa0f5762d7ce6185dd0442c060bef700785892b",
+  "cases": [
+    {
+      "mode": "positive",
+      "gateway_session_id": "evolution-96650fda0cf54aa5983dd4e5c0328b08",
+      "cleanup_confirmed": true,
+      "exception": null,
+      "rewards": {
+        "reward": 1.0
+      },
+      "passed": true,
+      "request_count": 8,
+      "server_errors": []
+    },
+    {
+      "mode": "partial",
+      "gateway_session_id": "evolution-9db51ff4dcb649f99aff05a29a8685bb",
+      "cleanup_confirmed": true,
+      "exception": null,
+      "rewards": {
+        "reward": 0.25
+      },
+      "passed": true,
+      "request_count": 7,
+      "server_errors": []
+    },
+    {
+      "mode": "missing_define",
+      "gateway_session_id": "evolution-0a989bc691164a3b8eef402ca34b456d",
+      "cleanup_confirmed": true,
+      "exception": null,
+      "rewards": {
+        "reward": 0.0
+      },
+      "passed": true,
+      "request_count": 3,
+      "server_errors": []
+    },
+    {
+      "mode": "tamper",
+      "gateway_session_id": "evolution-5f43b592b3054ac7a8afb6c43dde07ab",
+      "cleanup_confirmed": true,
+      "exception": {
+        "exception_type": "ValueError",
+        "exception_message": "Bridge trace/status/session identity mismatch",
+        "exception_traceback": "Traceback (most recent call last):\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/trial.py\", line 345, in run\n    await self._run()\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/single_step.py\", line 46, in _run\n    await self._run_verifier()\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/single_step.py\", line 92, in _run_verifier\n    self.result.verifier_result = await self._run_separate_verifier(\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/trial.py\", line 555, in _run_separate_verifier\n    await self._artifact_handler.upload_artifacts(\n  File \"/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/tasks/harbor_dsh/trace_artifacts.py\", line 189, in upload_artifacts\n    files = self.snapshot()\n            ^^^^^^^^^^^^^^^\n  File \"/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/tasks/harbor_dsh/trace_artifacts.py\", line 170, in snapshot\n    raise ValueError(\"Bridge trace/status/session identity mismatch\")\nValueError: Bridge trace/status/session identity mismatch\n",
+        "occurred_at": "2026-09-08T23:12:28.476901"
+      },
+      "rewards": null,
+      "passed": true,
+      "request_count": 8,
+      "server_errors": []
+    }
+  ],
+  "source_commit": "a17940d8587c1760f2a13dbd6842fe10d600bbad",
+  "agent_image": "sha256:25b67c52befc3c0ac35e614f3669c3122f2e916f0254f2c5ed95448bffa3897e",
+  "verifier_image": "sha256:e3aaf6d7bdfbd0e4d380d78659ff57a5d2e253e61a6ca80339cd1ecd56615696",
+  "package_manifest_sha256": "3400c6cbe93d7df56f56144419f3a1675a8aa07bf39a718f13f843f6f33ec460"
+}

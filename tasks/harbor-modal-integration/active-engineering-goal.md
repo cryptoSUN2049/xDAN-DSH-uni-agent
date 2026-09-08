@@ -188,3 +188,7 @@ r4两步在线RL真实更新+消费审计+独立reload均通过。报告docs/har
 ### 用户确认的推进顺序
 
 先完成DSH/Uni-Agent/VERL在线RL及Harbor Docker同步链路完整验收，再另排性能实验。单卡先评估现有colocate_async，具备独立资源后再评估separate_async；rollout.mode=async不等于trainer全异步。固定runtime/任务/verifier，模型权重同步不等于源码升级。SFT/数据生产由其他会话负责，不进入本轮工作。
+
+### Harbor v2 Docker环节完成
+
+四mode真实容器通过（1/.25/0/篡改拒绝），全部清理通过，报告harbor-evolution-v2-docker-r1-result.json。学生RL预检发现Hydra路径键序列化阻塞，未启动GPU。每环节通过即记录并commit/push，不等G1全部完成。
