@@ -35,3 +35,13 @@ M1 v2-r4及reload报告为当前通过证据，公开两题baseline已满分不�
 ## 平台goal状态
 
 2026-09-09已通过get_goal核实：新版原生四能力objective已激活，status=active。继续按N0—N5推进，所有必要验收完成前不标complete。
+
+## 2026-09-09 实测增量（不改变节点退出条件）
+
+- DSH runtime-grounding：8k失败；24k容量对照完整执行/轨迹回读，但reward0，模型仍未正确查询Tool。
+- 文件证据context r2：4/4严格执行通过，奖励全0，真实引用/读取覆盖不满足合同。仅文件证据基线，非真实context切换或RL训练。
+- Linux记忆封闭策略：14真实工具调用正反例通过；学生A/B链CPU接线进行中，credit尚未实现。
+- RSI候选持久化：27新增测试通过，晋升/回滚及新进程选择已验证；实际DSH策略加载与学生效果未验收。
+- T2日志工具：一个公开开发题4次采样已结束，未观察到成功，严格评估exit1；不是4任务/GRPO训练组。接下来优先真实记忆链与分级RL课程，不重复全零原配置。
+
+上述报告位于docs/harbor-modal-integration/native-*-result.json与native-memory-policy-linux-canary-r1.json。N1—N5均未因此标完成。

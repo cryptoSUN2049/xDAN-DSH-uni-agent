@@ -1,0 +1,235 @@
+{
+  "schema": "dsh.t2-exploration-result.v1",
+  "run": "/root/runs/t2-exploration-r1",
+  "supervisor": {
+    "exit_code": 1,
+    "reason": "training-exited",
+    "elapsed_seconds": 510.012,
+    "pid": 111367,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "launch": {
+    "schema": "dsh.native-capability-baseline.v1",
+    "source_commit": "8ff2f3aac8470783830a51c904396145a35cb6ef",
+    "scope": "one public dev task, four independent sampling attempts; not four tasks, not a GRPO group, no optimizer",
+    "command": [
+      "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+      "examples/inference/parallel_infer_verl.py",
+      "--data-path",
+      "/root/runs/t2-exploration-r1-data/diagnostic.parquet",
+      "--task-config",
+      "/root/runs/t2-exploration-r1-data/task-diagnostic.yaml",
+      "--n",
+      "1",
+      "--limit",
+      "4",
+      "--dsh-strict-audit",
+      "--require-result",
+      "--dsh-trace-root",
+      "/root/runs/t2-exploration-r1/artifacts/traces",
+      "--dsh-result-root",
+      "/root/runs/t2-exploration-r1/artifacts/results",
+      "--log-dir",
+      "/root/runs/t2-exploration-r1/agent-logs",
+      "--result-path",
+      "/root/runs/t2-exploration-r1/result.json",
+      "--inference-evidence-path",
+      "/root/runs/t2-exploration-r1/inference-evidence.json",
+      "--model-path",
+      "/workspace/models/Qwen3-4B-1cfa9a7",
+      "--served-model-name",
+      "Qwen/Qwen3-4B",
+      "--engine",
+      "vllm",
+      "--nnodes",
+      "1",
+      "--n-gpus-per-node",
+      "1",
+      "--tensor-parallel-size",
+      "1",
+      "--gpu-memory-utilization",
+      "0.40",
+      "--max-model-len",
+      "32768",
+      "--gateway-count",
+      "1",
+      "--concurrency",
+      "1",
+      "--tool-parser",
+      "hermes"
+    ],
+    "cwd": "/workspace/rebuild/uni-agent-native-n0-r1",
+    "python": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+    "wall_clock_seconds": 2700,
+    "environment": {
+      "PATH": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+      "PYTHONPATH": "/workspace/rebuild/uni-agent-native-n0-r1:/workspace/rebuild/uni-agent-native-n0-r1/verl",
+      "PYTHONNOUSERSITE": "1",
+      "HF_HUB_OFFLINE": "1",
+      "CUDA_VISIBLE_DEVICES": "0",
+      "RAY_TMPDIR": "/root/ray-t2-explore-r1",
+      "DSH_RUNTIME_MODE": "exe"
+    },
+    "inputs": {
+      "validation.parquet": "27313db60e10a713cbf2176f64c567647a77b9b4e2c2f3df2af0e3b08847cc05",
+      "diagnostic.parquet": "29472b5259053f75c83f69e791c4506c9dd1642cff09cdf332f64aa4f328103d",
+      "task.yaml": "7a41d2b55f22fb2553ad7e9cf4e97b590714de8b74aabf9d7be1e6b4570801b3",
+      "task-diagnostic.yaml": "99c29f2ff65c08555ab8b15c13f3568eab056afc1111316c1568b914809d8107"
+    }
+  },
+  "tasks": [
+    {
+      "finished": false,
+      "reason": "max-tokens",
+      "steps": 140,
+      "tool_calls": 139,
+      "literal_tool_call_in_final": false,
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:d0918eb7f7ffcb76e0789b075fc638b01629734a1c288d3da11ec603859455c1",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-ee5df698b74f470997af87e0fcdfcd50",
+        "eligible": false,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "fixture_digest:sha256:ae3ceff1246ee2b7952973534c6bb5fe455869d7d8c0ec6a19c3130dc1ac7752",
+          "trace_sha256:sha256:d50a22b7dd85f4dd8ebc2df511afc3e358869043e80b6cc567d9a39d4f9678a6",
+          "result:failed"
+        ],
+        "finished": false,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:40:26.495Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:0da506aed66ce5c5f7942d6592f22e179c6285dc039a46bac85467370dce2eba",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "log-tool-dev-01",
+        "task_version": "1",
+        "trace_sha256": "sha256:d50a22b7dd85f4dd8ebc2df511afc3e358869043e80b6cc567d9a39d4f9678a6",
+        "verifier": {
+          "code_digest": "sha256:8a3cdf25b58d981ddd0ca8b48071e0500a8a6c49eab9b63a859a891350a28a36",
+          "id": "dsh-log-tool-verifier",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "finished": true,
+      "reason": "completed",
+      "steps": 2,
+      "tool_calls": 1,
+      "literal_tool_call_in_final": true,
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:5c93ad96bd7fedfb752593ad48a9dee658cb59db0b372cdd8d20c5cacef577d6",
+        "dsh_session_id": "dsh-session-sample-1-rollout-0-0152093246d24697b24c7dabc2b154c3",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "fixture_digest:sha256:ae3ceff1246ee2b7952973534c6bb5fe455869d7d8c0ec6a19c3130dc1ac7752",
+          "trace_sha256:sha256:d5f07bb6ad05f6b8f69249cbe2d74ebd0649497d1f542d0c6a75d85d00a907cd",
+          "result:failed"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:40:31.511Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:4ec3d8388e4e9255238d57cd3700ac1b10f87e45b63c7f00d0daed02be5311e4",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "log-tool-dev-01",
+        "task_version": "1",
+        "trace_sha256": "sha256:d5f07bb6ad05f6b8f69249cbe2d74ebd0649497d1f542d0c6a75d85d00a907cd",
+        "verifier": {
+          "code_digest": "sha256:8a3cdf25b58d981ddd0ca8b48071e0500a8a6c49eab9b63a859a891350a28a36",
+          "id": "dsh-log-tool-verifier",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "finished": true,
+      "reason": "completed",
+      "steps": 2,
+      "tool_calls": 1,
+      "literal_tool_call_in_final": true,
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:ab030a6c7a6a7a8340724590c36883b6f5b19fb4841af37b510cab99168fe1e4",
+        "dsh_session_id": "dsh-session-sample-2-rollout-0-ccd19ab2655d45dbbde7083f96278093",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "fixture_digest:sha256:ae3ceff1246ee2b7952973534c6bb5fe455869d7d8c0ec6a19c3130dc1ac7752",
+          "trace_sha256:sha256:66c2a3c96a52820dcf176b52f0b3461e3853cf22c7ece76e3a1f5ef20ca4cc5b",
+          "result:failed"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:40:37.142Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:d03fff1fcbbbb4057bd0f84d8426c70cf4eaf1a0206323415be81a4986366a2a",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "log-tool-dev-01",
+        "task_version": "1",
+        "trace_sha256": "sha256:66c2a3c96a52820dcf176b52f0b3461e3853cf22c7ece76e3a1f5ef20ca4cc5b",
+        "verifier": {
+          "code_digest": "sha256:8a3cdf25b58d981ddd0ca8b48071e0500a8a6c49eab9b63a859a891350a28a36",
+          "id": "dsh-log-tool-verifier",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "finished": true,
+      "reason": "completed",
+      "steps": 2,
+      "tool_calls": 1,
+      "literal_tool_call_in_final": true,
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:1ac37380b8a43037692db3e095bf31143a8e6bdd7e229d0789c7e017dd4f5ab0",
+        "dsh_session_id": "dsh-session-sample-3-rollout-0-7d1d6f902d0a40e183808ea5a6a5c243",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "fixture_digest:sha256:ae3ceff1246ee2b7952973534c6bb5fe455869d7d8c0ec6a19c3130dc1ac7752",
+          "trace_sha256:sha256:849a7dabdeb4159ca72617296199f002585b6368d93f2d3c33930c8d59fe7cbf",
+          "result:failed"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T17:40:42.337Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:c579b323c1226aeecdfee1a2f9f6d4e330531b08cc575b4f89f1599333fe56b1",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "log-tool-dev-01",
+        "task_version": "1",
+        "trace_sha256": "sha256:849a7dabdeb4159ca72617296199f002585b6368d93f2d3c33930c8d59fe7cbf",
+        "verifier": {
+          "code_digest": "sha256:8a3cdf25b58d981ddd0ca8b48071e0500a8a6c49eab9b63a859a891350a28a36",
+          "id": "dsh-log-tool-verifier",
+          "version": "1"
+        }
+      }
+    }
+  ],
+  "independent_task_count": 1,
+  "attempt_count": 4,
+  "training": false,
+  "accepted_e2e": false
+}
