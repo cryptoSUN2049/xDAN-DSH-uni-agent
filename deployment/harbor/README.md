@@ -102,3 +102,16 @@ python3 deployment/checks/harbor_model_route_probe.py \
 This starts a short-lived HTTP probe on the remote node and preserves the full
 Gateway-shaped session path through a Mac loopback-only SSH forward. It does not
 start Gateway or call the model. Actual transport passed; use a new output path.
+
+## Independent verifier smoke
+
+```sh
+PYTHONPATH=. /private/tmp/harbor-h0-20260908/bin/python \
+  deployment/checks/harbor_isolated_verifier_smoke.py \
+  --task-dir examples/harbor/m2-file-write --output /absolute/path/to/new-trials
+```
+
+This uses the local execution image and builds a separate fixed Ubuntu verifier
+image. Real oracle/nop/agent-score-forgery cases returned 1/0/0, with no agent
+host mounts. The host verifier hash stayed unchanged. The overall deadline is
+720 seconds, with 240 seconds per trial. It does not call a model.

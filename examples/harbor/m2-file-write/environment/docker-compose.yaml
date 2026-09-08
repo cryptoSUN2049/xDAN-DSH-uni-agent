@@ -1,0 +1,4 @@
+services:
+  main:
+    platform: linux/amd64
+    network_mode: bridge

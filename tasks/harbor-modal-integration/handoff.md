@@ -292,3 +292,10 @@
 
 - 远程协议层uni_agent/tasks/harbor_dsh/protocol.py已实现：严格身份、独立policy、deadline/预算、幂等nonce/session与opaque artifact校验；69新测试+既有task/audit合计94 passed，两项Ruff通过。尚无HTTPworker/Task执行器；policy不能从请求反推，check_replay与ledger写入必须原子。
 - Harbor0.16.1 separate verifier默认仍给agent挂载host日志。下一批本仓SingleStepTrial子类覆盖_agent_env_mounts为空，保留verifier mounts，只显式收集/app/answer.txt；注意继承create硬编码返回SingleStepTrial，必须正确工厂实例化。详细只读审计由upstream_harbor_verl落盘harbor-isolated-verifier-audit.md。
+
+## M2 独立评分三例通过
+
+- isolated_trial.py限制固定单文件任务、separate verifier、agent无宿主挂载；正确工厂避免上游create丢失子类。
+- 实测v1 Oracle因/logs/agent目录缺失失败；补容器普通目录后v2 oracle=1/nop=0/tamper=0，三例无exception，宿主verifier未变。Docker查询专用agent/verifier均无残留。
+- 证据docs/harbor-modal-integration/harbor-isolation-result.json；原始/private/tmp/dsh-harbor-isolation-v2；133项接口/协议/隔离测试通过。
+- 下一批：下载前regular-file/size/symlink边界，随后有界worker/Task绑定真实Gateway，M2学生采样与更新/reload。当前未新启动GPU训练。

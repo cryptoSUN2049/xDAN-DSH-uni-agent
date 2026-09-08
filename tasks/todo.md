@@ -264,3 +264,10 @@ Review：本批只新增部署目录与设计；不将其标记为安装或部�
 - [ ] 无agent宿主挂载的独立verifier Trial，oracle/篡改实测。
 - [ ] 有界worker与Task接线、真实Gateway学生采样、更新/reload。
 - Review：探针不启动模型；独立verifier默认日志挂载需专门适配，不能仅凭separate配置宣布隔离。
+
+### M2 独立评分实测
+
+- [x] 固定单文件task与独立无网络verifier；agent镜像保持已验证DSH。
+- [x] 真实oracle/nop/评分伪造三例及无host mounts、清理验证（v2，1/0/0）。
+- [ ] artifact类型/符号链接/大小在下载前受限，绑定到worker准入。
+- Review：首轮oracle因移除mount后/logs/agent目录缺失而exit1，得到0分；不得将无exception视作oracle成功。适配器补普通容器目录后以新run复验。

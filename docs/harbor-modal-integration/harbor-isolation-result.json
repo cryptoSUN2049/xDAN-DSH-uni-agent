@@ -1,0 +1,64 @@
+{
+  "passed": true,
+  "model_called": false,
+  "cases": [
+    {
+      "mode": "oracle",
+      "expected_reward": 1,
+      "agent_container": "3071034f1f5ca4d0da03a4b7e619bdc7bce3ae3d9cdc78391984af13c1c3833e",
+      "agent_mounts": [],
+      "exception": null,
+      "rewards": {
+        "reward": 1.0
+      },
+      "agent_cleanup_verified": true
+    },
+    {
+      "mode": "nop",
+      "expected_reward": 0,
+      "agent_container": "754f3fbe89b61089cc68b53f312c3cbdaeea15ab4c5439924b56fb88f77a1e0d",
+      "agent_mounts": [],
+      "exception": null,
+      "rewards": {
+        "reward": 0.0
+      },
+      "agent_cleanup_verified": true
+    },
+    {
+      "mode": "tamper",
+      "expected_reward": 0,
+      "agent_container": "f9b43cf349013f5049c2de6e3de5a9fc6443692c22cc1dc54c80767b1969fe11",
+      "agent_mounts": [],
+      "forged_agent_score": true,
+      "exception": null,
+      "rewards": {
+        "reward": 0.0
+      },
+      "agent_cleanup_verified": true
+    }
+  ],
+  "host_verifier_sha256": "bbe5540ad6700aee6a39b9ab91f4eb5fa40ae9bbc7f0dcb4448575038cc11e98",
+  "run_files": {
+    "isolated-nop/artifacts/manifest.json": "4e942f8e1f7465dafd4ae8fae4d2fb1f5637316511794662658f8fa956612a57",
+    "isolated-nop/config.json": "21c079c4eaedcf500ac31e2f28bbdb390f5f0e26e8e8a06ea4e814b44b33c724",
+    "isolated-nop/result.json": "75d4fb898f7fcb7d53756051247752bba17e6a4cd7b4780a07d5110f0ff4264e",
+    "isolated-nop/trial.log": "4b7fa0a51cc55a040c6a81a67859fae23c2f60793802849b802f9fd587abe0b4",
+    "isolated-nop/verifier/reward.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "isolated-nop/verifier/test-stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "isolated-oracle/artifacts/app/answer.txt": "74c610e20125e3085231da869e8f71f5193b49b310f8e0ba3963186c22653de6",
+    "isolated-oracle/artifacts/manifest.json": "b5ad1401f9065c91b4e036d74db8b90e8714be72978d38b5becb0d4dfc4b0f27",
+    "isolated-oracle/config.json": "00b822928d371e91be7245743f634463441fbd4f70d8e2e548b6c18801662ea9",
+    "isolated-oracle/result.json": "d700fc736397a886359d6e68a5a3c8d84bc571744b321f545533ca62b7e90c04",
+    "isolated-oracle/trial.log": "db48ddbeba009ea6a19d9728e64d542bdc0e9097fec626b127958ec81224edf6",
+    "isolated-oracle/verifier/reward.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "isolated-oracle/verifier/test-stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "isolated-tamper/artifacts/app/answer.txt": "543df89fec85b1c280e5be7bc6a33e31203503cd6edb3084312de4db5a9b436c",
+    "isolated-tamper/artifacts/manifest.json": "b5ad1401f9065c91b4e036d74db8b90e8714be72978d38b5becb0d4dfc4b0f27",
+    "isolated-tamper/config.json": "3c7c9956f6dc74cabd5c5063341212190643449ece6514de4438ef51f0f6b4ac",
+    "isolated-tamper/result.json": "bb8cb9cc2603376bec41f7ee86ddeaf151fab6d573690291ea99d818b1e818d9",
+    "isolated-tamper/trial.log": "db48ddbeba009ea6a19d9728e64d542bdc0e9097fec626b127958ec81224edf6",
+    "isolated-tamper/verifier/reward.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "isolated-tamper/verifier/test-stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "isolation-smoke.json": "57a14afc7f93d3c8c3002ab40b617f37cbb3bce15b8184fbdd1b979e683c8198"
+  }
+}

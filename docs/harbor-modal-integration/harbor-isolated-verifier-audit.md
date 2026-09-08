@@ -137,3 +137,11 @@ config = TrialConfig.model_validate({
 5. 完成上述 CPU 验收后再用同一子类接真实 DshHarborAgent/Gateway，收齐 DSH trace、agent result、Harbor TrialResult/verifier reward。controller 生成正式 receipt 与绑定 manifest；不把 Harbor JSON 重命名为 DSH receipt。
 
 这条路线复用 Harbor 原生 lifecycle/verify，仅增加版本明确的小型挂载适配。当前只有源码可行性证据；实际 oracle、篡改验证和模型执行由下一实施批次完成。
+
+## 实施与实测补充
+
+本仓isolated_trial.py已实现正确工厂、配置限制与agent mounts=[]。首次真实Oracle暴露/logs/agent缺失导致shell重定向失败；适配器现先创建普通容器目录，不恢复host mount。
+
+新run `/private/tmp/dsh-harbor-isolation-v2`：oracle=1、nop=0、伪造agent内/tests/test.sh与/logs/verifier/reward.txt后仍为0；三例exception均null、Docker inspect agent Mounts均空、宿主test.sh哈希不变。agent与verifier容器清理另行查询无残留。证据harbor-isolation-result.json；初次v1保留为失败。
+
+运行入口deployment/checks/harbor_isolated_verifier_smoke.py，固定任务examples/harbor/m2-file-write，输入摘要deployment/versions/harbor-m2-task.json。本轮133项相关测试通过；不是模型rollout或训练证明。下载前artifact类型/大小与symlink边界仍需下一批实现；不据此给任意任务安全保证。
