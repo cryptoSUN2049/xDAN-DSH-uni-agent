@@ -227,6 +227,29 @@ class Registry:
             os.fsync(fd)
             return digest
 
+    def load_registered(self, candidate_sha256, expected_parent_active_sha256):
+        """Read an unselected direct child of the pinned active snapshot; never promote."""
+        with self._locked() as (fd, _):
+            active = self._active(fd, expected_parent_active_sha256)
+            candidate = self._candidate(fd, candidate_sha256)
+            if (
+                candidate_sha256 == active["candidate_sha256"]
+                or candidate["parent_sha256"] != active["candidate_sha256"]
+            ):
+                raise ValueError("Evaluation candidate must be an unselected direct child of active parent")
+            return {
+                "phase": "candidate-evaluation",
+                "pins_sha256": self.pins_sha256,
+                "parent_active_sha256": expected_parent_active_sha256,
+                "parent_candidate_sha256": active["candidate_sha256"],
+                "parent_selection": active,
+                "candidate_sha256": candidate_sha256,
+                "content_sha256": candidate["content_sha256"],
+                "spec": candidate["spec"],
+                "promoted": False,
+                "runtime_deployed": False,
+            }
+
     def load_active(self, expected_active_sha256):
         with self._locked() as (fd, _):
             active = self._active(fd, expected_active_sha256)

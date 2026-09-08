@@ -2,32 +2,14 @@
 
 ## 1. TL;DR
 
-- 最新通过：context-v2-baseline-r4已290.008秒exit0；4/4真实会话finished/eligible，strict TQ token回读通过，奖励0.1/0.1/0.1/0.72。源码a9c7b0a，报告native-context-v2-baseline-r4-result.json。只是评分/数据链工程通过，未新增optimizer，严格任务准确率仍0。下一步原生两步n4 RL诊断真实组信号，不再重复dev启动。
-
-- 最新覆盖：context-v2-baseline-r3已275秒exit1，4条verifier因root手动启动相对PYTHONPATH找不到模块；不是range修复失败。r4重新prepare，使用manifest.environment绝对路径，在data cwd导入verifier+摘要校验通过后启动。当前remote仍a9c7b0a，见/root/runs/context-v2-baseline-r4/supervisor.pid；不改运行中源码。
-- memory初始协议revision2已5867fcf推送，57项CPU+全Ruff通过，尚未部署GPU。v3 HTML最新状态已视觉复核390px无横溢/0坏锚点。
-
-- 当前唯一GPU作业：context-v2-baseline-r3，PID128980；remote checkout固定a9c7b0a155da9b8d29da3d4d46a7c337156a54f3。4公开dev各1次真实strict推理，无optimizer。目录/root/runs/context-v2-baseline-r3，配套新-data。前轮writer已结束；本地memory初始协议提示修订并行中。运行中不切remote源码。
-
-- 最新终态：memory writer r2已270秒exit1，4steps/3工具调用；只读源修改被拒一次后成功create正确memory，因原合同unapproved_action硬拒，未freeze/B。PID125477已退出，先前运行状态已过时。
-- context view_range适配已完成：83项v2+v1回归通过，下一步新prepare与4dev真实准入验证，再短程RL诊断真实n4组。
-
-- 当前GPU：memory-constraints-r2，源码d13bda976507aed8ee4722be38a36a332f8c898c，监督PID125477，日志/root/runs/dsh-memory-constraints-r2/writer/run/supervision/train.log。只有writer成功且reward1才freeze/B；运行中不切checkout。
-- context v2 r2根因已确认：16条DSH会话finished，但verifier误拒合法view_range。本地修复中，旧回执不修改。归档/workspace/reports/native-diagnostics-through-context-v2-r2.tar.gz，摘要见对应JSON交付物。
-
-- 最新覆盖：context-v2-exploration-r2 已340.01秒 exit1，16 sessions failed，未进入参数更新；GPU释放。根因审计进行中，旧“正在采样”记录仅代表当时状态。
-- memory拒绝反馈与3连拒绝保护已完成；root复核55项CPU+3组Node通过，待新chain真实验证。评分/访问准入不变，禁止把旧writer r1追认为成功。
-
-- 当前 worktree `harbor-modal-integration`，分支 `worktree-harbor-modal-integration`；权威目标 `active-engineering-goal.md`，系统方案 `docs/harbor-modal-integration/uni-agent-system-plan-v3.html`。
-- Goal active，未完成。当前顺序：DSH/记忆/上下文/受控RSI真实任务与训练效果 → 独立结果复现；Harbor训练后置。SFT与大规模数据生产由其他会话承担。
-- M1 v2-r4真实两步RL、消费审计、504 LoRA更新/399 base冻结及独立reload已验收；两条公开题基线满分，不能宣称能力提升。
-- 2026-09-09：`22265e1`已commit/push，GPU checkout `/workspace/rebuild/uni-agent-native-n0-r1`同步该提交。主线复用 `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，通过PYTHONPATH使用新checkout。不要修改运行中checkout。
-- 四例上下文GPU r1已于325秒exit1：4题finished，reward全0，3eligible/1ineligible。原因是引用basename而非完整source ID，另有一次读表外路径；保留原失败，修订prompt消除歧义，不降低rubric。
-- 容量对照r2已300秒exit0，单条真实轨迹回读、finished=true、reward=0；扩大窗口只解除容量阻断，未解决Tool查询。报告native-grounding-capacity-r2-result.json。
-- context r2已完成：4/4严格执行与轨迹回读，奖励均0，引用为绝对路径或缺失，不满足原合同。报告native-context-baseline-r2-result.json；未训练，不宣称能力提升。
-- T2 exploration-r1已510秒exit1，GPU释放。一个公开dev题4次采样：一次140步后max-tokens，三次工具调用留在文本而未执行，未观察到成功。报告native-t2-exploration-r1-result.json。不得重复原配置期望得到训练收益。
-- 真实记忆A r1已372秒exit1，源码22265e1；1次成功读来源后96次尝试改只读source被拒，没有create memory，最终工具JSON不完整。未freeze、未创建reader。报告native-memory-writer-r1-failure.json；下一步审计模型是否收到拒绝反馈，不能直接启动B。
-- 记忆链本轮49项root复核通过；完整手册native-memory-student-chain-runbook.md。仍是评估，credit_assignment=none，尚未训练。
+- 当前worktree `harbor-modal-integration` / 分支 `worktree-harbor-modal-integration`。Goal active；四能力与结果复现优先，Harbor后置，SFT不属本轮。权威目标active-engineering-goal.md，总方案uni-agent-system-plan-v3.html。
+- **当前唯一GPU作业**：`/root/runs/context-v2-train-r1`，监督PID136329；remote checkout `/workspace/rebuild/uni-agent-native-n0-r1` 固定 `a9c7b0a155da9b8d29da3d4d46a7c337156a54f3`。原生sync/GRPO，两步、n4，12可用训练题但仅消费部分。结果未出，不宣称有效更新。
+- 使用已验收venv `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，absolute PYTHONPATH指当前checkout；不要重装环境或修改运行中源码。checkpoint `/workspace/uni-agent-g1/checkpoint/context-v2-train-r1/`；运行日志 `train.log`/`supervisor-result.json`。禁止全局Ray清理。
+- context v2 **r4四题真实strict准入及TQ回读通过**：290.008秒exit0，reward .1/.1/.1/.72，strict准确率0，无optimizer。报告native-context-v2-baseline-r4-result.json。r2曾误拒合法view_range；r3是root启动相对PYTHONPATH错误，均保留失败。新版本已83项回归通过。
+- memory writer r2：4steps/3工具调用，拒绝一次后成功创建正确memory；因一次越权硬拒，未freeze/B。初始操作协议revision2已`5867fcf`推送、57项回归通过，**尚未GPU验证**。下一次需新chain，不能复用r2或追认通过。
+- M1 v2-r4既有两步真实RL、504 LoRA更新/399 base冻结、optimizer与消费审计、独立reload已通过；两公开题原本满分，不能宣称能力提升。RSI固定Linux父/子/回滚18工具调用通过，但synthetic选择不计学生训练；真实候选隔离评估入口在本地实施。
+- 数据审计native-data-coverage-audit.md：context12 train/4 dev；memory两固定模板；封存能力测试已验收数0。独立任务、采样尝试、实际消费分开报告。最新诊断云盘归档摘要见native-diagnostics-archive-through-context-v2-r2.json。
+- 下一步：监督本次真实RL→消费/方差/参数与optimizer审计→新run独立reload；随后memory新writer→成功才freeze/B。清单驱动inference launcher本地补齐，避免手写启动环境；不阻塞当前已固定训练。
 
 ### 最新 N0/N1/P1 检查点
 
@@ -51,6 +33,20 @@
 - 下一步：真实 Docker 负例恢复验证 → 新身份 M2 sync → 数值审计与独立 reload。通过后现有单卡有界 colocate_async 对照已获授权，不新增 GPU。
 
 ## 2. 本轮交付物
+
+最新CPU增量（未部署到正在运行的GPU checkout）：清单驱动推理启动/跨cwd预检/实际VERL pin校验，候选未晋升隔离评估。root联合58项（RSI46+launcher12）通过；context另83项回归通过，Ruff双门通过。RSI默认生产路径及policy源码不变；helper复用已有监督器。
+
+| 本轮文件 | 行数 |
+| --- | --- |
+| `examples/dsh/capabilities/launch_context_inference.py` | 288 |
+| `tests/uni_agent/examples/test_launch_context_inference.py` | 175 |
+| `docs/harbor-modal-integration/context-inference-launch-design.md` | 20 |
+| `uni_agent/tasks/dsh/rsi_candidates.py` | 386 |
+| `examples/dsh/rsi_closed/profile.py` | 117 |
+| `tests/uni_agent/tasks/test_dsh_rsi_candidates.py` | 326 |
+| `tests/uni_agent/deployment/test_dsh_rsi_policy_canary.py` | 217 |
+| `docs/harbor-modal-integration/native-rsi-student-next-stage-design.md` | 172 |
+
 
 下面为本检查点代码/文档清单（行数用于冷启动定位；历史产物见末尾归档）。
 

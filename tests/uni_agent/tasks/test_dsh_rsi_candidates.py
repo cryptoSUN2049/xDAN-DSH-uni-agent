@@ -289,3 +289,38 @@ def test_mixed_registry_candidate_identity_cannot_load(setup_registry):
     with pytest.raises(ValueError, match="identity mismatch"):
         Registry(other_root, other["pins_sha256"]).register(spec(["cordis_inspect_list"]), child)
     assert registry.load_active(initial["active_sha256"])["candidate_sha256"] == initial["candidate_sha256"]
+
+
+def test_load_registered_is_readonly_bound_to_real_parent(setup_registry):
+    registry, initial, child, _, _ = setup_registry
+    before = {p.name: p.read_bytes() for p in registry.root.iterdir()}
+    value = registry.load_registered(child, initial["active_sha256"])
+    assert value["phase"] == "candidate-evaluation"
+    assert value["candidate_sha256"] == child
+    assert value["parent_candidate_sha256"] == initial["candidate_sha256"]
+    assert value["parent_active_sha256"] == initial["active_sha256"]
+    assert value["pins_sha256"] == initial["pins_sha256"]
+    assert value["promoted"] is False
+    assert value["runtime_deployed"] is False
+    assert "active_sha256" not in value
+    assert before == {p.name: p.read_bytes() for p in registry.root.iterdir()}
+
+
+@pytest.mark.parametrize("fault", ["pins", "tamper", "stale", "parent", "already-active"])
+def test_load_registered_rejects_invalid_snapshot(setup_registry, fault):
+    registry, initial, child, _, _ = setup_registry
+    active = initial["active_sha256"]
+    if fault == "pins":
+        registry = Registry(registry.root, _sha(b"wrong"))
+    elif fault == "tamper":
+        (registry.root / (child[7:] + ".json")).write_text("{}")
+    elif fault == "stale":
+        promote(setup_registry)
+    elif fault == "parent":
+        child = registry.register(spec(["cordis_inspect_list"]), child)
+    else:
+        child = initial["candidate_sha256"]
+    before = {p.name: p.read_bytes() for p in registry.root.iterdir()}
+    with pytest.raises(ValueError):
+        registry.load_registered(child, active)
+    assert before == {p.name: p.read_bytes() for p in registry.root.iterdir()}

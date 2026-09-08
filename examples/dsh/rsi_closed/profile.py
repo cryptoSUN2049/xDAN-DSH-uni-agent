@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 
 from uni_agent.tasks.dsh.memory_artifacts import _directory, _read, _sha
-from uni_agent.tasks.dsh.rsi_candidates import Registry
+from uni_agent.tasks.dsh.rsi_candidates import Registry, _canonical
 
 POLICY_SHA256 = "sha256:a81e65c97bfe4ee111d810d060e5921f496a0cab0a92ec8be8f7af619e50c935"
 SUPPORTED_TOOLS = {"str_replace_editor", "cordis_inspect_list"}
@@ -14,6 +14,22 @@ SUPPORTED_TOOLS = {"str_replace_editor", "cordis_inspect_list"}
 
 def build_patch(registry_root, pins_sha256, active_sha256, read_files):
     selection = Registry(registry_root, pins_sha256).load_active(active_sha256)
+    return _render_patch(selection, active_sha256, read_files)
+
+
+def build_evaluation_patch(registry_root, pins_sha256, parent_active_sha256, candidate_sha256, read_files):
+    """Render an unpromoted candidate; callers must recheck the snapshot before launch."""
+    registry = Registry(registry_root, pins_sha256)
+    selection = registry.load_registered(candidate_sha256, parent_active_sha256)
+    value = _render_patch(selection, parent_active_sha256, read_files)
+    # Rendering reads operator files outside the registry lock. Refuse a stale snapshot.
+    if registry.load_registered(candidate_sha256, parent_active_sha256) != selection:
+        raise ValueError("Evaluation selection changed during rendering")
+    value.update(phase="candidate-evaluation", overlay_sha256=_sha(_canonical(value["patch"])))
+    return value
+
+
+def _render_patch(selection, active_sha256, read_files):
     if not set(selection["spec"]["allowed_tools"]) <= SUPPORTED_TOOLS:
         raise ValueError("Candidate contains tools outside the canary execution subset")
     policy = Path(__file__).with_name("policy.mjs")
@@ -83,8 +99,18 @@ def main():
     parser.add_argument("--pins-sha256", required=True)
     parser.add_argument("--active-sha256", required=True)
     parser.add_argument("--read-file", type=Path, action="append", required=True)
+    parser.add_argument("--mode", choices=["active", "evaluation"], default="active")
+    parser.add_argument("--candidate-sha256")
     args = parser.parse_args()
-    print(json.dumps(build_patch(args.registry, args.pins_sha256, args.active_sha256, args.read_file)))
+    if (args.mode == "evaluation") != (args.candidate_sha256 is not None):
+        parser.error("--candidate-sha256 is required only with --mode evaluation")
+    if args.mode == "evaluation":
+        value = build_evaluation_patch(
+            args.registry, args.pins_sha256, args.active_sha256, args.candidate_sha256, args.read_file
+        )
+    else:
+        value = build_patch(args.registry, args.pins_sha256, args.active_sha256, args.read_file)
+    print(json.dumps(value))
 
 
 if __name__ == "__main__":

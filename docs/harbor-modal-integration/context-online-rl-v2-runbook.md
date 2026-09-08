@@ -29,22 +29,17 @@ source "$CONTEXT_DATA_ROOT/training.env"
 
 ## 先真实 strict inference 四题
 
-把下面命令交给既有本 run 专属进程组 supervisor；建议首次 3600 秒总预算、单会话最多 900 秒。只停止该 run 拥有的进程；结束后核验其 Ray/vLLM 与 GPU 占用。不能用全局 `ray stop` 或按名称 kill 其他任务。
+从准备清单对应的精确 checkout 运行以下一条命令。入口读取 `manifest.environment`，覆盖外层相对 PYTHONPATH，并在 verifier 的 data cwd 先核导入/闭包/runtime；实际检查所有输入及 source 摘要后才新建 run root、记录启动清单并调用 owned supervisor。不要预先 mkdir run root，也不要复用旧 run。首次总预算3600秒、单会话最多900秒；结束后仍需按所有权核验独立 Ray/vLLM 后台资源，不能全局清理其他任务。
 
 ```bash
-mkdir -p "$RUN_ROOT"
-"$PYTHON_BIN" examples/inference/parallel_infer_verl.py \
-  --data-path "$TEST_FILE" --task-config "$TASK_CONFIG" \
-  --model-path "$MODEL_PATH" --n 1 --limit 4 \
-  --n-gpus-per-node 1 --tensor-parallel-size 1 --gateway-count 1 \
-  --concurrency 1 --gpu-memory-utilization 0.30 --max-model-len 16384 \
-  --tool-parser hermes --dsh-strict-audit --require-result \
-  --dsh-trace-root "$DSH_TRACE_ROOT" --dsh-result-root "$DSH_RESULT_ROOT" \
-  --log-dir "$AGENT_LOG_DIR" --result-path "$RUN_ROOT/result.json" \
-  --inference-evidence-path "$RUN_ROOT/inference-evidence.json"
+PYTHONPATH="$PWD:$PWD/verl" "$PYTHON_BIN" -m examples.dsh.capabilities.launch_context_inference \
+  --manifest "$CONTEXT_DATA_ROOT/manifest.json" --model-path "$MODEL_PATH" \
+  --concurrency 1 --gpu-memory 0.30 --max-model-len 16384 --wall-seconds 3600
 ```
 
 配置总生成预算 8192、单轮 2048；训练入口 prompt 预算 8192，engine window 16384。inference CLI 自带 prompt 预算 4096（仍使用同一 16384 engine window），因此报告要记录入口差异，不能假装 token 边界完全相同。这里走 Gateway + TQ 实际 token 和奖励回读，没有 optimizer。
+
+入口记录模型本地配置/tokenizer/权重摘要、完整argv、清单关键环境、cross-cwd预检和代码/输入摘要。部署锁的模型revision与本地字节测量分开标注，不假称重新在线核验了Hub版本。该入口不替代当前正在运行的旧run，也不会自动改旧实验。
 
 四条 dev 是四种不同组合，仅一次采样不证明 GRPO 组内方差。后续先在 train 同题做 n=4 诊断并保留原始分布；当前 strict inference 限 n=1、partition=val，不能直接把 train metadata 换成 validation 来绕过。若用公开 dev 同题重复采样诊断，标为公开开发采样，不叫 trainer 分组验收、不据此宣称盲测泛化。
 

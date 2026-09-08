@@ -112,3 +112,106 @@ def test_renderer_records_fresh_process_selection(loaded):
     value = json.loads(result.stdout)
     assert value["selection"]["candidate_sha256"] == ids["candidate_sha256"]
     assert value["runtime_started"] is False
+
+
+@pytest.fixture
+def pending(loaded):
+    from uni_agent.tasks.dsh.rsi_candidates import Registry
+
+    root, ids, file = loaded
+    registry = Registry(root, ids["pins_sha256"])
+    child = registry.register(
+        {"schema": "dsh.rsi-profile.v1", "profile": "sdk-minimal", "allowed_tools": ["cordis_inspect_list"]},
+        ids["candidate_sha256"],
+    )
+    return root, ids, file, child
+
+
+def test_evaluation_renderer_binds_pending_and_preserves_production(pending):
+    from examples.dsh.rsi_closed.profile import build_evaluation_patch, build_patch
+    from uni_agent.tasks.dsh.rsi_candidates import _canonical
+
+    root, ids, file, child = pending
+    before = {p.name: p.read_bytes() for p in root.iterdir()}
+    production = build_patch(root, ids["pins_sha256"], ids["active_sha256"], [file])
+    value = build_evaluation_patch(root, ids["pins_sha256"], ids["active_sha256"], child, [file])
+    assert value["phase"] == "candidate-evaluation"
+    assert value["selection"]["candidate_sha256"] == child
+    config = value["patch"][-1]["insert"][0]["config"]
+    assert config["activeSha256"] == ids["active_sha256"]
+    assert config["candidateSha256"] == child
+    assert config["contentSha256"] == value["selection"]["content_sha256"]
+    assert value["overlay_sha256"] == _sha(_canonical(value["patch"]))
+    assert value["runtime_started"] is False
+    assert production == build_patch(root, ids["pins_sha256"], ids["active_sha256"], [file])
+    assert before == {p.name: p.read_bytes() for p in root.iterdir()}
+
+
+def test_evaluation_renderer_rechecks_parent_after_render(pending, monkeypatch):
+    from examples.dsh.rsi_closed import profile
+
+    root, ids, file, child = pending
+    original = profile._read
+
+    def change_active(fd, name, *args, **kwargs):
+        value = original(fd, name, *args, **kwargs)
+        if name == file.name:
+            (root / "active.json").write_text("{}")
+        return value
+
+    monkeypatch.setattr(profile, "_read", change_active)
+    with pytest.raises(ValueError, match="Active selection changed"):
+        profile.build_evaluation_patch(root, ids["pins_sha256"], ids["active_sha256"], child, [file])
+
+
+@pytest.mark.parametrize(
+    "mode,with_candidate,success", [("active", True, False), ("evaluation", False, False), ("evaluation", True, True)]
+)
+def test_evaluation_cli_requires_explicit_mode(pending, mode, with_candidate, success):
+    import sys
+
+    root, ids, file, child = pending
+    before = {p.name: p.read_bytes() for p in root.iterdir()}
+    command = [
+        sys.executable,
+        "-m",
+        "examples.dsh.rsi_closed.profile",
+        "--registry",
+        str(root),
+        "--pins-sha256",
+        ids["pins_sha256"],
+        "--active-sha256",
+        ids["active_sha256"],
+        "--read-file",
+        str(file),
+        "--mode",
+        mode,
+    ]
+    if with_candidate:
+        command.extend(["--candidate-sha256", child])
+    result = subprocess.run(command, capture_output=True, text=True, timeout=30)
+    assert (result.returncode == 0) is success
+    if success:
+        value = json.loads(result.stdout)
+        assert value["phase"] == "candidate-evaluation"
+        assert value["selection"]["promoted"] is False
+        assert value["selection"]["parent_active_sha256"] == ids["active_sha256"]
+    else:
+        assert "required only with --mode evaluation" in result.stderr
+    assert before == {p.name: p.read_bytes() for p in root.iterdir()}
+
+
+@pytest.mark.parametrize("fault", ["policy", "pins"])
+def test_evaluation_rejects_wrong_pins(pending, monkeypatch, fault):
+    from examples.dsh.rsi_closed import profile
+
+    root, ids, file, child = pending
+    pins = ids["pins_sha256"]
+    if fault == "policy":
+        monkeypatch.setattr(profile, "POLICY_SHA256", _sha(b"wrong"))
+    else:
+        pins = _sha(b"wrong")
+    before = {p.name: p.read_bytes() for p in root.iterdir()}
+    with pytest.raises(ValueError):
+        profile.build_evaluation_patch(root, pins, ids["active_sha256"], child, [file])
+    assert before == {p.name: p.read_bytes() for p in root.iterdir()}
