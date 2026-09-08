@@ -135,3 +135,5 @@
 用户明确把Harbor训练后置，先完成可复建原生链路及DSH/记忆/上下文/RSI。旧M2计划不得继续驱动GPU启动；及时替换active goal并归档历史，而非只在聊天改变顺序。四类能力覆盖不等于四类能力提升，异步不成为训练效果前置。
 
 - N0复建不能从旧pyvenv.cfg home推断解释器存在；用command -v与readlink实际核验。第一次错路径失败必须留日志，再有证据地重试。
+
+- uv pip的显式版本可能被当前项目tool.uv.override-dependencies覆盖；lock之外的已批准overlay须--no-config隔离，并实际pip check/import验证，不能只信命令参数或Audited日志。

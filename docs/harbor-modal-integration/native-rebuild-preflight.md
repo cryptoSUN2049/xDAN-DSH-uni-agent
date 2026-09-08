@@ -130,3 +130,5 @@ uv pip check --python /workspace/venvs/uni-agent-native-n0-r1/bin/python
 
 ## 实跑纠正
 N0首次bootstrap在创建venv前退出：旧pyvenv.cfg的home=/usr/local/bin不能推导当前系统解释器路径。远端实际command -v python3=/usr/bin/python3，readlink旧venv/bin/python=/usr/bin/python3.12，版本3.12.3。模板已修正；失败日志install.log保留，新尝试install-attempt2.log。
+
+N0第二次真实安装创建新venv并安装255包，uv pip check拦截numpy仍为2.4.6。根因是脚本cwd在VERL目录，tool.uv.override-dependencies中的numpy>=2.0.0覆盖精确overlay要求。远端uv --no-config pip install --dry-run实测正确计划卸2.4.6、装2.3.5；脚本需隔离项目配置而不改上游lock。此时尚未训练。

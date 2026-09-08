@@ -37,11 +37,14 @@ if gpu["verl_uv_lock_sha256"] != digest:
 if gpu["validated_resolution_adjustment"]["numpy"] != "2.3.5":
     raise SystemExit("deployment lock does not authorize the reviewed numpy==2.3.5 overlay")
 PY
-UV_CACHE_DIR="$DSH_UV_CACHE" uv pip install --python "$DSH_TRAIN_VENV/bin/python" \
+# Project override-dependencies can replace even the exact numpy requirement.
+# Only frozen sync above should read upstream uv configuration; post-lock
+# operations must honor our explicit requirement/hash and checkout arguments.
+UV_CACHE_DIR="$DSH_UV_CACHE" uv pip install --no-config --python "$DSH_TRAIN_VENV/bin/python" \
   --no-deps --only-binary=:all: --require-hashes -r "$repo_root/deployment/versions/native-numpy-overlay.txt"
 # Add only this checkout; never re-resolve the locked GPU dependencies.
-UV_CACHE_DIR="$DSH_UV_CACHE" uv pip install --python "$DSH_TRAIN_VENV/bin/python" --no-deps -e "$repo_root"
-UV_CACHE_DIR="$DSH_UV_CACHE" uv pip check --python "$DSH_TRAIN_VENV/bin/python"
+UV_CACHE_DIR="$DSH_UV_CACHE" uv pip install --no-config --python "$DSH_TRAIN_VENV/bin/python" --no-deps -e "$repo_root"
+UV_CACHE_DIR="$DSH_UV_CACHE" uv pip check --no-config --python "$DSH_TRAIN_VENV/bin/python"
 # An old PYTHONPATH or the checkout working directory must not conceal missing
 # editable installs in the fresh environment. No GPU process is started here.
 env -u PYTHONPATH "$DSH_TRAIN_VENV/bin/python" -I -c '

@@ -93,6 +93,20 @@ def test_incompatible_packages_fail_before_import_gate(tmp_path):
     assert "isolated-import" not in commands.read_text()
 
 
+def test_post_lock_operations_ignore_project_dependency_overrides(tmp_path):
+    script, env, commands = bootstrap_fixture(tmp_path)
+    (script.parents[2] / "verl/pyproject.toml").write_text('[tool.uv]\noverride-dependencies = ["numpy>=2.0.0"]\n')
+    result = subprocess.run(["bash", str(script)], env=env, capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    calls = [json.loads(line) for line in commands.read_text().splitlines()]
+    pip_calls = [args for args in calls if args[0] == "pip"]
+    assert len(pip_calls) == 3
+    assert all("--no-config" in args for args in pip_calls)
+    # Frozen sync still needs upstream GPU indexes/configuration; isolate only
+    # the reviewed post-lock installation and verification operations.
+    assert "--no-config" not in calls[0]
+
+
 @pytest.mark.parametrize("version", ["2.4.6", "", "2.3.5 --extra-index-url untrusted"])
 def test_bootstrap_refuses_unapproved_overlay(tmp_path, version):
     script, env, commands = bootstrap_fixture(tmp_path, numpy=version)
