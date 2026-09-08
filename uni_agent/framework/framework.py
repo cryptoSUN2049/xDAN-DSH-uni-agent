@@ -1081,7 +1081,7 @@ class GatewayAgentFramework(AgentFramework):
             task_metrics = {
                 k: v
                 for k, v in trusted_result.items()
-                if k not in {"reward", "finished"} and isinstance(v, (int, float, str))
+                if k not in {"reward", "finished"} and isinstance(v, int | float | str)
             }
             if annotations is None:
                 logger.info("session %s: Framework produced no reward; rm_scores remain zero", session_id)
