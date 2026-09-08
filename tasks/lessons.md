@@ -102,3 +102,4 @@
 - 已通过的固定 runtime 继续工程验证；候选版本单独迁移，不直接改变进行中的训练基线。
 - 跨会话截图中的“本项目”必须回到绝对路径和commit核实。DSH-Exp离线converter修复不等于Uni-Agent在线SDK需要复制相同改动；先查调用链，避免重复适配。用户要求先验新版再继续时，更新执行顺序，但保留旧pin作为对照。
 - 用户明确“统一切换0.1.3-alpha.2”后，新版应成为后续默认目标；不能继续将旧版作为M2默认路线。历史备份不等于并行主线；区分目标配置、已安装版本与已验收运行三种状态。
+- 新版fs-ext触发node-gyp下载headers，网络盘fchown会EPERM；仅修外层tar --no-same-owner不够。构建时npm_config_nodedir指向已校验Node发行包（自带include/node），避免再次解包另一套headers。该修复需真实Linux重跑，不能凭CPU输入测试宣布构建通过。

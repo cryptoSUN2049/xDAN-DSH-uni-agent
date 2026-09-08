@@ -26,6 +26,9 @@ printf '2f2c0da162318f0de47665410c7c8c2ed3d36c8f3105de4bbc61176c70a7cbf2  %s\n' 
 # RunPod network volumes do not permit restoring archive UID/GID ownership.
 tar --no-same-owner -xJf "$archive"
 export PATH="$DSH_TOOLS_ROOT/node-v24.20.0-linux-x64/bin:$PATH"
+# Use the checksum-verified distribution's headers. node-gyp's separate
+# tar extraction tries fchown, which RunPod network volumes reject.
+export npm_config_nodedir="$DSH_TOOLS_ROOT/node-v24.20.0-linux-x64"
 npm install --global --prefix "$DSH_TOOLS_ROOT/pnpm-11.7.0" pnpm@11.7.0
 export PATH="$DSH_TOOLS_ROOT/pnpm-11.7.0/bin:$PATH"
 cd "$DSH_SOURCE_ROOT"
