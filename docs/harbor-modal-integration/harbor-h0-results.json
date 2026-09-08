@@ -1,0 +1,43 @@
+{
+  "harbor_version": "0.16.1",
+  "docker_version": "29.2.0",
+  "trials": [
+    {
+      "trial_name": "dsh-h0-oracle-v2-20260908",
+      "task_checksum": "c04d18f86d52d022fe8a633ad97e1e23c331e761f57fa2e6136a82287b3c53b5",
+      "verifier_result": {
+        "rewards": {
+          "reward": 1.0
+        }
+      },
+      "exception_info": null,
+      "started_at": "2026-09-08T05:03:29.549917Z",
+      "finished_at": "2026-09-08T05:03:39.984396Z",
+      "result_path": "/private/tmp/dsh-harbor-h0-trials/dsh-h0-oracle-v2-20260908/result.json",
+      "sha256": "e7d0e95dc2af1f5ace78ec5c75d22e7a68f3cacbc28a27952370af4839b7ced1"
+    },
+    {
+      "trial_name": "dsh-h0-nop-v2-20260908",
+      "task_checksum": "c04d18f86d52d022fe8a633ad97e1e23c331e761f57fa2e6136a82287b3c53b5",
+      "verifier_result": {
+        "rewards": {
+          "reward": 0.0
+        }
+      },
+      "exception_info": null,
+      "started_at": "2026-09-08T05:03:45.652307Z",
+      "finished_at": "2026-09-08T05:03:54.585957Z",
+      "result_path": "/private/tmp/dsh-harbor-h0-trials/dsh-h0-nop-v2-20260908/result.json",
+      "sha256": "1fd628f5ac6d5f515dc0e078c7dcbfff8a11a57370e188978ffee0fc3bc5fd4a"
+    }
+  ],
+  "fixture_sha256": {
+    "examples/harbor/h0-file-write/environment/Dockerfile": "b3831629803b53f2ea1194ebdf478086cc2772bd204c8e197676e97deacb34c8",
+    "examples/harbor/h0-file-write/environment/docker-compose.yaml": "17ceef0a82e7dfb63d9f5ce974350f392dd8a323eac174ec69d28a90c7de8388",
+    "examples/harbor/h0-file-write/instruction.md": "fa710628dc9886749b85809cb9a1ed8c9cf10b7e6853e0fc2451ecda6a6677ff",
+    "examples/harbor/h0-file-write/solution/solve.sh": "6d68d1072e6a16141128a054f808a15bbd619357d58847db80dbbafa4ca3c73b",
+    "examples/harbor/h0-file-write/task.toml": "709c4b7b0571d502112bc0a6f55352678e6608773d1a22f414b34d317665bed3",
+    "examples/harbor/h0-file-write/tests/test.sh": "bbe5540ad6700aee6a39b9ab91f4eb5fa40ae9bbc7f0dcb4448575038cc11e98"
+  },
+  "scope": "local Docker oracle and nop; no DSH/model/RL"
+}

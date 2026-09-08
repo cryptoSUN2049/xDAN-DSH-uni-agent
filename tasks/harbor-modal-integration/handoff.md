@@ -220,3 +220,24 @@
 - DSH官方runtime、0.1.2a1双wheel完成；独立/workspace/venvs/dsh-sdk-7840安装后sdk-minimal与sdk-restart均通过。
 - 实际命令/证据：docs/harbor-modal-integration/native-v1-and-dsh-runtime-results.md；摘要已更新deployment/versions/dsh-runtime-candidate.json。
 - 下一步将wheel接入GPU训练环境，推进M1真实DSH任务；原生不盲目加步数，独立reload/M1/M2仍未验收。
+
+## M1 部署与运行入口（当前）
+
+- GPU训练venv已--no-deps安装两个DSH 0.1.2a1 wheels，import通过；GPU checkout固定99dc3c7。
+- 实际GPU生成/workspace/data/dsh-evolution-v2-7840（16 train/8 holdout），环境摘要绑定当前runtime；Hydra --cfg job通过。
+- dsh-m1-v1在启动前被run.log存在检查拒绝，exit2，没有GPU训练。不可关闭防覆盖；外层日志改写reports。
+- dsh-m1-v2已提交启动，同一工具session6916；/workspace/reports/dsh-m1-v2.log，/workspace/runs/dsh-m1-v2/exit-code。下一轮先核验进程/日志，不重复启动。
+- resolved-launch.json记录版本和环境；2 optimizer steps、前4个trim训练任务、前2个trim留出、n4、并发1、8192+1024上下文、LoRA16、30分钟timeout。启动尚不代表任何验收成功。
+- subagent确认v2是最短真实Cordis链路；提供host代码/步骤，所以只证明受指导Harness执行，不证明自主设计或记忆能力。v3live training_eligible=false不可代替。
+
+## Harbor H0 正反例实测
+
+- 本机Docker29.2.0与Harbor0.16.1，固定ubuntu摘要；examples/harbor/h0-file-write任务。oracle=1、nop=0，两项无exception，证据docs/harbor-modal-integration/harbor-h0-results.json。
+- 初次地址池耗尽，保留失败trial；独立文件任务network_mode=none解决，不清理其他服务。CLI失败可退出0，必须读TrialResult。
+- M1同一dsh-m1-v2仍需查询日志；M2桥接未实现，RunPod远程DOCKER_HOST有挂载路径问题，不能直接配置即用。
+
+## M1 v2 终止：待修指标合同
+
+- exit-code=1：基线validation已输出0.jsonl；VERL trainer_base._val_metrics_update→metric_utils.process_validation_metrics:987 对dict求np_mean失败。未进入训练更新。
+- 另有hermes JSON工具解析失败日志，需要后续诊断；不能把metrics修复等同任务成功。
+- 下一步审计framework reward_extra_info中的嵌套receipt投影；保留审计数据，只向数值指标聚合提供受支持字段，不改VERL子模块；subagent正只读定位。
