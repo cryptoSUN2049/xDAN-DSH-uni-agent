@@ -1,5 +1,7 @@
 # 独立会话委托：DSH能力课程与评估数据 v1
 
+> 分工更新：用户已安排另一会话负责数据生成。优先复用DSH-Exp/feat-sft-campaign现有generator，由Uni-Agent提供任务与验收契约。本文件原建议新建Uni-Agent数据worktree不再作为默认执行路径；不要重复搭建生成器。最新操作指南：../../docs/harbor-modal-integration/data-expansion-runbook.md。
+
 ## 目标与职责
 
 为4B模型下一阶段能力实验准备**可执行、可评分、可复现**的数据任务，回答“模型是否更懂DSH调度、恢复与记忆使用”。当前邮箱脱敏4train/2public holdout只做工程验收，不够证明能力提升。

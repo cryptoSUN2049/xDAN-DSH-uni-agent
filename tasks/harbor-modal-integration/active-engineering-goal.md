@@ -184,3 +184,7 @@ M2 Harbor端到端验收仍为G1必需范围；完整RSI和显著效果保持后
 ### M1工程闭环验收通过，进入M2
 
 r4两步在线RL真实更新+消费审计+独立reload均通过。报告docs/harbor-modal-integration/redact-m1-v2-r4-reload-result.json。此结论限定固定邮箱脱敏课程与公开留出；不代表效果提升、Harbor M2或G1全体通过。Harbor v2执行与打包接线正在推进，另一会话负责新增数据。
+
+### 用户确认的推进顺序
+
+先完成DSH/Uni-Agent/VERL在线RL及Harbor Docker同步链路完整验收，再另排性能实验。单卡先评估现有colocate_async，具备独立资源后再评估separate_async；rollout.mode=async不等于trainer全异步。固定runtime/任务/verifier，模型权重同步不等于源码升级。SFT/数据生产由其他会话负责，不进入本轮工作。
