@@ -168,3 +168,16 @@
 - 新增deployment/bootstrap/checkout.sh（固定完整commit与子模块，拒绝覆盖）和checks/preflight.py（只读JSON清点，不冒充运行验收）；3项边界测试通过。
 - RunPod代码目标/workspace/src/uni-agent；实际checkout和运行状态按远端检查记录，不跟随main漂移。
 - DSH可复建来源找到官方训练worktree的1af5b00，Python文档要求Linux原生构建runtime；尚未恢复旧3b8fad发布物，也未构建新Linuxruntime。
+
+## 原生训练任务审计
+
+- native-recipe-selection.md对比MemAgent/HotpotQA、SWE、Harbor oracle及现有DSH单卡入口。
+- 推荐有界E0a原生HotpotQA/MemAgent单卡诊断，M1 DSH与M2 Harbor验收保持不变。
+- 原生HotpotQA不返回finished/DSH receipt；separate_async默认8GPU；不能直接套DSH strict或只改GPU_IDS。
+
+## 配对GPU依赖安装
+
+- VERL fefb080自带uv.lock可复用；远端frozen dry-run通过，254包，包含torch2.11+cu130、vLLM0.24、Transformers5.5.3、固定TransferQueue提交。
+- /workspace/venvs/uni-agent-fefb080为隔离环境，/workspace/cache/uv为缓存，安装日志/workspace/reports/verl-install.log；仍须检查结束状态。
+- 新增bootstrap/install-verl.sh和checks/gpu_smoke.py，安装后必须实际CUDA前后向并验证模块导入。
+- GitHub API对DSH-Exp提交1af5b00返回422（不可拉取），DSH发布物仍未解决；不要声称SDK已安装。

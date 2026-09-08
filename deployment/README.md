@@ -42,3 +42,7 @@ Gateway / 推理端点按运行模式启动；DSH 提供执行能力；Harbor �
 
 预检仅验证清单和安装存在性，不证明CUDA运算、DSH进程、Harbor容器或训练能工作；这些需要后续真实smoke。
 已有实验目录不直接git pull更新，使用新commit的新checkout；模型和运行产物保存在checkout外。
+
+GPU依赖安装：设置绝对路径DSH_TRAIN_VENV和DSH_UV_CACHE，运行
+`bash deployment/bootstrap/install-verl.sh`。它核对配对VERL提交与工作区，使用上游uv.lock的fsdp/vllm组合安装，并以no-deps安装本项目。
+安装后用该环境Python运行`deployment/checks/gpu_smoke.py`；该检查实际执行CUDA前向/反向，但不加载模型、不代表RL验收。

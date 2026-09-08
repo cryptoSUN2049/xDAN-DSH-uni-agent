@@ -234,3 +234,10 @@ Review：本批只新增部署目录与设计；不将其标记为安装或部�
 - [x] 新增八维配置矩阵、E0—E5实验顺序、不可用组合与独立验收状态。
 - [x] 核读新增ContextPilot路径并保存hash与适用边界。
 - [ ] 将首批实际任务实例、模型revision、数据split与阈值填入可执行实验配置。
+
+### GPU环境实施
+
+- [x] RunPod从GitHub拉取9b7dbdb与VERL fefb080；只读预检完成。
+- [x] 固定VERL自带uv.lock的FSDP/vLLM安装预演通过（254包）；开始隔离安装。
+- [ ] 安装完成后验证CUDA运算、GPU依赖导入和原生小任务。
+- [ ] 固定模型与数据；DSH runtime构建和Harbor容器环境仍待实施。
