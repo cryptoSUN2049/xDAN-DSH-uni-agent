@@ -96,3 +96,9 @@
 - 用户要求形成可复用训练体系：docs/harbor-modal-integration/engineering-roadmap.html为当前权威执行顺序，S0—S11含依赖、验收和产物。index.html已置顶链接。
 - 不重新搭历史底座，优先复用；Harness策略RL在S5，候选演化在S9—S11。Modal/OPD不是首个闭环的前置。
 - 新session先读路线图与已有能力审计，再执行S0/S1；本轮仅规划，无新增运行。
+
+## 最新上游接线风险（2026-09-08）
+
+- 上游89733ec相对继承6e00d83多5提交，证据见upstream-sync-evidence.json与upstream-adoption-plan.md。
+- #109移除reward_info改TaskResult，S2前必须设计严格准入迁移；不直接覆盖本地unfinished整组拒绝。#165在启用SWE-rebench前采纳评估。
+- 本轮未merge、未升级VERL、未运行新测试。S0/S1保留当前pin，路线图已加迁移节点。
