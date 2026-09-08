@@ -2,6 +2,8 @@
 
 ## 当前状态覆盖（新 Pod 恢复，优先于下方历史记录）
 
+- **T2学生基线运行中**：`/root/runs/t2-student-baseline-r1`，supervisor29423，代码`da24cfa`，VAL_ONLY=True，最多1800秒。先查exit-code/eval.log；本轮无参数更新。T2固定Linux runtime脚本策略smoke已通过3组业务调用与完整生命周期；42项CPU测试通过。报告`docs/harbor-modal-integration/t2-fixed-runtime-smoke-result.json`，源码通过runtime发布hash绑定b236969。
+
 - **当前能力基线已失败结束**：dsh-capability-grounding-r1，exit1，代码c04ff2d，VAL_ONLY=True。模型误选Service总目录导致Gateway会话容量耗尽，未完成轨迹被拒绝，无训练更新；不是4096累计预算限制。详情与后续SFT→RL路线见 `docs/harbor-modal-integration/dsh-capability-training-strategy.md`。下一步为T2真实DSH生命周期与严格评分，oracle准备不等于任务打通。
 
 - 用户最新优先级：全异步/Modal/云端沙盒扩容延后至性能阶段；当前只推进固定版本训练、reload和评估。

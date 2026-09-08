@@ -1,0 +1,103 @@
+{
+  "scope": "scripted-policy real-runtime integration; not model evaluation or RL",
+  "cases": [
+    {
+      "run": "t2-fixed-runtime-dev-01-r1",
+      "verdict": {
+        "passed": true,
+        "eligible": true,
+        "reasons": [],
+        "matched_calls": 3,
+        "hidden_inputs_verified": false,
+        "plugin_id": "log-1",
+        "package_id": "pkg-1",
+        "plugin_run_id": "run-1"
+      },
+      "trace_sha256": "sha256:360230256e7b3f15e110602b45a7b2ca4a62132a392b618b2eb3e73d88ead853",
+      "fixture_sha256": "sha256:ae3ceff1246ee2b7952973534c6bb5fe455869d7d8c0ec6a19c3130dc1ac7752",
+      "finish_reason": "completed"
+    },
+    {
+      "run": "t2-fixed-runtime-dev-02-r1",
+      "verdict": {
+        "passed": true,
+        "eligible": true,
+        "reasons": [],
+        "matched_calls": 3,
+        "hidden_inputs_verified": false,
+        "plugin_id": "log-1",
+        "package_id": "pkg-1",
+        "plugin_run_id": "run-1"
+      },
+      "trace_sha256": "sha256:e238f39aa4a495ec024842cee39083e1c63300a97ebd8b935a0efc46128be249",
+      "fixture_sha256": "sha256:afc18fec317093ecb92f78cca1f0e0efa0282432777ebbf4c53fdef5e962271b",
+      "finish_reason": "completed"
+    },
+    {
+      "run": "t2-fixed-runtime-smoke-r1",
+      "verdict": {
+        "passed": true,
+        "eligible": true,
+        "reasons": [],
+        "matched_calls": 3,
+        "hidden_inputs_verified": false,
+        "plugin_id": "log-1",
+        "package_id": "pkg-1",
+        "plugin_run_id": "run-1"
+      },
+      "trace_sha256": "sha256:be2422f04eedd858185ad6659ffa53240c59a0a017bb19903730c4aac517b7a8",
+      "fixture_sha256": "sha256:e725ac9994ff1404092a852deae84c41a2d1775e0d64a0989f9b8ebc9c10ad50",
+      "finish_reason": "completed"
+    },
+    {
+      "run": "t2-fixed-runtime-train-02-r1",
+      "verdict": {
+        "passed": true,
+        "eligible": true,
+        "reasons": [],
+        "matched_calls": 3,
+        "hidden_inputs_verified": false,
+        "plugin_id": "log-1",
+        "package_id": "pkg-1",
+        "plugin_run_id": "run-1"
+      },
+      "trace_sha256": "sha256:b2cc8516951a423084f9427d17f208d699d952ade9f94021332b6a7fb2c9948f",
+      "fixture_sha256": "sha256:42666f2beaa1b99d5c0fc04541b9bc9ecfa3931954046ed7777aacf16ccca3f2",
+      "finish_reason": "completed"
+    },
+    {
+      "run": "t2-fixed-runtime-train-03-r1",
+      "verdict": {
+        "passed": true,
+        "eligible": true,
+        "reasons": [],
+        "matched_calls": 3,
+        "hidden_inputs_verified": false,
+        "plugin_id": "log-1",
+        "package_id": "pkg-1",
+        "plugin_run_id": "run-1"
+      },
+      "trace_sha256": "sha256:1f32f21891b41c6c514524f1d8e1cb0ca11014072b962480a402b36644c962fd",
+      "fixture_sha256": "sha256:4268bec56049d1c95c2c392d6f672f4c485c9ea5ff79255050870bafbae628da",
+      "finish_reason": "completed"
+    },
+    {
+      "run": "t2-fixed-runtime-train-04-r1",
+      "verdict": {
+        "passed": true,
+        "eligible": true,
+        "reasons": [],
+        "matched_calls": 3,
+        "hidden_inputs_verified": false,
+        "plugin_id": "log-1",
+        "package_id": "pkg-1",
+        "plugin_run_id": "run-1"
+      },
+      "trace_sha256": "sha256:5772385abb7dab5d6bf5bcf62d153f6434d6b0508159adf2a96cd1a32030328c",
+      "fixture_sha256": "sha256:7768b0327c00307a76c95f1be62274eb8c1b93f79bbae9b57f0337bf7784e2ca",
+      "finish_reason": "completed"
+    }
+  ],
+  "archive": "/workspace/reports/t2-fixed-runtime-cases-r1.tar.gz",
+  "archive_sha256": "f7a3937f27a5ccb743ed10a06f83f9b928d3fae667135f1e26462276129b9966"
+}

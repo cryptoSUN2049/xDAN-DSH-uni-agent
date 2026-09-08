@@ -1,0 +1,38 @@
+{
+  "schema": "dsh.t2-scripted-runtime-smoke.v1",
+  "scope": "scripted-policy integration smoke",
+  "runtime_mode": "installed-sdk-runtime",
+  "runtime_source_commit": null,
+  "trace_sha256": "sha256:be2422f04eedd858185ad6659ffa53240c59a0a017bb19903730c4aac517b7a8",
+  "fixture_sha256": "sha256:e725ac9994ff1404092a852deae84c41a2d1775e0d64a0989f9b8ebc9c10ad50",
+  "sdk_version": "0.1.3a2",
+  "host_code_sha256": "sha256:089b6abbe32fd234c76e53d97dd10676702abfce79d915b8159944cc7e36980d",
+  "executable": null,
+  "executable_entry_sha256": null,
+  "session_id": "session-05b47aa4498b4810bd96b5cb98c1dc9c",
+  "finish_reason": "completed",
+  "verdict": {
+    "passed": true,
+    "eligible": true,
+    "reasons": [],
+    "matched_calls": 3,
+    "hidden_inputs_verified": false,
+    "plugin_id": "log-1",
+    "package_id": "pkg-1",
+    "plugin_run_id": "run-1"
+  },
+  "http_errors": [],
+  "verified_runtime": {
+    "path": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-linux-x64",
+    "versions": {
+      "path": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-linux-x64",
+      "runtime": "0.1.3a2",
+      "sdk": "0.1.3a2"
+    },
+    "sha256": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb"
+  },
+  "integration_commit": "da24cfaecc772d551c44c7386a8772f786d2a55f",
+  "source_pin": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+  "source_pin_basis": "installed executable digest matches existing released runtime lock; runtime source not inferred from mutable branch HEAD",
+  "run_root": "/root/runs/t2-fixed-runtime-smoke-r1"
+}

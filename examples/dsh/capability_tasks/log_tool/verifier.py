@@ -73,7 +73,7 @@ def _paired(events):
 
 
 def _inventory(args, text):
-    _require(args == QUERY, "wrong-inventory-query")
+    _require(args == QUERY or args == {**QUERY, "input": {}}, "wrong-inventory-query")
     value = _json(text)
     _require(all(value.get(k) == v for k, v in QUERY.items()), "wrong-inventory-response")
     tools = value["data"]["tools"]

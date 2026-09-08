@@ -66,3 +66,60 @@ def test_cli_rejects_envelope_tampering_before_scoring(tmp_path, monkeypatch):
     monkeypatch.setenv("DSH_ARTIFACT_SHA256", "sha256:" + "a" * 64)
     with pytest.raises(RuntimeError, match="envelope hash mismatch"):
         verifier_cli.verify()
+
+
+@pytest.mark.parametrize("tamper", [None, "profile", "code-pin", "split"])
+def test_cli_identity_gates_and_real_zero_reward(tmp_path, monkeypatch, tamper):
+    import sys
+    import types
+
+    from examples.dsh.capability_tasks.log_tool import verifier_cli
+    from examples.dsh.verifier import _sha256_bytes
+
+    def score(*args, **kwargs):
+        return dict(passed=False, eligible=True, reasons=["business-output-mismatch"])
+
+    monkeypatch.setitem(
+        sys.modules, "examples.dsh.capability_tasks.log_tool.verifier", types.SimpleNamespace(verify_trace=score)
+    )
+    rows, _ = bundle.build_rows(
+        ROOT, environment_digest="sha256:" + "e" * 64, patches=[str(ROOT / "examples/dsh/evolution.patch.yml")]
+    )
+    meta = rows[0]["extra_info"]["tools_kwargs"]["task"]["metadata"]
+    if tamper == "code-pin":
+        meta["verifier_code_digest"] = "sha256:" + "f" * 64
+    if tamper == "split":
+        meta["split"] = "train" if meta["split"] == "validation" else "validation"
+    dsh = dict(
+        dsh_session_id="test-session",
+        trace_sha256="sha256:" + "c" * 64,
+        profile="other" if tamper == "profile" else "sdk-minimal",
+        patches_sha256=meta["patches_sha256"],
+    )
+    envelope = dict(schema="dsh.uni-agent.task-result.v1", metadata=meta, dsh=dsh, finished=True)
+    path = tmp_path / "envelope.json"
+    raw = json.dumps(envelope).encode()
+    path.write_bytes(raw)
+    env = dict(
+        DSH_TASK_RESULT_PATH=str(path),
+        DSH_ARTIFACT_SHA256=_sha256_bytes(raw),
+        DSH_DSH_SESSION_ID=dsh["dsh_session_id"],
+        DSH_TRACE_SHA256=dsh["trace_sha256"],
+        DSH_TRACE_PATH=str(tmp_path / "trace.jsonl"),
+        DSH_TASK_WORKDIR=str(ROOT),
+        DSH_TASK_ID=meta["task_id"],
+        DSH_TASK_VERSION=meta["task_version"],
+        DSH_TASK_SPLIT=meta["split"],
+        DSH_ENVIRONMENT_DIGEST=meta["environment_digest"],
+        DSH_VERIFIER_ID=meta["verifier_id"],
+        DSH_VERIFIER_VERSION=meta["verifier_version"],
+        DSH_VERIFIER_CODE_DIGEST=meta["verifier_code_digest"],
+    )
+    for name, value in env.items():
+        monkeypatch.setenv(name, value)
+    if tamper:
+        with pytest.raises(RuntimeError, match="mismatch|differs"):
+            verifier_cli.verify()
+    else:
+        result = verifier_cli.verify()
+        assert result["reward"] == 0.0 and result["eligible"] is True and result["finished"] is True

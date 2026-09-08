@@ -165,3 +165,16 @@ def test_missing_public_call_is_eligible_failure_even_with_two_distinct_records(
     assert result["passed"] is False
     assert result["eligible"] is True
     assert "missing-public-fixture-call" in result["reasons"]
+
+
+@pytest.mark.parametrize("query_input,passed", [({}, True), ({"unexpected": 1}, False)])
+def test_optional_empty_inventory_input_is_equivalent(valid, query_input, passed):
+    from examples.dsh.capability_tasks.log_tool.verifier import evaluate_events
+
+    events, fixture = copy.deepcopy(valid)
+    for event in events:
+        if event["type"] == "tool/call" and event["data"]["name"] == "cordis_inspect_query":
+            args = json.loads(event["data"]["arguments"])
+            args["input"] = query_input
+            event["data"]["arguments"] = json.dumps(args)
+    assert evaluate_events(events, fixture=fixture)["passed"] is passed

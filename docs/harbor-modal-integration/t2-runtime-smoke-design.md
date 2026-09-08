@@ -25,3 +25,9 @@ PYTHONPATH=. python -m deployment.checks.dsh_log_tool_smoke \
 ```
 
 本机源码路径另加 `--exe /private/tmp/dsh-v2-built-cli-wrapper`，且PYTHONPATH指定SDK源码；这仅是本地调试入口，固定交付应使用private Release wheel/image，不依赖临时wrapper。
+
+## 显式业务 prompt（示范候选入口）
+
+新增可选 `--prompt-file PATH`：严格UTF-8解码原始字节，不strip、不做换行转换，拒绝全空白。读取一次后，将相同字符串传入首次 harness.run，并在新report记录 `initial_prompt`、`initial_prompt_sha256`（原始UTF-8字节SHA256）、`prompt_source`（file/default-diagnostic）。不提供参数时保留原诊断文本。模型请求由真实SDK自然生成和采集，禁止后写或修改历史requests。
+
+这为真实工具示范→后续独立SFT候选审核提供明确任务条件，scope仍是scripted-policy integration smoke，policy_origin=scripted，不属于学生on-policy轨迹。文件读错/编码错/空白在启动SDK、创建输出之前失败。新增测试覆盖UTF-8与CRLF原样保留、默认值、空白拒绝、SDK入口/报告/请求采集使用同一prompt；不调用GPU或模型。

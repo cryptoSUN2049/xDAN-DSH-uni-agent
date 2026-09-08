@@ -115,7 +115,24 @@ def sdk_version():
         return None
 
 
-def run(fixture_path: Path, output: Path, exe: str | None = None):
+def load_prompt(path: Path | None):
+    raw = (
+        path.read_bytes()
+        if path is not None
+        else b"Execute the scripted-policy integration smoke. No model capability claim."
+    )
+    text = raw.decode("utf-8")
+    if not text.strip():
+        raise ValueError("Prompt must not be blank")
+    return {
+        "initial_prompt": text,
+        "initial_prompt_sha256": "sha256:" + hashlib.sha256(raw).hexdigest(),
+        "prompt_source": "file" if path is not None else "default-diagnostic",
+    }
+
+
+def run(fixture_path: Path, output: Path, exe: str | None = None, *, prompt_file: Path | None = None):
+    prompt = load_prompt(prompt_file)
     from deepseek_harness import DeepSeekHarness, DeepSeekHarnessConfig
 
     from examples.dsh.capability_tasks.log_tool.verifier import verify_trace
@@ -172,7 +189,7 @@ def run(fixture_path: Path, output: Path, exe: str | None = None):
             env={"DSH_PERMISSION_MODE": "danger-full-access", "DSH_TELEMETRY_DISABLED": "1"},
         )
         with DeepSeekHarness(config) as harness:
-            result = harness.run("Execute the scripted-policy integration smoke. No model capability claim.")
+            result = harness.run(prompt["initial_prompt"])
         raw = _canonical_event_bytes(result.events)
         trace = output / "events.jsonl"
         trace.write_bytes(raw)
@@ -181,6 +198,8 @@ def run(fixture_path: Path, output: Path, exe: str | None = None):
         report = {
             "schema": "dsh.t2-scripted-runtime-smoke.v1",
             "scope": "scripted-policy integration smoke",
+            "policy_origin": "scripted",
+            **prompt,
             "runtime_mode": "source-built-executable" if exe else "installed-sdk-runtime",
             "runtime_source_commit": None,
             "trace_sha256": digest,
@@ -210,8 +229,9 @@ def main():
     parser.add_argument("--fixture", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--exe")
+    parser.add_argument("--prompt-file", type=Path, help="UTF-8 business prompt passed unchanged to the SDK")
     args = parser.parse_args()
-    print(json.dumps(run(args.fixture, args.output, args.exe), indent=2))
+    print(json.dumps(run(args.fixture, args.output, args.exe, prompt_file=args.prompt_file), indent=2))
 
 
 if __name__ == "__main__":
