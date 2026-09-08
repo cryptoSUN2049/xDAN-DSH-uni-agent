@@ -266,8 +266,8 @@
   },
   "artifact": {
     "path": "docs/dsh-adapter/DSH专家小模型-记忆与Context专项整改方案.html",
-    "sha256": "d09c8a25f8b91133e5035f5aa30b864cf61c611184725f2bbb5bba2f2fc6e8ab",
-    "bytes": 89060
+    "sha256": "80b7c1be990fd567744e37a30f5dea5946fd24d3bc7721780a9047c54c8fdef9",
+    "bytes": 89349
   },
   "external_research": {
     "read_date": "2026-09-08",
@@ -318,8 +318,8 @@
   },
   "validation": {
     "validated_at": "2026-09-08T04:24:33.472935+00:00",
-    "html_links": 154,
-    "local_links_checked": 139,
+    "html_links": 155,
+    "local_links_checked": 140,
     "broken_local_links": [],
     "source_files_hashed": 44,
     "source_hash_mismatches": [],
@@ -336,6 +336,7 @@
       "Meshy/JustRLII and current verl boundaries passed"
     ],
     "product_tests": "not run for document-only task; no GPU/model/remote resource execution",
-    "artifact_sha256": "d09c8a25f8b91133e5035f5aa30b864cf61c611184725f2bbb5bba2f2fc6e8ab"
-  }
+    "artifact_sha256": "80b7c1be990fd567744e37a30f5dea5946fd24d3bc7721780a9047c54c8fdef9"
+  },
+  "navigation_update": "Added link to data/training deep-dive at d606851; previous product/source audit remains historical."
 }

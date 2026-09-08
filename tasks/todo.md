@@ -108,3 +108,17 @@ Review：官方模型卡分数按表格列核对；最新代码9b7dbdb明确旧D
 - 真实pilot仅5attempt/10Session/58generic rows，生产训练eligible为0；不能等同记忆/context已训好。
 - 独立事实复核通过。154链接中139本地链接/锚点有效；桌面1440和手机390无页面横向溢出，筛选/重置/目录与本页console通过；24页A4打印无文本横向越界并抽查截图。
 - 本轮只写文档，未运行模型、训练、部署或修改产品；历史测试/GPU成绩未在本轮重跑。提交不推送。
+
+## 2026-09-08：数据层与完整训练路线深化
+
+规格：补充离线HTML专题，解释GKD/OPD关系、统一数据合同、数据生产与规模、SFT→学生状态蒸馏→RL→长循环/跨Session RL的进入门槛；更新原方案入口。只修改文档。
+
+- [x] 复核最新源码身份与SFT/teacher/多chain支持，区分当前工程smoke模型与目标Qwen3.5。
+- [x] 对照原始GKD/OPD资料，定义教师接口、loss与token对齐边界。
+- [x] 形成数据层、课程/规模、训练阶段与长循环信用分配设计。
+- [x] 独立复核，检查HTML链接、桌面/手机、打印；更新handoff并提交。
+
+
+Review：新专题DSH数据层与完整训练路线.html包含11节、五类核心数据＋训练消费记录、D0—D7数据产品、SFT/纠错/GKD/PG-OPD/RL/long-loop分工与独立消融。以d606851/verl fefb080审计；20源码引用；55本地链接通过、手机390/桌面1440无页面溢出、15页A4无文字横向越界。独立复核后补齐终态无next-request、SFT与RL不同mask、credit与节点选择分开消融。未训练、未部署。
+
+追加仓库同步核查：2026-09-08 12:42 UTC+8，官方UA89733ec为harbor d606851祖先，origin harbor与本地一致；默认main6e00d83落后官方5提交，root也尚未含这5提交。配对verl fefb080与官方UA gitlink一致，独立verl main又领先54提交。本GitHub仓库private:false。只读查询未fetch/merge/push/SSH；详细远端身份保存到dsh-data-training-evidence.json。

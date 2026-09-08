@@ -1,6 +1,6 @@
 # dsh-adapter 交接
 
-> 2026-09-08 最新专项交付：先读 [DSH专家小模型、记忆与Context整改方案](../../docs/dsh-adapter/DSH专家小模型-记忆与Context专项整改方案.html)。最新产品基线为 `harbor-modal-integration / 9b7dbdb` + verl `fefb080`；新增MiniCPM5-2B发布对标。下方早期工程状态保留为历史，不覆盖最新worktree与本轮证据。
+> 2026-09-08 最新专项交付：先读 [DSH专家小模型、记忆与Context整改方案](../../docs/dsh-adapter/DSH专家小模型-记忆与Context专项整改方案.html)。最新产品基线为 `harbor-modal-integration / d606851` + verl `fefb080`；新增MiniCPM5-2B发布对标。下方早期工程状态保留为历史，不覆盖最新worktree与本轮证据。
 
 更新时间：2026-09-07。新 session 首先读取本文件，再读本地状态快照及下一里程碑设计。
 
@@ -129,3 +129,23 @@
 - 本轮仅根分支dsh-adapter文档提交；没有push、合并、资源创建、模型调用或部署。旧CI/GPU结果不代表本轮新组合验证。
 - 冷启动顺序：新HTML → evidence JSON → 本handoff → 目标产品worktree的handoff/todo → 实际Git状态；再按实施审批与隔离约定推进。
 - 本轮验证：44源文件hash一致；139本地链接有效；手机/桌面/筛选/打印通过；CP、DSH和MiniCPM/算法独立复核通过。
+
+
+## 2026-09-08：数据层/训练路线与实时版本同步核查
+
+- 最新交付：[数据层与完整训练路线](../../docs/dsh-adapter/DSH数据层与完整训练路线.html)；证据 `docs/dsh-adapter/dsh-data-training-evidence.json`。原专项HTML新增入口，对应旧evidence更新文档hash与链接数；todo/handoff同步。
+- 目标/约束：数据任务、实际环境、Gateway token、teacher信号与训练消费联结；用途资格分别定义。GKD与OPD重叠，long-loop是任务跨度；不复制trainer或将text-only纠错冒充分布蒸馏。
+- 新发现：verl有SFT与Qwen3.5 OPD recipe，UA teacher_client仍拒绝；默认多轮SFT学习所有assistant，错误动作mask须新接。单卡native smoke是Qwen3-4B；不能视为Qwen3.5验收。
+- 版本状态：12:42查询官方UA89733ec已包含于本地/远端harbor d606851；默认main6e00d83落后5个官方提交，root维护分支也没有纳入这些提交。配对verl fefb080正确，独立上游c8687a0领先54。GitHub metadata为public（private:false）。仅查询，没有同步/合并/推送。
+- 验证：20源码hash；新HTML55本地链接、旧HTML140本地链接；桌面/手机/打印通过；独立review的next-request可空、SFT/RL mask区分、credit单变量对照已落实。未新跑产品/GPU测试。
+- 下一步：[ ] 数据schema＋可复算release；[ ] Qwen3.5 SFT update/reload；[ ] 学生错态纠正与GRPO同起点对照；[ ] A/B全链与teacher bridge；[ ] 验收后收敛默认发布分支（不是盲追verl main）。
+- 冷启动：先读新专题和evidence，再读目标harbor worktree最新handoff和Git状态。当前root只提交文档；不覆盖他人进行中的工程作业。
+
+| 本轮文件 | 行数 | 说明 |
+| --- | ---: | --- |
+| `docs/dsh-adapter/DSH数据层与完整训练路线.html` | 82 | 新数据与训练专题 |
+| `docs/dsh-adapter/dsh-data-training-evidence.json` | 181 | 源码、实时远端身份与验证 |
+| `docs/dsh-adapter/DSH专家小模型-记忆与Context专项整改方案.html` | 126 | 新增专题入口 |
+| `docs/dsh-adapter/dsh-expert-memory-context-remediation-evidence.json` | 342 | 文档hash与链接核验同步 |
+| `tasks/todo.md` | 124 | 任务与Review |
+| `tasks/dsh-adapter/handoff.md` | 151 | 本次交接 |

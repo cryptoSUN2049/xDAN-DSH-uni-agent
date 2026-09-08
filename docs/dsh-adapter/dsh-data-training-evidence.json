@@ -1,0 +1,181 @@
+{
+  "captured_at": "2026-09-08T04:44:53.120828+00:00",
+  "scope": "read-only code audit and proposed data/training design",
+  "repositories": {
+    "uni_agent": {
+      "root": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration",
+      "head": "d6068515280333d0ff9df11c50b85e6534b946be",
+      "status": []
+    },
+    "dsh": {
+      "root": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft",
+      "head": "71ca762018beebb58635bb4e896ebfbb4c6c2556",
+      "status": []
+    },
+    "contextpilot": {
+      "root": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft",
+      "head": "0b048404c8655aec67666800ba25484d72994a80",
+      "status": [
+        " M README.md",
+        " M docs/feat-contextpilot-capability-sft/architecture.md",
+        " M docs/feat-contextpilot-capability-sft/data-production-v1/training-data-guide.html",
+        " M docs/feat-contextpilot-capability-sft/data-production-v1/training-data-guide.validation.json",
+        " M docs/feat-contextpilot-capability-sft/design.html",
+        " M tasks/feat-contextpilot-capability-sft/handoff.md",
+        " M tasks/feat-contextpilot-capability-sft/todo.md",
+        " M tasks/lessons.md",
+        "?? docs/.DS_Store"
+      ]
+    }
+  },
+  "sources": {
+    "U1": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/framework/entry.py",
+      "sha256": "d5f0fcf3cfb36224e14bb2bdb1a27cdb20d64cfb413288913da62627d3630401",
+      "lines": 163
+    },
+    "U2": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/framework/framework.py",
+      "sha256": "1dbcc9eacf4cece791d27258c7a9d7201ca4856cb2c05cc03c421410c89acf17",
+      "lines": 1528
+    },
+    "U3": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/verl/verl/trainer/sft_trainer.py",
+      "sha256": "8abbbfa316a37177d48675f89a7014a9eacf51b03a3952ee850c7255a9a0ecce",
+      "lines": 488
+    },
+    "U4": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/verl/verl/utils/dataset/multiturn_sft_dataset.py",
+      "sha256": "fa9a39662fd016dcf6a2a9b6bf4b3f84c7f6e2fac70db2cc09fafca71241df01",
+      "lines": 456
+    },
+    "U5": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/verl/verl/experimental/teacher_loop/teacher_manager.py",
+      "sha256": "0a820c59cbeafacec61fc2f0da4e2810a39cc5f25a9f6d07aa9bad9618efde26",
+      "lines": 141
+    },
+    "U6": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/verl/verl/workers/config/distillation.py",
+      "sha256": "c91c4f6bf68f57431d5f71828afbe13ebfe4f5dfa0bd27ee4b61750da183b719",
+      "lines": 320
+    },
+    "U7": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/verl/verl/trainer/config/distillation/distillation.yaml",
+      "sha256": "706b380d3cc9a0baa961a935d073ec3c93d0176158d75dae700ac7e3af4cdf1b",
+      "lines": 113
+    },
+    "U8": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/verl/verl/trainer/distillation/losses.py",
+      "sha256": "8fc5835f410228c110f492a10dddfe6ce3274efd22f439dfaf8c88c5d5a6d843",
+      "lines": 405
+    },
+    "U9": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/examples/mem_agent/train_native_smoke.sh",
+      "sha256": "f0c55a91b58e2152fa4764cdbd8dea15af8b37c288269d235b6134174a0c62ed",
+      "lines": 70
+    },
+    "U10": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/tasks/harbor-modal-integration/handoff.md",
+      "sha256": "e5d2ad6318bd142baf8e5d712bb220fe755b9b9469b91084e32a882ecd271edb",
+      "lines": 206
+    },
+    "U11": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/framework/trajectory_identity.py",
+      "sha256": "ea23a7a90191950c39bc3f4a02f9af764ca9bde13ba732af92202d6c0602947d",
+      "lines": 6
+    },
+    "U12": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/tasks/dsh/trajectory_audit.py",
+      "sha256": "d3e231d5ad38e841432ed72397295337d9570a6b4ef4623ada86d3f59cbb3e77",
+      "lines": 280
+    },
+    "U13": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/verl/examples/on_policy_distillation_trainer/run_qwen3_5_4b_fsdp.sh",
+      "sha256": "4a246d1986166e2ddb60292827d9407009b879f07e74a02750bea5aef4006ca3",
+      "lines": 147
+    },
+    "D1": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft/scripts/trace-training/converter.ts",
+      "sha256": "e9b6859b76309a1ff41d77aaa8c3c45db8780c7c660e2b7a35becdf01d113c33",
+      "lines": 764
+    },
+    "D2": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft/packages/experimental/contextpilot-training-runner/src/index.ts",
+      "sha256": "acd9ff32d73cf200f87172d89969cc5f8dca0e25dc48b56a9a4a9519f06b185b",
+      "lines": 233
+    },
+    "D3": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft/packages/experimental/contextpilot-training-fs/src/index.ts",
+      "sha256": "52970e07d0f1022df6075d523b66d0f13c8ee14e00b194eee5003f8b3c9475b4",
+      "lines": 298
+    },
+    "C1": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/evaluation/xdandsh_contextpilot_campaign/campaign.py",
+      "sha256": "80a069552b5a9228574925b225b6b6cd56da26834b6b004d7131f26620c8d2ff",
+      "lines": 445
+    },
+    "C2": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/evaluation/xdandsh_contextpilot_campaign/artifacts.py",
+      "sha256": "969f7bada67e49b11d60e3add997593548bc99e3bad18f4ea5eddcc784f6c55a",
+      "lines": 172
+    },
+    "C3": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/evaluation/xdandsh_contextpilot_evaluation/verifier.py",
+      "sha256": "4871f427ce73745099dbed0bd452801143d7508f26dda28306f2ab3088d19878",
+      "lines": 181
+    },
+    "C4": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/train/verl/trainer/contextpilot/adv.py",
+      "sha256": "0c60a2342f5fcf659f94eaa68dd6c14a4c1c895e5144e33a8240c07964e582f3",
+      "lines": 72
+    }
+  },
+  "artifact": {
+    "path": "docs/dsh-adapter/DSH数据层与完整训练路线.html",
+    "sha256": "0c4ec4f4f1e642bc3520e7b997a0cbc4409f8d9aff99615107909586c506ebd5",
+    "bytes": 51083
+  },
+  "upstream_sync_audit": {
+    "checked_at": "2026-09-08T12:42:00+08:00",
+    "method": "git ls-remote; git merge-base ancestry; GitHub API metadata and compare",
+    "upstream_uni_agent": "89733ec81a69c3cc93ac90479de7ea7f01e51c1f",
+    "harbor_local_and_origin": "d6068515280333d0ff9df11c50b85e6534b946be",
+    "harbor_contains_upstream": true,
+    "origin_main": "6e00d8312d3d78996b2cb2de4061fea0d7c18680",
+    "origin_main_behind_upstream": 5,
+    "root_at_audit": "03895cc674b106444efbe4991262e914afbe26b6",
+    "origin_dsh_adapter": "a197eadae3b3f4150f12044faa1c0b1c4e62c9fe",
+    "root_missing_upstream_commits": 5,
+    "paired_verl": "fefb080262e1c015a0ea05f958822a6a512dc795",
+    "paired_verl_matches_official_uni_agent_gitlink": true,
+    "verl_upstream_main": "c8687a02e5b38172d6645cf120b71220f28cce88",
+    "verl_upstream_ahead_of_pin": 54,
+    "github_repository": "cryptoSUN2049/xDAN-DSH-uni-agent",
+    "github_private": false,
+    "mutations": "none; no fetch/merge/push/SSH"
+  },
+  "validation": {
+    "html_link_checks": [
+      {
+        "path": "DSH数据层与完整训练路线.html",
+        "links": 62,
+        "local_links_checked": 55,
+        "broken": []
+      },
+      {
+        "path": "DSH专家小模型-记忆与Context专项整改方案.html",
+        "links": 155,
+        "local_links_checked": 140,
+        "broken": []
+      }
+    ],
+    "desktop": "1440x1000 no page overflow",
+    "mobile": "390x844 no page overflow; screenshot inspected",
+    "console": "local reload after clear: no errors",
+    "print_pages": 15,
+    "print_horizontal_text_overflow_pages": [],
+    "review": "DSH data contracts and GKD/OPD independent reviews; nullable next-request, SFT vs RL masks, credit/selection ablation corrections applied",
+    "product_execution": "none",
+    "context7": "TRL library resolved; docs failed fetch even outside sandbox; official docs and pinned source verified via browse"
+  }
+}
