@@ -87,3 +87,19 @@ helper 返回一个内部 typed StageOutcome：stage identity、原始 TaskResul
 5. 独立reload新进程，留出source_version/事实/问题/chain身份；报告事实保真、写入→新会话检索、干扰/陈旧事实拒绝、任务成功和token/时延。不以压缩更多token为成功指标。训练集两个诊断族不能当heldout能力基准。
 
 本路线复用原生多context与GRPO结构，同时保留两个独立DSH会话的可信边界。无需Modal/Docker、ContextPilot安装、SFT、teacher服务或全异步性能改造作为先决条件。
+
+## 已批准 CPU 合同子任务（不接训练入口）
+
+新增 `examples/dsh/capabilities/memory_credit.py`：可信控制端 `StageOutcome`、`FrozenBinding`、`ChainOutcome` 及 `validate_credit_group(chains, expected_version, expected_group_uid, expected_run_id, expected_partition)`。输入仅允许已通过原单session审计/冻结验证的控制端对象；本模块不从模型字典解析“可信”回执、不替代磁盘hash/回执签发与消费账本。
+
+每组固定四个 sibling；验证A/B独立身份、source/checkpoint/同组实际版本、A成功与B合法终态、parent和冻结hash、不同链不共享会话/冻结身份、Trajectory token-mask-logprob对齐。输出独立 CreditAssignment 记录末B reward、TQ keys与原Trajectory对象引用；**不改变原对象或A回执**。版本由每段Gateway实际min/max字段提供，缺失拒绝。对象返回后不得跨不可信边界再修改；接入阶段仍须在TQ写入前复核。
+
+新增 `tests/uni_agent/examples/test_memory_credit.py` 覆盖合同正负例；`test_memory_credit_grpo.py` 使用固定本地VERL源码中的真实多trajectory函数（不仿写算法）验证四链不同段数、末B奖励广播、工具mask0、顺序重排。源码锁与被测函数哈希记录在测试失败信息中。先运行红测试再实现；此交付不包含执行器、TQ写入、训练、GPU或旧eval门修改。
+
+### CPU 子任务交付结果
+
+合同模块已实现，训练Framework接线仍未实现。新增合同测试先因模块缺失失败；实现后28项合同测试与4项固定VERL数学测试通过，连同原chain/denial回归共89项通过。最后全仓Ruff check/format-check通过。
+
+数学测试的准确范围：本地CPU环境不能直接导入VERL v1包（缺transfer_queue），因此从锁定git tree原样编译两个函数AST，调用真实DataProto/torch/core_algos，另核core GRPO函数AST与锁定源码一致；没有模拟或重写GRPO算法。测试通过record_property记录pin/函数AST哈希。它验证数学函数，不验证完整trainer依赖导入或TQ运行。测试用非末段99分与末段[0,1,0,1]验证末段选择，同时覆盖不同段数、逆序行、标准化开关和工具context mask0。
+
+CreditAssignment只是新的控制端训练注解：保留原Trajectory对象/原stage奖励，输出R_B、keys、FrozenBinding及run/partition/checkpoint；不自动修改训练奖励、不创建chain签发回执。调用方必须先验证真实receipt/文件，再调用此合同，写入TQ前防止对象被改动并复核；取消、重复消费账本、完整stage执行与读写隔离仍属于下一接线阶段。没有把本次CPU测试宣称为训练闭环通过。
