@@ -215,3 +215,9 @@ _hydra允许经过白名单校验的相对路径键；仍拒绝分隔符/插值�
 - RSI候选持久化a0aa392已推送，27新增测试通过；真实DSH overlay/canary实现中。持久选择不等于runtime已采用或学生已学会RSI。
 
 - 固定Linux RSI canary c5acd30已通过，18真实工具请求4.66秒；独立checkout/worktree不影响GPU源码。晋升比较标synthetic，不是学生收益；报告native-rsi-policy-linux-c5acd30-r1.json。
+
+### 最新上下文v2主线
+
+- daa7073已推送，12train/4dev结构课程、独立v2奖励及现有RL启动接线，root30项测试通过；v1评估不改。
+- GPU context-v2-exploration-r1在参数解析阶段exit2（不支持--temperature），未加载模型；修复后新run context-v2-exploration-r2，复用r1-data固定输入，16采样来自4个公开dev结构，每题4次，非trainer GRPO组。最终PID见远端supervisor.pid。
+- 当前使用committed sampler配置，CLI默认温度0.8；runroot/root/runs/context-v2-exploration-r2，最长3600秒，每任务900秒。禁止更新运行中checkout；源码daa7073。

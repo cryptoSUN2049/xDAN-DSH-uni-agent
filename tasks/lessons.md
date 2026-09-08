@@ -145,3 +145,5 @@
 - 用户强调充分利用GPU及数据量：CPU准备与有价值的GPU任务并行；四例诊断不是正式能力训练集。按有效任务覆盖、奖励差异和更新证据判断进度，不能靠重复采样或显存占用宣称有效训练。
 
 - max-tokens不是必然生成上限：先查每轮input/output及工具观测。grounding-r1仅61输出token，Service大目录耗尽轨迹容量；未定位前不能直接建议只增加生成预算。
+
+- parallel_infer_verl没有--temperature CLI；采样温度从任务model配置或固定默认0.8解析。启动前用真实_parse_args/init_config校验全部argv，不从其他入口猜参数。context-v2-r1因此CPU参数解析exit2，保留该失败并用新r2身份重启。
