@@ -170,3 +170,76 @@ examples/dsh/rsi_closed下的学生实验协调入口；runtime inspection dev�
   渲染期间 active 变更、固定 policy 错误、overlay/content/父身份绑定及原 production 回归。
 
 这一步无比较回执、无 synthetic 晋升，也不证明学生提议或实际 DSH 执行已完成。
+
+## 8. 已批准的两项 RSI worker 开发任务 v1
+
+新增 `examples/dsh/rsi_closed/worker_tasks.py`、`worker_verifier.py` 和
+`tests/uni_agent/tasks/test_dsh_rsi_workers.py`，不改变 memory/context 的任何评分规则。
+`prepare(output)` 生成两个独立 fixture、只读 source、标准 messages/Task metadata 的 tasks.jsonl
+和 source/hash manifest；任务仅作 development，不构造训练 split、生产回执或完整 controller。
+`score(contract, root, events, response, finished)` 纯 CPU；`verify()` 复用现 DSH envelope identity、
+trace SHA、完整 call/result 配对；由现 DSH Task 生成 fresh receipt 并由 strict runner 审计。
+
+合同固定 `schema=dsh.rsi-worker.v1`、两个 case_id（inspect-discovery/file-constraint）、kind、
+`runtime_sha256=d1a467…e80cb`、sources（相对 path 和 SHA）、target。metadata 使用独立
+`verifier_id=dsh-rsi-worker`、task/verifier version=1、task_id=dsh/rsi-worker/<case>、split=validation、dataset_role=development。
+现 DSH Task 只接受 train/validation/test/holdout，开发比较复用 validation，不新增非法 split。
+版本与 bundle 包括实际 verifier 依赖源码；环境 digest 必须等于固定 runtime SHA。
+
+真实输出核验：2026-09-09 在独立 c5acd30 Linux checkout，以旧已验收 venv 的固定 SDK/runtime
+运行一次无模型 CPU `ctx.tools.execute(cordis_inspect_list,{})`；产物
+`/root/runs/dsh-rsi-inspect-shape-r1/result.json`，SHA
+`8b61476c201b44241276f59c74f1c4161fa52402e8dcd8ec3a60923ad2035448`。
+成功结果 isError=false，model-facing content 为 text JSON `{providers:[...]}`，每项有
+platform/id/description/methods，method 有 name/description/inputSchema/outputSchema；
+实际包含 host Tool → listTools。该探针只是 schema 证据，不是学生 episode/比较回执。
+
+精确任务与奖励合同：
+
+- inspect-discovery：只允许 `cordis_inspect_list` 的空对象参数。回答严格 JSON
+  `{status,platform,provider,method}`；成功 answer 必须由实际成功 result 证明，
+  route 必须存在于该 result 且为 host Tool/listTools。不得执行 query、动态定义或写文件。
+  父策略正常拒绝时 `status=unavailable`、route 三字段 null；业务 reward=0、
+  finished/eligible 可以为 true。没有证据可返回 unavailable；不能自报已执行。内部 call ID 由 verifier 从 trace 关联，不要求模型输出隐藏元数据。
+- file-constraint：只允许完整 view 一个白名单 `sources/constraints.txt`；报告 max_attempts，
+  严格 JSON `{status,value,citation}`，citation 严格 `{source,line,quote}`。
+  值由固定 source 当前行推导；引用必须绑定实际成功 view 完整内容及精确行文。错误值但真实引用为业务 0。
+  unavailable/null/null 是合法未解决 0；写入、未知路径、非白名单动作及伪造引用硬拒 eligible=false。
+- 两者 binary reward，仅 finished completed、合法动作、真实证据和正确答案同时成立才为 1。
+  malformed response 是业务 0；声称的 route/引用不存在或缺少成功结果是硬拒。
+  malformed/missing trace pair 或 fixture/runtime/hash 身份不一致为 verifier integrity error，不能合成通过回执。
+
+测试先 RED：两正例；合法 deny 与 unavailable；错误值；伪造 route/source/quote；无真实成功结果；
+写/越权/未知工具；runtime/fixture 篡改；缺 pair；fresh envelope 身份错配；生成器新目录与两个唯一任务。
+后续 2 case × H0/H1 还需真实学生运行及可信比较协调器；这里不声称已完成配对或 RSI RL。
+
+CPU 使用入口：
+
+```bash
+PYTHONPATH=.:verl python -m examples.dsh.rsi_closed.worker_tasks --output /tmp/rsi-worker-dev-v1-new
+```
+
+`tasks.jsonl` 每行可交给现 DSH Task 的 messages/metadata；后续运行配置必须使用
+`verifier_command=[<已固定runner_python>, "-m", "examples.dsh.rsi_closed.worker_verifier"]`、
+上面的 verifier/runtime pins，以及既有唯一 DshAgent。H0 为 file-only，H1 为 file+inspect_list；
+两侧均将 file-constraint 的固定 source 放入 operator `read_files`。inspection case 自身不允许读取该文件。
+实际 H0/H1 的 canonical overlay bytes、候选 hash、父 active、模型版本与四份 episode 身份仍由后续
+run manifest/比较器绑定，不由这个数据生成器声称已经完成。
+
+本增量验证：初始 RED 为新模块缺失；另一次实际 `_task_identity` RED 揭示非法 development split，
+修复为 validation 后，27 项 worker 测试以及 Registry/policy/context 回归共 94 项通过；Ruff check/format通过。
+测试中的 trace/envelope 是隔离的单元 fixture，验证现 Task receipt 接口兼容，不能作为生产学生回执。
+尚未创建 run-specific task.yaml/parquet 或启动任何学生 worker；这与“CPU 合同就绪”分开记录。
+
+### worker v1 冻结前 API 边界修正：view_range
+
+对照已验证的 context v2 API：文件 view 允许附带 view_range=null 或两个真正整数 [start,end]，
+start≥1，end=-1 或 end≥start；上界以固定 runtime 的文本 split('\n') 计数，包含尾部空行。
+未知参数、bool、非法/越界范围依旧硬拒。合法 partial view 本身不判越权；真实返回且处于请求范围内的
+第 2 行可证明引用，但只有请求覆盖全部非空尾内容且实际返回完整源的调用才有 full-read credit。
+因此真实 partial 引用给业务 0，而非伪造证据；未读到的引用仍硬拒。字段 matched_call_ids 与
+successful_call_ids 分别记录引用证据和完整读取，不能混淆。
+
+限定修改 worker_verifier、对应测试及本文；现固定 policy.mjs 仍只接收 command/path，未在此擅改
+policy/hash。后续若真实运行也允许 view_range，必须另行版本化 policy 并重验 canary；旧 policy 合法拒绝
+时仍记业务未解决，不可宣称现 runtime overlay 已支持该参数。新 bundle 随 verifier 源码自然变化。
