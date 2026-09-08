@@ -1,0 +1,69 @@
+{
+  "run_root": "/root/runs/t2-student-baseline-r1",
+  "exit_code": 0,
+  "scope": "student VAL_ONLY public dev baseline; no optimizer",
+  "integration_commit": "da24cfaecc772d551c44c7386a8772f786d2a55f",
+  "receipts": [
+    {
+      "accuracy": 0.0,
+      "artifact_sha256": "sha256:efb9e57625dbc5fb7dca49ac71990a708c5c7e2d4727b0a2bdb5a72b0cf3f0fa",
+      "dsh_session_id": "dsh-session-sample-0-rollout-0-fd9f05194a5b4021b2f0bde53fddbfc2",
+      "eligible": true,
+      "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+      "evidence": [
+        "fixture_digest:sha256:ae3ceff1246ee2b7952973534c6bb5fe455869d7d8c0ec6a19c3130dc1ac7752",
+        "trace_sha256:sha256:f3ea22f116eb98f7a0b5726f93d7f3ee0d544d2e5b115ecd4850ac1459d70847",
+        "result:failed"
+      ],
+      "finished": true,
+      "fresh": true,
+      "issued_at": "2026-09-08T10:46:18.911Z",
+      "issuer": {
+        "id": "uni-agent-dsh",
+        "kind": "trusted-verifier"
+      },
+      "receipt_id": "sha256:cd4fd91e9490523e07ea4d93a49ad97408023888f0f78f71145894828990a58c",
+      "reward": 0.0,
+      "schema": "dsh.verifier-receipt.v1",
+      "task_id": "log-tool-dev-01",
+      "task_version": "1",
+      "trace_sha256": "sha256:f3ea22f116eb98f7a0b5726f93d7f3ee0d544d2e5b115ecd4850ac1459d70847",
+      "verifier": {
+        "code_digest": "sha256:181ebaf05985c0975bbb341970e7be5a166b4a43cd4a2ebab1bccef843dad95a",
+        "id": "dsh-log-tool-verifier",
+        "version": "1"
+      }
+    }
+  ],
+  "trace_results": [
+    {
+      "dsh_session_id": "dsh-session-sample-0-rollout-0-fd9f05194a5b4021b2f0bde53fddbfc2",
+      "event_count": 21,
+      "finish_reason": "completed",
+      "patches_sha256": "sha256:47d4e6cfc10c2735a7ba00e17052495e39cda9f5a2737c7ee2e55f43b595b01e",
+      "profile": "sdk-minimal",
+      "schema": "dsh.uni-agent.dsh-run.v1",
+      "trace_path": "/root/runs/t2-student-baseline-r1/artifacts/traces/092b4eed3ad0b0e5ab2c7ef3/session.jsonl",
+      "trace_persisted": true,
+      "trace_sha256": "sha256:f3ea22f116eb98f7a0b5726f93d7f3ee0d544d2e5b115ecd4850ac1459d70847"
+    }
+  ],
+  "observed_actions": [
+    "cordis_inspect_list",
+    "cordis_inspect_self"
+  ],
+  "limitations": [
+    "One public dev case; not hidden generalization evidence",
+    "No parameter update in VAL_ONLY",
+    "Final unexecuted cordis_define text does not count as tool execution"
+  ],
+  "failure_analysis": {
+    "observed": "Two real inventory calls; final cordis_define remained text and was not executed",
+    "json_validation": "Invalid \\escape: line 10 column 765 (char 1027)",
+    "host_code_review": [
+      "Not a harness.registerTool Plugin implementation",
+      "filter results discarded instead of assigned"
+    ],
+    "next": "Verified business demonstrations -> native VERL LoRA SFT -> independent student eval"
+  }
+}

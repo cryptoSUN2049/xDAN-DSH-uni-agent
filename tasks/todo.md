@@ -324,8 +324,9 @@ Review：本批只新增部署目录与设计；不将其标记为安装或部�
 - [x] T1 无答案提示基线执行并定位失败：错误查询导致容量耗尽，未通过完整评估。
 - [x] T2 独立日志 oracle 与 4 train / 2 public dev fixture；主代理复核 10 项测试通过。
 - [x] 固定 T2 真实 DSH API 合同并通过GPU固定wheel脚本策略 runtime smoke（不冒充模型轨迹）。
-- [ ] 严格生命周期 verifier 与负例测试；数据/配置/评分接入既有 DSH Task。
-- [ ] T2 学生 baseline，按成功探索情况选择补 SFT 示范或进入有界 RL。
+- [x] 严格生命周期 verifier 与负例测试；数据/配置/评分接入既有 DSH Task。
+- [x] T2 学生 baseline 完整exit0/fresh reward0，选择真实业务示范SFT暖启动。
+- [ ] 逐决策SFT转换、真实tokenizer/mask、原生VERL单步LoRA与独立导出/加载。
 - [ ] 非零有限梯度、LoRA 数值变化、独立 reload、同预算留出评估。
 - [ ] Harbor + Docker 对应任务增量与可复建复验。
 
