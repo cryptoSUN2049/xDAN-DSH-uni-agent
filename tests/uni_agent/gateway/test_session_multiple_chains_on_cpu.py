@@ -1158,8 +1158,9 @@ async def test_multiple_chains_length_exhaustion_orders_before_later_fresh_chain
     assert len(backend.calls) == 2
     assert backend.steps == []
     assert [_decode_response_ids(trajectory.response_ids) for trajectory in trajectories] == ["FULL", "NEW"]
-    assert trajectories[0].extra_fields == {"materialization_reason": "max_trajectory_length"}
-    assert trajectories[1].extra_fields == {}
+    assert trajectories[0].extra_fields["materialization_reason"] == "max_trajectory_length"
+    assert trajectories[0].extra_fields["version_evidence_complete"] is False
+    assert trajectories[1].extra_fields["version_evidence_complete"] is False
 
 
 @pytest.mark.cpu
@@ -1198,7 +1199,8 @@ async def test_multiple_chains_exactly_exhausted_chain_skips_new_media_extractio
     assert len(backend.calls) == 1
     assert backend.steps == ["SHOULD_NOT_RUN"]
     assert trajectories[0].multi_modal_data is None
-    assert trajectories[0].extra_fields == {"materialization_reason": "max_trajectory_length"}
+    assert trajectories[0].extra_fields["materialization_reason"] == "max_trajectory_length"
+    assert trajectories[0].extra_fields["version_evidence_complete"] is False
 
 
 @pytest.mark.cpu
@@ -1268,7 +1270,8 @@ async def test_multiple_chains_closes_when_continuation_fills_total_trajectory_c
     assert outcome.finish_reason == "length"
     assert len(backend.calls) == 1
     assert backend.steps == ["SHOULD_NOT_RUN"]
-    assert trajectories[0].extra_fields == {"materialization_reason": "max_trajectory_length"}
+    assert trajectories[0].extra_fields["materialization_reason"] == "max_trajectory_length"
+    assert trajectories[0].extra_fields["version_evidence_complete"] is False
 
 
 @pytest.mark.cpu
@@ -1972,4 +1975,77 @@ async def test_weight_versions_absent_when_backend_omits_them():
     await _run(session, SequencedBackend(["ONLY"]), [{"role": "user", "content": "base"}])
     [trajectory] = await session.finalize()
 
-    assert trajectory.extra_fields == {}
+    assert "min_global_steps" not in trajectory.extra_fields
+    assert "max_global_steps" not in trajectory.extra_fields
+    assert trajectory.extra_fields["generation_count"] == 1
+    assert trajectory.extra_fields["versioned_generation_count"] == 0
+    assert trajectory.extra_fields["version_evidence_complete"] is False
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "versions,complete,count",
+    [
+        ([(7, 7), (None, None)], False, 1),
+        ([(None, None), (None, None)], False, 0),
+        ([(7, 7), (7, 7)], True, 2),
+        ([(7, 7), (8, 8)], True, 2),
+    ],
+)
+async def test_generation_version_completeness_counts_real_calls_not_context(versions, complete, count):
+    session = _session("version-completeness")
+    messages = [{"role": "user", "content": "first"}]
+    await _run(session, _VersionedBackend([("FIRST", *versions[0])]), messages)
+    await _run(
+        session,
+        _VersionedBackend([("SECOND", *versions[1])]),
+        [*messages, {"role": "assistant", "content": "FIRST"}, {"role": "user", "content": "context"}],
+    )
+    [trajectory] = await session.finalize()
+    assert trajectory.extra_fields["generation_count"] == 2
+    assert trajectory.extra_fields["versioned_generation_count"] == count
+    assert trajectory.extra_fields["version_evidence_complete"] is complete
+
+
+@pytest.mark.asyncio
+async def test_version_completeness_is_local_to_split_contexts():
+    session = _session("version-context-split")
+    messages = [{"role": "user", "content": "base"}]
+    await _run(session, _VersionedBackend([("A", 7, 7)]), messages)
+    await _run(session, _VersionedBackend([("B", None, None)]), messages)
+    trajectories = await session.finalize()
+    by_text = {_decode_response_ids(t.response_ids): t.extra_fields for t in trajectories}
+    assert by_text["A"]["version_evidence_complete"] is True
+    assert by_text["B"]["version_evidence_complete"] is False
+    assert all(t.extra_fields["generation_count"] == 1 for t in trajectories)
+
+
+@pytest.mark.asyncio
+async def test_version_completeness_capacity_flush_does_not_count_unsent_request():
+    messages = [{"role": "user", "content": "fill"}]
+    session = _session("version-capacity", prompt_length=_prompt_length(messages), response_length=4)
+    backend = _VersionedBackend([("FULL", 7, 7)])
+    await _run(session, backend, messages)
+    outcome = await _run(session, backend, [*messages, {"role": "assistant", "content": "FULL"}])
+    [trajectory] = await session.finalize()
+    assert outcome.finish_reason == "length"
+    assert trajectory.extra_fields["generation_count"] == 1
+    assert trajectory.extra_fields["versioned_generation_count"] == 1
+    assert trajectory.extra_fields["version_evidence_complete"] is True
+    assert trajectory.extra_fields["materialization_reason"] == "max_trajectory_length"
+
+
+@pytest.mark.asyncio
+async def test_version_completeness_rollback_removes_dropped_missing_mark():
+    session = _session("version-rollback", enable_last_assistant_rollback=True)
+    prompt = [{"role": "user", "content": "base"}]
+    continuation = [*prompt, {"role": "assistant", "content": "A1"}, {"role": "user", "content": "second"}]
+    await _run(session, _VersionedBackend([("A1", 7, 7)]), prompt)
+    await _run(session, _VersionedBackend([("BAD", None, None)]), continuation)
+    await _run(session, _VersionedBackend([("FIXED", 7, 7)]), [*continuation, {"role": "user", "content": "error"}])
+    assert session.snapshot_state()["rollback_count"] == 1
+    [trajectory] = await session.finalize()
+    assert "BAD" not in _decode_response_ids(trajectory.response_ids)
+    assert trajectory.extra_fields["generation_count"] == 2
+    assert trajectory.extra_fields["versioned_generation_count"] == 2
+    assert trajectory.extra_fields["version_evidence_complete"] is True

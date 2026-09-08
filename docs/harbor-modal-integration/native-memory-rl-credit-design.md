@@ -103,3 +103,113 @@ helper 返回一个内部 typed StageOutcome：stage identity、原始 TaskResul
 数学测试的准确范围：本地CPU环境不能直接导入VERL v1包（缺transfer_queue），因此从锁定git tree原样编译两个函数AST，调用真实DataProto/torch/core_algos，另核core GRPO函数AST与锁定源码一致；没有模拟或重写GRPO算法。测试通过record_property记录pin/函数AST哈希。它验证数学函数，不验证完整trainer依赖导入或TQ运行。测试用非末段99分与末段[0,1,0,1]验证末段选择，同时覆盖不同段数、逆序行、标准化开关和工具context mask0。
 
 CreditAssignment只是新的控制端训练注解：保留原Trajectory对象/原stage奖励，输出R_B、keys、FrozenBinding及run/partition/checkpoint；不自动修改训练奖励、不创建chain签发回执。调用方必须先验证真实receipt/文件，再调用此合同，写入TQ前防止对象被改动并复核；取消、重复消费账本、完整stage执行与读写隔离仍属于下一接线阶段。没有把本次CPU测试宣称为训练闭环通过。
+
+## Resident backend 精确接线审计（下一实施批次，设计未实现）
+
+本节按当前源码进一步收敛。单个 `AgentFrameworkRolloutAdapter.create()` 创建resident backend client对应的GatewayManager/FrameworkWorker；四个逻辑sibling各运行A/B，共八个独立Gateway sessions即可。阶段只启动CPU DSH SDK runner，禁止调用 `memory_chain.run_stage` 或 `parallel_infer_verl` 重启模型后端。复用same sampling params与同一个manager，A/B仍通过runtime内部loop处理工具。
+
+### 两个必须先解决的实际兼容缺口
+
+1. **训练split不可借用eval回执。** `memory_verifier.verify` 当前明确只接受 metadata.split=test；`trajectory_audit._validate_partition` 又要求partition=train对应split=train。因此新训练stage必须有独立 verifier入口/ID/bundle，如拟新增 `memory_training_verifier.py`，复用现 `score()` 内容判定、保留unsafe与A质量门，但签发明确train阶段回执及 `credit_assignment=stage-only`；最终chain verifier才签发终态B信用。不可把原test回执改标签后放入train，旧eval门与文件不变。新入口要完整校验env/envelope/fixture/trace身份，不能只包一层score绕过现签发检查。
+2. **操作配置不能从sample注入。** `DshArchitectureTaskConfig.task_config_only_fields` 保护 agent/sandbox/workdir/verifier/roots等；TaskConfigResolver明确拒绝sample同名覆盖。Framework控制端应为每stage生成私有YAML，使用 `dataclasses.replace(runner_config, runner_kwargs={...旧参数, task_config_path:私有YAML,...})`。sample侧只给受控任务名/metadata，raw_prompt从stage准备结果派生；不把配置塞进 `tools_kwargs.task`，不放宽Resolver。
+
+### 建议方法与最小抽取点
+
+`uni_agent/framework/framework.py`：把当前 `_run_agent_episode` 的完整单session主体（创建session、Ray/inline runner、finalize、TaskResult注解、postprocess审计、score、日志）移动为内部 `_execute_gateway_stage`，返回值从原tuple提升为内部对象；原 `_run_agent_episode` 保留签名，调用helper并还原原tuple。主要新增接口：
+
+```python
+@dataclass(frozen=True)
+class GatewayStageExecution:
+    session_id: str
+    context: dict[str, object]
+    task_result: TaskResult
+    trajectories: list[Trajectory]  # 原单stage注解+审计后对象
+    sample_fields: dict[str, object]
+    run_dir: Path | None
+
+async def _execute_gateway_stage(
+    self, *, sample_fields, sample_index, session_index, global_steps,
+    partition_id, group_size, runner_name, runner_config, sampling_params,
+    stage_session_id: str | None = None,
+    dump_consumption_crosswalk: bool = True,
+) -> GatewayStageExecution: ...
+```
+
+`stage_session_id`仅由Framework subclass分配，不能由sample提供。默认None使用原uuid策略，保持原行为。memory预先生成GA/GB，便于B frozen绑定；Gateway create仍由helper唯一负责。原 `_run_agent_episode_with_concurrency_limit` 外层信号量无需移动，memory覆盖 `_run_agent_episode` 即可让每个slot覆盖整条A→B，最多并发4条链，不会无意同时放出8个stage。
+
+新增 `uni_agent/framework/memory_chain.py:NativeMemoryFramework`（名称与CPU合同分开）：
+
+```python
+async def _run_agent_episode(self, **原显式关键字参数):
+    # 分配chain/GA/GB；operator模板+固定数据prepare A
+    # execute A -> 原回执核验 -> freeze实际memory -> prepare B
+    # execute B -> 原回执核验 -> 构造ChainOutcome
+    # 暂存在此Framework私有按partition/uid/sibling索引的pending表
+    # 返回原类型(ordered_trajectories, 原sample_fields)，尚不更改奖励
+
+async def _write_prompt_trajectories_to_tq(
+    self, *, uid, session_outcomes, global_steps, partition_id
+):
+    # 原strict组成功后才进此处；取出完整4个ChainOutcome
+    # validate_credit_group -> 签发chain receipt -> 训练注解副本
+    # 唯一一次原super()._write_prompt_trajectories_to_tq(...)
+
+async def _run_prompt_rollouts(self, **原显式关键字参数):
+    try: return await super()._run_prompt_rollouts(...)
+    finally: ...  # 清掉本uid所有pending引用（失败也清），保留磁盘证据
+```
+
+这是最小扩展策略：复用原strict组 `failure/status/clear` 和TQ批量逻辑，不复制整份 `_run_prompt_rollouts`；constructor/from_config中强制 strict/finished/verifier/all/GRPO/sync，禁用permissive路径。pending表只存可信内存对象，禁止从sample反序列化ChainOutcome；每stage完成记录身份，异常路径清理并释放引用。group_uid在finally从传入sample_fields提取；不可清其他组。
+
+新版stage准备代码拟 `examples/dsh/capabilities/memory_training_stage.py`：
+
+```python
+prepare_writer_stage(*, operator_spec, group_context, chain_id, gateway_session_id) -> StageSpec
+freeze_and_prepare_reader(*, writer_execution, operator_spec, reader_gateway_session_id) -> StageSpec
+```
+
+StageSpec含私有config path/hash、fixture/hash、raw_prompt、metadata、trace/result根。复用 `writer_fixture/writer_prompt`、`build_memory_patch`、`freeze_memory_artifact/load_memory_artifact`，不要复用依赖CLI inference-evidence/process-exit的 `_stage_result`。resident路径需从TaskResult及stage审计后的磁盘receipt重新核对，而不是伪造inference-evidence文件。A→B相同source版本与实际写文件hash来自A回执；reader role名字在旧fixture为writer/reader，在CPU合同为A/B，显式转换并测试。
+
+task runner可完全保留 `uni_agent.framework.task_runner.run_task`：私有runner_config指向stage YAML；它使用session.base_url覆盖runtime model，且raw_prompt覆盖serialized Task prompt。若设置dsh_trace_root/result_root必须传stage同一组根，否则后置注入会覆盖YAML；不启用通用episode文件复制选项，避免重新复制A私有来源到B。sandbox继续local，限制由closed profile工具policy提供，不能称OS安全沙盒。
+
+### finalize、奖励与审计顺序
+
+阶段helper中按现顺序 `TaskResult返回→Gateway.finalize_session→单stage原奖励→原trajectory_audit`。finalize仅关闭session route，不销毁共享backend。memory任务不安装会重写reward的custom RewardLoopWorker；同stage多个context均保留。stage审计完成后，才读文件freeze或拼合**对象列表**；不修改原token/mask/logprob数组。
+
+组级commit前签发新chainreceipt：原A/B receipt摘要+token摘要+role索引映射+policy版本+FrozenBinding+R_B。训练注解副本使用 `replace(trajectory, reward_score=R_B, ...)`，原stage对象/回执保持原reward。新增 `chain_reward_info`，原 `dsh_reward_info` 应改存 `stage_reward_info`或明确命名嵌套，不能留下“当前reward与原dsh_reward_info矛盾”却假称仍满足单stage审计。新增chain-specific audit校验上述映射；不让老单session postprocessor处理已重注解对象，也不放宽其一致性检查。
+
+现 `_dump_trajectories` 会预生成 `{uid}_{sibling}_{index}` crosswalk；若A/B各stage都从0开始，会出现误导性的重复TQ key。新增helper参数必须让memory阶段日志只标 `stage-evidence/not-consumed`，保留原数组与stage身份；组级注解后统一导出最终index与TQ key。最终TQ arrays摘要与原stage相同才接受，且TQ提交异常走原清除keys逻辑。
+
+### CPU合同字段实查
+
+- Gateway `run_generation` 使用 `[1] * len(response_ids)`，工具context续写用 `[0] * ...`，finalize输出Python `list[int]`，与当前contract `type(x) is int`兼容。不要先经numpy转换（np.int64/bool会被拒），也不要为了通过强制cast可疑mask。
+- response_logprobs来自backend output.log_probs，context为0.0；recipe必须calculate_log_probs=True。未请求/缺失不能用teacher值或重算“假采样logprob”补齐。prompt/response IDs由backend/tokenizer链原样列表产生。
+- 版本传播源码可达：vllm_async_server初始self.global_steps=None，经set_global_steps更新，generate写extra_fields.global_steps；llm_server.generate将其映射min/max；Gateway记录每次generation mark并finalize为版本跨度。因此**训练backend正确完成update_weights/version设置后有真实版本通路，但源码不能证明每个现存run都取得非None**。standalone inference没有trainer同步钩子时可能缺失，不能拿已成功eval推出能通过credit_contract。
+- 现Gateway materialization只汇总min不为None的marks，混合“某次缺版本、其他有版本”可能被遮蔽。接线需新增 `versioned_generation_count/total_generation_count` 或等价complete标记，由Gateway按实际marks输出；chain审计要求全部generation都报告完整int跨度。同组min=max不足以发现部分缺失。默认单session行为不变，memory contract新增完整性字段需同步测试。
+- CPU合同StageOutcome只存receipt_sha，没有eligible字段自动来源；构造函数必须从已验证receipt读取eligible/finished/reward、从实际execution读取sessions，不从response文本读取。FrozenBinding content hash可以跨siblings相同（生成相同内容合法），manifest identity不能跨链复用。
+- 当前validate_credit_group固定4，仅供train n4。val n1不能直接使用同函数：另独立 `validate_credit_chain` 验证单链身份/版本并直接记录R_B，或明确第一批val也用n4；不能用复制同一链四次凑数量。
+
+### 下一批精确测试与实施顺序
+
+1. helper机械抽取：原Framework全部测试，返回TaskResult/上下文未丢失；Ray timeout/CancelledError仍abort，不多finalize。新增真实mock manager计数：一次framework创建、8次session create/finalize、0次backend重建，A/B地址不同。
+2. stage准备CPU：task_config_only_fields不能sample覆盖；A/B独立roots/privateYAML哈希；B工具policy不含A来源；原test verifier拒train、新训练verifier拒test混用；新入口保留unsafe/A质量规则与bundle绑定。
+3. 版本完整性：每请求都有v/缺一/全缺/跨v分别通过或拒绝，token masks Pythonint保真；不使用TQ tag fallback作为版本证据。
+4. 组级CPU：四条实际不同ChainOutcome才commit；8stage receipts→末B credit；mixed成功/失败/取消整组不写；TQ partial失败清理；pending引用finally清空、其他并发组不受影响；stage evidence无虚假TQ key，finalcrosswalk唯一。
+5. CPU真实固定VERL数学测试继续通过；训练副本B credit改变但原stage数组/奖励不变。postprocessor不能绕过chain审计；无生成token的末B拒绝。
+6. 单residentbackend fresh run先做n1 A/B无更新dry eval（版本事实记录）；再开启n4 one-step sync，要求实际版本完整、四条B终态有可用reward差异、TQ全部一次消费、非零advantage/参数变化。仍不引入DSH外模型控制loop。
+
+额外取消限制：现 `_cancel_runner_task` force cancel后没有等待确认退出，且异常日志可能只记录后返回；新memory阶段不能因此自动启动B或新尝试。第一批可在取消时将链硬失败、不自动retry，保留owned task清理未确认状态；需要继续调度同资源前补确认等待，而非假称原helper已有完整清理证明。
+
+### 下一阶段奖励信号建议（本轮不改合同）
+
+constraints/updates两个简单诊断可能使所有A/B满分。严格A reward1门下，若四个B同分，GRPO advantage=0：这可作为可执行链路结果，不能作为能力训练或有效参数更新验收；不得人为改分制造梯度。
+
+建议下一独立版本的training admission分两轴：安全/身份/完整性/文件格式必须全通过；语义质量单独计分。合法但遗漏或错误的memory允许冻结，交给B用真实内容回答，并由独立终态测试判R_B=0，以产生有意义负向credit。该设计需同步定义B的不可回答/错误事实奖励与训练数据难度，避免模型靠猜测绕过memory。越权、未完成、混链、损坏格式或不可信回执仍拒绝。旧eval与当前contract继续要求A reward1，不追认旧失败，不把语义错的训练接纳称为安全门放宽。先完成严格版本工程链路，再批准新准入版本及更有区分度的训练/留出任务。
+
+### 实際版本完整性增量（已批准）
+
+修改 `uni_agent/gateway/session/session.py:_build_materialized_trajectory`，从当前buffer保留的generation_versions计算 `generation_count`、`versioned_generation_count`、`version_evidence_complete`。计数单位是实际backend生成请求完成后留下的mark，不是context/prefix token数；rollback已删除的mark不再计，独立context/materialization各自计算。完整mark要求min/max都是非负Python int且min≤max；complete要求至少1次且全部完整。保持原合法min/max跨度行为，缺失不拿调度步数填充。新增字段为Gateway拥有，materialization extra_fields不得覆盖。
+
+修改memory_credit `_trajectory`，严格要求complete=true、两个正整数count一致；仍要求min=max=expected实际版本。默认其他任务不改变准入。测试先验证混合缺失被旧min/max遮蔽的红例，再覆盖全缺失/全同版/跨版/独立context/容量materialization/rollback，明确context追加不新增generation计数；更新既有extra_fields精确字典断言以容纳观测字段。此批不改Framework或TQ。
+
+该增量已实现：4项新增Gateway用例先因字段缺失失败；完成后Gateway完整文件、memory credit和固定GRPO数学测试合计108项CPU通过。额外覆盖容量已满的未发送请求不计数、独立context不互相补齐、rollback删除缺版本旧响应后计数正确。全仓Ruff check/format-check通过。Gateway types文档同步；现有合法min/max行为保留，缺失/非法mark不伪造版本。未运行GPU或调整Framework/TQ。

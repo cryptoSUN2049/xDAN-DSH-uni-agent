@@ -96,6 +96,16 @@ def _trajectory(trajectory, stage, version):
     for field in ("min_global_steps", "max_global_steps"):
         actual = trajectory.extra_fields.get(field)
         _require(type(actual) is int and actual == version, "Missing or different actual weight version")
+    total = trajectory.extra_fields.get("generation_count")
+    versioned = trajectory.extra_fields.get("versioned_generation_count")
+    _require(
+        trajectory.extra_fields.get("version_evidence_complete") is True
+        and type(total) is int
+        and total > 0
+        and type(versioned) is int
+        and versioned == total,
+        "Incomplete per-generation version evidence",
+    )
 
 
 def validate_credit_group(chains, *, expected_version, expected_group_uid, expected_run_id, expected_partition):

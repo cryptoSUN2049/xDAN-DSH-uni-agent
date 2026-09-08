@@ -822,13 +822,25 @@ class GatewaySession:
         # Fold the surviving marks into the trajectory-level version span the trainer
         # reads for staleness metrics. Omit the keys when no backend reported a
         # version so the framework falls back instead of tagging None.
-        marks = [mark for mark in chain.buffer.generation_versions if mark[0] is not None]
+        generation_count = len(chain.buffer.generation_versions)
+        marks = [
+            mark
+            for mark in chain.buffer.generation_versions
+            if type(mark[0]) is int and type(mark[1]) is int and 0 <= mark[0] <= mark[1]
+        ]
         trajectory_extra_fields: dict[str, Any] = {}
         if marks:
             trajectory_extra_fields["min_global_steps"] = min(mark[0] for mark in marks)
             trajectory_extra_fields["max_global_steps"] = max(mark[1] for mark in marks)
         if extra_fields:
             trajectory_extra_fields.update(extra_fields)
+        # Count actual surviving backend calls, never interstitial prompt tokens.
+        # Keep this evidence Gateway-owned and independent of scheduler fallbacks.
+        trajectory_extra_fields.update(
+            generation_count=generation_count,
+            versioned_generation_count=len(marks),
+            version_evidence_complete=generation_count > 0 and len(marks) == generation_count,
+        )
         return Trajectory(
             prompt_ids=list(chain.buffer.prompt_ids),
             response_ids=list(chain.buffer.response_ids),

@@ -63,6 +63,10 @@ class Trajectory:
         extra_fields: Gateway-owned extension fields, such as trajectory
             materialization metadata consumed by training adapters and the
             ``min_global_steps``/``max_global_steps`` weight-version span.
+            ``generation_count`` counts surviving backend-generation marks;
+            ``versioned_generation_count`` counts marks with valid integer spans.
+            ``version_evidence_complete`` is true only for nonempty, fully
+            versioned trajectories. Interstitial context does not add marks.
     """
 
     prompt_ids: list[int]

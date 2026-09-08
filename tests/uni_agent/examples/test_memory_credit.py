@@ -24,7 +24,13 @@ def stage(j, role, reward):
         response_logprobs=[-0.5, 0.0, -0.6],
         finished=True,
         reward_score=reward,
-        extra_fields={"min_global_steps": 7, "max_global_steps": 7},
+        extra_fields={
+            "min_global_steps": 7,
+            "max_global_steps": 7,
+            "generation_count": 1,
+            "versioned_generation_count": 1,
+            "version_evidence_complete": True,
+        },
     )
     return StageOutcome(
         run_id="run",
@@ -166,5 +172,20 @@ def test_admission_and_independence_boundaries(which):
         chains[0].reader.trajectories[0].response_logprobs[-1] = 0
     else:
         chains[0].reader.reward = 1
+    with pytest.raises(ValueError):
+        validate(chains)
+
+
+@pytest.mark.parametrize(
+    "evidence",
+    [
+        {},
+        {"generation_count": 2, "versioned_generation_count": 1, "version_evidence_complete": False},
+        {"generation_count": 2, "versioned_generation_count": 1, "version_evidence_complete": True},
+    ],
+)
+def test_incomplete_per_generation_evidence_rejected_even_when_span_matches(evidence):
+    chains = group()
+    chains[0].writer.trajectories[0].extra_fields = {"min_global_steps": 7, "max_global_steps": 7, **evidence}
     with pytest.raises(ValueError):
         validate(chains)
