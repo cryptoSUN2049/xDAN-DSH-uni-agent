@@ -102,3 +102,41 @@ DSH源码按固定 `b2369692ea530007075ebcd18d39fdba0bbd3982` 使用 `git show` 
 Linux/Mac用真实文件权限检查，不假定chmod成功就安全；目标创建后立即复核私有目录/文件权限。类似已知RunPod共享盘不能保证私有权限时拒绝，不静默降级。macOS应传`/private/tmp/...`或实际目录，`/tmp`软链接会按明确无软链接规则拒绝。
 
 写入失败可能保留本次新建但未完成的目录，调用者不会获得成功receipt，load无独立manifest摘要也无法验收；不自动覆盖或重试该目录。控制端可保留诊断后选择全新目录。此模块只返回读端已验证bytes，不自动拷贝到B工作区；仍未接Task链编排、模型采样或跨阶段RL。
+
+## A/B真实执行隔离：固定DSH源码复核（只读设计）
+
+### 当前配置不能阻止B读取A
+
+固定`b2369692ea530007075ebcd18d39fdba0bbd3982`的实际实现：
+
+1. `packages/fs/fs-local/src/index.ts:41`的配置仅`cwd`、`diffBasisMaxBytes`；约L60明确cwd是resolution default，不是containment boundary。`resolve()`对绝对路径不会限制在cwd。
+2. `packages/fs/tool-str-replace-editor/src/index.ts:89`的resolveTarget要求模型传绝对路径，然后直接`ctx.fs.resolve`。因此“换B工作目录”不阻止`view /绝对路径/A/原始资料`。
+3. `packages/fs/fs-sandbox/src/index.ts:1`与README明确所有mode的reads无阻碍，仅writeText/editText增加策略围栏。换成fs-sandbox并设read-only或workspace-write，**仍不能禁止读A**。workspace-write还允许平台temp roots，不能解释为精确B文件写白名单。
+4. `packages/fs/fs-observation-policy`是观察后编辑/CAS规则，不是保密访问控制。
+5. 当前sdk-minimal加载persistent-bash、bare fs-local；evolution.patch还开放动态插件代码执行。只限制editor路径而保留shell/动态Host代码，学生仍有旁路。
+
+因此当前无一个已核实的SDK config字段可直接写成`readRoots=[B]`。文件冻结模块保护转交产物完整性，不保护A目录免受同权限B runtime读取。
+
+### 最短原生路径：封闭memory动作集 + 可信前置策略
+
+目标仅为本轮受控memory任务的“模型工具调用不能读取A、不能修改冻结handoff”，不是通用恶意代码隔离平台。
+
+- 沿用同一个DSH SDK/Agent Loop，另设`memory-closed`专用composition身份，不用现evolution.patch。只保留模型面对的`str_replace_editor`；禁用/移除persistent-bash/pwsh与动态cordis插件、PTC代码执行、网络/任意Service调用及未来未声明工具。其他课程继续使用原composition，不能在旧奖励版本下静默变更。
+- 复用真实扩展点`packages/core/tools/src/index.ts:136`的`tools/pre-execute` waterfall：返回`{kind:'deny',reason:...}`时在tool body前拒绝；仅满足role/path/command白名单才调用next。不自行解析模型token，也不新增执行循环。
+- 一次runtime只承担一个A或B角色，策略配置由控制端只读注入。使用独立runtime/home/session/cwd，策略合同绑定role/chain/stage/source version/allowlist摘要。
+- **A角色**：只允许`view`明确输入文件与当前memory文件；`create/str_replace/insert`只能作用于单个指定memory输出文件。输入、规则与评分文件不可改。
+- **B角色**：只允许`view`冻结handoff与B问题文件；如任务需写答案，仅允许在一个指定答案文件create/str_replace/insert。禁目录view（避免探测路径）、所有A文件、session日志、凭据、源manifest与评价器目录。
+- 路径必须经过lexical/canonical检查，拒绝`..`、软链接/硬链接/非普通文件；create只允许精确目标名且父目录固定。只做字符串前缀比较不足。持有批准文件身份或由受控backend在打开时核查，不能先检查A路径再让异步阶段打开已替换的对象。
+- B没有任意代码执行/建链接能力时，可信editor处理模型字符串参数的白名单可作为本课程动作边界。若允许候选JS、bash或不可信并发文件写者，则该威胁模型不成立，须升级到OS用户/namespace等原生进程限制；不能拿这套薄策略宣称隔离恶意插件。
+
+`ctx.tools.restrict({allow:...})`也是真实API，但只允许agent-scoped context，且只按工具名过滤，不检查路径。固定源码还注明scoped registrations保持可见，因此单靠restrict不能覆盖动态注册旁路。它可用于隐藏非课程工具的schema；权限最终由全调用前置策略拒绝未白名单名称。SDK root agent创建窗口目前没有本项目现成接线，不能伪造一个配置键解决。
+
+### 待补最小合同与实测门
+
+1. **薄policy插件与装载**：现有固定SDK未提供本项目的memory path allowlist插件。需按DSH现有插件加载方式打包一小段可信policy并固定hash，或在DSH-Exp增加正式插件再出发布物；不能仅把任意YAML当作已生效的权限。具体patch selector/发布方式需实现时按loader验证，不在本只读审计中捏造配置。
+2. **composition自检**：一次无需模型的runtime工具目录检查，必须恰好只有课程允许工具；禁用工具不仅从schema隐藏，直接调用也应拒绝。启动时若policy缺失/配置错误，整个任务失败，不能回落sdk-minimal全工具。
+3. **双进程真实拒绝测试**：Controller在A目录写唯一canary，B使用已知A绝对路径、`../`、symlink/hardlink别名尝试读取；必须在工具执行前拒绝、返回中不含canary。B读冻结handoff成功；改handoff拒绝；A写memory成功；新目录/新session/load identity与冻结摘要匹配。
+4. **策略旁路负例**：直接call bash、cordis_define、动态工具、PTC等未允许名字失败；不把“不告诉B路径”或“碰巧模型没读A”作为通过条件。
+5. **A/B链再接线**：以上CPU与真实runtime拒绝测试通过，再将memory_artifacts合同与两个原生Task/runner调用串联；先评估因果隔离，之后补跨session训练信用合同。
+
+这一方案不用Docker、不需要立即建设完整安全平台；但**不是纯配置已可用**。现有配置能缩小工具集合，真正的读白名单还缺薄前置policy/backend接线与实际否定测试。当前步骤只读，没有声称已实现这些防护。

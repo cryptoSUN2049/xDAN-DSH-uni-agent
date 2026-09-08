@@ -56,7 +56,7 @@ cd /workspace/rebuild/uni-agent-native-n0-r1
 export DSH_TRAIN_VENV=/workspace/venvs/uni-agent-native-n0-r1
 export DSH_UV_CACHE=/workspace/cache/uv
 export UV_LINK_MODE=copy
-export UV_PYTHON=/usr/local/bin/python3.12
+export UV_PYTHON=/usr/bin/python3.12
 export UV_OFFLINE=true
 bash deployment/bootstrap/install-verl.sh
 ```
@@ -127,3 +127,6 @@ uv pip check --python /workspace/venvs/uni-agent-native-n0-r1/bin/python
 - 新环境CUDA/DSH预检、同任务训练更新、消费审计、独立reload与评估，以及脱敏归档/可获取路径。
 
 上述结果只读调查已完成。N0“独立干净环境”若使用同一Pod、已有模型与uv缓存，应准确称为 **同主机新checkout/新venv的缓存辅助复建**；这与从空机器/空缓存完整恢复是不同验收层级。
+
+## 实跑纠正
+N0首次bootstrap在创建venv前退出：旧pyvenv.cfg的home=/usr/local/bin不能推导当前系统解释器路径。远端实际command -v python3=/usr/bin/python3，readlink旧venv/bin/python=/usr/bin/python3.12，版本3.12.3。模板已修正；失败日志install.log保留，新尝试install-attempt2.log。
