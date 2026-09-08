@@ -8,7 +8,7 @@
 - 后续DSH统一b236969/0.1.3a2；Uni-Agent89733ec、VERLfefb080、原始Harbor镜像846b46。完整固定清单deployment/versions/g1-deployment-lock.json；SDK/wheel与镜像均有私有Release。
 - 历史M1v3（旧7840）真实2步更新/reload通过；新版M1数据16/8和选中4/2划分哈希已复核，等待串行训练，不能把旧证据当新版通过。
 - M2 r1因layered空收集CPU summon与NO_SHARD冲突失败；已修默认layered=False。r2/r3未进入训练。新r4使用修复提交和全新spec/凭据/节点；r4已exit1：控制SSH在16:51:55保活超时退出，16:58:11首个registration连接48350被拒绝；无训练更新。
-- 当前r5：Mac controller工具95012，spec /private/tmp/m2-recovery-r5/run-spec.json；GPU supervisor12209，/root/runs/m2-v2-r5；checkpoint /workspace/runs/m2-v2-r5-checkpoints；45分钟最多2步，新增认证健康监督（每5秒、请求5秒超时）。r4已结束归档。
+- r5历史（已exit1，见末尾终态）：Mac controller工具95012，spec /private/tmp/m2-recovery-r5/run-spec.json；GPU supervisor12209，/root/runs/m2-v2-r5；checkpoint /workspace/runs/m2-v2-r5-checkpoints；45分钟最多2步，新增认证健康监督（每5秒、请求5秒超时）。r4已结束归档。
 - 原连接阻塞已因新Pod解除，继续原G1工程目标。下方blocked/旧地址/未发布等均为历史，不据此停止新Pod工作。
 
 ## 1. TL;DR
@@ -432,3 +432,8 @@
 - controller新增认证GET状态和异常非零退出；GPU新监督入口deployment/services/harbor_training_supervisor.py。49项相关测试通过，全仓Ruff lint/format通过。
 - 44542b04168c696d39c3b704495a38a088dd2c80已推送并从GitHub固定到GPU，VERLfefb080保持。r5真实远程健康响应身份核对通过，supervisor12209已启动；不得运行中切checkout。
 - r5 spec摘要sha256:f08bd7cc711e957093db416d21fe94a9310545b8376dbdf387ff745a0efb0927。当前训练结果仍待验证；审计入口train-n应取ROLLOUT_N=4（不是训练dataset行数2）。
+
+## r5终态与参数隔离修复
+
+- r5 exit1，378.318秒；真实Gateway注册通过，control/model双隧道建立，此次不是SSH故障。任务尚未执行便被旧DSH artifact roots注入拒绝。
+- controller95012已SIGINT退出130，cleanup_errors为空；无训练更新。M2薄入口显式将dsh_trace_root/dsh_result_root置null，保留Harbor自己的artifact_root。新增真实Hydra覆盖+Task runner检查回归先红后绿；相关38项通过。

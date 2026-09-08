@@ -48,6 +48,9 @@ def build_overrides(launch: dict) -> list[str]:
     if launch.get("schema") != "dsh.harbor-m2-launch.v1":
         raise ValueError("Unknown prepared launch schema")
     return [
+        # Harbor stores its own receipt/artifacts; legacy DSH-only roots are invalid.
+        "++" + PREFIX + ".agent_runners.task.runner_kwargs.dsh_trace_root=null",
+        "++" + PREFIX + ".agent_runners.task.runner_kwargs.dsh_result_root=null",
         "++"
         + PREFIX
         + ".agent_runners.task.runner_kwargs.task_config_path="

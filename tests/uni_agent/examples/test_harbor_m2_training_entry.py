@@ -197,3 +197,40 @@ def test_ignored_directory_permissions_fail_before_writing_token_yaml(inputs, mo
         prepare_training(**inputs)
     assert not inputs["task_config_path"].exists()
     assert list(inputs["output_dir"].iterdir()) == []
+
+
+def test_harbor_runner_does_not_inherit_dsh_artifact_roots(inputs):
+    from hydra._internal.config_loader_impl import ConfigLoaderImpl
+    from omegaconf import OmegaConf
+
+    from uni_agent.framework.task_runner import _inject_dsh_artifact_roots
+
+    launch = json.loads(prepare_training(**inputs).read_text())
+    cfg = OmegaConf.create(
+        {
+            "actor_rollout_ref": {
+                "rollout": {
+                    "custom": {
+                        "agent_framework": {
+                            "trajectory_postprocessor_kwargs": {},
+                            "agent_runners": {
+                                "task": {
+                                    "runner_kwargs": {
+                                        "dsh_trace_root": "/old/traces",
+                                        "dsh_result_root": "/old/results",
+                                    }
+                                }
+                            },
+                        }
+                    }
+                }
+            }
+        }
+    )
+    ConfigLoaderImpl._apply_overrides_to_config(OverridesParser.create().parse_overrides(build_overrides(launch)), cfg)
+    kwargs = cfg.actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.runner_kwargs
+    task = {"name": "harbor_dsh"}
+    assert (
+        _inject_dsh_artifact_roots(task, trace_root=kwargs.dsh_trace_root, result_root=kwargs.dsh_result_root) == task
+    )
+    assert kwargs.dsh_trace_root is None and kwargs.dsh_result_root is None

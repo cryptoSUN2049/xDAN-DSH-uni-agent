@@ -1,0 +1,15 @@
+{
+  "run_id": "m2-v2-r5",
+  "integration_revision": "44542b04168c696d39c3b704495a38a088dd2c80",
+  "exit_code": 1,
+  "gateway_registration_passed": true,
+  "control_and_model_tunnels_established": true,
+  "failure": "DSH artifact roots are supported only for dsh_architecture tasks",
+  "optimizer_updates": 0,
+  "supervisor_reason": "training-exited",
+  "elapsed_seconds": 378.318,
+  "fix": "M2 runner overrides both legacy DSH artifact roots to null; preserve Harbor own artifact_root",
+  "regression_tests_passed": 38,
+  "controller_closed": true,
+  "controller_cleanup_errors": []
+}
