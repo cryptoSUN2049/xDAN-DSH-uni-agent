@@ -15,12 +15,12 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 
 | 对象 | 当前候选/要求 |
 | --- | --- |
-| 集成代码 | 最新部署脚本提交b21ae90；每次run保存完整40位commit |
+| 集成代码 | M1 v3运行固定dcbd323；验收工具3bb1b46；每次run保存完整40位commit |
 | 上游Uni-Agent | 89733ec81a69c3cc93ac90479de7ea7f01e51c1f |
 | 配对VERL | fefb080262e1c015a0ea05f958822a6a512dc795 |
 | GPU依赖 | 复用此VERL的uv.lock，fsdp+vllm；记录lock SHA256和实际安装清单 |
 | 已解析核心版本 | torch2.11.0+cu130、vLLM0.24.0、Transformers5.5.3；安装成功不替代运行兼容测试 |
-| DSH | 旧发布物未恢复；本地候选1af5b00在GitHub不可拉取，需发布/选择可复建源码并验证SDK合同 |
+| DSH | 固定7840bced35ee07ebefbdce0106b56dbc00bdc3ef；0.1.2a1 wheels构建安装、minimal/restart通过 |
 | 模型 | 首轮拟沿用Qwen3-4B；固定revision、Tokenizer/template；自有微调模型另作为明确候选，不静默替换 |
 | 任务和评分 | 固定数据release、实例与family、划分、环境/Harness/verifier digest、解码与预算 |
 
@@ -43,18 +43,18 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 
 ### G1.0 环境可运行
 
-- [ ] 固定GPU依赖和安装工具版本，执行CUDA有限数值前后向；vLLM/Ray/Transformers/TransferQueue/Uni-Agent/VERL可导入。
+- [x] 固定GPU依赖和安装工具版本，执行CUDA有限数值前后向；vLLM/Ray/Transformers/TransferQueue/Uni-Agent/VERL可导入。
 - [ ] 运行选定模型的真实推理，验证Tokenizer、解析、结束原因和输出预算。
-- [ ] 确定DSH Linux runtime可分发来源，构建后跑不调用模型的SDK协议检查。
+- [x] 确定DSH Linux runtime可分发来源，构建后跑不调用模型的SDK协议检查。
 - [ ] 确定Harbor任务环境：实际验证Docker能力；若当前Pod不能运行，评估现有可用环境后明确方案，不自动购买新服务。
 - 产物：安装log、uv.lock hash、package清单、GPU检查JSON、模型身份、DSH构建与smoke报告。
 
 ### G1.1 原生小任务诊断（E0a，辅助，不替代M1）
 
-- [ ] 复用HotpotQA Task/MemAgent及dataset adapter；选固定小子集，训练/留出不重叠。
-- [ ] 采用单卡sync配置，不照搬8GPU separate_async，不在DSH外嵌套MemAgent循环。
+- [x] 复用HotpotQA Task/MemAgent及dataset adapter；选固定小子集，训练/留出不重叠。
+- [x] 采用单卡sync配置，不照搬8GPU separate_async，不在DSH外嵌套MemAgent循环。
 - [ ] 先验证模型请求、多context轨迹和真实评分，再做少量更新与reload。
-- [ ] 报告真实奖励分布；无组内差异时诊断难度/格式/评分，禁止伪造差异。
+- [x] 报告真实奖励分布；native-v1两组分别全0/全1，梯度0、504个LoRA张量无变化；未通过有效更新，不盲目加步数。
 - 时间边界：一个短工程批次内评估适配成本；若新增基础设施明显多于现有DSH单卡入口，暂停支线并记录原因，继续M1。
 - 原生任务没有DSH receipt/finished合同的完整保障，单独标native-smoke，不发DSH合格报告。
 
@@ -108,3 +108,9 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 原生Uni-Agent最简单训练 → 带DSH真实运行轨迹的记忆/上下文任务 → Harbor长任务与泛化 → 动态Harness/RSI → 性能规模。原生diagnostic不变为长期主线。
 M1优先检查已有ContextPilot证据合同和DSH记忆动作能否承载首批任务；先通过真实观测/动作/结果/奖励到更新的工程门，再进入C2效果验收。若记忆runtime尚缺实现，明确列缺口并先复建DSH调用基础，不以普通任务假称记忆能力已经完成。
 M2 Harbor端到端验收仍为G1必需范围；完整RSI和显著效果保持后续Goal。
+
+## 当前运行证据补充
+
+- 原生诊断与DSH安装：docs/harbor-modal-integration/native-v1-and-dsh-runtime-results.md。
+- Harbor H0：本机Docker固定文件任务oracle=1/nop=0，无exception且专用容器/网络清理；不代替M2 DSH桥接/训练。
+- M1 v2基线实际产生两条fresh verifier回执，reward各0.25，但指标字典聚合异常exit1；修复后的v3正在独立复验，未追认有效更新。

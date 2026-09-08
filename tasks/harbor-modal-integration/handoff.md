@@ -254,3 +254,9 @@
 - 新run /workspace/runs/dsh-m1-v3，日志/workspace/reports/dsh-m1-v3.log，工具session26309；先查exit-code和真实进程，不重复启动。
 - resolved-launch.json更新完整集成SHA，其余任务/预算与v2一致。
 - 推送前检查曾因shell未fail-fast漏拦UP038；已补正dcbd323，两项Ruff重新通过。后续check链必须&&并在push前检查每个工具结果，不把末尾diff成功当lint成功。
+
+## 可复用数值验收与 M2 设计
+
+- 3bb1b46已推送；deployment/checks/checkpoint_delta.py在真实native两个checkpoint上运行，504 adapter变化0、399 base变化0，passed=false/exit1符合预期；报告/workspace/reports/native-v1-full-state-delta.json。
+- M1 v3仍使用dcbd323，不更新运行中的checkout；最近日志Actor/vLLM加载完成、正在基线采样，需继续核验。
+- docs/harbor-modal-integration/harbor-distributed-bridge-design.md为M2具体草案：Mac Harbor/Docker借用环境+RunPod Gateway，SSH控制/模型通路与证据回传；先审查后分批落实，不新增付费资源。
