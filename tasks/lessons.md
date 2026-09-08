@@ -1,5 +1,23 @@
 # 项目经验
 
+## 2026-09-08：跨仓库职责与唯一训练集成主线（用户已确认）
+
+- `xDAN-DSH-uni-agent` 是训练集成开发主仓：负责 DSH adapter、Gateway、
+  轨迹与奖励准入、训练入口、Harbor / Modal 接入，以及训练项目的统一进度与验收记录。
+- `xDAN-DSH-Exp` 负责 DSH 本体、runtime / SDK / 插件与 Harness 内部能力，
+  并保留历史实验、原始研究和验收协议；`dsh-official-training` 不是另一套训练实现主线。
+- 当前训练实现由 `dsh-v3-live-smoke` 承接，Harbor 增量由
+  `harbor-modal-integration` 承接；worktree 名不是永久架构边界，合并后以实际 Git 状态为准。
+- 跨仓修改：DSH 内部能力在 DSH 仓库实施；训练主仓引用明确的 commit / artifact
+  identity 并验证兼容性。不在两边重复实现 adapter、数据合同或训练入口。
+- 文档只保留一个可编辑权威来源。训练主仓引用 DSH 的原始研究与历史证据；
+  必要快照注明来源、revision、日期和证据范围，不复制成两套独立推进的完整方案。
+- 状态冲突时先核对实际代码、run manifest 和日志，再更新训练主仓的当前状态；
+  不凭目录名、最近文档修改时间或旧 todo 判定谁领先，不追认历史实验合格。
+- 冷启动先读本节和当前 worktree handoff，再查两边 Git 状态；发现 DSH 侧旧
+  “等待实现”记录时先核对 Uni-Agent，避免重做已交付工作。
+- 本决策由用户明确确认；只确立职责，不代表批准云资源、训练运行或新增方法实现。
+
 ## 2026-09-06：项目记忆必须能在所属仓库恢复
 
 - 用户指出训练交接仅保存在 sibling DSH worktree。本仓库须保留自己的

@@ -1,5 +1,7 @@
 # Uni-Agent 项目状态回顾与本地交接
 
+仓库职责以 [用户确认的项目记忆](lessons.md) 为准：本仓负责训练集成，DSH-Exp 负责 DSH 本体与历史研究。
+
 当前 worktree：`harbor-modal-integration`。先读 [当前交接](harbor-modal-integration/handoff.md)。
 旧章节保留历史；当前计划位于文末 Harbor / Modal 初始化段。
 
@@ -131,3 +133,8 @@ VERL 已检出固定 pin；复制完整对象并解除父 worktree 借用后，g
 - [ ] 继续 H0 单任务 Docker 正反例运行及资源清理验收。
 
 Review：本次只交付文档，未执行训练；Harbor runtime、任务格式与 Modal 服务已分开标记。
+
+### 2026-09-08 项目记忆固化
+
+- [x] 将用户确认的跨仓分工写入 tasks/lessons.md，并连接 README、当前 handoff 与计划入口。
+- Review：仅修改本 worktree 文档，DSH 侧已有未提交交接保持原样；检查链接与 diff，不涉及运行结果变化。

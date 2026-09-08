@@ -2,6 +2,9 @@
 
 ## 1. TL;DR
 
+- 用户已确认仓库分工：本仓为训练集成主线，DSH-Exp 负责 DSH 本体与历史研究；
+  冷启动先读 [项目长期记忆](../lessons.md) 的 2026-09-08 分工规则。
+
 - worktree：`.Codex/worktrees/harbor-modal-integration`；分支 `worktree-harbor-modal-integration`。
 - 基线：父分支已推送的 `41694e2`，保留历史 RL 实现与后续修复。
 - 用户 2026-09-08 已允许 git worktree add；工作区与固定 VERL 已初始化。

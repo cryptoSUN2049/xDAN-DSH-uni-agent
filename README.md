@@ -12,6 +12,9 @@ Uni-Agent is a framework for training long-horizon agents:
 - Unify diverse agent tasks through one extensible interface.
 - Run agents concurrently at scale and collect traceable trajectories as training-ready data (SFT and RL).
 
+Project ownership: **training integration lives in xDAN-DSH-uni-agent; DSH core and historical research live in xDAN-DSH-Exp**.
+Read the [confirmed cross-repository rules](tasks/lessons.md) before starting cross-repository work.
+
 Harbor / Modal development: start with the [current worktree page](docs/harbor-modal-integration/index.html)
 and [Harbor integration handoff](tasks/harbor-modal-integration/handoff.md).
 
