@@ -54,3 +54,43 @@ def test_success_preserves_training_exit(tmp_path):
     )
     assert result["exit_code"] == 0
     assert result["reason"] == "training-exited"
+
+
+def test_training_command_preserves_old_argv():
+    from deployment.services.harbor_training_supervisor import training_command
+
+    assert training_command({"environment": {}}, "/run/launch.json", "/venv/python") == [
+        "/venv/python",
+        "-m",
+        "examples.harbor.train_m2_online_rl",
+        "--launch",
+        "/run/launch.json",
+    ]
+
+
+def test_training_command_forwards_explicit_adapter():
+    from deployment.services.harbor_training_supervisor import training_command
+
+    digest = "sha256:" + "a" * 64
+    command = training_command(
+        {"lora_adapter": {"path": "/private/adapter", "bundle_sha256": digest}}, "/run/launch.json", "/venv/python"
+    )
+    assert command[-4:] == ["--lora-adapter-path", "/private/adapter", "--lora-adapter-bundle-sha256", digest]
+
+
+@pytest.mark.parametrize(
+    "adapter",
+    [
+        None,
+        {},
+        {"path": "/adapter"},
+        {"path": "/adapter", "bundle_sha256": "bad"},
+        {"path": "", "bundle_sha256": "sha256:" + "a" * 64},
+        {"path": "/adapter", "bundle_sha256": "sha256:" + "a" * 64, "unknown": True},
+    ],
+)
+def test_training_command_rejects_bad_adapter_schema(adapter):
+    from deployment.services.harbor_training_supervisor import training_command
+
+    with pytest.raises(ValueError, match="lora_adapter"):
+        training_command({"lora_adapter": adapter}, "/run/launch.json", "/venv/python")

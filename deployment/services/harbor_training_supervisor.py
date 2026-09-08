@@ -4,6 +4,7 @@ import argparse
 import contextlib
 import json
 import os
+import re
 import signal
 import subprocess
 import time
@@ -70,6 +71,26 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
+def training_command(manifest, launch_path, python_bin):
+    command = [python_bin, "-m", "examples.harbor.train_m2_online_rl", "--launch", str(launch_path)]
+    if "lora_adapter" not in manifest:
+        return command
+    adapter = manifest["lora_adapter"]
+    if not isinstance(adapter, dict) or set(adapter) != {"path", "bundle_sha256"}:
+        raise ValueError("lora_adapter requires exactly path and bundle_sha256")
+    path, digest = adapter["path"], adapter["bundle_sha256"]
+    if (
+        not isinstance(path, str)
+        or not path.strip()
+        or "\x00" in path
+        or not isinstance(digest, str)
+        or re.fullmatch(r"sha256:[0-9a-f]{64}", digest) is None
+    ):
+        raise ValueError("lora_adapter requires a nonempty path and fixed bundle sha256")
+    # The existing wrapper verifies the actual adapter files and bundle identity.
+    return command + ["--lora-adapter-path", path, "--lora-adapter-bundle-sha256", digest]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--launch", type=Path, required=True)
@@ -92,7 +113,7 @@ def main():
         validate_health(value, expected)
 
     environment = {**os.environ, **manifest["environment"]}
-    command = [environment["PYTHON_BIN"], "-m", "examples.harbor.train_m2_online_rl", "--launch", str(args.launch)]
+    command = training_command(manifest, args.launch, environment["PYTHON_BIN"])
     result = supervise(
         command,
         Path.cwd(),
