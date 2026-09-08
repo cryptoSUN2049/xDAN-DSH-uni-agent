@@ -250,3 +250,11 @@ POST `/sessions/<id>/v1/chat/completions` 路径及JSON nonce原样抵达并返�
 
 初次探针服务器仅handle_request一次，SSH readiness空连接使其提前结束；修复为等实际POST或截止。
 不能把该探针实现错误误判为Docker无法访问宿主loopback。脚本有SSH连接、服务器、容器超时及finally清理。
+
+### Durable worker ledger（实现批次）
+
+`uni_agent/tasks/harbor_dsh/ledger.py` 以SQLite FULL同步事务保存请求及状态；job/idempotency/nonce/Gateway session各自唯一。`submit`在同一写事务内检查并登记；同请求重试只返回原状态（允许查询过期旧请求），不同内容重用身份拒绝。`start(now_unix=...)`检查截止和单活动任务约束，两连接竞争由数据库写事务串行化。
+
+`cancel`进入`cancelling`，只有executor确认停止并持久化产物后才能`seal(cancelled)`；重启保留running/verifying/cancelling，不自动重跑或释放槽位。成功只能从verifying seal；终态manifest不可替换。新增cancelling是清理待确认状态，不冒充cancelled。
+
+该层不证明executor已经清理、不校验artifact字节、不提供HTTP认证；调用者必须完成这些职责。下一批HTTP worker复用此账本，不另建内存版重放表。测试覆盖重启、过期、冲突、取消、seal不变性与实际两线程争用。

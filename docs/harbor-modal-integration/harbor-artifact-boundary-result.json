@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "model_called": false,
+  "cases": [
+    {
+      "mode": "symlink",
+      "expected_reward": null,
+      "agent_container": "ccd8a74ac34fd1dd2992a6b13e798c31f8e1d98ff5cb7c282d1d8b7ab2e18dca",
+      "agent_mounts": [],
+      "exception": {
+        "exception_type": "AnswerArtifactError",
+        "exception_message": "Rejected unsafe or malformed answer artifact",
+        "occurred_at": "2026-09-08T14:20:22.385245"
+      },
+      "rewards": null,
+      "artifact_rejection_verified": true,
+      "agent_cleanup_verified": true
+    },
+    {
+      "mode": "directory",
+      "expected_reward": null,
+      "agent_container": "94c568053563bdf13f3e6b2ebd3380655a47ca98a594f930c594add59a6786fd",
+      "agent_mounts": [],
+      "exception": {
+        "exception_type": "AnswerArtifactError",
+        "exception_message": "Rejected unsafe or malformed answer artifact",
+        "occurred_at": "2026-09-08T14:20:30.838936"
+      },
+      "rewards": null,
+      "artifact_rejection_verified": true,
+      "agent_cleanup_verified": true
+    },
+    {
+      "mode": "oversize",
+      "expected_reward": null,
+      "agent_container": "6cee9166447d8da07b2b611324cfb0d76ad0034aeecb0eef39b70c25b2d573f2",
+      "agent_mounts": [],
+      "exception": {
+        "exception_type": "AnswerArtifactError",
+        "exception_message": "Rejected unsafe or malformed answer artifact",
+        "occurred_at": "2026-09-08T14:20:42.411191"
+      },
+      "rewards": null,
+      "artifact_rejection_verified": true,
+      "agent_cleanup_verified": true
+    }
+  ],
+  "host_verifier_sha256": "bbe5540ad6700aee6a39b9ab91f4eb5fa40ae9bbc7f0dcb4448575038cc11e98",
+  "scope": "fixed SDK image and unmodified in-container Python; not a host-enforced hostile-process output cap"
+}

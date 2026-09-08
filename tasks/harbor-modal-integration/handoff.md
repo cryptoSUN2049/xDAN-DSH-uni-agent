@@ -299,3 +299,10 @@
 - 实测v1 Oracle因/logs/agent目录缺失失败；补容器普通目录后v2 oracle=1/nop=0/tamper=0，三例无exception，宿主verifier未变。Docker查询专用agent/verifier均无残留。
 - 证据docs/harbor-modal-integration/harbor-isolation-result.json；原始/private/tmp/dsh-harbor-isolation-v2；133项接口/协议/隔离测试通过。
 - 下一批：下载前regular-file/size/symlink边界，随后有界worker/Task绑定真实Gateway，M2学生采样与更新/reload。当前未新启动GPU训练。
+
+## M2 任务账本和文件边界
+
+- ledger.py：SQLite持久化请求/状态，原子身份登记、单活动任务、deadline、取消待确认、不可变seal；重启不重跑；实际双线程争用仅一个成功。
+- 本轮154相关测试通过。容器内同fd收集器三项真实symlink/directory/oversize精确AnswerArtifactError，未评分/未落host答案；正常v3仍1/0/0，证据harbor-artifact-boundary-result.json和harbor-isolation-v3-result.json。
+- 明确剩余边界：当前收集器依赖agent容器内python且exec全量缓冲，尚非敌对进程硬传输限制。子代理unia_capability_audit已接下一批任务：可信宿主docker cp archive流硬限并解析单个普通answer.txt，不extractall。接班先核验agent状态及当前diff，勿覆盖它的代码。
+- 后续主线必须实现实际HTTP worker/Harbor executor/Task回传并跑M2模型更新，不能长期停留在边界单测。GPU本轮未启动新训练，G1仍active。

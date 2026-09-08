@@ -1,4 +1,9 @@
 import asyncio
+import json
+import os
+import shlex
+import subprocess
+import sys
 from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
@@ -233,3 +238,121 @@ def test_log_directory_transport_failure_does_not_start_agent(task_dir, monkeypa
         setup.assert_not_awaited()
     finally:
         close(trial)
+
+
+def answer_transport(trial, monkeypatch, folder):
+    calls = []
+
+    async def execute(**kwargs):
+        argv = shlex.split(kwargs["command"])
+        assert argv == ["python", "-c", isolated_trial._ANSWER_READ_SCRIPT, "/app"]
+        calls.append(kwargs)
+        result = subprocess.run(
+            [sys.executable, "-c", isolated_trial._ANSWER_READ_SCRIPT, str(folder)],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        return SimpleNamespace(return_code=result.returncode, stdout=result.stdout, stderr=result.stderr)
+
+    monkeypatch.setattr(trial.agent_environment, "exec", execute)
+    for name in ("service_download_file", "service_download_dir", "service_is_dir"):
+        monkeypatch.setattr(trial.agent_environment, name, AsyncMock(side_effect=AssertionError("unsafe copy")))
+    return calls
+
+
+@pytest.mark.parametrize("content", [b"", b"\x00\xff\n", b"a" * 4096, None])
+def test_bounded_answer_collection_copies_only_snapshot_bytes(task_dir, monkeypatch, content):
+    trial = create_isolated_trial(config(task_dir), allowed_task_dir=task_dir)
+    folder = task_dir.parent / "agent-app"
+    folder.mkdir()
+    if content is not None:
+        (folder / "answer.txt").write_bytes(content)
+    calls = answer_transport(trial, monkeypatch, folder)
+    try:
+        asyncio.run(trial._collect_artifacts())
+        target = trial.paths.artifacts_dir / "app/answer.txt"
+        if content is None:
+            assert not target.exists()
+        else:
+            assert target.read_bytes() == content
+        manifest = json.loads((trial.paths.artifacts_dir / "manifest.json").read_text())
+        answer = next(entry for entry in manifest if entry["source"] == "/app/answer.txt")
+        assert answer["status"] == ("empty" if content is None else "ok")
+        asyncio.run(trial._collect_artifacts())
+        assert len(calls) == 1
+        assert calls[0]["timeout_sec"] == 30
+    finally:
+        close(trial)
+
+
+@pytest.mark.parametrize("kind", ["symlink", "dangling", "directory", "oversize", "fifo", "parent_symlink"])
+def test_unsafe_answer_is_rejected_and_recovery_cannot_retry_collection(task_dir, monkeypatch, kind):
+    trial = create_isolated_trial(config(task_dir), allowed_task_dir=task_dir)
+    folder = task_dir.parent / "agent-app"
+    folder.mkdir()
+    answer = folder / "answer.txt"
+    if kind in {"symlink", "dangling"}:
+        target = folder / "other"
+        if kind == "symlink":
+            target.write_text("malicious")
+        answer.symlink_to(target)
+    elif kind == "directory":
+        answer.mkdir()
+    elif kind == "oversize":
+        answer.write_bytes(b"x" * 4097)
+    elif kind == "fifo":
+        os.mkfifo(answer)
+    else:
+        real_folder = folder.with_name("real-app")
+        folder.rename(real_folder)
+        folder.symlink_to(real_folder, target_is_directory=True)
+    calls = answer_transport(trial, monkeypatch, folder)
+    trial._init_result()
+    monkeypatch.setattr(trial, "_sync_agent_output", AsyncMock())
+    stop = AsyncMock()
+    monkeypatch.setattr(trial, "_stop_agent_environment", stop)
+    try:
+        with pytest.raises(RuntimeError, match="answer"):
+            asyncio.run(trial._collect_artifacts())
+        assert not (trial.paths.artifacts_dir / "app/answer.txt").exists()
+        asyncio.run(trial._recover_outputs())
+        assert len(calls) == 1
+        stop.assert_awaited_once()
+    finally:
+        close(trial)
+
+
+@pytest.mark.parametrize(
+    "reply", ["{}", '{"status":"ok","content":"!!!!"}', '{"status":"ok","content":""}' + "x" * 6000]
+)
+def test_malformed_or_oversized_answer_envelope_is_rejected(task_dir, monkeypatch, reply):
+    trial = create_isolated_trial(config(task_dir), allowed_task_dir=task_dir)
+    monkeypatch.setattr(
+        trial.agent_environment, "exec", AsyncMock(return_value=SimpleNamespace(return_code=0, stdout=reply))
+    )
+    try:
+        with pytest.raises(RuntimeError, match="answer"):
+            asyncio.run(trial._collect_artifacts())
+        assert not (trial.paths.artifacts_dir / "app/answer.txt").exists()
+    finally:
+        close(trial)
+
+
+def test_trial_run_records_artifact_error_and_never_scores_or_retries(task_dir, monkeypatch):
+    trial = create_isolated_trial(config(task_dir), allowed_task_dir=task_dir)
+    folder = task_dir.parent / "agent-app"
+    folder.mkdir()
+    (folder / "answer.txt").write_bytes(b"x" * 4097)
+    calls = answer_transport(trial, monkeypatch, folder)
+    for method in ("_prepare", "_run_agent", "_upload_agent_logs", "_sync_agent_output", "_stop_agent_environment"):
+        monkeypatch.setattr(trial, method, AsyncMock())
+    verifier = AsyncMock()
+    monkeypatch.setattr(trial, "_run_verifier", verifier)
+    result = asyncio.run(trial.run())
+    assert result.exception_info.exception_type == "AnswerArtifactError"
+    assert result.exception_info.exception_message == "Rejected unsafe or malformed answer artifact"
+    assert result.verifier_result is None
+    verifier.assert_not_awaited()
+    assert len(calls) == 1
+    assert not (trial.paths.artifacts_dir / "app/answer.txt").exists()

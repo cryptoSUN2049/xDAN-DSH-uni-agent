@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "model_called": false,
+  "cases": [
+    {
+      "mode": "oracle",
+      "expected_reward": 1,
+      "agent_container": "47d7c1bf17334709de46c38a56676e729ee373640bf9c6e801085f6b26bff8a7",
+      "agent_mounts": [],
+      "exception": null,
+      "rewards": {
+        "reward": 1.0
+      },
+      "agent_cleanup_verified": true
+    },
+    {
+      "mode": "nop",
+      "expected_reward": 0,
+      "agent_container": "28f1338569b878b54d833a54774a5924b20e807bbb708f8df5ff791bedef7bca",
+      "agent_mounts": [],
+      "exception": null,
+      "rewards": {
+        "reward": 0.0
+      },
+      "agent_cleanup_verified": true
+    },
+    {
+      "mode": "tamper",
+      "expected_reward": 0,
+      "agent_container": "2f9e74fef5636ad916436ca86fc3d46e8d6d4bdbc545fc20debcf9abc65b0402",
+      "agent_mounts": [],
+      "forged_agent_score": true,
+      "exception": null,
+      "rewards": {
+        "reward": 0.0
+      },
+      "agent_cleanup_verified": true
+    }
+  ],
+  "host_verifier_sha256": "bbe5540ad6700aee6a39b9ab91f4eb5fa40ae9bbc7f0dcb4448575038cc11e98"
+}

@@ -271,3 +271,10 @@ Review：本批只新增部署目录与设计；不将其标记为安装或部�
 - [x] 真实oracle/nop/评分伪造三例及无host mounts、清理验证（v2，1/0/0）。
 - [ ] artifact类型/符号链接/大小在下载前受限，绑定到worker准入。
 - Review：首轮oracle因移除mount后/logs/agent目录缺失而exit1，得到0分；不得将无exception视作oracle成功。适配器补普通容器目录后以新run复验。
+
+### M2 worker执行状态
+
+- [x] SQLite持久账本与原子请求登记、单任务领取、取消待确认、不可变seal；7项测试，连同协议76通过。
+- [x] 单文件同fd读取与真实容器异常产物拒绝；宿主硬限传输仍待替换。
+- [ ] HTTP worker + Harbor executor + Task回传与现有receipt准入。
+- Review：账本重启不重跑旧任务；它不代替实际进程清理或训练消费证据。
