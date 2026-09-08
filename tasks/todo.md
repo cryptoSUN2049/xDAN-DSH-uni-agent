@@ -138,3 +138,13 @@ Review：本次只交付文档，未执行训练；Harbor runtime、任务格式
 
 - [x] 将用户确认的跨仓分工写入 tasks/lessons.md，并连接 README、当前 handoff 与计划入口。
 - Review：仅修改本 worktree 文档，DSH 侧已有未提交交接保持原样；检查链接与 diff，不涉及运行结果变化。
+
+### 2026-09-08 统一全链路方案
+
+- [x] index.html 升级为当前权威总览，整合模型学习、教师辅助、云端执行与 Harness 演化。
+- [ ] 恢复可复建 DSH runtime 并完成原八类真实执行验收。
+- [ ] 完成 H0 → DSH / Gateway → 可信训练轨迹 → 更新 / reload → 独立评估。
+- [ ] 按基线缺口细化 SFT / OPD 接口与数据设计，单独验证教师信号和成本。
+- [ ] 完成 Modal 同任务迁移，再扩全异步与 Harness 候选验收、晋升和回滚。
+
+Review：本轮总览补全，不升级任何运行状态；付费云端、模型调用范围沿用既有边界。

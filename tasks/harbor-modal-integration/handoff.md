@@ -2,6 +2,9 @@
 
 ## 1. TL;DR
 
+- 2026-09-08 用户确认本 worktree 继续全链路集成；docs/harbor-modal-integration/index.html
+  已成为统一方案入口，覆盖 SFT / OPD / RL 与 Harness 演化（方案范围，不代表完成）。
+
 - 用户已确认仓库分工：本仓为训练集成主线，DSH-Exp 负责 DSH 本体与历史研究；
   冷启动先读 [项目长期记忆](../lessons.md) 的 2026-09-08 分工规则。
 
