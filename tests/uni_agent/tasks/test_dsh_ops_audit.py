@@ -196,3 +196,24 @@ def test_audit_marks_pre_crosswalk_dump_as_legacy_unjoinable(tmp_path: Path) -> 
     assert report["eligible"] is False
     assert report["summary"]["legacy_unjoinable_files"] == 1
     assert report["summary"]["unexpected_consumed_rows"] == 1
+
+
+def test_audit_accepts_scalar_metrics_and_still_rejects_receipt_tamper(tmp_path: Path) -> None:
+    run_root, session_dir = _write_run(tmp_path)
+    path = session_dir / "trajectory.json"
+    dump = json.loads(path.read_text())
+    del dump["trajectories"][0]["reward_extra_info"]["dsh"]
+    path.write_text(json.dumps(dump))
+    assert audit_trajectory_groups(run_root, partition="train")["eligible"] is True
+    dump["trajectories"][0]["reward_info"]["dsh"]["receipt_sha256"] = "sha256:" + "0" * 64
+    path.write_text(json.dumps(dump))
+    assert audit_trajectory_groups(run_root, partition="train")["eligible"] is False
+
+
+def test_audit_rejects_conflicting_legacy_lineage_projection(tmp_path: Path) -> None:
+    run_root, session_dir = _write_run(tmp_path)
+    path = session_dir / "trajectory.json"
+    dump = json.loads(path.read_text())
+    dump["trajectories"][0]["reward_extra_info"]["dsh"]["receipt_sha256"] = "changed"
+    path.write_text(json.dumps(dump))
+    assert audit_trajectory_groups(run_root, partition="train")["eligible"] is False

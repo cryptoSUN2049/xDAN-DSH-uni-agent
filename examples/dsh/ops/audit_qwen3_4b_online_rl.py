@@ -123,7 +123,9 @@ def _load_dump_trajectory(
         raise TrajectoryAuditError("trajectory metadata reward_score must be finite")
     if reward_score != reward_info.get("reward") or reward_score != reward_extra_info.get("verifier_reward"):
         raise TrajectoryAuditError("trajectory metadata reward projection does not match verifier reward")
-    if reward_info.get("dsh") != reward_extra_info.get("dsh"):
+    # Modern dumps keep structured proof only in reward_info; scalar metrics
+    # must remain consumable by VERL. If a legacy duplicate exists, bind it too.
+    if "dsh" in reward_extra_info and reward_info.get("dsh") != reward_extra_info["dsh"]:
         raise TrajectoryAuditError("trajectory metadata DSH lineage projection does not match reward_info")
     if trajectory_meta.get("prompt_len") != len(prompt_ids):
         raise TrajectoryAuditError("trajectory metadata prompt_len does not match NPZ")
