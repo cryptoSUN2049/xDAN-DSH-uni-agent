@@ -1,35 +1,48 @@
 import pytest
 
-from uni_agent.framework import task_runner
+from uni_agent.framework import task_runner as task_runner_module
 from uni_agent.framework.task_runner import (
     _extract_upstream,
     _inject_dsh_artifact_roots,
     _inject_gateway_tunnel,
-    _reward_info_from_result,
     _rewrite_gateway_url,
+    compute_score,
+    run_task,
+    score_from_runner_result,
 )
 from uni_agent.gateway.session import SessionHandle
 from uni_agent.tasks import TaskConfig, TaskResult
+from uni_agent.tasks.base import build_reward_info
 
 
+@pytest.mark.cpu
+@pytest.mark.level0
 def test_rewrite_gateway_url_replaces_host_with_tunnel_port():
     assert _rewrite_gateway_url("http://gateway.example:40169/sessions/abc/v1", 38197) == (
         "http://127.0.0.1:38197/sessions/abc/v1"
     )
 
 
+@pytest.mark.cpu
+@pytest.mark.level0
 def test_rewrite_gateway_url_custom_proxy_port():
     assert _rewrite_gateway_url("http://gateway:8000/v1", 4242) == "http://127.0.0.1:4242/v1"
 
 
+@pytest.mark.cpu
+@pytest.mark.level0
 def test_extract_upstream_returns_host_port():
     assert _extract_upstream("http://gateway.example:40169/sessions/abc/v1") == "gateway.example:40169"
 
 
+@pytest.mark.cpu
+@pytest.mark.level0
 def test_extract_upstream_none_without_port():
     assert _extract_upstream("http://gateway/v1") is None
 
 
+@pytest.mark.cpu
+@pytest.mark.level0
 def test_inject_gateway_tunnel_rewrites_upstream_and_base_url():
     task = {
         "sandbox": {"provider": "openyuanrong", "sandbox_kwargs": {"proxy_port": 38197, "image": "x"}},
@@ -44,12 +57,16 @@ def test_inject_gateway_tunnel_rewrites_upstream_and_base_url():
     assert merged["agent"]["step_limit"] == 10
 
 
+@pytest.mark.cpu
+@pytest.mark.level0
 def test_inject_gateway_tunnel_raises_without_port():
     task = {"sandbox": {"provider": "openyuanrong", "sandbox_kwargs": {"proxy_port": 38197}}}
     with pytest.raises(ValueError, match="cannot derive gateway tunnel upstream"):
         _inject_gateway_tunnel(task, "http://gateway.example/v1")
 
 
+@pytest.mark.cpu
+@pytest.mark.level0
 def test_inject_gateway_tunnel_rejects_non_yuanrong_sandbox():
     task = {"sandbox": {"provider": "local", "sandbox_kwargs": {"proxy_port": 38197}}}
     with pytest.raises(ValueError, match="supported only on 'openyuanrong'"):
@@ -106,7 +123,7 @@ def test_task_result_positional_field_order():
 def test_reward_info_omits_unknown_agent_completion():
     result = TaskResult(reward=0.5, accuracy=1.0)
 
-    assert _reward_info_from_result(result) == {
+    assert build_reward_info(result) == {
         "reward": 0.5,
         "acc": 1.0,
     }
@@ -116,19 +133,19 @@ def test_reward_info_omits_unknown_agent_completion():
 def test_reward_info_forwards_agent_completion(finished):
     result = TaskResult(reward=0.0, finished=finished)
 
-    assert _reward_info_from_result(result) == {
+    assert build_reward_info(result) == {
         "reward": 0.0,
         "finished": finished,
     }
 
 
 def test_reward_info_rejects_non_boolean_agent_completion():
-    result = TaskResult(reward=0.0, finished=0)  # type: ignore[arg-type]
-
     with pytest.raises(ValueError, match="finished must be a bool or None"):
-        _reward_info_from_result(result)
+        TaskResult(reward=0.0, finished=0)
 
 
+@pytest.mark.cpu
+@pytest.mark.level0
 @pytest.mark.asyncio
 async def test_run_task_binds_raw_prompt_to_sample_task_config(monkeypatch, tmp_path):
     config_path = tmp_path / "tasks.yaml"
@@ -152,14 +169,13 @@ async def test_run_task_binds_raw_prompt_to_sample_task_config(monkeypatch, tmp_
             captured["config"] = self.config
             return TaskResult(reward=1.0, accuracy=1.0, finished=True)
 
-    monkeypatch.setattr(task_runner, "get_task", _FakeTask)
+    monkeypatch.setattr(task_runner_module, "get_task", _FakeTask)
     source_prompt = [{"role": "user", "content": "Canonical source problem"}]
 
-    await task_runner.run_task(
+    await task_runner_module.run_task(
         session=SessionHandle(
             session_id="test-session",
             base_url="http://gateway/sessions/test/v1",
-            reward_info_url=None,
         ),
         raw_prompt=source_prompt,
         tools_kwargs={
@@ -174,119 +190,81 @@ async def test_run_task_binds_raw_prompt_to_sample_task_config(monkeypatch, tmp_
     assert captured["config"].prompt == source_prompt
 
 
-def _patch_fake_task(monkeypatch, tmp_path):
-    config_path = tmp_path / "tasks.yaml"
-    config_path.write_text("- name: test_task")
-    captured = {}
-
-    class _FakeTask:
-        def __init__(self, config):
-            self.config = config
-
-        async def run(self):
-            captured["ran"] = True
-            return TaskResult(reward=1.0, accuracy=1.0, finished=True)
-
-    monkeypatch.setattr(task_runner, "get_task", _FakeTask)
-    return config_path, captured
-
-
-def _runner_kwargs():
-    return {
-        "raw_prompt": [{"role": "user", "content": "hello"}],
-        "tools_kwargs": {"task": {"name": "test_task", "metadata": {}}},
-    }
-
-
+@pytest.mark.cpu
+@pytest.mark.level0
 @pytest.mark.asyncio
-async def test_run_task_requires_report_reward_when_ack_is_required():
-    with pytest.raises(ValueError, match="requires report_reward=True"):
-        await task_runner.run_task(
-            session=SessionHandle(session_id="test-session"),
-            report_reward=False,
-            require_reward_post=True,
-        )
-
-
-@pytest.mark.asyncio
-@pytest.mark.parametrize(
-    ("report_reward", "require_reward_post", "message"),
-    [
-        ("true", False, "report_reward must be a bool"),
-        (False, "true", "require_reward_post must be a bool"),
-    ],
-)
-async def test_run_task_rejects_non_boolean_reward_flags(report_reward, require_reward_post, message):
-    with pytest.raises(ValueError, match=message):
-        await task_runner.run_task(
-            session=SessionHandle(session_id="test-session"),
-            report_reward=report_reward,
-            require_reward_post=require_reward_post,
-        )
-
-
-@pytest.mark.asyncio
-async def test_run_task_ack_required_rejects_missing_reward_endpoint(monkeypatch, tmp_path):
-    config_path, captured = _patch_fake_task(monkeypatch, tmp_path)
-    kwargs = _runner_kwargs()
-    kwargs["task_config_path"] = str(config_path)
-
-    with pytest.raises(RuntimeError, match="reward-info endpoint"):
-        await task_runner.run_task(
-            session=SessionHandle(session_id="test-session", base_url="http://gateway/v1"),
-            report_reward=True,
-            require_reward_post=True,
-            **kwargs,
-        )
-    assert captured["ran"] is True
-
-
-@pytest.mark.asyncio
-async def test_run_task_ack_required_rejects_failed_reward_post(monkeypatch, tmp_path):
-    config_path, _ = _patch_fake_task(monkeypatch, tmp_path)
-    kwargs = _runner_kwargs()
-    kwargs["task_config_path"] = str(config_path)
-
-    async def _failed_post(_url, _result):
-        return False
-
-    monkeypatch.setattr(task_runner, "_post_reward_info", _failed_post)
-    with pytest.raises(RuntimeError, match="reward acknowledgement"):
-        await task_runner.run_task(
-            session=SessionHandle(
-                session_id="test-session",
-                base_url="http://gateway/v1",
-                reward_info_url="http://gateway/reward",
-            ),
-            report_reward=True,
-            require_reward_post=True,
-            **kwargs,
-        )
-
-
-@pytest.mark.asyncio
-async def test_run_task_ack_required_accepts_successful_reward_post(monkeypatch, tmp_path):
-    config_path, _ = _patch_fake_task(monkeypatch, tmp_path)
-    kwargs = _runner_kwargs()
-    kwargs["task_config_path"] = str(config_path)
-    seen = {}
-
-    async def _successful_post(url, result):
-        seen["url"] = url
-        seen["reward"] = result.reward
-        return True
-
-    monkeypatch.setattr(task_runner, "_post_reward_info", _successful_post)
-    result = await task_runner.run_task(
-        session=SessionHandle(
-            session_id="test-session",
-            base_url="http://gateway/v1",
-            reward_info_url="http://gateway/reward",
-        ),
-        report_reward=True,
-        require_reward_post=True,
-        **kwargs,
+async def test_run_task_returns_task_result_while_ignoring_framework_tool_config(monkeypatch):
+    task_result = TaskResult(
+        reward=0.5,
+        accuracy=1.0,
+        finished=False,
+        extra_info={"report": {"resolved": 1}},
     )
 
-    assert result.reward == 1.0
-    assert seen == {"url": "http://gateway/reward", "reward": 1.0}
+    class _Resolver:
+        def resolve(self, sample_config, runtime_model):
+            assert sample_config["name"] == "stub"
+            assert runtime_model["base_url"] == "http://gateway/session/v1"
+            return {"name": "stub"}
+
+    class _Task:
+        async def run(self):
+            return task_result
+
+    monkeypatch.setattr(task_runner_module, "TaskConfigResolver", _Resolver)
+    monkeypatch.setattr(task_runner_module, "get_task", lambda task: _Task())
+
+    result = await run_task(
+        session=SessionHandle(session_id="session", base_url="http://gateway/session/v1"),
+        tools_kwargs={"task": {"name": "stub"}},
+        tool_config=[object()],
+    )
+
+    assert result is task_result
+
+
+@pytest.mark.cpu
+@pytest.mark.level0
+def test_score_from_runner_result_passes_through_runner_reward_info():
+    assert compute_score is score_from_runner_result
+    assert score_from_runner_result(
+        data_source="stub",
+        solution_str="unused",
+        ground_truth="unused",
+        extra_info={
+            "runner_reward_info": {
+                "reward": "0.5",
+                "metrics": {"acc": True, "format": 0.8, "score": 0.75},
+                "reward_context": {"trace": "unused by pass-through"},
+            }
+        },
+        reward_router_address="http://reward-router",
+        reward_model_tokenizer=object(),
+    ) == {"score": 0.5, "acc": True, "format": 0.8}
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("flag", ["report_reward", "require_reward_post"])
+async def test_runner_rejects_removed_reward_http_flags(flag):
+    with pytest.raises(ValueError, match="legacy reward POST flags"):
+        await run_task(session=SessionHandle(session_id="test"), **{flag: True})
+
+
+@pytest.mark.asyncio
+async def test_runner_validates_required_result_before_return(monkeypatch):
+    class Resolver:
+        def resolve(self, *args, **kwargs):
+            return {"name": "stub"}
+
+    class Task:
+        async def run(self):
+            return TaskResult(reward=0.5, verifier_reward=1.0)
+
+    monkeypatch.setattr(task_runner_module, "TaskConfigResolver", Resolver)
+    monkeypatch.setattr(task_runner_module, "get_task", lambda config: Task())
+    with pytest.raises(ValueError, match="must equal"):
+        await run_task(
+            session=SessionHandle(session_id="test"),
+            tools_kwargs={"task": {"name": "stub"}},
+            require_result=True,
+        )

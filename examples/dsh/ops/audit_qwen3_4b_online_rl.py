@@ -139,10 +139,10 @@ def _load_dump_trajectory(
         response_ids=response_ids,
         response_mask=response_mask,
         response_logprobs=response_logprobs,
-        reward_info=reward_info,
+        finished=reward_info.get("finished"),
         reward_score=float(reward_score),
         num_turns=int(trajectory_meta.get("num_turns", 0)),
-        extra_fields={"reward_extra_info": reward_extra_info},
+        extra_fields={"reward_extra_info": reward_extra_info, "dsh_reward_info": reward_info},
     )
 
 
@@ -201,7 +201,7 @@ def _audit_dump(
             reasons.append(f"trajectory_{index}:{exc}")
             continue
         rewards.append(float(trajectory.reward_score))
-        receipt_ids.append(str(trajectory.reward_info["dsh"]["receipt_sha256"]))
+        receipt_ids.append(str(trajectory.extra_fields["dsh_reward_info"]["dsh"]["receipt_sha256"]))
     return reasons, transfer_keys, rewards, receipt_ids
 
 

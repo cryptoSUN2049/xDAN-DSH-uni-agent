@@ -230,7 +230,13 @@ def validate_trajectory(
 ) -> None:
     """Validate one DSH trajectory and every file that establishes its lineage."""
     _validate_token_evidence(trajectory)
-    reward_info = _require_object(trajectory.reward_info, field="reward_info")
+    # New runtime uses typed results; legacy artifact fixtures remain readable.
+    if hasattr(trajectory, "reward_score"):
+        reward_info = _require_object((trajectory.extra_fields or {}).get("dsh_reward_info"), field="reward_info")
+        _require_equal(trajectory.finished, reward_info.get("finished"), field="typed finished")
+        _require_equal(trajectory.reward_score, reward_info.get("reward"), field="typed reward")
+    else:
+        reward_info = _require_object(trajectory.reward_info, field="reward_info")
     if reward_info.get("finished") is not True:
         raise TrajectoryAuditError("reward_info must declare finished=true")
     dsh = _require_object(reward_info.get("dsh"), field="reward_info.dsh")

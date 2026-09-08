@@ -22,11 +22,12 @@ def _write_run(tmp_path: Path, *, consume: bool = True, consumed_step: int = 1) 
     validation_root.mkdir(parents=True)
 
     trajectory, trace_root, result_root = _valid_trajectory(run_root)
-    dsh = trajectory.reward_info["dsh"]
+    dsh = trajectory.extra_fields["dsh_reward_info"]["dsh"]
     scored = replace(
         trajectory,
         reward_score=0.75,
-        extra_fields={"reward_extra_info": {"verifier_reward": 0.75, "dsh": dict(dsh)}},
+        reward_metrics={"verifier_reward": 0.75, "dsh": dict(dsh)},
+        extra_fields={**trajectory.extra_fields, "reward_extra_info": {"verifier_reward": 0.75, "dsh": dict(dsh)}},
     )
     transfer_key = "group-uid_0_0"
     npz_path = session_dir / "trajectory.npz"
@@ -56,7 +57,7 @@ def _write_run(tmp_path: Path, *, consume: bool = True, consumed_step: int = 1) 
                 "num_turns": scored.num_turns,
                 "finished": True,
                 "reward_score": scored.reward_score,
-                "reward_info": scored.reward_info,
+                "reward_info": scored.extra_fields["dsh_reward_info"],
                 "reward_extra_info": scored.extra_fields["reward_extra_info"],
                 "materialization_reason": None,
                 "prompt_len": len(scored.prompt_ids),

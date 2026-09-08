@@ -1,5 +1,16 @@
 # Harbor / Modal 集成交接
 
+## 当前状态覆盖（2026-09-08，优先于下方历史追加记录）
+
+- 用户已批准工程集成；Uni-Agent 89733ec 与配对 VERL fefb080 已进入本地迁移，替代旧 pin。
+- #109 使用 typed TaskResult；DSH 严格回执、整组准入、后处理防篡改与旧 dump 审计投影保留。
+- 回归：framework/tasks 422 passed、1 skipped（Linux /proc）；Gateway session/RLInsight 70 passed。
+- 另一次 parser 组合测试因本机缺少 vLLM 有 4 项失败，不计为通过；Linux GPU 验证仍待完成。
+- deployment/README.md 与 deployment-design.md 已落地；安装器/服务组合尚未实现。
+- 下一步：提交迁移、版本预检、恢复 DSH 发布物、Linux 安装与 Docker oracle，再真实 GPU update/reload。
+- 未购买 GPU、未启动新训练、未推送本分支；下方“未merge/等待批准/固定483b8a0”为历史快照。
+
+
 ## 1. TL;DR
 
 - 架构规范更新为docs/harbor-modal-integration/uni-agent-system-plan-v2.html；

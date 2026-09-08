@@ -115,7 +115,9 @@ def _valid_trajectory(
         response_ids=[20, 21, 22],
         response_mask=[1, 0, 1],
         response_logprobs=[-0.1, 0.0, -0.2],
-        reward_info=reward_info,
+        finished=reward_info.get("finished"),
+        reward_score=reward_info["reward"],
+        extra_fields={"dsh_reward_info": reward_info},
         num_turns=1,
     )
     return trajectory, trace_root, result_root
@@ -158,14 +160,20 @@ def test_validate_trajectories_rejects_verifier_ineligible_episode(tmp_path: Pat
         (lambda trajectory: trajectory.response_mask.__setitem__(slice(None), [0, 0, 0]), "non-empty response mask"),
         (lambda trajectory: trajectory.response_logprobs.__setitem__(0, float("nan")), "finite log probabilities"),
         (lambda trajectory: trajectory.response_mask.pop(), "response mask must align"),
-        (lambda trajectory: trajectory.reward_info.__setitem__("finished", False), "finished=true"),
-        (lambda trajectory: trajectory.reward_info["dsh"].__setitem__("event_count", 2), "event_count"),
         (
-            lambda trajectory: trajectory.reward_info["dsh"].__setitem__("task_id", "dsh/other"),
+            lambda trajectory: trajectory.extra_fields["dsh_reward_info"].__setitem__("finished", False),
+            "typed finished",
+        ),
+        (
+            lambda trajectory: trajectory.extra_fields["dsh_reward_info"]["dsh"].__setitem__("event_count", 2),
+            "event_count",
+        ),
+        (
+            lambda trajectory: trajectory.extra_fields["dsh_reward_info"]["dsh"].__setitem__("task_id", "dsh/other"),
             "task_id",
         ),
         (
-            lambda trajectory: trajectory.reward_info["dsh"].__setitem__(
+            lambda trajectory: trajectory.extra_fields["dsh_reward_info"]["dsh"].__setitem__(
                 "environment_digest", _digest(b"other environment")
             ),
             "environment_digest",
@@ -200,7 +208,7 @@ def test_validate_trajectories_rejects_invalid_training_evidence(tmp_path: Path,
 def test_validate_trajectories_rejects_tampered_artifact_bytes(tmp_path: Path) -> None:
     trajectory, trace_root, result_root = _valid_trajectory(tmp_path)
     artifact_key = hashlib.sha256(
-        f"{trajectory.reward_info['dsh']['dsh_session_id']}\0{trajectory.reward_info['dsh']['trace_sha256']}".encode()
+        f"{trajectory.extra_fields['dsh_reward_info']['dsh']['dsh_session_id']}\0{trajectory.extra_fields['dsh_reward_info']['dsh']['trace_sha256']}".encode()
     ).hexdigest()[:24]
     (result_root / artifact_key / "agent-result.json").write_text("{}\n", encoding="utf-8")
 
@@ -219,7 +227,7 @@ def test_validate_trajectories_rejects_tampered_artifact_bytes(tmp_path: Path) -
 def test_validate_trajectories_rejects_tampered_receipt_bytes(tmp_path: Path) -> None:
     trajectory, trace_root, result_root = _valid_trajectory(tmp_path)
     artifact_key = hashlib.sha256(
-        f"{trajectory.reward_info['dsh']['dsh_session_id']}\0{trajectory.reward_info['dsh']['trace_sha256']}".encode()
+        f"{trajectory.extra_fields['dsh_reward_info']['dsh']['dsh_session_id']}\0{trajectory.extra_fields['dsh_reward_info']['dsh']['trace_sha256']}".encode()
     ).hexdigest()[:24]
     receipt_path = result_root / artifact_key / "verifier-receipt.json"
     receipt = json.loads(receipt_path.read_text(encoding="utf-8"))

@@ -99,7 +99,7 @@ class TaskResult:
 
     ``extra_info`` is evaluator-facing diagnostics and is not sent to the
     rollout Gateway. ``reward_info`` is the explicit, bounded session metadata
-    that a runner may post alongside the scalar reward (for example the hash of
+    returned with the typed result alongside the scalar reward (for example the hash of
     a fresh DSH verifier receipt). Keeping the two fields separate prevents a
     task's potentially large logs or model output from crossing the Gateway
     boundary accidentally. ``verifier_reward`` is framework-owned: trusted task
@@ -107,12 +107,31 @@ class TaskResult:
     cannot claim the same name.
     """
 
-    reward: Any
+    reward: float | None = None
     accuracy: float | None = None
     finished: bool | None = None
-    extra_info: dict[str, Any] | None = None
+    extra_info: dict[str, Any] = dataclasses.field(default_factory=dict)
     reward_info: dict[str, Any] | None = None
     verifier_reward: float | None = None
+
+    def __post_init__(self) -> None:
+        if self.verifier_reward is not None and isinstance(self.reward, bool):
+            raise ValueError("TaskResult.reward must be numeric when verifier_reward is set")
+        for field_name in ("reward", "accuracy"):
+            value = getattr(self, field_name)
+            if value is None:
+                continue
+            try:
+                normalized = float(value)
+            except (TypeError, ValueError) as exc:
+                raise ValueError(f"TaskResult.{field_name} must be a finite number or numeric string") from exc
+            if not math.isfinite(normalized):
+                raise ValueError(f"TaskResult.{field_name} must be a finite number or numeric string")
+            setattr(self, field_name, normalized)
+        if self.finished is not None and type(self.finished) is not bool:
+            raise ValueError("TaskResult.finished must be a bool or None")
+        if not isinstance(self.extra_info, dict):
+            raise ValueError("TaskResult.extra_info must be a dict")
 
 
 def build_reward_info(result: TaskResult) -> dict[str, Any]:
@@ -121,7 +140,7 @@ def build_reward_info(result: TaskResult) -> dict[str, Any]:
     Scalar fields are owned by the framework. Task-provided metadata is
     additive and cannot overwrite ``reward``, ``acc``, or ``finished``. The
     metadata is checked for strict JSON serializability before it crosses the
-    HTTP boundary.
+    Framework boundary.
     """
     if result.finished is not None and type(result.finished) is not bool:
         raise ValueError("TaskResult.finished must be a bool or None")

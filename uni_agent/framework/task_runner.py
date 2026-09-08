@@ -197,6 +197,29 @@ def _prepare_dsh_episode_workdir(
     return _deep_merge(task, {"workdir": str(workspace), "agent": {"default_workdir": str(workspace)}})
 
 
+def score_from_runner_result(
+    *,
+    data_source: str,
+    solution_str: str,
+    ground_truth: object,
+    extra_info: dict[str, Any],
+    **_reward_manager_kwargs: Any,
+) -> dict[str, int | float | bool]:
+    """Adapt the managed Runner result for a VERL RewardLoopWorker scorer.
+
+    The Worker may still apply its own post-processing (for example DAPO's
+    overlong penalty), so this is an adapter for the Runner payload rather than
+    a bypass of the Worker.
+    """
+    runner_reward_info = extra_info["runner_reward_info"]
+    return {**runner_reward_info["metrics"], "score": float(runner_reward_info["reward"])}
+
+
+# Keep the conventional VERL callback name available for existing configs.
+# New configs should prefer the descriptive ``score_from_runner_result`` name.
+compute_score = score_from_runner_result
+
+
 async def run_task(
     *,
     session: SessionHandle,
@@ -206,8 +229,7 @@ async def run_task(
     task_config_path: str | None = None,
     api_key: str = "EMPTY",
     model_name: str | None = None,
-    report_reward: bool = False,
-    require_reward_post: bool = False,
+    require_result: bool = False,
     dsh_trace_root: str | None = None,
     dsh_result_root: str | None = None,
     dsh_episode_workdir_root: str | None = None,
@@ -223,22 +245,17 @@ async def run_task(
 
     Run-level defaults come from the per-task-name YAML file selected by
     ``task_config_path``. ``TaskConfigResolver`` applies that Task Config, the
-    sample values, and the live endpoint in order. When ``report_reward`` is set,
-    the task's reward + info are POSTed back to the session's reward-info endpoint;
-    the standalone evaluator reads the returned :class:`TaskResult` directly. ``require_reward_post`` makes that
-    delivery an episode precondition and raises when the endpoint is absent or the POST is not acknowledged.
+    sample values, and the live endpoint in order.
     """
-    if type(report_reward) is not bool:
-        raise ValueError("report_reward must be a bool")
-    if type(require_reward_post) is not bool:
-        raise ValueError("require_reward_post must be a bool")
-    if require_reward_post and not report_reward:
-        raise ValueError("require_reward_post requires report_reward=True")
+    if type(require_result) is not bool:
+        raise ValueError("require_result must be a bool")
+    if "report_reward" in _ or "require_reward_post" in _:
+        raise ValueError("legacy reward POST flags were removed; use require_result=True")
     episode_workdir = any(
         value is not None for value in (dsh_episode_workdir_root, dsh_episode_source_root, dsh_episode_files)
     )
-    if episode_workdir and not require_reward_post:
-        raise ValueError("DSH episode workdirs require acknowledged reward reporting")
+    if episode_workdir and not require_result:
+        raise ValueError("DSH episode workdirs require validated typed results")
 
     sample_config = tools_kwargs.get("task") if tools_kwargs else None
     if not isinstance(sample_config, dict):
@@ -289,43 +306,18 @@ async def run_task(
             if episode_workdir:
                 assert dsh_episode_source_root is not None and dsh_episode_files is not None
                 _verify_dsh_episode_files(task["workdir"], dsh_episode_source_root, dsh_episode_files)
-        reward_posted = False
-        if report_reward:
-            if session.reward_info_url:
-                reward_posted = await _post_reward_info(session.reward_info_url, result)
-            elif require_reward_post:
-                raise RuntimeError("reward-info endpoint is required but the session did not provide one")
-        if require_reward_post and not reward_posted:
-            raise RuntimeError("reward acknowledgement was not received from the reward-info endpoint")
-        span.record_result(result, reward_posted=reward_posted)
+        if require_result:
+            if not isinstance(result, TaskResult):
+                raise TypeError("DSH runner requires TaskResult")
+            build_reward_info(result)
+            if result.reward is None:
+                raise ValueError("required TaskResult must contain reward")
+        span.record_result(result, reward_posted=False)
         logger.info(
-            "run_task done: task=%s reward=%s acc=%s finished=%s reward_posted=%s",
+            "run_task done: task=%s reward=%s acc=%s finished=%s",
             task_name,
             result.reward,
             result.accuracy,
             result.finished,
-            reward_posted,
         )
-        return result
-
-
-async def _post_reward_info(reward_info_url: str, result: TaskResult) -> bool:
-    """Best-effort POST of task reward, accuracy, and Agent completion."""
-    import aiohttp
-
-    reward_info = _reward_info_from_result(result)
-    try:
-        timeout = aiohttp.ClientTimeout(total=None)
-        async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.post(reward_info_url, json={"reward_info": reward_info}) as response:
-                response.raise_for_status()
-        logger.debug("posted reward_info to %s: %s", reward_info_url, reward_info)
-    except Exception as exc:  # noqa: BLE001 - reward-info is best-effort telemetry
-        logger.warning("failed to post reward_info to %s: %s: %s", reward_info_url, type(exc).__name__, exc)
-        return False
-    return True
-
-
-def _reward_info_from_result(result: TaskResult) -> dict[str, Any]:
-    """Build the session reward payload consumed by the trajectory framework."""
-    return build_reward_info(result)
+    return result

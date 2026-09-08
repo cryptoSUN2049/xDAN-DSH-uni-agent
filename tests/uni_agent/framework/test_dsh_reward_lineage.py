@@ -35,7 +35,7 @@ def test_task_reward_info_preserves_dsh_lineage_for_gateway_trajectory() -> None
 def test_task_reward_info_rejects_reserved_or_nonfinite_metadata() -> None:
     with pytest.raises(ValueError, match="cannot overwrite"):
         build_reward_info(TaskResult(reward=1.0, reward_info={"reward": 2.0}))
-    with pytest.raises(ValueError, match="strict-JSON"):
+    with pytest.raises(ValueError, match="finite number"):
         build_reward_info(TaskResult(reward=float("nan")))
     with pytest.raises(ValueError, match="cannot overwrite"):
         build_reward_info(TaskResult(reward=1.0, reward_info={"verifier_reward": 1.0}))

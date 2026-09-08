@@ -84,7 +84,7 @@ class SandboxShell:
             stderr = res.stderr or ""
         except Exception as exc:
             name = type(exc).__name__
-            if name == "CommandTimeoutError" or isinstance(exc, (TimeoutError, asyncio.TimeoutError)):
+            if name == "CommandTimeoutError" or isinstance(exc, TimeoutError | asyncio.TimeoutError):
                 timed_out = True
                 stderr = str(exc)
             else:

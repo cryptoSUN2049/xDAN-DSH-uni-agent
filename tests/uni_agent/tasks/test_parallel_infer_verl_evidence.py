@@ -42,8 +42,8 @@ def test_strict_config_uses_existing_admission_and_roots(cli, tmp_path):
     framework = config.actor_rollout_ref.rollout.custom.agent_framework
     runner = framework.agent_runners.task.runner_kwargs
 
-    assert runner.report_reward is True
-    assert runner.require_reward_post is True
+    assert "report_reward" not in runner
+    assert runner.require_result is True
     assert runner.dsh_trace_root == str(tmp_path / "traces")
     assert runner.dsh_result_root == str(tmp_path / "results")
     assert framework.fail_on_rollout_error is True
@@ -87,7 +87,8 @@ def test_normal_config_does_not_enable_strict_audit(cli):
         args, task_configs=[{}], served_model_name="policy"
     ).actor_rollout_ref.rollout.custom.agent_framework
     assert framework.log_dir == ""
-    assert framework.agent_runners.task.runner_kwargs.require_reward_post is False
+    assert framework.agent_runners.task.runner_kwargs.get("require_result", False) is False
+    assert "require_reward_post" not in framework.agent_runners.task.runner_kwargs
     assert "trajectory_postprocessor_fqn" not in framework
 
 

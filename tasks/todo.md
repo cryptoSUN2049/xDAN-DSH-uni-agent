@@ -190,7 +190,7 @@ Review：只读API/源码核查并更新文档，无依赖升级或功能测试�
 
 - [x] fetch目标对象、核验上游gitlink、merge-tree预演。
 - [x] 写8冲突文件、52提交VERL差异、迁移合同与测试设计。
-- [ ] Human Gate确认具体同步设计后实施合并、配对pin与兼容回归。
+- [x] 用户确认同步设计；已迁移配对 pin 和 typed TaskResult，CPU 回归通过。Linux/vLLM/GPU 验证仍待完成。
 
 ### 三阶段主线统一
 
@@ -212,3 +212,12 @@ Review：只读API/源码核查并更新文档，无依赖升级或功能测试�
 
 - [x] 将三阶段细化为15项任务，标明依赖、归属、验收与状态；不替换历史P0—P6资格。
 - [ ] 按任务清单产生新运行证据，再更新状态。
+
+### 安装部署入口
+
+- [x] 创建 deployment/README.md 与部署设计，明确复用现有 ops。
+- [ ] 实现版本清单与只读预检，恢复 DSH 发布物。
+- [ ] 实现 Linux 隔离安装与必要服务启动/健康检查。
+- [ ] Docker oracle → 真实 DSH episode → GPU update/reload → 干净环境复建。
+
+Review：本批只新增部署目录与设计；不将其标记为安装或部署完成。

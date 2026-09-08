@@ -11,8 +11,8 @@ framework adapter + TransferQueue (TQ):
     ->  per-trajectory records written to TransferQueue
 
 The per-sample score is the trainer's own ``rm_scores`` read back from TQ: ``run_task``
-(``report_reward=True``) posts the task reward to its session, and the framework writes
-it as ``reward_score`` -- no external reward model. Fan-out is ``rollout.n`` (``--n``),
+returns a typed task result, and the framework writes its reward as ``reward_score`` --
+no external reward model. Fan-out is ``rollout.n`` (``--n``),
 with no resolved/wrong-answer/timeout bucketing (just mean ``rm_scores``).
 
 Example (single node, 4-way tensor parallel)::
@@ -150,18 +150,18 @@ def init_config(args: argparse.Namespace, *, task_configs: list[dict], served_mo
                 "runner_kwargs": {
                     "task_config_path": args.task_config,
                     "model_name": served_model_name,
-                    "report_reward": True,
-                    "require_reward_post": args.require_reward_post,
                 },
             }
         },
     }
     agent_framework_cfg["log_dir"] = args.log_dir
     runner_kwargs = agent_framework_cfg["agent_runners"]["task"]["runner_kwargs"]
+    if args.require_reward_post:
+        runner_kwargs["require_result"] = True
     if args.dsh_trace_root is not None or args.dsh_result_root is not None:
         runner_kwargs.update(dsh_trace_root=args.dsh_trace_root, dsh_result_root=args.dsh_result_root)
     if args.dsh_strict_audit:
-        runner_kwargs["require_reward_post"] = True
+        runner_kwargs["require_result"] = True
         agent_framework_cfg.update(
             use_reward_loop_worker=False,
             fail_on_rollout_error=True,
@@ -535,9 +535,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Max in-flight gateway sessions for the runner (runner.max_concurrent_sessions; env GLOBAL_CONCURRENCY).",
     )
     parser.add_argument(
+        "--require-result",
         "--require-reward-post",
+        dest="require_reward_post",
         action="store_true",
-        help="Fail a rollout when the session reward endpoint is absent or does not acknowledge the reward POST.",
+        help="Require a validated typed TaskResult; --require-reward-post is a legacy CLI alias (no HTTP POST).",
     )
     parser.add_argument(
         "--log-dir",

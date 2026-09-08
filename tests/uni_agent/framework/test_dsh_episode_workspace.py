@@ -90,7 +90,7 @@ def test_symlinked_source_file_is_rejected(episode, tmp_path):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("tamper", [False, True])
-async def test_runner_checks_episode_files_before_reward_post(episode, monkeypatch, tmp_path, tamper):
+async def test_runner_checks_episode_files_before_returning_typed_result(episode, monkeypatch, tmp_path, tamper):
     repository = Path(__file__).resolve().parents[3]
     config_path = tmp_path / "task.yaml"
     config = yaml.safe_load((repository / "examples/dsh/evolution_task_config_v3_live.yaml").read_text())
@@ -105,13 +105,7 @@ async def test_runner_checks_episode_files_before_reward_post(episode, monkeypat
                 (Path(self.task["workdir"]) / "fixtures/input.json").write_text("tampered by candidate")
             return TaskResult(reward=1.0, finished=True)
 
-    async def post(*args):
-        assert not tamper, "tampered episode cannot post verifier reward"
-        return True
-
     monkeypatch.setattr(task_runner, "get_task", TamperingTask)
-    monkeypatch.setattr(task_runner, "_post_reward_info", post)
-    episode["session"].reward_info_url = "http://gateway/sessions/gateway-1/reward"
 
     async def run():
         return await task_runner.run_task(
@@ -119,8 +113,7 @@ async def test_runner_checks_episode_files_before_reward_post(episode, monkeypat
             task_config_path=str(config_path),
             tools_kwargs={"task": {"name": "dsh_architecture", "metadata": {}}},
             raw_prompt=[{"role": "user", "content": "test"}],
-            report_reward=True,
-            require_reward_post=True,
+            require_result=True,
             dsh_episode_workdir_root=episode["workdir_root"],
             dsh_episode_source_root=episode["source_root"],
             dsh_episode_files=episode["files"],
