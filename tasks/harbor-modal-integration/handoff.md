@@ -3,8 +3,9 @@
 ## 1. TL;DR
 
 - 当前worktree `harbor-modal-integration` / 分支 `worktree-harbor-modal-integration`。Goal active；四能力与结果复现优先，Harbor后置，SFT不属本轮。权威目标active-engineering-goal.md，总方案uni-agent-system-plan-v3.html。
-- **当前GPU作业**：第二族 `/root/runs/dsh-memory-updates-r1` writer已288.039秒exit0/评分1；freeze严格通过，独立reader已启动（监督PID159302）。remote固定d3084f2、已验收venv，reader短独占 `RAY_TMPDIR=/tmp/dsh-mu-r1b`。不修改运行中checkout；reader通过后运行finalize并归档。
-- **最新GPU完成作业**：`/root/runs/dsh-memory-constraints-r3`，reader监督PID152851；remote checkout `/workspace/rebuild/uni-agent-native-n0-r1` 固定 `d3084f2a771804f011c4e641ecf0986c7166bc86`，旧已验收venv，writer prompt revision2 已282.038秒exit0/score1，freeze严格通过；B已326.049秒exit0/reward1，主线程finalize整链passed。该run已完成，无训练。
+- **当前GPU作业**：`context-v2-curriculum-r1` 完整12题在线RL，supervisor162712，PID在 `/root/runs/context-v2-curriculum-r1-plan/supervisor.pid`；remote固定d3084f2、已验收venv，短独占 RAY_TMPDIR=/tmp/dsh-cv2c1，wall7200秒。12train/4dev、n4/batch1/epoch1、save/test6，checkpoint在/workspace。已启动尚未验收；真实日志已确认train dataset size=12、val=4、Total training steps=12。日志`/root/runs/context-v2-curriculum-r1/supervision/train.log`，不修改运行中checkout；实际唯一消费与非零adv组待审计。
+- **最新完成第二族**：`dsh-memory-updates-r1` A/B均exit0、reward1，finalize passed，旧eu-west-test被当前ap-south-test正确替代；独立CPU复核与云盘归档通过，training=false。报告native-memory-updates-r1-result.md/json。
+- **已完成记忆第一族**：`/root/runs/dsh-memory-constraints-r3`，reader监督PID152851；remote checkout `/workspace/rebuild/uni-agent-native-n0-r1` 固定 `d3084f2a771804f011c4e641ecf0986c7166bc86`，旧已验收venv，writer prompt revision2 已282.038秒exit0/score1，freeze严格通过；B已326.049秒exit0/reward1，主线程finalize整链passed。该run已完成，无训练。
 - **context独立reload已完成**：`context-v2-train-r1-reload` 415.009秒exit0，model/optimizer/RNG/lr_scheduler真实从step2加载；4/4fresh评估组被消费，无新增训练更新。reward均值.241875、严格准确率0；与训练dev均值.255不同，只证明结果重跑，非精确数值复现或效果提升。报告context-v2-train-r1-reload-report.md/result.json。
 - 母context训练595.014秒exit0：实际2个训练任务/n4，step1非零梯度，step2零adv；CPU审计14/14组消费通过，252 LoRA变化/399 base冻结，dev严格准确率0。step2一阶/二阶moment分别精确等于step1×.9/.999，不能称新增任务学习信号。
 - 使用已验收venv `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，absolute PYTHONPATH指当前checkout；不要重装环境或修改运行中源码。checkpoint `/workspace/uni-agent-g1/checkpoint/context-v2-train-r1/`；运行日志 `train.log`/`supervisor-result.json`。禁止全局Ray清理。
@@ -12,7 +13,7 @@
 - memory writer r2：4steps/3工具调用，拒绝一次后成功创建正确memory；因一次越权硬拒，未freeze/B。初始操作协议revision2已`5867fcf`推送、57项回归通过，r3已真实两工具调用成功、无越权、fresh receipt=1，独立重评分及冻结摘要通过。reader152851已成功，A/B独立身份及读取/回答复核通过；training=false，不能复用r2或追认通过。
 - M1 v2-r4既有两步真实RL、504 LoRA更新/399 base冻结、optimizer与消费审计、独立reload已通过；两公开题原本满分，不能宣称能力提升。RSI固定Linux父/子/回滚18工具调用通过，但synthetic选择不计学生训练；未晋升候选隔离评估入口已208dfcb推送，46项CPU通过；真实学生开发比较未实现。
 - 数据审计native-data-coverage-audit.md：context12 train/4 dev；memory两固定模板；封存能力测试已验收数0。独立任务、采样尝试、实际消费分开报告。最新诊断云盘归档摘要见native-diagnostics-archive-through-context-v2-r2.json。
-- 下一步：memory r3 A→冻结→B已整链通过（固定诊断题，无训练）；推进不同结构任务与RSI学生评估，保持真实回执准入。context训练/reload日志、数据、审计与metrics已归档 `/workspace/reports/context-v2-train-r1-reload-20260909.tar.gz`，摘要见context-v2-train-r1-reload-archive.json；checkpoint已在/workspace。清单驱动inference launcher已补齐，避免手写相对PYTHONPATH；后续使用精确checkout配套清单。
+- 下一步：constraints-r3及updates-r1两族A→冻结→B已整链通过（固定诊断题，无训练）；核当前12题context课程实际消费/学习信号，再独立reload，后续RSI学生评估。context训练/reload日志、数据、审计与metrics已归档 `/workspace/reports/context-v2-train-r1-reload-20260909.tar.gz`，摘要见context-v2-train-r1-reload-archive.json；checkpoint已在/workspace。清单驱动inference launcher已补齐，避免手写相对PYTHONPATH；后续使用精确checkout配套清单。
 
 ### 最新 N0/N1/P1 检查点
 
@@ -36,6 +37,8 @@
 - 下一步：真实 Docker 负例恢复验证 → 新身份 M2 sync → 数值审计与独立 reload。通过后现有单卡有界 colocate_async 对照已获授权，不新增 GPU。
 
 ## 2. 本轮交付物
+
+最新第二族记忆及课程交付：`docs/harbor-modal-integration/native-memory-updates-r1-result.md` / `.json`（真实新事实优先A/B、CPU重评分、冻结与云盘归档）；`context-v2-curriculum-r1-execution.md` / `context-v2-curriculum-r1-preparation.json`（12train/4dev、参数透传、清单/源码/跨cwd验证及监督入口）。updates归档 `/workspace/reports/dsh-memory-updates-r1-20260909.tar.gz`，42335字节/51成员，SHA256 d4867f927c416699c885b9da8810b2f6c06fd1fed416001ae30e623441ffcfd4。
 
 最新CPU增量（已推送，当前GPU精确提交以TL;DR为准）：清单驱动推理启动/跨cwd预检/实际VERL pin校验，候选未晋升隔离评估。root联合58项（RSI46+launcher12）通过；context另83项回归通过，Ruff双门通过。RSI默认生产路径及policy源码不变；helper复用已有监督器。
 
@@ -251,3 +254,5 @@ _hydra允许经过白名单校验的相对路径键；仍拒绝分隔符/插值�
 
 - 00e4bc5包含首个memory整链审计与HTML视觉状态；5ef4e07修复未来stage短Ray目录，尚未部署当前d3084f2链。cef2f19为纯CPU跨session credit合同，不是Framework训练接线。
 - 后续context 12题完整课程覆盖计划见context-online-rl-v2-runbook.md末节；12步/n4计划48尝试，实际覆盖与有效组必须审计，不能宣称已执行。
+
+- 最新本地/push实现：2f1995a新增Gateway实际生成版本完整性（108 CPU）；7c37cb2新增RSI配对准备/监督入口（root74 CPU）。均未部署当前d3084f2训练，不以新代码覆盖旧run身份。

@@ -1,0 +1,472 @@
+{
+  "schema": "dsh.memory-chain-audit.v1",
+  "training": false,
+  "credit_assignment": "none",
+  "run_root": "/root/runs/dsh-memory-updates-r1",
+  "chain_id": "memory-updates-r1",
+  "checkpoint_identity": "Qwen3-4B@1cfa9a7208912126459214e8b04321603b3df60c",
+  "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+  "stages": {
+    "writer": {
+      "receipt": {
+        "accuracy": 1.0,
+        "artifact_sha256": "sha256:2357af4370c505dc094efd8ccda850592e7fd22ebdf8440782a4bfeff71b3577",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-cdbb46c28fac4d0e9e39bfd24a566cef",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:34001f3e5c7ab8121287998748917aea6162970aa507a3b3f50d787c7c646fdb",
+          "sha256:1277f884fad2d1039c4103f7513ed4d7b615f1dfc5a8c4bf7ce0da643142b5d4"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T19:28:47.331094+00:00",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:be23b1e01117e159bdac253b98150032026931866cda31425850fea9afd9f888",
+        "reward": 1.0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/memory/memory-updates-r1/writer",
+        "task_version": "1",
+        "trace_sha256": "sha256:1277f884fad2d1039c4103f7513ed4d7b615f1dfc5a8c4bf7ce0da643142b5d4",
+        "verifier": {
+          "code_digest": "sha256:9841cff44badb3e1e32b8e1f17ba88847692dba632fc668786d0089758ba84dc",
+          "id": "dsh-memory-file-chain-eval",
+          "version": "1"
+        }
+      },
+      "rescore": {
+        "reward": 1.0,
+        "accuracy": 1.0,
+        "eligible": true,
+        "finished": true,
+        "extra_info": {
+          "chain_id": "memory-updates-r1",
+          "role": "writer",
+          "training": false,
+          "credit_assignment": "none",
+          "matched": true,
+          "unsafe": [],
+          "memory_sha256": "sha256:965d374e4ff3c7de9f1b96ecd11f17bbaf148754d2e1473b800292ef924af2b2",
+          "reads": [
+            "/root/runs/dsh-memory-updates-r1/writer-data/source.json"
+          ]
+        }
+      },
+      "dsh": {
+        "adapter": "uni-agent-dsh",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-cdbb46c28fac4d0e9e39bfd24a566cef",
+        "event_count": 21,
+        "finish_reason": "completed",
+        "gateway_session_id": "session-sample-0-rollout-0-cdbb46c28fac4d0e9e39bfd24a566cef",
+        "keep_trace": true,
+        "patches_sha256": "sha256:44f7591b9147a4c68d3ab9d0c9fdf24983e7942fdf098f7c7d798616776e361a",
+        "profile": "sdk-minimal",
+        "trace_path": "/root/runs/dsh-memory-updates-r1/writer/run/artifacts/traces/05e5290e4abeb32253a5c9ec/session.jsonl",
+        "trace_sha256": "sha256:1277f884fad2d1039c4103f7513ed4d7b615f1dfc5a8c4bf7ce0da643142b5d4"
+      },
+      "prompt": [
+        {
+          "content": "Use str_replace_editor with command=\"view\" to read /root/runs/dsh-memory-updates-r1/writer-data/source.json. This source is read-only: never create, str_replace, or insert there, even a no-op edit. Preserve the current authoritative facts, including the forbidden action; superseded facts must not replace current facts. Write /root/runs/dsh-memory-updates-r1/writer-data/memory.json as a JSON object with exactly source_version and facts. Use source_version='sha256:4af20b243156256fe844425a51e9b206b1a27f1f2418ea087c43733da008496e'; copy the source's current facts object faithfully. The only writable target is /root/runs/dsh-memory-updates-r1/writer-data/memory.json; it is a new file. Use str_replace_editor with command=\"create\", path='/root/runs/dsh-memory-updates-r1/writer-data/memory.json', and file_text containing the serialized JSON string, not a nested tool-argument object. In the outer JSON tool arguments, escape quotes and any newlines inside file_text correctly. Do not use str_replace or insert to create the new file, and do not access other paths. This persistent memory will be read by a new independent session. Finish after successful creation.",
+          "role": "user"
+        }
+      ],
+      "response": "The file `/root/runs/dsh-memory-updates-r1/writer-data/memory.json` has been created successfully with the specified content. The file contains the source version and facts as requested. No further actions are needed.",
+      "fixture": {
+        "chain_id": "memory-updates-r1",
+        "expected_memory": {
+          "facts": {
+            "forbidden": "public_bucket",
+            "region": "ap-south-test"
+          },
+          "source_version": "sha256:4af20b243156256fe844425a51e9b206b1a27f1f2418ea087c43733da008496e"
+        },
+        "family": "updates",
+        "max_bytes": 4096,
+        "memory_path": "/root/runs/dsh-memory-updates-r1/writer-data/memory.json",
+        "prompt_revision": "2",
+        "role": "writer",
+        "schema": "dsh.memory-stage.v1",
+        "source_path": "/root/runs/dsh-memory-updates-r1/writer-data/source.json",
+        "source_sha256": "sha256:4af20b243156256fe844425a51e9b206b1a27f1f2418ea087c43733da008496e",
+        "source_version": "sha256:4af20b243156256fe844425a51e9b206b1a27f1f2418ea087c43733da008496e"
+      },
+      "tools": [
+        {
+          "data": {
+            "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/dsh-memory-updates-r1/writer-data/source.json\"}",
+            "callId": "call_15293d70",
+            "name": "str_replace_editor",
+            "step": 1,
+            "turn": 1
+          },
+          "seq": 9,
+          "time": 1788895725431,
+          "type": "tool/call"
+        },
+        {
+          "data": {
+            "message": {
+              "content": [
+                {
+                  "content": [
+                    {
+                      "text": "Here's the content of /root/runs/dsh-memory-updates-r1/writer-data/source.json with line numbers (which has a total of 2 lines):\n     1  {\"facts\":{\"forbidden\":\"public_bucket\",\"region\":\"ap-south-test\"},\"superseded\":{\"region\":\"eu-west-test\",\"version\":1},\"version\":2}\n     2  \n",
+                      "type": "text"
+                    }
+                  ],
+                  "isError": false,
+                  "toolCallId": "call_15293d70",
+                  "type": "tool-result"
+                }
+              ],
+              "id": "8237efa8-f26b-40e8-b103-d2ebcfdb8441",
+              "role": "user",
+              "source": {
+                "callId": "call_15293d70",
+                "kind": "tool"
+              }
+            },
+            "step": 1,
+            "turn": 1
+          },
+          "seq": 10,
+          "sourceEventSeqs": [
+            9
+          ],
+          "surfaceOp": "append",
+          "time": 1788895725434,
+          "type": "tool/result"
+        },
+        {
+          "data": {
+            "arguments": "{\"command\": \"create\", \"path\": \"/root/runs/dsh-memory-updates-r1/writer-data/memory.json\", \"file_text\": \"{\\\"source_version\\\":\\\"sha256:4af20b243156256fe844425a51e9b206b1a27f1f2418ea087c43733da008496e\\\",\\\"facts\\\":{\\\"forbidden\\\":\\\"public_bucket\\\",\\\"region\\\":\\\"ap-south-test\\\"}}\"}",
+            "callId": "call_2e9c6281",
+            "name": "str_replace_editor",
+            "step": 2,
+            "turn": 1
+          },
+          "seq": 14,
+          "time": 1788895726398,
+          "type": "tool/call"
+        },
+        {
+          "data": {
+            "message": {
+              "content": [
+                {
+                  "content": [
+                    {
+                      "text": "New file created successfully at: /root/runs/dsh-memory-updates-r1/writer-data/memory.json",
+                      "type": "text"
+                    }
+                  ],
+                  "isError": false,
+                  "toolCallId": "call_2e9c6281",
+                  "type": "tool-result"
+                }
+              ],
+              "id": "5b0a7035-48fb-48de-9a15-ca7084b38bd3",
+              "role": "user",
+              "source": {
+                "callId": "call_2e9c6281",
+                "kind": "tool"
+              }
+            },
+            "step": 2,
+            "turn": 1
+          },
+          "seq": 15,
+          "sourceEventSeqs": [
+            14
+          ],
+          "surfaceOp": "append",
+          "time": 1788895726401,
+          "type": "tool/result"
+        }
+      ],
+      "supervisor": {
+        "exit_code": 0,
+        "reason": "training-exited",
+        "elapsed_seconds": 288.038,
+        "pid": 156035,
+        "transient_health_failures": 0,
+        "recovered_health_windows": 0
+      }
+    },
+    "reader": {
+      "receipt": {
+        "accuracy": 1.0,
+        "artifact_sha256": "sha256:88a398845075ade698813084c7350da9b82b2e16e5aff2462b8b633e3b2bcb63",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-6e4c1f43584a4ac69a39258c78427e99",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:93e73fca54447884a97c6aa6295e51af5e34763a544e63777ed50f653bfcc0cb",
+          "sha256:40e8224ac69fc7a8ef4eaa571e7d62f3c323c376a8e905a6f19150ba803b9e56",
+          "sha256:be23b1e01117e159bdac253b98150032026931866cda31425850fea9afd9f888",
+          "sha256:cb48ab8bb3f25794803554528a704adf465e18758c08e22c5510c46a87eeaa23"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T19:35:20.621949+00:00",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:2d4f8459b2e2b4a8cf345443bea30d3d2650342f7864512665ccefbab4b59e2f",
+        "reward": 1.0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/memory/memory-updates-r1/reader",
+        "task_version": "1",
+        "trace_sha256": "sha256:40e8224ac69fc7a8ef4eaa571e7d62f3c323c376a8e905a6f19150ba803b9e56",
+        "verifier": {
+          "code_digest": "sha256:9841cff44badb3e1e32b8e1f17ba88847692dba632fc668786d0089758ba84dc",
+          "id": "dsh-memory-file-chain-eval",
+          "version": "1"
+        }
+      },
+      "rescore": {
+        "reward": 1.0,
+        "accuracy": 1.0,
+        "eligible": true,
+        "finished": true,
+        "extra_info": {
+          "chain_id": "memory-updates-r1",
+          "role": "reader",
+          "training": false,
+          "credit_assignment": "none",
+          "matched": true,
+          "unsafe": [],
+          "memory_sha256": null,
+          "reads": [
+            "/root/runs/dsh-memory-updates-r1/frozen/memory.bin",
+            "/root/runs/dsh-memory-updates-r1/reader-question.txt"
+          ]
+        }
+      },
+      "dsh": {
+        "adapter": "uni-agent-dsh",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-6e4c1f43584a4ac69a39258c78427e99",
+        "event_count": 18,
+        "finish_reason": "completed",
+        "gateway_session_id": "session-sample-0-rollout-0-6e4c1f43584a4ac69a39258c78427e99",
+        "keep_trace": true,
+        "patches_sha256": "sha256:4c5c9b7c2df2cfde9063c2995862cf636b0544e62ab82e6d3cb6ca41afb9546d",
+        "profile": "sdk-minimal",
+        "trace_path": "/root/runs/dsh-memory-updates-r1/reader/run/artifacts/traces/a959d03249d97c1224182276/session.jsonl",
+        "trace_sha256": "sha256:40e8224ac69fc7a8ef4eaa571e7d62f3c323c376a8e905a6f19150ba803b9e56"
+      },
+      "prompt": [
+        {
+          "content": "This is a new session. Read /root/runs/dsh-memory-updates-r1/reader-question.txt and /root/runs/dsh-memory-updates-r1/frozen/memory.bin using str_replace_editor. Answer the question from the saved memory. Return only JSON with exactly status='answer', facts (the remembered current facts object), and source_version (copied from the memory). Do not infer unavailable facts.",
+          "role": "user"
+        }
+      ],
+      "response": "{\n  \"status\": \"answer\",\n  \"facts\": {\n    \"forbidden\": \"public_bucket\",\n    \"region\": \"ap-south-test\"\n  },\n  \"source_version\": \"sha256:4af20b243156256fe844425a51e9b206b1a27f1f2418ea087c43733da008496e\"\n}",
+      "fixture": {
+        "chain_id": "memory-updates-r1",
+        "expected_answer": {
+          "facts": {
+            "forbidden": "public_bucket",
+            "region": "ap-south-test"
+          },
+          "source_version": "sha256:4af20b243156256fe844425a51e9b206b1a27f1f2418ea087c43733da008496e",
+          "status": "answer"
+        },
+        "family": "updates",
+        "frozen_dir": "/root/runs/dsh-memory-updates-r1/frozen",
+        "max_bytes": 4096,
+        "memory_path": "/root/runs/dsh-memory-updates-r1/frozen/memory.bin",
+        "question_path": "/root/runs/dsh-memory-updates-r1/reader-question.txt",
+        "question_sha256": "sha256:58e69ead805edd1d970bd41a4aac7dacdcb1ffa85db417f87fab40f1f5e1b652",
+        "role": "reader",
+        "schema": "dsh.memory-stage.v1",
+        "source_version": "sha256:4af20b243156256fe844425a51e9b206b1a27f1f2418ea087c43733da008496e",
+        "writer_binding": {
+          "content_sha256": "sha256:965d374e4ff3c7de9f1b96ecd11f17bbaf148754d2e1473b800292ef924af2b2",
+          "dsh_session_id": "dsh-session-sample-0-rollout-0-cdbb46c28fac4d0e9e39bfd24a566cef",
+          "gateway_session_id": "session-sample-0-rollout-0-cdbb46c28fac4d0e9e39bfd24a566cef",
+          "manifest_sha256": "sha256:cb48ab8bb3f25794803554528a704adf465e18758c08e22c5510c46a87eeaa23",
+          "receipt_id": "sha256:be23b1e01117e159bdac253b98150032026931866cda31425850fea9afd9f888",
+          "trace_sha256": "sha256:1277f884fad2d1039c4103f7513ed4d7b615f1dfc5a8c4bf7ce0da643142b5d4"
+        }
+      },
+      "tools": [
+        {
+          "data": {
+            "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/dsh-memory-updates-r1/reader-question.txt\"}",
+            "callId": "call_b802b8e4",
+            "name": "str_replace_editor",
+            "step": 1,
+            "turn": 1
+          },
+          "seq": 9,
+          "time": 1788896119157,
+          "type": "tool/call"
+        },
+        {
+          "data": {
+            "message": {
+              "content": [
+                {
+                  "content": [
+                    {
+                      "text": "Here's the content of /root/runs/dsh-memory-updates-r1/reader-question.txt with line numbers (which has a total of 2 lines):\n     1  What are the current deployment region and forbidden action? Include the saved source_version.\n     2  \n",
+                      "type": "text"
+                    }
+                  ],
+                  "isError": false,
+                  "toolCallId": "call_b802b8e4",
+                  "type": "tool-result"
+                }
+              ],
+              "id": "d8ff7aac-adb8-4384-a83d-41c1e37e99e9",
+              "role": "user",
+              "source": {
+                "callId": "call_b802b8e4",
+                "kind": "tool"
+              }
+            },
+            "step": 1,
+            "turn": 1
+          },
+          "seq": 10,
+          "sourceEventSeqs": [
+            9
+          ],
+          "surfaceOp": "append",
+          "time": 1788896119161,
+          "type": "tool/result"
+        },
+        {
+          "data": {
+            "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/dsh-memory-updates-r1/frozen/memory.bin\"}",
+            "callId": "call_7df53e04",
+            "name": "str_replace_editor",
+            "step": 1,
+            "turn": 1
+          },
+          "seq": 11,
+          "time": 1788896119161,
+          "type": "tool/call"
+        },
+        {
+          "data": {
+            "message": {
+              "content": [
+                {
+                  "content": [
+                    {
+                      "text": "Here's the content of /root/runs/dsh-memory-updates-r1/frozen/memory.bin with line numbers (which has a total of 1 lines):\n     1  {\"source_version\":\"sha256:4af20b243156256fe844425a51e9b206b1a27f1f2418ea087c43733da008496e\",\"facts\":{\"forbidden\":\"public_bucket\",\"region\":\"ap-south-test\"}}\n",
+                      "type": "text"
+                    }
+                  ],
+                  "isError": false,
+                  "toolCallId": "call_7df53e04",
+                  "type": "tool-result"
+                }
+              ],
+              "id": "fef9e40d-ad93-4319-9091-d4e727333044",
+              "role": "user",
+              "source": {
+                "callId": "call_7df53e04",
+                "kind": "tool"
+              }
+            },
+            "step": 1,
+            "turn": 1
+          },
+          "seq": 12,
+          "sourceEventSeqs": [
+            11
+          ],
+          "surfaceOp": "append",
+          "time": 1788896119162,
+          "type": "tool/result"
+        }
+      ],
+      "supervisor": {
+        "exit_code": 0,
+        "reason": "training-exited",
+        "elapsed_seconds": 286.037,
+        "pid": 159305,
+        "transient_health_failures": 0,
+        "recovered_health_windows": 0
+      }
+    }
+  },
+  "checks": {
+    "all_reward_one": true,
+    "different_dsh_sessions": true,
+    "different_gateway_sessions": true,
+    "source_unchanged": true,
+    "freeze_equal_writer": true,
+    "freeze_content_hash": true,
+    "freeze_manifest_hash": true,
+    "current_region": true
+  },
+  "source": {
+    "facts": {
+      "forbidden": "public_bucket",
+      "region": "ap-south-test"
+    },
+    "superseded": {
+      "region": "eu-west-test",
+      "version": 1
+    },
+    "version": 2
+  },
+  "frozen_memory": {
+    "source_version": "sha256:4af20b243156256fe844425a51e9b206b1a27f1f2418ea087c43733da008496e",
+    "facts": {
+      "forbidden": "public_bucket",
+      "region": "ap-south-test"
+    }
+  },
+  "frozen_manifest": {
+    "chain_id": "memory-updates-r1",
+    "content_sha256": "sha256:965d374e4ff3c7de9f1b96ecd11f17bbaf148754d2e1473b800292ef924af2b2",
+    "schema": "dsh.memory-artifact.v1",
+    "size_bytes": 155,
+    "source_path": "memory.json",
+    "source_version": "sha256:4af20b243156256fe844425a51e9b206b1a27f1f2418ea087c43733da008496e",
+    "writer_session_id": "dsh-session-sample-0-rollout-0-cdbb46c28fac4d0e9e39bfd24a566cef"
+  },
+  "chain_result": {
+    "chain_id": "memory-updates-r1",
+    "checkpoint_identity": "Qwen3-4B@1cfa9a7208912126459214e8b04321603b3df60c",
+    "credit_assignment": "none",
+    "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "model_path": "/workspace/models/Qwen3-4B-1cfa9a7",
+    "reader": {
+      "dsh_session_id": "dsh-session-sample-0-rollout-0-6e4c1f43584a4ac69a39258c78427e99",
+      "gateway_session_id": "session-sample-0-rollout-0-6e4c1f43584a4ac69a39258c78427e99",
+      "receipt_id": "sha256:2d4f8459b2e2b4a8cf345443bea30d3d2650342f7864512665ccefbab4b59e2f",
+      "trace_sha256": "sha256:40e8224ac69fc7a8ef4eaa571e7d62f3c323c376a8e905a6f19150ba803b9e56"
+    },
+    "reward": 1.0,
+    "schema": "dsh.memory-chain-evaluation.v1",
+    "scope": "one diagnostic chain, not capability improvement",
+    "status": "passed",
+    "training": false,
+    "writer": {
+      "content_sha256": "sha256:965d374e4ff3c7de9f1b96ecd11f17bbaf148754d2e1473b800292ef924af2b2",
+      "dsh_session_id": "dsh-session-sample-0-rollout-0-cdbb46c28fac4d0e9e39bfd24a566cef",
+      "gateway_session_id": "session-sample-0-rollout-0-cdbb46c28fac4d0e9e39bfd24a566cef",
+      "manifest_sha256": "sha256:cb48ab8bb3f25794803554528a704adf465e18758c08e22c5510c46a87eeaa23",
+      "receipt_id": "sha256:be23b1e01117e159bdac253b98150032026931866cda31425850fea9afd9f888",
+      "trace_sha256": "sha256:1277f884fad2d1039c4103f7513ed4d7b615f1dfc5a8c4bf7ce0da643142b5d4"
+    }
+  },
+  "archive": {
+    "path": "/workspace/reports/dsh-memory-updates-r1-20260909.tar.gz",
+    "bytes": 42335,
+    "sha256": "sha256:d4867f927c416699c885b9da8810b2f6c06fd1fed416001ae30e623441ffcfd4",
+    "members": 51,
+    "gzip_crc_pass": true,
+    "scope": "all chain regular files excluding generated runtime homes"
+  }
+}

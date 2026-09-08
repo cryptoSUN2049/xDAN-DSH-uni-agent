@@ -439,3 +439,7 @@ Review：M1先前RL通过；本轮context/记忆仍是基线与接线修复，�
 - [ ] 四能力足量结构覆盖与有效RL组、留出评估；不将12可用题当作12已消费题。
 
 Review：context实际消费2条独立训练题/8次尝试；严格dev准确率0。memory r3整链通过，第二族updates-r1 writer运行中；training=false，整体Goal保持active。
+
+- [x] updates-r1第二族真实A→冻结→独立B通过，独立回执/事实更新审计与云盘归档通过。
+- [x] 启动context完整12题课程（PID162712），日志确认12train/4dev/12steps；尚未验收消费与更新。
+- [ ] 课程实际覆盖、非零优势、checkpoint与独立reload验收。
