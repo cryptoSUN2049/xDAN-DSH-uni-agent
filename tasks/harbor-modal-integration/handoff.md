@@ -212,3 +212,11 @@
 - ContextPilot远端71ca762确有source/fs/runner实际代码；runner可执行真实三工具file-memory阶段，不只是离线compiler。旧设计HTML是早期快照，不能覆盖最新源码结论。
 - 下一步记忆接入优先复用fs+runner及依赖闭包，维持edit/read/write-only独立profile；不能直接混入Cordis完整catalog。当前未升级DSH。
 - 原生train-v1实际生成global_step_1文件和validation/0、1；仍需检查更新指标、step2及独立reload，未宣称本次训练验收完成。
+
+## 原生诊断结束 / DSH 安装验收通过
+
+- native-train-v1 退出0，两步完成但组内奖励分别全0/全1，advantage和梯度均0；504个LoRA张量step1→2变化数0，不通过有效更新门。GPU查询无计算进程。
+- 退出阶段有DataLoader worker killed日志，cgroup OOM计数0，原因待核验，不将退出0等同无异常。
+- DSH官方runtime、0.1.2a1双wheel完成；独立/workspace/venvs/dsh-sdk-7840安装后sdk-minimal与sdk-restart均通过。
+- 实际命令/证据：docs/harbor-modal-integration/native-v1-and-dsh-runtime-results.md；摘要已更新deployment/versions/dsh-runtime-candidate.json。
+- 下一步将wheel接入GPU训练环境，推进M1真实DSH任务；原生不盲目加步数，独立reload/M1/M2仍未验收。

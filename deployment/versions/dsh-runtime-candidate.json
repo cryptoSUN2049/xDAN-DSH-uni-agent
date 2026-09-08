@@ -1,5 +1,5 @@
 {
-  "status": "source-frozen-build-in-progress",
+  "status": "built-installed-keyless-sdk-verified",
   "repository": "cryptoSUN2049/xDAN-DSH-Exp",
   "revision": "7840bced35ee07ebefbdce0106b56dbc00bdc3ef",
   "package_version": "0.1.2-alpha.1",
@@ -7,6 +7,11 @@
   "node_linux_x64_sha256": "2f2c0da162318f0de47665410c7c8c2ed3d36c8f3105de4bbc61176c70a7cbf2",
   "pnpm": "11.7.0",
   "target": "node24-linux-x64",
-  "runtime_digest": null,
-  "sdk_smoke_passed": false
+  "runtime_digest": "sha256:efb0630833f949ae4bfcef1f87a2c402595159fe8262169d9509b73297a91755",
+  "runtime_wheel_sha256": "fc5540b953606f065a0dfa2da416c15a7548af31a199f8d395da00676336033f",
+  "sdk_wheel_sha256": "8c5a6ac81b965d4ac9f25995f8cebcc29c4b5b4d8dfa03212ffadfea613c520c",
+  "python_distribution_version": "0.1.2a1",
+  "sdk_smoke_passed": true,
+  "verified_scenarios": ["sdk-minimal", "sdk-restart"],
+  "model_training_verified": false
 }

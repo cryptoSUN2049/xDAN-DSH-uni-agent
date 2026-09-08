@@ -241,3 +241,10 @@ Review：本批只新增部署目录与设计；不将其标记为安装或部�
 - [x] 固定VERL自带uv.lock的FSDP/vLLM安装预演通过（254包）；开始隔离安装。
 - [ ] 安装完成后验证CUDA运算、GPU依赖导入和原生小任务。
 - [ ] 固定模型与数据；DSH runtime构建和Harbor容器环境仍待实施。
+
+### 本次真实运行核验
+
+- [x] 原生两步采样/评分/checkpoint及504个LoRA张量差异审计。
+- [x] DSH Linux runtime、官方wheels、安装后minimal/restart keyless smoke。
+- [ ] M1真实DSH奖励与有效更新、独立reload。
+- Review：原生梯度零，不能记为有效更新；M2与整体G1仍未完成。
