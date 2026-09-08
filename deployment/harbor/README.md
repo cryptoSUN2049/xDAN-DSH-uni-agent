@@ -48,11 +48,10 @@ key, unreachable loopback model endpoint, and no `session_prompt`/`harness.run`.
 Docker `--network none` supplies the additional network boundary. Success proves
 SDK boot only, not a rollout, terminal verifier, or training update.
 
-This recipe now targets Session v2. The existing `harbor-execution-image.json`
-and M2 task digest describe the previously verified 7840 image until the new
-image is actually built and tested; do not replace those hashes with guessed
-values. Promote the new image and regenerate the task release together after
-verification. Historical results retain their original version identities.
+This recipe targets Session v2. `harbor-execution-image.json` now records the
+verified `b236969` / `0.1.3a2` image. The task image reference and task content
+digest must be updated together before using that task release. Historical
+7840 results retain their original version identities.
 
 ## Harbor use
 
@@ -76,7 +75,7 @@ setup currently has a 30-second timeout. Tasks requiring Git, compilers, or
 test runners must declare them in their own reproducible images. This base
 only supplies Python, SDK/runtime, and the DSH helper.
 
-## Verified local execution (2026-09-08)
+## Verified Session v2 local execution (2026-09-08)
 
 Inputs and image ID are frozen in `deployment/versions/harbor-execution-image.json`.
 The actual amd64 image built offline; network-free SDK initialize/shutdown passed.
@@ -85,14 +84,16 @@ Harbor setup also passed using the real environment and matching runner SHA256:
 ```sh
 PYTHONPATH=. /private/tmp/harbor-h0-20260908/bin/python \
   deployment/checks/harbor_dsh_setup_smoke.py \
-  --image sha256:9ab3e43d3c3c35070668d1d0fca60e31516727df431f00aedfd875479855fb37 \
+  --image sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97 \
   --output /absolute/path/to/new-output
 ```
 
 The setup check has a 180-second deadline, two CPUs, 2 GiB RAM and no network.
 It deletes its own Harbor environment in `finally`. Reports are in
-`docs/harbor-modal-integration/harbor-keyless-sdk-result.json` and
-`harbor-dsh-setup-result.json`. No model rollout or training is claimed.
+`docs/harbor-modal-integration/harbor-v2-keyless-sdk-result.json` and
+`harbor-v2-dsh-setup-result.json`; the versioned build and independent cleanup
+evidence are linked from `harbor-v2-execution-image-results.md`. The original
+7840 reports are preserved. No model rollout or training is claimed.
 The image currently exists only in local Docker; no registry publication is claimed.
 
 ## Model-route transport probe

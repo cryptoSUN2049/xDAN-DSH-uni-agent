@@ -1,0 +1,62 @@
+{
+  "control_only": true,
+  "actual_gateway_used": false,
+  "model_called": false,
+  "docker_job_submitted": false,
+  "training_started": false,
+  "private_root": "/private/tmp/hctl-1ophswwu",
+  "status": "passed",
+  "registration_status": 200,
+  "job_token_registration_status": 401,
+  "changed_port_status": 409,
+  "worker_empty_lookup_status": 404,
+  "model_tunnel_mock_echo": {
+    "control_only": true,
+    "path": "/sessions/control-probe/v1?nonce=control-only"
+  },
+  "run_id": "control-hctl-1ophswwu",
+  "controller_pid": 49324,
+  "policy_sha256": "sha256:c5a71650c40f7dc65ca0d1fbb6c35a356f123d65b74052cc0ff8b19bc89adb54",
+  "controller_returncode": -2,
+  "mock_ssh_returncode": 0,
+  "stop": {
+    "cleanup_errors": [],
+    "docker_cleanup_proven": false
+  },
+  "schema": "dsh.harbor-controller-control-preflight.v1",
+  "cleanup_probe": {
+    "local_ports_closed": {
+      "control_port": true,
+      "worker_port": true,
+      "model_port": true
+    },
+    "owned_tunnel_processes_remaining": 0,
+    "remote_control_worker_mock_ports_closed": [
+      true,
+      true,
+      true
+    ]
+  },
+  "run_spec_sha256": "sha256:8d8ecad072a7c6a22119f52edec4052d43b301237e3bdb107ce6cf9dff9f27e3",
+  "control_only_dsh_release": {
+    "image_digest": "sha256:9ab3e43d3c3c35070668d1d0fca60e31516727df431f00aedfd875479855fb37",
+    "patch_sha256s": [],
+    "platform": "linux/amd64",
+    "profile": "sdk-minimal",
+    "runtime_sha256": "sha256:fc5540b953606f065a0dfa2da416c15a7548af31a199f8d395da00676336033f",
+    "sdk_sha256": "sha256:8c5a6ac81b965d4ac9f25995f8cebcc29c4b5b4d8dfa03212ffadfea613c520c",
+    "source_sha": "7840bced35ee07ebefbdce0106b56dbc00bdc3ef"
+  },
+  "version_note": "Old 0.1.2a1 image identity was referenced only to start control-plane worker; no job or container ran. Training target remains 0.1.3alpha2.",
+  "source_head": "0b3fc06760cc133a98fc3c495c2b7c5f2c882717",
+  "source_tree_has_uncommitted_controller": true,
+  "source_files_sha256": {
+    "deployment/services/harbor_run_controller.py": "sha256:c53f9503ba68f9a5b1c9c45cd9d9cb59d48c5e2c19b1b4a7e13971e55acb0959",
+    "deployment/services/harbor_tunnel.py": "sha256:d4d7f0f3217fda8e412ef25030d99623333035d2cba5a576e2ec036e4be4bbf3",
+    "uni_agent/tasks/harbor_dsh/worker.py": "sha256:abfe905bf7e4c37a546afd2ee2a15fff8bfa248105440741ca9666213925c91a",
+    "uni_agent/tasks/harbor_dsh/worker_http.py": "sha256:1ae882be2cbfb0386ea1f785705b97b12440963535d0638cf97351e4559d1b22",
+    "uni_agent/tasks/harbor_dsh/protocol.py": "sha256:ae1162b4567264ca0c14f1c6b5cea2300ec232c16829b62a02a7e3c597240ee5"
+  },
+  "registration_idempotent": true,
+  "controller_exit_note": "Explicit SIGINT after probe; controller finally completed and independently checked ports/processes are closed."
+}

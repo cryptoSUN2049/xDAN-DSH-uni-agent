@@ -293,3 +293,15 @@ Review：本批只新增部署目录与设计；不将其标记为安装或部�
 - [x] Session/转换器388项、built migration worker 1项、本仓DSH回归84项通过；最新built CLI SDK boot通过。
 - [ ] 新版SDK完整事件/restart、Linux候选部署及真实训练准入；随后继续M2。
 - Review：新版源码审计与固定版本训练验收分开；未通过候选版本回归前不替换现有runtime。
+
+### G1 新版统一部署增量（2026-09-08，取代上面的候选未发布状态）
+
+- [x] Uni-Agent/VERL/DSH 固定源代码核验并记录 g1-source-lock。
+- [x] DSH 0.1.3a2 Linux 官方 wheel 构建、独立安装、minimal/restart 验收。
+- [x] Harbor Task/receipt、真实 Session Gateway 注册、独立 token 审计接线；主进程组合 110 passed。
+- [x] 真实 SSH 控制面登记和双向转发检查，结束后端口/进程清理；未调用模型。
+- [ ] 新版 Harbor 镜像 boot/setup 后更新任务摘要。
+- [ ] 新版训练环境回归与固定 M2 运行配置。
+- [ ] 真实学生 → DSH → Harbor verifier → Gateway token → VERL 更新。
+- [ ] 独立 reload、留出评估、可复建交付与最终完整版本清单。
+- Review：原生任务/M1 的历史证据不冒称新版 M2；环境兼容和数值更新分别验收。

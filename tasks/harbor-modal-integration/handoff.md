@@ -358,3 +358,12 @@
 - 官方package脚本已成功生成0.1.3a2 SDK/runtime与SHA256SUMS，目录/workspace/artifacts/dsh-g1-v2-b236969；精确哈希见deployment/versions/dsh-session-v2-candidate.json。
 - 独立venv /workspace/venvs/dsh-g1-v2-b236969-sdk，离开源码目录运行官方installed-wheel sdk-minimal和sdk-restart均通过。日志/workspace/reports/dsh-g1-v2-b236969-sdk/{minimal,restart}.log。真实新版runtime+替身模型，不是GPU训练证明。
 - Harbor新镜像由upstream_harbor_verl推进；controller/tunnel由verl_six_month_audit完成待主审；registration/trajectory audit由unia_capability_audit收尾。请勿覆盖代理未完成文件。旧生产训练环境尚未升级，G1继续active。
+
+## 固定接线已发布与隔离训练环境
+
+- 0b3fc06760cc133a98fc3c495c2b7c5f2c882717已推送；注册/controller/tunnel/独立audit组合主进程110tests通过（代理包含额外runner组116），Ruff双项通过209files。
+- 真实control-only报告harbor-controller-control-preflight-result.json：登记200、幂等、错误凭据401/改端口409、完整session path转发；全部owned端口/SSH已清理，无模型调用。
+- GPU新独立源码/workspace/rebuild/uni-agent-g1-v2固定0b3fc06，VERL本地Git对象clone后固定fefb080；不改/workspace/src/uni-agent历史生产checkout。
+- 复用隔离重建venv /workspace/venvs/uni-agent-rebuild-cf2d3f5 已升级SDK/runtime到0.1.3a2。该目录名是历史标签，不能再当旧环境快照。
+- uv pip check发现旧环境本来已有mistral-common1.11.3约束numpy<2.4、实际2.4.6冲突（原生产venv只读检查同样失败）。隔离venv精确降到numpy2.3.5，257packages依赖检查全通过；原生产venv未更改。升级前后freeze在/workspace/reports/g1-v2-training-env-{before,resolved}.txt。
+- CUDA/import smoke工具79627已exit0：核心imports通过，CUDA可用，合成梯度sum12.0；报告/workspace/reports/g1-v2-training-env-smoke.json。这不是模型更新证据。Harbor新镜像由upstream_harbor_verl验收中；unia_capability_audit正在补M2可复用轻量配置/数据入口，勿覆盖未完成文件。

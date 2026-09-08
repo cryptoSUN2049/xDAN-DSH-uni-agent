@@ -1,0 +1,54 @@
+{
+  "schema": "dsh.harbor-image-cleanup-check.v1",
+  "checked_at": "2026-09-08T07:45:31.789186+00:00",
+  "session_id": "dsh-setup-cbb47266b7ab",
+  "passed": true,
+  "queries": {
+    "setup_containers": {
+      "command": [
+        "docker",
+        "ps",
+        "-aq",
+        "--filter",
+        "label=com.docker.compose.project=dsh-setup-cbb47266b7ab"
+      ],
+      "exit_code": 0,
+      "ids": []
+    },
+    "setup_networks": {
+      "command": [
+        "docker",
+        "network",
+        "ls",
+        "-q",
+        "--filter",
+        "label=com.docker.compose.project=dsh-setup-cbb47266b7ab"
+      ],
+      "exit_code": 0,
+      "ids": []
+    },
+    "setup_volumes": {
+      "command": [
+        "docker",
+        "volume",
+        "ls",
+        "-q",
+        "--filter",
+        "label=com.docker.compose.project=dsh-setup-cbb47266b7ab"
+      ],
+      "exit_code": 0,
+      "ids": []
+    },
+    "keyless_container": {
+      "command": [
+        "docker",
+        "ps",
+        "-aq",
+        "--filter",
+        "name=^/dsh-harbor-v2-keyless-1263ff5$"
+      ],
+      "exit_code": 0,
+      "ids": []
+    }
+  }
+}

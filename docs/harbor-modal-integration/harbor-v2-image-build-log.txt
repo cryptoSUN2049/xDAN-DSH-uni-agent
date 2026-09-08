@@ -1,0 +1,93 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.51kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python@sha256:2fe5997d249a808b8eeea52c58a1dbffbba28754dc11699ef5c029f2d818ce79
+#2 DONE 1.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [ 1/13] FROM docker.io/library/python@sha256:2fe5997d249a808b8eeea52c58a1dbffbba28754dc11699ef5c029f2d818ce79
+#5 resolve docker.io/library/python@sha256:2fe5997d249a808b8eeea52c58a1dbffbba28754dc11699ef5c029f2d818ce79 0.0s done
+#5 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 82.33MB 1.8s done
+#4 DONE 1.9s
+
+#5 [ 1/13] FROM docker.io/library/python@sha256:2fe5997d249a808b8eeea52c58a1dbffbba28754dc11699ef5c029f2d818ce79
+#5 CACHED
+
+#6 [ 2/13] COPY wheelhouse/ /opt/wheelhouse/
+#6 DONE 0.6s
+
+#7 [ 3/13] RUN cd /opt/wheelhouse     && sha256sum --strict -c SHA256SUMS     && python -m pip install --no-cache-dir --no-index --only-binary=:all:         --find-links=/opt/wheelhouse         deepseek-harness-sdk==0.1.3a2         deepseek-harness-runtime-bin==0.1.3a2         pydantic==2.12.5     && python -m pip check
+#7 0.660 annotated_types-0.7.0-py3-none-any.whl: OK
+#7 0.847 deepseek_harness_runtime_bin-0.1.3a2-py3-none-manylinux_2_28_x86_64.whl: OK
+#7 0.848 deepseek_harness_sdk-0.1.3a2-py3-none-any.whl: OK
+#7 0.849 pydantic-2.12.5-py3-none-any.whl: OK
+#7 0.853 pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl: OK
+#7 0.854 typing_extensions-4.15.0-py3-none-any.whl: OK
+#7 0.854 typing_inspection-0.4.2-py3-none-any.whl: OK
+#7 2.708 Looking in links: /opt/wheelhouse
+#7 2.714 Processing ./deepseek_harness_sdk-0.1.3a2-py3-none-any.whl
+#7 2.723 Processing ./deepseek_harness_runtime_bin-0.1.3a2-py3-none-manylinux_2_28_x86_64.whl
+#7 2.946 Processing ./pydantic-2.12.5-py3-none-any.whl
+#7 2.971 Processing ./annotated_types-0.7.0-py3-none-any.whl (from pydantic==2.12.5)
+#7 2.976 Processing ./pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from pydantic==2.12.5)
+#7 2.986 Processing ./typing_extensions-4.15.0-py3-none-any.whl (from pydantic==2.12.5)
+#7 2.990 Processing ./typing_inspection-0.4.2-py3-none-any.whl (from pydantic==2.12.5)
+#7 3.009 Installing collected packages: typing-extensions, deepseek-harness-runtime-bin, annotated-types, typing-inspection, pydantic-core, pydantic, deepseek-harness-sdk
+#7 7.788 Successfully installed annotated-types-0.7.0 deepseek-harness-runtime-bin-0.1.3a2 deepseek-harness-sdk-0.1.3a2 pydantic-2.12.5 pydantic-core-2.41.5 typing-extensions-4.15.0 typing-inspection-0.4.2
+#7 7.789 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#7 9.699 No broken requirements found.
+#7 DONE 10.1s
+
+#8 [ 4/13] COPY uni_agent/__init__.py /opt/uni-agent/uni_agent/__init__.py
+#8 DONE 0.0s
+
+#9 [ 5/13] COPY uni_agent/version/version /opt/uni-agent/uni_agent/version/version
+#9 DONE 0.0s
+
+#10 [ 6/13] COPY uni_agent/agents/__init__.py /opt/uni-agent/uni_agent/agents/__init__.py
+#10 DONE 0.0s
+
+#11 [ 7/13] COPY uni_agent/agents/base.py /opt/uni-agent/uni_agent/agents/base.py
+#11 DONE 0.0s
+
+#12 [ 8/13] COPY uni_agent/agents/registry.py /opt/uni-agent/uni_agent/agents/registry.py
+#12 DONE 0.1s
+
+#13 [ 9/13] COPY uni_agent/agents/dsh/__init__.py /opt/uni-agent/uni_agent/agents/dsh/__init__.py
+#13 DONE 0.1s
+
+#14 [10/13] COPY uni_agent/agents/dsh/agent.py /opt/uni-agent/uni_agent/agents/dsh/agent.py
+#14 DONE 0.0s
+
+#15 [11/13] COPY uni_agent/agents/dsh/runner.py /opt/uni-agent/uni_agent/agents/dsh/runner.py
+#15 DONE 0.0s
+
+#16 [12/13] COPY checks/keyless_sdk_smoke.py /opt/checks/keyless_sdk_smoke.py
+#16 DONE 0.0s
+
+#17 [13/13] WORKDIR /app
+#17 DONE 0.0s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 11.0s done
+#18 exporting manifest sha256:94e60a910230b5c8982fb31a94e0fd5cbb021da68ac40ba820b475a39d3143ef done
+#18 exporting config sha256:e245406b1a1c5106b83e7cc2be7fdafee388f22acce8dcbbbaa09b1b51c5e159 done
+#18 exporting attestation manifest sha256:b9d53db1b6e580e0f8a6fe1680748717c8affdc445d493b010e8d7e1f9db3b5a 0.0s done
+#18 exporting manifest list sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97 done
+#18 naming to docker.io/library/uni-agent-dsh:0.1.3a2-1263ff5-amd64 done
+#18 DONE 11.1s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/i3tjwnobmp1l02aj0fh29pmsg

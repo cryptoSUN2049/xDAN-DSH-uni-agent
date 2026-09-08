@@ -21,7 +21,7 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 | 配对VERL | fefb080262e1c015a0ea05f958822a6a512dc795 |
 | GPU依赖 | 复用此VERL的uv.lock，fsdp+vllm；记录lock SHA256和实际安装清单 |
 | 已解析核心版本 | torch2.11.0+cu130、vLLM0.24.0、Transformers5.5.3；安装成功不替代运行兼容测试 |
-| DSH | 固定7840bced35ee07ebefbdce0106b56dbc00bdc3ef；0.1.2a1 wheels构建安装、minimal/restart通过 |
+| DSH | 后续统一 b2369692ea530007075ebcd18d39fdba0bbd3982 / 0.1.3a2；Linux wheels、独立minimal/restart、Harbor setup已通过；旧7840仅历史M1 |
 | 模型 | 首轮拟沿用Qwen3-4B；固定revision、Tokenizer/template；自有微调模型另作为明确候选，不静默替换 |
 | 任务和评分 | 固定数据release、实例与family、划分、环境/Harness/verifier digest、解码与预算 |
 
@@ -36,7 +36,7 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 - [x] 独立审计转换器归属与Session v2差异；DSH-Exp已修converter，本仓在线SDK不调用它，不重复复制。
 - [x] 新版Session/转换器388项、built migration worker1项实测通过；本仓DSH适配与审计84项通过。
 - [x] 本机built CLI+新版SDK initialize/shutdown、官方sdk-minimal与sdk-restart通过；后两者使用替身模型，不是训练。
-- [ ] 新版commit发布到GitHub，Linux独立候选wheel/镜像部署；本轮GitHub API对该SHA返回422，不可拉取。
+- [x] 新版commit已发布GitHub；Linux官方wheel构建、独立安装minimal/restart、Harbor新版镜像boot/setup通过。旧422状态已解除。
 - [ ] 新runtime的Harbor trace/receipt/Gateway token绑定、实际GPU更新/reload；通过后更新默认部署pin。
 
 完整顺序与仓库/远程职责：docs/harbor-modal-integration/dsh-session-v2-upgrade-plan.md。ContextPilot专题仍有独立消费者迁移缺口，不把SDK测试当记忆能力验收。

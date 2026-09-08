@@ -1,5 +1,5 @@
 {
-  "status": "installed-wheel-verified-harbor-pending",
+  "status": "installed-wheel-and-harbor-setup-verified-training-pending",
   "build_status": "built-and-packaged",
   "repository": "cryptoSUN2049/xDAN-DSH-Exp",
   "revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
@@ -13,7 +13,7 @@
   "runtime_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
   "runtime_wheel_sha256": "59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
   "sdk_wheel_sha256": "6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
-  "image_digest": null,
+  "image_digest": "sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97",
   "python_distribution_version": "0.1.3a2",
   "sdk_smoke_passed": true,
   "verified_scenarios": [

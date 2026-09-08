@@ -1,18 +1,18 @@
 {
   "schema": "dsh.harbor-task-inputs.v1",
   "task_id": "m2-file-write",
-  "task_version": "v1",
-  "task_sha256": "sha256:554f78ea9247472b6a46a08f266b3a0161a83d899ae2c1d9c3b744012850c9e6",
+  "task_version": "v2",
+  "task_sha256": "sha256:182b1aa1d4fcb93808fbcbe4ae722d2449ed7eed11fac93bb255909f67913eb1",
   "digest_method": "sha256 of sorted compact JSON mapping relative path to unprefixed file sha256",
   "files": {
     "environment/docker-compose.yaml": "2dcbdf0039babcbbb76ee24167f6a71dae3bf689cc97e06fd62220649fe0dda6",
     "instruction.md": "fa710628dc9886749b85809cb9a1ed8c9cf10b7e6853e0fc2451ecda6a6677ff",
     "solution/solve.sh": "6d68d1072e6a16141128a054f808a15bbd619357d58847db80dbbafa4ca3c73b",
-    "task.toml": "ebc760779a5643908456e0306c4d11e044af5f113fde16a7d0744dcfca2aae20",
+    "task.toml": "cd187048c0400eb12fa6a5d734390382be27e517c39a93478fcd27550981c514",
     "tests/Dockerfile": "eb43604e50ab557b8a072b8470a02896009f2acc79d0a0f9c6167b6f84504a6c",
     "tests/docker-compose.yaml": "17ceef0a82e7dfb63d9f5ce974350f392dd8a323eac174ec69d28a90c7de8388",
     "tests/test.sh": "bbe5540ad6700aee6a39b9ab91f4eb5fa40ae9bbc7f0dcb4448575038cc11e98"
   },
-  "agent_image": "sha256:9ab3e43d3c3c35070668d1d0fca60e31516727df431f00aedfd875479855fb37",
+  "agent_image": "sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97",
   "verifier_base_image": "ubuntu@sha256:561618e2c15bf2397621dd04f96926663a3b5616c189cf7e38db7e82f5c538ea"
 }
