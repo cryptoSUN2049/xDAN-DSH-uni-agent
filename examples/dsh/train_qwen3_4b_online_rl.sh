@@ -84,6 +84,29 @@ VAL_ONLY="${VAL_ONLY:-False}"
 RESUME_MODE="${RESUME_MODE:-disable}"
 RESUME_FROM_PATH="${RESUME_FROM_PATH:-}"
 
+# Validate before PRINT_COMMAND or any GPU/runtime setup. Keep the same gate in
+# the ops wrapper so invalid jobs never create a prepared deployment manifest.
+TRAINER_MODE="${TRAINER_MODE:-sync}"
+NUM_WARMUP_BATCHES="${NUM_WARMUP_BATCHES:-1}"
+for override in "$@"; do
+  key="${override%%=*}"
+  key="${key#+}"; key="${key#+}"
+  case "$key" in
+    trainer.v1.trainer_mode) TRAINER_MODE="${override#*=}" ;;
+    trainer.v1.colocate_async.num_warmup_batches) NUM_WARMUP_BATCHES="${override#*=}" ;;
+    trainer|trainer.v1|trainer.v1.colocate_async|~trainer|~trainer.v1|~trainer.v1.*)
+      echo "trainer mode/warmup must use explicit supported overrides" >&2; exit 2 ;;
+  esac
+done
+if [[ "${TRAINER_MODE}" != sync && "${TRAINER_MODE}" != colocate_async ]]; then
+  echo "TRAINER_MODE must be sync or colocate_async" >&2
+  exit 2
+fi
+if ! [[ "${NUM_WARMUP_BATCHES}" =~ ^[1-9][0-9]*$ ]]; then
+  echo "NUM_WARMUP_BATCHES must be a positive integer" >&2
+  exit 2
+fi
+
 if [[ "${PRINT_COMMAND:-0}" == "1" ]]; then
   # PRINT_COMMAND is a dependency-free config gate used by CI and operators to
   # inspect the exact Hydra overrides without starting Ray or touching data.
@@ -91,7 +114,8 @@ if [[ "${PRINT_COMMAND:-0}" == "1" ]]; then
   COMMAND=(
     "${PYTHON_BIN}" -m verl.trainer.main_ppo
     "trainer.use_v1=True"
-    "trainer.v1.trainer_mode=sync"
+    "trainer.v1.trainer_mode=${TRAINER_MODE}"
+    "trainer.v1.colocate_async.num_warmup_batches=${NUM_WARMUP_BATCHES}"
     "trainer.v1.sampler.sync_refill_failed_groups=True"
     "transfer_queue.enable=True"
     "algorithm.adv_estimator=grpo"
@@ -144,7 +168,7 @@ if [[ "${PRINT_COMMAND:-0}" == "1" ]]; then
     "trainer.resume_mode=${RESUME_MODE}"
     "trainer.val_only=${VAL_ONLY}"
   )
-  printf '%q ' "${COMMAND[@]}"
+  printf '%q ' "${COMMAND[@]}" "$@"
   printf '\n'
   exit 0
 fi
@@ -203,7 +227,8 @@ mkdir -p "${CKPTS_DIR}" "${AGENT_LOG_DIR}" "${ROLLOUT_DATA_DIR}" "${VALIDATION_D
 COMMAND=(
   "${PYTHON_BIN}" -m verl.trainer.main_ppo
   trainer.use_v1=True
-  trainer.v1.trainer_mode=sync
+  trainer.v1.trainer_mode="${TRAINER_MODE}"
+  trainer.v1.colocate_async.num_warmup_batches="${NUM_WARMUP_BATCHES}"
   trainer.v1.sampler.sync_refill_failed_groups=True
   transfer_queue.enable=True
   algorithm.adv_estimator=grpo

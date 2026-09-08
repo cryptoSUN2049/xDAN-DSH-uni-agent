@@ -1,5 +1,6 @@
 import json
 import os
+import shlex
 import signal
 import subprocess
 import sys
@@ -14,6 +15,27 @@ TRAINING_LAUNCHER = REPO_ROOT / "examples/dsh/train_qwen3_4b_online_rl.sh"
 SUPERVISOR = REPO_ROOT / "examples/dsh/ops/supervise_qwen3_4b_online_rl.sh"
 TEARDOWN = REPO_ROOT / "examples/dsh/ops/teardown_qwen3_4b_online_rl.sh"
 STATUS = REPO_ROOT / "examples/dsh/ops/status_qwen3_4b_online_rl.sh"
+
+
+@pytest.mark.parametrize(
+    "tail",
+    [
+        ["trainer.v1.trainer_mode=separate_async"],
+        ["trainer.v1.colocate_async.num_warmup_batches=0"],
+        ["~trainer.v1.trainer_mode"],
+    ],
+)
+def test_ops_rejects_invalid_trainer_before_creating_run(tmp_path: Path, tail: list[str]):
+    run_root = tmp_path / "run"
+    result = subprocess.run(
+        ["/bin/bash", str(LAUNCHER), *tail],
+        capture_output=True,
+        text=True,
+        env={**os.environ, "RUN_ROOT": str(run_root), "PYTHON_BIN": sys.executable},
+    )
+    assert result.returncode == 2
+    assert not run_root.exists()
+    assert "TRAINER_MODE" in result.stderr or "NUM_WARMUP_BATCHES" in result.stderr or "explicit" in result.stderr
 
 
 def _start_signal_aware_supervisor(tmp_path: Path) -> tuple[subprocess.Popen[str], Path, Path]:
@@ -72,7 +94,8 @@ while True:
     raise AssertionError("supervisor or child did not become ready")
 
 
-def test_detached_launcher_finalizes_manifest_after_training_exits(tmp_path: Path):
+@pytest.mark.parametrize("mode", ["detach", "foreground"])
+def test_detached_launcher_finalizes_manifest_after_training_exits(tmp_path: Path, mode: str):
     model_path = tmp_path / "model"
     data_root = tmp_path / "data"
     fake_venv_bin = tmp_path / "venv/bin"
@@ -112,6 +135,7 @@ until grep -q '"status": "running"' "$RUN_ROOT/run-manifest.json" 2>/dev/null; d
   sleep 0.01
 done
 trap ': > "$CHILD_FINISHED"' EXIT
+printf '%s\\n' "$@" > "$RUN_ROOT/actual-argv"
 exit "$TRAINING_EXIT_CODE"
 """,
         encoding="utf-8",
@@ -132,18 +156,21 @@ exit "$TRAINING_EXIT_CODE"
         "TRAINING_EXIT_CODE": "23",
         "CHILD_FINISHED": str(child_finished),
     }
+    tail = ["trainer.v1.trainer_mode=colocate_async", "trainer.v1.colocate_async.num_warmup_batches=2"]
     result = subprocess.run(
-        ["/bin/bash", str(LAUNCHER)],
+        ["/bin/bash", str(LAUNCHER), *(["--foreground"] if mode == "foreground" else []), *tail],
         capture_output=True,
         text=True,
         env=env,
         timeout=10,
     )
 
-    assert result.returncode == 0, result.stderr
-    pid = int((run_root / "pid").read_text(encoding="utf-8"))
+    assert result.returncode == (23 if mode == "foreground" else 0), result.stderr
+    pid = int((run_root / "pid").read_text(encoding="utf-8")) if mode == "detach" else None
     deadline = time.monotonic() + 5
     while time.monotonic() < deadline:
+        if mode == "foreground" and child_finished.exists():
+            break
         process_state = subprocess.run(
             ["ps", "-o", "stat=", "-p", str(pid)],
             capture_output=True,
@@ -166,6 +193,8 @@ exit "$TRAINING_EXIT_CODE"
     assert manifest["paths"]["agent_log_dir"] == str(run_root / "agent-logs/dsh-qwen3-4b-online-rl/expanded-v2")
     assert manifest["paths"]["trace_root"] == str(run_root / "artifacts/traces")
     assert manifest["paths"]["result_root"] == str(run_root / "artifacts/results")
+    assert (run_root / "actual-argv").read_text().splitlines()[-2:] == tail
+    assert shlex.split((run_root / "command.txt").read_text())[-2:] == tail
 
 
 def test_supervisor_forwards_term_and_records_interruption(tmp_path: Path):

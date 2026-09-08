@@ -1,8 +1,106 @@
+import json
 import os
+import shlex
 import subprocess
+import sys
 from pathlib import Path
 
+import pytest
+
 SCRIPT = Path("examples/dsh/train_qwen3_4b_online_rl.sh")
+
+
+def test_async_mode_and_tail_are_printed_without_losing_literal_arguments():
+    tail = [
+        "trainer.v1.trainer_mode=colocate_async",
+        "trainer.v1.colocate_async.num_warmup_batches=2",
+        "++custom.note='literal $HOME with spaces'",
+    ]
+    result = subprocess.run(
+        ["bash", str(SCRIPT), *tail], capture_output=True, text=True, env={**os.environ, "PRINT_COMMAND": "1"}
+    )
+    assert result.returncode == 0, result.stderr
+    assert shlex.split(result.stdout)[-len(tail) :] == tail
+
+
+def test_async_mode_environment_is_explicit():
+    result = subprocess.run(
+        ["bash", str(SCRIPT)],
+        capture_output=True,
+        text=True,
+        env={**os.environ, "PRINT_COMMAND": "1", "TRAINER_MODE": "colocate_async", "NUM_WARMUP_BATCHES": "2"},
+    )
+    assert result.returncode == 0, result.stderr
+    argv = shlex.split(result.stdout)
+    assert "trainer.v1.trainer_mode=colocate_async" in argv
+    assert "trainer.v1.colocate_async.num_warmup_batches=2" in argv
+
+
+def test_actual_exec_matches_printed_async_and_tail_overrides(tmp_path):
+    model = tmp_path / "model"
+    model.mkdir()
+    for name in ("config.json", "tokenizer_config.json"):
+        (model / name).write_text("{}")
+    data = tmp_path / "data"
+    data.write_text("fixture")
+    capture = tmp_path / "argv.json"
+    fake_python = tmp_path / "python"
+    fake_python.write_text(
+        f"#!{sys.executable}\nimport json, os, sys\nfrom pathlib import Path\n"
+        "if sys.argv[1] == '-m':\n"
+        "    Path(os.environ['CAPTURE_ARGV']).write_text(json.dumps(sys.argv[1:]))\n"
+    )
+    fake_python.chmod(0o755)
+    env = {
+        **os.environ,
+        "PYTHON_BIN": str(fake_python),
+        "CAPTURE_ARGV": str(capture),
+        "MODEL_PATH": str(model),
+        "TRAIN_FILE": str(data),
+        "TEST_FILE": str(data),
+        "TASK_CONFIG": str(data),
+        "RUN_ROOT": str(tmp_path / "run"),
+        "MODEL_LICENSE_APPROVED": "1",
+        "TRAINER_MODE": "colocate_async",
+        "NUM_WARMUP_BATCHES": "2",
+    }
+    tail = ["trainer.v1.colocate_async.num_warmup_batches=3", "++custom.note='literal $HOME with spaces'"]
+    printed = subprocess.run(
+        ["bash", str(SCRIPT), *tail], env={**env, "PRINT_COMMAND": "1"}, capture_output=True, text=True
+    )
+    actual = subprocess.run(
+        ["bash", str(SCRIPT), *tail], env={**env, "PRINT_COMMAND": "0"}, capture_output=True, text=True
+    )
+    assert actual.returncode == printed.returncode == 0, actual.stderr
+    actual_args = json.loads(capture.read_text())
+    printed_args = shlex.split(printed.stdout)
+    assert actual_args[-len(tail) :] == printed_args[-len(tail) :] == tail
+    for args in (actual_args, printed_args):
+        assert "trainer.v1.trainer_mode=colocate_async" in args
+        assert "trainer.v1.colocate_async.num_warmup_batches=3" in args
+
+
+@pytest.mark.parametrize(
+    "settings,tail",
+    [
+        ({"TRAINER_MODE": "separate_async"}, []),
+        ({"NUM_WARMUP_BATCHES": "0"}, []),
+        ({"NUM_WARMUP_BATCHES": "1.5"}, []),
+        ({}, ["trainer.v1.trainer_mode=unknown"]),
+        ({}, ["trainer.v1.colocate_async.num_warmup_batches=-1"]),
+        ({}, ["++trainer.v1.trainer_mode=separate_async"]),
+        ({}, ["~trainer.v1.trainer_mode"]),
+    ],
+)
+def test_invalid_async_configuration_rejected_before_any_launch(settings, tail):
+    result = subprocess.run(
+        ["bash", str(SCRIPT), *tail],
+        capture_output=True,
+        text=True,
+        env={**os.environ, "PRINT_COMMAND": "1", **settings},
+    )
+    assert result.returncode == 2
+    assert not result.stdout
 
 
 def test_qwen3_4b_launcher_has_valid_shell_syntax():

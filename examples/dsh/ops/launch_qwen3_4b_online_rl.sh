@@ -20,10 +20,28 @@ if [[ "${1:-}" == "--foreground" ]]; then
   MODE=foreground
   shift
 fi
-if [[ "$#" -ne 0 ]]; then
-  echo "usage: $0 [--foreground]" >&2
-  exit 2
+TRAINER_MODE="${TRAINER_MODE:-sync}"
+NUM_WARMUP_BATCHES="${NUM_WARMUP_BATCHES:-1}"
+for override in "$@"; do
+  if [[ "${override}" == --* ]]; then
+    echo "usage: $0 [--foreground] [Hydra overrides...]" >&2; exit 2
+  fi
+  key="${override%%=*}"
+  key="${key#+}"; key="${key#+}"
+  case "$key" in
+    trainer.v1.trainer_mode) TRAINER_MODE="${override#*=}" ;;
+    trainer.v1.colocate_async.num_warmup_batches) NUM_WARMUP_BATCHES="${override#*=}" ;;
+    trainer|trainer.v1|trainer.v1.colocate_async|~trainer|~trainer.v1|~trainer.v1.*)
+      echo "trainer mode/warmup must use explicit supported overrides" >&2; exit 2 ;;
+  esac
+done
+if [[ "${TRAINER_MODE}" != sync && "${TRAINER_MODE}" != colocate_async ]]; then
+  echo "TRAINER_MODE must be sync or colocate_async" >&2; exit 2
 fi
+if ! [[ "${NUM_WARMUP_BATCHES}" =~ ^[1-9][0-9]*$ ]]; then
+  echo "NUM_WARMUP_BATCHES must be a positive integer" >&2; exit 2
+fi
+export TRAINER_MODE NUM_WARMUP_BATCHES
 if [[ "${MODE}" != "detach" && "${MODE}" != "foreground" ]]; then
   echo "MODE must be detach or foreground" >&2
   exit 2
@@ -103,7 +121,8 @@ export PYTHON_BIN
 LAUNCHER="${DSH_REPO_ROOT}/examples/dsh/train_qwen3_4b_online_rl.sh"
 dsh_require_file "${LAUNCHER}"
 COMMAND_FILE="${RUN_ROOT}/command.txt"
-printf '%q ' env "PATH=${PATH}" "PYTHONPATH=${PYTHONPATH}" "PYTHON_BIN=${PYTHON_BIN}" \
+printf '%q ' env "TRAINER_MODE=${TRAINER_MODE}" "NUM_WARMUP_BATCHES=${NUM_WARMUP_BATCHES}" \
+  "PATH=${PATH}" "PYTHONPATH=${PYTHONPATH}" "PYTHON_BIN=${PYTHON_BIN}" \
   "MODEL_LICENSE_APPROVED=${MODEL_LICENSE_APPROVED}" "LOW_VRAM=${LOW_VRAM}" \
   "MODEL_ID=${MODEL_ID}" "MODEL_PATH=${MODEL_PATH}" "TRAIN_FILE=${TRAIN_FILE}" \
   "TEST_FILE=${TEST_FILE}" "TASK_CONFIG=${TASK_CONFIG}" "RUN_ROOT=${RUN_ROOT}" \
@@ -121,7 +140,7 @@ printf '%q ' env "PATH=${PATH}" "PYTHONPATH=${PYTHONPATH}" "PYTHON_BIN=${PYTHON_
   "AGENT_LOG_DIR=${AGENT_LOG_DIR}" "ROLLOUT_DATA_DIR=${ROLLOUT_DATA_DIR}" \
   "VALIDATION_DATA_DIR=${VALIDATION_DATA_DIR}" "DSH_TRACE_ROOT=${DSH_TRACE_ROOT}" \
   "DSH_RESULT_ROOT=${DSH_RESULT_ROOT}" \
-  "PYTORCH_CUDA_ALLOC_CONF=" bash "${LAUNCHER}" > "${COMMAND_FILE}"
+  "PYTORCH_CUDA_ALLOC_CONF=" bash "${LAUNCHER}" "$@" > "${COMMAND_FILE}"
 printf '\n' >> "${COMMAND_FILE}"
 
 MANIFEST_ARGS=(
@@ -147,7 +166,8 @@ if [[ -n "${DSH_SHA}" ]]; then
 fi
 dsh_write_manifest "${RUN_ROOT}" --status prepared "${MANIFEST_ARGS[@]}"
 
-run_command=(env "PATH=${PATH}" "PYTHONPATH=${PYTHONPATH}" "PYTHON_BIN=${PYTHON_BIN}" \
+run_command=(env "TRAINER_MODE=${TRAINER_MODE}" "NUM_WARMUP_BATCHES=${NUM_WARMUP_BATCHES}" \
+  "PATH=${PATH}" "PYTHONPATH=${PYTHONPATH}" "PYTHON_BIN=${PYTHON_BIN}" \
   "MODEL_LICENSE_APPROVED=${MODEL_LICENSE_APPROVED}" "LOW_VRAM=${LOW_VRAM}" \
   "MODEL_ID=${MODEL_ID}" "MODEL_PATH=${MODEL_PATH}" "TRAIN_FILE=${TRAIN_FILE}" \
   "TEST_FILE=${TEST_FILE}" "TASK_CONFIG=${TASK_CONFIG}" "RUN_ROOT=${RUN_ROOT}" \
@@ -165,12 +185,12 @@ run_command=(env "PATH=${PATH}" "PYTHONPATH=${PYTHONPATH}" "PYTHON_BIN=${PYTHON_
   "AGENT_LOG_DIR=${AGENT_LOG_DIR}" "ROLLOUT_DATA_DIR=${ROLLOUT_DATA_DIR}" \
   "VALIDATION_DATA_DIR=${VALIDATION_DATA_DIR}" "DSH_TRACE_ROOT=${DSH_TRACE_ROOT}" \
   "DSH_RESULT_ROOT=${DSH_RESULT_ROOT}" \
-  "PYTORCH_CUDA_ALLOC_CONF=" bash "${LAUNCHER}")
+  "PYTORCH_CUDA_ALLOC_CONF=" bash "${LAUNCHER}" "$@")
 
 if [[ "${MODE}" == "foreground" ]]; then
   dsh_write_manifest "${RUN_ROOT}" --status running --pid "$$" "${MANIFEST_ARGS[@]}"
   set +e
-  "${run_command[@]}" "$@"
+  "${run_command[@]}"
   code=$?
   set -e
   if [[ "$code" -eq 0 ]]; then status=completed; else status=failed; fi
