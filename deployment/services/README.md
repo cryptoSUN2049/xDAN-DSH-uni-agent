@@ -38,3 +38,31 @@ executor's cleanup check and complete bounded artifacts before sealing.
 
 The service deadline closes HTTP then cancels active work. It does not stop or
 delete the GPU server. No model run is implied by the HTTP unit tests.
+
+## M2 controller health supervision
+
+Use the same frozen integration revision for the Mac controller and GPU supervisor.
+The controller exposes authenticated `GET /v1/runs/{run_id}/status` with its existing
+registration credential. The response includes `run_id`, `controller_id`,
+`run_spec_sha256`, `state`, and `healthy`; it never registers a Gateway.
+
+After `examples.harbor.prepare_m2_training` has created a fresh private launch
+folder and the operator has recorded the environment in `run-manifest.json`, run
+from the pinned GPU checkout:
+
+```bash
+python -m deployment.services.harbor_training_supervisor \
+  --launch /root/runs/NEW_RUN/launch.json \
+  --manifest /root/runs/NEW_RUN/run-manifest.json
+```
+
+The manifest supplies `environment` (including `PYTHON_BIN`) and an optional
+`wall_clock_seconds` (default 2700). The supervisor checks controller identity
+before starting training and every five seconds thereafter, with a five-second
+HTTP timeout. An unhealthy or unreachable controller stops the owned training
+process group. `supervisor-result.json` and `exit-code` describe the result.
+It refuses to overwrite `train.log`; retries require a new run directory and
+new matching controller spec. Outer orchestration remains responsible for
+credential-free archival to persistent storage and checking any detached Ray
+resources after failure. The health response verifies service lifecycle, not
+model inference or reward correctness. No automatic tunnel reconnect is used.

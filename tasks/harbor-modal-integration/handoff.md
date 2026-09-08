@@ -2,13 +2,13 @@
 
 ## 当前状态覆盖（新 Pod 恢复，优先于下方历史记录）
 
-- Worktree/分支：harbor-modal-integration / worktree-harbor-modal-integration；运行代码固定30381f71131c5629cabb7b9a1e2942c06b8a4fa5。
+- Worktree/分支：harbor-modal-integration / worktree-harbor-modal-integration；运行代码固定44542b04168c696d39c3b704495a38a088dd2c80（已push）。
 - 用户确认旧Pod停止，已提供新Pod：SSH root@216.243.220.178 -p14465 -i~/.ssh/id_ed25519；hostname c54bc4bb224c，节点172.26.0.2，同RTX PRO6000/97887MiB/driver595.91.07。
 - 云盘完整保留源码/venv/模型/data/artifacts/checkpoints。新节点复用venv验证257包兼容、CUDA合成梯度12、DSH runtime binary哈希匹配；无需重装模型或生成数据。旧/root目录已丢失，新凭据/运行证据用本地私有目录，结束时归档到云盘。
 - 后续DSH统一b236969/0.1.3a2；Uni-Agent89733ec、VERLfefb080、原始Harbor镜像846b46。完整固定清单deployment/versions/g1-deployment-lock.json；SDK/wheel与镜像均有私有Release。
 - 历史M1v3（旧7840）真实2步更新/reload通过；新版M1数据16/8和选中4/2划分哈希已复核，等待串行训练，不能把旧证据当新版通过。
 - M2 r1因layered空收集CPU summon与NO_SHARD冲突失败；已修默认layered=False。r2/r3未进入训练。新r4使用修复提交和全新spec/凭据/节点；r4已exit1：控制SSH在16:51:55保活超时退出，16:58:11首个registration连接48350被拒绝；无训练更新。
-- 新本地controller工具58987，spec /private/tmp/m2-recovery-r4/run-spec.json，日志同目录controller.log；GPU运行根/root/runs/m2-v2-r4，持久checkpoint /workspace/runs/m2-v2-r4-checkpoints，45分钟最多2步，执行状态先查supervisor.pid/exit-code/train.log。
+- 当前r5：Mac controller工具95012，spec /private/tmp/m2-recovery-r5/run-spec.json；GPU supervisor12209，/root/runs/m2-v2-r5；checkpoint /workspace/runs/m2-v2-r5-checkpoints；45分钟最多2步，新增认证健康监督（每5秒、请求5秒超时）。r4已结束归档。
 - 原连接阻塞已因新Pod解除，继续原G1工程目标。下方blocked/旧地址/未发布等均为历史，不据此停止新Pod工作。
 
 ## 1. TL;DR
@@ -425,3 +425,10 @@
 - 代理ssh.runpod.io可PTY登录同Pod，但非PTY exec和测试反向转发均失败，不作为Harbor隧道替代。公网直连命令正常。
 - SSH保活10秒/2次；仅能确认未及时收到响应，网络丢包/代理/服务器具体首因尚未确定。不得把推测写成已修复。
 - 详见docs/harbor-modal-integration/ssh-tunnel-diagnosis.json；下一步长连接及实际双向应用探针通过后再开新run，不复用失败r4。
+
+## r5恢复（44542b0）
+
+- 双向HTTP探针约121秒、7轮14请求通过，保持SSH原保活参数；这不是断线底层原因已修复证明。
+- controller新增认证GET状态和异常非零退出；GPU新监督入口deployment/services/harbor_training_supervisor.py。49项相关测试通过，全仓Ruff lint/format通过。
+- 44542b04168c696d39c3b704495a38a088dd2c80已推送并从GitHub固定到GPU，VERLfefb080保持。r5真实远程健康响应身份核对通过，supervisor12209已启动；不得运行中切checkout。
+- r5 spec摘要sha256:f08bd7cc711e957093db416d21fe94a9310545b8376dbdf387ff745a0efb0927。当前训练结果仍待验证；审计入口train-n应取ROLLOUT_N=4（不是训练dataset行数2）。
