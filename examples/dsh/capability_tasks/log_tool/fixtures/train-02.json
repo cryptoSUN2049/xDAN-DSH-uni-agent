@@ -1,0 +1,102 @@
+{
+  "schema": "dsh.t2-log-tool-case.v1",
+  "case_id": "log-tool-train-02",
+  "split": "train",
+  "public": true,
+  "calls": [
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-12T00:00:00Z",
+          "service": "gateway",
+          "severity": "ERROR",
+          "message": "Report to A.Admin@EXAMPLE.ORG.",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-12T00:01:00Z",
+          "service": "gateway",
+          "severity": "ERROR",
+          "message": "No email here",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-12T00:02:00Z",
+          "service": "gateway",
+          "severity": "INFO",
+          "message": "route switched",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-gateway",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "gateway",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ERROR",
+      "service": "gateway"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "later",
+          "service": "gateway",
+          "severity": "ERROR",
+          "message": "new_02@second.example.com"
+        },
+        {
+          "timestamp": "earlier",
+          "service": "gateway",
+          "severity": "error",
+          "message": "case-sensitive"
+        }
+      ],
+      "severity": null,
+      "service": "gateway"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-12T00:00:00Z",
+          "service": "gateway",
+          "severity": "ERROR",
+          "message": "Report to A.Admin@EXAMPLE.ORG.",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-12T00:01:00Z",
+          "service": "gateway",
+          "severity": "ERROR",
+          "message": "No email here",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-12T00:02:00Z",
+          "service": "gateway",
+          "severity": "INFO",
+          "message": "route switched",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-gateway",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "gateway",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ABSENT",
+      "service": null
+    }
+  ]
+}

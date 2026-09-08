@@ -1,0 +1,102 @@
+{
+  "schema": "dsh.t2-log-tool-case.v1",
+  "case_id": "log-tool-dev-02",
+  "split": "dev",
+  "public": true,
+  "calls": [
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-12T00:00:00Z",
+          "service": "notifications",
+          "severity": "WARN",
+          "message": "notify x@y.io and a-b@sub.mail.net",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-12T00:01:00Z",
+          "service": "notifications",
+          "severity": "ERROR",
+          "message": "delivery refused",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-12T00:02:00Z",
+          "service": "notifications",
+          "severity": "INFO",
+          "message": "sent",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-notifications",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "notifications",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ERROR",
+      "service": "notifications"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "later",
+          "service": "notifications",
+          "severity": "ERROR",
+          "message": "new_02@second.example.com"
+        },
+        {
+          "timestamp": "earlier",
+          "service": "notifications",
+          "severity": "error",
+          "message": "case-sensitive"
+        }
+      ],
+      "severity": null,
+      "service": "notifications"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-12T00:00:00Z",
+          "service": "notifications",
+          "severity": "WARN",
+          "message": "notify x@y.io and a-b@sub.mail.net",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-12T00:01:00Z",
+          "service": "notifications",
+          "severity": "ERROR",
+          "message": "delivery refused",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-12T00:02:00Z",
+          "service": "notifications",
+          "severity": "INFO",
+          "message": "sent",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-notifications",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "notifications",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ABSENT",
+      "service": null
+    }
+  ]
+}

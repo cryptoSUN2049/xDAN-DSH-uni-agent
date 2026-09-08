@@ -1,0 +1,31 @@
+{
+  "schema": "dsh.t2-scripted-runtime-smoke.v1",
+  "scope": "scripted-policy integration smoke",
+  "runtime_mode": "source-built-executable",
+  "trace_sha256": "sha256:edef7aaf784bf9c3b6efcac5cf30b16a55c28c5530230b8af08d043943290563",
+  "session_id": "session-2ce7283645064c76910bd4fff93b3bc5",
+  "finish_reason": "completed",
+  "verdict": {
+    "passed": true,
+    "eligible": true,
+    "reasons": [],
+    "matched_calls": 3,
+    "hidden_inputs_verified": false,
+    "plugin_id": "log-1",
+    "package_id": "pkg-1",
+    "plugin_run_id": "run-1"
+  },
+  "http_errors": [],
+  "runtime_source_commit": null,
+  "source_checkout_head_at_postrun_check": "355e0bae6ae74af1ab7309b88a6b99806350aaa2",
+  "built_cli_sha256": "sha256:78f24fd08b5136f9670f4b9b4401a9665869fa931da82b2cc868bda885873d1d",
+  "evidence_directory": "/private/tmp/t2-scripted-runtime-first",
+  "limitations": [
+    "Scripted responses, not model rollout or training",
+    "Runtime build source commit unknown; checkout HEAD is not artifact provenance",
+    "Source SDK import, not fixed released wheel acceptance",
+    "Public fixture only; no sealed holdout"
+  ],
+  "events_count": 78,
+  "requests_count": 14
+}

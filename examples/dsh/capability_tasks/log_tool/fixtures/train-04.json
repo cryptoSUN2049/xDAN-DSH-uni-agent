@@ -1,0 +1,102 @@
+{
+  "schema": "dsh.t2-log-tool-case.v1",
+  "case_id": "log-tool-train-04",
+  "split": "train",
+  "public": true,
+  "calls": [
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-14T00:00:00Z",
+          "service": "scheduler",
+          "severity": "INFO",
+          "message": "job owner job_42@example.com",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-14T00:01:00Z",
+          "service": "scheduler",
+          "severity": "WARN",
+          "message": "delay",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-14T00:02:00Z",
+          "service": "scheduler",
+          "severity": "ERROR",
+          "message": "oncall@tasks.org",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-scheduler",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "scheduler",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ERROR",
+      "service": "scheduler"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "later",
+          "service": "scheduler",
+          "severity": "ERROR",
+          "message": "new_04@second.example.com"
+        },
+        {
+          "timestamp": "earlier",
+          "service": "scheduler",
+          "severity": "error",
+          "message": "case-sensitive"
+        }
+      ],
+      "severity": null,
+      "service": "scheduler"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-14T00:00:00Z",
+          "service": "scheduler",
+          "severity": "INFO",
+          "message": "job owner job_42@example.com",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-14T00:01:00Z",
+          "service": "scheduler",
+          "severity": "WARN",
+          "message": "delay",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-14T00:02:00Z",
+          "service": "scheduler",
+          "severity": "ERROR",
+          "message": "oncall@tasks.org",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-scheduler",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "scheduler",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ABSENT",
+      "service": null
+    }
+  ]
+}

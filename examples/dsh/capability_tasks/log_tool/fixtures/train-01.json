@@ -1,0 +1,102 @@
+{
+  "schema": "dsh.t2-log-tool-case.v1",
+  "case_id": "log-tool-train-01",
+  "split": "train",
+  "public": true,
+  "calls": [
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-11T00:00:00Z",
+          "service": "payments",
+          "severity": "WARN",
+          "message": "Retry contact a.pay+retry@example.com",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-11T00:01:00Z",
+          "service": "payments",
+          "severity": "ERROR",
+          "message": "Receipt failed for billing@shop.io",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-11T00:02:00Z",
+          "service": "payments",
+          "severity": "INFO",
+          "message": "Heartbeat",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-payments",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "payments",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ERROR",
+      "service": "payments"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "later",
+          "service": "payments",
+          "severity": "ERROR",
+          "message": "new_01@second.example.com"
+        },
+        {
+          "timestamp": "earlier",
+          "service": "payments",
+          "severity": "error",
+          "message": "case-sensitive"
+        }
+      ],
+      "severity": null,
+      "service": "payments"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-11T00:00:00Z",
+          "service": "payments",
+          "severity": "WARN",
+          "message": "Retry contact a.pay+retry@example.com",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-11T00:01:00Z",
+          "service": "payments",
+          "severity": "ERROR",
+          "message": "Receipt failed for billing@shop.io",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-11T00:02:00Z",
+          "service": "payments",
+          "severity": "INFO",
+          "message": "Heartbeat",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-payments",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "payments",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ABSENT",
+      "service": null
+    }
+  ]
+}

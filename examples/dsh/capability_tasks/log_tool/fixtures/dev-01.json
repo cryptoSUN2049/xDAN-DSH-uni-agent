@@ -1,0 +1,102 @@
+{
+  "schema": "dsh.t2-log-tool-case.v1",
+  "case_id": "log-tool-dev-01",
+  "split": "dev",
+  "public": true,
+  "calls": [
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-11T00:00:00Z",
+          "service": "search",
+          "severity": "ERROR",
+          "message": "index admin index+blue@search.example.org",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-11T00:01:00Z",
+          "service": "search",
+          "severity": "INFO",
+          "message": "ready",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-11T00:02:00Z",
+          "service": "search",
+          "severity": "WARN",
+          "message": "stale data",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-search",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "search",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ERROR",
+      "service": "search"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "later",
+          "service": "search",
+          "severity": "ERROR",
+          "message": "new_01@second.example.com"
+        },
+        {
+          "timestamp": "earlier",
+          "service": "search",
+          "severity": "error",
+          "message": "case-sensitive"
+        }
+      ],
+      "severity": null,
+      "service": "search"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-11T00:00:00Z",
+          "service": "search",
+          "severity": "ERROR",
+          "message": "index admin index+blue@search.example.org",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-11T00:01:00Z",
+          "service": "search",
+          "severity": "INFO",
+          "message": "ready",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-11T00:02:00Z",
+          "service": "search",
+          "severity": "WARN",
+          "message": "stale data",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-search",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "search",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ABSENT",
+      "service": null
+    }
+  ]
+}

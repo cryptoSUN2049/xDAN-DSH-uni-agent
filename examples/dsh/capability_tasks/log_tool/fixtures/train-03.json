@@ -1,0 +1,102 @@
+{
+  "schema": "dsh.t2-log-tool-case.v1",
+  "case_id": "log-tool-train-03",
+  "split": "train",
+  "public": true,
+  "calls": [
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-13T00:00:00Z",
+          "service": "warehouse",
+          "severity": "DEBUG",
+          "message": "trace only",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-13T00:01:00Z",
+          "service": "warehouse",
+          "severity": "WARN",
+          "message": "ops@sub.example.net; backup@safe.io",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-13T00:02:00Z",
+          "service": "warehouse",
+          "severity": "ERROR",
+          "message": "disk full",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-warehouse",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "warehouse",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ERROR",
+      "service": "warehouse"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "later",
+          "service": "warehouse",
+          "severity": "ERROR",
+          "message": "new_03@second.example.com"
+        },
+        {
+          "timestamp": "earlier",
+          "service": "warehouse",
+          "severity": "error",
+          "message": "case-sensitive"
+        }
+      ],
+      "severity": null,
+      "service": "warehouse"
+    },
+    {
+      "records": [
+        {
+          "timestamp": "2026-09-13T00:00:00Z",
+          "service": "warehouse",
+          "severity": "DEBUG",
+          "message": "trace only",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-13T00:01:00Z",
+          "service": "warehouse",
+          "severity": "WARN",
+          "message": "ops@sub.example.net; backup@safe.io",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-13T00:02:00Z",
+          "service": "warehouse",
+          "severity": "ERROR",
+          "message": "disk full",
+          "ignored": "private-extra"
+        },
+        {
+          "timestamp": "2026-09-01",
+          "service": "other-warehouse",
+          "severity": "ERROR",
+          "message": "cross service"
+        },
+        {
+          "service": "warehouse",
+          "severity": "ERROR",
+          "message": "missing timestamp"
+        }
+      ],
+      "severity": "ABSENT",
+      "service": null
+    }
+  ]
+}
