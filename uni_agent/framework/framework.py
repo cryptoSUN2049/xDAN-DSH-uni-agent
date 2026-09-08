@@ -9,6 +9,7 @@ import json
 import logging
 import os
 import random
+import re
 from collections.abc import Awaitable, Callable
 from copy import deepcopy
 from dataclasses import dataclass, replace
@@ -42,6 +43,18 @@ logger = logging.getLogger(__name__)
 
 
 TrajectoryPostprocessor = Callable[..., list[Trajectory] | Awaitable[list[Trajectory]]]
+
+
+@dataclass(frozen=True)
+class GatewayStageExecution:
+    """One finalized Gateway stage; not evidence of TransferQueue consumption."""
+
+    session_id: str
+    context: dict[str, object]
+    task_result: TaskResult
+    trajectories: list[Trajectory]
+    sample_fields: dict[str, object]
+    run_dir: Path | None
 
 
 @dataclass
@@ -895,8 +908,48 @@ class GatewayAgentFramework(AgentFramework):
         runner_config: _RunnerConfig,
         sampling_params: dict[str, object],
     ) -> tuple[list[Trajectory], dict[str, object]]:
-        """Run one AgentRunner episode inside a Framework-created Gateway session."""
-        session_id = f"session-sample-{sample_index}-rollout-{session_index}-{uuid4().hex}"
+        """Run one episode, preserving the original tuple interface."""
+        stage = await self._execute_gateway_stage(
+            sample_fields=sample_fields,
+            sample_index=sample_index,
+            session_index=session_index,
+            global_steps=global_steps,
+            partition_id=partition_id,
+            group_size=group_size,
+            runner_name=runner_name,
+            runner_config=runner_config,
+            sampling_params=sampling_params,
+        )
+        return stage.trajectories, stage.sample_fields
+
+    async def _execute_gateway_stage(
+        self,
+        *,
+        sample_fields: dict[str, object],
+        sample_index: int,
+        session_index: int,
+        global_steps: int | None,
+        partition_id: str,
+        group_size: int,
+        runner_name: str,
+        runner_config: _RunnerConfig,
+        sampling_params: dict[str, object],
+        stage_session_id: str | None = None,
+        dump_consumption_crosswalk: bool = True,
+    ) -> GatewayStageExecution:
+        """Execute one stage through the existing manager, runner and reward path.
+
+        Stage identity and dump mode are operator-only keywords; sample content
+        cannot override them. A stage dump does not claim a future TQ key.
+        """
+        if stage_session_id is not None and (
+            not isinstance(stage_session_id, str)
+            or re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,127}", stage_session_id) is None
+        ):
+            raise ValueError("stage_session_id must be 1-128 safe ASCII letters, digits, underscores or hyphens")
+        if type(dump_consumption_crosswalk) is not bool:
+            raise ValueError("dump_consumption_crosswalk must be a bool")
+        session_id = stage_session_id or f"session-sample-{sample_index}-rollout-{session_index}-{uuid4().hex}"
         uid = str(sample_fields.get("uid", ""))
         session_trace = agent_loop_session(
             sample=sample_index,
@@ -1060,7 +1113,9 @@ class GatewayAgentFramework(AgentFramework):
                     status="empty",
                     trajectories=[],
                 )
-                return session_trajectories, sample_fields
+                return GatewayStageExecution(
+                    session_id, runner_context, task_result, session_trajectories, sample_fields, run_dir
+                )
 
             if self.reward_loop_worker_handles and self._custom_reward_function_configured:
                 annotations = await self._score_trajectories(
@@ -1121,6 +1176,7 @@ class GatewayAgentFramework(AgentFramework):
                     group_size=group_size,
                     sample_index=sample_index,
                     session_index=session_index,
+                    dump_consumption_crosswalk=dump_consumption_crosswalk,
                 )
             session_trace.finish(
                 runner_name=runner_name,
@@ -1129,7 +1185,9 @@ class GatewayAgentFramework(AgentFramework):
                 reward_source=reward_source,
                 finished=result_trajectories[0].finished if result_trajectories else None,
             )
-            return result_trajectories, sample_fields
+            return GatewayStageExecution(
+                session_id, runner_context, task_result, result_trajectories, sample_fields, run_dir
+            )
 
     async def _cancel_runner_task(self, object_ref, session_id: str) -> None:
         """Cancel a dispatched runner Ray task after its session timed out.
@@ -1195,6 +1253,7 @@ class GatewayAgentFramework(AgentFramework):
         group_size: int,
         sample_index: int,
         session_index: int,
+        dump_consumption_crosswalk: bool = True,
     ) -> None:
         """Persist finalized trajectories next to ``task.log``.
 
@@ -1223,7 +1282,9 @@ class GatewayAgentFramework(AgentFramework):
             np.savez_compressed(buf, **arrays)
             npz_bytes = buf.getvalue()
             meta = {
-                "schema": "uni-agent.trajectory-dump.v2",
+                "schema": (
+                    "uni-agent.trajectory-dump.v2" if dump_consumption_crosswalk else "uni-agent.gateway-stage-dump.v1"
+                ),
                 "session_id": session_id,
                 "gateway_session_id": session_id,
                 "partition_id": partition_id,
@@ -1238,7 +1299,9 @@ class GatewayAgentFramework(AgentFramework):
                     self._trajectory_meta(
                         traj,
                         trajectory_index=index,
-                        transfer_queue_key=trajectory_tq_key(group_uid, session_index, index),
+                        transfer_queue_key=(
+                            trajectory_tq_key(group_uid, session_index, index) if dump_consumption_crosswalk else None
+                        ),
                     )
                     for index, traj in enumerate(trajectories)
                 ],
@@ -1260,13 +1323,13 @@ class GatewayAgentFramework(AgentFramework):
         traj: Trajectory,
         *,
         trajectory_index: int,
-        transfer_queue_key: str,
+        transfer_queue_key: str | None,
     ) -> dict[str, object]:
         """Small, human-readable per-trajectory summary; the token arrays live in the npz."""
         extra = traj.extra_fields or {}
         return {
             "trajectory_index": trajectory_index,
-            "transfer_queue_key": transfer_queue_key,
+            **({"transfer_queue_key": transfer_queue_key} if transfer_queue_key is not None else {}),
             "num_turns": traj.num_turns,
             "finished": traj.finished,
             "reward_score": traj.reward_score,
