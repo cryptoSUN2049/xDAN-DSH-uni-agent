@@ -5,12 +5,13 @@
 - 当前 worktree `harbor-modal-integration`，分支 `worktree-harbor-modal-integration`；权威目标 `active-engineering-goal.md`，系统方案 `docs/harbor-modal-integration/uni-agent-system-plan-v3.html`。
 - Goal active，未完成。当前顺序：DSH/记忆/上下文/受控RSI真实任务与训练效果 → 独立结果复现；Harbor训练后置。SFT与大规模数据生产由其他会话承担。
 - M1 v2-r4真实两步RL、消费审计、504 LoRA更新/399 base冻结及独立reload已验收；两条公开题基线满分，不能宣称能力提升。
-- 2026-09-09：`8ff2f3a`已commit/push，GPU checkout `/workspace/rebuild/uni-agent-native-n0-r1`同步该提交。主线复用 `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，通过PYTHONPATH使用新checkout。不要修改运行中checkout。
+- 2026-09-09：`22265e1`已commit/push，GPU checkout `/workspace/rebuild/uni-agent-native-n0-r1`同步该提交。主线复用 `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，通过PYTHONPATH使用新checkout。不要修改运行中checkout。
 - 四例上下文GPU r1已于325秒exit1：4题finished，reward全0，3eligible/1ineligible。原因是引用basename而非完整source ID，另有一次读表外路径；保留原失败，修订prompt消除歧义，不降低rubric。
 - 容量对照r2已300秒exit0，单条真实轨迹回读、finished=true、reward=0；扩大窗口只解除容量阻断，未解决Tool查询。报告native-grounding-capacity-r2-result.json。
 - context r2已完成：4/4严格执行与轨迹回读，奖励均0，引用为绝对路径或缺失，不满足原合同。报告native-context-baseline-r2-result.json；未训练，不宣称能力提升。
 - T2 exploration-r1已510秒exit1，GPU释放。一个公开dev题4次采样：一次140步后max-tokens，三次工具调用留在文本而未执行，未观察到成功。报告native-t2-exploration-r1-result.json。不得重复原配置期望得到训练收益。
-- 下一GPU：真实记忆writer A→验真freeze→新reader B；CPU接线与有界supervisor收尾中，部署前固定新提交。
+- 当前GPU真实记忆A：/root/runs/dsh-memory-constraints-r1，writer-supervisor PID115999，源码22265e1，已部署旧验收venv；每stage1800秒。先查writer/run/process-exit.json及supervision/supervisor-result.json，A成功后使用memory_chain freeze-and-prepare-reader再run-stage reader/finalize。不能跳过A失败或修改运行中源码。
+- 记忆链本轮49项root复核通过；完整手册native-memory-student-chain-runbook.md。仍是评估，credit_assignment=none，尚未训练。
 
 ### 最新 N0/N1/P1 检查点
 

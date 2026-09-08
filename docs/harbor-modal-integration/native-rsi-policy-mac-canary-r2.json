@@ -1,0 +1,249 @@
+{
+  "errors": [],
+  "evidence_location": "/private/tmp/dsh-rsi-policy-canary-r2/result.json",
+  "fixed_runtime_verified": false,
+  "model_evaluation": false,
+  "passed": true,
+  "policy_sha256": "sha256:a81e65c97bfe4ee111d810d060e5921f496a0cab0a92ec8be8f7af619e50c935",
+  "runtime_mode": "mutable-source-wrapper-development-only",
+  "runtime_packages": {
+    "runtime": "source-checkout-no-distribution-metadata",
+    "sdk": "source-checkout-no-distribution-metadata"
+  },
+  "runtime_sha256": "sha256:cec771d179c978c65b263f8162e7bd511e379452ede18e44b593db7a96548786",
+  "schema": "dsh.rsi-runtime-policy-canary.v1",
+  "scope": "actual SDK tool calls; synthetic registry transition; no student rollout or RL admission",
+  "source_hashes": {
+    "deployment/checks/dsh_rsi_policy_canary.py": "sha256:a199a078e3cb03e2ff12c853ba1e2afa6659b7bfe7dd16b8ba0d1a4dbe72a5d4",
+    "examples/dsh/rsi_closed/policy.mjs": "sha256:a81e65c97bfe4ee111d810d060e5921f496a0cab0a92ec8be8f7af619e50c935",
+    "examples/dsh/rsi_closed/probe.mjs": "sha256:6636e8f104d5bc875c3857d1f51293cfbd1b8f1aab9e5a8cc9e938230358eebd",
+    "examples/dsh/rsi_closed/profile.py": "sha256:cc405f3d90346f537aee9b71d1d3fe7dc54269d7464e4b6894feb081f912e919",
+    "uni_agent/tasks/dsh/rsi_candidates.py": "sha256:5fc196ebe22224fa75a9138a1749f6d9ca0cb5d5cac1fef8702b30f45d6b9ab2"
+  },
+  "stages": [
+    {
+      "active_sha256": "sha256:d1e42cbc70a26cd4f7a3942bef1c6ba6c5470649052c1b95125077217ae8ac08",
+      "candidateSha256": "sha256:f7ef3875853fded7a43bf479355f1ec1593c371feebec0903dbdcbd668aeeade",
+      "inventory": [
+        "cordis_define",
+        "cordis_inspect_list",
+        "cordis_inspect_query",
+        "cordis_inspect_self",
+        "cordis_run",
+        "cordis_stop",
+        "cordis_undefine",
+        "str_replace_editor"
+      ],
+      "patch_sha256": "sha256:714b38be5075021789446d1b87e0043e20eedc181d9c6c52f7a25e798daf1efc",
+      "policySha256": "sha256:a81e65c97bfe4ee111d810d060e5921f496a0cab0a92ec8be8f7af619e50c935",
+      "policy_sha256": "sha256:a81e65c97bfe4ee111d810d060e5921f496a0cab0a92ec8be8f7af619e50c935",
+      "probe_sha256": "sha256:6636e8f104d5bc875c3857d1f51293cfbd1b8f1aab9e5a8cc9e938230358eebd",
+      "raw_probe_sha256": "sha256:6c93e87364972652edc485c0d191be93bf6a456b6fe40564be93dd29627bd583",
+      "read_file_hashes": {
+        "/private/tmp/dsh-rsi-policy-canary-r2/public.txt": "sha256:f3d3003540946d4142fbbd618837712dc235780cb381953a46f52aad9130d3cc"
+      },
+      "results": [
+        {
+          "expectedTextPresent": true,
+          "forbiddenTextPresent": false,
+          "isError": false,
+          "label": "read-public",
+          "policyDenied": false,
+          "resultSha256": "sha256:469226d8b96885693736187609316387cea9416379f3e3e12e5e03f05f6e96a6"
+        },
+        {
+          "expectedTextPresent": false,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "inspect-list",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-private",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-write",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-code",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-shell",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        }
+      ],
+      "selection_loaded_in_new_python": true,
+      "stage": "parent"
+    },
+    {
+      "active_sha256": "sha256:816879a7d57a915a8ad2b4cdf7c6e5f8040f3b94540e05934038e8983658dc43",
+      "candidateSha256": "sha256:84abe47f3cfcbbf3e5f0fd3ff0ff82d15a67484aac4323b6fc98797171de87d8",
+      "inventory": [
+        "cordis_define",
+        "cordis_inspect_list",
+        "cordis_inspect_query",
+        "cordis_inspect_self",
+        "cordis_run",
+        "cordis_stop",
+        "cordis_undefine",
+        "str_replace_editor"
+      ],
+      "patch_sha256": "sha256:19d077cc7a66fcce8e13d6417a036cd4b7aab72456bdb2703fb941d8ebeb2659",
+      "policySha256": "sha256:a81e65c97bfe4ee111d810d060e5921f496a0cab0a92ec8be8f7af619e50c935",
+      "policy_sha256": "sha256:a81e65c97bfe4ee111d810d060e5921f496a0cab0a92ec8be8f7af619e50c935",
+      "probe_sha256": "sha256:6636e8f104d5bc875c3857d1f51293cfbd1b8f1aab9e5a8cc9e938230358eebd",
+      "raw_probe_sha256": "sha256:92a1d8f74017948c90e15cae5b7626329f1168fd3799a463e91c79ad63991a15",
+      "read_file_hashes": {
+        "/private/tmp/dsh-rsi-policy-canary-r2/public.txt": "sha256:f3d3003540946d4142fbbd618837712dc235780cb381953a46f52aad9130d3cc"
+      },
+      "results": [
+        {
+          "expectedTextPresent": true,
+          "forbiddenTextPresent": false,
+          "isError": false,
+          "label": "read-public",
+          "policyDenied": false,
+          "resultSha256": "sha256:469226d8b96885693736187609316387cea9416379f3e3e12e5e03f05f6e96a6"
+        },
+        {
+          "expectedTextPresent": true,
+          "forbiddenTextPresent": false,
+          "isError": false,
+          "label": "inspect-list",
+          "policyDenied": false,
+          "resultSha256": "sha256:8b61476c201b44241276f59c74f1c4161fa52402e8dcd8ec3a60923ad2035448"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-private",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-write",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-code",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-shell",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        }
+      ],
+      "selection_loaded_in_new_python": true,
+      "stage": "candidate"
+    },
+    {
+      "active_sha256": "sha256:f8e15042134456c23989346911f51793e802a9c95a28ddc0f6ba8eaa88a176c9",
+      "candidateSha256": "sha256:f7ef3875853fded7a43bf479355f1ec1593c371feebec0903dbdcbd668aeeade",
+      "inventory": [
+        "cordis_define",
+        "cordis_inspect_list",
+        "cordis_inspect_query",
+        "cordis_inspect_self",
+        "cordis_run",
+        "cordis_stop",
+        "cordis_undefine",
+        "str_replace_editor"
+      ],
+      "patch_sha256": "sha256:9cdbf3de0fd9d42241188647f2a2545fcf3902cf8850ac11078db03e886202e8",
+      "policySha256": "sha256:a81e65c97bfe4ee111d810d060e5921f496a0cab0a92ec8be8f7af619e50c935",
+      "policy_sha256": "sha256:a81e65c97bfe4ee111d810d060e5921f496a0cab0a92ec8be8f7af619e50c935",
+      "probe_sha256": "sha256:6636e8f104d5bc875c3857d1f51293cfbd1b8f1aab9e5a8cc9e938230358eebd",
+      "raw_probe_sha256": "sha256:6c93e87364972652edc485c0d191be93bf6a456b6fe40564be93dd29627bd583",
+      "read_file_hashes": {
+        "/private/tmp/dsh-rsi-policy-canary-r2/public.txt": "sha256:f3d3003540946d4142fbbd618837712dc235780cb381953a46f52aad9130d3cc"
+      },
+      "results": [
+        {
+          "expectedTextPresent": true,
+          "forbiddenTextPresent": false,
+          "isError": false,
+          "label": "read-public",
+          "policyDenied": false,
+          "resultSha256": "sha256:469226d8b96885693736187609316387cea9416379f3e3e12e5e03f05f6e96a6"
+        },
+        {
+          "expectedTextPresent": false,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "inspect-list",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-private",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-write",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-code",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        },
+        {
+          "expectedTextPresent": null,
+          "forbiddenTextPresent": false,
+          "isError": true,
+          "label": "deny-shell",
+          "policyDenied": true,
+          "resultSha256": "sha256:acb05d4d99e14e9d609cf4d5bf0396c73c103804963b81d2a46794a8e3c0dbd3"
+        }
+      ],
+      "selection_loaded_in_new_python": true,
+      "stage": "rollback"
+    }
+  ],
+  "synthetic_selection_comparison": true,
+  "training": false
+}
