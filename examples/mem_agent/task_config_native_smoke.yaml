@@ -1,0 +1,14 @@
+# Standalone native diagnostic; never nest this Agent around DSH.
+- name: hotpotqa
+  sandbox:
+    provider: local
+  agent:
+    name: mem_agent
+    max_memorization_length: 256
+    max_chunks: 32
+    max_final_response_length: 512
+    max_steps: 33
+    model:
+      temperature: 1.0
+      top_p: 0.9
+      top_k: -1
