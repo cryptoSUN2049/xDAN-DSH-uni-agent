@@ -2,7 +2,7 @@
 
 2026-09-09：当前节点以active-engineering-goal.md中的N0—N5/P1为准，均待新验收；M1已通过证据保留。以下G1表为历史记录，Harbor不再前置。
 
-权威目标：[active-engineering-goal.md](active-engineering-goal.md)第4节。冷启动：[handoff.md](handoff.md)。本页是状态索引，不替代原始日志或放宽验收。
+权威目标：[active-engineering-goal.md](active-engineering-goal.md)。冷启动：[handoff.md](handoff.md)。本页是状态索引，不替代原始日志或放宽验收。
 
 | 节点 | 完成标准 | 当前状态/证据 |
 | --- | --- | --- |
@@ -27,6 +27,19 @@
 
 ## 后续目标
 
-G2能力效果：DSH调度内化、跨会话记忆/上下文管理、受约束RSI/harness演化、长任务留出评估。G3性能：质量门通过后再优化并发、全异步与Modal等云端沙盒。两者不冒充G1已完成。全局方案见docs/harbor-modal-integration/uni-agent-system-plan-v2.html和task-roadmap.html。
+G2能力效果：DSH调度内化、跨会话记忆/上下文管理、受约束RSI/harness演化、长任务留出评估。G3性能：质量门通过后再优化并发、全异步与Modal等云端沙盒。两者不冒充G1已完成。全局方案以docs/harbor-modal-integration/uni-agent-system-plan-v3.html及native-capability-roadmap.md为准；v2与task-roadmap是历史入口。
 
 基线/step1/step2/reload共8条公开留出结果均1，证据docs/harbor-modal-integration/redact-m1-v2-r4-eval-comparison.json。
+
+## 原生四能力最新可核验节点
+
+| 节点 | 已通过范围 | 仍未通过 |
+| --- | --- | --- |
+| DSH执行 | 既有M1真实RL+reload；grounding容量对照完整执行 | grounding/T2任务质量与独立效果增益 |
+| 文件证据上下文 | v1四题真实执行/轨迹回读；v2 12train/4dev准备；view_range适配83项CPU回归；r4四题真实strict准入/TQ回读通过 | v2真实RL与严格任务准确率；真实多context切换能力 |
+| 记忆边界 | 固定Linux SDK工具边界14请求；writer r2拒绝后恢复并创建正确memory | r2含一次越权，仍eligible=false；无freeze/B、无记忆RL |
+| RSI运行时 | 固定Linux父→子→回滚18真实工具请求，持久候选与选择合同 | 学生候选开发任务比较、训练与效果归因 |
+| 数据 | 独立实例/重复采样/消费口径审计 | 四能力完整课程与封存评估交付 |
+| 展示 | v3 HTML 390px无横向溢出、0坏锚点、状态视觉检查 | 视觉结果不替代上述训练验收 |
+
+最近运行状态看handoff，不在此把“正在运行”写成通过。相关报告入口为docs/harbor-modal-integration/native-data-coverage-audit.md、context-v2-view-range-compatibility.md和memory-writer-prompt-v2-design.md。

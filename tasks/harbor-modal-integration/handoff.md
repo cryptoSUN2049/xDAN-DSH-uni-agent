@@ -2,6 +2,11 @@
 
 ## 1. TL;DR
 
+- 最新通过：context-v2-baseline-r4已290.008秒exit0；4/4真实会话finished/eligible，strict TQ token回读通过，奖励0.1/0.1/0.1/0.72。源码a9c7b0a，报告native-context-v2-baseline-r4-result.json。只是评分/数据链工程通过，未新增optimizer，严格任务准确率仍0。下一步原生两步n4 RL诊断真实组信号，不再重复dev启动。
+
+- 最新覆盖：context-v2-baseline-r3已275秒exit1，4条verifier因root手动启动相对PYTHONPATH找不到模块；不是range修复失败。r4重新prepare，使用manifest.environment绝对路径，在data cwd导入verifier+摘要校验通过后启动。当前remote仍a9c7b0a，见/root/runs/context-v2-baseline-r4/supervisor.pid；不改运行中源码。
+- memory初始协议revision2已5867fcf推送，57项CPU+全Ruff通过，尚未部署GPU。v3 HTML最新状态已视觉复核390px无横溢/0坏锚点。
+
 - 当前唯一GPU作业：context-v2-baseline-r3，PID128980；remote checkout固定a9c7b0a155da9b8d29da3d4d46a7c337156a54f3。4公开dev各1次真实strict推理，无optimizer。目录/root/runs/context-v2-baseline-r3，配套新-data。前轮writer已结束；本地memory初始协议提示修订并行中。运行中不切remote源码。
 
 - 最新终态：memory writer r2已270秒exit1，4steps/3工具调用；只读源修改被拒一次后成功create正确memory，因原合同unapproved_action硬拒，未freeze/B。PID125477已退出，先前运行状态已过时。

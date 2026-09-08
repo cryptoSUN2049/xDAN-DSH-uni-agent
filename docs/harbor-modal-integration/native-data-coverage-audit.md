@@ -40,7 +40,7 @@ DSH：
   [任务合同](../../examples/dsh/capability_tasks/log_tool/task_bundle.py)：4 train / 2 validation，后者来源public dev。
   准备环境默认VAL_ONLY=True，不会因文件名prepare_training而自动训练。
 - [T2最新探索](native-t2-exploration-r1-result.json)：independent_task_count=1、attempt_count=4、
-  training=false、accepted_e2e=false；两个尝试max-tokens，其余完成但0分。不是四个任务或一次GRPO更新。
+  training=false、accepted_e2e=false；一个尝试max-tokens，其余三个完成但0分。不是四个任务或一次GRPO更新。
 - 历史T2还有真实SFT checkpoint审计：[step1](t2-sft-step1-checkpoint-audit.json)、
   [step1→56](t2-sft-warm-checkpoint-audit.json)。这些记录不能否认，但**不属于本轮在线RL训练覆盖**；
   [后续公开dev评估](t2-registration-student-eval-r1-result.json)仍是两题0分，没有证明完整能力提升。

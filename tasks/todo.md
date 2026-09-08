@@ -426,3 +426,6 @@ Review：当前四能力仍未验收完成；真实GPU baseline在运行，后�
 - [ ] 有效训练组→参数/optimizer审计→独立reload与dev评估。
 
 Review：M1先前RL通过；本轮context/记忆仍是基线与接线修复，不宣称新增RL成功。
+
+- [x] context v2 r4真实四题strict准入与TQ回读通过（290.008秒exit0），已归档完整回执。
+- [ ] 进入原生两步RL，检查实际任务组方差、optimizer与checkpoint；准确率未因此通过。

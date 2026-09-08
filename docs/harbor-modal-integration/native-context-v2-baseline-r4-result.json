@@ -1,0 +1,311 @@
+{
+  "schema": "dsh.context-baseline-result.v2",
+  "run": "/root/runs/context-v2-baseline-r4",
+  "launch": {
+    "source": "a9c7b0a155da9b8d29da3d4d46a7c337156a54f3",
+    "command": [
+      "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+      "/workspace/rebuild/uni-agent-native-n0-r1/examples/inference/parallel_infer_verl.py",
+      "--data-path",
+      "/root/runs/context-v2-baseline-r4-data/validation.parquet",
+      "--task-config",
+      "/root/runs/context-v2-baseline-r4-data/task.yaml",
+      "--n",
+      "1",
+      "--limit",
+      "4",
+      "--dsh-strict-audit",
+      "--require-result",
+      "--dsh-trace-root",
+      "/root/runs/context-v2-baseline-r4/artifacts/traces",
+      "--dsh-result-root",
+      "/root/runs/context-v2-baseline-r4/artifacts/results",
+      "--log-dir",
+      "/root/runs/context-v2-baseline-r4/agent-logs",
+      "--result-path",
+      "/root/runs/context-v2-baseline-r4/result.json",
+      "--inference-evidence-path",
+      "/root/runs/context-v2-baseline-r4/inference-evidence.json",
+      "--model-path",
+      "/workspace/models/Qwen3-4B-1cfa9a7",
+      "--n-gpus-per-node",
+      "1",
+      "--tensor-parallel-size",
+      "1",
+      "--gateway-count",
+      "1",
+      "--concurrency",
+      "2",
+      "--gpu-memory-utilization",
+      "0.4",
+      "--max-model-len",
+      "16384",
+      "--tool-parser",
+      "hermes"
+    ],
+    "run": "/root/runs/context-v2-baseline-r4",
+    "data": "/root/runs/context-v2-baseline-r4-data",
+    "training": false,
+    "independent_tasks": 4,
+    "sampling_attempts": 4,
+    "verifier_bundle": {
+      "id": "dsh-context-file-evidence-v2",
+      "version": "2",
+      "sha256": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546"
+    },
+    "wall_seconds": 3600,
+    "pythonpath": "/workspace/rebuild/uni-agent-native-n0-r1:/workspace/rebuild/uni-agent-native-n0-r1/verl",
+    "verifier_import_from_task_cwd": true,
+    "previous_run": "context-v2-baseline-r3",
+    "fix": "absolute prepared environment, cross-cwd verifier import preflight"
+  },
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 290.008,
+    "pid": 132707,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "inference": {
+    "finished_at": "2026-09-08T18:38:34.007124Z",
+    "global_steps": null,
+    "partition_id": "val",
+    "readback": {
+      "final_keys": [
+        "13067a32-b9d4-4071-b1b7-225a2b70a535_0_0",
+        "2bd17b83-0981-4a72-ae2a-270052ade723_0_0",
+        "49191613-631a-4566-af95-a2d8c55a8cbb_0_0",
+        "5ad8481c-f8e1-4b04-b399-7ad16e09a4ad_0_0"
+      ],
+      "scores": [
+        0.10000000149011612,
+        0.10000000149011612,
+        0.10000000149011612,
+        0.7200000286102295
+      ],
+      "traj_keys": [
+        "49191613-631a-4566-af95-a2d8c55a8cbb_0_0",
+        "2bd17b83-0981-4a72-ae2a-270052ade723_0_0",
+        "13067a32-b9d4-4071-b1b7-225a2b70a535_0_0",
+        "5ad8481c-f8e1-4b04-b399-7ad16e09a4ad_0_0"
+      ],
+      "uid_status": {
+        "13067a32-b9d4-4071-b1b7-225a2b70a535": "finished",
+        "2bd17b83-0981-4a72-ae2a-270052ade723": "finished",
+        "49191613-631a-4566-af95-a2d8c55a8cbb": "finished",
+        "5ad8481c-f8e1-4b04-b399-7ad16e09a4ad": "finished"
+      }
+    },
+    "samples": [
+      {
+        "metadata": {
+          "capability_scope": "file-evidence-only",
+          "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+          "fixture_path": "/root/runs/context-v2-baseline-r4-data/cases/dev-D/contract.json",
+          "fixture_sha256": "sha256:f40f9ae9f8222d5d7223c663a3e64197519758d0afdec27c9f2c962597440304",
+          "split": "validation",
+          "structure_id": "dev-D",
+          "task_id": "dsh/context-v2/dev-D",
+          "task_version": "2",
+          "verifier_code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+          "verifier_id": "dsh-context-file-evidence-v2",
+          "verifier_version": "2"
+        },
+        "sample_index": 0,
+        "uid": "49191613-631a-4566-af95-a2d8c55a8cbb"
+      },
+      {
+        "metadata": {
+          "capability_scope": "file-evidence-only",
+          "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+          "fixture_path": "/root/runs/context-v2-baseline-r4-data/cases/dev-C/contract.json",
+          "fixture_sha256": "sha256:a4a0a49e62d8afc7fcac7db41fea6b87b49b18da7a0f533c13e682e1f8d2b253",
+          "split": "validation",
+          "structure_id": "dev-C",
+          "task_id": "dsh/context-v2/dev-C",
+          "task_version": "2",
+          "verifier_code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+          "verifier_id": "dsh-context-file-evidence-v2",
+          "verifier_version": "2"
+        },
+        "sample_index": 1,
+        "uid": "2bd17b83-0981-4a72-ae2a-270052ade723"
+      },
+      {
+        "metadata": {
+          "capability_scope": "file-evidence-only",
+          "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+          "fixture_path": "/root/runs/context-v2-baseline-r4-data/cases/dev-M/contract.json",
+          "fixture_sha256": "sha256:03249aaaccb81024f605be5138f4921cebba807d2590108bfd38082b9269036e",
+          "split": "validation",
+          "structure_id": "dev-M",
+          "task_id": "dsh/context-v2/dev-M",
+          "task_version": "2",
+          "verifier_code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+          "verifier_id": "dsh-context-file-evidence-v2",
+          "verifier_version": "2"
+        },
+        "sample_index": 2,
+        "uid": "13067a32-b9d4-4071-b1b7-225a2b70a535"
+      },
+      {
+        "metadata": {
+          "capability_scope": "file-evidence-only",
+          "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+          "fixture_path": "/root/runs/context-v2-baseline-r4-data/cases/dev-V/contract.json",
+          "fixture_sha256": "sha256:51b2e484b72393c7de92cf7537884ad5e198a9da22382143c9c681be682ff9d8",
+          "split": "validation",
+          "structure_id": "dev-V",
+          "task_id": "dsh/context-v2/dev-V",
+          "task_version": "2",
+          "verifier_code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+          "verifier_id": "dsh-context-file-evidence-v2",
+          "verifier_version": "2"
+        },
+        "sample_index": 3,
+        "uid": "5ad8481c-f8e1-4b04-b399-7ad16e09a4ad"
+      }
+    ],
+    "schema": "dsh.inference-evidence.v1",
+    "started_at": "2026-09-08T18:34:07.885207Z",
+    "status": "completed"
+  },
+  "receipts": [
+    {
+      "path": "/root/runs/context-v2-baseline-r4/artifacts/results/55f3d56f23f8e7e66c6582ad/verifier-receipt.json",
+      "sha256": "04f4272fefad020a4ae3f880d90c1af4992987016614fa135ad6904c20443f8d",
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:9bbd4b7c3b720b36b109d6e02b4b81800b00d27e567a2a15f7e2cf9c93bf40a1",
+        "dsh_session_id": "dsh-session-sample-2-rollout-0-359f900f06ef4a97bbb8b77d84cc6f81",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:03249aaaccb81024f605be5138f4921cebba807d2590108bfd38082b9269036e",
+          "sha256:0f1a50680541f941811bfb314ee6b7346c9967bc3dad97e4ed02146df520ced3"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T18:38:33.053Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:ce4bcdd65a10dcb35b863ed886b702aa2049edf33020357444eb6b3aa0bbdde3",
+        "reward": 0.1,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context-v2/dev-M",
+        "task_version": "2",
+        "trace_sha256": "sha256:0f1a50680541f941811bfb314ee6b7346c9967bc3dad97e4ed02146df520ced3",
+        "verifier": {
+          "code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+          "id": "dsh-context-file-evidence-v2",
+          "version": "2"
+        }
+      }
+    },
+    {
+      "path": "/root/runs/context-v2-baseline-r4/artifacts/results/967508f31e42b239bc152bb5/verifier-receipt.json",
+      "sha256": "8d09d71fad1ba77ec7bca8346e0364563643bed495e1bca70e508fedcfee3fb3",
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:9220e4df1b1c80543f69e32abe9d720d27335702ea355defff6f1406e9532e36",
+        "dsh_session_id": "dsh-session-sample-1-rollout-0-5e99793545c44d8e851b664d60f87efd",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:a4a0a49e62d8afc7fcac7db41fea6b87b49b18da7a0f533c13e682e1f8d2b253",
+          "sha256:13ecfed555aa26e746b1e5cbcd9d4b40686554b3bee7f1301c871d0545256102"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T18:38:30.090Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:87866d00dcf27b727d156140a316ba44d5c908ae486e1405a26e4340c004b98c",
+        "reward": 0.1,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context-v2/dev-C",
+        "task_version": "2",
+        "trace_sha256": "sha256:13ecfed555aa26e746b1e5cbcd9d4b40686554b3bee7f1301c871d0545256102",
+        "verifier": {
+          "code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+          "id": "dsh-context-file-evidence-v2",
+          "version": "2"
+        }
+      }
+    },
+    {
+      "path": "/root/runs/context-v2-baseline-r4/artifacts/results/a9e8fcbfec8ff3d7915553d3/verifier-receipt.json",
+      "sha256": "0b350db5cb230c30f2675e9c45c6ce531ad1cf6dfec09275f79d6649a441e57d",
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:0d2ed22f7de15f747bca7effdc358b8ecb92c273c3f921a507203d21ea60338f",
+        "dsh_session_id": "dsh-session-sample-3-rollout-0-3b7d489d00ec474f871f9ccf093e6ad1",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:51b2e484b72393c7de92cf7537884ad5e198a9da22382143c9c681be682ff9d8",
+          "sha256:6ec8cdbc59bc7668c8a9b7e2355ded4893f8eb023d09b8aff1224d67b0af2ee0"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T18:38:33.921Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:f5fc9f639f92f455beb4a6cc2f421d70345cd07b66af18df8b4acbf6624b9039",
+        "reward": 0.72,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context-v2/dev-V",
+        "task_version": "2",
+        "trace_sha256": "sha256:6ec8cdbc59bc7668c8a9b7e2355ded4893f8eb023d09b8aff1224d67b0af2ee0",
+        "verifier": {
+          "code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+          "id": "dsh-context-file-evidence-v2",
+          "version": "2"
+        }
+      }
+    },
+    {
+      "path": "/root/runs/context-v2-baseline-r4/artifacts/results/d5172efb22708f3525a6b621/verifier-receipt.json",
+      "sha256": "c4a90f219575970432903997654c7419f613d78069cd4caebaa911cab2c4833d",
+      "receipt": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:2fbd285350401cd29e1dc578f967c1e253e21e427c37a95ad0fa68c996c3da43",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-af0621dd6a4041aca0521d9dd384a325",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:f40f9ae9f8222d5d7223c663a3e64197519758d0afdec27c9f2c962597440304",
+          "sha256:fdcfa42948420983f952aa3d267a73e4473203e2c1bfa75fb1342dd7a8259524"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-08T18:38:29.676Z",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:d55d1a76272fd408a8b11fd4d918f521ac3764a9ea71b6869936d101479c8f54",
+        "reward": 0.1,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/context-v2/dev-D",
+        "task_version": "2",
+        "trace_sha256": "sha256:fdcfa42948420983f952aa3d267a73e4473203e2c1bfa75fb1342dd7a8259524",
+        "verifier": {
+          "code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+          "id": "dsh-context-file-evidence-v2",
+          "version": "2"
+        }
+      }
+    }
+  ],
+  "training": false,
+  "capability_improvement_proven": false,
+  "scope": "4 public dev tasks, fresh strict receipt and token readback; no optimizer"
+}
