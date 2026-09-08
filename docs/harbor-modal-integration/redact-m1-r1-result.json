@@ -1,0 +1,63 @@
+{
+  "schema": "dsh.redact-m1-result.v1",
+  "passed": false,
+  "reason": "zero-gradient; completed policy failures excluded by v1 admission",
+  "source_commit": "74b253bfe2f580d4c6175672b5bdc0b3ccf623a8",
+  "run_root": "/root/runs/dsh-redact-m1-r1",
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 1065.022,
+    "pid": 53591
+  },
+  "steps": [
+    {
+      "global_step": 1,
+      "actor/grad_norm": 0.0,
+      "actor/pg_loss": 0.0,
+      "critic/score/mean": 1.0,
+      "critic/score/min": 1.0,
+      "critic/score/max": 1.0,
+      "training/rollout_failure/evicted_samples": 1.0
+    },
+    {
+      "global_step": 2,
+      "actor/grad_norm": 0.0,
+      "actor/pg_loss": 0.0,
+      "critic/score/mean": 1.0,
+      "critic/score/min": 1.0,
+      "critic/score/max": 1.0,
+      "training/rollout_failure/evicted_samples": 4.0
+    }
+  ],
+  "checkpoint_delta": {
+    "schema": "dsh.single-rank-lora-delta.v1",
+    "passed": false,
+    "adapter_count": 504,
+    "adapter_changed": 0,
+    "base_count": 399,
+    "base_changed": 0,
+    "before": {
+      "path": "/workspace/runs/dsh-redact-m1-r1-checkpoints/global_step_1/actor/model_world_size_1_rank_0.pt",
+      "sha256": "584f7911bbd4933e328feb122699d041cda67febeab28d4aba42cd1b87b52cac"
+    },
+    "after": {
+      "path": "/workspace/runs/dsh-redact-m1-r1-checkpoints/global_step_2/actor/model_world_size_1_rank_0.pt",
+      "sha256": "584f7911bbd4933e328feb122699d041cda67febeab28d4aba42cd1b87b52cac"
+    }
+  },
+  "audit_summary": {
+    "eligible_groups": 10,
+    "groups": 15,
+    "legacy_unjoinable_files": 0,
+    "rejected_groups": 5,
+    "run_completed": true,
+    "unexpected_consumed_rows": 0,
+    "variance_groups": 0
+  },
+  "independent_reload_performed": false,
+  "archive": {
+    "path": "/workspace/reports/dsh-redact-m1-r1-evidence.tar.gz",
+    "sha256": "22088026fd717e232ad9d9b2cc4c59ee76ed42aaa85bb5873de943e8b34659d6"
+  }
+}

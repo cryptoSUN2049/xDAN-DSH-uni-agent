@@ -38,9 +38,9 @@ class SshTunnel:
             "-o",
             "ConnectTimeout=10",
             "-o",
-            "ServerAliveInterval=10",
+            "ServerAliveInterval=15",
             "-o",
-            "ServerAliveCountMax=2",
+            "ServerAliveCountMax=6",
         ]
         if kind == "control":
             self.argv += [

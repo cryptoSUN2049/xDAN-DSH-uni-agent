@@ -16,9 +16,10 @@ import yaml
 
 from deployment.services.harbor_run_controller import RunSpec, digest
 from uni_agent.agents.dsh.harbor_release import release_patch_paths
+from uni_agent.tasks.harbor_dsh.evolution_scoring import EvolutionBinding, load_evolution_binding
 from uni_agent.tasks.harbor_dsh.protocol import DshRelease, TaskRef
 from uni_agent.tasks.harbor_dsh.registration import _token
-from uni_agent.tasks.harbor_dsh.task import T2FixtureBinding, _json, load_t2_fixture
+from uni_agent.tasks.harbor_dsh.task import T2FixtureBinding, _fixture_lane, _json, load_t2_fixture
 
 EVALUATION_SCOPE = "same-task-engineering-evaluation-not-generalization"
 
@@ -96,6 +97,7 @@ def prepare_training(
     train_count: int = 2,
     heldout_count: int = 1,
     t2_fixture_binding: Path | None = None,
+    evolution_binding: Path | None = None,
 ) -> Path:
     """Spec paths remain Mac-owned; task/credential/output paths refer to this host."""
     for count in (train_count, heldout_count):
@@ -114,8 +116,10 @@ def prepare_training(
     if manifest.get("environment", {}).get("docker_image") != template["dsh_release"]["image_digest"]:
         raise ValueError("Current task image differs from the frozen DSH release")
     release = DshRelease.model_validate(template["dsh_release"])
-    t2 = bool(release_patch_paths(release))
-    if t2 != (t2_fixture_binding is not None):
+    if t2_fixture_binding is not None and evolution_binding is not None:
+        raise ValueError("T2 and evolution bindings are mutually exclusive")
+    t2 = t2_fixture_binding is not None
+    if bool(release_patch_paths(release)) != (t2 or evolution_binding is not None):
         raise ValueError("T2 requires an explicit operator fixture binding; empty release must omit it")
     binding = None
     fixture = None
@@ -128,6 +132,26 @@ def prepare_training(
         if frozen.raw != expected_path.read_bytes():
             raise ValueError("T2 fixture bytes differ from frozen task")
         fixture = _json(frozen.raw)
+    evolution = None
+    if evolution_binding is not None:
+        evolution = EvolutionBinding.model_validate(_json(evolution_binding.read_bytes()))
+        for field, filename in (("fixture_path", "fixture.json"), ("metadata_path", "metadata.json")):
+            if Path(getattr(evolution, field)).resolve(strict=True) != (task_dir / "tests" / filename).resolve(
+                strict=True
+            ):
+                raise ValueError("Evolution binding must use frozen task tests files")
+        descriptor = {
+            key: evolution.model_dump(mode="json")[key]
+            for key in ("kind", "fixture_sha256", "metadata_sha256", "source_sha256s")
+        }
+        if _json((task_dir / "evolution.json").read_bytes()) != descriptor:
+            raise ValueError("Evolution descriptor differs from operator binding")
+        frozen_evolution = load_evolution_binding(
+            evolution, TaskRef.model_validate(refs[0]), repository_root=Path(__file__).resolve().parents[2]
+        )
+        _fixture_lane(release, TaskRef.model_validate(refs[0]), None, frozen_evolution)
+        metadata = _json(frozen_evolution.metadata_raw)
+        fixture = {"case_id": metadata["scenario_id"], "split": metadata["split"]}
     instruction = (task_dir / "instruction.md").read_text()
     if not instruction.strip():
         raise ValueError("Frozen task instruction is empty")
@@ -152,6 +176,8 @@ def prepare_training(
     }
     if binding is not None:
         task_config["t2_fixture"] = binding.model_dump(mode="json")
+    if evolution is not None:
+        task_config["evolution_binding"] = evolution.model_dump(mode="json")
     _write(task_config_path, yaml.safe_dump(task_config, allow_unicode=True, sort_keys=True).encode())
     for split, count in (("train", train_count), ("heldout", heldout_count)):
         path = output_dir / f"{split}.parquet"
@@ -164,7 +190,7 @@ def prepare_training(
                         spec.run_id,
                         split,
                         count,
-                        task_id=refs[0]["id"] if t2 else "m2-file-write",
+                        task_id=refs[0]["id"] if t2 or evolution is not None else "m2-file-write",
                         fixture=fixture,
                     )
                 ),
@@ -186,7 +212,9 @@ def prepare_training(
             "TEST_FILE": str(output_dir / "heldout.parquet"),
             "TASK_CONFIG": str(task_config_path),
             "RUN_ROOT": str(output_dir),
-            "PROJECT_NAME": "harbor-t2-engineering" if t2 else "harbor-m2-engineering",
+            "PROJECT_NAME": "harbor-evolution-engineering"
+            if evolution is not None
+            else ("harbor-t2-engineering" if t2 else "harbor-m2-engineering"),
             "EXP_NAME": spec.run_id,
             "MODEL_ID": template["model_name"],
             "TRAIN_MAX_SAMPLES": str(train_count),
@@ -207,6 +235,8 @@ def prepare_training(
     }
     if binding is not None:
         launch["postprocessor"]["t2_fixture"] = binding.model_dump(mode="json")
+    if evolution is not None:
+        launch["postprocessor"]["evolution_binding"] = evolution.model_dump(mode="json")
     path = output_dir / "launch.json"
     _write(path, (json.dumps(launch, indent=2, ensure_ascii=False, allow_nan=False) + "\n").encode())
     return path
@@ -225,6 +255,9 @@ def main():
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument(
         "--t2-fixture-binding", type=Path, help="Operator T2FixtureBinding JSON bound to this frozen task"
+    )
+    parser.add_argument(
+        "--evolution-binding", type=Path, help="Operator EvolutionBinding JSON bound to this frozen task"
     )
     parser.add_argument("--train-count", type=int, default=2)
     parser.add_argument("--heldout-count", type=int, default=1)

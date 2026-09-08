@@ -141,3 +141,104 @@ def test_urlerror_records_timeout_type_without_reason_text(tmp_path):
     assert value["reason_type"] == "TimeoutError"
     assert "secret" not in (tmp_path / "health-failure.json").read_text()
     assert (tmp_path / "health-failure.json").stat().st_mode & 0o777 == 0o600
+
+
+@pytest.mark.parametrize(
+    "error, expected",
+    [(TimeoutError(), True), (ConnectionRefusedError(), True), (ValueError(), False), (PermissionError(), False)],
+)
+def test_transport_error_classification(error, expected):
+    from deployment.services.harbor_training_supervisor import transient_transport_error
+
+    assert transient_transport_error(error) is expected
+
+
+@pytest.mark.parametrize("scenario", ["recover", "reset", "continuous", "wall", "auth"])
+def test_bounded_transport_windows_with_fake_clock(tmp_path, monkeypatch, scenario):
+    import urllib.error
+
+    from deployment.services import harbor_training_supervisor as module
+
+    clock = [0.0]
+
+    class Process:
+        pid = 54321
+        returncode = None
+
+        def poll(self):
+            return self.returncode
+
+        def wait(self, timeout):
+            self.returncode = -15
+            return -15
+
+    process = Process()
+    monkeypatch.setattr(module.subprocess, "Popen", lambda *a, **k: process)
+    monkeypatch.setattr(module.os, "killpg", lambda *a: None)
+    monkeypatch.setattr(module.time, "monotonic", lambda: clock[0])
+    monkeypatch.setattr(module.time, "sleep", lambda seconds: clock.__setitem__(0, clock[0] + seconds))
+    checks = []
+
+    def health():
+        checks.append(clock[0])
+        if len(checks) == 1:
+            return
+        if scenario == "auth":
+            raise urllib.error.HTTPError("secret", 403, "secret", {}, None)
+        if scenario == "recover" and clock[0] >= 20:
+            process.returncode = 0
+            return
+        if scenario == "reset" and clock[0] == 80:
+            return
+        if scenario == "reset" and clock[0] >= 160:
+            process.returncode = 0
+            return
+        raise TimeoutError("secret")
+
+    result = module.supervise(
+        ["unused"], tmp_path, {}, tmp_path, health, interval=10, wall_seconds=25 if scenario == "wall" else 300
+    )
+    if scenario in ("recover", "reset"):
+        assert result["reason"] == "training-exited"
+        assert result["exit_code"] == 0
+    else:
+        assert result["reason"] == ("wall-clock-deadline" if scenario == "wall" else "controller-health-failed")
+        assert clock[0] == ({"continuous": 90, "wall": 25, "auth": 0}[scenario])
+    assert "secret" not in (tmp_path / "supervisor-result.json").read_text()
+
+
+def test_wrapped_transport_and_permanent_failures_are_distinguished():
+    import errno
+    import socket
+    import ssl
+    import urllib.error
+
+    from deployment.services.harbor_training_supervisor import transient_transport_error
+
+    for reason in (
+        TimeoutError(),
+        ConnectionResetError(),
+        OSError(errno.EHOSTUNREACH, "private"),
+        socket.gaierror(socket.EAI_AGAIN, "private"),
+    ):
+        assert transient_transport_error(urllib.error.URLError(reason))
+    for error in (
+        urllib.error.HTTPError("private", 503, "private", {}, None),
+        urllib.error.URLError("timed out"),
+        urllib.error.URLError(ssl.SSLCertVerificationError()),
+        socket.gaierror(socket.EAI_NONAME, "private"),
+        json.JSONDecodeError("private", "x", 0),
+    ):
+        assert not transient_transport_error(error)
+
+
+def test_transport_preflight_still_refuses_to_launch(tmp_path, monkeypatch):
+    from deployment.services import harbor_training_supervisor as module
+
+    def forbidden(*a, **k):
+        raise AssertionError("must not start training")
+
+    monkeypatch.setattr(module.subprocess, "Popen", forbidden)
+    with pytest.raises(TimeoutError):
+        supervise(["unused"], tmp_path, {}, tmp_path, lambda: (_ for _ in ()).throw(TimeoutError("private")))
+    assert not (tmp_path / "train.log").exists()

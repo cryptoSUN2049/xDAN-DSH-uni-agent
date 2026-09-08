@@ -372,3 +372,94 @@ def test_frozen_t2_patch_bytes_cannot_be_substituted(task_dir, harness):
     with pytest.raises(ValueError, match="patch"):
         run(request, task_dir)
     assert harness.trial is None
+
+
+def evolution_task(task_dir):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH
+
+    source = Path(__file__).resolve().parents[3]
+    (task_dir / "environment").mkdir()
+    (task_dir / "environment/evolution.patch.yml").write_bytes(
+        (source / "examples/dsh/evolution.patch.yml").read_bytes()
+    )
+    (task_dir / "tests").mkdir()
+    raw = b'{"schema":"dsh.evolution.fixture.v1","operation":"redact_email","input":"a@b.org"}'
+    (task_dir / "tests/fixture.json").write_bytes(raw)
+    sources = {
+        p: digest((source / p).read_bytes()) for p in ["examples/dsh/evolution_verifier.py", "examples/dsh/verifier.py"]
+    }
+    metadata = dict(
+        operation="redact_email",
+        candidate_tool_name="redact_payload",
+        scenario_id="redact-holdout-01",
+        task_id="dsh/harness-evolution/redact-holdout-01",
+        task_version="1",
+        fixture_digest=digest(raw),
+        fixture_path="/app/fixture.json",
+        profile="sdk-minimal",
+        environment_digest=HASH,
+        patches_sha256=digest(json.dumps([T2_PATCH_PATH], separators=(",", ":")).encode()),
+        verifier_id="dsh-harness-evolution-verifier",
+        verifier_version="1",
+        verifier_code_digest=sources["examples/dsh/evolution_verifier.py"],
+    )
+    raw_meta = json.dumps(metadata).encode()
+    (task_dir / "tests/metadata.json").write_bytes(raw_meta)
+    descriptor = dict(
+        kind="evolution-v2-lifecycle-v1",
+        fixture_sha256=digest(raw),
+        metadata_sha256=digest(raw_meta),
+        source_sha256s=sources,
+    )
+    (task_dir / "evolution.json").write_text(json.dumps(descriptor))
+    return descriptor, metadata
+
+
+def test_evolution_injects_request_taskref_outside_task_tree(task_dir, harness):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_SHA256
+
+    descriptor, _ = evolution_task(task_dir)
+    request = request_for(task_dir, dsh_release={"patch_sha256s": [T2_PATCH_SHA256]})
+    result = run(request, task_dir)
+    assert result.cleanup_confirmed
+    kwargs = harness.trial.strategy_kwargs
+    assert kwargs["strategy"] == "evolution-v2-lifecycle-v1"
+    binding = json.loads(kwargs["evolution_binding"])
+    assert binding == {
+        **descriptor,
+        "task_ref": request.task_ref.model_dump(),
+        "fixture_path": "/tests/fixture.json",
+        "metadata_path": "/tests/metadata.json",
+    }
+    assert "task_ref" not in json.loads((task_dir / "evolution.json").read_text())
+
+
+@pytest.mark.parametrize(
+    "bad",
+    ["source", "fixture", "metadata", "kind", "self_reference", "runtime", "patch_path", "fixture_path", "unpatched"],
+)
+def test_evolution_preflight_rejects_before_trial(task_dir, harness, bad):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_SHA256
+
+    descriptor, metadata = evolution_task(task_dir)
+    if bad == "source":
+        descriptor["source_sha256s"]["examples/dsh/verifier.py"] = HASH
+    if bad == "fixture":
+        (task_dir / "tests/fixture.json").write_bytes(b"changed")
+    if bad == "metadata":
+        (task_dir / "tests/metadata.json").write_bytes(b"changed")
+    if bad == "kind":
+        descriptor["kind"] = "other"
+    if bad == "self_reference":
+        descriptor["task_ref"] = dict(id="forged", version="v1", sha256=HASH)
+    if bad in ("runtime", "patch_path", "fixture_path"):
+        field = {"runtime": "environment_digest", "patch_path": "patches_sha256", "fixture_path": "fixture_path"}[bad]
+        metadata[field] = "/tmp/another.json" if bad == "fixture_path" else "sha256:" + "c" * 64
+        raw = json.dumps(metadata).encode()
+        (task_dir / "tests/metadata.json").write_bytes(raw)
+        descriptor["metadata_sha256"] = digest(raw)
+    (task_dir / "evolution.json").write_text(json.dumps(descriptor))
+    request = request_for(task_dir, dsh_release={"patch_sha256s": [] if bad == "unpatched" else [T2_PATCH_SHA256]})
+    with pytest.raises(ValueError):
+        run(request, task_dir)
+    assert harness.trial is None

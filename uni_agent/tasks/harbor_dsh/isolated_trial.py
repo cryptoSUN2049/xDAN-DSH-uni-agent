@@ -24,7 +24,8 @@ from harbor.trial.artifact_handler import ArtifactHandler
 from harbor.trial.single_step import SingleStepTrial
 
 from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH, T2_STRATEGY
-from uni_agent.tasks.harbor_dsh.trace_artifacts import TraceArtifacts
+from uni_agent.tasks.harbor_dsh.evolution_scoring import EVOLUTION_KIND
+from uni_agent.tasks.harbor_dsh.trace_artifacts import TraceArtifacts, validate_evolution_binding
 
 _DSH_IMPORT = "uni_agent.agents.dsh.harbor_agent:DshHarborAgent"
 _DSH_KWARGS = {
@@ -234,7 +235,7 @@ def _validate_task(task: Task, *, strategy: str = "answer") -> None:
         raise ValueError("Only single-step tasks are supported")
     if resolve_task_verifier_mode(config) != VerifierEnvironmentMode.SEPARATE or config.verifier.environment is None:
         raise ValueError("An explicit separate verifier environment is required")
-    if strategy == T2_STRATEGY and config.artifacts:
+    if strategy in {T2_STRATEGY, EVOLUTION_KIND} and config.artifacts:
         raise ValueError("T2 forbids student artifacts")
     if strategy == "answer" and config.artifacts != ["/app/answer.txt"]:
         raise ValueError("This lane only transfers the explicit /app/answer.txt artifact")
@@ -254,15 +255,21 @@ class IsolatedDshTrial(SingleStepTrial):
         strategy: str = "answer",
         gateway_session_id: str | None = None,
         max_trace_bytes: int | None = None,
+        evolution_binding: bytes | None = None,
     ):
         # Upstream retains config by reference; isolate it from caller mutations.
         snapshot = config.model_copy(deep=True)
         task_dir = _validate_runtime(snapshot, allowed_task_dir)
         task = Task(task_dir=task_dir)
-        if strategy not in {"answer", T2_STRATEGY}:
+        if strategy not in {"answer", T2_STRATEGY, EVOLUTION_KIND}:
             raise ValueError("Unsupported isolated task strategy")
+        if strategy == EVOLUTION_KIND:
+            validate_evolution_binding(evolution_binding)
+        elif evolution_binding is not None:
+            raise ValueError("Binding requires explicit evolution strategy")
+        self._evolution_binding = evolution_binding
         _validate_task(task, strategy=strategy)
-        if strategy == T2_STRATEGY:
+        if strategy in {T2_STRATEGY, EVOLUTION_KIND}:
             if (
                 snapshot.agent.import_path != _DSH_IMPORT
                 or snapshot.agent.name is not None
@@ -274,7 +281,9 @@ class IsolatedDshTrial(SingleStepTrial):
                 raise ValueError("T2 requires the fixed DSH bridge, patch, session and byte budget")
         elif gateway_session_id is not None or max_trace_bytes is not None:
             raise ValueError("Trace settings require explicit T2 strategy")
-        self._trace_settings = (gateway_session_id, max_trace_bytes) if strategy == T2_STRATEGY else None
+        self._trace_settings = (
+            (gateway_session_id, max_trace_bytes) if strategy in {T2_STRATEGY, EVOLUTION_KIND} else None
+        )
         self._artifact_collection_failed = False
         super().__init__(snapshot, _task=task)
 
@@ -288,6 +297,7 @@ class IsolatedDshTrial(SingleStepTrial):
                 trial_id=self.id,
                 trial_name=self.config.trial_name,
                 max_trace_bytes=budget,
+                evolution_binding=self._evolution_binding,
                 logger=self.logger,
             )
             return
@@ -335,6 +345,7 @@ def create_isolated_trial(
     strategy: str = "answer",
     gateway_session_id: str | None = None,
     max_trace_bytes: int | None = None,
+    evolution_binding: bytes | None = None,
 ) -> IsolatedDshTrial:
     """Construct the local trial without downloading tasks or starting resources."""
     return IsolatedDshTrial(
@@ -343,4 +354,5 @@ def create_isolated_trial(
         strategy=strategy,
         gateway_session_id=gateway_session_id,
         max_trace_bytes=max_trace_bytes,
+        evolution_binding=evolution_binding,
     )

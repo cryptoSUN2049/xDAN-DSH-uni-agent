@@ -352,8 +352,10 @@ Review：SFT参数审计不等同于在线RL打通；开发loss下降不等于�
 - [x] 原样筛选邮箱脱敏4/2课程，10项测试，GitHub74b253b，GPU源码拉取并核验。
 - [x] Harbor r1启动期SSH失败归档，GPU退出，无有效任务评分。
 - [x] 失败诊断增强：SSH退出码、HTTP异常类型/时间，39项测试；超时策略未改。
-- [ ] M1两步GRPO数值更新和消费审计。
+- [x] M1 r1两步数值/消费审计已执行但失败：0grad、LoRA不变、5组拒绝；v2新run仍待验收。
 - [ ] 独立reload与同条件公开holdout评估。
 - [ ] Harbor新run真实学生闭环，再验收M2更新。
 
 Review：SFT数值更新通过但任务0/2；Harbor脚本策略四例通过不等于学生RL通过。
+
+检查点review：611项组合CPU回归通过（包含新增smoke，无skip），M1真实零更新结果和SSH复现已归档；当前以handoff.md与active-engineering-goal.md为准。

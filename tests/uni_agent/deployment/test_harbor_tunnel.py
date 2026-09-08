@@ -100,3 +100,10 @@ async def test_cancelled_start_reaps_checker_and_owned_master(tmp_path):
 def test_invalid_tunnel_port_cannot_be_interpolated(tmp_path):
     with pytest.raises(ValueError):
         SshTunnel(make_spec(tmp_path), kind="model", gateway_port="45678 -R bad")
+
+
+def test_keepalive_has_explicit_bounded_jitter_allowance(tmp_path):
+    tunnel = SshTunnel(make_spec(tmp_path), kind="control")
+    assert "ServerAliveInterval=15" in tunnel.argv
+    assert "ServerAliveCountMax=6" in tunnel.argv
+    assert "ControlPersist=no" in tunnel.argv

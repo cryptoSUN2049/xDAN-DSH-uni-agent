@@ -14,6 +14,7 @@ from harbor.trial.artifact_handler import ArtifactHandler
 
 from uni_agent.agents.dsh.agent import _require_result, _run_key
 from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH
+from uni_agent.tasks.harbor_dsh.evolution_scoring import SOURCES, EvolutionBinding
 
 
 def _digest(raw):
@@ -59,8 +60,23 @@ def _read_private(directory, name, limit):
         return raw
 
 
+def validate_evolution_binding(raw):
+    if type(raw) is not bytes or not raw or len(raw) > 65536:
+        raise ValueError("Evolution binding must be immutable bounded bytes")
+    binding = EvolutionBinding.model_validate(_json(raw))
+    if (
+        binding.fixture_path != "/tests/fixture.json"
+        or binding.metadata_path != "/tests/metadata.json"
+        or set(binding.source_sha256s) != set(SOURCES)
+    ):
+        raise ValueError("Evolution binding requires fixed verifier paths and sources")
+    return binding
+
+
 class TraceArtifacts(ArtifactHandler):
-    def __init__(self, *, agent_dir, gateway_session_id, trial_id, trial_name, max_trace_bytes, logger):
+    def __init__(
+        self, *, agent_dir, gateway_session_id, trial_id, trial_name, max_trace_bytes, logger, evolution_binding=None
+    ):
         super().__init__(artifacts=[], logger=logger)
         if not gateway_session_id or type(max_trace_bytes) is not int or max_trace_bytes <= 0:
             raise ValueError("Explicit session and positive trace budget required")
@@ -69,6 +85,9 @@ class TraceArtifacts(ArtifactHandler):
         self.trial_id = str(trial_id)
         self.trial_name = trial_name
         self.max_trace_bytes = max_trace_bytes
+        if evolution_binding is not None:
+            validate_evolution_binding(evolution_binding)
+        self._evolution_binding = evolution_binding
         self._uploaded = False
 
     def snapshot(self):
@@ -153,13 +172,17 @@ class TraceArtifacts(ArtifactHandler):
             raise ValueError("T2 upload is single-use with no student artifact overrides")
         self._uploaded = True
         files = self.snapshot()
+        names = ["session.jsonl", "run.json", "status.json"]
+        if self._evolution_binding is not None:
+            files["evolution-binding.json"] = self._evolution_binding
+            names.append("evolution-binding.json")
         # Upload immutable private copies, never reopen the checked original paths.
         with tempfile.TemporaryDirectory(prefix="t2-audit-") as folder:
             async with asyncio.timeout(60):
                 result = await target_env.exec(command="mkdir -p -- /audit-input", timeout_sec=30, user="root")
                 if result.return_code != 0:
                     raise RuntimeError("Cannot create independent verifier input directory")
-                for name in ("session.jsonl", "run.json", "status.json"):
+                for name in names:
                     path = Path(folder) / name
                     path.write_bytes(files[name])
                     path.chmod(0o600)

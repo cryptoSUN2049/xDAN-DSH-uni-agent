@@ -134,3 +134,62 @@ def test_cancelled_upload_cleans_private_snapshot_and_cannot_retry(tmp_path):
         asyncio.run(
             handler.upload_artifacts(env, tmp_path, source_artifacts_dir="/unused", target_artifacts_dir="/unused")
         )
+
+
+def evolution_binding():
+    return json.dumps(
+        dict(
+            kind="evolution-v2-lifecycle-v1",
+            task_ref=dict(id="redact", version="v1", sha256="sha256:" + "a" * 64),
+            fixture_path="/tests/fixture.json",
+            fixture_sha256="sha256:" + "b" * 64,
+            metadata_path="/tests/metadata.json",
+            metadata_sha256="sha256:" + "c" * 64,
+            source_sha256s={
+                p: "sha256:" + "d" * 64 for p in ["examples/dsh/evolution_verifier.py", "examples/dsh/verifier.py"]
+            },
+        )
+    ).encode()
+
+
+def test_evolution_uploads_only_trusted_fourth_binding(tmp_path):
+    old, folder = fixture(tmp_path)
+    raw = evolution_binding()
+    handler = TraceArtifacts(
+        agent_dir=old.agent_dir,
+        gateway_session_id="session",
+        trial_id="trial",
+        trial_name="name",
+        max_trace_bytes=10000,
+        logger=logging.getLogger("test"),
+        evolution_binding=raw,
+    )
+    # An agent-side file with this name must never become a controller input.
+    (folder / "evolution-binding.json").write_bytes(b"student-forgery")
+    seen = {}
+
+    async def upload(source_path, target_path):
+        seen[target_path] = source_path.read_bytes()
+
+    env = SimpleNamespace(exec=AsyncMock(return_value=SimpleNamespace(return_code=0)), upload_file=upload)
+    asyncio.run(handler.upload_artifacts(env, tmp_path, source_artifacts_dir="/unused", target_artifacts_dir="/unused"))
+    assert set(seen) == {
+        "/audit-input/" + n for n in ["session.jsonl", "run.json", "status.json", "evolution-binding.json"]
+    }
+    assert seen["/audit-input/evolution-binding.json"] == raw
+
+
+@pytest.mark.parametrize(
+    "bad", [b"{}", b" " * 65537, bytearray(b"{}"), b'{"kind":"other"}'], ids=["empty", "oversize", "mutable", "kind"]
+)
+def test_invalid_evolution_binding_rejected_at_construction(tmp_path, bad):
+    with pytest.raises(ValueError):
+        TraceArtifacts(
+            agent_dir=tmp_path,
+            gateway_session_id="session",
+            trial_id="trial",
+            trial_name="name",
+            max_trace_bytes=10000,
+            logger=logging.getLogger("test"),
+            evolution_binding=bad,
+        )

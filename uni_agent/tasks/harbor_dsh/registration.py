@@ -259,6 +259,7 @@ def validate_registered_trajectories(
     controller_id,
     run_spec_sha256,
     t2_fixture=None,
+    evolution_binding=None,
 ):
     """Static FQN kwargs support a port learned only from independent registration."""
     policy = load_registered_policy(
@@ -278,4 +279,5 @@ def validate_registered_trajectories(
         policy=policy,
         instruction=instruction,
         t2_fixture=t2_fixture,
+        evolution_binding=evolution_binding,
     )

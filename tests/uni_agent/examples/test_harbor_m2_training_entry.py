@@ -395,3 +395,81 @@ def test_adapter_input_failures(tmp_path, bad):
         env["RESUME_FROM_PATH"] = "/old/ppo"
     with pytest.raises(ValueError):
         adapter_overrides(path, expected, env)
+
+
+@pytest.mark.parametrize("variant", ["valid", "mutual", "descriptor", "metadata_path"])
+def test_evolution_preparation_preserves_operator_binding(inputs, tmp_path, variant):
+    from tests.uni_agent.tasks.test_harbor_evolution_admission import configured
+
+    cfg, _ = configured(tmp_path)
+    task = inputs["task_dir"]
+    (task / "tests").mkdir()
+    binding = cfg.evolution_binding.model_dump(mode="json")
+    for key, filename in [("fixture_path", "fixture.json"), ("metadata_path", "metadata.json")]:
+        target = task / "tests" / filename
+        target.write_bytes(Path(binding[key]).read_bytes())
+        binding[key] = str(target)
+    descriptor = {key: binding[key] for key in ["kind", "fixture_sha256", "metadata_sha256", "source_sha256s"]}
+    (task / "evolution.json").write_text(json.dumps(descriptor))
+    spec = json.loads(inputs["run_spec_path"].read_text())
+    spec["policy_template"]["dsh_release"] = cfg.policy.dsh_release.model_dump(mode="json")
+    (task / "task.toml").write_text('[environment]\ndocker_image = "' + cfg.policy.dsh_release.image_digest + '"\n')
+    if variant == "descriptor":
+        descriptor["kind"] = "other"
+        (task / "evolution.json").write_text(json.dumps(descriptor))
+    spec["policy_template"]["task_refs"][0]["sha256"] = task_digest(task)
+    binding["task_ref"] = spec["policy_template"]["task_refs"][0]
+    inputs["run_spec_path"].write_text(json.dumps(spec))
+    if variant == "metadata_path":
+        binding["metadata_path"] = cfg.evolution_binding.metadata_path
+    path = tmp_path / "evolution-binding.json"
+    path.write_text(json.dumps(binding))
+    if variant != "valid":
+        extra = {"t2_fixture_binding": path} if variant == "mutual" else {}
+        with pytest.raises(ValueError):
+            prepare_training(**inputs, evolution_binding=path, **extra)
+        assert not inputs["output_dir"].exists()
+        return
+    launch = json.loads(prepare_training(**inputs, evolution_binding=path).read_text())
+    config_value = yaml.safe_load(inputs["task_config_path"].read_text())
+    assert config_value["evolution_binding"] == binding
+    assert launch["postprocessor"]["evolution_binding"] == binding
+    assert "t2_fixture" not in launch["postprocessor"]
+    assert launch["environment"]["PROJECT_NAME"] == "harbor-evolution-engineering"
+    rows = pq.read_table(inputs["output_dir"] / "train.parquet").to_pylist()
+    assert (
+        rows[0]["extra_info"]["public_fixture_case_id"]
+        == json.loads(Path(binding["metadata_path"]).read_text())["scenario_id"]
+    )
+    assert rows[0]["extra_info"]["evaluation_scope"] == "same-task-engineering-evaluation-not-generalization"
+
+
+def test_registered_wrapper_forwards_evolution_binding(monkeypatch):
+    from uni_agent.tasks.harbor_dsh import registration
+
+    binding = {"marker": "operator-binding"}
+    captured = {}
+    monkeypatch.setattr(registration, "load_registered_policy", lambda **kwargs: "registered-policy")
+
+    def check(trajectories, **kwargs):
+        captured.update(kwargs)
+        return trajectories
+
+    monkeypatch.setattr(registration, "validate_trajectories", check)
+    result = registration.validate_registered_trajectories(
+        (),
+        context={},
+        artifact_root="/tmp/artifacts",
+        run_id="r",
+        worker_id="w",
+        task_ref={},
+        policy_template={},
+        instruction="task",
+        registration_root="/tmp/registrations",
+        controller_id="c",
+        run_spec_sha256="sha",
+        evolution_binding=binding,
+    )
+    assert result == ()
+    assert captured["evolution_binding"] is binding
+    assert captured["policy"] == "registered-policy"

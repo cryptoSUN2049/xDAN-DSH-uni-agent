@@ -1,0 +1,366 @@
+{
+  "eligible": false,
+  "groups": [
+    {
+      "eligible": false,
+      "expected_sessions": 4,
+      "global_steps": 1,
+      "group_uid": "5499f8a9-4b1c-45f4-903b-f445ea6cb375",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [
+        "5499f8a9-4b1c-45f4-903b-f445ea6cb375_1_0",
+        "5499f8a9-4b1c-45f4-903b-f445ea6cb375_2_0",
+        "5499f8a9-4b1c-45f4-903b-f445ea6cb375_3_0"
+      ],
+      "observed_sessions": 3,
+      "partition_id": "train",
+      "reasons": [
+        "group_size_mismatch"
+      ],
+      "reward_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "status": "rejected",
+      "transfer_queue_keys": [
+        "5499f8a9-4b1c-45f4-903b-f445ea6cb375_1_0",
+        "5499f8a9-4b1c-45f4-903b-f445ea6cb375_2_0",
+        "5499f8a9-4b1c-45f4-903b-f445ea6cb375_3_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 4,
+      "global_steps": 1,
+      "group_uid": "930d5363-4d82-4002-a218-6eb7c731291a",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 4,
+      "partition_id": "train",
+      "reasons": [],
+      "reward_values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "930d5363-4d82-4002-a218-6eb7c731291a_0_0",
+        "930d5363-4d82-4002-a218-6eb7c731291a_1_0",
+        "930d5363-4d82-4002-a218-6eb7c731291a_2_0",
+        "930d5363-4d82-4002-a218-6eb7c731291a_3_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 4,
+      "global_steps": 1,
+      "group_uid": "e2a000f6-9a0c-47b5-aa89-fa09d29a5f1a",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 4,
+      "partition_id": "train",
+      "reasons": [],
+      "reward_values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "e2a000f6-9a0c-47b5-aa89-fa09d29a5f1a_0_0",
+        "e2a000f6-9a0c-47b5-aa89-fa09d29a5f1a_1_0",
+        "e2a000f6-9a0c-47b5-aa89-fa09d29a5f1a_2_0",
+        "e2a000f6-9a0c-47b5-aa89-fa09d29a5f1a_3_0"
+      ]
+    },
+    {
+      "eligible": false,
+      "expected_sessions": 4,
+      "global_steps": 2,
+      "group_uid": "5f8d1c0b-4cf3-4d3a-be6f-6cf9c08a7de6",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [
+        "5f8d1c0b-4cf3-4d3a-be6f-6cf9c08a7de6_0_0",
+        "5f8d1c0b-4cf3-4d3a-be6f-6cf9c08a7de6_1_0",
+        "5f8d1c0b-4cf3-4d3a-be6f-6cf9c08a7de6_2_0"
+      ],
+      "observed_sessions": 3,
+      "partition_id": "train",
+      "reasons": [
+        "group_size_mismatch"
+      ],
+      "reward_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "status": "rejected",
+      "transfer_queue_keys": [
+        "5f8d1c0b-4cf3-4d3a-be6f-6cf9c08a7de6_0_0",
+        "5f8d1c0b-4cf3-4d3a-be6f-6cf9c08a7de6_1_0",
+        "5f8d1c0b-4cf3-4d3a-be6f-6cf9c08a7de6_2_0"
+      ]
+    },
+    {
+      "eligible": false,
+      "expected_sessions": 4,
+      "global_steps": 2,
+      "group_uid": "6c0c8872-f5f5-4c30-ba0a-be695d24deee",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [
+        "6c0c8872-f5f5-4c30-ba0a-be695d24deee_0_0",
+        "6c0c8872-f5f5-4c30-ba0a-be695d24deee_1_0",
+        "6c0c8872-f5f5-4c30-ba0a-be695d24deee_3_0"
+      ],
+      "observed_sessions": 3,
+      "partition_id": "train",
+      "reasons": [
+        "group_size_mismatch"
+      ],
+      "reward_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "status": "rejected",
+      "transfer_queue_keys": [
+        "6c0c8872-f5f5-4c30-ba0a-be695d24deee_0_0",
+        "6c0c8872-f5f5-4c30-ba0a-be695d24deee_1_0",
+        "6c0c8872-f5f5-4c30-ba0a-be695d24deee_3_0"
+      ]
+    },
+    {
+      "eligible": false,
+      "expected_sessions": 4,
+      "global_steps": 2,
+      "group_uid": "95cec5a0-00cd-463f-aa2d-e9bc39c5afc8",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [
+        "95cec5a0-00cd-463f-aa2d-e9bc39c5afc8_0_0",
+        "95cec5a0-00cd-463f-aa2d-e9bc39c5afc8_2_0",
+        "95cec5a0-00cd-463f-aa2d-e9bc39c5afc8_3_0"
+      ],
+      "observed_sessions": 3,
+      "partition_id": "train",
+      "reasons": [
+        "group_size_mismatch"
+      ],
+      "reward_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "status": "rejected",
+      "transfer_queue_keys": [
+        "95cec5a0-00cd-463f-aa2d-e9bc39c5afc8_0_0",
+        "95cec5a0-00cd-463f-aa2d-e9bc39c5afc8_2_0",
+        "95cec5a0-00cd-463f-aa2d-e9bc39c5afc8_3_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 4,
+      "global_steps": 2,
+      "group_uid": "bb31b7f5-a7fc-437b-9e3e-a975697460c1",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 4,
+      "partition_id": "train",
+      "reasons": [],
+      "reward_values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "bb31b7f5-a7fc-437b-9e3e-a975697460c1_0_0",
+        "bb31b7f5-a7fc-437b-9e3e-a975697460c1_1_0",
+        "bb31b7f5-a7fc-437b-9e3e-a975697460c1_2_0",
+        "bb31b7f5-a7fc-437b-9e3e-a975697460c1_3_0"
+      ]
+    },
+    {
+      "eligible": false,
+      "expected_sessions": 4,
+      "global_steps": 2,
+      "group_uid": "e953530a-884e-45eb-9d9f-a8fee30e0d09",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [
+        "e953530a-884e-45eb-9d9f-a8fee30e0d09_0_0",
+        "e953530a-884e-45eb-9d9f-a8fee30e0d09_1_0",
+        "e953530a-884e-45eb-9d9f-a8fee30e0d09_3_0"
+      ],
+      "observed_sessions": 3,
+      "partition_id": "train",
+      "reasons": [
+        "group_size_mismatch"
+      ],
+      "reward_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "status": "rejected",
+      "transfer_queue_keys": [
+        "e953530a-884e-45eb-9d9f-a8fee30e0d09_0_0",
+        "e953530a-884e-45eb-9d9f-a8fee30e0d09_1_0",
+        "e953530a-884e-45eb-9d9f-a8fee30e0d09_3_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 4,
+      "global_steps": 2,
+      "group_uid": "f35715b2-18e8-409c-8ace-51fef17dfc52",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 4,
+      "partition_id": "train",
+      "reasons": [],
+      "reward_values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "f35715b2-18e8-409c-8ace-51fef17dfc52_0_0",
+        "f35715b2-18e8-409c-8ace-51fef17dfc52_1_0",
+        "f35715b2-18e8-409c-8ace-51fef17dfc52_2_0",
+        "f35715b2-18e8-409c-8ace-51fef17dfc52_3_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 1,
+      "global_steps": 0,
+      "group_uid": "d8227bab-bb3b-4753-ae39-a9fddf3cf67e",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 1,
+      "partition_id": "val",
+      "reasons": [],
+      "reward_values": [
+        1.0
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "d8227bab-bb3b-4753-ae39-a9fddf3cf67e_0_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 1,
+      "global_steps": 0,
+      "group_uid": "f1dd6d22-67ba-4989-8967-787b2ed87c7a",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 1,
+      "partition_id": "val",
+      "reasons": [],
+      "reward_values": [
+        1.0
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "f1dd6d22-67ba-4989-8967-787b2ed87c7a_0_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 1,
+      "global_steps": 1,
+      "group_uid": "341c5bc3-c6a9-49b3-8b31-3d11a9cf307e",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 1,
+      "partition_id": "val",
+      "reasons": [],
+      "reward_values": [
+        1.0
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "341c5bc3-c6a9-49b3-8b31-3d11a9cf307e_0_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 1,
+      "global_steps": 1,
+      "group_uid": "673bb8f5-f8dc-49ea-940b-1a682a84429c",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 1,
+      "partition_id": "val",
+      "reasons": [],
+      "reward_values": [
+        1.0
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "673bb8f5-f8dc-49ea-940b-1a682a84429c_0_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 1,
+      "global_steps": 2,
+      "group_uid": "8cce349a-dd7d-4612-843e-4f5d1d8bfbd5",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 1,
+      "partition_id": "val",
+      "reasons": [],
+      "reward_values": [
+        1.0
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "8cce349a-dd7d-4612-843e-4f5d1d8bfbd5_0_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 1,
+      "global_steps": 2,
+      "group_uid": "9476b3e4-508e-4e67-9a16-05222c426a0d",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 1,
+      "partition_id": "val",
+      "reasons": [],
+      "reward_values": [
+        1.0
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "9476b3e4-508e-4e67-9a16-05222c426a0d_0_0"
+      ]
+    }
+  ],
+  "legacy_unjoinable": [],
+  "run_manifest_sha256": "sha256:12eeb61a92311c3be5c6e3067ccba1b9c3b657951ee42d24c89140fd9cb78005",
+  "run_status": "completed",
+  "schema": "dsh.trajectory-group-audit.v1",
+  "summary": {
+    "eligible_groups": 10,
+    "groups": 15,
+    "legacy_unjoinable_files": 0,
+    "rejected_groups": 5,
+    "run_completed": true,
+    "unexpected_consumed_rows": 0,
+    "variance_groups": 0
+  },
+  "unexpected_consumed": {
+    "train": [],
+    "val": []
+  }
+}

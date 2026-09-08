@@ -42,3 +42,27 @@ Harbor 入口应重用 `_load_trace` 与 `_score_episode`，而不是调用旧 C
 host trace hash 只能证明转移字节一致；agent root 可改本容器runtime/trace，仍非外部不可篡改行为证明。独立 verifier 保护评分代码，不能自动提升原始事件的信任等级。
 
 更短路线：先在原生 M1 获得可复验课程收益与独立reload，再做上述评分接线。如果 M1 没有有效行为变化，先诊断提示/schema/准入/优化信号，暂不扩 Harbor；迁移沙盒不会解决模型不会执行的问题。
+
+## 第一实现批次：冻结评分输入与纯 CPU 重算
+
+新增 `uni_agent/tasks/harbor_dsh/evolution_scoring.py`，仅支持 `evolution-v2-lifecycle-v1` 与 redact_email。`EvolutionBinding` 固定 TaskRef、fixture/metadata 绝对路径及各自 SHA、原 scorer 两源码文件 SHA；加载后持有 immutable bytes，评分不重新读取输入文件。`score_evolution` 接受宿主已经绑定来源的 trace/run bytes、各自预期 SHA、Gateway session 与同 TaskRef，使用 run.final_response 构造纯评分 envelope，复用 `_load_trace` / `_score_episode`，返回原 reward/accuracy/details/evidence；不生成旧 DSH fresh receipt。
+
+独立输入结构或身份错误抛异常；业务 hard_veto 保留原 reward=0/eligible=false，`require_evolution_admission` 明确拒绝该样本，与 `uni_agent/tasks/dsh/trajectory_audit.py:197` 一致。安全普通失败的小数分保留。T2 scorer 及旧 file lane 本批不变。
+
+测试覆盖六种原评分等价（正确、业务错误、无候选、漏清理、hard veto、最终报告错误）、冻结文件变动后仍用原 bytes、TaskRef/kind/fixture/metadata/scorer hash 身份、trace/run/session/重复事件以及小数准入。CPU fixtures 是合成测试证据，不是新学生轨迹。
+
+部署接线待下一批：原 metadata 的相对 patch list digest 与 Harbor `/opt/...` 不相同，不能因 bytes 相同而绕过校验。打包器须显式记录并冻结部署路径 metadata 转换和原 metadata 身份；原 prompt 的 fixture 绝对路径须真实提供或另行记录明确迁移。纯 scorer 不自动改 metadata。
+
+第一批验证结果：18 个新增 scorer/绑定测试 + 7 个原 evolution verifier 回归，共 25 passed；新增 Python 文件 Ruff check / format --check 通过。冻结字段另含 fixture_path（用于打包部署位置合同）。本 module 无 T2 scorer/oracle import；仍依赖 Pydantic 与既有 protocol.Contract/TaskRef，后续独立 verifier 镜像需固定这些依赖，不能按纯 stdlib 镜像直接复制一个文件。此批没有 CLI、worker 选择 kind、Task/audit 接线、打包器或 GPU 部署；不宣称 Harbor 新课程已经打通。
+
+## 打包批次：一个公开 redact-train-01
+
+新增 `examples/harbor/prepare_evolution_task.py` 与 CPU tests。输入外部 SHA 绑定原16/8 source manifest，校验全源 Parquet bytes、固定 scenario fixture、原 scorer/source metadata 与 patch bytes；只取 `redact-train-01`，不将单任务重复包装成4/2或隐藏验证。CLI 接 `--root --source-dir --source-manifest-sha256 --output --agent-image-digest [--verifier-image-digest]`。
+
+`task/evolution.json` 固定 `{kind,fixture_sha256,metadata_sha256,source_sha256s}`，无 TaskRef；fixture/metadata 在 task/tests/。旁置 manifest 包含 TaskRef、训练 operator evolution_binding 与完整原 row/metadata 摘要及 source SHA。只把原 `_prompt` 中 fixture绝对路径映射 `/app/fixture.json`；metadata 部署 fixture_path、patches_sha256、environment_digest 变化须逐字段记录，不修改原评分或实现代码。
+
+agent 与 verifier Dockerfile 父镜像均固定本地 `uni-agent-dsh:t2-log-tool-r1`，构建前必须 inspect imageID `sha256:b016c85140a58f7d842eadb0238925ee1c347143cc7bede5b9b35bfa38747dca`，不拉取、不联网安装依赖。agent COPY fixture 到 `/app/fixture.json` 并只读文件模式；独立 verifier network_mode none，COPY 最小闭包 src 到 `/opt/evolution-verifier`、fixture/meta到/tests，已有Pydantic由父镜像提供。worker负责第四份独立 operator binding 输入，打包器不伪造试次/session。TaskRef摘要不含旁置manifest，避免自引用。prepare不build、启动Docker/GPU或训练。
+
+测试：可信源/patch/fixture/source SHA错配失败、禁止非固定scenario、原instruction除路径外逐字不变、原metadata→部署metadata差异穷举、闭包文件齐全、TaskRef重算一致、旁置binding与task marker一致、固定父镜像/no-pip/networknone、拒覆盖与私有文件。
+
+打包批次完成 CPU 验证：9 新测试；连同 selector/原 scorer/冻结 scorer 共44 passed，Ruff check / format通过。`metadata.environment_digest` **保持原固定runtime binary SHA d1a467...**，绝不替成agent imageID；后者独立由release/TaskRef约束。实际映射差异只有 fixture_path 与 patches_sha256。最小5文件闭包已在独立cwd、仅指向打包src的PYTHONPATH下子进程import验证，尚未Docker build或部署。

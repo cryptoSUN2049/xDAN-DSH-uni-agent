@@ -2,10 +2,12 @@
 
 import argparse
 import contextlib
+import errno
 import json
 import os
 import re
 import signal
+import socket
 import subprocess
 import time
 import urllib.error
@@ -36,6 +38,22 @@ def record_health_failure(root, exc, phase):
     return diagnostic
 
 
+TRANSPORT_FAILURE_WINDOW_SECONDS = 90
+
+
+def transient_transport_error(exc):
+    """Allow only concrete transport faults, never HTTP/auth/validation failures."""
+    if isinstance(exc, urllib.error.HTTPError):
+        return False
+    if isinstance(exc, urllib.error.URLError):
+        exc = exc.reason
+    if isinstance(exc, TimeoutError | ConnectionRefusedError | ConnectionResetError | ConnectionAbortedError):
+        return True
+    if isinstance(exc, socket.gaierror):
+        return exc.errno == socket.EAI_AGAIN
+    return isinstance(exc, OSError) and exc.errno in {errno.ENETUNREACH, errno.EHOSTUNREACH}
+
+
 def supervise(command, cwd, environment, root, health, *, wall_seconds=2700, interval=5, grace=30):
     try:
         health()  # No GPU work before the first successful authenticated check.
@@ -43,6 +61,10 @@ def supervise(command, cwd, environment, root, health, *, wall_seconds=2700, int
         record_health_failure(root, exc, "preflight")
         raise
     health_failure = None
+    transport_since = None
+    transport_error = None
+    transient_failures = 0
+    recovered_windows = 0
     started = time.monotonic()
     reason = "training-exited"
     with (root / "train.log").open("xb") as log:
@@ -54,13 +76,46 @@ def supervise(command, cwd, environment, root, health, *, wall_seconds=2700, int
                 if time.monotonic() - started >= wall_seconds:
                     reason = "wall-clock-deadline"
                     break
+                if (
+                    transport_since is not None
+                    and time.monotonic() - transport_since >= TRANSPORT_FAILURE_WINDOW_SECONDS
+                ):
+                    health_failure = record_health_failure(root, transport_error, "runtime")
+                    reason = "controller-health-failed"
+                    break
                 try:
                     health()
                 except Exception as exc:
-                    health_failure = record_health_failure(root, exc, "runtime")
-                    reason = "controller-health-failed"
+                    if not transient_transport_error(exc):
+                        health_failure = record_health_failure(root, exc, "runtime")
+                        reason = "controller-health-failed"
+                        break
+                    transient_failures += 1
+                    if transport_since is None:
+                        transport_since = time.monotonic()
+                    transport_error = exc
+                else:
+                    # An over-budget check cannot erase the expired outage window.
+                    if transport_since is not None:
+                        if time.monotonic() - transport_since >= TRANSPORT_FAILURE_WINDOW_SECONDS:
+                            health_failure = record_health_failure(root, transport_error, "runtime")
+                            reason = "controller-health-failed"
+                            break
+                        recovered_windows += 1
+                    transport_since = None
+                    transport_error = None
+                remaining = wall_seconds - (time.monotonic() - started)
+                if remaining <= 0:
+                    reason = "wall-clock-deadline"
                     break
-                time.sleep(interval)
+                if transport_since is not None:
+                    outage_remaining = TRANSPORT_FAILURE_WINDOW_SECONDS - (time.monotonic() - transport_since)
+                    if outage_remaining <= 0:
+                        health_failure = record_health_failure(root, transport_error, "runtime")
+                        reason = "controller-health-failed"
+                        break
+                    remaining = min(remaining, outage_remaining)
+                time.sleep(min(interval, remaining))
         finally:
             # Only signal the process group created above; never global Ray/pkill.
             if process.poll() is None:
@@ -79,6 +134,8 @@ def supervise(command, cwd, environment, root, health, *, wall_seconds=2700, int
         "reason": reason,
         "elapsed_seconds": round(time.monotonic() - started, 3),
         "pid": process.pid,
+        "transient_health_failures": transient_failures,
+        "recovered_health_windows": recovered_windows,
     }
     if health_failure is not None:
         result["health_failure"] = health_failure

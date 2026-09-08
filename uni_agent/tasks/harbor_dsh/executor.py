@@ -34,6 +34,7 @@ from uni_agent.agents.dsh.harbor_release import (
     release_patch_paths,
     release_patch_paths_digest,
 )
+from uni_agent.tasks.harbor_dsh.evolution_scoring import EVOLUTION_KIND, EvolutionBinding, load_evolution_binding
 from uni_agent.tasks.harbor_dsh.isolated_trial import _run_bounded_command, create_isolated_trial
 from uni_agent.tasks.harbor_dsh.protocol import JobRequest
 
@@ -229,6 +230,49 @@ def _collect_evidence(trial, result, request: JobRequest, private_root: Path) ->
     return artifacts
 
 
+def _evolution_verifier_binding(task_dir: Path, request: JobRequest) -> bytes | None:
+    path = task_dir / "evolution.json"
+    if not path.exists() and not path.is_symlink():
+        return None
+    if not release_patch_paths(request.dsh_release):
+        raise ValueError("Evolution task requires the fixed patch composition")
+    descriptor = _json(_read_regular(task_dir, path, 65536))
+    if not isinstance(descriptor, dict) or set(descriptor) != {
+        "kind",
+        "fixture_sha256",
+        "metadata_sha256",
+        "source_sha256s",
+    }:
+        raise ValueError("Evolution task descriptor must exclude TaskRef and arbitrary paths")
+    fixture = task_dir / "tests" / "fixture.json"
+    metadata = task_dir / "tests" / "metadata.json"
+    _read_regular(task_dir, fixture, 1048576)
+    _read_regular(task_dir, metadata, 1048576)
+    binding = EvolutionBinding.model_validate(
+        {
+            **descriptor,
+            "task_ref": request.task_ref.model_dump(),
+            "fixture_path": str(fixture.resolve()),
+            "metadata_path": str(metadata.resolve()),
+        }
+    )
+    frozen = load_evolution_binding(binding, request.task_ref, repository_root=Path(__file__).resolve().parents[3])
+    value = _json(frozen.metadata_raw)
+    if (
+        value["environment_digest"] != request.dsh_release.runtime_sha256
+        or value["profile"] != request.dsh_release.profile
+        or value["patches_sha256"] != release_patch_paths_digest(request.dsh_release)
+        or value["fixture_path"] not in {"fixture.json", "/app/fixture.json"}
+    ):
+        raise ValueError("Evolution metadata differs from the fixed runtime, patch or fixture path")
+    mapped = {
+        **binding.model_dump(mode="json"),
+        "fixture_path": "/tests/fixture.json",
+        "metadata_path": "/tests/metadata.json",
+    }
+    return json.dumps(mapped, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+
+
 async def execute_job(
     request: JobRequest,
     *,
@@ -262,6 +306,7 @@ async def execute_job(
         patch = _read_regular(task_dir, task_dir / "environment" / "evolution.patch.yml", 65536)
         if _digest(patch) != T2_PATCH_SHA256:
             raise ValueError("Frozen T2 task patch byte hash mismatch")
+    evolution_binding = _evolution_verifier_binding(task_dir, request)
     remaining = min(request.budgets.wall_time_seconds, request.budgets.deadline_unix - time.time())
     if remaining <= 0:
         raise ValueError("Job deadline expired")
@@ -302,6 +347,8 @@ async def execute_job(
             gateway_session_id=request.gateway_session_id,
             max_trace_bytes=request.budgets.max_artifact_bytes,
         )
+    if evolution_binding is not None:
+        trial_kwargs.update(strategy=EVOLUTION_KIND, evolution_binding=evolution_binding)
     trial = create_isolated_trial(config, allowed_task_dir=task_dir.resolve(), **trial_kwargs)
     verifying = False
 

@@ -10,13 +10,13 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 用户再次明确最终交付：各核心组件版本、我方仓库分支/完整commit、部署产物摘要、模型/数据/评分输入与运行参数一并固定；提供可重复部署和运行的全链路工程包，并以实际复建验证。分支用于维护，完整commit用于复现；不得只提供版本说明或安装脚本而缺真实运行证据。
 本轮不以显著提分、全面记忆能力或完整RSI为完成条件。没有真实运行证明时不得标记通过。
 
-执行状态：用户已明确持续推进原G1，当前新Pod连接恢复并正在真实运行。get_goal仍保留旧SSH故障时的blocked状态；现工具仅支持complete/blocked，不能据此重复创建目标或宣称完成。以下以新版证据为准。
+执行状态：用户已明确持续推进原G1，当前新Pod短SSH可用；M1 r1已结束并记录失败，下一步新v2回归。get_goal仍保留旧SSH故障时的blocked状态；现工具仅支持complete/blocked，不能据此重复创建目标或宣称完成。以下以新版证据为准。
 
 ## 2. 固定身份与更新规则
 
 | 对象 | 当前候选/要求 |
 | --- | --- |
-| 集成代码 | 当前T2部署代码f0979706cf2001f23d54dfef93ca12eee9c6a3bb；每次run保存实际完整40位commit，维护分支worktree-harbor-modal-integration |
+| 集成代码 | GPU当前代码74b253bfe2f580d4c6175672b5bdc0b3ccf623a8；新检查点见分支HEAD，尚未部署；每次run保存实际完整40位commit，维护分支worktree-harbor-modal-integration |
 | 上游Uni-Agent | 89733ec81a69c3cc93ac90479de7ea7f01e51c1f |
 | 配对VERL | fefb080262e1c015a0ea05f958822a6a512dc795 |
 | GPU依赖 | 复用此VERL的uv.lock，fsdp+vllm；记录lock SHA256和实际安装清单 |
@@ -144,3 +144,17 @@ M2 Harbor端到端验收仍为G1必需范围；完整RSI和显著效果保持后
 - [ ] 新版M1/M2真实在线RL消费和有效数值更新、独立reload、未参与训练的留出前后评估。
 
 当前任务范围是log-tool注册/调用/撤销的DSH能力子集，不宣称全面熟悉架构、跨会话记忆或RSI已训练完成。
+
+## 本检查点更新：零学习根因与下一步
+
+- [x] 新DSH原样邮箱课程4/2，真实baseline两题均成功；两步训练自然exit0。
+- [x] 明确验收失败：两step梯度0，504LoRA无变化；15组中5拒绝，消费0方差，不进行旧run独立reload。
+- [x] 根因审计：可信已完成无define失败被v1 hard-veto排除；独立v2实现与CPU freshreceipt/audit测试，原reward保持0。
+- [x] Harbor evolution单题评分、Task/audit、worker/isolated verifier/打包与训练准备CPU接线。
+- [x] 长SSH探针复现超时，有限抖动处理代码与CPU测试；真实新容忍尚待回归。
+- [ ] 新v2 GPU采样/有效数值更新/独立reload与留出评估。
+- [ ] Harbor新课程真实Docker和学生M2更新，再完成可复建交付。
+
+本检查点为工程进行中，不将CPU通过、SFT更新或自然exit0替代完整G1验收。当前服务器没有本会话训练进程；新版代码尚未部署。
+
+检查点验证：611项组合CPU测试通过，无skip；Ruff check/format与diff空白检查通过。新增真实Docker执行尚未运行，不以CPU结果代替。
