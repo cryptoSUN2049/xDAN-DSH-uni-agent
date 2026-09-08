@@ -521,3 +521,19 @@ def test_v2_marker_rejects_before_trial(task_dir, harness, bad):
     with pytest.raises(ValueError):
         run(request, task_dir)
     assert harness.trial is None
+
+
+@pytest.mark.parametrize("cleanup_unknown", [False, True])
+def test_failed_trial_only_acknowledges_independently_confirmed_cleanup(task_dir, harness, cleanup_unknown):
+    from uni_agent.tasks.harbor_dsh.execution_outcome import CleanExecutionRejected
+
+    def edit(trial):
+        trial.rewrite = lambda: setattr(trial.result, "exception_info", object())
+
+    harness.edit = edit
+    if cleanup_unknown:
+        harness.inventory.return_value = b"container-still-present\n"
+    with pytest.raises(RuntimeError) as caught:
+        run(request_for(task_dir), task_dir)
+    assert isinstance(caught.value, CleanExecutionRejected) is not cleanup_unknown
+    assert harness.inventory.await_count == (1 if cleanup_unknown else 6)

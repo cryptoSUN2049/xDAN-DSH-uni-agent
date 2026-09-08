@@ -118,3 +118,20 @@ def test_parallel_start_claims_only_one_slot(tmp_path):
 
     with ThreadPoolExecutor(max_workers=2) as pool:
         assert sorted(pool.map(claim, (data["job_id"], other["job_id"]))) == [False, True]
+
+
+@pytest.mark.parametrize("state", ["running", "verifying", "cancelling"])
+def test_submit_rejects_busy_ledger_before_insert_across_connections(tmp_path, state):
+    data = payload()
+    path = tmp_path / "jobs.sqlite"
+    with JobLedger(path) as one, JobLedger(path) as two:
+        one.submit(data, policy=policy(data), now_unix=1000)
+        one.start(data["job_id"], now_unix=1000)
+        if state == "verifying":
+            one.verifying(data["job_id"])
+        elif state == "cancelling":
+            one.cancel(data["job_id"])
+        with pytest.raises(ValueError, match="active or unconfirmed"):
+            two.submit(second(data), policy=policy(data), now_unix=1000)
+        assert two.db.execute("SELECT count(*) FROM jobs").fetchone()[0] == 1
+        assert two.submit(data, policy=policy(data), now_unix=1200)["status"] == state

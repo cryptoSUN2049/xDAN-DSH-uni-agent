@@ -1,0 +1,108 @@
+{
+  "schema": "dsh.harbor-evolution-v2-image-release-result.v1",
+  "status": "published-private-prerelease-download-verified",
+  "verified_at_utc": "2026-09-08T15:38:46.842004+00:00",
+  "repository": "cryptoSUN2049/xDAN-DSH-Exp",
+  "repository_private_verified": true,
+  "release_url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/tag/harbor-evolution-v2-dsh-0.1.3a2-25b67c52",
+  "tag": "harbor-evolution-v2-dsh-0.1.3a2-25b67c52",
+  "target_commit": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+  "is_draft": false,
+  "is_prerelease": true,
+  "no_existing_release_overwritten": true,
+  "image_ids": {
+    "agent": "sha256:25b67c52befc3c0ac35e614f3669c3122f2e916f0254f2c5ed95448bffa3897e",
+    "verifier": "sha256:e3aaf6d7bdfbd0e4d380d78659ff57a5d2e253e61a6ca80339cd1ecd56615696"
+  },
+  "image_tags": {
+    "agent": "uni-agent-dsh:evolution-redact-v2-r1",
+    "verifier": "uni-agent-dsh:evolution-verifier-v2-r1"
+  },
+  "platform": "linux/amd64",
+  "integration_image_source_commit": "a17940d8587c1760f2a13dbd6842fe10d600bbad",
+  "task_ref": {
+    "id": "evolution-redact-train-01",
+    "version": "v2",
+    "sha256": "sha256:3cf73f11ef23772c61c243f830e04e095914573740c52be2176c75c68716c3ef"
+  },
+  "runtime_sha256": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+  "verifier_bundle_sha256": "sha256:60f49dcb519576bbe09839371ec3220775aa42aaf5e780a7f5d843c71552ea82",
+  "archive_file": "harbor-evolution-v2-linux-amd64.docker.tar.gz",
+  "archive_sha256": "e21573922e151630fd248f221fca6b7168bcdf6cff799758e1f7ae495c50b0a9",
+  "archive_size": 212285680,
+  "archive_inspection": {
+    "verified_blob_count": 36,
+    "all_blob_digests_verified": true,
+    "downloaded_oci_index": {
+      "schemaVersion": 2,
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "manifests": [
+        {
+          "mediaType": "application/vnd.oci.image.index.v1+json",
+          "digest": "sha256:25b67c52befc3c0ac35e614f3669c3122f2e916f0254f2c5ed95448bffa3897e",
+          "size": 856,
+          "annotations": {
+            "io.containerd.image.name": "docker.io/library/uni-agent-dsh:evolution-redact-v2-r1",
+            "org.opencontainers.image.ref.name": "evolution-redact-v2-r1"
+          }
+        },
+        {
+          "mediaType": "application/vnd.oci.image.index.v1+json",
+          "digest": "sha256:e3aaf6d7bdfbd0e4d380d78659ff57a5d2e253e61a6ca80339cd1ecd56615696",
+          "size": 856,
+          "annotations": {
+            "io.containerd.image.name": "docker.io/library/uni-agent-dsh:evolution-verifier-v2-r1",
+            "org.opencontainers.image.ref.name": "evolution-verifier-v2-r1"
+          }
+        }
+      ]
+    }
+  },
+  "download_verification": {
+    "passed": true,
+    "source": "independent draft asset download before publication",
+    "assets": [
+      {
+        "asset": "harbor-evolution-v2-linux-amd64.docker.tar.gz",
+        "sha256": "e21573922e151630fd248f221fca6b7168bcdf6cff799758e1f7ae495c50b0a9",
+        "bytes": 212285680,
+        "download_matches_original": true
+      },
+      {
+        "asset": "manifest.json",
+        "sha256": "fac8dad72ecaed9fb40e025ed6b7c9ff0e3b0365f7b3dd78b5b30fe029fd8736",
+        "bytes": 2549,
+        "download_matches_original": true
+      },
+      {
+        "asset": "LOAD.md",
+        "sha256": "5715a663fb1f5f635508bb243125fb96ffc74d2d5ce9b95684b63ec253446baa",
+        "bytes": 1539,
+        "download_matches_original": true
+      },
+      {
+        "asset": "SHA256SUMS",
+        "sha256": "8afa5f69f5e3d37f816374cdcfaa13c8b24e0cd2f9fb0f541f34a984b3a6061f",
+        "bytes": 266,
+        "download_matches_original": true
+      }
+    ],
+    "published_server_digests_match": true
+  },
+  "docker_load_verification": {
+    "executed": false,
+    "fresh_empty_daemon_verified": false,
+    "docker_server_version": "29.2.0",
+    "reason": "Current daemon already has exact archived image IDs and active training uses these images. No load/prune/daemon mutation performed; downloaded archive and OCI identities verified independently."
+  },
+  "restore_instructions_asset": "LOAD.md",
+  "private_registry_publication": false,
+  "gpu_or_training_processes_modified": false,
+  "deployment_pins_modified": false,
+  "limitations": [
+    "Private GitHub authentication required to download assets.",
+    "Archive restore on fresh empty Docker/containerd daemon remains unverified.",
+    "Docker build reproducibility is not established by Docker-save archive integrity.",
+    "No fresh model-training environment or student training/reload success is claimed."
+  ]
+}

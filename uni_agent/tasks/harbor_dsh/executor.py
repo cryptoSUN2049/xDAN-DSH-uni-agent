@@ -2,7 +2,8 @@
 
 The worker must validate JobRequest against its frozen operator policy first.
 Release wheel/source hashes describe the approved image, not fresh attestation.
-Any exception (including cancellation) leaves cleanup unconfirmed to the caller.
+Only CleanExecutionRejected acknowledges independently verified cleanup.
+Other exceptions (including cancellation) leave cleanup unconfirmed.
 max_tokens limits each model request here; episode totals require the training
 Gateway session's separately configured and audited token budget. File limits
 bound evidence admission after Harbor collection, not upstream download traffic.
@@ -40,6 +41,7 @@ from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import (
     EvolutionV2Binding,
     load_evolution_v2_binding,
 )
+from uni_agent.tasks.harbor_dsh.execution_outcome import CleanExecutionRejected
 from uni_agent.tasks.harbor_dsh.isolated_trial import _run_bounded_command, create_isolated_trial
 from uni_agent.tasks.harbor_dsh.protocol import JobRequest
 
@@ -372,10 +374,15 @@ async def execute_job(
     trial.add_hook(TrialEvent.VERIFICATION_START, verification_started)
     async with asyncio.timeout(min(remaining, request.budgets.deadline_unix - time.time())):
         result = await trial.run()
-    if not verifying:
-        raise RuntimeError("Native verifier did not start")
     await _confirm_cleanup(trial)
-    if _task_digest(task_dir) != request.task_ref.sha256:
-        raise RuntimeError("Frozen task changed during execution")
-    artifacts = _collect_evidence(trial, result, request, private_root)
+    # The trial has returned and both Docker environments are independently
+    # absent. Preserve that fact if evidence admission subsequently fails.
+    try:
+        if not verifying:
+            raise RuntimeError("Native verifier did not start")
+        if _task_digest(task_dir) != request.task_ref.sha256:
+            raise RuntimeError("Frozen task changed during execution")
+        artifacts = _collect_evidence(trial, result, request, private_root)
+    except (ValueError, RuntimeError, OSError) as error:
+        raise CleanExecutionRejected(trial_id=str(trial.id)) from error
     return ExecutionResult(trial_id=str(trial.id), artifacts=artifacts, cleanup_confirmed=True)

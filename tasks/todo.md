@@ -376,3 +376,10 @@ Review：本提交为进行中检查点；不将first checkpoint或CPU通过当�
 - [x] M1独立reload最终审计2/2通过、无再训练，证据归档云盘。
 - [x] Harbor v2执行/打包/训练准备接线；668项组合CPU测试通过。
 - [ ] 固定提交部署GPU打包，在Mac真实Docker执行v2正反例；再M2学生训练。
+
+## M2 失败恢复检查点
+- [x] 查明 max-tokens 后 cleanup 状态丢失与重复提交根因。
+- [x] 修复可信清理终态和 ledger 忙碌拒绝；685 项回归通过。
+- [ ] 真实 Docker 截断任务拒绝后下一正常任务可执行。
+- [ ] 新身份 M2 同步训练、参数更新与独立 reload。
+- [ ] 同步通过后单卡 colocate_async 有界对照。

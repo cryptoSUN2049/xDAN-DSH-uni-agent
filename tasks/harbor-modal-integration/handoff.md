@@ -9,6 +9,14 @@
 - 下一步：Harbor v2 worker/packer接线 → Docker正反例 → 同任务学生M2在线RL与reload → 可复建交付。数据生产由用户安排另一会话。
 - 平台get_goal仍显示旧SSH故障时的blocked；用户已明确持续推进原G1，工具只能complete/blocked，不能自行改active或重复创建。权威任务见active-engineering-goal.md，不宣称完成。
 
+### 最新检查点：M2 r1 失败与清理修复
+
+- Harbor v2 已完成真实 Docker 正例、部分分、合法零分、篡改拒绝四模式；镜像已发布私有 Release，见 `docs/harbor-modal-integration/harbor-evolution-v2-image-release.json`。
+- M2 r1 GPU 源码 be8237e，前四个 job 成功；第五个学生 max-tokens 未完成，正确拒绝。随后发现 cleanup 事实丢失，旧 job 卡 cancelling，新 job 反复创建。不是 CUDA 未安装，也不是摘要损坏。
+- 已停止本 run 专属训练进程组；supervisor exit=-6、835.18 秒。停止后 GPU 0%、0 MiB。M2 没有验收成功的训练更新或 checkpoint。
+- 修复：只有实际 Docker 六项查空通过才报告 CleanExecutionRejected；worker 封存 cancelled/空 artifacts 并释放 slot；ledger 在插入前拒绝活跃或未确认作业。685 项组合回归通过，真实清理失败→后续正常 job 验证进行中。
+- 下一步：真实 Docker 负例恢复验证 → 新身份 M2 sync → 数值审计与独立 reload。通过后现有单卡有界 colocate_async 对照已获授权，不新增 GPU。
+
 ## 2. 本轮交付物
 
 下面为本检查点代码/文档清单（行数用于冷启动定位；历史产物见末尾归档）。

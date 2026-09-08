@@ -149,3 +149,74 @@ async def test_cancellation_never_interrupts_executor_cleanup(tmp_path, trigger)
         assert cleaned.is_set()
         assert worker.status("job-1")["manifest"] is None
         assert worker.status("job-1")["unconfirmed"]["cleanup_confirmed"] is False
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("already_cancelling", [False, True])
+async def test_clean_rejection_is_terminal_and_releases_slot_without_retry(tmp_path, already_cancelling):
+    from tests.uni_agent.tasks.test_harbor_dsh_ledger import second
+    from uni_agent.tasks.harbor_dsh.execution_outcome import CleanExecutionRejected
+
+    calls = []
+
+    async def execute(request, **kwargs):
+        calls.append(request.job_id)
+        await kwargs["on_verifying"]()
+        if already_cancelling:
+            ledger.cancel(request.job_id)
+        raise CleanExecutionRejected(trial_id="trial-1")
+
+    data = payload()
+    with JobLedger(tmp_path / "ledger.sqlite") as ledger:
+        worker = HarborWorker(
+            ledger=ledger,
+            policy=policy(data),
+            worker_id="worker-1",
+            task_dir=tmp_path,
+            root=tmp_path / "worker",
+            gateway_base_url="http://host.docker.internal:45678",
+            executor=execute,
+            clock=lambda: 1000.0,
+        )
+        worker.submit(data)
+        await worker.wait(data["job_id"])
+        result = worker.status(data["job_id"])
+        assert result["status"] == "cancelled"
+        assert result["manifest"]["error_code"] == "evidence-rejected-after-cleanup"
+        assert result["manifest"]["artifacts"] == []
+        assert not (tmp_path / "worker/job-1/unconfirmed.json").exists()
+        assert worker.submit(data)["status"] == "cancelled"
+        assert calls == ["job-1"]
+        other = second(data)
+        worker.submit(other)
+        await worker.wait(other["job_id"])
+        assert calls == ["job-1", "job-1-2"]
+
+
+@pytest.mark.asyncio
+async def test_unconfirmed_slot_rejects_new_submit_without_queue_growth(tmp_path):
+    from tests.uni_agent.tasks.test_harbor_dsh_ledger import second
+
+    async def execute(*args, **kwargs):
+        raise RuntimeError("cleanup unknown")
+
+    data = payload()
+    with JobLedger(tmp_path / "ledger.sqlite") as ledger:
+        worker = HarborWorker(
+            ledger=ledger,
+            policy=policy(data),
+            worker_id="worker-1",
+            task_dir=tmp_path,
+            root=tmp_path / "worker",
+            gateway_base_url="http://host.docker.internal:45678",
+            executor=execute,
+            clock=lambda: 1000.0,
+        )
+        worker.submit(data)
+        await worker.wait(data["job_id"])
+        await worker.cancel(data["job_id"])
+        for _ in range(3):
+            with pytest.raises(ValueError, match="active or unconfirmed"):
+                worker.submit(second(data))
+        assert ledger.db.execute("SELECT count(*) FROM jobs").fetchone()[0] == 1
+        assert not (tmp_path / "worker/job-1-2").exists()

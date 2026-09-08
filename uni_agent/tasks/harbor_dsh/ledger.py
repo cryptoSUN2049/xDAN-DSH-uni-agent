@@ -69,6 +69,8 @@ class JobLedger:
                 # A published request stays inspectable after its deadline.
                 return self.get(rows[0]["job_id"])
             validate_request(data, policy=policy, now_unix=now_unix)
+            if self.db.execute("SELECT 1 FROM jobs WHERE status IN ('running','verifying','cancelling')").fetchone():
+                raise ValueError("Worker already has an active or unconfirmed job")
             self.db.execute(
                 "INSERT INTO jobs VALUES (?,?,?,?,?,?,?,NULL)",
                 (

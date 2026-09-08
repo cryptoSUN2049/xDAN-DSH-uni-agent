@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 from urllib.parse import urlparse
 
+from .execution_outcome import CleanExecutionRejected
 from .ledger import JobLedger
 from .protocol import Artifact, JobRequest, RequestPolicy, validate_artifact, validate_manifest
 
@@ -103,6 +104,26 @@ class HarborWorker:
                     asyncio.shield(execution),
                     timeout=min(request.budgets.wall_time_seconds, request.budgets.deadline_unix - self.clock()),
                 )
+            except CleanExecutionRejected as error:
+                # This signal can only be emitted after independent Docker
+                # inventory confirms stop. Publish no reward or rollout.
+                manifest = {
+                    "schema": "dsh.harbor-job-manifest.v1",
+                    "job_id": request.job_id,
+                    "request_sha256": request.request_sha256,
+                    "gateway_session_id": request.gateway_session_id,
+                    "nonce": request.nonce,
+                    "worker_id": self.worker_id,
+                    "trial_id": error.trial_id,
+                    "status": "cancelled",
+                    "sealed_at_unix": self.clock(),
+                    "error_code": error.error_code,
+                    "artifacts": [],
+                }
+                validated = validate_manifest(manifest, request=request, worker_id=self.worker_id)
+                _persist(directory / "manifest.json", validated.model_dump_json(by_alias=True).encode())
+                self.ledger.seal(request.job_id, manifest, worker_id=self.worker_id)
+                return
             finally:
                 # Timeout, cancellation and HTTP retries share one cancellation
                 # owner. Never interrupt an executor already unwinding cleanup.
