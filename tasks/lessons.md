@@ -137,3 +137,7 @@
 - N0复建不能从旧pyvenv.cfg home推断解释器存在；用command -v与readlink实际核验。第一次错路径失败必须留日志，再有证据地重试。
 
 - uv pip的显式版本可能被当前项目tool.uv.override-dependencies覆盖；lock之外的已批准overlay须--no-config隔离，并实际pip check/import验证，不能只信命令参数或Audited日志。
+
+- 用户确认另一会话共享同一GPU：本会话新venv/checkouts不等于GPU隔离。未协调前禁止启动CUDA探针/模型/train/reload；只做本会话CPU安装准备。不得自动ray stop、pkill或通过一瞬GPU空闲推断有独占权。
+
+- 用户澄清无人占GPU，现场也无计算PID；应撤销基于早先歧义建立的GPU阻塞，不再重复询问使用权。优先四类能力真实完成，“独立复建”近期解释为固定条件独立重跑任务结果；从零安装不是能力训练前置。

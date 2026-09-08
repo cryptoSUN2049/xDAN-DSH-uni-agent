@@ -2,6 +2,9 @@
 
 ## 1. TL;DR
 
+> 2026-09-09最新纠偏：用户澄清没有另一会话占GPU；00:45实测0%/0MiB/无计算PID。保留每run前占用核验、不全局Ray清理，不能再以未确认的共享占用阻塞。能力主线用已验收venv；优先四能力真实执行和结果复现，新环境安装是后续交付旁路。
+
+
 > 2026-09-09最高优先级覆盖：用户要求重新设计原生优先，覆盖DSH/记忆/上下文/RSI。新权威入口active-engineering-goal.md与docs/harbor-modal-integration/uni-agent-system-plan-v3.html。Harbor r2暂停，不使用已准备spec继续训练。新版设计已获实施授权。以下旧M2“下一步”均已后置，历史证据仍有效。
 
 

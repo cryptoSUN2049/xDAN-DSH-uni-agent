@@ -99,6 +99,9 @@ def test_prepare_rebuilds_course_and_isolates_train_reload(inputs):
     assert result["equivalence"]["absolute_path_replacements"] == 12
     assert result["equivalence"]["metadata_equal_without_exclusions"] is True
     assert len(result["equivalence"]["path_diffs"]) == 6
+    optimizer = next(step for step in result["steps"] if step["name"] == "optimizer-audit")
+    assert optimizer["argv"][1] == "deployment/checks/optimizer_delta.py"
+    assert "global_step_2/actor/optim_world_size_1_rank_0.pt" in optimizer["argv"][3]
     train = json.loads((inputs["output_dir"] / "train-launch-manifest.json").read_bytes())
     reload = json.loads((inputs["output_dir"] / "reload-launch-manifest.json").read_bytes())
     assert train["environment"]["DSH_VENV"] == str(inputs["venv"])

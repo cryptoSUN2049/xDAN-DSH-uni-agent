@@ -11,3 +11,5 @@
 失败规则：输出根/run根/checkpoint根必须新建、不接受symlink或checkout内输出；任何前置/hash/预算/等价失败即抛错，保留私有失败准备目录供诊断，但不写成功计划。每个CLI有CPU timeout。读取基线文件有大小/路径检查，新进程运行现有CLI，参数数组无shell。输出JSON用独占写入0600；顶层目录0700。
 
 测试：实际三级准备器生成数据；证明6条逐字等价和运行根隔离；拒绝源manifest/Parquet篡改、业务变化、旧输出覆盖、错误runtime/commit、非法run名。检查生成train/reload argv与真实CLI对应，无模型/GPU调用。先失败测试，再最小实现，再Ruff和相关回归。
+
+后续补齐：已新增 optimizer_delta.py，基于真实r4 state[int]/param_groups单组AdamW结构（541总state、504非空、37空），准备器plan使用其实际CLI。既有freeze数据/评分bundle不变；仍未自动执行整个训练流水线。

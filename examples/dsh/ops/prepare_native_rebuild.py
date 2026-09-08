@@ -310,7 +310,17 @@ def prepare(
                 str(output_dir / "checkpoint-delta.json"),
             ],
         },
-        {"name": "optimizer-audit", "status": "operator must verify optimizer steps/moments; no invented CLI"},
+        {
+            "name": "optimizer-audit",
+            "argv": [
+                python,
+                "deployment/checks/optimizer_delta.py",
+                str(checkpoints / "global_step_1/actor/optim_world_size_1_rank_0.pt"),
+                str(checkpoints / "global_step_2/actor/optim_world_size_1_rank_0.pt"),
+                "--output",
+                str(output_dir / "optimizer-delta.json"),
+            ],
+        },
         {
             "name": "reload",
             "launch_manifest": str(output_dir / "reload-launch-manifest.json"),

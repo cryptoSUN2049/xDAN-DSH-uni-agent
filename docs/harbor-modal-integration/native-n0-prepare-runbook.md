@@ -43,7 +43,7 @@ export PYTHONPATH="$PWD:$PWD/verl"
 
 ## 训练：使用已有 supervisor 函数
 
-训练前必须：安装/DSH/CUDA预检通过，GPU无其他作业，云盘实际可写且新增配额够保存两份完整checkpoint。训练用新运行目录与云盘checkpoint；不覆盖r4或既有模型。
+训练前必须：安装/DSH/CUDA预检通过，已与共享GPU的其他会话协调取得本轮使用时段、已核实本次GPU无其他作业，云盘实际可写且新增配额够保存两份完整checkpoint。训练用新运行目录与云盘checkpoint；不覆盖r4或既有模型。
 
 以下Python片段在新checkout前台执行，可保存运行输出，但不能当作后台进程已经托管。`launch_path` 指train manifest；reload时只在前置审计全部通过后改为reload manifest。CLI没有虚构的 `--native` 选项；原生链路直接复用现有有界 `supervise` 函数，`health=lambda:None` 因为此处不使用Harbor controller。
 
@@ -74,8 +74,12 @@ raise SystemExit(0 if result['exit_code'] == 0 else 1)
 1. train退出状态与checkpoint完整性。
 2. `examples/dsh/ops/audit_qwen3_4b_online_rl.py <train-run> --output <train-audit.json>`核实际fresh轨迹/奖励与TransferQueue/trainer消费。
 3. `deployment/checks/checkpoint_delta.py <step1 actor模型文件> <step2 actor模型文件> --output <checkpoint-delta.json>`核LoRA实际变化、base冻结及数值有限。计划中的文件名对应现有单卡checkpoint布局；文件不存在就停止，不猜别的checkpoint代替。
-4. optimizer step/moments与日志交叉验证。当前准备器明确将此项标为operator检查，**没有伪造尚不存在的统一optimizer CLI**。
+4. `deployment/checks/optimizer_delta.py <step1优化器文件> <step2优化器文件> --output <optimizer-delta.json>` 核实际step进展、AdamW moment有限及非零，保留已观察到的空state；再与训练日志交叉核对。只接受本项目产生的可信checkpoint，以CPU和weights_only=True读取，不支持任意下载pickle或通用优化器格式。
 5. 前述全通过、训练GPU退出后，用 `reload-launch-manifest.json` 和同一supervise方式启动独立进程。它调用现有reload shell wrapper，保留4条train/batch2以加载数据加载器状态，设置VAL_ONLY=True并绑定本次global_step_2。
 6. `audit_qwen3_4b_online_rl.py <reload-run> --partition val --output <reload-audit.json>`，确认新session/新评分，实际恢复本次权重、无额外训练/新model checkpoint和GPU释放。
 
 不能因有文件或exit0继续跳过某个失败审计。当前脚本未自动编排以上执行与gate；后续若增加执行模式，应先把这些规则实现并测试，再声称“一条命令完成全链路”。
+
+共享GPU说明：新venv只隔离依赖，不隔离GPU资源。nvidia-smi瞬间为空或0%不能证明已取得独占使用权；必须先协调其他会话，再执行CUDA探针、训练或reload。
+
+2026-09-09最新优先级：用户澄清没有其他会话占用，00:45计算PID空。运行前仍核占用并仅管理自身进程，不额外引入人工协调前置。该N0新环境流程后置；四能力任务使用已验收环境优先推进。
