@@ -99,7 +99,7 @@ wrong final 最多拿一次 0.10 的真实取证分，重复读取或堆工具�
 1. 冻结 16 题及 source/reward/模型/预算摘要。先用 scripted 正例走真实 DSH runtime，每种结构至少一例，确认 prompt 可执行、行号准确、独立 verifier 新鲜回执可回读。
 2. 固定 base checkpoint，优先抽 4 个不同 train 结构，每题采样 n=4，temperature 固定并记录。先只诊断，不更新。CLI strict inference 当前限制 n=1，复制四行的诊断只能证明同题独立采样分布；它不是 trainer 的真实 GRPO 分组验收。
 3. 按 task ID 分别报告 4 条完整 reward、各分量、strict accuracy、eligible、终止原因、唯一 token/trace 身份、组内 variance。全 0、全 0.10、全 1 都是零差异组，不能给任务奖励产生非零的组相对 advantage。
-4. 建议进入首轮工程训练前，4 个结构中至少 2 组有 ≥2 个不同合法奖励且至少 2 个合法样本，并至少出现一个 semantic=1 样本。没有满足就保留失败；查引用协议/容量/任务可探索性，不盲目加更新步数。该门是首批工程启发式，不是收敛保证。
+4. 建议诊断时关注4个结构中至少2组有≥2个不同合法奖励，并出现semantic=1样本；这只是工程诊断建议，不是框架硬门或收敛保证。也可在fresh strict准入通过后直接用原生两步RL收集真实n=4分组证据，避免反复dev采样。若实际reward advantage全零，不得判为有效任务学习；保留结果并检查协议/容量/可探索性，不盲目加步数。
 5. 通过后原生 trainer 真实同题 n=4 采样，使用全部 12 train、4 dev 独立 validation；沿用已验收 sync/LoRA 配置、单 GPU、固定小步数与 wall-clock。训练消费审计必须看到真实组 ID、policy version、token/logprob、verifier reward、非零 reward advantage；不能拿 KL 或 weight decay 的参数变化替代任务学习信号。
 6. 保存到 `/workspace/uni-agent-g1/checkpoint/<独立run-id>/...`，审计 optimizer step、实际 LoRA 参数变化及冻结 base；独立 reload 同一 checkpoint 后在相同推理预算跑 4 dev 和原 v1 四题。
 7. 分开报告 `train_reward_mean`、`semantic_accuracy`、`v2_task_accuracy`、`v1_regression_accuracy`、eligible/unsafe、有效差异组比例及 token/时延。4 题 dev 与 4 题公开回归都样本过小，不能据一次波动宣称泛化提升。

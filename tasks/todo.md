@@ -415,3 +415,14 @@ Review：本提交为进行中检查点；不将first checkpoint或CPU通过当�
 - [ ] 按四能力覆盖设计独立训练/评估任务，完成RL更新及reload；四例诊断不算能力训练完成。
 
 Review：当前四能力仍未验收完成；真实GPU baseline在运行，后续以进程及回执为准。
+
+## 2026-09-09 真实错误修复与后续门
+
+- [x] memory反馈/3连拒绝保护：55项root CPU与3组Node；d13bda9已推送。
+- [x] GPU新writer r2已启动（PID125477），复用固定venv与DSH。
+- [x] context v2探索r2失败定位：合法view_range误判，16条真实会话已完成但准入拒绝。
+- [ ] 修复view_range边界并新身份真实复跑，不覆盖旧回执。
+- [ ] writer r2成功才freeze/B；失败保存原证据和诊断。
+- [ ] 有效训练组→参数/optimizer审计→独立reload与dev评估。
+
+Review：M1先前RL通过；本轮context/记忆仍是基线与接线修复，不宣称新增RL成功。

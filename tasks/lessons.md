@@ -147,3 +147,9 @@
 - max-tokens不是必然生成上限：先查每轮input/output及工具观测。grounding-r1仅61输出token，Service大目录耗尽轨迹容量；未定位前不能直接建议只增加生成预算。
 
 - parallel_infer_verl没有--temperature CLI；采样温度从任务model配置或固定默认0.8解析。启动前用真实_parse_args/init_config校验全部argv，不从其他入口猜参数。context-v2-r1因此CPU参数解析exit2，保留该失败并用新r2身份重启。
+
+## 2026-09-09 — 训练数据量与工具 API 准入
+
+- 用户要求数据量足够：统计独立实例、结构族、尝试次数及优化器实际消费，不能把重复行/新UID当作数据覆盖。先使用现有课程验证有效信号，再按失败场景扩充，拒绝虚构统一行业最低样本量。
+- context v2 GPU 16条会话被误拒：verifier只允许command/path，却未对照固定DSH的合法view_range/null语义。工具消费者适配必须读固定版本源码，并加入真实调用形状回归；范围参数合法与实际完整读取证据分开验证。
+- 反事实重评分只用于定位错误，不能覆盖历史回执或当作送入优化器的真实轨迹。新verifier闭包需新prepare、新run和真实评分。

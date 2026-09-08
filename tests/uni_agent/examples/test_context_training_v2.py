@@ -39,6 +39,107 @@ def test_generation_refuses_overwrite_and_changed_sources(tmp_path):
         oracle(contract, path.parent)
 
 
+@pytest.mark.parametrize("partial", [False, True])
+def test_real_gpu_range_arguments_and_numbered_result(tmp_path, partial):
+    """r2's 68 calls had view_range; reproduce its exact API/numbered view shape."""
+    from examples.dsh.capabilities.context_verifier_v2 import score
+
+    _, contract, root, events, answer = episode(tmp_path, 12)
+    for i, source in enumerate(contract["sources"]):
+        lines = (root / source["path"]).read_text().splitlines()
+        end = 1 if partial else len(lines)
+        args = {"command": "view", "path": str(root / source["path"]), "view_range": [1, end]}
+        events[2 * i] = _call(str(i), "str_replace_editor", args, seq=i)
+        rendered = "Here's the content with line numbers:\n" + "\n".join(
+            f"{n:6d}  {line}" for n, line in enumerate(lines[:end], 1)
+        )
+        events[2 * i + 1] = _result(str(i), rendered)
+    result = score(contract, root, events, json.dumps(answer), True)
+    assert result["eligible"] is True
+    if partial:
+        assert result["extra_info"]["sources_read"] == ["sources/index.txt"]
+        assert result["reward"] == pytest.approx(0.025)
+        assert result["accuracy"] == 0
+    else:
+        assert result["reward"] == result["accuracy"] == 1
+
+
+@pytest.mark.parametrize("view_range", [None, [1, -1], [1, 6], [2, 4]])
+def test_valid_range_never_substitutes_for_actual_result(tmp_path, view_range):
+    from examples.dsh.capabilities.context_verifier_v2 import score
+
+    _, contract, root, events, answer = episode(tmp_path)
+    args = json.loads(events[0]["data"]["arguments"])
+    args["view_range"] = view_range
+    events[0] = _call("0", "str_replace_editor", args, seq=0)
+    events[1] = _result("0", "only part of the file")
+    result = score(contract, root, events, json.dumps(answer), True)
+    assert result["eligible"] and result["reward"] == pytest.approx(0.05)
+    assert result["extra_info"]["semantic_accuracy"] == 0
+
+
+@pytest.mark.parametrize(
+    "view_range", [[], [1], [1, 2, 3], [0, 5], [True, 5], [1, False], [3, 2], [1, -2], "1,5", [1, 999], [999, -1]]
+)
+def test_invalid_range_is_rejected(tmp_path, view_range):
+    from examples.dsh.capabilities.context_verifier_v2 import score
+
+    _, contract, root, events, answer = episode(tmp_path)
+    args = json.loads(events[0]["data"]["arguments"])
+    args["view_range"] = view_range
+    events[0] = _call("0", "str_replace_editor", args, seq=0)
+    result = score(contract, root, events, json.dumps(answer), True)
+    assert not result["eligible"] and result["reward"] == 0
+
+
+@pytest.mark.parametrize("mutation", ["write", "outside", "extra", "error", "unfinished"])
+def test_range_compatibility_preserves_other_boundaries(tmp_path, mutation):
+    from examples.dsh.capabilities.context_verifier_v2 import score
+
+    _, contract, root, events, answer = episode(tmp_path)
+    args = json.loads(events[0]["data"]["arguments"])
+    args["view_range"] = [1, -1]
+    if mutation == "write":
+        args["command"] = "create"
+    if mutation == "outside":
+        args["path"] = str(root / "contract.json")
+    if mutation == "extra":
+        args["new_str"] = "x"
+    events[0] = _call("0", "str_replace_editor", args, seq=0)
+    if mutation == "error":
+        events[1] = _result("0", (root / contract["sources"][0]["path"]).read_text(), error=True)
+    result = score(contract, root, events, json.dumps(answer), mutation != "unfinished")
+    if mutation == "error":
+        assert result["eligible"] and result["reward"] == pytest.approx(0.05)
+    else:
+        assert not result["eligible"] and result["reward"] == 0
+
+
+def test_partial_range_cannot_claim_full_read_with_inconsistent_result(tmp_path):
+    from examples.dsh.capabilities.context_verifier_v2 import score
+
+    _, contract, root, events, answer = episode(tmp_path)
+    args = json.loads(events[0]["data"]["arguments"])
+    args["view_range"] = [2, 3]
+    events[0] = _call("0", "str_replace_editor", args, seq=0)
+    # Deliberately retain the original whole-file result: it exceeds requested range.
+    result = score(contract, root, events, json.dumps(answer), True)
+    assert result["eligible"] and result["reward"] == pytest.approx(0.05)
+    assert result["extra_info"]["sources_read"] == ["sources/other.txt"]
+
+
+@pytest.mark.parametrize("bounds", [None, [1, -1], [1, 5], [1, 6]])
+def test_pinned_runtime_null_and_trailing_empty_line(tmp_path, bounds):
+    from examples.dsh.capabilities.context_verifier_v2 import score
+
+    _, contract, root, events, answer = episode(tmp_path)
+    args = json.loads(events[0]["data"]["arguments"])
+    args["view_range"] = bounds
+    events[0] = _call("0", "str_replace_editor", args, seq=0)
+    result = score(contract, root, events, json.dumps(answer), True)
+    assert result["eligible"] and result["reward"] == result["accuracy"] == 1
+
+
 def episode(tmp_path, index=0):
     row = prepare(tmp_path / "cases")[index]
     path = Path(row["metadata"]["fixture_path"])

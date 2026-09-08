@@ -1,0 +1,15 @@
+{
+  "path": "/workspace/reports/native-diagnostics-through-context-v2-r2.tar.gz",
+  "bytes": 360006,
+  "sha256": "e38267ba9606f771b7472a6fd7f88db6aa9392b2834c479369a0dcb4fe6c5b53",
+  "included_runs": [
+    "dsh-context-baseline-r2",
+    "dsh-context-baseline-r2-data",
+    "t2-exploration-r1",
+    "dsh-memory-constraints-r1",
+    "context-v2-exploration-r1",
+    "context-v2-exploration-r1-data",
+    "context-v2-exploration-r2"
+  ],
+  "scope": "Historical completed diagnostics; failures retained; no checkpoint or capability-improvement claim"
+}

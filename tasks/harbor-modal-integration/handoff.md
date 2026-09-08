@@ -2,6 +2,12 @@
 
 ## 1. TL;DR
 
+- 最新终态：memory writer r2已270秒exit1，4steps/3工具调用；只读源修改被拒一次后成功create正确memory，因原合同unapproved_action硬拒，未freeze/B。PID125477已退出，先前运行状态已过时。
+- context view_range适配已完成：83项v2+v1回归通过，下一步新prepare与4dev真实准入验证，再短程RL诊断真实n4组。
+
+- 当前GPU：memory-constraints-r2，源码d13bda976507aed8ee4722be38a36a332f8c898c，监督PID125477，日志/root/runs/dsh-memory-constraints-r2/writer/run/supervision/train.log。只有writer成功且reward1才freeze/B；运行中不切checkout。
+- context v2 r2根因已确认：16条DSH会话finished，但verifier误拒合法view_range。本地修复中，旧回执不修改。归档/workspace/reports/native-diagnostics-through-context-v2-r2.tar.gz，摘要见对应JSON交付物。
+
 - 最新覆盖：context-v2-exploration-r2 已340.01秒 exit1，16 sessions failed，未进入参数更新；GPU释放。根因审计进行中，旧“正在采样”记录仅代表当时状态。
 - memory拒绝反馈与3连拒绝保护已完成；root复核55项CPU+3组Node通过，待新chain真实验证。评分/访问准入不变，禁止把旧writer r1追认为成功。
 
