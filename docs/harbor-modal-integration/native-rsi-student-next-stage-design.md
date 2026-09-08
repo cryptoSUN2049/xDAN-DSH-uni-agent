@@ -243,3 +243,87 @@ successful_call_ids 分别记录引用证据和完整读取，不能混淆。
 限定修改 worker_verifier、对应测试及本文；现固定 policy.mjs 仍只接收 command/path，未在此擅改
 policy/hash。后续若真实运行也允许 view_range，必须另行版本化 policy 并重验 canary；旧 policy 合法拒绝
 时仍记业务未解决，不可宣称现 runtime overlay 已支持该参数。新 bundle 随 verifier 源码自然变化。
+
+## 9. Run-specific H0/H1 worker evaluation 准备与监督入口
+
+新增 `prepare_worker_eval.py`、`launch_worker_eval.py` 及两者共同 CPU 测试。
+不修改固定 policy ESM、不实现 proposer/比较器/晋升，不启动远端进程。
+
+输入为已经冻结的 worker cases_root、现有 private registry、外部 pins SHA/parent active SHA/候选 SHA、
+固定本地 model/runtime/runner_python、pair_id、新 preparation 根和独立新 run 根。
+两侧引用同一 cases_root 的 fixture 和 prompt 字节；H0/H1 各2题、n=1，同总token/per-turn预算，
+独立 run-root/{H0,H1} 和 trace/result 根。准备目录含每侧 task.yaml、eval.parquet、canonical overlay.json、
+render.json，顶层 preparation-manifest.json 保存数据/源码/model/runtime/env/argv/选择身份/hash。
+只生成配置，不生成任何结果或比较回执。
+
+Registry pins 必须与本次输入相符：model_sha256 是本地 config/tokenizer/权重文件清单 canonical hash，
+devset_sha256 是冻结数据 artifact 清单 canonical hash，verifier 为 worker bundle，runtime 为固定二进制，
+case_ids 是两个开发任务，max_tokens 等于预算，evolution_run_id 等于 pair_id。
+base_harness_sha256 用 parent spec+固定 policy SHA 的 canonical hash，避免 overlay 的 activeSHA 与
+registry pins 循环依赖。提供只读 input_pins API；初始化/注册仍使用现 Registry API，不自动创建或晋升。
+
+prepare 先验证真实 runner Python 的 SDK/runtime 0.1.3a2 与 bundle 导入来源，再渲染 H0 active 和 H1
+unpromoted evaluation overlay。序列化严格复用 _canonical(patch)，记录 byte SHA 和 runner 实際报告的
+patch path-list SHA（两者不同）。manifest 记录真实 git HEAD、固定 VERL SHA及源码hash。
+
+launch 仅允许 manifest 声明的 H0/H1，先重验 frozen 文件/pins/parentactive/overlay/model/runtime/source，
+使用现 parallel_infer_verl --dsh-strict-audit --require-result 和现 supervise 约束时间/进程组。
+启动前查 GPU 实际进程占用；运行中 health 回调重验 active、overlay、policy 与固定 source，不重新hash大模型。
+结果后核两个 expected task 身份及真实 DSH envelope 中 profile/patches_sha256，结合外部 bytehash报告
+SDK patch路径绑定；这不是 policy 自签回执，也不单独等于候选有效性或真实晋升。
+失败不继续、不改旧输出；zero reward 的合法任务结果可以通过工程身份验收，但不证明能力收益。
+
+测试计划：准备两侧相同fixture/prompt/预算与不同run/overlay，registry全文件不变；错pins、数据/model/runtime/
+policy篡改、active切换、目录重用、额外文件拒绝；argv实际解析和Task metadata/config解析；mock监督器只证
+委托/失败传播，不伪造GPU成功。运行绑定报告测试使用明确unit fixture，不生成生产student回执。
+
+### 实际准备与启动接口
+
+`input_pins(cases_root, model_path, pair_id, max_tokens, parent_spec)` 返回现 Registry.initialize 所需的 pins；
+必须先生成并冻结 cases，再建立此次 registry 和未晋升候选。模型清单包括 config/tokenizer/权重及
+实际存在的 JSON generation/tokenizer 配置；每次 prepare/preflight 只遍历权重计算一次 SHA，运行健康检查
+不反复读取大模型。真实 prepare 要求所列执行源码已提交且干净、VERL tracked 源码干净；其它文档编辑不阻塞。
+
+配置文件是 `prepare(...)` 的 keyword JSON，字段如下（路径和 SHA 由本次部署实际值填写，不含 token）：
+
+```json
+{
+  "cases_root": "/root/runs/rsi-worker-dev-v1",
+  "model_path": "/workspace/models/SELECTED-FROZEN-MODEL",
+  "pair_id": "rsi-worker-pair-r1",
+  "registry_root": "/root/rsi-worker-pair-r1-registry",
+  "pins_sha256": "EXTERNAL-REGISTRY-PINS-SHA256",
+  "parent_active_sha256": "EXTERNAL-PARENT-ACTIVE-SHA256",
+  "candidate_sha256": "REGISTERED-UNPROMOTED-CANDIDATE-SHA256",
+  "runner_python": "/workspace/venvs/SELECTED-PINNED-ENV/bin/python",
+  "runtime_executable": "ABSOLUTE-BUNDLED-RUNTIME-PATH",
+  "output_dir": "/root/runs/rsi-worker-pair-r1-prepared",
+  "run_root": "/root/runs/rsi-worker-pair-r1-execution",
+  "max_tokens": 4096,
+  "per_turn": 512,
+  "wall_seconds": 1800
+}
+```
+
+```bash
+# 只准备，未加载 GPU。
+PYTHONPATH=.:verl python -m examples.dsh.rsi_closed.prepare_worker_eval --config /root/rsi-worker-prepare.json
+# SHA 为 preparation-manifest.json 的实际文件 SHA，需由控制端独立保留。
+# 默认只做 CPU preflight；在固定执行 checkout 中，显式 --launch 才调用 GPU 推理。
+PYTHONPATH=.:verl python -m examples.dsh.rsi_closed.launch_worker_eval \
+  --manifest /root/runs/rsi-worker-pair-r1-prepared/preparation-manifest.json \
+  --manifest-sha256 EXTERNAL-MANIFEST-SHA256 --side H0
+# 确认该单 GPU 当前无其它计算进程后，在相同命令末尾加 --launch；H0结束后同样运行H1。
+```
+
+受监督入口对外部 manifest SHA、源码完整清单、数据/overlay/model/runtime 和 active 快照失败均立即退出。
+成功退出后还要求两个明确 case、两个不同 session、canonical receipt/hash/身份、真实 readback 对应奖励一致；
+zero reward 可以合法通过这些工程身份门。`runtime-binding.json` 明确
+`scope=SDK patch + canonical receipt + readback consistency`、`raw_token_reaudit=false`、
+`policy_self_attestation=false`、`promotion_verified=false`。真实 token 准入由固定 strict runner 内已有
+trajectory_audit 执行，不能把这个文件单独称为完整训练/晋升验收；它也不是独立的新 token 审计器。
+CPU 单元测试中生成的 envelope/receipt/readback 始终只是 unit fixture，不会部署到生产 runs。
+
+本增量 CPU 验证：最初新模块缺失 RED；完成后 28 项准备/启动/结果门测试通过，连同 worker、Registry、
+policy、context v1/v2 回归共 198 项通过（1 条既有 Ray import deprecation warning）；Ruff check 与 format check通过。
+尚未在 Linux 部署该新入口或运行 H0/H1 学生评估；未创建实际比较/晋升回执。
