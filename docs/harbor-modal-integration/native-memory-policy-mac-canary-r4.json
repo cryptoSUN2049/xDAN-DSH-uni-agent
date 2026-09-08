@@ -1,0 +1,130 @@
+{
+  "schema": "dsh.closed-memory-policy-canary.v1",
+  "status": "passed",
+  "scope": "real SDK tools; no model or training; closed trusted tool composition only",
+  "runtime_mode": "mutable-source-wrapper-development-only",
+  "sdk_version": "source-checkout-no-distribution-metadata",
+  "requested_source_version": "dsh:b2369692ea530007075ebcd18d39fdba0bbd3982",
+  "runtime_source_verified_by_this_script": false,
+  "policy_sha256": "sha256:95cc1d2d7e10a2395b413c5e0709ec2dd6c5bf557b87bb41639dec1f0f9ccc26",
+  "chain_id": "220fdef6bb8e4cbdae6663129b39a11c",
+  "writer_session_id": "writer-f282a717905c4059b917baed14528021",
+  "reader_session_id": "reader-057a57e478874e7ca4365bb1b5a2b635",
+  "identity_scope": "controller-stage identities; no model agent sessions created",
+  "frozen_manifest_sha256": "sha256:bf6a27660e86118b715a5933aed9bbbdadbed432d674588ca57339d6710472c3",
+  "loaded_handoff_matches": true,
+  "writer": {
+    "tools": [
+      "str_replace_editor"
+    ],
+    "results": [
+      {
+        "label": "write-memory",
+        "isError": false,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": false
+      },
+      {
+        "label": "read-memory",
+        "isError": false,
+        "expectedTextPresent": true,
+        "forbiddenTextPresent": false,
+        "policyDenied": false
+      },
+      {
+        "label": "deny-input-write",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      }
+    ],
+    "policy_config_sha256": "sha256:64a2267d61cf5234d3d7b15acc69994ce7fdf0f649cb422b3f191f57bd6b00df"
+  },
+  "reader": {
+    "tools": [
+      "str_replace_editor"
+    ],
+    "results": [
+      {
+        "label": "read-handoff",
+        "isError": false,
+        "expectedTextPresent": true,
+        "forbiddenTextPresent": false,
+        "policyDenied": false
+      },
+      {
+        "label": "deny-A-secret",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-handoff-write",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-directory",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-relative",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-symlink",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-hardlink",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-bash",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-cordis_define",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-run_code",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-future_tool",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      }
+    ],
+    "policy_config_sha256": "sha256:765029571ec8cc2941e687bfd412147f12b243b67babe692c0be45165c08e159"
+  }
+}
