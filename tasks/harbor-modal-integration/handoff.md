@@ -10,7 +10,7 @@
 - 容量对照r2已300秒exit0，单条真实轨迹回读、finished=true、reward=0；扩大窗口只解除容量阻断，未解决Tool查询。报告native-grounding-capacity-r2-result.json。
 - context r2已完成：4/4严格执行与轨迹回读，奖励均0，引用为绝对路径或缺失，不满足原合同。报告native-context-baseline-r2-result.json；未训练，不宣称能力提升。
 - T2 exploration-r1已510秒exit1，GPU释放。一个公开dev题4次采样：一次140步后max-tokens，三次工具调用留在文本而未执行，未观察到成功。报告native-t2-exploration-r1-result.json。不得重复原配置期望得到训练收益。
-- 当前GPU真实记忆A：/root/runs/dsh-memory-constraints-r1，writer-supervisor PID115999，源码22265e1，已部署旧验收venv；每stage1800秒。先查writer/run/process-exit.json及supervision/supervisor-result.json，A成功后使用memory_chain freeze-and-prepare-reader再run-stage reader/finalize。不能跳过A失败或修改运行中源码。
+- 真实记忆A r1已372秒exit1，源码22265e1；1次成功读来源后96次尝试改只读source被拒，没有create memory，最终工具JSON不完整。未freeze、未创建reader。报告native-memory-writer-r1-failure.json；下一步审计模型是否收到拒绝反馈，不能直接启动B。
 - 记忆链本轮49项root复核通过；完整手册native-memory-student-chain-runbook.md。仍是评估，credit_assignment=none，尚未训练。
 
 ### 最新 N0/N1/P1 检查点
@@ -213,3 +213,5 @@ _hydra允许经过白名单校验的相对路径键；仍拒绝分隔符/插值�
 - 已结束诊断归档 `/workspace/reports/native-capability-diagnostics-r1-r2.tar.gz`（不含context r2），135398 bytes，SHA256 e99f85967faef859b1f229eaba9fe2b6f8ee2d6208f3755ae01a7cdf5903844d。
 
 - RSI候选持久化a0aa392已推送，27新增测试通过；真实DSH overlay/canary实现中。持久选择不等于runtime已采用或学生已学会RSI。
+
+- 固定Linux RSI canary c5acd30已通过，18真实工具请求4.66秒；独立checkout/worktree不影响GPU源码。晋升比较标synthetic，不是学生收益；报告native-rsi-policy-linux-c5acd30-r1.json。

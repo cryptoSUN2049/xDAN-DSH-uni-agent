@@ -1,0 +1,75 @@
+{
+  "schema": "dsh.memory-writer-failure.v1",
+  "root": "/root/runs/dsh-memory-constraints-r1",
+  "deployment": {
+    "commit": "22265e16e7e816100e884dfbf2bb9dd97c5544b1",
+    "command": [
+      "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+      "-m",
+      "examples.dsh.capabilities.memory_chain",
+      "run-stage",
+      "--manifest",
+      "/root/runs/dsh-memory-constraints-r1/chain.json",
+      "--role",
+      "writer"
+    ],
+    "environment": {
+      "PATH": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+      "PYTHONPATH": "/workspace/rebuild/uni-agent-native-n0-r1:/workspace/rebuild/uni-agent-native-n0-r1/verl",
+      "DSH_RUNTIME_MODE": "exe",
+      "RAY_TMPDIR": "/root/ray-memory-A-r1",
+      "CUDA_VISIBLE_DEVICES": "0",
+      "HF_HUB_OFFLINE": "1",
+      "PYTHONNOUSERSITE": "1"
+    }
+  },
+  "process_exit": {
+    "argv_sha256": "sha256:1f9395bbe40f499b95fe170e40b4e9ba22ce782a3fe395c5dd1dd290c2732eff",
+    "chain_id": "memory-constraints-r1",
+    "checkpoint_identity": "Qwen3-4B@1cfa9a7208912126459214e8b04321603b3df60c",
+    "exit_code": 1,
+    "finished_at": "2026-09-08T17:53:10.188198+00:00",
+    "manifest_sha256": "sha256:6f05ab613dee72fac1c2f152fe6411514114020f986d3aa1df2a5424a86c274a",
+    "role": "writer",
+    "run_root": "/root/runs/dsh-memory-constraints-r1/writer/run",
+    "started_at": "2026-09-08T17:46:58.146829+00:00",
+    "supervisor_sha256": "sha256:27aa7be49f7d5febd8ad08d127e9a91178e8e7798a7fa442cecf552f0b1bd5b8",
+    "termination_grace_seconds": 30,
+    "training": false,
+    "wall_seconds": 1800
+  },
+  "receipt": {
+    "accuracy": 0,
+    "artifact_sha256": "sha256:13ba452af256d03695d7591a227d8404af4fcc3a5f4417e860901a0dd074b18c",
+    "dsh_session_id": "dsh-session-sample-0-rollout-0-284e159d9550445c89b3c8e7ee43326c",
+    "eligible": false,
+    "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "evidence": [
+      "sha256:9667dfb0a5f4acd4e0a9b6c90693f4a075a579a9b26d479e785b7713ec5aa194",
+      "sha256:6587d7139900080464ef6ade2e80bbd1f4ea2a9aab003c1eb70a7c092863f353"
+    ],
+    "finished": true,
+    "fresh": true,
+    "issued_at": "2026-09-08T17:53:05.718784+00:00",
+    "issuer": {
+      "id": "uni-agent-dsh",
+      "kind": "trusted-verifier"
+    },
+    "receipt_id": "sha256:65ad8c66277595b3d52628eceef7817de11fdf4e77e45972844a82b1f1cdcf56",
+    "reward": 0,
+    "schema": "dsh.verifier-receipt.v1",
+    "task_id": "dsh/memory/memory-constraints-r1/writer",
+    "task_version": "1",
+    "trace_sha256": "sha256:6587d7139900080464ef6ade2e80bbd1f4ea2a9aab003c1eb70a7c092863f353",
+    "verifier": {
+      "code_digest": "sha256:9841cff44badb3e1e32b8e1f17ba88847692dba632fc668786d0089758ba84dc",
+      "id": "dsh-memory-file-chain-eval",
+      "version": "1"
+    }
+  },
+  "finished": true,
+  "freeze_exists": false,
+  "reader_exists": false,
+  "training": false,
+  "diagnosis": "One source read followed by 96 denied attempts to replace readonly source; no memory create. Gateway feedback audit pending."
+}
