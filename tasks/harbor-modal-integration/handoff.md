@@ -181,3 +181,12 @@
 - /workspace/venvs/uni-agent-fefb080为隔离环境，/workspace/cache/uv为缓存，安装日志/workspace/reports/verl-install.log；仍须检查结束状态。
 - 新增bootstrap/install-verl.sh和checks/gpu_smoke.py，安装后必须实际CUDA前后向并验证模块导入。
 - GitHub API对DSH-Exp提交1af5b00返回422（不可拉取），DSH发布物仍未解决；不要声称SDK已安装。
+
+## 最新G1已激活与GPU检查通过
+
+- get_goal已确认新版用户目标为active（旧blocked记录不再适用）。
+- /workspace/reports/gpu-smoke.json通过CUDA前后向与7个关键模块导入；torch2.11+cu130、vLLM0.24。
+- 模型下载固定Qwen/Qwen3-4B@1cfa9a7208912126459214e8b04321603b3df60c，目的路径/workspace/models/Qwen3-4B-1cfa9a7。
+- HotpotQA原生数据repo固定27275ff4fee67ac0acb6478e405e7ac07efbdc1a；先小型dev文件用于明确标记的工程诊断，不冒充正式benchmark泛化。
+- 下一批实现单卡native smoke配置、固定小批数据、真实采样及update/reload；DSH与Harbor验收尚未通过。
+- 模型下载已完成（MODEL_READY）；原生hotpotqa_dev.parquet已下载，128行。含旧模型回答/评分列，现有adapter只读五个必需列，继续保持此隔离。
