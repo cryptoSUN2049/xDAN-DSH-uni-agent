@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 import os
+import stat
 from pathlib import Path
 
 import pyarrow as pa
@@ -101,6 +102,11 @@ def prepare_training(
     _token(str(registration_token_file))
     worker_token = _token(str(worker_token_file))
     output_dir.mkdir(mode=0o700, parents=True, exist_ok=False)
+    actual = output_dir.lstat()
+    if not stat.S_ISDIR(actual.st_mode) or actual.st_uid != os.getuid() or stat.S_IMODE(actual.st_mode) != 0o700:
+        raise ValueError(
+            "Output filesystem did not enforce private owner permissions; use a permissions-capable local path"
+        )
     task_config = {
         "name": "harbor_dsh",
         "run_id": spec.run_id,

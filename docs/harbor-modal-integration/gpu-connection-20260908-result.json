@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-09-08T08:09:35.918777+00:00",
+  "ssh_host": "216.243.220.244",
+  "ssh_port": 14682,
+  "ssh_exit_code": 255,
+  "ssh_failure_stage": "before key exchange",
+  "ssh_error": "kex_exchange_identification: Connection closed by remote host",
+  "runpodctl_version": "2.12.0-51ca7f0",
+  "configured_account_all_pods_count": 0,
+  "pod_deleted_proven": false,
+  "r1_training_exit_code": 1,
+  "r1_gpu_and_ray_cleanup_verified_before_connection_loss": true,
+  "r2_controller_start_failed": true,
+  "r2_training_started": false,
+  "r3_local_spec": "/private/tmp/m2v2-20260908-r3/run-spec.json",
+  "r3_remote_spec_transfer_succeeded": false,
+  "action_needed": "Verify current Pod state and SSH endpoint or account; do not buy or recreate automatically"
+}

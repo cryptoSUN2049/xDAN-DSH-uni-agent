@@ -383,3 +383,14 @@
 - Mac controller56072/SSH56114已正常停止，工具97061 exit130、cleanup_errors=[]，本机三个端口关闭；GPU/Ray进程查询均无残留。
 - r2私有配置/private/tmp/m2v2-20260908-r2/run-spec.json已生成并传/root/runs/m2-v2-r2-control；尚未启动，先核新commit再开始。M1新版数据已生成/workspace/data/dsh-evolution-v2-b236969，16/8，报告m1-session-v2-data-preparation-result.json；不要重生成。
 - 私有DSH prerelease发布完成并逐字节回下载核验，见dsh-v2-private-release-result.json；不重复上传/创建tag。
+
+## 当前连接中断（先读）
+
+- 88a52ad30fb6743566266a867f8275c61746c673已推送，修复r1单卡layered设置。r2 controller启动时SSH被服务端在握手前关闭，已exit1/cleanup_errors=[]，没有启动r2训练。
+- 后续SSH普通命令/传配置也同样exit255，runpodctl2.12.0当前配置账号pod list --all两次均[]。不能断言Pod被删；已异步询问用户当前Pod/SSH地址。未购买/重建/停止任何Pod。
+- r3仅本机spec /private/tmp/m2v2-20260908-r3/run-spec.json已生成；远程传输失败，不能假称已部署。当前没有本机controller/隧道需继续运行，r1最后GPU/Ray已清空。
+- GPU连接恢复后先检查原/root/runs/m2-v2-r1证据是否仍存在并归档；新版M1数据/workspace/data/dsh-evolution-v2-b236969已成功生成，可直接复用。若Pod重建，要核对持久盘与虚拟环境，不能盲目续用旧nodeIP172.22.0.3。
+- unia_capability_audit正在补prepare_m2_training输出目录真实private-mode预检（Task YAML写token前）；尚未完成不stage。G1 active，当前第一次外部连接阻塞，尚不满足blocked连续3轮阈值。
+
+- 连接中断期间补完本地预检：prepare_m2_training在写secret YAML前lstat验证真实owner/0700，模拟网络盘忽略mode测试先红后绿，主进程14tests通过、Ruff双通过。
+- 新context实际离线build+keyless成功，报告harbor-context-image-rebuild-result.json；19输入文件hash匹配，但image ID d4956d...与原始846b46c...不同（文件metadata不在旧manifest内容hash中），不称bit-identical。不修改任务pin。verl_six_month_audit正在为原始固定image发布私有归档以支持精确docker load；勿重复发布。

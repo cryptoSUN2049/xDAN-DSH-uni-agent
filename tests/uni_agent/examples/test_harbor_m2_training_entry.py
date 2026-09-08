@@ -182,3 +182,18 @@ def test_single_gpu_print_defaults_disable_layered_offload_fallback(inputs):
     assert "actor_rollout_ref.model.lora_rank=16" in command.stdout
     assert "actor_rollout_ref.model.lora_alpha=16" in command.stdout
     assert "actor_rollout_ref.actor.checkpoint.save_lora_only=False" in command.stdout
+
+
+def test_ignored_directory_permissions_fail_before_writing_token_yaml(inputs, monkeypatch):
+    original_mkdir = Path.mkdir
+
+    def mkdir_ignoring_mode(path, *args, **kwargs):
+        original_mkdir(path, *args, **kwargs)
+        if path == inputs["output_dir"]:
+            path.chmod(0o777)
+
+    monkeypatch.setattr(Path, "mkdir", mkdir_ignoring_mode)
+    with pytest.raises(ValueError, match="permissions.*local path"):
+        prepare_training(**inputs)
+    assert not inputs["task_config_path"].exists()
+    assert list(inputs["output_dir"].iterdir()) == []

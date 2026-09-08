@@ -1,0 +1,49 @@
+{
+  "context": "/private/tmp/dsh-harbor-rebuild-88a52ad",
+  "docker_build_executed": true,
+  "dsh_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+  "files": {
+    "Dockerfile": "fb3472fca67939a64e648f366380eac8b28fd42387b3bd047dbcd03eca56bce2",
+    "checks/keyless_sdk_smoke.py": "bf89b569292325530ab447509290d561c7a3fc482b5f36c11ab8ed4ca9215360",
+    "source-revision": "5bf88a6f60372977a8b09f0eb66bf133ce40c5d82733167e7c4e960c74ec0069",
+    "uni_agent/__init__.py": "60a11cd8a9c8c3ecdbd25ad0dbdebd5eae84aaf7bd2aecf0be729116bea2315b",
+    "uni_agent/agents/__init__.py": "6b25c6382b034dc4b0ef4b32b0c41f082bd5f4d07ea1e3713ed0d572e6963a6e",
+    "uni_agent/agents/base.py": "73e24adc94a9819203bfb0a5943dd2343be62ecdc9cb423bdaad0c6b9f60e924",
+    "uni_agent/agents/dsh/__init__.py": "57afdc2162a9f5de5d2a504b6ed548c6966af6cc468049c358a089393c333e50",
+    "uni_agent/agents/dsh/agent.py": "a3a90a1ad2158e3bc30f5140f7690670f1c4ec9beac4c5c946a4403d7531704b",
+    "uni_agent/agents/dsh/runner.py": "a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+    "uni_agent/agents/registry.py": "f088743b5d7e42055ae62bdf74c78473d109aad11b25ee97311eccdbd854f586",
+    "uni_agent/version/version": "e61af3189dfe5f92f60e65d185e63092fb6278a4fa12e429577887f6c31f8bfd",
+    "wheelhouse/SHA256SUMS": "0b6e829526dd10750ceae08a4b9f2b19d00127b1593b988c6a60db7aced1461e",
+    "wheelhouse/annotated_types-0.7.0-py3-none-any.whl": "1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53",
+    "wheelhouse/deepseek_harness_runtime_bin-0.1.3a2-py3-none-manylinux_2_28_x86_64.whl": "59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+    "wheelhouse/deepseek_harness_sdk-0.1.3a2-py3-none-any.whl": "6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
+    "wheelhouse/pydantic-2.12.5-py3-none-any.whl": "e561593fccf61e8a20fc46dfc2dfe075b8be7d0188df33f221ad1f0139180f9d",
+    "wheelhouse/pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "eceb81a8d74f9267ef4081e246ffd6d129da5d87e37a77c9bde550cb04870c1c",
+    "wheelhouse/typing_extensions-4.15.0-py3-none-any.whl": "f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548",
+    "wheelhouse/typing_inspection-0.4.2-py3-none-any.whl": "4ed1cacbdc298c220f1bd249ed5287caa16f34d44ef4e9c3d0cbad5b521545e7"
+  },
+  "network_used": false,
+  "python_distribution_version": "0.1.3a2",
+  "schema": "dsh.harbor-context-rebuild.v1",
+  "source_commit": "1263ff59bfd06a36bf99122694de0df5869370ba",
+  "verified": true,
+  "actual_docker_build": true,
+  "image_id": "sha256:d4956d01961de09dae292121fadfd5b6222232f0b802755b95acd6ca8718223a",
+  "original_image_id": "sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97",
+  "bit_identical_image": false,
+  "scope": "New context from pinned Git objects and verified cached wheels; offline build and SDK initialize/shutdown passed. File content hashes match; container image metadata differs. Not a fresh-host or GPU training rebuild.",
+  "keyless_sdk": {
+    "architecture": "x86_64",
+    "runner_sha256": "sha256:a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+    "runtime_executable": "/usr/local/lib/python3.12/site-packages/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-linux-x64",
+    "schema": "dsh.keyless-sdk-smoke.v1",
+    "scope": "initialize-shutdown-only",
+    "status": "passed",
+    "versions": {
+      "deepseek-harness-runtime-bin": "0.1.3a2",
+      "deepseek-harness-sdk": "0.1.3a2",
+      "pydantic": "2.12.5"
+    }
+  }
+}
