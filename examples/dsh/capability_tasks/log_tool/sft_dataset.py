@@ -124,8 +124,9 @@ class DshDecisionSFTDataset(Dataset):
             "chat-template token prefix mismatch; no boundary repair permitted",
         )
         _require(len(full_ids) <= self.max_length, "decision exceeds max_length; truncation forbidden")
+        vocabulary_size = len(self.tokenizer)
         _require(
-            all(type(value) is int and 0 <= value < len(self.tokenizer) for value in full_ids),
+            all(type(value) is int and 0 <= value < vocabulary_size for value in full_ids),
             "token outside tokenizer vocabulary",
         )
         eos, eos_id = self.tokenizer.eos_token, self.tokenizer.eos_token_id

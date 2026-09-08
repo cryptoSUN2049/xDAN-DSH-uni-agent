@@ -11,6 +11,11 @@ cd "${REPO_ROOT}"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 SFT_STEPS="${SFT_STEPS:-1}"
 SFT_TIMEOUT="${SFT_TIMEOUT:-1800}"
+SFT_SAVE_FREQ="${SFT_SAVE_FREQ:-1}"
+SFT_TEST_FREQ="${SFT_TEST_FREQ:-1}"
+for frequency in "${SFT_SAVE_FREQ}" "${SFT_TEST_FREQ}"; do
+  [[ "${frequency}" =~ ^-?[1-9][0-9]*$ ]] || { echo 'SFT frequencies must be nonzero integers' >&2; exit 2; }
+done
 for value in "${SFT_STEPS}" "${SFT_MAX_LENGTH}" "${SFT_TIMEOUT}"; do
   [[ "${value}" =~ ^[1-9][0-9]*$ ]] || { echo 'SFT bounds must be positive integers' >&2; exit 2; }
 done

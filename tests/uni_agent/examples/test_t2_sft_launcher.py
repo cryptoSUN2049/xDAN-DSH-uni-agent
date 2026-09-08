@@ -41,3 +41,21 @@ def test_sft_launch_command_and_step_bound(tmp_path):
     env["SFT_STEPS"] = "0"
     result = subprocess.run(command, env=env, capture_output=True, text=True)
     assert result.returncode != 0
+
+
+def test_zero_frequency_is_rejected_before_training(tmp_path):
+    env = dict(
+        os.environ,
+        PRINT_COMMAND="1",
+        MODEL_PATH="/model",
+        SFT_TRAIN="/train",
+        SFT_DEV="/dev",
+        SFT_RUN=str(tmp_path / "run"),
+        SFT_MAX_LENGTH="1024",
+        SFT_TEST_FREQ="0",
+    )
+    result = subprocess.run(
+        ["bash", str(ROOT / "examples/dsh/ops/train_t2_lora_sft.sh")], env=env, capture_output=True, text=True
+    )
+    assert result.returncode == 2 and "frequencies" in result.stderr
+    assert not (tmp_path / "run").exists()
