@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Native Linux build from a pinned, already authenticated GitHub checkout.
-# Opt in to the v2 candidate with DSH_BUILD_REVISION and a separate checkout.
+# Session v2 is the default candidate; use an explicit revision for old rollback.
 set -euo pipefail
 : "${DSH_SOURCE_ROOT:?Absolute DSH checkout required}"
 : "${DSH_TOOLS_ROOT:?Absolute build tools directory required}"
-DSH_BUILD_REVISION="${DSH_BUILD_REVISION-7840bced35ee07ebefbdce0106b56dbc00bdc3ef}"
+DSH_BUILD_REVISION="${DSH_BUILD_REVISION-b2369692ea530007075ebcd18d39fdba0bbd3982}"
 case "$DSH_BUILD_REVISION" in
   7840bced35ee07ebefbdce0106b56dbc00bdc3ef|b2369692ea530007075ebcd18d39fdba0bbd3982) ;;
   *) printf 'Unsupported DSH_BUILD_REVISION\n' >&2; exit 2 ;;

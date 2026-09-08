@@ -29,7 +29,7 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 
 ### Session v2 候选升级（用户最新执行顺序）
 
-先验新版DSH架构/SDK，再将通过验证的候选用于后续M2；7840保留作已验收M1基线。
+用户进一步明确：后续工程统一切换0.1.3-alpha.2，包括默认构建、GPU SDK/runtime、Harbor镜像及run manifest；7840仅保留历史M1证据和显式回退备份，不作为后续M2默认。部署未完成之前不得宣称已经统一切换。
 候选：b2369692ea530007075ebcd18d39fdba0bbd3982，0.1.3-alpha.2；upstream c389f96bf3a9b6807cb71ed6bdad5849be0df6d8。
 
 - [x] 独立审计转换器归属与Session v2差异；DSH-Exp已修converter，本仓在线SDK不调用它，不重复复制。

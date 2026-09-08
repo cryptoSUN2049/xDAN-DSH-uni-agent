@@ -43,7 +43,7 @@ def preflight(tmp_path):
         "TEST_BOUNDARY": str(tmp_path / "boundary"),
         "TEST_OS": "Linux",
         "TEST_ARCH": "x86_64",
-        "TEST_HEAD": BASELINE,
+        "TEST_HEAD": CANDIDATE,
     }
 
     def run(**overrides):
@@ -60,7 +60,7 @@ def preflight(tmp_path):
 
 
 @pytest.mark.parametrize("revision", [None, BASELINE, CANDIDATE])
-def test_only_default_baseline_or_explicit_approved_candidate_reaches_build_boundary(preflight, revision):
+def test_default_v2_or_explicit_historical_rollback_reaches_build_boundary(preflight, revision):
     run, boundary = preflight
     overrides = {} if revision is None else {"DSH_BUILD_REVISION": revision, "TEST_HEAD": revision}
     result = run(**overrides)
@@ -112,7 +112,7 @@ def test_relative_roots_are_rejected(preflight, field):
     assert not boundary.exists()
 
 
-def test_candidate_manifest_does_not_claim_unbuilt_artifacts_or_change_baseline():
+def test_candidate_manifest_preserves_unknown_artifacts_and_historical_baseline():
     candidate = json.loads((ROOT / "deployment/versions/dsh-session-v2-candidate.json").read_text())
     baseline = json.loads((ROOT / "deployment/versions/dsh-runtime-candidate.json").read_text())
     assert baseline["revision"] == BASELINE

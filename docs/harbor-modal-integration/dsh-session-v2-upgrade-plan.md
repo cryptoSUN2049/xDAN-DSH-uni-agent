@@ -4,7 +4,7 @@
 
 ## 目标与边界
 
-让最新 DSH 0.1.3-alpha.2 经可追溯验证进入训练链路。候选 source 固定 b2369692ea530007075ebcd18d39fdba0bbd3982（upstream c389f96bf3a9b6807cb71ed6bdad5849be0df6d8）；已验收基线7840bced保留。候选测试不自动修改默认pin，不把旧M1结果归属于新版。
+让最新 DSH 0.1.3-alpha.2 经可追溯验证进入训练链路。候选 source 固定 b2369692ea530007075ebcd18d39fdba0bbd3982（upstream c389f96bf3a9b6807cb71ed6bdad5849be0df6d8）。用户最新明确统一切换：本仓默认构建、GPU SDK/runtime、Harbor镜像与后续run manifest均以0.1.3-alpha.2为目标；7840仅历史证据与显式回退备份。不能把默认配置更新声称为远程部署完成，也不把旧M1结果归属于新版。
 
 ## 接口与链路
 
