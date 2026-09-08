@@ -1,0 +1,84 @@
+{
+  "passed": true,
+  "scope": "scripted Harbor/DSH integration; no model, Gateway tokens or training",
+  "cases": [
+    {
+      "mode": "positive",
+      "gateway_session_id": "t2-d39945da3329455f9c32727165355882",
+      "cleanup_confirmed": true,
+      "exception": null,
+      "rewards": {
+        "reward": 1.0
+      },
+      "passed": true,
+      "request_count": 14,
+      "server_errors": []
+    },
+    {
+      "mode": "wrongoutput",
+      "gateway_session_id": "t2-e9f07fbf8ae74244b64b3d32f59c0fe0",
+      "cleanup_confirmed": true,
+      "exception": null,
+      "rewards": {
+        "reward": 0.0
+      },
+      "passed": true,
+      "request_count": 14,
+      "server_errors": []
+    },
+    {
+      "mode": "noop",
+      "gateway_session_id": "t2-2a749d677ae24576b2dfd43112acd274",
+      "cleanup_confirmed": true,
+      "exception": null,
+      "rewards": {
+        "reward": 0.0
+      },
+      "passed": true,
+      "request_count": 1,
+      "server_errors": []
+    },
+    {
+      "mode": "tamper",
+      "gateway_session_id": "t2-db5d39525bb74e47bd9764c4d593d27f",
+      "cleanup_confirmed": true,
+      "exception": {
+        "exception_type": "ValueError",
+        "exception_message": "Bridge trace/status/session identity mismatch",
+        "exception_traceback": "Traceback (most recent call last):\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/trial.py\", line 345, in run\n    await self._run()\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/single_step.py\", line 46, in _run\n    await self._run_verifier()\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/single_step.py\", line 92, in _run_verifier\n    self.result.verifier_result = await self._run_separate_verifier(\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/harbor-h0-20260908/lib/python3.12/site-packages/harbor/trial/trial.py\", line 555, in _run_separate_verifier\n    await self._artifact_handler.upload_artifacts(\n  File \"/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/tasks/harbor_dsh/trace_artifacts.py\", line 155, in upload_artifacts\n    files = self.snapshot()\n            ^^^^^^^^^^^^^^^\n  File \"/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/tasks/harbor_dsh/trace_artifacts.py\", line 136, in snapshot\n    raise ValueError(\"Bridge trace/status/session identity mismatch\")\nValueError: Bridge trace/status/session identity mismatch\n",
+        "occurred_at": "2026-09-08T19:50:32.829283"
+      },
+      "rewards": null,
+      "passed": true,
+      "request_count": 14,
+      "server_errors": []
+    }
+  ],
+  "source_sha256": {
+    "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/deployment/checks/harbor_t2_scripted_smoke.py": "7cec1a164588511448bc267dd5d472f312836b74e5cd4049ceb84e6e15b85bbd",
+    "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/deployment/checks/dsh_log_tool_smoke.py": "0792daac6312d817616448fe6e6221891d5380f7388d34b7b4048f1f45c969cd",
+    "/private/tmp/harbor-t2-package-r1/task/tests/fixture.json": "ae3ceff1246ee2b7952973534c6bb5fe455869d7d8c0ec6a19c3130dc1ac7752",
+    "/private/tmp/harbor-t2-package-r1/task/instruction.md": "be7e4c295b181692ade0833475ad8f4bbf5b63917bd6329c384421499eff8e52",
+    "/private/tmp/harbor-t2-package-r1/task/task.toml": "06f90aed861e5c759c9f7af51fc27f8726a4fd862ff5077b86cc96c212ae9234",
+    "/private/tmp/harbor-t2-package-r1/task/tests/docker-compose.yaml": "d8c4d0405729a2736350e6b16cd4e8fb7aa4b125755bbac908f6d8806004d15d",
+    "/private/tmp/harbor-t2-package-r1/task/tests/Dockerfile": "de2fdfe57d1660f98ce06bc7b385bc5b789a94ffb7a9e6cab3bb61a6d27a8174",
+    "/private/tmp/harbor-t2-package-r1/task/tests/test.sh": "71fcce400dd1a79f2c2a1f5fca427fcd7af9c016d2e09e2c1b27bc72345eec47",
+    "/private/tmp/harbor-t2-package-r1/task/environment/docker-compose.yaml": "2dcbdf0039babcbbb76ee24167f6a71dae3bf689cc97e06fd62220649fe0dda6",
+    "/private/tmp/harbor-t2-package-r1/task/environment/Dockerfile": "5464f5574b46d37b381d97548b7b85101f6c77e50e647342630dce74eaeb8fce",
+    "/private/tmp/harbor-t2-package-r1/task/environment/evolution.patch.yml": "edace17a8096ec41e572c10fc7ad96f0d9a62c0a6ff9c8271694b4c1b1024aeb",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/examples/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/uni_agent/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/examples/harbor/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/examples/harbor/t2_verifier.py": "bd7eeb9571c75017fc611e7fb3740a77dc9b56b60064127d3bd088025931127a",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/examples/dsh/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/examples/dsh/evolution_verifier.py": "067668803e5f6fdb5f64cd44a17e2f4baef8835e4681a02cdf35d9f6bb4e3748",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/examples/dsh/verifier.py": "eb5e0d68779739d04e1038534e5f2799a44cf299e7325ba2f6bef5c793ecf2cd",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/examples/dsh/capability_tasks/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/examples/dsh/capability_tasks/log_tool/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/examples/dsh/capability_tasks/log_tool/oracle.py": "07e2a3ddf3091a1879f88ca0811026257d0db6a02301ddf0abd5b44afa1c4f2b",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/examples/dsh/capability_tasks/log_tool/verifier.py": "684ef5476b8f4eb129a1ef25af76cd4fab8f192bb45b75eef31e91e57ca22d73",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/uni_agent/agents/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/uni_agent/agents/dsh/harbor_release.py": "127723fb910c2f96d8e92442e82bd452a4549cc3aa4590e394542b4902667c90",
+    "/private/tmp/harbor-t2-package-r1/task/tests/src/uni_agent/agents/dsh/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

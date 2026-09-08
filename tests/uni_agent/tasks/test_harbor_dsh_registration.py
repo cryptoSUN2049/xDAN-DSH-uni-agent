@@ -363,3 +363,35 @@ async def test_audit_wrapper_reads_registered_port_not_task_receipt(tmp_path, mo
     saved.write_bytes(json.dumps(response, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode())
     with pytest.raises(ValueError):
         validate_registered_trajectories((trajectory,), **kwargs)
+
+
+def test_registered_audit_passes_only_explicit_operator_fixture(monkeypatch):
+    from uni_agent.tasks.harbor_dsh import registration as module
+
+    trusted_policy = object()
+    binding = {"task_ref": {"id": "t2"}, "fixture_path": "/operator/frozen.json", "fixture_sha256": "sha256:trusted"}
+    seen = []
+    monkeypatch.setattr(module, "load_registered_policy", lambda **kwargs: trusted_policy)
+
+    def validate(trajectories, **kwargs):
+        seen.append(kwargs)
+        return list(trajectories)
+
+    monkeypatch.setattr(module, "validate_trajectories", validate)
+    kwargs = dict(
+        context={},
+        artifact_root="/private",
+        run_id="run",
+        worker_id="worker",
+        task_ref={},
+        policy_template={},
+        instruction="instruction",
+        registration_root="/registrations",
+        controller_id="controller",
+        run_spec_sha256="sha256:spec",
+    )
+    assert module.validate_registered_trajectories(("trajectory",), **kwargs, t2_fixture=binding) == ["trajectory"]
+    assert seen[-1]["t2_fixture"] is binding
+    assert seen[-1]["policy"] is trusted_policy
+    module.validate_registered_trajectories(("trajectory",), **kwargs)
+    assert seen[-1]["t2_fixture"] is None

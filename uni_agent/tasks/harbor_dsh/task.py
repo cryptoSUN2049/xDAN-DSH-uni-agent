@@ -12,15 +12,18 @@ import json
 import math
 import os
 import stat
+import tempfile
 import time
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Annotated, Literal
+from typing import Annotated, ClassVar, Literal
 from urllib.parse import urlsplit
 from uuid import uuid4
 
 from pydantic import ConfigDict, Field, SecretStr, field_validator, model_validator
 
 from uni_agent.agents.dsh.agent import _require_result, _run_key, prompt_from_messages
+from uni_agent.agents.dsh.harbor_release import release_patch_paths, release_patch_paths_digest
 from uni_agent.tasks.base import Task, TaskConfig, TaskResult, build_reward_info
 from uni_agent.tasks.registry import register_task
 
@@ -30,6 +33,7 @@ from .protocol import (
     JobRequest,
     OpaqueId,
     RequestPolicy,
+    Sha256,
     TaskRef,
     request_sha256,
     validate_artifact,
@@ -48,6 +52,70 @@ class RunnerContext(Contract):
     session_index: Annotated[int, Field(ge=0)]
 
 
+class T2FixtureBinding(Contract):
+    task_ref: TaskRef
+    fixture_path: str
+    fixture_sha256: Sha256
+
+    @field_validator("fixture_path")
+    @classmethod
+    def _absolute_path(cls, value):
+        if not Path(value).is_absolute() or ".." in Path(value).parts:
+            raise ValueError("T2 fixture path must be absolute and traversal-free")
+        return value
+
+
+@dataclass(frozen=True)
+class FrozenT2Fixture:
+    task_ref: TaskRef
+    sha256: str
+    raw: bytes
+
+
+def load_t2_fixture(binding: T2FixtureBinding, task_ref: TaskRef) -> FrozenT2Fixture:
+    if binding.task_ref != task_ref:
+        raise ValueError("T2 fixture TaskRef mismatch")
+    descriptor = os.open(binding.fixture_path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    with os.fdopen(descriptor, "rb") as stream:
+        info = os.fstat(stream.fileno())
+        if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or info.st_size > 1048576:
+            raise ValueError("T2 fixture must be a bounded regular file")
+        raw = stream.read(1048577)
+    if len(raw) > 1048576 or _digest(raw) != binding.fixture_sha256:
+        raise ValueError("T2 fixture hash mismatch")
+    fixture = _object(_json(raw))
+    if (
+        fixture.get("schema") != "dsh.t2-log-tool-case.v1"
+        or fixture.get("public") is not True
+        or not isinstance(fixture.get("calls"), list)
+        or len(fixture["calls"]) < 2
+    ):
+        raise ValueError("Invalid frozen T2 public fixture")
+    return FrozenT2Fixture(task_ref=binding.task_ref, sha256=binding.fixture_sha256, raw=raw)
+
+
+def _fixture_lane(release, task_ref, fixture):
+    t2 = bool(release_patch_paths(release))
+    if t2 != (fixture is not None):
+        raise ValueError("T2 release requires an independent operator fixture binding")
+    if fixture is not None and (fixture.task_ref != task_ref or _digest(fixture.raw) != fixture.sha256):
+        raise ValueError("Frozen T2 fixture identity mismatch")
+
+
+def _verify_t2_business(trace: bytes, reward: float, fixture: FrozenT2Fixture):
+    from examples.dsh.capability_tasks.log_tool.verifier import verify_trace
+
+    with tempfile.TemporaryDirectory(prefix="harbor-t2-audit-") as folder:
+        path = Path(folder) / "session.jsonl"
+        path.write_bytes(trace)
+        path.chmod(0o600)
+        result = verify_trace(path, _digest(trace), fixture=_json(fixture.raw))
+    if result.get("eligible") is not True or type(result.get("passed")) is not bool:
+        raise ValueError("T2 business evidence is not eligible")
+    if float(result["passed"]) != reward:
+        raise ValueError("T2 recomputed business score differs from Harbor reward")
+
+
 class HarborDshTaskConfig(TaskConfig):
     name: Literal["harbor_dsh"] = "harbor_dsh"
     sandbox: None = None
@@ -55,6 +123,8 @@ class HarborDshTaskConfig(TaskConfig):
     instruction: str = Field(min_length=1)
     run_id: OpaqueId
     task_ref: TaskRef
+    t2_fixture: T2FixtureBinding | None = None
+    task_config_optional_only_fields: ClassVar[frozenset[str]] = frozenset({"t2_fixture"})
     policy: RequestPolicy
     worker_url: str
     worker_token: SecretStr = Field(exclude=True, repr=False)
@@ -122,8 +192,11 @@ def _object(value):
     return value
 
 
-def verify_downloaded_evidence(request: JobRequest, downloaded: DownloadedJob, *, worker_id: str) -> float:
+def verify_downloaded_evidence(
+    request: JobRequest, downloaded: DownloadedJob, *, worker_id: str, t2_fixture: FrozenT2Fixture | None = None
+) -> float:
     """Pure second-side evidence check; does not attest worker or Gateway tokens."""
+    _fixture_lane(request.dsh_release, request.task_ref, t2_fixture)
     manifest = validate_manifest(
         downloaded.manifest.model_dump(mode="json", by_alias=True), request=request, worker_id=worker_id
     )
@@ -156,8 +229,7 @@ def verify_downloaded_evidence(request: JobRequest, downloaded: DownloadedJob, *
         helper.get("finish_reason") != "completed"
         or helper.get("profile") != request.dsh_release.profile
         or request.dsh_release.profile != "sdk-minimal"
-        or request.dsh_release.patch_sha256s
-        or helper.get("patches_sha256") != _digest(b"[]")
+        or helper.get("patches_sha256") != release_patch_paths_digest(request.dsh_release)
         or type(helper["event_count"]) is not int
         or helper["event_count"] != len(events)
         or helper["trace_sha256"] != trace_hash
@@ -196,6 +268,8 @@ def verify_downloaded_evidence(request: JobRequest, downloaded: DownloadedJob, *
     rewards = _object(_object(harbor.get("verifier_result")).get("rewards"))
     if set(rewards) != {"reward"} or type(rewards["reward"]) not in (int, float) or rewards != reward:
         raise ValueError("Harbor verifier reward mismatch")
+    if t2_fixture is not None:
+        _verify_t2_business(by_kind["dsh_trace"], float(reward["reward"]), t2_fixture)
     return float(reward["reward"])
 
 
@@ -228,6 +302,8 @@ class HarborDshTask(Task):
 
     def __init__(self, config: HarborDshTaskConfig):
         super().__init__(config.model_copy(deep=True))
+        self._fixture = load_t2_fixture(config.t2_fixture, config.task_ref) if config.t2_fixture is not None else None
+        _fixture_lane(config.policy.dsh_release, config.task_ref, self._fixture)
         self._ran = False
 
     async def run(self) -> TaskResult:
@@ -305,7 +381,7 @@ class HarborDshTask(Task):
                 if not isinstance(content, bytes) or len(content) > entry.size_bytes:
                     raise ValueError("Artifact exceeds declared size or is not bytes")
                 _write(directory, entry.id, content)
-            reward = verify_downloaded_evidence(request, downloaded, worker_id=cfg.worker_id)
+            reward = verify_downloaded_evidence(request, downloaded, worker_id=cfg.worker_id, t2_fixture=self._fixture)
             body = {
                 "schema": "dsh.harbor-verifier-receipt.v1",
                 "admission_stage": "task-evidence-verified",
@@ -327,6 +403,8 @@ class HarborDshTask(Task):
                 "verifier_reward": reward,
                 "finished": True,
             }
+            if self._fixture is not None:
+                body["t2_fixture_sha256"] = self._fixture.sha256
             receipt_id = _digest(_canonical(body))
             _write(directory, "receipt.json", _canonical({**body, "receipt_id": receipt_id}))
             os.fsync(directory)

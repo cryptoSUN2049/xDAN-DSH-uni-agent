@@ -234,3 +234,164 @@ def test_harbor_runner_does_not_inherit_dsh_artifact_roots(inputs):
         _inject_dsh_artifact_roots(task, trace_root=kwargs.dsh_trace_root, result_root=kwargs.dsh_result_root) == task
     )
     assert kwargs.dsh_trace_root is None and kwargs.dsh_result_root is None
+
+
+def t2_inputs(inputs):
+    import hashlib
+
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_SHA256
+
+    fixture = inputs["task_dir"] / "tests" / "fixture.json"
+    fixture.parent.mkdir()
+    fixture.write_bytes((REPO / "examples/dsh/capability_tasks/log_tool/fixtures/dev-01.json").read_bytes())
+    spec = json.loads(inputs["run_spec_path"].read_text())
+    spec["policy_template"]["dsh_release"]["patch_sha256s"] = [T2_PATCH_SHA256]
+    ref = spec["policy_template"]["task_refs"][0]
+    ref.update(id="t2-log-tool-dev-01", sha256=task_digest(inputs["task_dir"]))
+    inputs["run_spec_path"].write_text(json.dumps(spec))
+    binding = dict(
+        task_ref=ref,
+        fixture_path=str(fixture),
+        fixture_sha256="sha256:" + hashlib.sha256(fixture.read_bytes()).hexdigest(),
+    )
+    binding_path = inputs["run_spec_path"].parent / "t2-binding.json"
+    binding_path.write_text(json.dumps(binding))
+    return {**inputs, "t2_fixture_binding": binding_path}, binding
+
+
+def test_t2_binding_enters_task_and_postprocessor_without_sample_override(inputs):
+    values, binding = t2_inputs(inputs)
+    launch = json.loads(prepare_training(**values).read_text())
+    task = yaml.safe_load(inputs["task_config_path"].read_text())
+    assert task["t2_fixture"] == launch["postprocessor"]["t2_fixture"] == binding
+    for name in ("train", "heldout"):
+        rows = pq.read_table(inputs["output_dir"] / f"{name}.parquet").to_pylist()
+        assert all(row["data_source"] == f"harbor/t2-log-tool-dev-01/{name}" for row in rows)
+        assert all(
+            row["extra_info"]["evaluation_scope"] == "same-task-engineering-evaluation-not-generalization"
+            for row in rows
+        )
+        assert all(row["extra_info"]["public_fixture_split"] == "dev" for row in rows)
+        assert all("t2_fixture" not in row["extra_info"]["tools_kwargs"]["task"] for row in rows)
+
+
+@pytest.mark.parametrize("bad", ["missing", "task_ref", "hash", "external_path"])
+def test_t2_binding_failures_reject_before_private_output(inputs, bad):
+    values, binding = t2_inputs(inputs)
+    if bad == "missing":
+        del values["t2_fixture_binding"]
+    if bad == "task_ref":
+        binding["task_ref"]["version"] = "other"
+    if bad == "hash":
+        binding["fixture_sha256"] = "sha256:" + "0" * 64
+    if bad == "external_path":
+        copy = inputs["run_spec_path"].parent / "other-fixture.json"
+        copy.write_bytes(Path(binding["fixture_path"]).read_bytes())
+        binding["fixture_path"] = str(copy)
+    if "t2_fixture_binding" in values:
+        values["t2_fixture_binding"].write_text(json.dumps(binding))
+    with pytest.raises(ValueError):
+        prepare_training(**values)
+    assert not inputs["output_dir"].exists()
+
+
+def test_empty_release_cannot_accept_t2_binding(inputs):
+    path = inputs["run_spec_path"].parent / "binding.json"
+    path.write_text("{}")
+    with pytest.raises(ValueError, match="empty release"):
+        prepare_training(**inputs, t2_fixture_binding=path)
+    assert not inputs["output_dir"].exists()
+
+
+def test_t2_fixture_survives_real_hydra_postprocessor_override(inputs):
+    values, binding = t2_inputs(inputs)
+    launch = json.loads(prepare_training(**values).read_text())
+    parsed = OverridesParser.create().parse_overrides(build_overrides(launch))
+    overrides = {item.key_or_group: item.value() for item in parsed if not item.is_delete()}
+    post = overrides["actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_kwargs"]
+    assert post["t2_fixture"] == binding
+
+
+def adapter_dir(tmp_path):
+    path = tmp_path / "adapter with space"
+    path.mkdir()
+    (path / "adapter_model.safetensors").write_bytes(b"test-weights")
+    (path / "adapter_config.json").write_text('{"r":16,"lora_alpha":16}')
+    return path
+
+
+def test_adapter_override_is_hash_bound_and_hydra_preserves_path(tmp_path):
+    from examples.harbor.train_m2_online_rl import adapter_digest, adapter_overrides
+
+    path = adapter_dir(tmp_path)
+    values = adapter_overrides(path, adapter_digest(path), {"RESUME_MODE": "disable"})
+    parsed = OverridesParser.create().parse_overrides(values)
+    assert parsed[0].key_or_group == "actor_rollout_ref.model.lora_adapter_path"
+    assert parsed[0].value() == str(path)
+    old = adapter_digest(path)
+    (path / "adapter_config.json").write_text('{"lora_alpha":0}')
+    with pytest.raises(ValueError, match="hash"):
+        adapter_overrides(path, old, {"RESUME_MODE": "disable"})
+
+
+@pytest.mark.parametrize("mode", [None, "auto", "resume_path"])
+def test_adapter_warmstart_requires_explicit_disable(tmp_path, mode):
+    from examples.harbor.train_m2_online_rl import adapter_digest, adapter_overrides
+
+    path = adapter_dir(tmp_path)
+    with pytest.raises(ValueError, match="RESUME_MODE"):
+        adapter_overrides(path, adapter_digest(path), {} if mode is None else {"RESUME_MODE": mode})
+
+
+def test_adapter_is_visible_in_actual_print_command(inputs):
+    from examples.harbor.train_m2_online_rl import adapter_digest
+
+    path = adapter_dir(inputs["run_spec_path"].parent)
+    launch_path = prepare_training(**inputs)
+    command = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "examples.harbor.train_m2_online_rl",
+            "--launch",
+            str(launch_path),
+            "--print-command",
+            "--lora-adapter-path",
+            str(path),
+            "--lora-adapter-bundle-sha256",
+            adapter_digest(path),
+        ],
+        cwd=REPO,
+        env={**os.environ, "RESUME_MODE": "disable", "RESUME_FROM_PATH": ""},
+        capture_output=True,
+        text=True,
+        timeout=15,
+    )
+    assert command.returncode == 0, command.stderr
+    assert "actor_rollout_ref.model.lora_adapter_path=" in command.stdout
+    assert str(path) in command.stdout
+    assert "trainer.resume_mode=disable" in command.stdout
+    provenance = json.loads(command.stderr.splitlines()[0])
+    assert set(provenance["files"]) == {"adapter_model.safetensors", "adapter_config.json"}
+    assert provenance["bundle_sha256"] == adapter_digest(path)
+
+
+@pytest.mark.parametrize("bad", ["missing_file", "relative", "path_only", "hash_only", "resume_path"])
+def test_adapter_input_failures(tmp_path, bad):
+    from examples.harbor.train_m2_online_rl import adapter_digest, adapter_overrides
+
+    path = adapter_dir(tmp_path)
+    expected = adapter_digest(path)
+    env = {"RESUME_MODE": "disable"}
+    if bad == "missing_file":
+        (path / "adapter_model.safetensors").unlink()
+    if bad == "relative":
+        path = Path("relative")
+    if bad == "path_only":
+        expected = None
+    if bad == "hash_only":
+        path = None
+    if bad == "resume_path":
+        env["RESUME_FROM_PATH"] = "/old/ppo"
+    with pytest.raises(ValueError):
+        adapter_overrides(path, expected, env)

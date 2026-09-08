@@ -288,3 +288,32 @@ async def test_existing_context_identity_is_not_overwritten(tmp_path):
     with pytest.raises(ValueError, match="already contains"):
         await agent.run("task", environment, AgentContext(metadata={"dsh": {"other": "identity"}}))
     assert environment.runner_calls == 0
+
+
+def test_only_frozen_t2_patch_path_is_allowed(tmp_path):
+    with pytest.raises(ValueError, match="patch"):
+        bridge(tmp_path, patches=["/tmp/model-selected.yml"])
+
+
+@pytest.mark.parametrize("bad", [False, True])
+def test_t2_setup_checks_actual_patch_bytes(tmp_path, bad):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH, T2_PATCH_SHA256
+
+    environment = FakeEnvironment()
+    original = environment.exec
+
+    async def exec_with_patch(*args, **kwargs):
+        result = await original(*args, **kwargs)
+        if result.stdout:
+            probe = json.loads(result.stdout)
+            probe["patches"] = [{"path": T2_PATCH_PATH, "sha256": "sha256:" + "0" * 64 if bad else T2_PATCH_SHA256}]
+            result.stdout = json.dumps(probe)
+        return result
+
+    environment.exec = exec_with_patch
+    agent = bridge(tmp_path, patches=[T2_PATCH_PATH])
+    if bad:
+        with pytest.raises(RuntimeError, match="patch"):
+            asyncio.run(agent.setup(environment))
+    else:
+        asyncio.run(agent.setup(environment))

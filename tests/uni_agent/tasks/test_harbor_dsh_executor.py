@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import time
+from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import AsyncMock
 from uuid import uuid4
@@ -87,7 +88,8 @@ def request_for(task_dir, **changes):
 
 
 class FakeTrial:
-    def __init__(self, config, *, allowed_task_dir):
+    def __init__(self, config, *, allowed_task_dir, **strategy_kwargs):
+        self.strategy_kwargs = strategy_kwargs
         self.config = config
         self.id = uuid4()
         self.paths = TrialPaths(config.trials_dir / config.trial_name)
@@ -122,7 +124,7 @@ class FakeTrial:
             "finish_reason": "completed",
             "trace_path": trace_path,
             "trace_persisted": True,
-            "patches_sha256": digest(b"[]"),
+            "patches_sha256": digest(json.dumps(self.config.agent.kwargs["patches"], separators=(",", ":")).encode()),
         }
         result = {
             "finished": True,
@@ -345,3 +347,28 @@ def test_private_job_directory_is_exclusive(task_dir, harness):
     run(request, task_dir)
     with pytest.raises(FileExistsError):
         run(request, task_dir)
+
+
+def test_frozen_t2_patch_is_forwarded_and_bound(task_dir, harness):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH, T2_PATCH_SHA256
+
+    patch = task_dir / "environment" / "evolution.patch.yml"
+    patch.parent.mkdir(exist_ok=True)
+    source = Path(__file__).resolve().parents[3] / "examples/dsh/evolution.patch.yml"
+    patch.write_bytes(source.read_bytes())
+    request = request_for(task_dir, dsh_release={"patch_sha256s": [T2_PATCH_SHA256]})
+    result = run(request, task_dir)
+    assert result.cleanup_confirmed
+    assert harness.trial.config.agent.kwargs["patches"] == [T2_PATCH_PATH]
+
+
+def test_frozen_t2_patch_bytes_cannot_be_substituted(task_dir, harness):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_SHA256
+
+    patch = task_dir / "environment" / "evolution.patch.yml"
+    patch.parent.mkdir(exist_ok=True)
+    patch.write_text("changed")
+    request = request_for(task_dir, dsh_release={"patch_sha256s": [T2_PATCH_SHA256]})
+    with pytest.raises(ValueError, match="patch"):
+        run(request, task_dir)
+    assert harness.trial is None

@@ -313,3 +313,101 @@ async def test_scalar_reward_file_zero_is_a_completed_task(tmp_path, transport):
     result = await module.HarborDshTask(config(tmp_path)).run()
     assert result.reward == result.verifier_reward == 0.0
     assert result.finished is True
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("correct_path_digest", [True, False])
+async def test_t2_patch_content_and_path_identities_are_distinct(tmp_path, transport, correct_path_digest, monkeypatch):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_SHA256, release_patch_paths_digest
+
+    _, edits = transport
+    cfg = config(tmp_path)
+    value = cfg.policy.model_dump(mode="json")
+    value["dsh_release"]["patch_sha256s"] = [T2_PATCH_SHA256]
+    cfg = config(tmp_path, policy=value, t2_fixture=t2_binding(tmp_path, cfg.task_ref))
+    from examples.dsh.capability_tasks.log_tool import verifier
+
+    monkeypatch.setattr(verifier, "verify_trace", lambda *args, **kwargs: {"eligible": True, "passed": True})
+
+    def edit(request, contents):
+        helper = json.loads(contents["dsh_result"])
+        helper["patches_sha256"] = (
+            release_patch_paths_digest(request.dsh_release) if correct_path_digest else T2_PATCH_SHA256
+        )
+        contents["dsh_result"] = raw(helper)
+        harbor = json.loads(contents["harbor_result"])
+        harbor["agent_result"]["metadata"]["dsh"]["run_sha256"] = digest(contents["dsh_result"])
+        contents["harbor_result"] = raw(harbor)
+
+    edits["fn"] = edit
+    if correct_path_digest:
+        result = await module.HarborDshTask(cfg).run()
+        assert result.finished is True
+    else:
+        with pytest.raises(ValueError, match="identity"):
+            await module.HarborDshTask(cfg).run()
+
+
+def t2_binding(tmp_path, task_ref):
+    path = tmp_path / "fixture.json"
+    raw_fixture = Path("examples/dsh/capability_tasks/log_tool/fixtures/dev-01.json").read_bytes()
+    path.write_bytes(raw_fixture)
+    return {"task_ref": task_ref.model_dump(), "fixture_path": str(path), "fixture_sha256": digest(raw_fixture)}
+
+
+def test_t2_fixture_snapshot_survives_source_change(tmp_path):
+    cfg = config(tmp_path)
+    binding = module.T2FixtureBinding.model_validate(t2_binding(tmp_path, cfg.task_ref))
+    snapshot = module.load_t2_fixture(binding, cfg.task_ref)
+    Path(binding.fixture_path).write_text("tampered")
+    assert digest(snapshot.raw) == binding.fixture_sha256
+    with pytest.raises(ValueError, match="hash"):
+        module.load_t2_fixture(binding, cfg.task_ref)
+
+
+@pytest.mark.parametrize(
+    "eligible,passed,reward,accept",
+    [
+        (True, True, 1, True),
+        (True, False, 0, True),
+        (False, False, 0, False),
+        (True, True, 0, False),
+        (True, False, 1, False),
+    ],
+)
+def test_t2_business_rescores_instead_of_trusting_worker(tmp_path, monkeypatch, eligible, passed, reward, accept):
+    from examples.dsh.capability_tasks.log_tool import verifier
+
+    cfg = config(tmp_path)
+    snapshot = module.load_t2_fixture(
+        module.T2FixtureBinding.model_validate(t2_binding(tmp_path, cfg.task_ref)), cfg.task_ref
+    )
+
+    def verify(path, expected, *, fixture):
+        assert path.read_bytes() == b"actual trace"
+        assert expected == digest(b"actual trace")
+        assert fixture["case_id"] == "log-tool-dev-01"
+        return {"eligible": eligible, "passed": passed}
+
+    monkeypatch.setattr(verifier, "verify_trace", verify)
+    if accept:
+        module._verify_t2_business(b"actual trace", reward, snapshot)
+    else:
+        with pytest.raises(ValueError):
+            module._verify_t2_business(b"actual trace", reward, snapshot)
+
+
+def test_t2_requires_operator_binding_and_rejects_wrong_task(tmp_path):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_SHA256
+
+    cfg = config(tmp_path)
+    policy_value = cfg.policy.model_dump(mode="json")
+    policy_value["dsh_release"]["patch_sha256s"] = [T2_PATCH_SHA256]
+    with pytest.raises(ValueError, match="binding"):
+        module.HarborDshTask(config(tmp_path, policy=policy_value))
+    binding = t2_binding(tmp_path, cfg.task_ref)
+    binding["task_ref"]["version"] = "wrong"
+    with pytest.raises(ValueError, match="TaskRef"):
+        module.HarborDshTask(config(tmp_path, policy=policy_value, t2_fixture=binding))
+    with pytest.raises(ValueError, match="binding"):
+        module.HarborDshTask(config(tmp_path, t2_fixture=t2_binding(tmp_path, cfg.task_ref)))

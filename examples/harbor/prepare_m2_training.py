@@ -15,7 +15,10 @@ import tomllib
 import yaml
 
 from deployment.services.harbor_run_controller import RunSpec, digest
+from uni_agent.agents.dsh.harbor_release import release_patch_paths
+from uni_agent.tasks.harbor_dsh.protocol import DshRelease, TaskRef
 from uni_agent.tasks.harbor_dsh.registration import _token
+from uni_agent.tasks.harbor_dsh.task import T2FixtureBinding, _json, load_t2_fixture
 
 EVALUATION_SCOPE = "same-task-engineering-evaluation-not-generalization"
 
@@ -50,17 +53,30 @@ def _write(path: Path, raw: bytes):
         output.write(raw)
 
 
-def _rows(instruction: str, run_id: str, split: str, count: int):
+def _rows(
+    instruction: str,
+    run_id: str,
+    split: str,
+    count: int,
+    *,
+    task_id: str = "m2-file-write",
+    fixture: dict | None = None,
+):
     return [
         {
             "uid": f"{run_id}-{split}-{index}",
             "agent_name": "task",
-            "data_source": f"harbor/m2-file-write/{split}",
+            "data_source": f"harbor/{task_id}/{split}",
             "prompt": [{"role": "user", "content": instruction}],
             "extra_info": {
                 "index": index,
                 "split": split,
                 "evaluation_scope": EVALUATION_SCOPE,
+                **(
+                    {"public_fixture_case_id": fixture["case_id"], "public_fixture_split": fixture["split"]}
+                    if fixture
+                    else {}
+                ),
                 "sample_id": f"{run_id}-{split}-{index}",
                 "tools_kwargs": {"task": {"name": "harbor_dsh"}},
             },
@@ -79,6 +95,7 @@ def prepare_training(
     worker_token_file: Path,
     train_count: int = 2,
     heldout_count: int = 1,
+    t2_fixture_binding: Path | None = None,
 ) -> Path:
     """Spec paths remain Mac-owned; task/credential/output paths refer to this host."""
     for count in (train_count, heldout_count):
@@ -96,6 +113,21 @@ def prepare_training(
     manifest = tomllib.loads((task_dir / "task.toml").read_text())
     if manifest.get("environment", {}).get("docker_image") != template["dsh_release"]["image_digest"]:
         raise ValueError("Current task image differs from the frozen DSH release")
+    release = DshRelease.model_validate(template["dsh_release"])
+    t2 = bool(release_patch_paths(release))
+    if t2 != (t2_fixture_binding is not None):
+        raise ValueError("T2 requires an explicit operator fixture binding; empty release must omit it")
+    binding = None
+    fixture = None
+    if t2:
+        binding = T2FixtureBinding.model_validate(_json(t2_fixture_binding.read_bytes()))
+        expected_path = (task_dir / "tests" / "fixture.json").resolve(strict=True)
+        if Path(binding.fixture_path).resolve(strict=True) != expected_path:
+            raise ValueError("T2 binding must use the frozen task's tests/fixture.json")
+        frozen = load_t2_fixture(binding, TaskRef.model_validate(refs[0]))
+        if frozen.raw != expected_path.read_bytes():
+            raise ValueError("T2 fixture bytes differ from frozen task")
+        fixture = _json(frozen.raw)
     instruction = (task_dir / "instruction.md").read_text()
     if not instruction.strip():
         raise ValueError("Frozen task instruction is empty")
@@ -118,12 +150,26 @@ def prepare_training(
         "artifact_root": str(output_dir / "artifacts"),
         "instruction": instruction,
     }
+    if binding is not None:
+        task_config["t2_fixture"] = binding.model_dump(mode="json")
     _write(task_config_path, yaml.safe_dump(task_config, allow_unicode=True, sort_keys=True).encode())
     for split, count in (("train", train_count), ("heldout", heldout_count)):
         path = output_dir / f"{split}.parquet"
         descriptor = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
         with os.fdopen(descriptor, "wb") as output:
-            pq.write_table(pa.Table.from_pylist(_rows(instruction, spec.run_id, split, count)), output)
+            pq.write_table(
+                pa.Table.from_pylist(
+                    _rows(
+                        instruction,
+                        spec.run_id,
+                        split,
+                        count,
+                        task_id=refs[0]["id"] if t2 else "m2-file-write",
+                        fixture=fixture,
+                    )
+                ),
+                output,
+            )
     registration = {
         "controller_url": f"http://127.0.0.1:{spec.remote_control_port}",
         "token_file": str(registration_token_file),
@@ -140,7 +186,7 @@ def prepare_training(
             "TEST_FILE": str(output_dir / "heldout.parquet"),
             "TASK_CONFIG": str(task_config_path),
             "RUN_ROOT": str(output_dir),
-            "PROJECT_NAME": "harbor-m2-engineering",
+            "PROJECT_NAME": "harbor-t2-engineering" if t2 else "harbor-m2-engineering",
             "EXP_NAME": spec.run_id,
             "MODEL_ID": template["model_name"],
             "TRAIN_MAX_SAMPLES": str(train_count),
@@ -159,6 +205,8 @@ def prepare_training(
             "run_spec_sha256": registration["run_spec_sha256"],
         },
     }
+    if binding is not None:
+        launch["postprocessor"]["t2_fixture"] = binding.model_dump(mode="json")
     path = output_dir / "launch.json"
     _write(path, (json.dumps(launch, indent=2, ensure_ascii=False, allow_nan=False) + "\n").encode())
     return path
@@ -175,6 +223,9 @@ def main():
         "worker-token-file",
     ):
         parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument(
+        "--t2-fixture-binding", type=Path, help="Operator T2FixtureBinding JSON bound to this frozen task"
+    )
     parser.add_argument("--train-count", type=int, default=2)
     parser.add_argument("--heldout-count", type=int, default=1)
     args = parser.parse_args()

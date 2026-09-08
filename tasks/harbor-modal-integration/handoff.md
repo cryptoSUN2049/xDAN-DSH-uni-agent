@@ -2,6 +2,12 @@
 
 ## 当前状态覆盖（新 Pod 恢复，优先于下方历史记录）
 
+- **原生SFT累计56步已结束exit0且数值审计通过**：代码7561821；step1→56新增55更新，399基座张量不变、504LoRA张量均变化且有限，optimizer全step56。checkpoint `/workspace/runs/t2-sft-warm-r1/global_step_56`；dev/loss0.07406399399（step1为1.60730338）。原生merger导出 `/workspace/runs/t2-sft-warm-r1-export/lora_adapter`，权重SHA cbcfb9ddb2dd0ac4eeec61c980229d0216b28f0055b2a946a80846e2ef556d32。未保存逐样本ID，不宣称完整epoch覆盖；不代表在线RL更新。
+- **独立学生评估已结束exit0但0/2成功**：`/root/runs/t2-sft-student-eval-r1`，VAL_ONLY，2公开dev；fresh receipt与严格轨迹准入通过，实际只有两次工具调用，cordis_define非法JSON且API错误。独立HF同前缀base/adapter对照确认adapter改变输出但仍失败；不是已证实权重同步或mask错误。日志证实LoRA内核执行，loss对每decision等权平均，define只占1/14。报告t2-sft-student-eval-r1-result.json、t2-sft-prefix-diagnostic-r1.json。
+- **下一步注册课程**：prepare_sft_curriculum.py从原manifest/hash筛选4条真实cordis_define train，保留28dev原bytes；计划step56adapter warmstart、新optimizer、lr5e-5、16epochs/64steps/1800秒，再独立任务评估。已启动supervisor42232，GPU代码ce26f1d，run=/workspace/runs/t2-sft-registration-r1，launch=/root/runs/t2-sft-registration-r1-launch；不修改任何target或评分标准。
+- 数据 `/root/runs/t2-sft-data-r1`：56train/28dev决策，真实tokenizer84项通过/max17037；inputs archive `/workspace/reports/t2-sft-inputs-r1.tar.gz` SHA a63bb64b3c2e9ceca7da8c33128911ae9f93d0b1b243039423a0d02241d621e0。报告见docs同目录 t2-sft-step1-checkpoint-audit.json、t2-sft-step1-adapter-load.json、t2-sft-warm-checkpoint-audit.json。
+- **T2 Harbor scripted真实4正反例通过**：`/private/tmp/harbor-t2-scripted-r1`，positive1/wrongoutput0/noop0/tamper拒绝无reward，全部cleanup_confirmed。报告t2-harbor-scripted-r1-result.json；主进程完整Harbor环境257tests通过。固定T2 agent image b016c85140a58f7d842eadb0238925ee1c347143cc7bede5b9b35bfa38747dca（父846b46），打包任务/private/tmp/harbor-t2-package-r1/task。新版学生→Gateway→Harbor→训练侧准入尚未执行；不算RL训练完成。
+
 - **T2学生基线已完整结束exit0、得分0**：`/root/runs/t2-student-baseline-r1`，supervisor29423，代码`da24cfa`，VAL_ONLY=True，最多1800秒。只真实调用inspect_list/self；注册输出包含非法JSON转义，停留为文本，没有实际定义工具。fresh receipt/严格轨迹准入通过；本轮无参数更新。T2固定Linux runtime脚本策略6cases/18业务调用与完整生命周期通过；随后重新采集业务prompt示范，manifest `/root/runs/t2-business-demos-r1/source-manifest.json`，sha256:adc29526115e12f41ce595ea452266212f803f78ccb9b304f64d596777a23a2f。下一步为原生VERL LoRA SFT暖启动，当前52项已通过回归，新SFT增量另计。报告`docs/harbor-modal-integration/t2-fixed-runtime-smoke-result.json`，源码通过runtime发布hash绑定b236969。
 
 - **当前能力基线已失败结束**：dsh-capability-grounding-r1，exit1，代码c04ff2d，VAL_ONLY=True。模型误选Service总目录导致Gateway会话容量耗尽，未完成轨迹被拒绝，无训练更新；不是4096累计预算限制。详情与后续SFT→RL路线见 `docs/harbor-modal-integration/dsh-capability-training-strategy.md`。下一步为T2真实DSH生命周期与严格评分，oracle准备不等于任务打通。
@@ -10,7 +16,7 @@
 
 - **r6已结束exit1（历史运行）**：GPU supervisor17184，/root/runs/m2-v2-r6；Mac controller工具60798，/private/tmp/m2-recovery-r6/run-spec.json。r5已失败并清理。实际命令已确认两个旧DSH artifact roots=null，基线1+训练4条完成且全奖励1；第一步optimizer step=1但1008个动量张量全0，后评估Harbor等待超时。无有效学习证明；controller60798已关闭。
 
-- Worktree/分支：harbor-modal-integration / worktree-harbor-modal-integration；运行代码固定f368708e7848501b1045b8eee4a6aa8d4a49a578（已push）。
+- Worktree/分支：harbor-modal-integration / worktree-harbor-modal-integration；当前GPU运行代码固定7561821354194b2389d2e78edf04b13e79d836b7（已push），本地另有T2 Harbor并行修改。
 - 用户确认旧Pod停止，已提供新Pod：SSH root@216.243.220.178 -p14465 -i~/.ssh/id_ed25519；hostname c54bc4bb224c，节点172.26.0.2，同RTX PRO6000/97887MiB/driver595.91.07。
 - 云盘完整保留源码/venv/模型/data/artifacts/checkpoints。新节点复用venv验证257包兼容、CUDA合成梯度12、DSH runtime binary哈希匹配；无需重装模型或生成数据。旧/root目录已丢失，新凭据/运行证据用本地私有目录，结束时归档到云盘。
 - 后续DSH统一b236969/0.1.3a2；Uni-Agent89733ec、VERLfefb080、原始Harbor镜像846b46。完整固定清单deployment/versions/g1-deployment-lock.json；SDK/wheel与镜像均有私有Release。

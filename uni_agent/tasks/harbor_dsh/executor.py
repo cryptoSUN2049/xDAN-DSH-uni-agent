@@ -28,6 +28,12 @@ from harbor.models.trial.config import TrialConfig
 from harbor.trial.hooks import TrialEvent
 
 from uni_agent.agents.dsh.agent import _require_result, _run_key
+from uni_agent.agents.dsh.harbor_release import (
+    T2_PATCH_SHA256,
+    T2_STRATEGY,
+    release_patch_paths,
+    release_patch_paths_digest,
+)
 from uni_agent.tasks.harbor_dsh.isolated_trial import _run_bounded_command, create_isolated_trial
 from uni_agent.tasks.harbor_dsh.protocol import JobRequest
 
@@ -185,7 +191,7 @@ def _collect_evidence(trial, result, request: JobRequest, private_root: Path) ->
         or result.agent_result.metadata.get("dsh") != status
         or helper.get("finish_reason") != "completed"
         or helper.get("profile") != request.dsh_release.profile
-        or helper.get("patches_sha256") != _digest(b"[]")
+        or helper.get("patches_sha256") != release_patch_paths_digest(request.dsh_release)
         or helper["trace_sha256"] != trace_hash
         or helper["event_count"] != len(events)
         or not events
@@ -244,8 +250,7 @@ async def execute_job(
         or url.path != request.model_route.session_path
     ):
         raise ValueError("Mapped Gateway URL must preserve the exact session path without credentials")
-    if request.dsh_release.profile != "sdk-minimal" or request.dsh_release.patch_sha256s:
-        raise ValueError("First execution requires the fixed sdk-minimal profile without patches")
+    patch_paths = release_patch_paths(request.dsh_release)
     if not request.budgets.cpus.is_integer():
         raise ValueError("Harbor Docker requires an integer CPU budget")
     if _task_digest(task_dir) != request.task_ref.sha256:
@@ -253,6 +258,10 @@ async def execute_job(
     task = tomllib.loads(_read_regular(task_dir, task_dir / "task.toml", 1024 * 1024).decode())
     if task.get("environment", {}).get("docker_image") != request.dsh_release.image_digest:
         raise ValueError("Task image does not match the approved DSH release")
+    if patch_paths:
+        patch = _read_regular(task_dir, task_dir / "environment" / "evolution.patch.yml", 65536)
+        if _digest(patch) != T2_PATCH_SHA256:
+            raise ValueError("Frozen T2 task patch byte hash mismatch")
     remaining = min(request.budgets.wall_time_seconds, request.budgets.deadline_unix - time.time())
     if remaining <= 0:
         raise ValueError("Job deadline expired")
@@ -272,7 +281,7 @@ async def execute_job(
                 "kwargs": {
                     "gateway_base_url": gateway_base_url,
                     "profile": request.dsh_release.profile,
-                    "patches": [],
+                    "patches": list(patch_paths),
                     "workdir": "/app",
                     "max_tokens_per_turn": request.budgets.max_tokens,
                     "run_timeout": remaining,
@@ -286,7 +295,14 @@ async def execute_job(
             },
         }
     )
-    trial = create_isolated_trial(config, allowed_task_dir=task_dir.resolve())
+    trial_kwargs = {}
+    if patch_paths:
+        trial_kwargs = dict(
+            strategy=T2_STRATEGY,
+            gateway_session_id=request.gateway_session_id,
+            max_trace_bytes=request.budgets.max_artifact_bytes,
+        )
+    trial = create_isolated_trial(config, allowed_task_dir=task_dir.resolve(), **trial_kwargs)
     verifying = False
 
     async def verification_started(_event):

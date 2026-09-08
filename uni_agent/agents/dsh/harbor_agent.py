@@ -21,6 +21,7 @@ from harbor.models.agent.context import AgentContext
 
 from uni_agent import __version__
 from uni_agent.agents.base import ModelConfig
+from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH, T2_PATCH_SHA256
 from uni_agent.sandbox.harbor import BorrowedHarborSandbox
 
 from .agent import DshAgent, DshAgentConfig, _require_result, _run_key, extract_gateway_session_id
@@ -76,6 +77,8 @@ class DshHarborAgent(BaseAgent):
         mcp_servers: list[Any] | None = None,
         skills_dir: str | None = None,
     ) -> None:
+        if tuple(patches or []) not in {(), (T2_PATCH_PATH,)}:
+            raise ValueError("Only the frozen T2 patch path is supported")
         if extra_env or mcp_servers or skills_dir:
             raise ValueError("DSH Harbor bridge does not support extra_env, MCP, or skill injection")
         if not model_name or not model_name.strip() or not gateway_api_key.strip():
@@ -134,6 +137,9 @@ class DshHarborAgent(BaseAgent):
             raise RuntimeError("DSH container helper does not match the bridge runner source")
         if any(not isinstance(probe.get(key), str) or not probe[key] for key in ("sdk_version", "runtime_version")):
             raise RuntimeError("DSH preflight did not report SDK/runtime versions")
+        expected_patches = [{"path": T2_PATCH_PATH, "sha256": T2_PATCH_SHA256}] if self._config.patches else []
+        if probe.get("patches", []) != expected_patches:
+            raise RuntimeError("DSH container patch bytes do not match the frozen release")
         self._evidence_dir.mkdir(parents=True, mode=0o700, exist_ok=False)
         self._write("setup.json", _json_bytes(probe))
         self._environment = environment

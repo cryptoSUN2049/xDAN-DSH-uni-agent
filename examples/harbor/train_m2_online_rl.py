@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
 import shlex
 import subprocess
+import sys
 from pathlib import Path
 
 PREFIX = "actor_rollout_ref.rollout.custom.agent_framework"
@@ -67,14 +69,65 @@ def build_overrides(launch: dict) -> list[str]:
     ]
 
 
+def adapter_identity(path: Path) -> dict:
+    """Bind weights and PEFT configuration together; this is not a weights-only hash."""
+    if not path.is_absolute() or ".." in path.parts or path.is_symlink() or not path.is_dir():
+        raise ValueError("LoRA adapter must be an absolute real directory")
+    hashes = {}
+    for name in ("adapter_config.json", "adapter_model.safetensors"):
+        file = path / name
+        if file.is_symlink() or not file.is_file():
+            raise ValueError("LoRA adapter requires regular config and safetensors files")
+        with file.open("rb") as stream:
+            hashes[name] = hashlib.file_digest(stream, "sha256").hexdigest()
+    config = json.loads((path / "adapter_config.json").read_bytes())
+    if not isinstance(config, dict) or not config:
+        raise ValueError("LoRA adapter configuration must be a nonempty JSON object")
+    bundle = "sha256:" + hashlib.sha256(json.dumps(hashes, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    return {"bundle_sha256": bundle, "files": hashes}
+
+
+def adapter_digest(path: Path) -> str:
+    return adapter_identity(path)["bundle_sha256"]
+
+
+def adapter_overrides(path: Path | None, expected_sha256: str | None, environment: dict) -> list[str]:
+    if path is None and expected_sha256 is None:
+        return []
+    if path is None or expected_sha256 is None:
+        raise ValueError("LoRA adapter path and hash must be supplied together")
+    if environment.get("RESUME_MODE") != "disable" or environment.get("RESUME_FROM_PATH"):
+        raise ValueError("SFT warmstart requires explicit RESUME_MODE=disable and no RESUME_FROM_PATH")
+    if adapter_digest(path) != expected_sha256:
+        raise ValueError("LoRA adapter artifact hash mismatch")
+    return ["actor_rollout_ref.model.lora_adapter_path=" + _hydra(str(path))]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--launch", type=Path, required=True)
     parser.add_argument("--print-command", action="store_true")
+    parser.add_argument("--lora-adapter-path", type=Path)
+    parser.add_argument(
+        "--lora-adapter-bundle-sha256",
+        help="SHA256 of compact sorted JSON mapping both adapter filenames to file SHA256s",
+    )
     args = parser.parse_args()
     launch = json.loads(args.launch.read_bytes())
     overrides = build_overrides(launch)
     environment = {**SINGLE_GPU_DEFAULTS, **os.environ, **launch["environment"]}
+    overrides.extend(adapter_overrides(args.lora_adapter_path, args.lora_adapter_bundle_sha256, environment))
+    if args.lora_adapter_path is not None:
+        identity = adapter_identity(args.lora_adapter_path)
+        if identity["bundle_sha256"] != args.lora_adapter_bundle_sha256:
+            raise ValueError("LoRA adapter changed before launch")
+        print(
+            json.dumps(
+                {"schema": "dsh.harbor-sft-warmstart.v1", "adapter_path": str(args.lora_adapter_path), **identity},
+                sort_keys=True,
+            ),
+            file=sys.stderr,
+        )
     base = Path(__file__).resolve().parents[1] / "dsh" / "train_qwen3_4b_online_rl.sh"
     if args.print_command or os.environ.get("PRINT_COMMAND") == "1":
         # The base print branch omits "$@". Preserve its command and append the

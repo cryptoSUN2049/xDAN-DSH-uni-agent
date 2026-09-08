@@ -14,7 +14,18 @@ from uni_agent.tasks.dsh.trajectory_audit import TrajectoryAuditError, _require_
 
 from .client import DownloadedJob
 from .protocol import JobRequest, OpaqueId, RequestPolicy, TaskRef, validate_manifest, validate_request
-from .task import RunnerContext, _canonical, _digest, _json, _object, verify_downloaded_evidence
+from .task import (
+    FrozenT2Fixture,
+    RunnerContext,
+    T2FixtureBinding,
+    _canonical,
+    _digest,
+    _fixture_lane,
+    _json,
+    _object,
+    load_t2_fixture,
+    verify_downloaded_evidence,
+)
 
 
 def _private_directory(path, *, dir_fd=None) -> int:
@@ -66,6 +77,7 @@ def _verify_saved(
     task_ref: TaskRef,
     policy: RequestPolicy,
     instruction: str,
+    t2_fixture: FrozenT2Fixture | None = None,
 ) -> tuple[dict, str, float]:
     request_data, _ = _read_object(directory, "request.json")
     parsed = JobRequest.model_validate(request_data)
@@ -84,7 +96,9 @@ def _verify_saved(
     manifest_data, manifest_bytes = _read_object(directory, "manifest.json")
     manifest = validate_manifest(manifest_data, request=request, worker_id=worker_id)
     artifacts = {entry.id: _read(directory, entry.id, entry.size_bytes) for entry in manifest.artifacts}
-    reward = verify_downloaded_evidence(request, DownloadedJob(manifest, artifacts), worker_id=worker_id)
+    reward = verify_downloaded_evidence(
+        request, DownloadedJob(manifest, artifacts), worker_id=worker_id, t2_fixture=t2_fixture
+    )
     receipt, _ = _read_object(directory, "receipt.json")
     body = {key: value for key, value in receipt.items() if key != "receipt_id"}
     expected = {
@@ -108,6 +122,8 @@ def _verify_saved(
         "verifier_reward": reward,
         "finished": True,
     }
+    if t2_fixture is not None:
+        expected["t2_fixture_sha256"] = t2_fixture.sha256
     # Canonical comparison also distinguishes bool/int/float substitutions.
     if _canonical(body) != _canonical(expected):
         raise TrajectoryAuditError("Harbor receipt does not bind the verified evidence and Framework context")
@@ -127,6 +143,7 @@ def validate_trajectories(
     task_ref: Mapping[str, object] | TaskRef,
     policy: Mapping[str, object] | RequestPolicy,
     instruction: str,
+    t2_fixture: Mapping[str, object] | T2FixtureBinding | None = None,
 ) -> list[Trajectory]:
     """FQN postprocessor; all kwargs except context must be operator configured.
 
@@ -139,6 +156,12 @@ def validate_trajectories(
         trusted_context = RunnerContext.model_validate(dict(context))
         trusted_policy = RequestPolicy.model_validate(policy)
         trusted_task = TaskRef.model_validate(task_ref)
+        fixture = (
+            load_t2_fixture(T2FixtureBinding.model_validate(t2_fixture), trusted_task)
+            if t2_fixture is not None
+            else None
+        )
+        _fixture_lane(trusted_policy.dsh_release, trusted_task, fixture)
         TypeAdapter(OpaqueId).validate_python(run_id)
         TypeAdapter(OpaqueId).validate_python(worker_id)
         if not isinstance(instruction, str) or not instruction:
@@ -165,6 +188,7 @@ def validate_trajectories(
                         task_ref=trusted_task,
                         policy=trusted_policy,
                         instruction=instruction,
+                        t2_fixture=fixture,
                     )
                 finally:
                     os.close(directory)

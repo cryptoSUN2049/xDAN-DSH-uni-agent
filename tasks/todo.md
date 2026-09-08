@@ -331,3 +331,18 @@ Review：本批只新增部署目录与设计；不将其标记为安装或部�
 - [ ] Harbor + Docker 对应任务增量与可复建复验。
 
 Review：G1 尚未完成；全异步、Modal 和扩容延后。训练策略见 docs/harbor-modal-integration/dsh-capability-training-strategy.md。
+
+## 当前 G1：T2 示范暖启动 → 学生在线 RL → Harbor 同任务
+
+- [x] 固定新版DSH runtime，6公开case/18实际业务调用通过。
+- [x] 真实请求/事件生成56训练与28开发决策，tokenizer/mask逐项验证。
+- [x] 原生SFT累计56步，504 LoRA数值更新、399基座不变、optimizer step56。
+- [x] 原生merger导出adapter；step1独立CPU加载匹配。
+- [x] step56独立学生任务评估：exit0，公开dev 0/2；保留失败证据。
+- [ ] 有差异奖励的新版DSH在线RL真实更新与独立reload。
+- [x] T2 Harbor隔离评分、训练侧业务复验CPU回归及4真实Docker正反例。
+- [ ] 注册决策补课64步与后续独立学生评估。
+- [ ] 学生→Gateway→Harbor→训练侧的真实准入验收。
+- [ ] 新留出案例、可复建版本清单与最终G1交付。
+
+Review：SFT参数审计不等同于在线RL打通；开发loss下降不等于任务效果或留出泛化。

@@ -287,3 +287,18 @@ def test_recipe_prompt_template_overrides_sample_template_and_uses_metadata():
         {"role": "system", "content": "Recipe instructions"},
         {"role": "user", "content": "Issue: Metadata problem"},
     ]
+
+
+def test_harbor_optional_fixture_is_operator_only_without_old_lane_placeholder():
+    from uni_agent.tasks.harbor_dsh.task import HarborDshTaskConfig
+
+    defaults = {field: "operator" for field in HarborDshTaskConfig.task_config_only_fields}
+    defaults["name"] = "harbor_dsh"
+    resolver = TaskConfigResolver({"harbor_dsh": defaults})
+    result = resolver.resolve({"name": "harbor_dsh"})
+    assert "t2_fixture" not in result
+    with pytest.raises(ValueError, match="task-config-only"):
+        resolver.resolve({"name": "harbor_dsh", "t2_fixture": None})
+    defaults["t2_fixture"] = {"fixture_path": "/operator/fixture.json"}
+    result = TaskConfigResolver({"harbor_dsh": defaults}).resolve({"name": "harbor_dsh"})
+    assert result["t2_fixture"] == defaults["t2_fixture"]

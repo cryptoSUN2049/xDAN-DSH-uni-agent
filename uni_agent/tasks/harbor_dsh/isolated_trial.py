@@ -23,6 +23,9 @@ from harbor.models.trial.config import ServiceVolumeConfig, TrialConfig
 from harbor.trial.artifact_handler import ArtifactHandler
 from harbor.trial.single_step import SingleStepTrial
 
+from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH, T2_STRATEGY
+from uni_agent.tasks.harbor_dsh.trace_artifacts import TraceArtifacts
+
 _DSH_IMPORT = "uni_agent.agents.dsh.harbor_agent:DshHarborAgent"
 _DSH_KWARGS = {
     "gateway_base_url",
@@ -225,13 +228,15 @@ def _validate_runtime(config: TrialConfig, allowed_task_dir: Path) -> Path:
     return task_dir
 
 
-def _validate_task(task: Task) -> None:
+def _validate_task(task: Task, *, strategy: str = "answer") -> None:
     config = task.config
     if task.has_steps:
         raise ValueError("Only single-step tasks are supported")
     if resolve_task_verifier_mode(config) != VerifierEnvironmentMode.SEPARATE or config.verifier.environment is None:
         raise ValueError("An explicit separate verifier environment is required")
-    if config.artifacts != ["/app/answer.txt"]:
+    if strategy == T2_STRATEGY and config.artifacts:
+        raise ValueError("T2 forbids student artifacts")
+    if strategy == "answer" and config.artifacts != ["/app/answer.txt"]:
         raise ValueError("This lane only transfers the explicit /app/answer.txt artifact")
     for env in (config.environment, config.verifier.environment):
         if env.os != "linux" or env.skills_dir or env.mcp_servers or env.env:
@@ -241,17 +246,51 @@ def _validate_task(task: Task) -> None:
 
 
 class IsolatedDshTrial(SingleStepTrial):
-    def __init__(self, config: TrialConfig, *, allowed_task_dir: Path):
+    def __init__(
+        self,
+        config: TrialConfig,
+        *,
+        allowed_task_dir: Path,
+        strategy: str = "answer",
+        gateway_session_id: str | None = None,
+        max_trace_bytes: int | None = None,
+    ):
         # Upstream retains config by reference; isolate it from caller mutations.
         snapshot = config.model_copy(deep=True)
         task_dir = _validate_runtime(snapshot, allowed_task_dir)
         task = Task(task_dir=task_dir)
-        _validate_task(task)
+        if strategy not in {"answer", T2_STRATEGY}:
+            raise ValueError("Unsupported isolated task strategy")
+        _validate_task(task, strategy=strategy)
+        if strategy == T2_STRATEGY:
+            if (
+                snapshot.agent.import_path != _DSH_IMPORT
+                or snapshot.agent.name is not None
+                or snapshot.agent.kwargs.get("patches") != [T2_PATCH_PATH]
+                or not gateway_session_id
+                or type(max_trace_bytes) is not int
+                or max_trace_bytes <= 0
+            ):
+                raise ValueError("T2 requires the fixed DSH bridge, patch, session and byte budget")
+        elif gateway_session_id is not None or max_trace_bytes is not None:
+            raise ValueError("Trace settings require explicit T2 strategy")
+        self._trace_settings = (gateway_session_id, max_trace_bytes) if strategy == T2_STRATEGY else None
         self._artifact_collection_failed = False
         super().__init__(snapshot, _task=task)
 
     def _init_artifact_handler(self) -> None:
         self._validate_artifact_configuration()
+        if self._trace_settings is not None:
+            session, budget = self._trace_settings
+            self._artifact_handler = TraceArtifacts(
+                agent_dir=self.paths.agent_dir,
+                gateway_session_id=session,
+                trial_id=self.id,
+                trial_name=self.config.trial_name,
+                max_trace_bytes=budget,
+                logger=self.logger,
+            )
+            return
         self._artifact_handler = _BoundedAnswerArtifacts(
             artifacts=self.task.config.artifacts,
             logger=self.logger,
@@ -284,11 +323,24 @@ class IsolatedDshTrial(SingleStepTrial):
         await super()._setup_agent()
 
     @classmethod
-    async def create(cls, config: TrialConfig, *, allowed_task_dir: Path) -> IsolatedDshTrial:
+    async def create(cls, config: TrialConfig, *, allowed_task_dir: Path, **kwargs) -> IsolatedDshTrial:
         # Trial.create hardcodes SingleStepTrial; never delegate to that factory.
-        return cls(config, allowed_task_dir=allowed_task_dir)
+        return cls(config, allowed_task_dir=allowed_task_dir, **kwargs)
 
 
-def create_isolated_trial(config: TrialConfig, *, allowed_task_dir: Path) -> IsolatedDshTrial:
+def create_isolated_trial(
+    config: TrialConfig,
+    *,
+    allowed_task_dir: Path,
+    strategy: str = "answer",
+    gateway_session_id: str | None = None,
+    max_trace_bytes: int | None = None,
+) -> IsolatedDshTrial:
     """Construct the local trial without downloading tasks or starting resources."""
-    return IsolatedDshTrial(config, allowed_task_dir=allowed_task_dir)
+    return IsolatedDshTrial(
+        config,
+        allowed_task_dir=allowed_task_dir,
+        strategy=strategy,
+        gateway_session_id=gateway_session_id,
+        max_trace_bytes=max_trace_bytes,
+    )

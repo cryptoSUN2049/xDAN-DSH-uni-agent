@@ -260,3 +260,14 @@ async def test_zero_verifier_reward_is_admitted_without_token_changes(tmp_path, 
     )
     assert admitted[0] is trajectory
     assert admitted[0].reward_score == 0.0
+
+
+@pytest.mark.asyncio
+async def test_t2_audit_without_independent_binding_rejected(case):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_SHA256
+
+    trajectory, kwargs, _ = case
+    kwargs = copy.deepcopy(kwargs)
+    kwargs["policy"]["dsh_release"]["patch_sha256s"] = [T2_PATCH_SHA256]
+    with pytest.raises(TrajectoryAuditError):
+        validate_trajectories((trajectory,), **kwargs)

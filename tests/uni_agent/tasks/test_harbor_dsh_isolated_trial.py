@@ -465,3 +465,38 @@ def test_archive_parser_never_extracts_unapproved_entries(case):
         raw = raw[:512]
     with pytest.raises(isolated_trial.AnswerArtifactError):
         isolated_trial._answer_from_tar(raw)
+
+
+def test_explicit_t2_strategy_has_trace_handler_without_agent_mounts(task_dir):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH
+    from uni_agent.tasks.harbor_dsh.trace_artifacts import TraceArtifacts
+
+    path = task_dir / "task.toml"
+    path.write_text(path.read_text().replace('artifacts = ["/app/answer.txt"]', "artifacts = []"))
+    cfg = config(
+        task_dir,
+        agent={
+            "import_path": "uni_agent.agents.dsh.harbor_agent:DshHarborAgent",
+            "model_name": "Qwen/Qwen3-4B",
+            "kwargs": {"gateway_base_url": "http://127.0.0.1:8000/sessions/session/v1", "patches": [T2_PATCH_PATH]},
+        },
+    )
+    trial = create_isolated_trial(
+        cfg, allowed_task_dir=task_dir, strategy="t2-log-tool", gateway_session_id="session", max_trace_bytes=10000
+    )
+    try:
+        assert isinstance(trial._artifact_handler, TraceArtifacts)
+        assert trial._agent_env_mounts == []
+    finally:
+        close(trial)
+
+
+def test_t2_requires_no_student_artifacts(task_dir):
+    with pytest.raises(ValueError, match="artifact"):
+        create_isolated_trial(
+            config(task_dir),
+            allowed_task_dir=task_dir,
+            strategy="t2-log-tool",
+            gateway_session_id="session",
+            max_trace_bytes=10000,
+        )

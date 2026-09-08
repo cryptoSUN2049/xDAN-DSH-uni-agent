@@ -130,16 +130,18 @@ class TaskConfigResolver:
         from .registry import TASK_MODULES, TASK_REGISTRY, get_task_cls
 
         if str(task_name) in TASK_REGISTRY or str(task_name) in TASK_MODULES:
-            protected = get_task_cls(str(task_name)).config_model.task_config_only_fields
+            config_model = get_task_cls(str(task_name)).config_model
+            required_protected = config_model.task_config_only_fields
+            protected = required_protected | getattr(config_model, "task_config_optional_only_fields", frozenset())
         else:
-            protected = frozenset()
+            protected = required_protected = frozenset()
         if protected:
             sample_overrides = sorted(protected.intersection(sample_config))
             if sample_overrides:
                 raise ValueError(
                     f"sample Task Config for {task_name!r} cannot set task-config-only fields: {sample_overrides}"
                 )
-            missing_defaults = sorted(field for field in protected if field not in file_defaults)
+            missing_defaults = sorted(field for field in required_protected if field not in file_defaults)
             if missing_defaults:
                 raise ValueError(
                     f"Task Config for {task_name!r} is missing task-config-only fields: {missing_defaults}"
