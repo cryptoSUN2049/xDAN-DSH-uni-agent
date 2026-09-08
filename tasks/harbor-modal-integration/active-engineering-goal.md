@@ -2,7 +2,7 @@
 
 更新：2026-09-08。训练集成主线：worktree-harbor-modal-integration。
 
-> 当前运行：固定代码2df91d7，v2-r4已提交GPU启动（supervisor70864），待运行验收。用户云盘已扩到500 GB，写入通过；r1/r2配额失败、r3启动命令错误均保留。checkpoint=/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4。
+> 当前运行：固定代码2df91d7，v2-r4两步完成，504LoRA变化、399base不变、optimizer2→4，10/10组消费通过；独立reload PID78419待验收。用户云盘已扩到500 GB，写入通过；r1/r2配额失败、r3启动命令错误均保留。checkpoint=/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4。
 > 验收索引：[acceptance-tracker.md](acceptance-tracker.md)。历史运行更新不替代此处当前状态。
 
 ## 1. 目标与完成边界
@@ -173,3 +173,10 @@ M2 Harbor端到端验收仍为G1必需范围；完整RSI和显著效果保持后
 ### 容量恢复与v2-r3实跑
 
 用户将网络云盘扩至500 GB；1 MiB实际写入落盘通过。已启动r3（PID70820，2steps/2700秒），checkpoint=/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r3。未删除历史文件。待梯度、数值、消费审计和独立reload验收。
+
+### r4真实训练更新验收
+
+- 两步梯度0.1337890625/0.2119140625；step1→2全部504LoRA变化、399base不变、张量有限；optimizer2→4且动量非零。
+- trajectory audit eligible=true：10组全部准入，0拒绝、0异常消费，2个奖励方差组。
+- 证据：docs/harbor-modal-integration/redact-m1-v2-r4-audit-bundle.json。GPU保持2df91d7，未同步本机新增Harbor代码。
+- 独立reload：/root/runs/dsh-redact-m1-v2-r4-reload，supervisor78419，1800秒，仅评估，继承r4完整环境。未验收，不宣称G1完成。

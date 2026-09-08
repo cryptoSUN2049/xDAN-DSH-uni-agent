@@ -4,7 +4,7 @@
 
 - 当前 worktree：`.Codex/worktrees/harbor-modal-integration`；分支 `worktree-harbor-modal-integration`。训练主仓为本仓，DSH-Exp 负责 DSH 本体。
 - G1 **未完成**。本检查点保存新版 DSH 零梯度失败证据、独立 verifier v2 修复、Harbor evolution 接线与有限网络抖动处理。
-- **v2-r4已启动待验收**：GPU代码`2df91d7de31b9ecacefeaad1c54dbea80028eead`，run=`/root/runs/dsh-redact-m1-v2-r4`，supervisor PID70864，2steps/2700秒；第一步已完成，checkpoint保存成功，reward min0/max1/mean0.875，第二步运行中。v2-r1/r2因配额失败；r3监管命令引号错误，未进入训练。r4修正启动方式，保留所有失败证据。
+- **v2-r4已启动待验收**：GPU代码`2df91d7de31b9ecacefeaad1c54dbea80028eead`，run=`/root/runs/dsh-redact-m1-v2-r4`，supervisor PID70864，2steps/2700秒；两步755.018秒自然完成，数值/optimizer/消费审计通过；独立reload PID78419进行中。v2-r1/r2因配额失败；r3监管命令引号错误，未进入训练。r4修正启动方式，保留所有失败证据。
 - 用户已将/workspace网络云盘扩到500 GB；新目录1 MiB write/fsync通过。checkpoint=`/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4`。未清理任何历史产物。
 - 下一步：监控新run → 训练奖励/梯度与checkpoint数值/消费审计 → 继承r3完整环境独立reload；运行中不更换GPU代码。
 - 平台get_goal仍显示旧SSH故障时的blocked；用户已明确持续推进原G1，工具只能complete/blocked，不能自行改active或重复创建。权威任务见active-engineering-goal.md，不宣称完成。
@@ -140,3 +140,10 @@
 - 新增evolution_scoring_v2.py、Task/audit绑定与24项测试：调用原固定verifier CLI，不复制准入规则。
 - 新增acceptance-tracker.md、checkpoint-storage-layout.md、v1 Docker与SSH探针报告；版本锁保留GPU实际代码2df91d7，提交版本与运行版本分别记录。
 - r3监管启动引号错误，未进入训练；r4已修正。下次启动应确认train.log和持续存活，而非仅PID。
+
+### r4真实训练更新验收
+
+- 两步梯度0.1337890625/0.2119140625；step1→2全部504LoRA变化、399base不变、张量有限；optimizer2→4且动量非零。
+- trajectory audit eligible=true：10组全部准入，0拒绝、0异常消费，2个奖励方差组。
+- 证据：docs/harbor-modal-integration/redact-m1-v2-r4-audit-bundle.json。GPU保持2df91d7，未同步本机新增Harbor代码。
+- 独立reload：/root/runs/dsh-redact-m1-v2-r4-reload，supervisor78419，1800秒，仅评估，继承r4完整环境。未验收，不宣称G1完成。
