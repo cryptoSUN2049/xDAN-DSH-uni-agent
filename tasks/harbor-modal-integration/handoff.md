@@ -2,12 +2,15 @@
 
 ## 1. TL;DR
 
+> 2026-09-09最高优先级覆盖：用户要求重新设计原生优先，覆盖DSH/记忆/上下文/RSI。新权威入口active-engineering-goal.md与docs/harbor-modal-integration/uni-agent-system-plan-v3.html。Harbor r2暂停，不使用已准备spec继续训练。新版设计已获实施授权。以下旧M2“下一步”均已后置，历史证据仍有效。
+
+
 - 当前 worktree：`.Codex/worktrees/harbor-modal-integration`；分支 `worktree-harbor-modal-integration`。训练主仓为本仓，DSH-Exp 负责 DSH 本体。
 - G1 **未完成**。本检查点保存新版 DSH 零梯度失败证据、独立 verifier v2 修复、Harbor evolution 接线与有限网络抖动处理。
 - **M1本轮训练/恢复验收通过**：GPU源码2df91d7；r4两步755秒完成，504LoRA变化/399base冻结，optimizer2→4；10/10组消费通过。独立reload480秒完成，2/2新评估组通过、两题reward=1，无再训练/新checkpoint，GPU已释放。
 - 用户已将/workspace网络云盘扩到500 GB；新目录1 MiB write/fsync通过。checkpoint=`/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4`。未清理任何历史产物。
 - 下一步：Harbor v2 worker/packer接线 → Docker正反例 → 同任务学生M2在线RL与reload → 可复建交付。数据生产由用户安排另一会话。
-- 平台get_goal仍显示旧SSH故障时的blocked；用户已明确持续推进原G1，工具只能complete/blocked，不能自行改active或重复创建。权威任务见active-engineering-goal.md，不宣称完成。
+- 平台get_goal已核实为新版原生四能力目标，status=active。当前未完成，按active-engineering-goal.md推进。
 
 ### 最新检查点：M2 r1 失败与清理修复
 

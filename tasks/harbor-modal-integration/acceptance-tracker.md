@@ -1,4 +1,6 @@
-# G1 验收追踪索引
+# 原生四能力验收与历史G1索引
+
+2026-09-09：当前节点以active-engineering-goal.md中的N0—N5/P1为准，均待新验收；M1已通过证据保留。以下G1表为历史记录，Harbor不再前置。
 
 权威目标：[active-engineering-goal.md](active-engineering-goal.md)第4节。冷启动：[handoff.md](handoff.md)。本页是状态索引，不替代原始日志或放宽验收。
 
