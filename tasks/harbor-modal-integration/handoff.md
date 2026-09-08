@@ -161,3 +161,10 @@
 - experiment-matrix.html将八个实验配置维度与系统验收证据分开，链接首页和能力排期。
 - 新读DSH-Exp/feat-contextpilot-capability-sft/design.html，来源hash存contextpilot-exp-source.json；不是此前contextpilot仓同名文件。
 - 新来源是离线compiler/证据设计，不代表跨会话RL或GPU效果已完成；27B参数规划不直接搬到4B。
+
+## GitHub分发与预检实现
+
+- 用户批准开始工程，并要求GitHub拉取替代scp；分支已推送origin，规划提交bbb8d7e。
+- 新增deployment/bootstrap/checkout.sh（固定完整commit与子模块，拒绝覆盖）和checks/preflight.py（只读JSON清点，不冒充运行验收）；3项边界测试通过。
+- RunPod代码目标/workspace/src/uni-agent；实际checkout和运行状态按远端检查记录，不跟随main漂移。
+- DSH可复建来源找到官方训练worktree的1af5b00，Python文档要求Linux原生构建runtime；尚未恢复旧3b8fad发布物，也未构建新Linuxruntime。

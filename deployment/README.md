@@ -34,3 +34,11 @@ Gateway / 推理端点按运行模式启动；DSH 提供执行能力；Harbor �
 不复制或搬迁这些入口；部署流程在环境验收后引用它们。停止作业不等于停止云资源计费。
 密钥不入库；模型、数据、日志与检查点保存在配置的外部路径。DSH 本体由 DSH-Exp 维护，
 这里仅固定并安装其发布物，不维护第二份实现。
+
+## 已实现的第一批入口
+
+- `bash deployment/bootstrap/checkout.sh <完整commit> <新目录>`：从本项目GitHub仓库创建固定revision的checkout，初始化配对子模块；拒绝覆盖已有目录。
+- `python deployment/checks/preflight.py --manifest deployment/versions/first-gpu-candidate.json`：只读环境清点，输出JSON；版本身份未填、代码不匹配或缺少GPU/依赖时非零退出。
+
+预检仅验证清单和安装存在性，不证明CUDA运算、DSH进程、Harbor容器或训练能工作；这些需要后续真实smoke。
+已有实验目录不直接git pull更新，使用新commit的新checkout；模型和运行产物保存在checkout外。
