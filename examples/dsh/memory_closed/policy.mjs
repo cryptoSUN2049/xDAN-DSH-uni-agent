@@ -44,6 +44,16 @@ export function createPolicy(config) {
 
 export function apply(ctx, config) {
   const permits = createPolicy(config);
+  // Only operator-declared allowlist paths appear here; never echo rejected args.
+  const readOnly = config.readFiles.filter(file => file !== config.writeFile);
+  const writable = config.writeFile;
+  const reason = 'MEMORY_POLICY_DENIED. Allowed tool: str_replace_editor. '
+    + `Read-only sources (view only; do not modify): ${JSON.stringify(readOnly)}. `
+    + (writable === null
+      ? 'No writable target in this reader session.'
+      : `Only writable target: ${JSON.stringify(writable)}. For a new file use command="create", `
+        + `path=${JSON.stringify(writable)}, file_text=<your memory JSON>. `
+        + 'Use str_replace/insert only on that existing target, never on a source.');
   ctx.on('tools/pre-execute', async (exec, next) => permits(exec)
-    ? next() : { kind: 'deny', reason: 'MEMORY_POLICY_DENIED' });
+    ? next() : { kind: 'deny', reason });
 }

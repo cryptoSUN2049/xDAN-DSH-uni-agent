@@ -47,3 +47,24 @@ test('deny before tool body, config failure is fatal and output links cannot be 
     assert.throws(()=>createPolicy(config));
   } finally { fs.rmSync(root,{recursive:true,force:true}); }
 });
+
+test('denial explains public allowed actions and never echoes reader rejected path', async () => {
+  const { apply } = await import('./policy.mjs');
+  const root = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), 'memory-feedback-'));
+  try {
+    const input = path.join(root,'input'); const memory = path.join(root,'memory');
+    fs.writeFileSync(input,'facts');
+    let handler;
+    const ctx = {on(_event, callback) {handler=callback;}};
+    apply(ctx,{role:'writer',chainId:'c',sessionId:'a',sourceVersion:'v',readFiles:[input,memory],writeFile:memory});
+    let result = await handler({name:'str_replace_editor',arguments:{command:'str_replace',path:input}},()=>assert.fail());
+    assert.equal(result.kind,'deny');
+    assert.match(result.reason,/read-only/i); assert.match(result.reason,/create/);
+    assert.ok(result.reason.includes(memory)); assert.ok(result.reason.includes('file_text'));
+    apply(ctx,{role:'reader',chainId:'c',sessionId:'b',sourceVersion:'v',readFiles:[input],writeFile:null});
+    result = await handler({name:'str_replace_editor',arguments:{command:'view',path:'/private/A-secret-NEVER-ECHO'}},()=>assert.fail());
+    assert.match(result.reason,/No writable target/);
+    assert.ok(result.reason.includes(input)); assert.ok(!result.reason.includes('A-secret-NEVER-ECHO'));
+    assert.ok(!result.reason.includes(memory));
+  } finally {fs.rmSync(root,{recursive:true,force:true});}
+});

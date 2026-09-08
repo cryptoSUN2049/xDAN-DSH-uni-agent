@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from deployment.services.harbor_training_supervisor import supervise
+from examples.dsh.capabilities.memory_denial_budget import denial_health
 from examples.dsh.capabilities.memory_tasks import reader_prompt, writer_fixture, writer_prompt
 from examples.dsh.capabilities.memory_verifier import (
     VERIFIER_ID,
@@ -224,6 +225,7 @@ def prepare_writer(
     sources = [
         Path(__file__),
         Path(__file__).with_name("memory_tasks.py"),
+        Path(__file__).with_name("memory_denial_budget.py"),
         Path(__file__).with_name("memory_verifier.py"),
         module_root / "examples/dsh/memory_closed/policy.mjs",
         module_root / "examples/dsh/memory_closed/profile.py",
@@ -474,7 +476,7 @@ def run_stage(manifest_path, role):
         raise ValueError("Runner SDK/runtime does not match pin")
     started = datetime.now(timezone.utc).isoformat()
     supervision = new_dir(run / "supervision")
-    result = supervise(argv, repository, env, supervision, lambda: None, wall_seconds=1800, interval=2, grace=30)
+    result = supervise(argv, repository, env, supervision, denial_health(run), wall_seconds=1800, interval=2, grace=30)
     report = {
         "exit_code": result["exit_code"],
         "chain_id": stage["chain_id"],
@@ -482,6 +484,7 @@ def run_stage(manifest_path, role):
         "run_root": str(run),
         "manifest_sha256": sha(read_regular(stage["manifest_path"])),
         "supervisor_sha256": sha(read_regular(supervision / "supervisor-result.json")),
+        "repeated_policy_denial_limit": 3,
         "wall_seconds": 1800,
         "termination_grace_seconds": 30,
         "argv_sha256": stage["files"][stage["argv_path"]],

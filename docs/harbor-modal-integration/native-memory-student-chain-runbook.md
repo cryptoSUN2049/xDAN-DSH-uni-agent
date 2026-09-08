@@ -1,6 +1,6 @@
 # 原生 memory A→freeze→B 最小评估链手册
 
-状态：CPU实现完成，真实学生A/B尚未执行。两族constraints/updates；单次一族一chain，先constraints。无SFT/RL更新，无新checkpoint，credit_assignment=none。
+状态：真实学生writer r1失败，B未启动；反馈与重复拒绝保护已修复，待新chain复验。两族constraints/updates；单次一族一chain，先constraints。无SFT/RL更新，无新checkpoint，credit_assignment=none。
 
 ## 固定与预算
 
@@ -10,7 +10,7 @@
 - 1 GPU，TP1，1 Gateway，并发1，n=1；vLLM，hermes parser（本recipe针对Qwen3 4B），max_model_len16384，GPU memory utilization0.6。
 - temperature0、top_p1；max_total_tokens8192、max_tokens_per_turn4096，reasoning_effort=off。
 - 每stage墙钟1800秒，现有owned process-group supervisor TERM宽限30秒，必要KILL/最终wait5秒。成功/失败均产生真实supervisor结果，process-exit绑定chain/role/run目录/manifest/argv/supervisor hash。禁止全局Ray清理。两stage一次chain最大约61分钟，实际诊断预计远低于上限；任何A失败不启动B。
-- 监督复用既有harbor_training_supervisor的通用进程组函数，health为本地no-op，不连接Harbor；日志名train.log是旧监督器命名，本次命令明确运行inference模块。
+- 监督复用既有harbor_training_supervisor的通用进程组函数，health仅检查本run实时Session v2连续相同拒绝预算（3次已配对拒绝），不连接Harbor；日志名train.log是旧监督器命名，本次命令明确运行inference模块。
 
 ## 命令（先由主线程确认GPU空闲与当前源码commit）
 
@@ -54,3 +54,7 @@ python -m examples.dsh.capabilities.memory_chain finalize \
 CPU测试覆盖两个任务族的完整合成回执链、独立verifier环境接口、A失败不freeze、B身份/manifest/content篡改、合法零分/未完成/越界、配置/运行时改动拒绝、同目录重跑拒绝，以及实际CPU owned子进程墙钟终止。合成回执仅用于tests，绝不记为学生运行证据。
 
 固定Linux无模型policy canary已独立通过；本轮未操作GPU或远程checkout。下一门为真实学生writer→freeze→reader。no-memory对照后续扩展，当前不能宣称记忆效果提升或跨会话RL训练成功。
+
+## writer r1后的反馈与预算修复
+
+旧r1证据保留：首次读来源成功，随后96次重复修改只读来源，无create目标；新deny只解释当前公开allowlist与create/file_text，不放宽准入或评分。run-stage每2秒读取本run正在追加的Session v2，连续3个同工具/同参数、真实配对且isError的MEMORY_POLICY_DENIED触发owned进程组终止；成功/换动作重置，尾部未完成JSON不计。触发时写`repeated-denial.json`（动作摘要，不写请求路径/内容），supervisor及process-exit保持失败，不启动B。必须重新prepare新chain目录，不能复用r1。

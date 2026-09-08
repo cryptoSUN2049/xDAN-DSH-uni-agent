@@ -2,6 +2,9 @@
 
 ## 1. TL;DR
 
+- 最新覆盖：context-v2-exploration-r2 已340.01秒 exit1，16 sessions failed，未进入参数更新；GPU释放。根因审计进行中，旧“正在采样”记录仅代表当时状态。
+- memory拒绝反馈与3连拒绝保护已完成；root复核55项CPU+3组Node通过，待新chain真实验证。评分/访问准入不变，禁止把旧writer r1追认为成功。
+
 - 当前 worktree `harbor-modal-integration`，分支 `worktree-harbor-modal-integration`；权威目标 `active-engineering-goal.md`，系统方案 `docs/harbor-modal-integration/uni-agent-system-plan-v3.html`。
 - Goal active，未完成。当前顺序：DSH/记忆/上下文/受控RSI真实任务与训练效果 → 独立结果复现；Harbor训练后置。SFT与大规模数据生产由其他会话承担。
 - M1 v2-r4真实两步RL、消费审计、504 LoRA更新/399 base冻结及独立reload已验收；两条公开题基线满分，不能宣称能力提升。
