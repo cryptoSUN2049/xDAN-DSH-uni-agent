@@ -245,6 +245,11 @@ class HarborRunController:
                     {
                         **self.status(),
                         "reason": reason,
+                        "failure_observed_at_unix": self.clock(),
+                        "ssh_exit_codes": {
+                            name: getattr(getattr(getattr(self, name), "process", None), "returncode", None)
+                            for name in ("control", "model")
+                        },
                     },
                 )
                 raise RuntimeError("Controller health failed: " + reason)

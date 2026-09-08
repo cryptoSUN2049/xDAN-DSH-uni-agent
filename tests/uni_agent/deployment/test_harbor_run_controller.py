@@ -318,3 +318,19 @@ async def test_deadline_is_terminal_and_recorded(tmp_path):
     with pytest.raises(RuntimeError, match="deadline-expired"):
         await controller.monitor()
     await controller.close()
+
+
+@pytest.mark.asyncio
+async def test_failure_records_observed_time_and_owned_ssh_exitcode(tmp_path):
+    from types import SimpleNamespace
+
+    controller, _, _ = make_controller(tmp_path)
+    await controller.start()
+    controller.control.process = SimpleNamespace(returncode=255)
+    controller.control.alive = False
+    with pytest.raises(RuntimeError, match="control-unavailable"):
+        await controller.monitor()
+    failure = json.loads((controller.spec.root / "controller-failure.json").read_text())
+    assert failure["failure_observed_at_unix"] == 1000
+    assert failure["ssh_exit_codes"] == {"control": 255, "model": None}
+    assert "rrrrrrrr" not in json.dumps(failure)

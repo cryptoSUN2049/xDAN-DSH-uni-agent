@@ -8,6 +8,7 @@ import re
 import signal
 import subprocess
 import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -21,8 +22,27 @@ def validate_health(value, expected):
         raise ValueError("Controller unhealthy")
 
 
+def record_health_failure(root, exc, phase):
+    # Deliberately exclude exception text, URL, headers and response body.
+    diagnostic = dict(phase=phase, observed_at_unix=time.time(), exception_type=type(exc).__name__)
+    if isinstance(exc, urllib.error.HTTPError) and type(exc.code) is int:
+        diagnostic["http_status"] = exc.code
+    elif isinstance(exc, urllib.error.URLError) and isinstance(exc.reason, BaseException):
+        diagnostic["reason_type"] = type(exc.reason).__name__
+    descriptor = os.open(root / "health-failure.json", os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(descriptor, "w") as output:
+        json.dump(diagnostic, output, sort_keys=True)
+        output.write("\n")
+    return diagnostic
+
+
 def supervise(command, cwd, environment, root, health, *, wall_seconds=2700, interval=5, grace=30):
-    health()  # No GPU work before the first successful authenticated check.
+    try:
+        health()  # No GPU work before the first successful authenticated check.
+    except Exception as exc:
+        record_health_failure(root, exc, "preflight")
+        raise
+    health_failure = None
     started = time.monotonic()
     reason = "training-exited"
     with (root / "train.log").open("xb") as log:
@@ -36,7 +56,8 @@ def supervise(command, cwd, environment, root, health, *, wall_seconds=2700, int
                     break
                 try:
                     health()
-                except Exception:
+                except Exception as exc:
+                    health_failure = record_health_failure(root, exc, "runtime")
                     reason = "controller-health-failed"
                     break
                 time.sleep(interval)
@@ -59,6 +80,8 @@ def supervise(command, cwd, environment, root, health, *, wall_seconds=2700, int
         "elapsed_seconds": round(time.monotonic() - started, 3),
         "pid": process.pid,
     }
+    if health_failure is not None:
+        result["health_failure"] = health_failure
     if reason != "training-exited" and result["exit_code"] == 0:
         result["exit_code"] = 125
     (root / "supervisor-result.json").write_text(json.dumps(result, indent=2) + "\n")

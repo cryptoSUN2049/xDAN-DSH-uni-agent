@@ -94,3 +94,50 @@ def test_training_command_rejects_bad_adapter_schema(adapter):
 
     with pytest.raises(ValueError, match="lora_adapter"):
         training_command({"lora_adapter": adapter}, "/run/launch.json", "/venv/python")
+
+
+@pytest.mark.parametrize("phase", ["preflight", "runtime"])
+def test_health_diagnostics_do_not_leak_http_secrets(tmp_path, phase):
+    import urllib.error
+
+    count = 0
+
+    def health():
+        nonlocal count
+        count += 1
+        if phase == "runtime" and count == 1:
+            return
+        raise urllib.error.HTTPError("https://secret-url", 403, "secret-token", {"secret-header": "private"}, None)
+
+    if phase == "preflight":
+        with pytest.raises(urllib.error.HTTPError):
+            supervise([sys.executable, "-c", "pass"], tmp_path, os.environ.copy(), tmp_path, health)
+        assert not (tmp_path / "train.log").exists()
+    else:
+        result = supervise(
+            [sys.executable, "-c", "import time;time.sleep(60)"],
+            tmp_path,
+            os.environ.copy(),
+            tmp_path,
+            health,
+            interval=0.01,
+            grace=1,
+        )
+        assert result["health_failure"]["exception_type"] == "HTTPError"
+    raw = (tmp_path / "health-failure.json").read_text()
+    data = json.loads(raw)
+    assert data["phase"] == phase and data["http_status"] == 403
+    assert data["observed_at_unix"] > 0
+    assert "secret" not in raw and "private" not in raw
+
+
+def test_urlerror_records_timeout_type_without_reason_text(tmp_path):
+    import urllib.error
+
+    from deployment.services.harbor_training_supervisor import record_health_failure
+
+    value = record_health_failure(tmp_path, urllib.error.URLError(TimeoutError("secret-url-token")), "runtime")
+    assert value["exception_type"] == "URLError"
+    assert value["reason_type"] == "TimeoutError"
+    assert "secret" not in (tmp_path / "health-failure.json").read_text()
+    assert (tmp_path / "health-failure.json").stat().st_mode & 0o777 == 0o600

@@ -2,6 +2,8 @@
 
 ## 当前状态覆盖（新 Pod 恢复，优先于下方历史记录）
 
+- **新版M1 redact_email r1运行中**：代码74b253bfe2f580d4c6175672b5bdc0b3ccf623a8，/root/runs/dsh-redact-m1-r1，supervisor53590，2700秒截止；checkpoint /workspace/runs/dsh-redact-m1-r1-checkpoints。原样4train/2公开holdout，新Qwen3-4B LoRA16/16，2步GRPO/n4，8192/1024上下文预算，前评估+逐步后评估。输入/root/runs/dsh-redact-execute-r1-data，manifest SHA3e75ccb8973a5e2703a97a12ee88638ebb6e11b567dde97d836c14dc3e5c4fe0。未继承T2 SFT adapter；等待真实奖励/更新/独立reload验收。
+
 - **原生SFT累计56步已结束exit0且数值审计通过**：代码7561821；step1→56新增55更新，399基座张量不变、504LoRA张量均变化且有限，optimizer全step56。checkpoint `/workspace/runs/t2-sft-warm-r1/global_step_56`；dev/loss0.07406399399（step1为1.60730338）。原生merger导出 `/workspace/runs/t2-sft-warm-r1-export/lora_adapter`，权重SHA cbcfb9ddb2dd0ac4eeec61c980229d0216b28f0055b2a946a80846e2ef556d32。未保存逐样本ID，不宣称完整epoch覆盖；不代表在线RL更新。
 - **独立学生评估已结束exit0但0/2成功**：`/root/runs/t2-sft-student-eval-r1`，VAL_ONLY，2公开dev；fresh receipt与严格轨迹准入通过，实际只有两次工具调用，cordis_define非法JSON且API错误。独立HF同前缀base/adapter对照确认adapter改变输出但仍失败；不是已证实权重同步或mask错误。日志证实LoRA内核执行，loss对每decision等权平均，define只占1/14。报告t2-sft-student-eval-r1-result.json、t2-sft-prefix-diagnostic-r1.json。
 - **下一步注册课程**：prepare_sft_curriculum.py从原manifest/hash筛选4条真实cordis_define train，保留28dev原bytes；计划step56adapter warmstart、新optimizer、lr5e-5、16epochs/64steps/1800秒，再独立任务评估。已exit0且CPU audit通过：399base不变，504adapter在BF16→FP32无损规范后仍有真实更新，optimizer全64。run=/workspace/runs/t2-sft-registration-r1，launch=/root/runs/t2-sft-registration-r1-launch；独立学生eval=/root/runs/t2-registration-student-eval-r1，supervisor42825，GPU代码f7733a3，已exit0、0/2严格成功：已观察实际定义和一次run，但漏参数/错ID/缺后续业务调用；不修改任何target或评分标准。
