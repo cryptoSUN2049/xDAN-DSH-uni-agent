@@ -142,3 +142,22 @@
 
 - task-roadmap.html细化三阶段15项任务，明确目标/依赖/归属/验收。P1.1—P1.7为工程阶段，勿与历史P0—P6混淆。
 - 下一批：P1.1同步设计待确认，P1.2复建预检，P1.3沿用H0授权；没有新的运行或训练证据。
+
+## GPU 已就绪：2026-09-08 最新补充
+
+- 用户已部署服务器；只读SSH确认 RTX PRO 6000 Blackwell Server Edition，97887 MiB，驱动595.91.07。此前“无需购买”不再是当前行动建议。
+- 首轮方案：docs/harbor-modal-integration/first-gpu-acceptance.md；候选身份清单：deployment/versions/first-gpu-candidate.json。
+- 先工程批次A：基线eval、小步更新、张量数值变化、独立reload、同集留出eval；再逐批DSH/记忆/终端/RSI。
+- 本次只读检查，尚未安装或启动训练；候选清单的null项仍阻塞完整版本冻结。
+
+## 能力排期补充
+
+- capability-milestones.html为用户四项能力诉求的排期专题：M1/M2工程→C1 DSH内化→C2记忆及C3受控演化→C4归因→C5性能。
+- 不在DSH外新增MemAgent执行循环；现有MemAgent默认8GPU recipe需为当前单卡改配。
+- 四类循环身份分别记录；ContextPilot树分支与异步partial rollout不能混同。token压缩不是记忆成功指标。
+
+## 实验正交矩阵与记忆来源
+
+- experiment-matrix.html将八个实验配置维度与系统验收证据分开，链接首页和能力排期。
+- 新读DSH-Exp/feat-contextpilot-capability-sft/design.html，来源hash存contextpilot-exp-source.json；不是此前contextpilot仓同名文件。
+- 新来源是离线compiler/证据设计，不代表跨会话RL或GPU效果已完成；27B参数规划不直接搬到4B。

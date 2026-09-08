@@ -221,3 +221,16 @@ Review：只读API/源码核查并更新文档，无依赖升级或功能测试�
 - [ ] Docker oracle → 真实 DSH episode → GPU update/reload → 干净环境复建。
 
 Review：本批只新增部署目录与设计；不将其标记为安装或部署完成。
+
+### 四项能力里程碑排期
+
+- [x] 对照RSI研读、研究索引及Harbor指南，落盘capability-milestones.html并链接首页。
+- [ ] M1/M2工程验收后，先C1 DSH策略内化；并行准备C2记忆任务与C3a候选实验。
+- [ ] C2/C3b完成后做C4权重×Harness归因，再按瓶颈推进C5性能规模。
+- Review：本轮为规划；四种循环身份与跨会话奖励为待实现合同，无新增训练证据。
+
+### 实验配置与证据矩阵
+
+- [x] 新增八维配置矩阵、E0—E5实验顺序、不可用组合与独立验收状态。
+- [x] 核读新增ContextPilot路径并保存hash与适用边界。
+- [ ] 将首批实际任务实例、模型revision、数据split与阈值填入可执行实验配置。

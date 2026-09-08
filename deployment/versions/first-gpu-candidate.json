@@ -1,0 +1,21 @@
+{
+  "status": "candidate-not-gpu-validated",
+  "integration_revision": "7139f57eae3797d3179abb4e96a11da7cdc3037e",
+  "upstream_uni_agent": "89733ec81a69c3cc93ac90479de7ea7f01e51c1f",
+  "verl": "fefb080262e1c015a0ea05f958822a6a512dc795",
+  "harbor_candidate": "0.16.1",
+  "dsh_release": null,
+  "container_digest": null,
+  "python_dependencies_lock": null,
+  "student_model_revision": null,
+  "task_release_digest": null,
+  "verifier_digest": null,
+  "harness_digest": null,
+  "gpu_observed": {
+    "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "memory_mib": 97887,
+    "driver": "595.91.07"
+  },
+  "observed_date": "2026-09-08",
+  "blocking_rule": "Resolve all null identities and validate the complete combination before accepting a training run."
+}
