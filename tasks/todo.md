@@ -1,5 +1,7 @@
 # Uni-Agent 项目状态回顾与本地交接
 
+最新权威目标：[原生四能力 Goal](harbor-modal-integration/active-engineering-goal.md)。Harbor 后置，以下旧路线仅作历史记录。
+
 逐项验收入口：[三阶段任务路线图](../docs/harbor-modal-integration/task-roadmap.html)。下一批P1.1版本迁移、P1.2环境复建、P1.3Harbor正反例。
 
 用户确认优先级：**第一阶段工程贯通 → 第二阶段任务效果 → 第三阶段性能与规模**。S0—S11为交付物编号，不是严格执行顺序。
@@ -400,3 +402,14 @@ Review：本提交为进行中检查点；不将first checkpoint或CPU通过当�
 - [ ] N1真实跑通DSH/记忆/上下文/受控RSI四类任务，分别保存证据。
 - [ ] 各类固定条件新run复现结果，再核训练前后变化。
 - [ ] N0-E环境安装作为旁路交付，不阻塞上述工作。
+
+## 2026-09-09 当前能力推进
+
+- [x] 保存并推送0fdcbeb记忆边界与context准备器；22项复核与Ruff双门通过。
+- [x] GPU从GitHub同步0fdcbeb，复用已验收venv，启动四例context真实基线。
+- [ ] 验收context实际结果，记录失败、Gateway token和可信receipt。
+- [ ] 固定Linux runtime记忆边界canary，再接真实模型A/B。
+- [ ] 查明grounding截断预算并独立复跑；不修改旧证据。
+- [ ] 按四能力覆盖设计独立训练/评估任务，完成RL更新及reload；四例诊断不算能力训练完成。
+
+Review：当前四能力仍未验收完成；真实GPU baseline在运行，后续以进程及回执为准。

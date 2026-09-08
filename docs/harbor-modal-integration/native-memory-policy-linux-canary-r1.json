@@ -1,0 +1,147 @@
+{
+  "schema": "dsh.closed-memory-policy-canary.v1",
+  "status": "passed",
+  "scope": "real SDK tools; no model or training; closed trusted tool composition only",
+  "runtime_mode": "installed-sdk-runtime",
+  "sdk_version": "0.1.3a2",
+  "requested_source_version": "dsh:b2369692ea530007075ebcd18d39fdba0bbd3982",
+  "runtime_source_verified_by_this_script": false,
+  "policy_sha256": "sha256:95cc1d2d7e10a2395b413c5e0709ec2dd6c5bf557b87bb41639dec1f0f9ccc26",
+  "chain_id": "5ea8f19e203e4cbfa885a02c96c3e197",
+  "writer_session_id": "writer-27c1383e7fff441d92da6df1a794825f",
+  "reader_session_id": "reader-eeb9f5deca444df6ab3c3173ba632cf9",
+  "identity_scope": "controller-stage identities; no model agent sessions created",
+  "frozen_manifest_sha256": "sha256:44bef8bfcd98a248ec104cd0237be416766c11924951ef56317e7a839dd3ea06",
+  "loaded_handoff_matches": true,
+  "writer": {
+    "tools": [
+      "str_replace_editor"
+    ],
+    "results": [
+      {
+        "label": "write-memory",
+        "isError": false,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": false
+      },
+      {
+        "label": "read-memory",
+        "isError": false,
+        "expectedTextPresent": true,
+        "forbiddenTextPresent": false,
+        "policyDenied": false
+      },
+      {
+        "label": "deny-input-write",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      }
+    ],
+    "policy_config_sha256": "sha256:6888658896c98ef6e6e1394a42c0344ecf73dfdaf4669b305d133a286073b0ff"
+  },
+  "reader": {
+    "tools": [
+      "str_replace_editor"
+    ],
+    "results": [
+      {
+        "label": "read-handoff",
+        "isError": false,
+        "expectedTextPresent": true,
+        "forbiddenTextPresent": false,
+        "policyDenied": false
+      },
+      {
+        "label": "deny-A-secret",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-handoff-write",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-directory",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-relative",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-symlink",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-hardlink",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-bash",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-cordis_define",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-run_code",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      },
+      {
+        "label": "deny-future_tool",
+        "isError": true,
+        "expectedTextPresent": null,
+        "forbiddenTextPresent": false,
+        "policyDenied": true
+      }
+    ],
+    "policy_config_sha256": "sha256:509953df21bcaf7600c186dedfdd8964039e0222d6feb35cf7d2e114719b2c9d"
+  },
+  "deployment_provenance": {
+    "checkout": "/workspace/rebuild/uni-agent-native-n0-r1",
+    "commit": "0fdcbeb4511ef91c39bd74cadad5b77ff650f31f",
+    "python": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+    "sdk_module": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/deepseek_harness/__init__.py",
+    "runtime_module": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/deepseek_harness_runtime/__init__.py",
+    "runtime_launch_argv": [
+      "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-linux-x64"
+    ],
+    "runtime_sha256": "d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "runtime_distribution": "0.1.3a2",
+    "DSH_RUNTIME_MODE": "exe",
+    "runtime_matches_previously_accepted_pin": true,
+    "evidence_path": "/root/runs/dsh-memory-policy-linux-0fdcbeb-r1/result.json",
+    "source_pin": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+    "source_mapping_basis": "existing accepted release lock; executable SHA checked before and after canary"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "schema": "dsh.capability-baseline-failure.v1",
+  "run": "/root/runs/dsh-capability-grounding-baseline-r1",
+  "supervisor": {
+    "exit_code": 1,
+    "reason": "training-exited",
+    "elapsed_seconds": 340.01,
+    "pid": 96211,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "launch": {
+    "schema": "dsh.native-capability-baseline.v1",
+    "source_commit": "00eeaeb280f5004e2afe275e58fbcc859fbd389f",
+    "scope": "one runtime-grounding inference-only baseline; no optimizer",
+    "command": [
+      "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+      "examples/inference/parallel_infer_verl.py",
+      "--data-path",
+      "/root/runs/dsh-capability-grounding-baseline-r1-data/eval.parquet",
+      "--task-config",
+      "/root/runs/dsh-capability-grounding-baseline-r1-data/task.yaml",
+      "--model-path",
+      "/workspace/models/Qwen3-4B-1cfa9a7",
+      "--served-model-name",
+      "Qwen/Qwen3-4B",
+      "--engine",
+      "vllm",
+      "--nnodes",
+      "1",
+      "--n-gpus-per-node",
+      "1",
+      "--tensor-parallel-size",
+      "1",
+      "--gpu-memory-utilization",
+      "0.30",
+      "--max-model-len",
+      "8192",
+      "--gateway-count",
+      "1",
+      "--concurrency",
+      "1",
+      "--tool-parser",
+      "hermes",
+      "--limit",
+      "1",
+      "--n",
+      "1",
+      "--require-result",
+      "--dsh-strict-audit",
+      "--log-dir",
+      "/root/runs/dsh-capability-grounding-baseline-r1/agent-logs",
+      "--dsh-trace-root",
+      "/root/runs/dsh-capability-grounding-baseline-r1/artifacts/traces",
+      "--dsh-result-root",
+      "/root/runs/dsh-capability-grounding-baseline-r1/artifacts/results",
+      "--result-path",
+      "/root/runs/dsh-capability-grounding-baseline-r1/result.json",
+      "--inference-evidence-path",
+      "/root/runs/dsh-capability-grounding-baseline-r1/inference-evidence.json"
+    ],
+    "cwd": "/workspace/rebuild/uni-agent-native-n0-r1",
+    "python": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+    "wall_clock_seconds": 1800,
+    "inputs": {
+      "eval.parquet": "023948522fcd9536f1312463a91bad8dca7a678c584279b2a5fafc78e28938de",
+      "task.yaml": "0cc45a20d779e9537ee767575a8aaf181899ab860ec8a4479593ded0a55ec0b5"
+    },
+    "ray_tmpdir": "/root/ray-cgr1"
+  },
+  "finished": false,
+  "finish_reason": "max-tokens",
+  "receipt": {
+    "accuracy": 0,
+    "artifact_sha256": "sha256:79466cdb2e228435e9ec03fdc5008024d8cd2b8900722299a45812489dc07c62",
+    "dsh_session_id": "dsh-session-sample-0-rollout-0-6b1abfb64c9b4ff08207a26df38405c6",
+    "eligible": true,
+    "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "evidence": [
+      "scenario_id:runtime-grounding-live-001",
+      "fixture_digest:sha256:d5e5e77c6374b30022d6c35efec605928ab2dc8a728cd202f11cb58b0a7a7ad5",
+      "trace_sha256:sha256:9bcba5b9869b88fc368b5daf36f07cfeba1dba88fce8336bf6ab8cd953b10cf8",
+      "result:failed"
+    ],
+    "finished": false,
+    "fresh": true,
+    "issued_at": "2026-09-08T17:04:07.464Z",
+    "issuer": {
+      "id": "uni-agent-dsh",
+      "kind": "trusted-verifier"
+    },
+    "receipt_id": "sha256:fc1503351c98b9673c4ad72f8064ebdaa2f8924b1f841ee838f1cc96cf6955cc",
+    "reward": 0,
+    "schema": "dsh.verifier-receipt.v1",
+    "task_id": "dsh/harness-evolution-v3/runtime-grounding/live-001",
+    "task_version": "1",
+    "trace_sha256": "sha256:9bcba5b9869b88fc368b5daf36f07cfeba1dba88fce8336bf6ab8cd953b10cf8",
+    "verifier": {
+      "code_digest": "sha256:64ac909099ac96631a2075a033438937db60518d5103e3437da11d7801d3fcbb",
+      "id": "dsh-harness-evolution-v3-live-verifier",
+      "version": "1"
+    }
+  },
+  "training": false,
+  "checkpoint": false,
+  "diagnosis": {
+    "status": "trace and fixed-tokenizer audited",
+    "observed_steps": [
+      {
+        "step": 1,
+        "interface": "inspect_list",
+        "input_tokens": 4998,
+        "output_tokens": 19
+      },
+      {
+        "step": 2,
+        "interface": "Service.listService",
+        "input_tokens": 5631,
+        "output_tokens": 42
+      },
+      {
+        "step": 3,
+        "input_tokens": 5673,
+        "output_tokens": 0,
+        "finish_reason": "max-tokens"
+      }
+    ],
+    "interpretation": "Large Service observation exhausted remaining trajectory capacity; not a 2048-token single-turn completion. Increasing output budget alone is not justified.",
+    "service_observation_tokens": 12938,
+    "minimum_next_context_tokens": 18611,
+    "configured_max_model_len": 8192
+  }
+}

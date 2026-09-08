@@ -2,26 +2,24 @@
 
 ## 1. TL;DR
 
-> 2026-09-09最新纠偏：用户澄清没有另一会话占GPU；00:45实测0%/0MiB/无计算PID。保留每run前占用核验、不全局Ray清理，不能再以未确认的共享占用阻塞。能力主线用已验收venv；优先四能力真实执行和结果复现，新环境安装是后续交付旁路。
+- 当前 worktree `harbor-modal-integration`，分支 `worktree-harbor-modal-integration`；权威目标 `active-engineering-goal.md`，系统方案 `docs/harbor-modal-integration/uni-agent-system-plan-v3.html`。
+- Goal active，未完成。当前顺序：DSH/记忆/上下文/受控RSI真实任务与训练效果 → 独立结果复现；Harbor训练后置。SFT与大规模数据生产由其他会话承担。
+- M1 v2-r4真实两步RL、消费审计、504 LoRA更新/399 base冻结及独立reload已验收；两条公开题基线满分，不能宣称能力提升。
+- 2026-09-09：`0fdcbeb`已commit/push，GPU checkout `/workspace/rebuild/uni-agent-native-n0-r1`同步该提交。主线复用 `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，通过PYTHONPATH使用新checkout。不要修改运行中checkout。
+- 四例上下文 GPU 推理基线已启动 `/root/runs/dsh-context-baseline-r1`，supervisor PID99963，30分钟上限、并发2、strict audit。这不是训练更新，也不是实际context切换验收；冷启动须重新查进程及supervisor-result.json。
 
+### 最新 N0/N1/P1 检查点
 
-> 2026-09-09最高优先级覆盖：用户要求重新设计原生优先，覆盖DSH/记忆/上下文/RSI。新权威入口active-engineering-goal.md与docs/harbor-modal-integration/uni-agent-system-plan-v3.html。Harbor r2暂停，不使用已准备spec继续训练。新版设计已获实施授权。以下旧M2“下一步”均已后置，历史证据仍有效。
+- runtime-grounding-r1于340.01秒exit1：模型max-tokens，finished=false，严格组拒绝；结果在 `/root/runs/dsh-capability-grounding-baseline-r1`，无训练或checkpoint。保留失败；trace仅61个生成token，错误查询Service大目录后容量耗尽，非2048单轮输出截断。
+- 新venv `/workspace/venvs/uni-agent-native-n0-r1` 已安装完成：257 packages、pip check、固定runtime摘要及隔离import检查通过。仅CPU安装验收，不替代GPU复建/能力结果。
+- 原M1 optimizer独立CPU复核通过：2→4，504 active/37 empty，1008 moment tensors变化；报告 `native-r4-optimizer-result-replay.json`。不是新增训练。
+- 记忆freeze/load合同已通过；新closed policy及Mac SDK canary14真实工具调用通过。固定Linux runtime canary14请求通过；尚无模型A/B记忆训练验收。
+- 上下文两族四例与准备器已落盘，独立verifier/manifest/严格runner接线通过。本轮复核22项测试，Ruff双门通过；四例仅文件证据诊断，不证明泛化。
+- P1 sync/colocate_async入口已实现，GPU异步对照尚未执行。
+- 用户已澄清无其他会话占GPU；保留运行前占用核验，不再据过期歧义阻塞。禁止全局Ray清理。优先真实任务与独立结果重跑，不重复安装。
+- 用户提醒数据量；四例仅调试入口，正式RL必须覆盖各能力场景、独立训练/评估身份，并报告有效组与奖励差异，不能将重复采样当任务多样性。
 
-
-- 当前 worktree：`.Codex/worktrees/harbor-modal-integration`；分支 `worktree-harbor-modal-integration`。训练主仓为本仓，DSH-Exp 负责 DSH 本体。
-- G1 **未完成**。本检查点保存新版 DSH 零梯度失败证据、独立 verifier v2 修复、Harbor evolution 接线与有限网络抖动处理。
-- **M1本轮训练/恢复验收通过**：GPU源码2df91d7；r4两步755秒完成，504LoRA变化/399base冻结，optimizer2→4；10/10组消费通过。独立reload480秒完成，2/2新评估组通过、两题reward=1，无再训练/新checkpoint，GPU已释放。
-- 用户已将/workspace网络云盘扩到500 GB；新目录1 MiB write/fsync通过。checkpoint=`/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4`。未清理任何历史产物。
-- 下一步：Harbor v2 worker/packer接线 → Docker正反例 → 同任务学生M2在线RL与reload → 可复建交付。数据生产由用户安排另一会话。
-- 平台get_goal已核实为新版原生四能力目标，status=active。当前未完成，按active-engineering-goal.md推进。
-
-### N0/N1/P1 实施检查点
-
-- 新原生checkout已由GitHub创建：/workspace/rebuild/uni-agent-native-n0-r1，初始49c05e2，VERL fefb080；尚未安装新venv/启动新训练。
-- 旧venv editable指旧checkout，且numpy与上游lock存在已验证overlay差异；bootstrap现落实numpy2.3.5 wheel SHA及独立import来源门，真实安装待执行。
-- P1入口透传50ef90c已推送，23项通过/1旧Linux测试跳过；GPU异步未验收。
-- N1单文件记忆freeze/load合同37项通过；未接入A/B真实Task或reward，不能称记忆能力训练通过。
-- v3设计/Goal/视觉审计49c05e2已推送；Harbor暂停，原生新目标active。
+以下 M2 段均为历史证据；其中“下一步”不覆盖上述原生优先顺序。
 
 ### 最新检查点：M2 r1 失败与清理修复
 
