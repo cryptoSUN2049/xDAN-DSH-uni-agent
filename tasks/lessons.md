@@ -107,3 +107,5 @@
 - 2026-09-08 RunPod 网络盘真实权限：本 Pod `/workspace` 的文件创建 mode=0600、chmod600 均仍报告0666，目录0700仍777。严格私有凭据和审计运行证据必须放本地 `/root/runs`，读取前验证实际stat；checkpoint可继续在持久盘。不得为适配网络盘删除所有权/权限检查。运行结束应把不含凭据的证据归档并记录摘要后持久保存。
 
 - 2026-09-08 单卡M2入口必须显式保留已验证M1的ROLLOUT_LAYERED_SUMMON=False。仅复制LoRA/显存参数而沿用底座layered=True会使collect_lora_params空收集fallback调用offload_to_cpu=True，Torch NO_SHARD拒绝；ACTOR_PARAM_OFFLOAD=True本身不是该异常的充分原因。必须把实际生效配置与参考run逐项比较。
+
+- 用户确认旧Runpod停止并换新Pod：云盘保留不代表/root、SSH部署key、Ray/运行凭据保留。先验持久资产与venv，再重建本地身份/节点IP；最终日志应排除凭据后归档到持久盘。handoff顶部“当前状态”必须更新，不能让旧优先覆盖段与后文新事实冲突。

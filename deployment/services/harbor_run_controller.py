@@ -210,6 +210,46 @@ class HarborRunController:
             await self.control.close()
             raise
 
+    def _unhealthy_reason(self):
+        now = self.clock()
+        if isinstance(now, bool) or not math.isfinite(now) or now >= self.spec.deadline_unix:
+            return "deadline-expired"
+        if self.state not in {"unregistered", "registering", "ready"}:
+            return "controller-" + self.state
+        if self.control is None or not self.control.alive:
+            return "control-unavailable"
+        if self.state == "ready" and (self.model is None or not self.model.alive):
+            return "model-unavailable"
+        if self.state == "ready" and (self.worker is None or not self.worker.alive):
+            return "worker-unavailable"
+        return None
+
+    def status(self):
+        """Read-only lifecycle health; not an end-to-end model execution probe."""
+        return {
+            "run_id": self.spec.run_id,
+            "controller_id": self.spec.controller_id,
+            "run_spec_sha256": self.spec_sha256,
+            "state": self.state,
+            "healthy": self._unhealthy_reason() is None,
+        }
+
+    async def monitor(self):
+        """Unexpected exit/deadline is terminal for this run, never a reconnect."""
+        while True:
+            reason = self._unhealthy_reason()
+            if reason is not None:
+                self.state = "failed"
+                persist(
+                    self.spec.root / "controller-failure.json",
+                    {
+                        **self.status(),
+                        "reason": reason,
+                    },
+                )
+                raise RuntimeError("Controller health failed: " + reason)
+            await asyncio.sleep(min(1, max(0, self.spec.deadline_unix - self.clock())))
+
     async def register(self, run_id, data):
         registration = Registration.model_validate(data)
         async with self.lock:
@@ -302,7 +342,13 @@ def create_app(controller):
         value = await controller.register(request.match_info["run_id"], await request.json())
         return web.json_response(value)
 
+    async def status(request):
+        if request.match_info["run_id"] != controller.spec.run_id:
+            raise web.HTTPNotFound(text="Unknown run")
+        return web.json_response(controller.status())
+
     app = web.Application(middlewares=[authenticate], client_max_size=16384)
+    app.router.add_get("/v1/runs/{run_id}/status", status)
     app.router.add_post("/v1/runs/{run_id}/gateway", register)
     return app
 
@@ -321,10 +367,7 @@ async def main(path):
             json.dumps({"run_id": spec.run_id, "state": controller.state, "run_spec_sha256": controller.spec_sha256}),
             flush=True,
         )
-        while time.time() < spec.deadline_unix and controller.state != "failed":
-            if not controller.control.alive or (controller.model is not None and not controller.model.alive):
-                break
-            await asyncio.sleep(min(1, max(0, spec.deadline_unix - time.time())))
+        await controller.monitor()
     finally:
         await runner.cleanup()
         await controller.close()

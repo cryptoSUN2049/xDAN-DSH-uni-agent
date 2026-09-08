@@ -1,0 +1,29 @@
+{
+  "run_id": "m2-v2-r4",
+  "failure_time_local": "2026-09-08 16:51:55 +0800",
+  "ssh_stderr": "Timeout, server 216.243.220.178 not responding.",
+  "keepalive_interval_seconds": 10,
+  "keepalive_count_max": 2,
+  "first_gateway_registration_failure": "2026-09-08 16:58:11 +0800",
+  "registration_error": "Connection refused 127.0.0.1:48350",
+  "training_exit_code": 1,
+  "training_update_verified": false,
+  "underlying_packet_loss_cause": "not established",
+  "proxy_ssh": {
+    "endpoint": "ssh.runpod.io",
+    "interactive_pty": "same hostname c54bc4bb224c reached",
+    "non_pty_exec": "rejected: client does not support PTY",
+    "reverse_forward": "rejected: remote port forwarding failed",
+    "replacement_for_harbor_tunnel": false
+  },
+  "direct_ssh_command_recheck": "passed",
+  "sleep_event_search_in_failure_window": "no matching sleep/wake event found",
+  "evidence_archive": "/workspace/reports/m2-v2-r4-evidence.tar.gz",
+  "direct_reverse_forward_probe": {
+    "same_keepalive_settings": true,
+    "survived_seconds": 65,
+    "stderr": "",
+    "stopped_by_probe": true,
+    "application_roundtrip_verified": false
+  }
+}

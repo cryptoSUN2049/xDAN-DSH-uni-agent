@@ -255,3 +255,66 @@ async def test_real_factory_binds_run_and_closes_listener_before_worker(monkeypa
         service.worker.submit({"run_id": "other-run"})
     await service.close()
     assert calls == ["site-start", "site-stop", "worker-close", "runner-cleanup"]
+
+
+@pytest.mark.asyncio
+async def test_authenticated_status_is_read_only_and_identity_bound(tmp_path):
+    controller, calls, _ = make_controller(tmp_path)
+    await controller.start()
+    before = list(calls)
+    async with TestClient(TestServer(create_app(controller))) as client:
+        assert (await client.get("/v1/runs/run-1/status")).status == 401
+        headers = {"Authorization": "Bearer " + "r" * 32}
+        assert (await client.get("/v1/runs/other/status", headers=headers)).status == 404
+        response = await client.get("/v1/runs/run-1/status", headers=headers)
+        assert response.status == 200
+        assert await response.json() == dict(
+            run_id="run-1",
+            controller_id="controller-1",
+            run_spec_sha256=controller.spec_sha256,
+            state="unregistered",
+            healthy=True,
+        )
+    assert calls == before
+    assert controller.receipt is None
+    await controller.close()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("service", ["control", "model", "worker"])
+async def test_ready_status_detects_owned_service_exit(tmp_path, service):
+    controller, _, _ = make_controller(tmp_path)
+    await controller.start()
+    await controller.register(
+        "run-1", dict(gateway_host="10.0.0.2", gateway_port=45678, run_spec_sha256=controller.spec_sha256)
+    )
+    assert controller.status()["healthy"] is True
+    getattr(controller, service).alive = False
+    assert controller.status()["healthy"] is False
+    with pytest.raises(RuntimeError, match=service):
+        await controller.monitor()
+    failure = json.loads((controller.spec.root / "controller-failure.json").read_text())
+    assert failure["run_id"] == "run-1"
+    assert failure["reason"] == service + "-unavailable"
+    assert controller.state == "failed"
+    await controller.close()
+    assert (controller.spec.root / "controller-failure.json").exists()
+
+
+def test_registering_does_not_mistake_unstarted_model_for_exit(tmp_path):
+    controller, _, _ = make_controller(tmp_path)
+    controller.state = "registering"
+    controller.control = FakeService([], "control")
+    controller.model = FakeService([], "model")
+    controller.model.alive = False
+    assert controller.status()["healthy"] is True
+
+
+@pytest.mark.asyncio
+async def test_deadline_is_terminal_and_recorded(tmp_path):
+    controller, _, _ = make_controller(tmp_path)
+    await controller.start()
+    controller.clock = lambda: 1100
+    with pytest.raises(RuntimeError, match="deadline-expired"):
+        await controller.monitor()
+    await controller.close()

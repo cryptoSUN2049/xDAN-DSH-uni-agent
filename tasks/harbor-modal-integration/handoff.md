@@ -1,14 +1,15 @@
 # Harbor / Modal 集成交接
 
-## 当前状态覆盖（2026-09-08，优先于下方历史追加记录）
+## 当前状态覆盖（新 Pod 恢复，优先于下方历史记录）
 
-- 当前 worktree/分支：harbor-modal-integration / worktree-harbor-modal-integration；提交身份以 git HEAD 为准，已通过 GitHub 分发。
-- Uni-Agent 上游 89733ec + VERL fefb080 已适配；DSH runtime 保持 7840，不随 sibling 仓自动升级。
-- M1 v3：两步真实非零梯度更新，504 LoRA 张量变化、399 base 冻结；10/10 组消费审计通过。独立 reload exit0，2/2 组通过；留出 accuracy 仍为0，无能力提升证据。详见 m1-v3-results.md。
-- M2：Harbor H0 oracle=1/nop=0，真实 borrowed Docker 环境与 SSH 控制隧道探针通过；DSH BaseAgent bridge 已实现并做接口测试，实际 Harbor 模型训练尚未验收。
-- 独立 GitHub checkout cf2d3f5 + 新 venv 安装 exit0，CUDA 前后向通过；复用依赖缓存与既有 DSH wheel，不冒充新机器冷构建或再次完整训练。
-- 最新 DSH 审计见 docs/harbor-modal-integration/dsh-session-api-impact-audit.md：converter 本地3e93373修复，聚焦18测试通过；最新HEAD完整构建成功证据不足。ContextPilot仍有旧session.events与lineage条件冲突。
-- G1仍active：下一步完成真实 M2 模型通路、训练/reload与总版本固定交付；不新增付费资源。下方为历史快照，旧“未运行/未推送/等待批准”不代表当前状态。
+- Worktree/分支：harbor-modal-integration / worktree-harbor-modal-integration；运行代码固定30381f71131c5629cabb7b9a1e2942c06b8a4fa5。
+- 用户确认旧Pod停止，已提供新Pod：SSH root@216.243.220.178 -p14465 -i~/.ssh/id_ed25519；hostname c54bc4bb224c，节点172.26.0.2，同RTX PRO6000/97887MiB/driver595.91.07。
+- 云盘完整保留源码/venv/模型/data/artifacts/checkpoints。新节点复用venv验证257包兼容、CUDA合成梯度12、DSH runtime binary哈希匹配；无需重装模型或生成数据。旧/root目录已丢失，新凭据/运行证据用本地私有目录，结束时归档到云盘。
+- 后续DSH统一b236969/0.1.3a2；Uni-Agent89733ec、VERLfefb080、原始Harbor镜像846b46。完整固定清单deployment/versions/g1-deployment-lock.json；SDK/wheel与镜像均有私有Release。
+- 历史M1v3（旧7840）真实2步更新/reload通过；新版M1数据16/8和选中4/2划分哈希已复核，等待串行训练，不能把旧证据当新版通过。
+- M2 r1因layered空收集CPU summon与NO_SHARD冲突失败；已修默认layered=False。r2/r3未进入训练。新r4使用修复提交和全新spec/凭据/节点；r4已exit1：控制SSH在16:51:55保活超时退出，16:58:11首个registration连接48350被拒绝；无训练更新。
+- 新本地controller工具58987，spec /private/tmp/m2-recovery-r4/run-spec.json，日志同目录controller.log；GPU运行根/root/runs/m2-v2-r4，持久checkpoint /workspace/runs/m2-v2-r4-checkpoints，45分钟最多2步，执行状态先查supervisor.pid/exit-code/train.log。
+- 原连接阻塞已因新Pod解除，继续原G1工程目标。下方blocked/旧地址/未发布等均为历史，不据此停止新Pod工作。
 
 ## 1. TL;DR
 
@@ -410,3 +411,17 @@
 
 - 原始Harbor846b46镜像私有archive prerelease已发布，URL/hash写入g1-deployment-lock.json。6assets回下载逐字节验证、22blobs/16layers、真实docker load保持原imageID通过；报告harbor-v2-private-image-release-result.json。上传/下载/load均已终态，无遗留live handle。
 - 剩余核心任务仍是M2修复后真实更新/独立reload、M1新版留出训练/reload、GPU侧最终复建。相同SSH阻塞连续三轮，且用户未提供新连接，主进程将标goal blocked（不是complete），恢复后继续原G1不缩小范围。
+
+## 新Pod实际恢复和r4启动
+
+- 用户确认旧Pod已停止，新SSH216.243.220.178:14465已恢复。新环境验证报告new-pod-recovery-result.json；旧地址阻塞记录已失效，不再用旧地址探测。
+- r4 supervisor2015，2700s deadline，/root/runs/m2-v2-r4/{train.log,exit-code,run-manifest.json}；checkpoint/workspace/runs/m2-v2-r4-checkpoints；结束后自动归档/workspace/reports/m2-v2-r4-evidence.tar.gz及sha256，排除含worker token的task.yaml。
+- Mac controller58987/spec/private/tmp/m2-recovery-r4/run-spec.json，原端口48340/41/42与remote48350/51，新node172.26.0.2；真实Gateway端口待采样时登记。全部旧r2/r3配置不再使用。
+- unia_capability_audit在只读检查Harbor准入组到优化器消费的离线审计方法；不修改运行source。当前训练验收pending，不声称参数更新。
+
+## r4 SSH故障诊断
+
+- r4已退出1，GPU显存归零；证据归档已生成。Mac controller已退出，58987不再作为live句柄。
+- 代理ssh.runpod.io可PTY登录同Pod，但非PTY exec和测试反向转发均失败，不作为Harbor隧道替代。公网直连命令正常。
+- SSH保活10秒/2次；仅能确认未及时收到响应，网络丢包/代理/服务器具体首因尚未确定。不得把推测写成已修复。
+- 详见docs/harbor-modal-integration/ssh-tunnel-diagnosis.json；下一步长连接及实际双向应用探针通过后再开新run，不复用失败r4。
