@@ -4,9 +4,9 @@
 
 - 当前 worktree：`.Codex/worktrees/harbor-modal-integration`；分支 `worktree-harbor-modal-integration`。训练主仓为本仓，DSH-Exp 负责 DSH 本体。
 - G1 **未完成**。本检查点保存新版 DSH 零梯度失败证据、独立 verifier v2 修复、Harbor evolution 接线与有限网络抖动处理。
-- **v2-r4已启动待验收**：GPU代码`2df91d7de31b9ecacefeaad1c54dbea80028eead`，run=`/root/runs/dsh-redact-m1-v2-r4`，supervisor PID70864，2steps/2700秒；两步755.018秒自然完成，数值/optimizer/消费审计通过；独立reload PID78419进行中。v2-r1/r2因配额失败；r3监管命令引号错误，未进入训练。r4修正启动方式，保留所有失败证据。
+- **M1本轮训练/恢复验收通过**：GPU源码2df91d7；r4两步755秒完成，504LoRA变化/399base冻结，optimizer2→4；10/10组消费通过。独立reload480秒完成，2/2新评估组通过、两题reward=1，无再训练/新checkpoint，GPU已释放。
 - 用户已将/workspace网络云盘扩到500 GB；新目录1 MiB write/fsync通过。checkpoint=`/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4`。未清理任何历史产物。
-- 下一步：监控新run → 训练奖励/梯度与checkpoint数值/消费审计 → 继承r3完整环境独立reload；运行中不更换GPU代码。
+- 下一步：Harbor v2 worker/packer接线 → Docker正反例 → 同任务学生M2在线RL与reload → 可复建交付。数据生产由用户安排另一会话。
 - 平台get_goal仍显示旧SSH故障时的blocked；用户已明确持续推进原G1，工具只能complete/blocked，不能自行改active或重复创建。权威任务见active-engineering-goal.md，不宣称完成。
 
 ## 2. 本轮交付物
@@ -147,3 +147,15 @@
 - trajectory audit eligible=true：10组全部准入，0拒绝、0异常消费，2个奖励方差组。
 - 证据：docs/harbor-modal-integration/redact-m1-v2-r4-audit-bundle.json。GPU保持2df91d7，未同步本机新增Harbor代码。
 - 独立reload：/root/runs/dsh-redact-m1-v2-r4-reload，supervisor78419，1800秒，仅评估，继承r4完整环境。未验收，不宣称G1完成。
+
+### 独立数据会话工作包
+
+任务委托见data-curriculum-session-brief.md：D0先24个设计样本，设计批准后A/B首批40个pilot；记忆与RSI明确接口前提，不改当前G1/GPU。当前只创建委托，尚未启动第二会话或生成数据。
+
+### M1最终证据与M2边界
+
+完整reload报告：docs/harbor-modal-integration/redact-m1-v2-r4-reload-result.json；训练和reload原始日志已归档到/workspace/uni-agent-g1/reports/dsh-redact-m1-v2-r4-and-reload-evidence.tar.gz，SHA见报告。该归档不含大checkpoint，checkpoint保留指定云盘路径。当前同题公开留出基线满分，未证明能力提升。
+
+### Harbor v2完整接线检查点
+
+新增examples/harbor/evolution_verifier_v2.py，更新executor/isolated_trial/trace_artifacts、prepare_evolution_task/prepare_m2_training/registration和scripted smoke。原三份DSH verifier源码不变。668项组合测试通过、Ruff双门通过。实际Docker v2尚待构建与四mode验收，尚未跑M2学生训练。手动说明见docs/harbor-modal-integration/manual-gpu-runbook.md。

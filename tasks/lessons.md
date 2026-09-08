@@ -124,3 +124,5 @@
 - GPU checkpoint按用户指定持久目录`/workspace/<project>/checkpoint/<run>`保存。配额不足先实际write+fsync核验，不能用共享文件系统df推断用户配额；不能只迁checkpoint而遗漏Hydra等写入，或静默切换到易失/root。
 
 - SSH远端heredoc须对整个远端命令作正确shell引用；内嵌Python引号可能被外层shell吃掉。后台PID返回不代表训练启动成功，必须检查supervisor.log、train.log及持续存活。
+
+- 用户已将新增数据生成安排另一会话；本会话继续M1收尾与Harbor M2工程，不再重复建数据生成器。跨仓数据协作由Uni-Agent定义训练验收，campaign负责生产，不能混改当前固定课程。

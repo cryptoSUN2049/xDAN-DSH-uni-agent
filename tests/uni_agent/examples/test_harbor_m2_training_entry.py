@@ -398,18 +398,22 @@ def test_adapter_input_failures(tmp_path, bad):
 
 
 @pytest.mark.parametrize("variant", ["valid", "mutual", "descriptor", "metadata_path"])
-def test_evolution_preparation_preserves_operator_binding(inputs, tmp_path, variant):
+@pytest.mark.parametrize("binding_key", ["evolution_binding", "evolution_v2_binding"])
+def test_evolution_preparation_preserves_operator_binding(inputs, tmp_path, variant, binding_key):
     from tests.uni_agent.tasks.test_harbor_evolution_admission import configured
+    from tests.uni_agent.tasks.test_harbor_evolution_admission_v2 import v2_config
 
-    cfg, _ = configured(tmp_path)
+    cfg, _ = (v2_config if binding_key == "evolution_v2_binding" else configured)(tmp_path)
     task = inputs["task_dir"]
     (task / "tests").mkdir()
-    binding = cfg.evolution_binding.model_dump(mode="json")
+    binding = getattr(cfg, binding_key).model_dump(mode="json")
     for key, filename in [("fixture_path", "fixture.json"), ("metadata_path", "metadata.json")]:
         target = task / "tests" / filename
         target.write_bytes(Path(binding[key]).read_bytes())
         binding[key] = str(target)
     descriptor = {key: binding[key] for key in ["kind", "fixture_sha256", "metadata_sha256", "source_sha256s"]}
+    if binding_key == "evolution_v2_binding":
+        descriptor["verifier_bundle_sha256"] = binding["verifier_bundle_sha256"]
     (task / "evolution.json").write_text(json.dumps(descriptor))
     spec = json.loads(inputs["run_spec_path"].read_text())
     spec["policy_template"]["dsh_release"] = cfg.policy.dsh_release.model_dump(mode="json")
@@ -417,23 +421,24 @@ def test_evolution_preparation_preserves_operator_binding(inputs, tmp_path, vari
     if variant == "descriptor":
         descriptor["kind"] = "other"
         (task / "evolution.json").write_text(json.dumps(descriptor))
+    spec["policy_template"]["task_refs"][0]["version"] = cfg.task_ref.version
     spec["policy_template"]["task_refs"][0]["sha256"] = task_digest(task)
     binding["task_ref"] = spec["policy_template"]["task_refs"][0]
     inputs["run_spec_path"].write_text(json.dumps(spec))
     if variant == "metadata_path":
-        binding["metadata_path"] = cfg.evolution_binding.metadata_path
+        binding["metadata_path"] = getattr(cfg, binding_key).metadata_path
     path = tmp_path / "evolution-binding.json"
     path.write_text(json.dumps(binding))
     if variant != "valid":
         extra = {"t2_fixture_binding": path} if variant == "mutual" else {}
         with pytest.raises(ValueError):
-            prepare_training(**inputs, evolution_binding=path, **extra)
+            prepare_training(**inputs, **{binding_key: path}, **extra)
         assert not inputs["output_dir"].exists()
         return
-    launch = json.loads(prepare_training(**inputs, evolution_binding=path).read_text())
+    launch = json.loads(prepare_training(**inputs, **{binding_key: path}).read_text())
     config_value = yaml.safe_load(inputs["task_config_path"].read_text())
-    assert config_value["evolution_binding"] == binding
-    assert launch["postprocessor"]["evolution_binding"] == binding
+    assert config_value[binding_key] == binding
+    assert launch["postprocessor"][binding_key] == binding
     assert "t2_fixture" not in launch["postprocessor"]
     assert launch["environment"]["PROJECT_NAME"] == "harbor-evolution-engineering"
     rows = pq.read_table(inputs["output_dir"] / "train.parquet").to_pylist()
@@ -444,7 +449,8 @@ def test_evolution_preparation_preserves_operator_binding(inputs, tmp_path, vari
     assert rows[0]["extra_info"]["evaluation_scope"] == "same-task-engineering-evaluation-not-generalization"
 
 
-def test_registered_wrapper_forwards_evolution_binding(monkeypatch):
+@pytest.mark.parametrize("binding_key", ["evolution_binding", "evolution_v2_binding"])
+def test_registered_wrapper_forwards_evolution_binding(monkeypatch, binding_key):
     from uni_agent.tasks.harbor_dsh import registration
 
     binding = {"marker": "operator-binding"}
@@ -468,8 +474,8 @@ def test_registered_wrapper_forwards_evolution_binding(monkeypatch):
         registration_root="/tmp/registrations",
         controller_id="c",
         run_spec_sha256="sha",
-        evolution_binding=binding,
+        **{binding_key: binding},
     )
     assert result == ()
-    assert captured["evolution_binding"] is binding
+    assert captured[binding_key] is binding
     assert captured["policy"] == "registered-policy"

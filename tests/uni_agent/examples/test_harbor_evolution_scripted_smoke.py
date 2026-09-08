@@ -107,3 +107,23 @@ def test_taskref_mismatch_rejected_before_server_or_output(tmp_path, monkeypatch
     with pytest.raises(ValueError, match="TaskRef"):
         asyncio.run(smoke.run(task, manifest, tmp_path / "output"))
     assert not (tmp_path / "output").exists()
+
+
+def test_v2_missing_define_is_real_zero_reward_not_verifier_failure():
+    result = SimpleNamespace(exception_info=None, verifier_result=SimpleNamespace(rewards={"reward": 0.0}))
+    check_result("missing_define", result, admission_version="v2")
+    with pytest.raises(RuntimeError):
+        check_result(
+            "missing_define",
+            SimpleNamespace(exception_info="missing reward", verifier_result=None),
+            admission_version="v2",
+        )
+
+
+def test_unknown_admission_version_rejected():
+    with pytest.raises(ValueError):
+        check_result(
+            "positive",
+            SimpleNamespace(exception_info=None, verifier_result=SimpleNamespace(rewards={"reward": 1.0})),
+            admission_version="future",
+        )

@@ -100,13 +100,22 @@ class Policy:
         ]
 
 
-def check_result(mode, result, verifier_stdout=b""):
+def check_result(mode, result, verifier_stdout=b"", *, admission_version="v1"):
+    if admission_version not in {"v1", "v2"}:
+        raise ValueError("Unknown admission version")
     if mode == "tamper":
         if (
             "Bridge trace/status/session identity mismatch" not in str(result.exception_info)
             or result.verifier_result is not None
         ):
             raise RuntimeError("Expected exact bridge tamper rejection without reward")
+    elif mode == "missing_define" and admission_version == "v2":
+        if (
+            result.exception_info is not None
+            or result.verifier_result is None
+            or result.verifier_result.rewards != {"reward": 0.0}
+        ):
+            raise RuntimeError("Expected completed policy failure with real zero reward")
     elif mode == "missing_define":
         if (
             result.exception_info is None
@@ -134,6 +143,11 @@ async def run(task_dir, manifest_path, output, *, modes=MODES, timeout=600):
         _json,
         load_evolution_binding,
     )
+    from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import (
+        EVOLUTION_V2_KIND,
+        EvolutionV2Binding,
+        load_evolution_v2_binding,
+    )
     from uni_agent.tasks.harbor_dsh.executor import _confirm_cleanup, _task_digest
     from uni_agent.tasks.harbor_dsh.isolated_trial import create_isolated_trial
     from uni_agent.tasks.harbor_dsh.protocol import TaskRef
@@ -145,9 +159,15 @@ async def run(task_dir, manifest_path, output, *, modes=MODES, timeout=600):
     if _task_digest(task_dir) != ref.sha256:
         raise ValueError("Frozen package TaskRef mismatch")
     descriptor = _json(_read(task_dir / "evolution.json", 65536))
-    if set(descriptor) != {"kind", "fixture_sha256", "metadata_sha256", "source_sha256s"}:
+    is_v2 = descriptor.get("kind") == EVOLUTION_V2_KIND
+    fields = {"kind", "fixture_sha256", "metadata_sha256", "source_sha256s"}
+    if is_v2:
+        fields.add("verifier_bundle_sha256")
+    if set(descriptor) != fields or descriptor.get("kind") not in {EVOLUTION_KIND, EVOLUTION_V2_KIND}:
         raise ValueError("Unexpected evolution descriptor")
-    binding = EvolutionBinding.model_validate(
+    binding_type = EvolutionV2Binding if is_v2 else EvolutionBinding
+    loader = load_evolution_v2_binding if is_v2 else load_evolution_binding
+    binding = binding_type.model_validate(
         {
             **descriptor,
             "task_ref": ref.model_dump(),
@@ -155,7 +175,7 @@ async def run(task_dir, manifest_path, output, *, modes=MODES, timeout=600):
             "metadata_path": str(task_dir / "tests/metadata.json"),
         }
     )
-    frozen = load_evolution_binding(binding, ref, repository_root=Path(__file__).resolve().parents[2])
+    frozen = loader(binding, ref, repository_root=Path(__file__).resolve().parents[2])
     fixture, metadata = _json(frozen.fixture_raw), _json(frozen.metadata_raw)
     mapped = {
         **binding.model_dump(mode="json"),
@@ -168,6 +188,7 @@ async def run(task_dir, manifest_path, output, *, modes=MODES, timeout=600):
         passed=False,
         scope="scripted Harbor/DSH integration; no student, Gateway tokens or training",
         task_ref=ref.model_dump(),
+        admission_kind=binding.kind,
         fixture_sha256=binding.fixture_sha256,
         metadata_sha256=binding.metadata_sha256,
         source_sha256s=binding.source_sha256s,
@@ -204,7 +225,7 @@ async def run(task_dir, manifest_path, output, *, modes=MODES, timeout=600):
                 trial = create_isolated_trial(
                     config,
                     allowed_task_dir=task_dir,
-                    strategy=EVOLUTION_KIND,
+                    strategy=binding.kind,
                     gateway_session_id=session,
                     max_trace_bytes=16 * 1024 * 1024,
                     evolution_binding=raw_binding,
@@ -224,7 +245,7 @@ async def run(task_dir, manifest_path, output, *, modes=MODES, timeout=600):
                 if errors or not requests:
                     raise RuntimeError(f"Scripted server failed: {errors}")
                 stdout = trial.paths.test_stdout_path.read_bytes() if trial.paths.test_stdout_path.exists() else b""
-                check_result(mode, result, stdout)
+                check_result(mode, result, stdout, admission_version="v2" if is_v2 else "v1")
                 if _task_digest(task_dir) != ref.sha256:
                     raise ValueError("TaskRef changed during smoke")
                 evidence["passed"] = True

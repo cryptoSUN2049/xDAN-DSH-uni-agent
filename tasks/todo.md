@@ -369,3 +369,10 @@ Review：SFT数值更新通过但任务0/2；Harbor脚本策略四例通过不�
 - [ ] Harbor v2 worker/packer接线与真实学生M2。
 
 Review：本提交为进行中检查点；不将first checkpoint或CPU通过当成G1完成。
+
+- [x] 独立数据会话委托落盘：tasks/harbor-modal-integration/data-curriculum-session-brief.md。
+- [ ] 另会话完成D0设计并获批后实施数据pilot；不阻塞G1主线。
+
+- [x] M1独立reload最终审计2/2通过、无再训练，证据归档云盘。
+- [x] Harbor v2执行/打包/训练准备接线；668项组合CPU测试通过。
+- [ ] 固定提交部署GPU打包，在Mac真实Docker执行v2正反例；再M2学生训练。

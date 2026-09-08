@@ -14,6 +14,7 @@ from examples.dsh.prepare_evolution_dataset import _patches_digest, _prompt
 from examples.harbor.prepare_t2_task import _git, _read, _sha
 from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH, T2_PATCH_SHA256
 from uni_agent.tasks.harbor_dsh.evolution_scoring import EVOLUTION_KIND, SOURCES
+from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import EVOLUTION_V2_KIND, SOURCE_HASHES, VERIFIER_BUNDLE_SHA256
 
 PARENT_IMAGE = "sha256:b016c85140a58f7d842eadb0238925ee1c347143cc7bede5b9b35bfa38747dca"
 PARENT_TAG = "uni-agent-dsh:t2-log-tool-r1"
@@ -39,7 +40,29 @@ def _require(condition, message):
         raise ValueError(message)
 
 
-def prepare(*, root, source_dir, source_manifest_sha256, output, agent_image_digest, verifier_image_digest=None):
+def prepare(
+    *,
+    root,
+    source_dir,
+    source_manifest_sha256,
+    output,
+    agent_image_digest,
+    verifier_image_digest=None,
+    admission_version="v1",
+):
+    _require(admission_version in ("v1", "v2"), "invalid admission version")
+    v2 = admission_version == "v2"
+    scoring_sources = tuple("examples/dsh/" + name for name in SOURCE_HASHES) if v2 else SOURCES
+    verifier_sources = (
+        VERIFIER_SOURCES
+        + (
+            "examples/harbor/evolution_verifier_v2.py",
+            "uni_agent/tasks/harbor_dsh/evolution_scoring_v2.py",
+            "examples/dsh/evolution_verifier_v2.py",
+        )
+        if v2
+        else VERIFIER_SOURCES
+    )
     root, source_dir, output = Path(root).resolve(), Path(source_dir).resolve(), Path(output).absolute()
     _require(root == Path(__file__).resolve().parents[2], "root must match the imported checkout")
     _require(not output.exists() and not output.is_symlink(), "output must be new")
@@ -54,11 +77,12 @@ def prepare(*, root, source_dir, source_manifest_sha256, output, agent_image_dig
     _require(_sha(source_raw) == source_manifest_sha256, "source manifest SHA mismatch")
     source = json.loads(source_raw)
     _require(
-        source["schema"] == "dsh.evolution-dataset-manifest.v1" and source["counts"] == {"train": 16, "holdout": 8},
-        "expected original 16/8 dataset manifest",
+        source["schema"] == ("dsh.redact-curriculum.v2" if v2 else "dsh.evolution-dataset-manifest.v1")
+        and (v2 or source["counts"] == {"train": 16, "holdout": 8}),
+        "expected version-matched source dataset manifest",
     )
     selected = []
-    for split, count in [("train", 16), ("holdout", 8)]:
+    for split, count in [("train", 4), ("holdout", 2)] if v2 else [("train", 16), ("holdout", 8)]:
         raw = _read(source_dir, Path(split + ".parquet"))
         entry = source["files"][split + ".parquet"]
         _require(_sha(raw) == entry["sha256"], "source parquet SHA mismatch")
@@ -80,7 +104,7 @@ def prepare(*, root, source_dir, source_manifest_sha256, output, agent_image_dig
         and source_task["environment_digest"] == RUNTIME_SHA,
         "source runtime/patch configuration mismatch",
     )
-    paths = {Path(p) for p in VERIFIER_SOURCES} | {
+    paths = {Path(p) for p in verifier_sources} | {
         PATCH,
         FIXTURE,
         Path("examples/dsh/prepare_evolution_dataset.py"),
@@ -103,12 +127,22 @@ def prepare(*, root, source_dir, source_manifest_sha256, output, agent_image_dig
     for key in ["environment_digest", "profile", "verifier_id", "verifier_version", "verifier_code_digest"]:
         _require(metadata[key] == source_task[key], "source metadata identity mismatch: " + key)
     _require(
-        metadata["verifier_code_digest"] == _sha(sources[Path(SOURCES[0])])
+        metadata["verifier_code_digest"] == (VERIFIER_BUNDLE_SHA256 if v2 else _sha(sources[Path(SOURCES[0])]))
         and metadata["verifier_id"] == "dsh-harness-evolution-verifier"
-        and metadata["verifier_version"] == "1"
+        and metadata["verifier_version"] == ("2" if v2 else "1")
+        and metadata["task_version"] == ("2" if v2 else "1")
         and metadata["patches_sha256"] == _patches_digest([str(PATCH)]),
         "source scorer/patch digest mismatch",
     )
+    if v2:
+        _require(source.get("verifier_sources") == SOURCE_HASHES, "source verifier map mismatch")
+        _require(
+            all(
+                _sha(sources[Path("examples/dsh/" + name)]) == "sha256:" + value
+                for name, value in SOURCE_HASHES.items()
+            ),
+            "source verifier bytes mismatch",
+        )
     fixture = json.loads(fixture_raw)
     _require(
         fixture.get("operation") == "redact_email" and isinstance(fixture.get("input"), str), "invalid email fixture"
@@ -121,11 +155,13 @@ def prepare(*, root, source_dir, source_manifest_sha256, output, agent_image_dig
     deployed = {**metadata, "fixture_path": "/app/fixture.json", "patches_sha256": _patches_digest([T2_PATCH_PATH])}
     metadata_raw = _json_bytes(deployed)
     marker = dict(
-        kind=EVOLUTION_KIND,
+        kind=EVOLUTION_V2_KIND if v2 else EVOLUTION_KIND,
         fixture_sha256=_sha(fixture_raw),
         metadata_sha256=_sha(metadata_raw),
-        source_sha256s={p: _sha(sources[Path(p)]) for p in SOURCES},
+        source_sha256s={p: _sha(sources[Path(p)]) for p in scoring_sources},
     )
+    if v2:
+        marker["verifier_bundle_sha256"] = VERIFIER_BUNDLE_SHA256
     parent = (
         f"# Require docker inspect {PARENT_TAG} image ID {PARENT_IMAGE}; build --pull=false.\n"
         f"FROM --platform=linux/amd64 {PARENT_TAG}\n"
@@ -152,6 +188,10 @@ def prepare(*, root, source_dir, source_manifest_sha256, output, agent_image_dig
             b"--input-dir /audit-input --output-dir /logs/verifier\n"
         ),
     }
+    if v2:
+        files["tests/test.sh"] = files["tests/test.sh"].replace(
+            b"examples.harbor.evolution_verifier ", b"examples.harbor.evolution_verifier_v2 "
+        )
     verifier_pin = f'docker_image = "{verifier_image_digest}"\n' if verifier_image_digest else ""
     files["task.toml"] = (
         'schema_version = "1.3"\nartifacts = []\n\n[agent]\ntimeout_sec = 600.0\n\n'
@@ -161,7 +201,7 @@ def prepare(*, root, source_dir, source_manifest_sha256, output, agent_image_dig
         f"[verifier.environment]\n{verifier_pin}build_timeout_sec = 120.0\n"
         'cpus = 1\nmemory_mb = 512\nstorage_mb = 1024\nworkdir = "/app"\n'
     ).encode()
-    for name in VERIFIER_SOURCES:
+    for name in verifier_sources:
         path = Path(name)
         files["tests/src/" + name] = sources[path]
         for parent_path in path.parents:
@@ -169,7 +209,7 @@ def prepare(*, root, source_dir, source_manifest_sha256, output, agent_image_dig
                 files["tests/src/" + str(parent_path / "__init__.py")] = b""
     task_ref = dict(
         id="evolution-redact-train-01",
-        version="v1",
+        version="v2" if v2 else "v1",
         sha256=_sha(
             json.dumps(
                 {name: hashlib.sha256(value).hexdigest() for name, value in files.items()},
@@ -214,6 +254,9 @@ def prepare(*, root, source_dir, source_manifest_sha256, output, agent_image_dig
         files={"task/" + name: _sha(value) for name, value in files.items()},
         manifest_excludes_self=True,
     )
+    if v2:
+        result["schema"] = "dsh.harbor-evolution-task-package.v2"
+        result["evolution_v2_binding"] = result.pop("evolution_binding")
     output.mkdir(mode=0o700, parents=True, exist_ok=False)
     for name, value in {**{"task/" + k: v for k, v in files.items()}, "manifest.json": _json_bytes(result)}.items():
         path = output / name
@@ -230,6 +273,7 @@ def main():
     parser.add_argument("--source-manifest-sha256", required=True)
     parser.add_argument("--agent-image-digest", required=True)
     parser.add_argument("--verifier-image-digest")
+    parser.add_argument("--admission-version", choices=("v1", "v2"), default="v1")
     result = prepare(**vars(parser.parse_args()))
     print(json.dumps({"task_dir": result["task_dir"], "task_ref": result["task_ref"]}))
 

@@ -15,6 +15,12 @@ from harbor.trial.artifact_handler import ArtifactHandler
 from uni_agent.agents.dsh.agent import _require_result, _run_key
 from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH
 from uni_agent.tasks.harbor_dsh.evolution_scoring import SOURCES, EvolutionBinding
+from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import (
+    EVOLUTION_V2_KIND,
+    SOURCE_HASHES,
+    VERIFIER_BUNDLE_SHA256,
+    EvolutionV2Binding,
+)
 
 
 def _digest(raw):
@@ -63,11 +69,20 @@ def _read_private(directory, name, limit):
 def validate_evolution_binding(raw):
     if type(raw) is not bytes or not raw or len(raw) > 65536:
         raise ValueError("Evolution binding must be immutable bounded bytes")
-    binding = EvolutionBinding.model_validate(_json(raw))
+    value = _json(raw)
+    is_v2 = isinstance(value, dict) and value.get("kind") == EVOLUTION_V2_KIND
+    binding = (EvolutionV2Binding if is_v2 else EvolutionBinding).model_validate(value)
+    sources = {"examples/dsh/" + name: "sha256:" + sha for name, sha in SOURCE_HASHES.items()} if is_v2 else None
+    if is_v2 and (
+        binding.source_sha256s != sources
+        or binding.verifier_bundle_sha256 != VERIFIER_BUNDLE_SHA256
+        or binding.task_ref.version != "v2"
+    ):
+        raise ValueError("Evolution v2 binding source/version/bundle mismatch")
     if (
         binding.fixture_path != "/tests/fixture.json"
         or binding.metadata_path != "/tests/metadata.json"
-        or set(binding.source_sha256s) != set(SOURCES)
+        or set(binding.source_sha256s) != set(sources if is_v2 else SOURCES)
     ):
         raise ValueError("Evolution binding requires fixed verifier paths and sources")
     return binding

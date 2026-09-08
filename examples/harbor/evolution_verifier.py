@@ -33,26 +33,31 @@ def _read(path, limit):
     return raw
 
 
-def run_verifier(
+def _run_verifier(
     *,
     input_dir=Path("/audit-input"),
     output_dir=Path("/logs/verifier"),
     fixture_path=Path("/tests/fixture.json"),
     metadata_path=Path("/tests/metadata.json"),
     repository_root=None,
+    binding_model=EvolutionBinding,
+    loader=load_evolution_binding,
+    scorer=score_evolution,
+    admission=require_evolution_admission,
+    report_name="evolution-report.json",
 ):
     source, destination = Path(input_dir), Path(output_dir)
     if source.is_symlink() or not source.is_dir() or destination.is_symlink():
         raise ValueError("Invalid verifier directory")
-    for name in ("reward.txt", "evolution-report.json"):
+    for name in ("reward.txt", report_name):
         if (destination / name).exists() or (destination / name).is_symlink():
             raise ValueError("Refusing to overwrite verifier output")
-    binding = EvolutionBinding.model_validate(_json(_read(source / "evolution-binding.json", 65536)))
+    binding = binding_model.model_validate(_json(_read(source / "evolution-binding.json", 65536)))
     if binding.fixture_path != "/tests/fixture.json" or binding.metadata_path != "/tests/metadata.json":
         raise ValueError("Evolution verifier requires fixed controller-owned input paths")
     # Overrides are for isolated CPU tests; the public CLI exposes no path override.
     binding = binding.model_copy(update={"fixture_path": str(fixture_path), "metadata_path": str(metadata_path)})
-    frozen = load_evolution_binding(
+    frozen = loader(
         binding, binding.task_ref, repository_root=Path(repository_root or Path(__file__).resolve().parents[2])
     )
     trace = _read(source / "session.jsonl", 16 * 1024 * 1024)
@@ -83,7 +88,7 @@ def run_verifier(
         or run.get("trace_path") != trace_path
     ):
         raise ValueError("Bridge status/session/trace identity mismatch")
-    report = score_evolution(
+    report = scorer(
         frozen=frozen,
         task_ref=binding.task_ref,
         trace=trace,
@@ -92,14 +97,31 @@ def run_verifier(
         run_sha256=_sha(run_raw),
         gateway_session_id=session,
     )
-    require_evolution_admission(report, report["reward"])
+    admission(report, report["reward"])
     destination.mkdir(parents=True, exist_ok=True)
-    with (destination / "evolution-report.json").open("x") as stream:
+    with (destination / report_name).open("x") as stream:
         json.dump(report, stream, sort_keys=True, indent=2, allow_nan=False)
         stream.write("\n")
     with (destination / "reward.txt").open("x") as stream:
         stream.write(str(report["reward"]) + "\n")
     return report
+
+
+def run_verifier(
+    *,
+    input_dir=Path("/audit-input"),
+    output_dir=Path("/logs/verifier"),
+    fixture_path=Path("/tests/fixture.json"),
+    metadata_path=Path("/tests/metadata.json"),
+    repository_root=None,
+):
+    return _run_verifier(
+        input_dir=input_dir,
+        output_dir=output_dir,
+        fixture_path=fixture_path,
+        metadata_path=metadata_path,
+        repository_root=repository_root,
+    )
 
 
 def main():

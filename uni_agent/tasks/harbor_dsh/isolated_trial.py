@@ -25,6 +25,7 @@ from harbor.trial.single_step import SingleStepTrial
 
 from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH, T2_STRATEGY
 from uni_agent.tasks.harbor_dsh.evolution_scoring import EVOLUTION_KIND
+from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import EVOLUTION_V2_KIND
 from uni_agent.tasks.harbor_dsh.trace_artifacts import TraceArtifacts, validate_evolution_binding
 
 _DSH_IMPORT = "uni_agent.agents.dsh.harbor_agent:DshHarborAgent"
@@ -235,7 +236,7 @@ def _validate_task(task: Task, *, strategy: str = "answer") -> None:
         raise ValueError("Only single-step tasks are supported")
     if resolve_task_verifier_mode(config) != VerifierEnvironmentMode.SEPARATE or config.verifier.environment is None:
         raise ValueError("An explicit separate verifier environment is required")
-    if strategy in {T2_STRATEGY, EVOLUTION_KIND} and config.artifacts:
+    if strategy in {T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND} and config.artifacts:
         raise ValueError("T2 forbids student artifacts")
     if strategy == "answer" and config.artifacts != ["/app/answer.txt"]:
         raise ValueError("This lane only transfers the explicit /app/answer.txt artifact")
@@ -261,15 +262,17 @@ class IsolatedDshTrial(SingleStepTrial):
         snapshot = config.model_copy(deep=True)
         task_dir = _validate_runtime(snapshot, allowed_task_dir)
         task = Task(task_dir=task_dir)
-        if strategy not in {"answer", T2_STRATEGY, EVOLUTION_KIND}:
+        if strategy not in {"answer", T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND}:
             raise ValueError("Unsupported isolated task strategy")
-        if strategy == EVOLUTION_KIND:
-            validate_evolution_binding(evolution_binding)
+        if strategy in {EVOLUTION_KIND, EVOLUTION_V2_KIND}:
+            binding = validate_evolution_binding(evolution_binding)
+            if binding.kind != strategy:
+                raise ValueError("Evolution strategy and binding kind mismatch")
         elif evolution_binding is not None:
             raise ValueError("Binding requires explicit evolution strategy")
         self._evolution_binding = evolution_binding
         _validate_task(task, strategy=strategy)
-        if strategy in {T2_STRATEGY, EVOLUTION_KIND}:
+        if strategy in {T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND}:
             if (
                 snapshot.agent.import_path != _DSH_IMPORT
                 or snapshot.agent.name is not None
@@ -282,7 +285,9 @@ class IsolatedDshTrial(SingleStepTrial):
         elif gateway_session_id is not None or max_trace_bytes is not None:
             raise ValueError("Trace settings require explicit T2 strategy")
         self._trace_settings = (
-            (gateway_session_id, max_trace_bytes) if strategy in {T2_STRATEGY, EVOLUTION_KIND} else None
+            (gateway_session_id, max_trace_bytes)
+            if strategy in {T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND}
+            else None
         )
         self._artifact_collection_failed = False
         super().__init__(snapshot, _task=task)

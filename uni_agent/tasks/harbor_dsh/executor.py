@@ -34,7 +34,12 @@ from uni_agent.agents.dsh.harbor_release import (
     release_patch_paths,
     release_patch_paths_digest,
 )
-from uni_agent.tasks.harbor_dsh.evolution_scoring import EVOLUTION_KIND, EvolutionBinding, load_evolution_binding
+from uni_agent.tasks.harbor_dsh.evolution_scoring import EvolutionBinding, load_evolution_binding
+from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import (
+    EVOLUTION_V2_KIND,
+    EvolutionV2Binding,
+    load_evolution_v2_binding,
+)
 from uni_agent.tasks.harbor_dsh.isolated_trial import _run_bounded_command, create_isolated_trial
 from uni_agent.tasks.harbor_dsh.protocol import JobRequest
 
@@ -237,18 +242,22 @@ def _evolution_verifier_binding(task_dir: Path, request: JobRequest) -> bytes | 
     if not release_patch_paths(request.dsh_release):
         raise ValueError("Evolution task requires the fixed patch composition")
     descriptor = _json(_read_regular(task_dir, path, 65536))
-    if not isinstance(descriptor, dict) or set(descriptor) != {
+    is_v2 = isinstance(descriptor, dict) and descriptor.get("kind") == EVOLUTION_V2_KIND
+    fields = {
         "kind",
         "fixture_sha256",
         "metadata_sha256",
         "source_sha256s",
-    }:
+    }
+    if is_v2:
+        fields.add("verifier_bundle_sha256")
+    if not isinstance(descriptor, dict) or set(descriptor) != fields:
         raise ValueError("Evolution task descriptor must exclude TaskRef and arbitrary paths")
     fixture = task_dir / "tests" / "fixture.json"
     metadata = task_dir / "tests" / "metadata.json"
     _read_regular(task_dir, fixture, 1048576)
     _read_regular(task_dir, metadata, 1048576)
-    binding = EvolutionBinding.model_validate(
+    binding = (EvolutionV2Binding if is_v2 else EvolutionBinding).model_validate(
         {
             **descriptor,
             "task_ref": request.task_ref.model_dump(),
@@ -256,7 +265,8 @@ def _evolution_verifier_binding(task_dir: Path, request: JobRequest) -> bytes | 
             "metadata_path": str(metadata.resolve()),
         }
     )
-    frozen = load_evolution_binding(binding, request.task_ref, repository_root=Path(__file__).resolve().parents[3])
+    loader = load_evolution_v2_binding if is_v2 else load_evolution_binding
+    frozen = loader(binding, request.task_ref, repository_root=Path(__file__).resolve().parents[3])
     value = _json(frozen.metadata_raw)
     if (
         value["environment_digest"] != request.dsh_release.runtime_sha256
@@ -348,7 +358,7 @@ async def execute_job(
             max_trace_bytes=request.budgets.max_artifact_bytes,
         )
     if evolution_binding is not None:
-        trial_kwargs.update(strategy=EVOLUTION_KIND, evolution_binding=evolution_binding)
+        trial_kwargs.update(strategy=_json(evolution_binding)["kind"], evolution_binding=evolution_binding)
     trial = create_isolated_trial(config, allowed_task_dir=task_dir.resolve(), **trial_kwargs)
     verifying = False
 

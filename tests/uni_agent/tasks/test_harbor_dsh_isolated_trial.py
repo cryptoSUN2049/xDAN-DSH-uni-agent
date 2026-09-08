@@ -502,7 +502,8 @@ def test_t2_requires_no_student_artifacts(task_dir):
         )
 
 
-def test_evolution_strategy_freezes_binding_and_has_no_host_mount(task_dir):
+@pytest.mark.parametrize("v2", [False, True])
+def test_evolution_strategy_freezes_binding_and_has_no_host_mount(task_dir, v2):
     from tests.uni_agent.tasks.test_harbor_dsh_trace_artifacts import evolution_binding
     from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH
 
@@ -516,11 +517,11 @@ def test_evolution_strategy_freezes_binding_and_has_no_host_mount(task_dir):
             "kwargs": {"gateway_base_url": "http://127.0.0.1:8000/sessions/session/v1", "patches": [T2_PATCH_PATH]},
         },
     )
-    raw = evolution_binding()
+    raw = evolution_binding(v2=v2)
     trial = create_isolated_trial(
         cfg,
         allowed_task_dir=task_dir,
-        strategy="evolution-v2-lifecycle-v1",
+        strategy="evolution-v2-lifecycle-admission-v2" if v2 else "evolution-v2-lifecycle-v1",
         gateway_session_id="session",
         max_trace_bytes=10000,
         evolution_binding=raw,
@@ -539,3 +540,16 @@ def test_binding_requires_explicit_evolution_strategy(task_dir, strategy, bindin
     with pytest.raises(ValueError):
         create_isolated_trial(config(task_dir), allowed_task_dir=task_dir, strategy=strategy, evolution_binding=binding)
     assert not (task_dir.parent / "private-trials").exists()
+
+
+@pytest.mark.parametrize("v2", [False, True])
+def test_evolution_strategy_cannot_swap_binding_kind(task_dir, v2):
+    from tests.uni_agent.tasks.test_harbor_dsh_trace_artifacts import evolution_binding
+
+    with pytest.raises(ValueError, match="kind mismatch"):
+        create_isolated_trial(
+            config(task_dir),
+            allowed_task_dir=task_dir,
+            strategy="evolution-v2-lifecycle-v1" if v2 else "evolution-v2-lifecycle-admission-v2",
+            evolution_binding=evolution_binding(v2=v2),
+        )

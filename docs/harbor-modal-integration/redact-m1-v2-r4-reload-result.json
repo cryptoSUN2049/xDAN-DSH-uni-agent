@@ -1,0 +1,152 @@
+{
+  "source_commit": "2df91d7de31b9ecacefeaad1c54dbea80028eead",
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 480.01,
+    "pid": 78420,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "trajectory_audit": {
+    "eligible": true,
+    "groups": [
+      {
+        "eligible": true,
+        "expected_sessions": 1,
+        "global_steps": 2,
+        "group_uid": "bf18570a-9d58-439e-8c0f-ffbd549d3ecb",
+        "has_reward_variance": false,
+        "missing_consumed_keys": [],
+        "observed_sessions": 1,
+        "partition_id": "val",
+        "reasons": [],
+        "reward_values": [
+          1.0
+        ],
+        "status": "eligible-and-consumed",
+        "transfer_queue_keys": [
+          "bf18570a-9d58-439e-8c0f-ffbd549d3ecb_0_0"
+        ]
+      },
+      {
+        "eligible": true,
+        "expected_sessions": 1,
+        "global_steps": 2,
+        "group_uid": "c3e95da6-f795-46db-84e6-e04ad1d4405a",
+        "has_reward_variance": false,
+        "missing_consumed_keys": [],
+        "observed_sessions": 1,
+        "partition_id": "val",
+        "reasons": [],
+        "reward_values": [
+          1.0
+        ],
+        "status": "eligible-and-consumed",
+        "transfer_queue_keys": [
+          "c3e95da6-f795-46db-84e6-e04ad1d4405a_0_0"
+        ]
+      }
+    ],
+    "legacy_unjoinable": [],
+    "run_manifest_sha256": "sha256:a781e5823a4c05340e99fb5ebf18a8e4d4f381965c4b1d3ad70de42a34834f03",
+    "run_status": "completed",
+    "schema": "dsh.trajectory-group-audit.v1",
+    "summary": {
+      "eligible_groups": 2,
+      "groups": 2,
+      "legacy_unjoinable_files": 0,
+      "rejected_groups": 0,
+      "run_completed": true,
+      "unexpected_consumed_rows": 0,
+      "variance_groups": 0
+    },
+    "unexpected_consumed": {
+      "val": []
+    }
+  },
+  "launch_manifest": {
+    "source_commit": "2df91d7de31b9ecacefeaad1c54dbea80028eead",
+    "environment": {
+      "PATH": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+      "PYTHONPATH": "/workspace/rebuild/uni-agent-g1-v2:/workspace/rebuild/uni-agent-g1-v2/verl",
+      "PYTHON_BIN": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+      "DSH_VENV": "/workspace/venvs/uni-agent-rebuild-cf2d3f5",
+      "DSH_RUNTIME_MODE": "exe",
+      "DSH_SHA": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+      "MODEL_LICENSE_APPROVED": "1",
+      "MODEL_ID": "Qwen/Qwen3-4B",
+      "MODEL_PATH": "/workspace/models/Qwen3-4B-1cfa9a7",
+      "DATA_ROOT": "/root/runs/dsh-redact-execute-v2-r1-data",
+      "TASK_CONFIG": "/root/runs/dsh-redact-execute-v2-r1-data/task-config.yaml",
+      "RUN_ROOT": "/root/runs/dsh-redact-m1-v2-r4-reload",
+      "CKPTS_DIR": "/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4-reload",
+      "PROJECT_NAME": "dsh-redact-execute",
+      "EXP_NAME": "m1-v2-r4-reload",
+      "MAX_PROMPT_LENGTH": "8192",
+      "MAX_RESPONSE_LENGTH": "1024",
+      "PPO_MAX_TOKEN_LEN_PER_GPU": "9216",
+      "ROLLOUT_N": "4",
+      "VAL_ROLLOUT_N": "1",
+      "ROLLOUT_MAX_NUM_SEQS": "1",
+      "TRAIN_BATCH_SIZE": "2",
+      "PPO_MINI_BATCH_SIZE": "1",
+      "TOTAL_TRAINING_STEPS": "2",
+      "SAVE_FREQ": "1",
+      "TEST_FREQ": "1",
+      "TRAIN_MAX_SAMPLES": "4",
+      "VAL_MAX_SAMPLES": "2",
+      "DATA_SHUFFLE": "False",
+      "GPU_MEMORY_UTILIZATION": "0.30",
+      "ROLLOUT_ENFORCE_EAGER": "True",
+      "ROLLOUT_FREE_CACHE_ENGINE": "True",
+      "ROLLOUT_LAYERED_SUMMON": "False",
+      "ROLLOUT_CPU_OFFLOAD_GB": "0",
+      "ACTOR_PARAM_OFFLOAD": "True",
+      "ACTOR_OPTIMIZER_OFFLOAD": "True",
+      "LORA_RANK": "16",
+      "LORA_ALPHA": "16",
+      "SAVE_LORA_ONLY": "False",
+      "RESUME_MODE": "resume_path",
+      "VAL_ONLY": "True",
+      "CONCURRENCY": "1",
+      "GATEWAY_COUNT": "1",
+      "HF_HUB_OFFLINE": "1",
+      "WANDB_MODE": "disabled",
+      "TRAIN_FILE": "/root/runs/dsh-redact-execute-v2-r1-data/train.parquet",
+      "TEST_FILE": "/root/runs/dsh-redact-execute-v2-r1-data/holdout.parquet",
+      "RESUME_FROM_PATH": "/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4/global_step_2"
+    },
+    "command": [
+      "bash",
+      "examples/dsh/ops/reload_qwen3_4b_checkpoint.sh",
+      "/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4/global_step_2",
+      "--foreground"
+    ],
+    "wall_clock_seconds": 1800,
+    "initial_policy": "/workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4/global_step_2",
+    "curriculum_manifest_sha256": "8e7b094ade62d35c5cb186a1498ffcb69d31e8acad1958ab74b1e656fe6b118f",
+    "verifier_bundle_sha256": "sha256:60f49dcb519576bbe09839371ec3220775aa42aaf5e780a7f5d843c71552ea82",
+    "comparison_run": "dsh-redact-m1-r1",
+    "retry_of": "dsh-redact-m1-v2-r3",
+    "retry_reason": "Fix remote command quoting; prior supervisor failed before training",
+    "checkpoint_storage": "network volume /workspace"
+  },
+  "checkpoint_load_lines": [
+    "\u001b[36m(WorkerDict pid=81445)\u001b[0m INFO:2026-09-08 14:20:23,278:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4/global_step_2/actor/model_world_size_1_rank_0.pt",
+    "\u001b[36m(WorkerDict pid=81445)\u001b[0m INFO:2026-09-08 14:20:24,040:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4/global_step_2/actor/optim_world_size_1_rank_0.pt",
+    "\u001b[36m(WorkerDict pid=81445)\u001b[0m INFO:2026-09-08 14:20:24,056:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4/global_step_2/actor/extra_state_world_size_1_rank_0.pt",
+    "\u001b[36m(WorkerDict pid=81445)\u001b[0m INFO:2026-09-08 14:20:24,056:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/dsh-redact-m1-v2-r4/global_step_2/actor/extra_state_world_size_1_rank_0.pt"
+  ],
+  "actor_training_metric_lines": 0,
+  "new_model_checkpoint_files": [],
+  "gpu_processes": "",
+  "archive": {
+    "path": "/workspace/uni-agent-g1/reports/dsh-redact-m1-v2-r4-and-reload-evidence.tar.gz",
+    "sha256": "02c13549f7bb2fb253069274eedc44692f2f956f1bf93ce647cb8edca3ab5331",
+    "bytes": 677482
+  },
+  "evaluation_lines": [
+    "\u001b[36m(TaskRunnerV1 pid=80526)\u001b[0m step:2 - val-aux/dsh/harness-evolution/redact-holdout-01/reward/mean@1:np.float64(1.0) - val-aux/dsh/harness-evolution/redact-holdout-01/verifier_reward/mean@1:np.float64(1.0) - val-core/dsh/harness-evolution/redact-holdout-01/acc/mean@1:np.float64(1.0) - val-aux/dsh/harness-evolution/redact-holdout-02/reward/mean@1:np.float64(1.0) - val-aux/dsh/harness-evolution/redact-holdout-02/verifier_reward/mean@1:np.float64(1.0) - val-core/dsh/harness-evolution/redact-holdout-02/acc/mean@1:np.float64(1.0) - val-aux/num_turns/min:np.int64(6) - val-aux/num_turns/max:np.int64(6) - val-aux/num_turns/mean:np.float64(6.0)"
+  ]
+}

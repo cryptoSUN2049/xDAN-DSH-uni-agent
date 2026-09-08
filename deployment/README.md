@@ -1,7 +1,8 @@
 # 系统安装与部署入口
 
 本目录负责可复建的环境安装、服务管理与部署前检查。
-当前只落地目录约定；安装器、镜像和组合启动器尚未实现，不能据此认为服务已经部署。
+已具备版本锁、源码checkout、依赖安装、DSH发布物构建、服务监管和训练入口；完整干净环境复建仍待验收。
+现有GPU手动复跑入口：[当前M1操作说明](../docs/harbor-modal-integration/manual-gpu-runbook.md)。
 设计及验收：[部署设计](../docs/harbor-modal-integration/deployment-design.md)。
 
 ## 目录规划（待逐项实现）

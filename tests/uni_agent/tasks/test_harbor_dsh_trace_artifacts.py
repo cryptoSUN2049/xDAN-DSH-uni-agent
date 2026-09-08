@@ -136,8 +136,8 @@ def test_cancelled_upload_cleans_private_snapshot_and_cannot_retry(tmp_path):
         )
 
 
-def evolution_binding():
-    return json.dumps(
+def evolution_binding(*, v2=False):
+    raw = json.dumps(
         dict(
             kind="evolution-v2-lifecycle-v1",
             task_ref=dict(id="redact", version="v1", sha256="sha256:" + "a" * 64),
@@ -150,11 +150,24 @@ def evolution_binding():
             },
         )
     ).encode()
+    if not v2:
+        return raw
+    from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import EVOLUTION_V2_KIND, SOURCE_HASHES, VERIFIER_BUNDLE_SHA256
+
+    data = json.loads(raw)
+    data.update(
+        kind=EVOLUTION_V2_KIND,
+        verifier_bundle_sha256=VERIFIER_BUNDLE_SHA256,
+        source_sha256s={"examples/dsh/" + k: "sha256:" + v for k, v in SOURCE_HASHES.items()},
+    )
+    data["task_ref"]["version"] = "v2"
+    return json.dumps(data).encode()
 
 
-def test_evolution_uploads_only_trusted_fourth_binding(tmp_path):
+@pytest.mark.parametrize("v2", [False, True])
+def test_evolution_uploads_only_trusted_fourth_binding(tmp_path, v2):
     old, folder = fixture(tmp_path)
-    raw = evolution_binding()
+    raw = evolution_binding(v2=v2)
     handler = TraceArtifacts(
         agent_dir=old.agent_dir,
         gateway_session_id="session",

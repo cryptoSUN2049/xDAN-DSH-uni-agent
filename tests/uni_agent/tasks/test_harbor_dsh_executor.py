@@ -463,3 +463,61 @@ def test_evolution_preflight_rejects_before_trial(task_dir, harness, bad):
     with pytest.raises(ValueError):
         run(request, task_dir)
     assert harness.trial is None
+
+
+def evolution_v2_task(task_dir):
+    from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import EVOLUTION_V2_KIND, SOURCE_HASHES, VERIFIER_BUNDLE_SHA256
+
+    marker, metadata = evolution_task(task_dir)
+    metadata.update(task_version="2", verifier_version="2", verifier_code_digest=VERIFIER_BUNDLE_SHA256)
+    meta_raw = json.dumps(metadata).encode()
+    (task_dir / "tests/metadata.json").write_bytes(meta_raw)
+    marker.update(
+        kind=EVOLUTION_V2_KIND,
+        metadata_sha256=digest(meta_raw),
+        source_sha256s={"examples/dsh/" + k: "sha256:" + v for k, v in SOURCE_HASHES.items()},
+        verifier_bundle_sha256=VERIFIER_BUNDLE_SHA256,
+    )
+    (task_dir / "evolution.json").write_text(json.dumps(marker))
+    return marker
+
+
+def test_v2_executor_freezes_exact_marker_and_selects_strategy(task_dir, harness):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_SHA256
+
+    marker = evolution_v2_task(task_dir)
+    request = request_for(task_dir, dsh_release={"patch_sha256s": [T2_PATCH_SHA256]}, task_ref={"version": "v2"})
+    result = run(request, task_dir)
+    assert result.cleanup_confirmed
+    kwargs = harness.trial.strategy_kwargs
+    assert kwargs["strategy"] == marker["kind"]
+    assert json.loads(kwargs["evolution_binding"]) == {
+        **marker,
+        "task_ref": request.task_ref.model_dump(),
+        "fixture_path": "/tests/fixture.json",
+        "metadata_path": "/tests/metadata.json",
+    }
+
+
+@pytest.mark.parametrize("bad", ["v1_version", "bundle", "source", "missing_bundle", "extra"])
+def test_v2_marker_rejects_before_trial(task_dir, harness, bad):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_SHA256
+
+    marker = evolution_v2_task(task_dir)
+    if bad == "bundle":
+        marker["verifier_bundle_sha256"] = HASH
+    elif bad == "source":
+        marker["source_sha256s"].pop("examples/dsh/evolution_verifier_v2.py")
+    elif bad == "missing_bundle":
+        marker.pop("verifier_bundle_sha256")
+    elif bad == "extra":
+        marker["fixture_path"] = "/tmp/forged"
+    (task_dir / "evolution.json").write_text(json.dumps(marker))
+    request = request_for(
+        task_dir,
+        dsh_release={"patch_sha256s": [T2_PATCH_SHA256]},
+        task_ref={"version": "v1" if bad == "v1_version" else "v2"},
+    )
+    with pytest.raises(ValueError):
+        run(request, task_dir)
+    assert harness.trial is None
