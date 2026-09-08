@@ -148,3 +148,11 @@ Review：本次只交付文档，未执行训练；Harbor runtime、任务格式
 - [ ] 完成 Modal 同任务迁移，再扩全异步与 Harness 候选验收、晋升和回滚。
 
 Review：本轮总览补全，不升级任何运行状态；付费云端、模型调用范围沿用既有边界。
+
+### 4B能力审计与资料复用
+
+- [x] 并行审计Uni-Agent、读取导航五份数据设计及ContextPilot规范，归档来源与边界。
+- [x] 总览明确Harness RL必要、Modal可选、MemAgent可复用、OPD接口未接通。
+- [ ] 下一步为DSH可复建环境与Harbor单任务验证；继而细化学生Harness动作和跨Session评估合同。
+
+Review：HTML本地链接与diff检查通过；未复跑源码测试、模型、GPU或上游报告成绩。

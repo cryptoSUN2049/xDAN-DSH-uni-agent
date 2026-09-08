@@ -58,3 +58,15 @@
   resume 依赖 Agent capability，旧依赖版本不能自动享有新版功能。
 - 面向入门用户先解释角色和证据，再讲 API。起步命令应限制单任务；latest 任务
   集可能包含 GPU / 多容器任务，不能把完整 benchmark 当作无成本入门检查。
+
+## 2026-09-08：承认历史训练闭环，区分新增集成验收
+
+- 用户提醒此前 DSH → Uni-Agent → VERL 已在 RunPod GPU 真实运行。介绍后续计划时必须先承认已有 64 rollouts / 4 optimizer steps / 独立 reload，不笼统说整个项目尚未跑通。
+- 当前 H0 未执行、八类新 smoke 0/8，仅针对新增验收范围；后续工作是恢复复建、修复验收和扩展 Harbor / 教师学习 / Harness，不从零重建已有训练底座。
+- 用户记忆的 RTX 5090 型号尚未在本轮历史运行记录中确认；GPU 价格表中的型号不能作为实际运行硬件证据。
+
+## 2026-09-08：Harness RL是明确目标，先审计已有能力
+
+- 用户明确4B终局：熟练DSH调用与调度、记忆/上下文管理、受控RSI行为、终端任务能力。Harness RL不能从范围中淡化成可有可无；分阶段实现而非删除目标。
+- 先检查Uni-Agent已有MemAgent、Gateway多轨迹与异步recipe，避免重复建设。当前teacher_client不支持，不能声称OPD配置即用。
+- ContextPilot保留专题原始资产，训练集成以Uni-Agent为主；树分支partial rollout与异步partial rollout分开设计。

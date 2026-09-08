@@ -78,3 +78,9 @@
 - 隔离 Harbor 0.16.1 安装于 /private/tmp/harbor-h0-20260908；尚未运行 H0。
 - H0 已查明 network_mode=no-network 会启用 egress sidecar；delete 会执行 compose down --rmi local，执行前需限定本任务资源。
 - 本轮转入用户要求的上游调研，下一执行步骤仍为 H0，不将调研算作运行验收。
+
+## 4B能力目标与复用审计补充
+
+- 当前目标见 docs/harbor-modal-integration/4b-harness-capability-plan.md；Harness RL为必要范围，Modal为可选环境。
+- 导航数据资料已读五份；ContextPilot HTML和规范已读，源hash在contextpilot-source-identity.json，源工作区有未提交修改。
+- Uni-Agent已有MemAgent训练recipe；DSH训练adapter拒绝teacher_client，OPD待接入。本轮没有新增运行证据。

@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-08",
+  "scope": "read-only working-tree snapshot; source has uncommitted changes; not runtime verification",
+  "sources": [
+    {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/docs/feat-contextpilot-capability-sft/design.html",
+      "sha256": "209f59723c0978526e446b688c5a326955eaf1e3b267d19ef43a797b46625a1a"
+    },
+    {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/docs/feat-contextpilot-capability-sft/architecture.md",
+      "sha256": "f9708234295af4e9d09cd15663006b05fa34c18763981c0c6ed51ffe387cf977"
+    }
+  ]
+}
