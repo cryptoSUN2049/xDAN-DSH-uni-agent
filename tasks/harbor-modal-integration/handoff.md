@@ -260,3 +260,10 @@
 - 3bb1b46已推送；deployment/checks/checkpoint_delta.py在真实native两个checkpoint上运行，504 adapter变化0、399 base变化0，passed=false/exit1符合预期；报告/workspace/reports/native-v1-full-state-delta.json。
 - M1 v3仍使用dcbd323，不更新运行中的checkout；最近日志Actor/vLLM加载完成、正在基线采样，需继续核验。
 - docs/harbor-modal-integration/harbor-distributed-bridge-design.md为M2具体草案：Mac Harbor/Docker借用环境+RunPod Gateway，SSH控制/模型通路与证据回传；先审查后分批落实，不新增付费资源。
+
+## M1 v3 更新和消费审计通过；reload运行中
+
+- docs/harbor-modal-integration/m1-v3-results.md：exit0，两步非零梯度，504 adapter变化/399 base冻结；10/10轨迹组eligible-and-consumed，无异常消费。
+- checkpoint比较工具3bb1b46、审计读取器cf2d3f5；原始run代码dcbd323，未修改训练产物。
+- 独立reload已启动：工具28907，/workspace/runs/dsh-m1-v3-reload；日志/workspace/reports/dsh-m1-v3-reload.log。实际pid24470 timeout、24554 python；下一轮先核验，不重复启动。
+- Harbor borrowed adapter cf2d3f5已推送，76项相关测试通过；未运行真实DSH Harbor bridge。
