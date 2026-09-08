@@ -2268,3 +2268,33 @@ async def test_strict_verifier_blocks_custom_worker_before_scoring(fake_tq):
     with pytest.raises(RuntimeError, match="rollout failure"):
         await framework.generate_sequences(_build_prompts(count=1, global_steps=8))
     assert fake_tq.batch_puts == []
+
+
+@pytest.mark.asyncio
+async def test_validation_metrics_exclude_receipt_but_preserve_audit(fake_tq):
+    receipt = {"receipt_sha256": "sha256:" + "a" * 64, "freshness": "fresh"}
+
+    async def runner(**kwargs):
+        return TaskResult(
+            reward=0.5,
+            accuracy=1.0,
+            verifier_reward=0.5,
+            finished=True,
+            reward_info={"dsh": receipt, "optional": None, "details": [1, 2]},
+        )
+
+    framework = await _build_framework_with_agent_runners(
+        agent_runners={"runner": _inline_runner_config(runner)},
+        gateway_manager=_FakeGatewayManager({"session-sample-0-rollout-0": [_trajectory()]}),
+    )
+    await framework.generate_sequences(_build_prompts(count=1, global_steps=8, validate=True))
+    extra = tu.get(fake_tq.batch_puts[0]["fields"], "extra_fields")[0]
+    assert extra["reward_extra_info"] == {"acc": 1.0, "verifier_reward": 0.5}
+    assert extra["dsh_reward_info"]["dsh"] == receipt
+    assert extra["dsh_reward_info"]["details"] == [1, 2]
+    assert "optional" in extra["dsh_reward_info"]
+    from verl.trainer.ppo.metric_utils import process_validation_metrics
+
+    metrics = process_validation_metrics(["dsh"], ["uid-0"], {k: [v] for k, v in extra["reward_extra_info"].items()})
+    assert metrics["dsh"]["acc"]["mean@1"] == 1.0
+    assert metrics["dsh"]["verifier_reward"]["mean@1"] == 0.5

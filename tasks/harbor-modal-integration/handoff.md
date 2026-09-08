@@ -241,3 +241,9 @@
 - exit-code=1：基线validation已输出0.jsonl；VERL trainer_base._val_metrics_update→metric_utils.process_validation_metrics:987 对dict求np_mean失败。未进入训练更新。
 - 另有hermes JSON工具解析失败日志，需要后续诊断；不能把metrics修复等同任务成功。
 - 下一步审计framework reward_extra_info中的嵌套receipt投影；保留审计数据，只向数值指标聚合提供受支持字段，不改VERL子模块；subagent正只读定位。
+
+## M1 指标投影修复
+
+- framework TaskResult投影仅保留标量指标；完整dsh_reward_info仍保留，VERL子模块不变。
+- 新回归先失败后通过；实际调用固定VERL process_validation_metrics；框架/任务423 passed、1 skipped，另增强后的单测1 passed。
+- 待推送修复后固定新revision启动dsh-m1-v3；沿用v2任务/预算，不能追认v2通过。
