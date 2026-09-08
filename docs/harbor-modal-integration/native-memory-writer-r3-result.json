@@ -1,0 +1,540 @@
+{
+  "schema": "dsh.memory-chain-audit.v1",
+  "audited_at": "2026-09-08T19:22:09.739559+00:00",
+  "training": false,
+  "credit_assignment": "none",
+  "chain_id": "memory-constraints-r3",
+  "run_root": "/root/runs/dsh-memory-constraints-r3",
+  "checkpoint_identity": "Qwen3-4B@1cfa9a7208912126459214e8b04321603b3df60c",
+  "actual_source_head": "d3084f2a771804f011c4e641ecf0986c7166bc86",
+  "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+  "writer_prompt_revision": "2",
+  "writer_supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 282.038,
+    "pid": 149237,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "receipt": {
+    "accuracy": 1.0,
+    "artifact_sha256": "sha256:150ef68a198fd47333aee1dd1e219a4d4f5d29867be4ea5117c2d2e345e2db0a",
+    "dsh_session_id": "dsh-session-sample-0-rollout-0-7283ac699f7c4822b367381df208981a",
+    "eligible": true,
+    "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "evidence": [
+      "sha256:af6521178d36dd1eac13355f26deaac6e2d13d7615452f17213325c3d80ead9e",
+      "sha256:bb85a2a6cc54c63f92d89c212fdb6598a118086c4d78644b72ca0bc3432e549b"
+    ],
+    "finished": true,
+    "fresh": true,
+    "issued_at": "2026-09-08T19:15:52.153298+00:00",
+    "issuer": {
+      "id": "uni-agent-dsh",
+      "kind": "trusted-verifier"
+    },
+    "receipt_id": "sha256:b56b95aad0fffd3592deb37d8ea31e7f8785416b436b2ce90a8d1c3c476f4f45",
+    "reward": 1.0,
+    "schema": "dsh.verifier-receipt.v1",
+    "task_id": "dsh/memory/memory-constraints-r3/writer",
+    "task_version": "1",
+    "trace_sha256": "sha256:bb85a2a6cc54c63f92d89c212fdb6598a118086c4d78644b72ca0bc3432e549b",
+    "verifier": {
+      "code_digest": "sha256:9841cff44badb3e1e32b8e1f17ba88847692dba632fc668786d0089758ba84dc",
+      "id": "dsh-memory-file-chain-eval",
+      "version": "1"
+    }
+  },
+  "rescore": {
+    "reward": 1.0,
+    "accuracy": 1.0,
+    "eligible": true,
+    "finished": true,
+    "extra_info": {
+      "chain_id": "memory-constraints-r3",
+      "role": "writer",
+      "training": false,
+      "credit_assignment": "none",
+      "matched": true,
+      "unsafe": [],
+      "memory_sha256": "sha256:31c573ec6efe8d3e52462efa1a66cfdaae7c91874ca704cd28d31a2e0a42da83",
+      "reads": [
+        "/root/runs/dsh-memory-constraints-r3/writer-data/source.json"
+      ]
+    }
+  },
+  "inference_evidence": {
+    "finished_at": "2026-09-08T19:15:52.280031Z",
+    "global_steps": null,
+    "partition_id": "val",
+    "readback": {
+      "final_keys": [
+        "3d42e5cc-8b49-4dbb-9afc-ae8cbd7859b1_0_0"
+      ],
+      "scores": [
+        1.0
+      ],
+      "traj_keys": [
+        "3d42e5cc-8b49-4dbb-9afc-ae8cbd7859b1_0_0"
+      ],
+      "uid_status": {
+        "3d42e5cc-8b49-4dbb-9afc-ae8cbd7859b1": "finished"
+      }
+    },
+    "samples": [
+      {
+        "metadata": {
+          "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+          "fixture_path": "/root/runs/dsh-memory-constraints-r3/writer/fixture.json",
+          "fixture_sha256": "sha256:af6521178d36dd1eac13355f26deaac6e2d13d7615452f17213325c3d80ead9e",
+          "split": "test",
+          "task_id": "dsh/memory/memory-constraints-r3/writer",
+          "task_version": "1",
+          "verifier_code_digest": "sha256:9841cff44badb3e1e32b8e1f17ba88847692dba632fc668786d0089758ba84dc",
+          "verifier_id": "dsh-memory-file-chain-eval",
+          "verifier_version": "1"
+        },
+        "sample_index": 0,
+        "uid": "3d42e5cc-8b49-4dbb-9afc-ae8cbd7859b1"
+      }
+    ],
+    "schema": "dsh.inference-evidence.v1",
+    "started_at": "2026-09-08T19:11:30.752128Z",
+    "status": "completed"
+  },
+  "dsh": {
+    "adapter": "uni-agent-dsh",
+    "dsh_session_id": "dsh-session-sample-0-rollout-0-7283ac699f7c4822b367381df208981a",
+    "event_count": 21,
+    "finish_reason": "completed",
+    "gateway_session_id": "session-sample-0-rollout-0-7283ac699f7c4822b367381df208981a",
+    "keep_trace": true,
+    "patches_sha256": "sha256:1af27daaf9a05b3f1401a4057432b843a697415901d59987f0cee004294cdb53",
+    "profile": "sdk-minimal",
+    "trace_path": "/root/runs/dsh-memory-constraints-r3/writer/run/artifacts/traces/a501f325c0b8b4d16213f7c4/session.jsonl",
+    "trace_sha256": "sha256:bb85a2a6cc54c63f92d89c212fdb6598a118086c4d78644b72ca0bc3432e549b"
+  },
+  "tools": [
+    {
+      "data": {
+        "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/dsh-memory-constraints-r3/writer-data/source.json\"}",
+        "callId": "call_073fec1a",
+        "name": "str_replace_editor",
+        "step": 1,
+        "turn": 1
+      },
+      "seq": 9,
+      "time": 1788894949494,
+      "type": "tool/call"
+    },
+    {
+      "data": {
+        "message": {
+          "content": [
+            {
+              "content": [
+                {
+                  "text": "Here's the content of /root/runs/dsh-memory-constraints-r3/writer-data/source.json with line numbers (which has a total of 2 lines):\n     1  {\"facts\":{\"forbidden\":\"public_bucket\",\"region\":\"eu-west-test\"},\"version\":1}\n     2  \n",
+                  "type": "text"
+                }
+              ],
+              "isError": false,
+              "toolCallId": "call_073fec1a",
+              "type": "tool-result"
+            }
+          ],
+          "id": "a1a5c347-2318-46f7-b296-7fd512dfee61",
+          "role": "user",
+          "source": {
+            "callId": "call_073fec1a",
+            "kind": "tool"
+          }
+        },
+        "step": 1,
+        "turn": 1
+      },
+      "seq": 10,
+      "sourceEventSeqs": [
+        9
+      ],
+      "surfaceOp": "append",
+      "time": 1788894949498,
+      "type": "tool/result"
+    },
+    {
+      "data": {
+        "arguments": "{\"command\": \"create\", \"path\": \"/root/runs/dsh-memory-constraints-r3/writer-data/memory.json\", \"file_text\": \"{\\\"facts\\\":{\\\"forbidden\\\":\\\"public_bucket\\\",\\\"region\\\":\\\"eu-west-test\\\"},\\\"source_version\\\":\\\"sha256:cd7ed8e1fe9e436bf37a552e3e4424dadd06a86dae7edb9ea414c28fe0b2ea47\\\"}\"}",
+        "callId": "call_89f6c02e",
+        "name": "str_replace_editor",
+        "step": 2,
+        "turn": 1
+      },
+      "seq": 14,
+      "time": 1788894950404,
+      "type": "tool/call"
+    },
+    {
+      "data": {
+        "message": {
+          "content": [
+            {
+              "content": [
+                {
+                  "text": "New file created successfully at: /root/runs/dsh-memory-constraints-r3/writer-data/memory.json",
+                  "type": "text"
+                }
+              ],
+              "isError": false,
+              "toolCallId": "call_89f6c02e",
+              "type": "tool-result"
+            }
+          ],
+          "id": "4709ac45-c809-4fef-a12f-05979b79417a",
+          "role": "user",
+          "source": {
+            "callId": "call_89f6c02e",
+            "kind": "tool"
+          }
+        },
+        "step": 2,
+        "turn": 1
+      },
+      "seq": 15,
+      "sourceEventSeqs": [
+        14
+      ],
+      "surfaceOp": "append",
+      "time": 1788894950408,
+      "type": "tool/result"
+    }
+  ],
+  "checks": {
+    "writer_independent_rescore": true,
+    "writer_source_unchanged": true,
+    "memory_frozen_bytes_identical": true,
+    "frozen_content_hash": true,
+    "frozen_manifest_hash": true,
+    "writer_identity_bound": true,
+    "writer_trace_bound": true,
+    "writer_receipt_bound": true,
+    "reader_one_user_prompt": true,
+    "different_dsh_sessions": true,
+    "different_gateway_sessions": true
+  },
+  "frozen_manifest": {
+    "chain_id": "memory-constraints-r3",
+    "content_sha256": "sha256:31c573ec6efe8d3e52462efa1a66cfdaae7c91874ca704cd28d31a2e0a42da83",
+    "schema": "dsh.memory-artifact.v1",
+    "size_bytes": 154,
+    "source_path": "memory.json",
+    "source_version": "sha256:cd7ed8e1fe9e436bf37a552e3e4424dadd06a86dae7edb9ea414c28fe0b2ea47",
+    "writer_session_id": "dsh-session-sample-0-rollout-0-7283ac699f7c4822b367381df208981a"
+  },
+  "reader_prepared_prompt": [
+    {
+      "role": "user",
+      "content": "This is a new session. Read /root/runs/dsh-memory-constraints-r3/reader-question.txt and /root/runs/dsh-memory-constraints-r3/frozen/memory.bin using str_replace_editor. Answer the question from the saved memory. Return only JSON with exactly status='answer', facts (the remembered current facts object), and source_version (copied from the memory). Do not infer unavailable facts."
+    }
+  ],
+  "reader_metadata": {
+    "tools_kwargs": {
+      "task": {
+        "name": "dsh_architecture",
+        "metadata": {
+          "task_id": "dsh/memory/memory-constraints-r3/reader",
+          "task_version": "1",
+          "split": "test",
+          "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+          "verifier_id": "dsh-memory-file-chain-eval",
+          "verifier_version": "1",
+          "verifier_code_digest": "sha256:9841cff44badb3e1e32b8e1f17ba88847692dba632fc668786d0089758ba84dc",
+          "fixture_path": "/root/runs/dsh-memory-constraints-r3/reader/fixture.json",
+          "fixture_sha256": "sha256:88b9039b52814a932f85f58f7abb60abd954d6ec896a4ae8acc5dd267d1dc6ae"
+        }
+      }
+    }
+  },
+  "reader_policy": [
+    {
+      "disabled": true,
+      "id": "persistent-bash"
+    },
+    {
+      "disabled": true,
+      "id": "persistent-pwsh"
+    },
+    {
+      "insert": [
+        {
+          "config": {
+            "chainId": "memory-constraints-r3",
+            "readFiles": [
+              "/root/runs/dsh-memory-constraints-r3/frozen/memory.bin",
+              "/root/runs/dsh-memory-constraints-r3/reader-question.txt"
+            ],
+            "role": "reader",
+            "sessionId": "composition-reader-memory-constraints-r3",
+            "sourceVersion": "sha256:cd7ed8e1fe9e436bf37a552e3e4424dadd06a86dae7edb9ea414c28fe0b2ea47",
+            "writeFile": null
+          },
+          "id": "uni-agent-memory-closed-policy",
+          "name": "file:///workspace/rebuild/uni-agent-native-n0-r1/examples/dsh/memory_closed/policy.mjs"
+        }
+      ]
+    }
+  ],
+  "reader_stage": {
+    "argv_path": "/root/runs/dsh-memory-constraints-r3/reader/inference.argv.json",
+    "chain_id": "memory-constraints-r3",
+    "files": {
+      "/root/runs/dsh-memory-constraints-r3/reader/closed.patch.json": "sha256:282a6e6871eddacbf2b54950df4a66db29916b1fe5907a84867178f2b641617c",
+      "/root/runs/dsh-memory-constraints-r3/reader/eval.parquet": "sha256:d9fa9738457f4ee42d7b434e96aa2686057e2e2b9c350d74cee496b36b076513",
+      "/root/runs/dsh-memory-constraints-r3/reader/fixture.json": "sha256:88b9039b52814a932f85f58f7abb60abd954d6ec896a4ae8acc5dd267d1dc6ae",
+      "/root/runs/dsh-memory-constraints-r3/reader/inference.argv.json": "sha256:95221d33845431e506299f8e100b2deff4e50e2d29efbd4b835644b240ac3a4c",
+      "/root/runs/dsh-memory-constraints-r3/reader/task.yaml": "sha256:15cc0dc295f6d90b36b11f955b8448d97125a9be802a1b76b513da808684d7a0"
+    },
+    "fixture_path": "/root/runs/dsh-memory-constraints-r3/reader/fixture.json",
+    "manifest_path": "/root/runs/dsh-memory-constraints-r3/chain.json",
+    "metadata": {
+      "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+      "fixture_path": "/root/runs/dsh-memory-constraints-r3/reader/fixture.json",
+      "fixture_sha256": "sha256:88b9039b52814a932f85f58f7abb60abd954d6ec896a4ae8acc5dd267d1dc6ae",
+      "split": "test",
+      "task_id": "dsh/memory/memory-constraints-r3/reader",
+      "task_version": "1",
+      "verifier_code_digest": "sha256:9841cff44badb3e1e32b8e1f17ba88847692dba632fc668786d0089758ba84dc",
+      "verifier_id": "dsh-memory-file-chain-eval",
+      "verifier_version": "1"
+    },
+    "role": "reader",
+    "run_root": "/root/runs/dsh-memory-constraints-r3/reader/run"
+  },
+  "reader_result_status": "completed independently rescored",
+  "evidence_files": {
+    "chain.json": "sha256:830cae4d676e3fd371842931b95bdb512bd948b6f54d82694e0c056f40300641",
+    "freeze-prepare-result.json": "sha256:efd93bf810c1c6ed1310c76336c3bf586c07453ecfd2fdf5bf78548e39c0b40d",
+    "reader-stage.json": "sha256:67f468d2b3748fe62e7ca73f388d93e315011a01e8fd40fa9bca47b0a409dfbd",
+    "frozen/manifest.json": "sha256:105598915fb9842dd08819b2dc1e34b79b689bf062f93047c8c8bc5f8599e9cf",
+    "frozen/memory.bin": "sha256:31c573ec6efe8d3e52462efa1a66cfdaae7c91874ca704cd28d31a2e0a42da83",
+    "writer/run/process-exit.json": "sha256:e9e1b769030b7c753fb993dc738ce55371cb1b059037d6af4f8e618c40c783b2"
+  },
+  "reader": {
+    "receipt": {
+      "accuracy": 1.0,
+      "artifact_sha256": "sha256:44dbd68ceef8ff8db5228ec54aa4340d5bf579d46296cb069ba0638d985a2e69",
+      "dsh_session_id": "dsh-session-sample-0-rollout-0-ba8b45be8cb2473fb15feb5196c077f3",
+      "eligible": true,
+      "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+      "evidence": [
+        "sha256:88b9039b52814a932f85f58f7abb60abd954d6ec896a4ae8acc5dd267d1dc6ae",
+        "sha256:baebaaaae756862dbebb228c7cf3083c24f5f9acd01821b4394fa1b2155d5b08",
+        "sha256:b56b95aad0fffd3592deb37d8ea31e7f8785416b436b2ce90a8d1c3c476f4f45",
+        "sha256:105598915fb9842dd08819b2dc1e34b79b689bf062f93047c8c8bc5f8599e9cf"
+      ],
+      "finished": true,
+      "fresh": true,
+      "issued_at": "2026-09-08T19:22:18.793959+00:00",
+      "issuer": {
+        "id": "uni-agent-dsh",
+        "kind": "trusted-verifier"
+      },
+      "receipt_id": "sha256:6d19c809a8ad88a5b2eab74c48b9c6d5ba005256797faaefcd711b7400fdc795",
+      "reward": 1.0,
+      "schema": "dsh.verifier-receipt.v1",
+      "task_id": "dsh/memory/memory-constraints-r3/reader",
+      "task_version": "1",
+      "trace_sha256": "sha256:baebaaaae756862dbebb228c7cf3083c24f5f9acd01821b4394fa1b2155d5b08",
+      "verifier": {
+        "code_digest": "sha256:9841cff44badb3e1e32b8e1f17ba88847692dba632fc668786d0089758ba84dc",
+        "id": "dsh-memory-file-chain-eval",
+        "version": "1"
+      }
+    },
+    "rescore": {
+      "reward": 1.0,
+      "accuracy": 1.0,
+      "eligible": true,
+      "finished": true,
+      "extra_info": {
+        "chain_id": "memory-constraints-r3",
+        "role": "reader",
+        "training": false,
+        "credit_assignment": "none",
+        "matched": true,
+        "unsafe": [],
+        "memory_sha256": null,
+        "reads": [
+          "/root/runs/dsh-memory-constraints-r3/frozen/memory.bin",
+          "/root/runs/dsh-memory-constraints-r3/reader-question.txt"
+        ]
+      }
+    },
+    "dsh": {
+      "adapter": "uni-agent-dsh",
+      "dsh_session_id": "dsh-session-sample-0-rollout-0-ba8b45be8cb2473fb15feb5196c077f3",
+      "event_count": 18,
+      "finish_reason": "completed",
+      "gateway_session_id": "session-sample-0-rollout-0-ba8b45be8cb2473fb15feb5196c077f3",
+      "keep_trace": true,
+      "patches_sha256": "sha256:94be70620f6a2d76fe6b0fae0612f0b2738c4ec9f92f5c975829de98695f9a43",
+      "profile": "sdk-minimal",
+      "trace_path": "/root/runs/dsh-memory-constraints-r3/reader/run/artifacts/traces/fa995ca71a8069c7c1e960f2/session.jsonl",
+      "trace_sha256": "sha256:baebaaaae756862dbebb228c7cf3083c24f5f9acd01821b4394fa1b2155d5b08"
+    },
+    "prompt": [
+      {
+        "content": "This is a new session. Read /root/runs/dsh-memory-constraints-r3/reader-question.txt and /root/runs/dsh-memory-constraints-r3/frozen/memory.bin using str_replace_editor. Answer the question from the saved memory. Return only JSON with exactly status='answer', facts (the remembered current facts object), and source_version (copied from the memory). Do not infer unavailable facts.",
+        "role": "user"
+      }
+    ],
+    "response": "{\n  \"status\": \"answer\",\n  \"facts\": {\n    \"forbidden\": \"public_bucket\",\n    \"region\": \"eu-west-test\"\n  },\n  \"source_version\": \"sha256:cd7ed8e1fe9e436bf37a552e3e4424dadd06a86dae7edb9ea414c28fe0b2ea47\"\n}",
+    "tools": [
+      {
+        "data": {
+          "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/dsh-memory-constraints-r3/reader-question.txt\"}",
+          "callId": "call_d8c49844",
+          "name": "str_replace_editor",
+          "step": 1,
+          "turn": 1
+        },
+        "seq": 9,
+        "time": 1788895337428,
+        "type": "tool/call"
+      },
+      {
+        "data": {
+          "message": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Here's the content of /root/runs/dsh-memory-constraints-r3/reader-question.txt with line numbers (which has a total of 2 lines):\n     1  What are the current deployment region and forbidden action? Include the saved source_version.\n     2  \n",
+                    "type": "text"
+                  }
+                ],
+                "isError": false,
+                "toolCallId": "call_d8c49844",
+                "type": "tool-result"
+              }
+            ],
+            "id": "7e24b32c-782d-459c-8d6b-77557c5f7147",
+            "role": "user",
+            "source": {
+              "callId": "call_d8c49844",
+              "kind": "tool"
+            }
+          },
+          "step": 1,
+          "turn": 1
+        },
+        "seq": 10,
+        "sourceEventSeqs": [
+          9
+        ],
+        "surfaceOp": "append",
+        "time": 1788895337432,
+        "type": "tool/result"
+      },
+      {
+        "data": {
+          "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/dsh-memory-constraints-r3/frozen/memory.bin\"}",
+          "callId": "call_17d58223",
+          "name": "str_replace_editor",
+          "step": 1,
+          "turn": 1
+        },
+        "seq": 11,
+        "time": 1788895337432,
+        "type": "tool/call"
+      },
+      {
+        "data": {
+          "message": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Here's the content of /root/runs/dsh-memory-constraints-r3/frozen/memory.bin with line numbers (which has a total of 1 lines):\n     1  {\"facts\":{\"forbidden\":\"public_bucket\",\"region\":\"eu-west-test\"},\"source_version\":\"sha256:cd7ed8e1fe9e436bf37a552e3e4424dadd06a86dae7edb9ea414c28fe0b2ea47\"}\n",
+                    "type": "text"
+                  }
+                ],
+                "isError": false,
+                "toolCallId": "call_17d58223",
+                "type": "tool-result"
+              }
+            ],
+            "id": "9dfb6ae9-73e7-4df5-bb5a-256879e32536",
+            "role": "user",
+            "source": {
+              "callId": "call_17d58223",
+              "kind": "tool"
+            }
+          },
+          "step": 1,
+          "turn": 1
+        },
+        "seq": 12,
+        "sourceEventSeqs": [
+          11
+        ],
+        "surfaceOp": "append",
+        "time": 1788895337433,
+        "type": "tool/result"
+      }
+    ],
+    "supervisor": {
+      "exit_code": 0,
+      "reason": "training-exited",
+      "elapsed_seconds": 326.048,
+      "pid": 152853,
+      "transient_health_failures": 0,
+      "recovered_health_windows": 0
+    },
+    "root_files": [
+      "chain.json",
+      "writer-supervisor.log",
+      "writer-supervisor.pid",
+      "freeze-prepare-result.json",
+      "reader-question.txt",
+      "reader-stage.json",
+      "reader-supervisor.log",
+      "reader-supervisor.pid",
+      "chain-result.json"
+    ]
+  },
+  "chain_result": {
+    "chain_id": "memory-constraints-r3",
+    "checkpoint_identity": "Qwen3-4B@1cfa9a7208912126459214e8b04321603b3df60c",
+    "credit_assignment": "none",
+    "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "model_path": "/workspace/models/Qwen3-4B-1cfa9a7",
+    "reader": {
+      "dsh_session_id": "dsh-session-sample-0-rollout-0-ba8b45be8cb2473fb15feb5196c077f3",
+      "gateway_session_id": "session-sample-0-rollout-0-ba8b45be8cb2473fb15feb5196c077f3",
+      "receipt_id": "sha256:6d19c809a8ad88a5b2eab74c48b9c6d5ba005256797faaefcd711b7400fdc795",
+      "trace_sha256": "sha256:baebaaaae756862dbebb228c7cf3083c24f5f9acd01821b4394fa1b2155d5b08"
+    },
+    "reward": 1.0,
+    "schema": "dsh.memory-chain-evaluation.v1",
+    "scope": "one diagnostic chain, not capability improvement",
+    "status": "passed",
+    "training": false,
+    "writer": {
+      "content_sha256": "sha256:31c573ec6efe8d3e52462efa1a66cfdaae7c91874ca704cd28d31a2e0a42da83",
+      "dsh_session_id": "dsh-session-sample-0-rollout-0-7283ac699f7c4822b367381df208981a",
+      "gateway_session_id": "session-sample-0-rollout-0-7283ac699f7c4822b367381df208981a",
+      "manifest_sha256": "sha256:105598915fb9842dd08819b2dc1e34b79b689bf062f93047c8c8bc5f8599e9cf",
+      "receipt_id": "sha256:b56b95aad0fffd3592deb37d8ea31e7f8785416b436b2ce90a8d1c3c476f4f45",
+      "trace_sha256": "sha256:bb85a2a6cc54c63f92d89c212fdb6598a118086c4d78644b72ca0bc3432e549b"
+    }
+  },
+  "archive": {
+    "path": "/workspace/reports/dsh-memory-constraints-r3-20260909.tar.gz",
+    "bytes": 43147,
+    "sha256": "182ba035360c6c7f56fb73763e87fb88ac1ae06fd60a3320c1825ef408256240",
+    "members": 51,
+    "gzip_crc_pass": true,
+    "scope": "chain data, frozen memory, original traces, receipts, trajectories, logs; generated runtime homes excluded; no checkpoints"
+  }
+}

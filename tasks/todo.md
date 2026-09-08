@@ -421,11 +421,21 @@ Review：当前四能力仍未验收完成；真实GPU baseline在运行，后�
 - [x] memory反馈/3连拒绝保护：55项root CPU与3组Node；d13bda9已推送。
 - [x] GPU新writer r2已启动（PID125477），复用固定venv与DSH。
 - [x] context v2探索r2失败定位：合法view_range误判，16条真实会话已完成但准入拒绝。
-- [ ] 修复view_range边界并新身份真实复跑，不覆盖旧回执。
-- [ ] writer r2成功才freeze/B；失败保存原证据和诊断。
-- [ ] 有效训练组→参数/optimizer审计→独立reload与dev评估。
+- [x] 修复view_range边界并新身份r4真实复跑，不覆盖旧回执。
+- [x] writer r2未通过，保留失败与诊断；新prompt revision2另开r3。
+- [x] context v2有效训练组→参数/optimizer审计→独立reload与dev评估；严格准确率0，非能力通过。
 
 Review：M1先前RL通过；本轮context/记忆仍是基线与接线修复，不宣称新增RL成功。
 
 - [x] context v2 r4真实四题strict准入与TQ回读通过（290.008秒exit0），已归档完整回执。
-- [ ] 进入原生两步RL，检查实际任务组方差、optimizer与checkpoint；准确率未因此通过。
+- [x] context v2两步RL完成，14组消费与checkpoint/optimizer审计通过；仅首步有非零任务梯度，独立reload4题通过执行。
+
+## 当前复核：context独立reload与memory新链
+
+- [x] context训练/reload证据归档云盘，完整报告及HTML更新，390px视觉复核通过。
+- [x] RSI两项开发worker独立评分合同，97项root联合CPU回归；尚未真实学生配对运行。
+- [x] memory writer r3真实完成、reward1，严格freeze成功。
+- [x] memory r3独立reader完成、最终整链身份与结果审计、云盘归档通过。
+- [ ] 四能力足量结构覆盖与有效RL组、留出评估；不将12可用题当作12已消费题。
+
+Review：context实际消费2条独立训练题/8次尝试；严格dev准确率0。memory r3整链通过，第二族updates-r1 writer运行中；training=false，整体Goal保持active。
