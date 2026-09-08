@@ -1,0 +1,40 @@
+{
+  "schema": "dsh.native-optimizer-delta.v1",
+  "passed": true,
+  "errors": [],
+  "before": {
+    "steps": [
+      1
+    ],
+    "active_state_count": 504,
+    "empty_state_count": 37,
+    "tensor_count": 1512,
+    "all_finite": true,
+    "nonzero_moment_tensors": 504
+  },
+  "after": {
+    "steps": [
+      2
+    ],
+    "active_state_count": 504,
+    "empty_state_count": 37,
+    "tensor_count": 1512,
+    "all_finite": true,
+    "nonzero_moment_tensors": 504
+  },
+  "active_state_count": 504,
+  "empty_state_count": 37,
+  "changed_moment_tensors": 252,
+  "optimizer_step_advanced": true,
+  "files": {
+    "before": {
+      "path": "/workspace/uni-agent-g1/checkpoint/context-v2-train-r1/global_step_1/actor/optim_world_size_1_rank_0.pt",
+      "sha256": "96b2c927f69bdecb8de4f9fb3d61bdebc76dfb8f08197e1f636c8b298877c749"
+    },
+    "after": {
+      "path": "/workspace/uni-agent-g1/checkpoint/context-v2-train-r1/global_step_2/actor/optim_world_size_1_rank_0.pt",
+      "sha256": "e055b34fb32f441f94ea1a08a79926dce92753e2e79e37a494baa725e7b69ec6"
+    }
+  },
+  "input_scope": "Trusted checkpoints produced by this project's own run; weights_only=True, CPU only"
+}

@@ -3,13 +3,13 @@
 ## 1. TL;DR
 
 - 当前worktree `harbor-modal-integration` / 分支 `worktree-harbor-modal-integration`。Goal active；四能力与结果复现优先，Harbor后置，SFT不属本轮。权威目标active-engineering-goal.md，总方案uni-agent-system-plan-v3.html。
-- **当前唯一GPU作业**：`/root/runs/context-v2-train-r1`，监督PID136329；remote checkout `/workspace/rebuild/uni-agent-native-n0-r1` 固定 `a9c7b0a155da9b8d29da3d4d46a7c337156a54f3`。原生sync/GRPO，两步、n4，12可用训练题但仅消费部分。结果未出，不宣称有效更新。
+- **当前唯一GPU作业**：`/root/runs/context-v2-train-r1-reload`，监督PID143486；remote checkout `/workspace/rebuild/uni-agent-native-n0-r1` 固定 `a9c7b0a155da9b8d29da3d4d46a7c337156a54f3`。正在独立加载context训练step2，仅四题评估，不再训练。母run已595.014秒exit0：实际2个训练任务/n4，step1非零梯度，step2零adv；CPU审计14/14组消费通过，252 LoRA变化/399 base冻结，dev严格准确率0。
 - 使用已验收venv `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，absolute PYTHONPATH指当前checkout；不要重装环境或修改运行中源码。checkpoint `/workspace/uni-agent-g1/checkpoint/context-v2-train-r1/`；运行日志 `train.log`/`supervisor-result.json`。禁止全局Ray清理。
 - context v2 **r4四题真实strict准入及TQ回读通过**：290.008秒exit0，reward .1/.1/.1/.72，strict准确率0，无optimizer。报告native-context-v2-baseline-r4-result.json。r2曾误拒合法view_range；r3是root启动相对PYTHONPATH错误，均保留失败。新版本已83项回归通过。
 - memory writer r2：4steps/3工具调用，拒绝一次后成功创建正确memory；因一次越权硬拒，未freeze/B。初始操作协议revision2已`5867fcf`推送、57项回归通过，**尚未GPU验证**。下一次需新chain，不能复用r2或追认通过。
-- M1 v2-r4既有两步真实RL、504 LoRA更新/399 base冻结、optimizer与消费审计、独立reload已通过；两公开题原本满分，不能宣称能力提升。RSI固定Linux父/子/回滚18工具调用通过，但synthetic选择不计学生训练；真实候选隔离评估入口在本地实施。
+- M1 v2-r4既有两步真实RL、504 LoRA更新/399 base冻结、optimizer与消费审计、独立reload已通过；两公开题原本满分，不能宣称能力提升。RSI固定Linux父/子/回滚18工具调用通过，但synthetic选择不计学生训练；未晋升候选隔离评估入口已208dfcb推送，46项CPU通过；真实学生开发比较未实现。
 - 数据审计native-data-coverage-audit.md：context12 train/4 dev；memory两固定模板；封存能力测试已验收数0。独立任务、采样尝试、实际消费分开报告。最新诊断云盘归档摘要见native-diagnostics-archive-through-context-v2-r2.json。
-- 下一步：监督本次真实RL→消费/方差/参数与optimizer审计→新run独立reload；随后memory新writer→成功才freeze/B。清单驱动inference launcher本地补齐，避免手写启动环境；不阻塞当前已固定训练。
+- 下一步：完成当前独立reload与真实四题回执审计；随后memory新writer→成功才freeze/B。清单驱动inference launcher本地补齐，避免手写启动环境；不阻塞当前已固定训练。
 
 ### 最新 N0/N1/P1 检查点
 

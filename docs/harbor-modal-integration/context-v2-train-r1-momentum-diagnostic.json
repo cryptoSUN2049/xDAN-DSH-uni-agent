@@ -1,0 +1,39 @@
+{
+  "schema": "dsh.context-zero-gradient-momentum-diagnostic.v1",
+  "files": {
+    "before": {
+      "path": "/workspace/uni-agent-g1/checkpoint/context-v2-train-r1/global_step_1/actor/optim_world_size_1_rank_0.pt",
+      "sha256": "96b2c927f69bdecb8de4f9fb3d61bdebc76dfb8f08197e1f636c8b298877c749"
+    },
+    "after": {
+      "path": "/workspace/uni-agent-g1/checkpoint/context-v2-train-r1/global_step_2/actor/optim_world_size_1_rank_0.pt",
+      "sha256": "e055b34fb32f441f94ea1a08a79926dce92753e2e79e37a494baa725e7b69ec6"
+    }
+  },
+  "betas": [
+    0.9,
+    0.999
+  ],
+  "weight_decay": 0.01,
+  "moments": [
+    {
+      "moment": "exp_avg",
+      "beta": 0.9,
+      "tensors": 504,
+      "exact_decay_matches": 504,
+      "within_two_dtype_eps_scale": 504,
+      "max_abs_residual": 0,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "moment": "exp_avg_sq",
+      "beta": 0.999,
+      "tensors": 504,
+      "exact_decay_matches": 504,
+      "within_two_dtype_eps_scale": 504,
+      "max_abs_residual": 0,
+      "dtype": "torch.bfloat16"
+    }
+  ],
+  "interpretation": "CPU state recurrence compared with zero-gradient moment decay; not a new reward learning signal"
+}

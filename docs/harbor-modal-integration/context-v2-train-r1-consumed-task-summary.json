@@ -1,0 +1,574 @@
+{
+  "schema": "dsh.context-consumed-task-audit.v1",
+  "run_root": "/root/runs/context-v2-train-r1",
+  "scope": "Only this run. Validated binding relies on passing trajectory-groups.json; no GPU.",
+  "groups": [
+    {
+      "partition": "val",
+      "step": 0,
+      "group_uid": "57089a5e-c15d-4857-bfa3-d18a1f67c2b5",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-D",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-0-rollout-0-4b32f9d38a5a4730933a6e1b2d5bc0d5",
+          "tq_key": "57089a5e-c15d-4857-bfa3-d18a1f67c2b5_0_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1682,
+          "response_len": 635,
+          "model_token_count": 276,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:831ccab5b45c5d4e9ee932f9cb1e8dc24b955fb16ddfaa08ff046a4c3450a31f",
+          "receipt_sha256": "sha256:fcc32bce79e2541ce47e684477479a3f13f58507b3ab25e8c8425957d0aedd78",
+          "trace_sha256": "sha256:444695f6b797811e40c18cfb1fa8f5d2ee2a2cd03a0714fcd049af2271d68d21",
+          "artifact_sha256": "sha256:28dc3afa28d6ce21b0ea0e1829ab8be2aa5aaf1e27bde575e5156cce72d852cb"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-D"
+      ],
+      "reward_values": [
+        0.1
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "val",
+      "step": 0,
+      "group_uid": "ae45db3b-846a-4a29-8966-4a653fe17448",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-C",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-1-rollout-0-ade7c87f3ea9491c902abc4c212c3df6",
+          "tq_key": "ae45db3b-846a-4a29-8966-4a653fe17448_0_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1854,
+          "response_len": 812,
+          "model_token_count": 320,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:0d731690b22ee3219e134b150f260b2821cfb15e6703b4d4a9ce6afd8c257f6c",
+          "receipt_sha256": "sha256:f17f29a3fcdc044707fdfb424abe52dec0927bd1e6b62e52d2bd911e8899b41d",
+          "trace_sha256": "sha256:3561a0699ada0cd739407a67504088d765adf0eb2486d95190e4ccded763690d",
+          "artifact_sha256": "sha256:16e4c9e2319d36ba6294908323754d1144994b2005fbc085ffcdcab4264958ea"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-C"
+      ],
+      "reward_values": [
+        0.1
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "val",
+      "step": 0,
+      "group_uid": "e20a37ad-a1d4-48b0-aed0-7cbbc91d1439",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-M",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-2-rollout-0-9a1722a89ade4ce8ad14bdae8022bf15",
+          "tq_key": "e20a37ad-a1d4-48b0-aed0-7cbbc91d1439_0_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1689,
+          "response_len": 641,
+          "model_token_count": 278,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:c67c28b52dfd7229cf6990eb7cbcca11af094e77fef7e56faf53e502b258223b",
+          "receipt_sha256": "sha256:633f4d0c39160931d97be331d87de319be7d98b32d5204513ecf1d7d34787973",
+          "trace_sha256": "sha256:84e5da389c186049b332930701e088f31c82eefeffdd16c61b5789c59381d2e4",
+          "artifact_sha256": "sha256:c8c02a91f1971df4c68e38a0ac09a3d576d0fdaa3dd2870a3e060f9e97c23549"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-M"
+      ],
+      "reward_values": [
+        0.1
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "val",
+      "step": 0,
+      "group_uid": "51e9e34e-0238-49d7-8be1-86e3e2f50881",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-V",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-3-rollout-0-234e2bc78e624bf282ba361abcf6af7b",
+          "tq_key": "51e9e34e-0238-49d7-8be1-86e3e2f50881_0_0",
+          "reward": 0.72,
+          "accuracy": 0.0,
+          "prompt_len": 1749,
+          "response_len": 769,
+          "model_token_count": 369,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:83df3bd1718763f0f5c2458433f1b2a4faa33ff77cfec2855c0b6eb41e2b5b4c",
+          "receipt_sha256": "sha256:c017b43104ecf837668b81fa87187313b2e1c05946805e39ddd1e384ad785fda",
+          "trace_sha256": "sha256:7b4bc7e659d3ece093978f00a1e169044c101a8bc73b82f7ca17d9cce4641a78",
+          "artifact_sha256": "sha256:e2f5e07d59fc0563952c401c5d8dc142689379ab25327c5c2917b9bb26f08f30"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-V"
+      ],
+      "reward_values": [
+        0.72
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "val",
+      "step": 1,
+      "group_uid": "d450cdb2-3b49-40fe-b464-351ba399f730",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-D",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-0-rollout-0-455defbcec3949a7b5f8770eff0f25da",
+          "tq_key": "d450cdb2-3b49-40fe-b464-351ba399f730_0_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1682,
+          "response_len": 635,
+          "model_token_count": 276,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:627e64f34c33e6ab8a75b46e8d5f31eaeb1c9ea24224e18f5c31a87999325166",
+          "receipt_sha256": "sha256:950eb0e54487b22bfefc055ac11ec6dfdef1b439921fbad7d6fb6c145d0e963a",
+          "trace_sha256": "sha256:23186b94ec40c249329bc2b3feff7c3954ecdc186cf18b0fdc584d935490072c",
+          "artifact_sha256": "sha256:8f8155c010be61b9c539c1b7c7db3060d3f5e6b5c8993c2984f1ec0a206e2e12"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-D"
+      ],
+      "reward_values": [
+        0.1
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "train",
+      "step": 1,
+      "group_uid": "f6ceb7b1-8951-4e1b-a676-8bf73fb6aaad",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/train-M1",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-0-rollout-0-e6c3503d4b69440c9efbe9a09f179f52",
+          "tq_key": "f6ceb7b1-8951-4e1b-a676-8bf73fb6aaad_0_0",
+          "reward": 1.0,
+          "accuracy": 1.0,
+          "prompt_len": 1544,
+          "response_len": 892,
+          "model_token_count": 561,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:b3224cb7428ccb5ff95f9606cb462ed8515d4df05dd4409333ce35a053c88c45",
+          "receipt_sha256": "sha256:26dae98d3eacfcdeb2b6ffaff37a2bde2a23f4a533dd5dce483f052d9f54e14d",
+          "trace_sha256": "sha256:e79fa2b960e664a33339f6e147aa421b1a2c44a97d0ec5c58ff2b201a4962809",
+          "artifact_sha256": "sha256:9bf162c862c4b4238f5d4228376ba0b52587f4eae8c7b2d7f07a4d80090e0b5f"
+        },
+        {
+          "task_id": "dsh/context-v2/train-M1",
+          "session_index": 1,
+          "gateway_session_id": "session-sample-0-rollout-1-1222084d66b145b9b84e779e75794052",
+          "tq_key": "f6ceb7b1-8951-4e1b-a676-8bf73fb6aaad_1_0",
+          "reward": 1.0,
+          "accuracy": 1.0,
+          "prompt_len": 1544,
+          "response_len": 892,
+          "model_token_count": 561,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:b3224cb7428ccb5ff95f9606cb462ed8515d4df05dd4409333ce35a053c88c45",
+          "receipt_sha256": "sha256:a0afecb7841eb28f15ea3587d7e52e63d0ad9424f5bbeaf029cbbaee9e018310",
+          "trace_sha256": "sha256:fd928292595a57bb0f646bfa3a09c3c059fdaa52c35b0ff528272a42103c2a53",
+          "artifact_sha256": "sha256:c14150cbfc69d5998789241fea055924e5f9fb7e0e67e440a76f83b7f4f7a6f2"
+        },
+        {
+          "task_id": "dsh/context-v2/train-M1",
+          "session_index": 2,
+          "gateway_session_id": "session-sample-0-rollout-2-db9660371a6146daa54d3e6f674afdb2",
+          "tq_key": "f6ceb7b1-8951-4e1b-a676-8bf73fb6aaad_2_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1544,
+          "response_len": 331,
+          "model_token_count": 133,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:648209f009a4f452b07db3c75ad710f13c8bd2fcdb8bfbcbf4f0bd8441612f5f",
+          "receipt_sha256": "sha256:445cd80e74ea17a091da2b8c51e4df8e40da0be29ac4c76ff7d283c7db477409",
+          "trace_sha256": "sha256:f42db8831e21ef720bbfa99aa63db32f3ec58e485eb30539df90f0411fa1cdb3",
+          "artifact_sha256": "sha256:432e55751e94d988dd79a8f31b67cc16557360111c308aa842c6927a13333622"
+        },
+        {
+          "task_id": "dsh/context-v2/train-M1",
+          "session_index": 3,
+          "gateway_session_id": "session-sample-0-rollout-3-3d2754b1d4ea4428b403ab7283a95713",
+          "tq_key": "f6ceb7b1-8951-4e1b-a676-8bf73fb6aaad_3_0",
+          "reward": 1.0,
+          "accuracy": 1.0,
+          "prompt_len": 1544,
+          "response_len": 892,
+          "model_token_count": 561,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:b3224cb7428ccb5ff95f9606cb462ed8515d4df05dd4409333ce35a053c88c45",
+          "receipt_sha256": "sha256:e6550858f502cc92d85a90f98d49d2c2c57b262b68b91622eba3fb7220fc65fe",
+          "trace_sha256": "sha256:4736a6293f0f33dbef3c97015ce4b5e6e15b959169ce1df626d9f397718516cc",
+          "artifact_sha256": "sha256:35f0c50271ea66aa933d632581cd293c41697f39743ec4582ca1452f160997bc"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/train-M1"
+      ],
+      "reward_values": [
+        1.0,
+        1.0,
+        0.1,
+        1.0
+      ],
+      "has_reward_variance": true
+    },
+    {
+      "partition": "val",
+      "step": 1,
+      "group_uid": "70bd8906-ca65-4a31-98dd-78fab08f9eb2",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-C",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-1-rollout-0-50050c7c72214165806990dcb12f1dc0",
+          "tq_key": "70bd8906-ca65-4a31-98dd-78fab08f9eb2_0_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1854,
+          "response_len": 812,
+          "model_token_count": 320,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:41a18f47e7fd3c8e3d9d3d46a3cfa3e11d0cf7a0ef049e72a70cd65ca9bae83d",
+          "receipt_sha256": "sha256:7fa154f272087216907a34223ae87b2cfc2e8d0da031d2102de60003399322eb",
+          "trace_sha256": "sha256:fa73b3b3c6a4aed4e8dddf85c8100752ff9017b31456f1e55fded6c89b408e56",
+          "artifact_sha256": "sha256:4bed21c1e0e5573cefd866809906c4507cde4c50306e89e6d7e8006889997b0b"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-C"
+      ],
+      "reward_values": [
+        0.1
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "val",
+      "step": 1,
+      "group_uid": "5dfb223b-988c-4be5-9138-9cd6e0109330",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-M",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-2-rollout-0-fb8dbab6c64f47c784a58f3f8e1a7f34",
+          "tq_key": "5dfb223b-988c-4be5-9138-9cd6e0109330_0_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1689,
+          "response_len": 641,
+          "model_token_count": 278,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:a7f332f8ca6293ac2f8c4337978145e84c6b0e7de19e450bf67ddeb757a0d127",
+          "receipt_sha256": "sha256:645cfb73900ff9521ffd02a9586df9b4c72fb9fdf0da431d7c19c75e801251b7",
+          "trace_sha256": "sha256:3dae404e0fb0d83fa6600b19b143194a38318cd02975e7850e7c06a4bea11f5e",
+          "artifact_sha256": "sha256:b4264ab9b1f9b2a9a19defd0df019fc3893f795a5c76938af46857213594ecb9"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-M"
+      ],
+      "reward_values": [
+        0.1
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "val",
+      "step": 1,
+      "group_uid": "b3eb21f9-6a05-41ca-8365-c447b1b11344",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-V",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-3-rollout-0-85f19f508b8e4413a65e8eda1cf8aae2",
+          "tq_key": "b3eb21f9-6a05-41ca-8365-c447b1b11344_0_0",
+          "reward": 0.72,
+          "accuracy": 0.0,
+          "prompt_len": 1749,
+          "response_len": 769,
+          "model_token_count": 369,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:e598aa4f2eacabf9ea680e63640a4cea4ea22276fcb70653eb394ce26ede2a05",
+          "receipt_sha256": "sha256:aaa9ea3223699f49e8f1cfa688a416a9e5b28a590e4f6ceb3d60b0b22ec2fca1",
+          "trace_sha256": "sha256:9a505aaf2eb67941555998c7d05b4a116d3334c5c2c5736c9b10ad8c72ccbed3",
+          "artifact_sha256": "sha256:da072e3db6673bdce9e18cef5001ab98406628b8b7d0143b8ef27018252ca2fb"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-V"
+      ],
+      "reward_values": [
+        0.72
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "train",
+      "step": 2,
+      "group_uid": "86ef257e-f98d-4f4b-81ca-bdffb699d395",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/train-C3",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-0-rollout-0-0c6e2aa69ce24a9ebf0008d7f9dcc11f",
+          "tq_key": "86ef257e-f98d-4f4b-81ca-bdffb699d395_0_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1654,
+          "response_len": 516,
+          "model_token_count": 212,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:5d6c2cac40d11aebe331b204f0ef84f6d6cc8d248a4d31e4af8b12eb2c77b793",
+          "receipt_sha256": "sha256:3f5de88e440a86654269fe059341212a742d81eed1e633377e01299883a3a059",
+          "trace_sha256": "sha256:89bbde0cb6f0a0a0cc595e7d6c0d6eb09e3740e949ec17194ee86542fc77038d",
+          "artifact_sha256": "sha256:d2c96c590aa2f754c0ccac19db1e5122c615bbd3656349446648a48bcb757fc3"
+        },
+        {
+          "task_id": "dsh/context-v2/train-C3",
+          "session_index": 1,
+          "gateway_session_id": "session-sample-0-rollout-1-017f8ef60ed0478994395eb01ed688e8",
+          "tq_key": "86ef257e-f98d-4f4b-81ca-bdffb699d395_1_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1654,
+          "response_len": 516,
+          "model_token_count": 212,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:5d6c2cac40d11aebe331b204f0ef84f6d6cc8d248a4d31e4af8b12eb2c77b793",
+          "receipt_sha256": "sha256:b5982d9dca3a522f82211e9dd2248c96840563976eb633d478622851624e6ce8",
+          "trace_sha256": "sha256:f5228e5aa584c1dd870c79ac722fd317b154377e43fb5523e22a71b3d5417a15",
+          "artifact_sha256": "sha256:4cdf61c717fe7bab70b40351522439eb7895724d077360e86a230af7d9e1a264"
+        },
+        {
+          "task_id": "dsh/context-v2/train-C3",
+          "session_index": 2,
+          "gateway_session_id": "session-sample-0-rollout-2-4de5e484ac59484ba5c96e7d2c2c9bcd",
+          "tq_key": "86ef257e-f98d-4f4b-81ca-bdffb699d395_2_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1654,
+          "response_len": 530,
+          "model_token_count": 226,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:85384c10a18c72f9e61ad5a1b076faa46bea87223e5c94d50caba6986606cb62",
+          "receipt_sha256": "sha256:4dae4299b5ea9ec4990a05b8d6edd8ffae9dc3a89da8eda5672f33f272a5cac2",
+          "trace_sha256": "sha256:627690aabcb8be688842406e294d850b19d8eb83b69c9a7ad802803fbfeeb9d0",
+          "artifact_sha256": "sha256:9886cc03262bffe14e72df5dde8e28ee3e2ce4ca51b6e6b067dcccf55e79233b"
+        },
+        {
+          "task_id": "dsh/context-v2/train-C3",
+          "session_index": 3,
+          "gateway_session_id": "session-sample-0-rollout-3-35ae91e479784a859aac19a1333369b9",
+          "tq_key": "86ef257e-f98d-4f4b-81ca-bdffb699d395_3_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1654,
+          "response_len": 516,
+          "model_token_count": 212,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:5d6c2cac40d11aebe331b204f0ef84f6d6cc8d248a4d31e4af8b12eb2c77b793",
+          "receipt_sha256": "sha256:8bcd1b0336d7d1474cc095d86af9d4a9e95974a424091eb1acf2abfd36d31745",
+          "trace_sha256": "sha256:7e1c6b7759f1a4814ded0175995574c20c0c458f650a745a0f3f8e3c24213d6a",
+          "artifact_sha256": "sha256:da91dc4162ba10aae6108cf9731de2e45665e319ef1e8fa78b2775b11c754e16"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/train-C3"
+      ],
+      "reward_values": [
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "val",
+      "step": 2,
+      "group_uid": "3b4dbf3d-3540-443a-a1e4-a610cdfda10c",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-D",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-0-rollout-0-764a15f2cdac4304b5abdcda6a4e3fbb",
+          "tq_key": "3b4dbf3d-3540-443a-a1e4-a610cdfda10c_0_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1682,
+          "response_len": 635,
+          "model_token_count": 276,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:58363efa4acac02511ecb6a1d0963185c9a38e0f10eef728bf775f1f053b12e0",
+          "receipt_sha256": "sha256:25b5a500fee8a7beb9db258518f01bae57c6aa4fbac8b03e3d04ef144e27b7c1",
+          "trace_sha256": "sha256:102842327fd0ffb7497f0f90f2e840a31139b5b5ad8b8d5332e7438aa1dbeb8c",
+          "artifact_sha256": "sha256:80a32e7e8885fc29f54193c2600878ee3429fec00dd4d514f33760ffca312791"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-D"
+      ],
+      "reward_values": [
+        0.1
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "val",
+      "step": 2,
+      "group_uid": "36b59902-89a0-47e1-8c48-875093258730",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-C",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-1-rollout-0-f45bd5b67f4546cd9539a63058c1f00b",
+          "tq_key": "36b59902-89a0-47e1-8c48-875093258730_0_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1854,
+          "response_len": 812,
+          "model_token_count": 320,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:0ac5bb331d34f8037757aae43a64cc9c54a78d778344736be7b9e6fafadeff9e",
+          "receipt_sha256": "sha256:87535203cfd7c15a4900358bbfd973502fa3f7abae4b8dd0aa78a6b6898fcfa8",
+          "trace_sha256": "sha256:a9c6a86141a2a74154eb86f39fd9bcd8e6a9586b721e6e64bdbff56b2d5dd0d5",
+          "artifact_sha256": "sha256:92856eeac31a4f35e9d29b2560b896473908fb9a7058f5e65122b92398ea1f95"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-C"
+      ],
+      "reward_values": [
+        0.1
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "val",
+      "step": 2,
+      "group_uid": "25500aa3-5a6e-4293-9bbd-837bcf6a06c3",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-M",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-2-rollout-0-ceb00defef004fe5975e3a3a0fef6077",
+          "tq_key": "25500aa3-5a6e-4293-9bbd-837bcf6a06c3_0_0",
+          "reward": 0.1,
+          "accuracy": 0.0,
+          "prompt_len": 1689,
+          "response_len": 641,
+          "model_token_count": 278,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:68ace7915f9206dcc347ff50cfbdf8e15f232fdb251b4df8a46b25aaf6fc8872",
+          "receipt_sha256": "sha256:b0416778b327742f643bcbbf18d5e50d506225139033bd0ea0df19fb16fdcb46",
+          "trace_sha256": "sha256:346bd1319abfec6474ebf7d33c5412df6150a81c4083d5af182a0e1827b07956",
+          "artifact_sha256": "sha256:06722ced7135b7754414bc009673237ae4399c7812b630b674c87ad2da41cea8"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-M"
+      ],
+      "reward_values": [
+        0.1
+      ],
+      "has_reward_variance": false
+    },
+    {
+      "partition": "val",
+      "step": 2,
+      "group_uid": "96a7184e-15e0-4cbe-9bd8-e2563438c016",
+      "samples": [
+        {
+          "task_id": "dsh/context-v2/dev-V",
+          "session_index": 0,
+          "gateway_session_id": "session-sample-3-rollout-0-5b23eb703d4a4451b91a0d76e3fa4bcd",
+          "tq_key": "96a7184e-15e0-4cbe-9bd8-e2563438c016_0_0",
+          "reward": 0.72,
+          "accuracy": 0.0,
+          "prompt_len": 1749,
+          "response_len": 769,
+          "model_token_count": 369,
+          "has_logprobs": true,
+          "npz_sha256": "sha256:ebce69c89d803578e884abf1c2126fe989319d703cb7b9494d65e64207adfbc6",
+          "receipt_sha256": "sha256:57ff5815161cdb037dc2d939298465d7dd54a2bc0f7a7e8ccbed6ff39b104cc2",
+          "trace_sha256": "sha256:7490d7fb44d369e0926cc8ff7b7b1242063959146e80cb5779474ff8dfb5e086",
+          "artifact_sha256": "sha256:fddf89070de447a63828651bbf721cb592e9273e6d6535989df613982d754960"
+        }
+      ],
+      "distinct_task_ids": [
+        "dsh/context-v2/dev-V"
+      ],
+      "reward_values": [
+        0.72
+      ],
+      "has_reward_variance": false
+    }
+  ],
+  "metrics": [
+    {
+      "step": 0,
+      "data": {
+        "val-core/dsh/context-v2/context-v2-train-r1/acc/mean@1": 0.0
+      }
+    },
+    {
+      "step": 1,
+      "data": {
+        "actor/pg_loss": -0.35352346301078796,
+        "actor/grad_norm": 0.267578125,
+        "val-core/dsh/context-v2/context-v2-train-r1/acc/mean@1": 0.0,
+        "critic/advantages/mean": 0.35352352261543274,
+        "critic/advantages/max": 0.49999892711639404,
+        "critic/advantages/min": -1.499996542930603,
+        "training/off_policy/trajectory_staleness/mean": 0.0,
+        "training/off_policy/trajectory_staleness/max": 0,
+        "training/off_policy/trajectory_staleness/min": 0,
+        "training/off_policy/trajectory_staleness_worst/mean": 0.0,
+        "training/off_policy/trajectory_staleness_worst/max": 0,
+        "training/off_policy/trajectory_staleness_worst/min": 0
+      }
+    },
+    {
+      "step": 2,
+      "data": {
+        "actor/pg_loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "val-core/dsh/context-v2/context-v2-train-r1/acc/mean@1": 0.0,
+        "critic/advantages/mean": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0,
+        "training/off_policy/trajectory_staleness/mean": 0.0,
+        "training/off_policy/trajectory_staleness/max": 0,
+        "training/off_policy/trajectory_staleness/min": 0,
+        "training/off_policy/trajectory_staleness_worst/mean": 0.0,
+        "training/off_policy/trajectory_staleness_worst/max": 0,
+        "training/off_policy/trajectory_staleness_worst/min": 0
+      }
+    }
+  ],
+  "metrics_path": "/workspace/rebuild/uni-agent-native-n0-r1/dsh-context-v2/context-v2-train-r1.jsonl",
+  "metrics_sha256": "37f4c836017f2dd45e417e6b730ac6170eb5bddcb6e723712aae26fdb62261a5",
+  "step2_interpretation": "zero task advantage and gradient; checkpoint change may persist through AdamW momentum, not a new task-learning signal"
+}
