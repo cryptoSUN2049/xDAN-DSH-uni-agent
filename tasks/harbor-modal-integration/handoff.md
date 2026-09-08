@@ -247,3 +247,10 @@
 - framework TaskResult投影仅保留标量指标；完整dsh_reward_info仍保留，VERL子模块不变。
 - 新回归先失败后通过；实际调用固定VERL process_validation_metrics；框架/任务423 passed、1 skipped，另增强后的单测1 passed。
 - 待推送修复后固定新revision启动dsh-m1-v3；沿用v2任务/预算，不能追认v2通过。
+
+## M1 v3 已启动
+
+- 修复部署dcbd323，旧v2 exit1且GPU无遗留计算进程后才checkout。
+- 新run /workspace/runs/dsh-m1-v3，日志/workspace/reports/dsh-m1-v3.log，工具session26309；先查exit-code和真实进程，不重复启动。
+- resolved-launch.json更新完整集成SHA，其余任务/预算与v2一致。
+- 推送前检查曾因shell未fail-fast漏拦UP038；已补正dcbd323，两项Ruff重新通过。后续check链必须&&并在push前检查每个工具结果，不把末尾diff成功当lint成功。

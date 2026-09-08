@@ -36,3 +36,10 @@ null表示尚未恢复/确定，不能伪装成可部署锁文件。先形成候
 
 实际学生模型路径/revision（沿用Qwen3-4B或用户微调产物）、DSH发布物、可用容器执行方案，以及本次运行时长预算。
 SSH信息仅用于连接；不把私钥或凭据写入仓库。本轮仅做只读检查和设计落盘，尚未安装/训练。
+
+## 可执行单 rank LoRA 数值检查
+
+`deployment/checks/checkpoint_delta.py BEFORE.pt AFTER.pt --output NEW.json`
+比较同名、同形状、同dtype张量，要求存在LoRA变化、所有数值有限、存在且保持冻结的基础权重；键不一致直接拒绝。仅接受weights_only安全加载。报告含文件摘要与逐张量数值delta，不用文件hash冒充学习证据。两训练step之间的变化不等同初始模型到最终模型的变化，须按输入身份解读。多rank/sharded格式不在本入口验收范围。
+
+回归涵盖无更新、有效adapter更新、基础权重被改、NaN、缺adapter与键/形状不匹配；部署检查5项通过。独立reload仍由现有ops/reload_qwen3_4b_checkpoint.sh执行，须保持训练模型、LoRA配置、任务与解码预算，并使用新RUN_ROOT。
