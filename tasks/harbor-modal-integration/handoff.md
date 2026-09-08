@@ -102,3 +102,9 @@
 - 上游89733ec相对继承6e00d83多5提交，证据见upstream-sync-evidence.json与upstream-adoption-plan.md。
 - #109移除reward_info改TaskResult，S2前必须设计严格准入迁移；不直接覆盖本地unfinished整组拒绝。#165在启用SWE-rebench前采纳评估。
 - 本轮未merge、未升级VERL、未运行新测试。S0/S1保留当前pin，路线图已加迁移节点。
+
+## 成对版本同步预演
+
+- 用户要求同步最新Uni-Agent及对应VERL并避免冲突。目标89733ec + fefb080，当前VERL483b8a0；相差52提交，不能只看Uni-Agent5提交。
+- merge-tree预演8文件冲突，工作区未进入merge。version-sync-design.md与version-sync-preview.json为具体设计与清单；按Human Gate等待设计确认后实施。
+- 未checkout新VERL、未跑兼容测试、未push；历史GPU结果不代表新版本通过。

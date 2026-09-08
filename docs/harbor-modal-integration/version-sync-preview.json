@@ -1,0 +1,19 @@
+{
+  "current_uni_agent": "768cdef",
+  "target_uni_agent": "89733ec81a69c3cc93ac90479de7ea7f01e51c1f",
+  "current_verl": "483b8a009ba3a97563edee3a19887e4862b8094a",
+  "target_verl": "fefb080262e1c015a0ea05f958822a6a512dc795",
+  "verl_new_commits": 52,
+  "text_conflicts": [
+    "docs/source/concepts/gateway-and-trajectories.md",
+    "examples/inference/parallel_infer_verl.py",
+    "tests/uni_agent/framework/test_generate_sequences_on_cpu.py",
+    "tests/uni_agent/framework/test_task_runner.py",
+    "tests/uni_agent/gateway/test_message_codec_tool_dispatch.py",
+    "uni_agent/framework/framework.py",
+    "uni_agent/framework/task_runner.py",
+    "uni_agent/tasks/base.py"
+  ],
+  "merged": false,
+  "gpu_tested": false
+}
