@@ -1,0 +1,98 @@
+{
+  "schema": "dsh.m1-session-v2-data-preparation.v1",
+  "status": "prepared-and-verified",
+  "verified_at": "2026-09-08T08:02:30.160758+00:00",
+  "scope": "CPU Parquet generation and lineage/split checks only; no training, reload, model request, checkout edit, package install, or service restart",
+  "source_root": "/workspace/rebuild/uni-agent-g1-v2",
+  "source_revision": "c4f9c308e98dd002d491113691416e3ab8736306",
+  "verl_revision": "fefb080262e1c015a0ea05f958822a6a512dc795",
+  "source_tracked_clean_after": true,
+  "dsh_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+  "runtime_executable": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-linux-x64",
+  "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+  "python": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+  "versions": {
+    "deepseek-harness-sdk": "0.1.3a2",
+    "deepseek-harness-runtime-bin": "0.1.3a2",
+    "numpy": "2.3.5",
+    "datasets": "5.0.0",
+    "pyarrow": "24.0.0"
+  },
+  "counts": {
+    "holdout": 8,
+    "train": 16
+  },
+  "files": {
+    "train.parquet": {
+      "path": "/workspace/data/dsh-evolution-v2-b236969/train.parquet",
+      "sha256": "sha256:5e3927a87e8a1296ab0e665c9ca9029d0825096310ec7529570e6a564ac2da04",
+      "size_bytes": 66935
+    },
+    "holdout.parquet": {
+      "path": "/workspace/data/dsh-evolution-v2-b236969/holdout.parquet",
+      "sha256": "sha256:b4fb8a1eff5e2c9349dcc4d441119919359321766bc75caee7159f31185bc4e7",
+      "size_bytes": 44071
+    },
+    "manifest.json": {
+      "path": "/workspace/data/dsh-evolution-v2-b236969/manifest.json",
+      "sha256": "sha256:1e22ec154e30d1d3394c394b837be6cddcb5067da32ab895058d5347298854d7",
+      "size_bytes": 6114
+    }
+  },
+  "source_files": {
+    "examples/dsh/ops/prepare_qwen3_4b_data.sh": "sha256:769f31a87818f0890442af34f82f57257274db81c087ab4cd542e439d8bef557",
+    "examples/dsh/ops/write_dataset_manifest.py": "sha256:8cadce71ecfb3875fa1f23fd5f59eef1b1093e0e38a17e2569af4828f9ca93a3",
+    "examples/dsh/prepare_evolution_dataset.py": "sha256:8b97838da262e6dec4818911342f2f2f2517b3a16e171259df272f2e69ef85fb",
+    "examples/dsh/evolution_scenarios_v2.jsonl": "sha256:79689d637b5350b183a007d7aa0d2870c7fbaa62300c8cad5263d8aacd89473c",
+    "examples/dsh/evolution_verifier.py": "sha256:067668803e5f6fdb5f64cd44a17e2f4baef8835e4681a02cdf35d9f6bb4e3748",
+    "examples/dsh/evolution.patch.yml": "sha256:edace17a8096ec41e572c10fc7ad96f0d9a62c0a6ff9c8271694b4c1b1024aeb",
+    "examples/dsh/evolution_task_config_v2_fast.yaml": "sha256:33eff7c295c027dc11e1a0e81bd8da3b04aa03b727800716c331dda0e8ee373b"
+  },
+  "checks": {
+    "all_24_runtime_bindings": true,
+    "all_24_new_checkout_fixture_paths": true,
+    "all_24_fixture_hashes": true,
+    "train_holdout_task_id_overlap": 0,
+    "selected_trim_input_overlap": 0
+  },
+  "selected_m1_rows": {
+    "train": [
+      {
+        "task_id": "dsh/harness-evolution/trim-train-01",
+        "fixture_path": "/workspace/rebuild/uni-agent-g1-v2/examples/dsh/fixtures/evolution-v2/trim-train-01.json",
+        "fixture_digest": "sha256:eaf2ea89a1802cc9a2a4746397a67b3b1389181b9cdbd2459ce7c088e4232931"
+      },
+      {
+        "task_id": "dsh/harness-evolution/trim-train-02",
+        "fixture_path": "/workspace/rebuild/uni-agent-g1-v2/examples/dsh/fixtures/evolution-v2/trim-train-02.json",
+        "fixture_digest": "sha256:4fde269df07dcfc52ff4b0972714d330af20c64b7e8f8f0fb653be53865150ef"
+      },
+      {
+        "task_id": "dsh/harness-evolution/trim-train-03",
+        "fixture_path": "/workspace/rebuild/uni-agent-g1-v2/examples/dsh/fixtures/evolution-v2/trim-train-03.json",
+        "fixture_digest": "sha256:d5c7d0eca672c0d42f8bfa48335c76e25deae2541e6854f33b938ddf74f73661"
+      },
+      {
+        "task_id": "dsh/harness-evolution/trim-train-04",
+        "fixture_path": "/workspace/rebuild/uni-agent-g1-v2/examples/dsh/fixtures/evolution-v2/trim-train-04.json",
+        "fixture_digest": "sha256:81b232ed1cc1de57efd41c29396e2a0c0f973ffa8d2840fa1cb826bdda109831"
+      }
+    ],
+    "holdout": [
+      {
+        "task_id": "dsh/harness-evolution/trim-holdout-01",
+        "fixture_path": "/workspace/rebuild/uni-agent-g1-v2/examples/dsh/fixtures/evolution-v2/trim-holdout-01.json",
+        "fixture_digest": "sha256:961c62261e0be8c4d907301ff52578bacbd1954891845bbfc33bcadee069f791"
+      },
+      {
+        "task_id": "dsh/harness-evolution/trim-holdout-02",
+        "fixture_path": "/workspace/rebuild/uni-agent-g1-v2/examples/dsh/fixtures/evolution-v2/trim-holdout-02.json",
+        "fixture_digest": "sha256:93883fad5a2dc9ed8bf045ebdc48978bac3889a710df34e4e94c4b3ce0930248"
+      }
+    ]
+  },
+  "manifest_limitations": [
+    "source.repository and source.branch are historical hardcoded labels; source.commit and this report identify the actual checkout",
+    "holdout is outside optimization but same trim family and previously evaluated; not a fresh blind benchmark"
+  ]
+}

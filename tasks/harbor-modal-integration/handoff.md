@@ -367,3 +367,19 @@
 - 复用隔离重建venv /workspace/venvs/uni-agent-rebuild-cf2d3f5 已升级SDK/runtime到0.1.3a2。该目录名是历史标签，不能再当旧环境快照。
 - uv pip check发现旧环境本来已有mistral-common1.11.3约束numpy<2.4、实际2.4.6冲突（原生产venv只读检查同样失败）。隔离venv精确降到numpy2.3.5，257packages依赖检查全通过；原生产venv未更改。升级前后freeze在/workspace/reports/g1-v2-training-env-{before,resolved}.txt。
 - CUDA/import smoke工具79627已exit0：核心imports通过，CUDA可用，合成梯度sum12.0；报告/workspace/reports/g1-v2-training-env-smoke.json。这不是模型更新证据。Harbor新镜像由upstream_harbor_verl验收中；unia_capability_audit正在补M2可复用轻量配置/数据入口，勿覆盖未完成文件。
+
+## M2 Session v2 首次真实训练启动
+
+- c4f9c308e98dd002d491113691416e3ab8736306已推送并由GPU拉取；Mac/训练checkout一致。新版image846b46c...、task v2 sha182b1aa...；新版独立verifier oracle/nop/tamper=1/0/0，证据harbor-v2-isolation-result.json。
+- Mac controller工具97061仍运行，私有spec /private/tmp/m2v2-20260908-r1/run-spec.json，日志同目录controller.log，run-id m2-v2-r1。controller root为该目录/controller，截止epoch1788857460。专属端口Mac48340/48341/48342、remote48350/48351，Gateway node172.22.0.3，端口由真实Session登记。
+- GPU supervisor PID32642，运行根/root/runs/m2-v2-r1，train.log、exit-code、run-manifest.json、supervisor.pid均在该目录。2700秒hard timeout，最多2steps，n4/val n1/trainbatch1，LoRA16/16，8192+1024；持久checkpoint /workspace/runs/m2-v2-r1-checkpoints。启动查询已证实监督进程live，Ray TaskRunnerV1开始，尚未有有效更新证据。工具89317已exit0仅证明启动。
+- 凭据/待审计证据使用/root本地目录；/workspace强制666/777导致private-read拒绝，chmod无效，原本次workspace凭据副本已移除。私有控制配置/root/runs/m2-v2-r1-control；不提交/输出token。
+- 当前M2为同题工程复评，不当泛化。M1新版真正优化外留出重跑方案由upstream_harbor_verl记录m1-session-v2-replay-plan.md，须待M2 GPU释放再执行；旧Parquet带旧runtime/fixture路径必须重建。
+- 可复建context入口prepare_harbor_context.py及7tests完成待commit。verl_six_month_audit正在核验/发布私有DSH wheel Release；先读代理状态，不重复创建tag/上传。G1 active。
+
+## M2 r1失败后的修正
+
+- r1 supervisor已终止，exit1；未登记Gateway/未采样。堆栈collect_lora_params:742证实layered空收集fallback CPU summon不支持单卡NO_SHARD。新薄入口固定已验证layered=False等默认，13tests通过，原始失败log/manifest保留。
+- Mac controller56072/SSH56114已正常停止，工具97061 exit130、cleanup_errors=[]，本机三个端口关闭；GPU/Ray进程查询均无残留。
+- r2私有配置/private/tmp/m2v2-20260908-r2/run-spec.json已生成并传/root/runs/m2-v2-r2-control；尚未启动，先核新commit再开始。M1新版数据已生成/workspace/data/dsh-evolution-v2-b236969，16/8，报告m1-session-v2-data-preparation-result.json；不要重生成。
+- 私有DSH prerelease发布完成并逐字节回下载核验，见dsh-v2-private-release-result.json；不重复上传/创建tag。

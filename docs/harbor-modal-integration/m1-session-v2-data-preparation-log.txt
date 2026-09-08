@@ -1,0 +1,8 @@
+
+Creating parquet from Arrow format:   0%|          | 0/1 [00:00<?, ?ba/s]
+Creating parquet from Arrow format: 100%|██████████| 1/1 [00:00<00:00, 1904.77ba/s]
+
+Creating parquet from Arrow format:   0%|          | 0/1 [00:00<?, ?ba/s]
+Creating parquet from Arrow format: 100%|██████████| 1/1 [00:00<00:00, 3231.36ba/s]
+wrote splits: train=16, holdout=8
+/workspace/data/dsh-evolution-v2-b236969/manifest.json

@@ -21,7 +21,9 @@
     "sdk-restart --installed-wheel"
   ],
   "model_training_verified": false,
-  "validation_scope": "Linux x86_64 wheels installed in an independent Python 3.12.3 venv outside the source checkout; official minimal/restart scenarios passed with local mock model. Harbor image and GPU training on this release remain pending.",
+  "validation_scope": "Linux installed-wheel minimal/restart and Harbor image boot/setup plus isolated oracle/nop/tamper passed. GPU M2 r1 failed before sampling in single-card FSDP layered weight synchronization; corrected run pending. No new model update claimed.",
   "build_entry_revision": "1263ff59bfd06a36bf99122694de0df5869370ba",
-  "artifact_directory": "/workspace/artifacts/dsh-g1-v2-b236969"
+  "artifact_directory": "/workspace/artifacts/dsh-g1-v2-b236969",
+  "release_url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/tag/dsh-sdk-0.1.3a2-b236969-linux-x64",
+  "release_repository_visibility": "private"
 }

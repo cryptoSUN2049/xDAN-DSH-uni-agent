@@ -1,0 +1,142 @@
+{
+  "counts": {
+    "holdout": 8,
+    "train": 16
+  },
+  "dataset_id": "dsh-harness-evolution-v2",
+  "files": {
+    "holdout.parquet": {
+      "records": 8,
+      "sha256": "sha256:b4fb8a1eff5e2c9349dcc4d441119919359321766bc75caee7159f31185bc4e7"
+    },
+    "train.parquet": {
+      "records": 16,
+      "sha256": "sha256:5e3927a87e8a1296ab0e665c9ca9029d0825096310ec7529570e6a564ac2da04"
+    }
+  },
+  "fixtures": {
+    "mask-holdout-01": {
+      "path": "examples/dsh/fixtures/evolution-v2/mask-holdout-01.json",
+      "sha256": "sha256:2b09bf93defa774bf6069a33c6aa87c80390cbe1e348a0eab8dbaa2d42a79420"
+    },
+    "mask-holdout-02": {
+      "path": "examples/dsh/fixtures/evolution-v2/mask-holdout-02.json",
+      "sha256": "sha256:39d8691bec7d9fb49d2675681ff6e6f55f0065ef63aa1cf04a2cf28d3e4ad999"
+    },
+    "mask-train-01": {
+      "path": "examples/dsh/fixtures/evolution-v2/mask-train-01.json",
+      "sha256": "sha256:0ec0101dee5b8539c0d604e5546775606a13fe39647302a47859ca120cd42a8c"
+    },
+    "mask-train-02": {
+      "path": "examples/dsh/fixtures/evolution-v2/mask-train-02.json",
+      "sha256": "sha256:9d2a926ed9528ac9b419bd7b15033620a4e5711846ae902f98cbc24c9a1ae17a"
+    },
+    "mask-train-03": {
+      "path": "examples/dsh/fixtures/evolution-v2/mask-train-03.json",
+      "sha256": "sha256:cc57303f813ad51ff905959439d40d736fc58233fa22677af30b6852ba97776c"
+    },
+    "mask-train-04": {
+      "path": "examples/dsh/fixtures/evolution-v2/mask-train-04.json",
+      "sha256": "sha256:be0470e82261cffc41c2a617fb7c8295e637042d832d42ae4b7cad11e10fd766"
+    },
+    "normalize-holdout-01": {
+      "path": "examples/dsh/fixtures/evolution-v2/normalize-holdout-01.json",
+      "sha256": "sha256:d843ce59d6fad8b00bb5f032bcb318df66757fbbdf4ee1d45ac75418d90dd0d4"
+    },
+    "normalize-holdout-02": {
+      "path": "examples/dsh/fixtures/evolution-v2/normalize-holdout-02.json",
+      "sha256": "sha256:89b11c7d839da4bbc101fa3a021503c44346d281bd544352c1673444ddb9d868"
+    },
+    "normalize-train-01": {
+      "path": "examples/dsh/fixtures/evolution-v2/normalize-train-01.json",
+      "sha256": "sha256:238d132b7c77a0b8ee9f5065130c482d846104e80c4ed37f2c3c8487ea198879"
+    },
+    "normalize-train-02": {
+      "path": "examples/dsh/fixtures/evolution-v2/normalize-train-02.json",
+      "sha256": "sha256:fdede99050d0039b2208b476385f8f01d22ccaaf6bcf06d1f103e710b171f434"
+    },
+    "normalize-train-03": {
+      "path": "examples/dsh/fixtures/evolution-v2/normalize-train-03.json",
+      "sha256": "sha256:dc44a1bef4c07507870a3596f6f19092697fb9095e0d1f072c312c54ca3b4fd8"
+    },
+    "normalize-train-04": {
+      "path": "examples/dsh/fixtures/evolution-v2/normalize-train-04.json",
+      "sha256": "sha256:01afdbb0a54688d8294d22418b9be9b15689b35c819c0c6f1b86fd489e15f7bb"
+    },
+    "redact-holdout-01": {
+      "path": "examples/dsh/fixtures/evolution-v2/redact-holdout-01.json",
+      "sha256": "sha256:a4b6a08fbcebac031aee39fdddc782847d4e833b0944888fc202b677ca7cd841"
+    },
+    "redact-holdout-02": {
+      "path": "examples/dsh/fixtures/evolution-v2/redact-holdout-02.json",
+      "sha256": "sha256:d853528248c7070746eeb2586dedf05bfafd9d05dde37da7f3211a572661e550"
+    },
+    "redact-train-01": {
+      "path": "examples/dsh/fixtures/evolution-v2/redact-train-01.json",
+      "sha256": "sha256:7bee382f0329b19c6194780532262aa244f66fa5b34e31e3fa48d7e7dddeda04"
+    },
+    "redact-train-02": {
+      "path": "examples/dsh/fixtures/evolution-v2/redact-train-02.json",
+      "sha256": "sha256:6f17b981e8475d50903fff130dab6d89a0aa86768293021a4027ea3842d60bef"
+    },
+    "redact-train-03": {
+      "path": "examples/dsh/fixtures/evolution-v2/redact-train-03.json",
+      "sha256": "sha256:40adfec4316b2f36ae6f7e6c231c107d07ca9c206ac8f9d6ac2fa6e79afedd47"
+    },
+    "redact-train-04": {
+      "path": "examples/dsh/fixtures/evolution-v2/redact-train-04.json",
+      "sha256": "sha256:b22ef0b1e534aabc7a1e7e67559e760f80d24b2646ff0095d93a5886a85d5c79"
+    },
+    "trim-holdout-01": {
+      "path": "examples/dsh/fixtures/evolution-v2/trim-holdout-01.json",
+      "sha256": "sha256:961c62261e0be8c4d907301ff52578bacbd1954891845bbfc33bcadee069f791"
+    },
+    "trim-holdout-02": {
+      "path": "examples/dsh/fixtures/evolution-v2/trim-holdout-02.json",
+      "sha256": "sha256:93883fad5a2dc9ed8bf045ebdc48978bac3889a710df34e4e94c4b3ce0930248"
+    },
+    "trim-train-01": {
+      "path": "examples/dsh/fixtures/evolution-v2/trim-train-01.json",
+      "sha256": "sha256:eaf2ea89a1802cc9a2a4746397a67b3b1389181b9cdbd2459ce7c088e4232931"
+    },
+    "trim-train-02": {
+      "path": "examples/dsh/fixtures/evolution-v2/trim-train-02.json",
+      "sha256": "sha256:4fde269df07dcfc52ff4b0972714d330af20c64b7e8f8f0fb653be53865150ef"
+    },
+    "trim-train-03": {
+      "path": "examples/dsh/fixtures/evolution-v2/trim-train-03.json",
+      "sha256": "sha256:d5c7d0eca672c0d42f8bfa48335c76e25deae2541e6854f33b938ddf74f73661"
+    },
+    "trim-train-04": {
+      "path": "examples/dsh/fixtures/evolution-v2/trim-train-04.json",
+      "sha256": "sha256:81b232ed1cc1de57efd41c29396e2a0c0f973ffa8d2840fa1cb826bdda109831"
+    }
+  },
+  "generated_at": "2026-09-08T08:02:29.127002+00:00",
+  "operations": {
+    "mask_digits": 6,
+    "normalize_whitespace": 6,
+    "redact_email": 6,
+    "trim": 6
+  },
+  "schema": "dsh.evolution-dataset-manifest.v1",
+  "source": {
+    "branch": "dsh-adapter",
+    "commit": "c4f9c308e98dd002d491113691416e3ab8736306",
+    "repository": "cryptoSUN2049/uni-agent",
+    "scenario_file": "examples/dsh/evolution_scenarios_v2.jsonl",
+    "scenario_file_sha256": "sha256:79689d637b5350b183a007d7aa0d2870c7fbaa62300c8cad5263d8aacd89473c"
+  },
+  "status": "generated",
+  "task": {
+    "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "patches": [
+      "examples/dsh/evolution.patch.yml"
+    ],
+    "profile": "sdk-minimal",
+    "task_name": "dsh_architecture",
+    "verifier_code_digest": "sha256:067668803e5f6fdb5f64cd44a17e2f4baef8835e4681a02cdf35d9f6bb4e3748",
+    "verifier_id": "dsh-harness-evolution-verifier",
+    "verifier_version": "1"
+  }
+}

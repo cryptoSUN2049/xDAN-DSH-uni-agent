@@ -1,0 +1,100 @@
+{
+  "schema": "dsh.private-python-release-publication.v1",
+  "repository": "cryptoSUN2049/xDAN-DSH-Exp",
+  "repository_visibility": "private",
+  "source_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+  "release": {
+    "assets": [
+      {
+        "apiUrl": "https://api.github.com/repos/cryptoSUN2049/xDAN-DSH-Exp/releases/assets/550100551",
+        "contentType": "application/json",
+        "createdAt": "2026-09-08T08:00:01Z",
+        "digest": "sha256:c4d306689bd8203d5b51b68fc33298ef8b54bf0bdafc0c80a63b92568fa9c286",
+        "downloadCount": 0,
+        "id": "RA_kwDOUIrees4gyd5H",
+        "label": "",
+        "name": "build-info.json",
+        "size": 243,
+        "state": "uploaded",
+        "updatedAt": "2026-09-08T08:00:02Z",
+        "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/download/dsh-sdk-0.1.3a2-b236969-linux-x64/build-info.json"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/cryptoSUN2049/xDAN-DSH-Exp/releases/assets/550100553",
+        "contentType": "application/octet-stream",
+        "createdAt": "2026-09-08T08:00:01Z",
+        "digest": "sha256:59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+        "downloadCount": 0,
+        "id": "RA_kwDOUIrees4gyd5J",
+        "label": "",
+        "name": "deepseek_harness_runtime_bin-0.1.3a2-py3-none-manylinux_2_28_x86_64.whl",
+        "size": 79647622,
+        "state": "uploaded",
+        "updatedAt": "2026-09-08T08:00:13Z",
+        "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/download/dsh-sdk-0.1.3a2-b236969-linux-x64/deepseek_harness_runtime_bin-0.1.3a2-py3-none-manylinux_2_28_x86_64.whl"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/cryptoSUN2049/xDAN-DSH-Exp/releases/assets/550100552",
+        "contentType": "application/octet-stream",
+        "createdAt": "2026-09-08T08:00:01Z",
+        "digest": "sha256:6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
+        "downloadCount": 0,
+        "id": "RA_kwDOUIrees4gyd5I",
+        "label": "",
+        "name": "deepseek_harness_sdk-0.1.3a2-py3-none-any.whl",
+        "size": 13682,
+        "state": "uploaded",
+        "updatedAt": "2026-09-08T08:00:02Z",
+        "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/download/dsh-sdk-0.1.3a2-b236969-linux-x64/deepseek_harness_sdk-0.1.3a2-py3-none-any.whl"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/cryptoSUN2049/xDAN-DSH-Exp/releases/assets/550100550",
+        "contentType": "application/json",
+        "createdAt": "2026-09-08T08:00:01Z",
+        "digest": "sha256:2bc61f77ce7d9521275ba998731c8511c72cc244d434c22d63fa02b9058993cd",
+        "downloadCount": 0,
+        "id": "RA_kwDOUIrees4gyd5G",
+        "label": "",
+        "name": "release-manifest.json",
+        "size": 1506,
+        "state": "uploaded",
+        "updatedAt": "2026-09-08T08:00:02Z",
+        "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/download/dsh-sdk-0.1.3a2-b236969-linux-x64/release-manifest.json"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/cryptoSUN2049/xDAN-DSH-Exp/releases/assets/550100549",
+        "contentType": "application/octet-stream",
+        "createdAt": "2026-09-08T08:00:01Z",
+        "digest": "sha256:80cda211d2d3856b0f65cc984d2741acb133288298427b1b1ff9f504ba65acd8",
+        "downloadCount": 0,
+        "id": "RA_kwDOUIrees4gyd5F",
+        "label": "",
+        "name": "SHA256SUMS",
+        "size": 420,
+        "state": "uploaded",
+        "updatedAt": "2026-09-08T08:00:01Z",
+        "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/download/dsh-sdk-0.1.3a2-b236969-linux-x64/SHA256SUMS"
+      }
+    ],
+    "isDraft": false,
+    "isPrerelease": true,
+    "publishedAt": "2026-09-08T08:01:21Z",
+    "tagName": "dsh-sdk-0.1.3a2-b236969-linux-x64",
+    "targetCommitish": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+    "url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/tag/dsh-sdk-0.1.3a2-b236969-linux-x64"
+  },
+  "downloaded_assets_sha256": {
+    "build-info.json": "c4d306689bd8203d5b51b68fc33298ef8b54bf0bdafc0c80a63b92568fa9c286",
+    "deepseek_harness_runtime_bin-0.1.3a2-py3-none-manylinux_2_28_x86_64.whl": "59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+    "deepseek_harness_sdk-0.1.3a2-py3-none-any.whl": "6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
+    "release-manifest.json": "2bc61f77ce7d9521275ba998731c8511c72cc244d434c22d63fa02b9058993cd",
+    "SHA256SUMS": "80cda211d2d3856b0f65cc984d2741acb133288298427b1b1ff9f504ba65acd8"
+  },
+  "download_verification": "all five assets downloaded from private draft and matched staged bytes before publication; final published GitHub digests rechecked",
+  "relative_sha256sums_verified": true,
+  "embedded_runtime_and_rg_hashes_verified": true,
+  "no_existing_release_overwritten": true,
+  "python_distribution_version": "0.1.3a2",
+  "credentials_in_assets": false,
+  "runtime_training_claim": "No new training claim; publication packages previously verified installed-SDK and Harbor-setup artifacts."
+}

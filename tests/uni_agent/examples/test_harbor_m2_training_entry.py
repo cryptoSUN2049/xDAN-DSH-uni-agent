@@ -148,3 +148,37 @@ def test_hydra_application_removes_old_dsh_postprocessor_kwargs(inputs):
         cfg.actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_kwargs
     )
     assert applied == launch["postprocessor"]
+
+
+def test_single_gpu_print_defaults_disable_layered_offload_fallback(inputs):
+    launch_path = prepare_training(**inputs)
+    environment = dict(os.environ)
+    for key in (
+        "LOW_VRAM",
+        "ROLLOUT_LAYERED_SUMMON",
+        "ROLLOUT_ENFORCE_EAGER",
+        "ROLLOUT_FREE_CACHE_ENGINE",
+        "ROLLOUT_CPU_OFFLOAD_GB",
+        "LORA_RANK",
+        "LORA_ALPHA",
+        "SAVE_LORA_ONLY",
+        "ACTOR_PARAM_OFFLOAD",
+    ):
+        environment.pop(key, None)
+    command = subprocess.run(
+        [sys.executable, "-m", "examples.harbor.train_m2_online_rl", "--launch", str(launch_path), "--print-command"],
+        cwd=REPO,
+        env=environment,
+        capture_output=True,
+        text=True,
+        timeout=15,
+    )
+    assert command.returncode == 0, command.stderr
+    assert "actor_rollout_ref.rollout.layered_summon=False" in command.stdout
+    assert "actor_rollout_ref.rollout.enforce_eager=True" in command.stdout
+    assert "actor_rollout_ref.rollout.free_cache_engine=True" in command.stdout
+    assert "actor_rollout_ref.actor.fsdp_config.param_offload=True" in command.stdout
+    assert "actor_rollout_ref.rollout.engine_kwargs.vllm.cpu_offload_gb=0" in command.stdout
+    assert "actor_rollout_ref.model.lora_rank=16" in command.stdout
+    assert "actor_rollout_ref.model.lora_alpha=16" in command.stdout
+    assert "actor_rollout_ref.actor.checkpoint.save_lora_only=False" in command.stdout

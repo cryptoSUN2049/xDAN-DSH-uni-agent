@@ -1,0 +1,16 @@
+{
+  "run_id": "m2-v2-r1",
+  "status": "failed-before-sampling",
+  "exit_code": 1,
+  "integration_revision": "c4f9c308e98dd002d491113691416e3ab8736306",
+  "error": "NotImplementedError: offload_to_cpu=True and NO_SHARD is not supported yet",
+  "source_path": "verl/utils/fsdp_utils.py:742 collect_lora_params layered empty fallback",
+  "configuration": "ROLLOUT_LAYERED_SUMMON inherited True; corrected single-card M2 default False",
+  "optimizer_update_verified": false,
+  "gateway_registered": false,
+  "log": "/root/runs/m2-v2-r1/train.log",
+  "manifest": "/root/runs/m2-v2-r1/run-manifest.json",
+  "remote_gpu_processes_after_exit": [],
+  "controller_cleanup_errors": [],
+  "controller_tool_exit_code": 130
+}

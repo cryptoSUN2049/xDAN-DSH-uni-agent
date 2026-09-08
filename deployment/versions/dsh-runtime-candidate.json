@@ -12,6 +12,11 @@
   "sdk_wheel_sha256": "8c5a6ac81b965d4ac9f25995f8cebcc29c4b5b4d8dfa03212ffadfea613c520c",
   "python_distribution_version": "0.1.2a1",
   "sdk_smoke_passed": true,
-  "verified_scenarios": ["sdk-minimal", "sdk-restart"],
-  "model_training_verified": false
+  "verified_scenarios": [
+    "sdk-minimal",
+    "sdk-restart"
+  ],
+  "model_training_verified": false,
+  "role": "historical-M1-evidence-and-explicit-rollback-only",
+  "current_target_manifest": "deployment/versions/dsh-session-v2-candidate.json"
 }

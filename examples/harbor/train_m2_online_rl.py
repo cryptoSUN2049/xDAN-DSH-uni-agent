@@ -11,6 +11,21 @@ import subprocess
 from pathlib import Path
 
 PREFIX = "actor_rollout_ref.rollout.custom.agent_framework"
+# Carry the single-GPU M1 settings explicitly: layered summon can fall back to
+# offload_to_cpu=True, which FSDP1 NO_SHARD rejects before sampling.
+SINGLE_GPU_DEFAULTS = {
+    "LOW_VRAM": "1",
+    "ROLLOUT_LAYERED_SUMMON": "False",
+    "ROLLOUT_ENFORCE_EAGER": "True",
+    "ROLLOUT_FREE_CACHE_ENGINE": "True",
+    "ROLLOUT_CPU_OFFLOAD_GB": "0",
+    "ACTOR_PARAM_OFFLOAD": "True",
+    "ACTOR_OPTIMIZER_OFFLOAD": "True",
+    "LORA_RANK": "16",
+    "LORA_ALPHA": "16",
+    "SAVE_LORA_ONLY": "False",
+    "MAX_RESPONSE_LENGTH": "1024",
+}
 
 
 def _hydra(value):
@@ -56,7 +71,7 @@ def main():
     args = parser.parse_args()
     launch = json.loads(args.launch.read_bytes())
     overrides = build_overrides(launch)
-    environment = {**os.environ, **launch["environment"]}
+    environment = {**SINGLE_GPU_DEFAULTS, **os.environ, **launch["environment"]}
     base = Path(__file__).resolve().parents[1] / "dsh" / "train_qwen3_4b_online_rl.sh"
     if args.print_command or os.environ.get("PRINT_COMMAND") == "1":
         # The base print branch omits "$@". Preserve its command and append the
