@@ -337,6 +337,8 @@ def test_stage_launcher_waits_and_records_exit_without_training(prepared, monkey
     from examples.dsh.capabilities import memory_chain
 
     calls = []
+    monkeypatch.setattr(memory_chain, "RAY_TMP_ROOT", Path(prepared["root"]))
+    monkeypatch.setenv("RAY_TMPDIR", "/tmp/" + "long" * 40)
 
     def fake_run(argv, **kwargs):
         calls.append(argv)
@@ -349,6 +351,7 @@ def test_stage_launcher_waits_and_records_exit_without_training(prepared, monkey
         calls.append(argv)
         assert argv[2] == "examples.inference.parallel_infer_verl"
         assert environment["DSH_RUNTIME_MODE"] == "exe"
+        assert Path(environment["RAY_TMPDIR"]).name.startswith("dsh-mem-")
         assert kwargs["wall_seconds"] == 1800 and kwargs["grace"] == 30
         result = {"exit_code": 0 if outcome == "success" else 1}
         memory_chain.write_new(root / "supervisor-result.json", result)
@@ -368,6 +371,7 @@ def test_stage_launcher_waits_and_records_exit_without_training(prepared, monkey
     else:
         result = memory_chain.run_stage(prepared["manifest_path"], "writer")
         assert result["exit_code"] == 0 and result["training"] is False
+        assert Path(result["ray_tmpdir"]).is_dir()
         with pytest.raises(ValueError, match="empty"):
             memory_chain.run_stage(prepared["manifest_path"], "writer")
 
@@ -390,3 +394,45 @@ def test_owned_supervisor_real_cpu_wall_timeout(tmp_path):
     assert result["reason"] == "wall-clock-deadline" and result["exit_code"] != 0
     with pytest.raises(ProcessLookupError):
         os.kill(result["pid"], 0)
+
+
+def test_memory_stage_environment_short_independent_and_private(tmp_path, monkeypatch):
+    import os
+    from pathlib import Path
+
+    from examples.dsh.capabilities import memory_chain
+
+    monkeypatch.setattr(memory_chain, "RAY_TMP_ROOT", tmp_path)
+    inherited = {
+        "RAY_TMPDIR": "/tmp/" + "long" * 50,
+        "RAY_ADDRESS": "external",
+        "PYTHONHOME": "/wrong",
+        "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True",
+    }
+    for key, value in inherited.items():
+        monkeypatch.setenv(key, value)
+    writer = memory_chain.stage_environment(tmp_path / "writer/run", tmp_path)
+    reader = memory_chain.stage_environment(tmp_path / "reader/run", tmp_path)
+    assert writer["RAY_TMPDIR"] != reader["RAY_TMPDIR"]
+    assert len(Path(writer["RAY_TMPDIR"]).name) == len("dsh-mem-") + 12
+    assert Path(writer["RAY_TMPDIR"]).stat().st_mode & 0o777 == 0o700
+    assert writer["DSH_RUNTIME_MODE"] == "exe"
+    assert writer["PYTHONPATH"] == f"{tmp_path}:{tmp_path / 'verl'}"
+    for key in ("RAY_ADDRESS", "PYTHONHOME", "PYTORCH_CUDA_ALLOC_CONF"):
+        assert key not in writer
+    assert all(os.environ[key] == value for key, value in inherited.items())
+    with pytest.raises(FileExistsError):
+        memory_chain.stage_environment(tmp_path / "writer/run", tmp_path)
+
+
+def test_memory_stage_environment_refuses_symlink(tmp_path, monkeypatch):
+    import hashlib
+
+    from examples.dsh.capabilities import memory_chain
+
+    monkeypatch.setattr(memory_chain, "RAY_TMP_ROOT", tmp_path)
+    run = tmp_path / "writer/run"
+    target = tmp_path / ("dsh-mem-" + hashlib.sha256(str(run.resolve()).encode()).hexdigest()[:12])
+    target.symlink_to(tmp_path / "absent")
+    with pytest.raises(FileExistsError):
+        memory_chain.stage_environment(run, tmp_path)

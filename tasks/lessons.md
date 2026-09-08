@@ -155,3 +155,9 @@
 - 反事实重评分只用于定位错误，不能覆盖历史回执或当作送入优化器的真实轨迹。新verifier闭包需新prepare、新run和真实评分。
 
 - context v2 r3启动错误：不要手写相对PYTHONPATH=.:verl给会切cwd的runner/verifier。直接使用prepare manifest.environment的绝对PYTHONPATH；GPU前在任务data cwd导入实际verifier，并核bundle摘要。r3作为部署失败保留，不归因模型。
+
+## 2026-09-09：Ray短路径与GPU初始化证据
+
+- root手写`RAY_TMPDIR=/tmp/dsh-memory-constraints-r3-reader`导致Ray MetricsHead Unix socket总路径超过107字节；dashboard失败不等于训练/推理失败，当前vLLM仍完成加载。
+- 后续监督入口用run摘要构造短且独立的/tmp目录，记录实际值并拒绝复用；不要把完整业务run名层层拼进Ray socket路径。
+- 将初始化、采样、参数更新的耗时分别记录。不能凭某一时刻GPU 0%判断CUDA未安装，也不能把显存驻留当吞吐提升。

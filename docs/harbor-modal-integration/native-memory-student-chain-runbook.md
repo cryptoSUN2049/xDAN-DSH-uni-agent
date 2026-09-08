@@ -58,3 +58,10 @@ CPU测试覆盖两个任务族的完整合成回执链、独立verifier环境接
 ## writer r1后的反馈与预算修复
 
 旧r1证据保留：首次读来源成功，随后96次重复修改只读来源，无create目标；新deny只解释当前公开allowlist与create/file_text，不放宽准入或评分。run-stage每2秒读取本run正在追加的Session v2，连续3个同工具/同参数、真实配对且isError的MEMORY_POLICY_DENIED触发owned进程组终止；成功/换动作重置，尾部未完成JSON不计。触发时写`repeated-denial.json`（动作摘要，不写请求路径/内容），supervisor及process-exit保持失败，不启动B。必须重新prepare新chain目录，不能复用r1。
+# Ray 短临时目录修复
+
+真实 reader r3 的继承 `RAY_TMPDIR=/tmp/dsh-memory-constraints-r3-reader` 加上 Ray session/metrics socket 后超过 AF_UNIX 107 字节上限，MetricsHead 失败但推理仍继续。此处修复启动环境，不改变任务评分或运行中的远程进程。
+
+`memory_chain.run_stage` 将采用 `/tmp/dsh-mem-<run绝对路径SHA256前12位>`，A/B不同run路径分别预留新目录；拒绝已有目录、文件或符号链接。仅子进程环境覆盖RAY_TMPDIR并清除RAY_ADDRESS/PYTHONHOME/PYTORCH_CUDA_ALLOC_CONF，保留当前父环境不变；process-exit记录实际短路径。不删旧目录、不全局停Ray。测试覆盖阶段独立、继承长路径、父环境无污染、目录/符号链接复用拒绝。
+
+实现已完成：process-exit 的实际字段为 `ray_tmpdir`。两个新增用例先红后绿，chain/budget 共59项CPU测试通过，含模拟启动器环境传递与回执路径验证；尚未重新运行远程reader验证MetricsHead。预留目录即使后续runtime探针失败也保留；更正配置后使用新的run身份，不复用该目录。

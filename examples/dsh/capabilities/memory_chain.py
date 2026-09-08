@@ -443,6 +443,24 @@ def finalize_chain(manifest_path):
     return report
 
 
+RAY_TMP_ROOT = Path("/tmp")
+
+
+def stage_environment(run, repository):
+    """Reserve one short stage-owned Ray directory without mutating parent env."""
+    ray_tmp = RAY_TMP_ROOT / ("dsh-mem-" + hashlib.sha256(str(Path(run).resolve()).encode()).hexdigest()[:12])
+    ray_tmp.mkdir(mode=0o700, exist_ok=False)
+    env = {
+        **os.environ,
+        "DSH_RUNTIME_MODE": "exe",
+        "PYTHONPATH": f"{repository}:{repository / 'verl'}",
+        "RAY_TMPDIR": str(ray_tmp),
+    }
+    for key in ("RAY_ADDRESS", "PYTHONHOME", "PYTORCH_CUDA_ALLOC_CONF"):
+        env.pop(key, None)
+    return env
+
+
 def run_stage(manifest_path, role):
     """Explicit operator entry: executes inference only and records its process exit."""
     manifest = _load_manifest(manifest_path)
@@ -456,7 +474,7 @@ def run_stage(manifest_path, role):
         raise ValueError("Stage run directory must be empty; no retry/reuse")
     argv = loads(read_regular(stage["argv_path"]))
     repository = Path(__file__).resolve().parents[3]
-    env = {**os.environ, "DSH_RUNTIME_MODE": "exe", "PYTHONPATH": f"{repository}:{repository / 'verl'}"}
+    env = stage_environment(run, repository)
     probe = subprocess.run(
         [
             manifest["runner_python"],
@@ -483,6 +501,7 @@ def run_stage(manifest_path, role):
         "chain_id": stage["chain_id"],
         "role": role,
         "run_root": str(run),
+        "ray_tmpdir": env["RAY_TMPDIR"],
         "manifest_sha256": sha(read_regular(stage["manifest_path"])),
         "supervisor_sha256": sha(read_regular(supervision / "supervisor-result.json")),
         "repeated_policy_denial_limit": 3,
