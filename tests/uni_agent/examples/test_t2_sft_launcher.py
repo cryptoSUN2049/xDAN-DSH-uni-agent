@@ -35,6 +35,7 @@ def test_sft_launch_command_and_step_bound(tmp_path):
     with initialize_config_dir(config_dir=str(ROOT / "verl/verl/trainer/config"), version_base=None):
         config = compose(config_name="sft_trainer_engine", overrides=argv[argv.index("verl.trainer.sft_trainer") + 1 :])
     assert config.engine.strategy == "fsdp"
+    assert config.model.override_config.attn_implementation == "sdpa"
     assert config.data.custom_cls.name == "DshDecisionSFTDataset"
     assert config.model.lora_rank == 16 and config.trainer.total_training_steps == 1
     env["SFT_STEPS"] = "0"

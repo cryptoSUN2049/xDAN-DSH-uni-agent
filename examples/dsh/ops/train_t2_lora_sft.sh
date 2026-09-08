@@ -27,6 +27,7 @@ COMMAND=(
   "model.path=${MODEL_PATH}" "model.tokenizer_path=${MODEL_PATH}"
   model.lora_rank=16 model.lora_alpha=16 model.target_modules=all-linear
   model.enable_gradient_checkpointing=True model.use_remove_padding=True
+  ++model.override_config.attn_implementation=sdpa
   engine=fsdp engine.strategy=fsdp engine.ulysses_sequence_parallel_size=1
   engine.model_dtype=bfloat16 engine.dtype=bfloat16 engine.use_torch_compile=False
   "optim.lr=${SFT_LR:-1e-4}" checkpoint.save_contents='[model,optimizer,extra]'
