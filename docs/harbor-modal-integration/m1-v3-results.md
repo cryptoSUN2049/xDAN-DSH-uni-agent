@@ -1,4 +1,4 @@
-# M1 v3：真实更新证据（reload待完成）
+# M1 v3：真实更新与独立 reload 证据
 
 2026-09-08，训练代码dcbd323，DSH7840，配对VERL fefb080，固定Qwen3-4B模型与trim任务，RunPod RTX PRO 6000。
 
@@ -15,6 +15,14 @@
 
 基线两题reward均0.25、accuracy均0；step1与step2留出accuracy仍均0。没有能力提升证据。张量比较是两个训练step之间，不冒充初始模型对最终模型的逐张量比较。
 
-独立reload已在新进程启动：`/workspace/runs/dsh-m1-v3-reload`，日志`/workspace/reports/dsh-m1-v3-reload.log`，加载global_step_2；同代码、模型、LoRA与留出预算，val-only，30分钟截止。尚须核验load日志、结果和无新增optimizer更新。
+独立 reload 已完成，证据见下节；使用同代码、模型、LoRA 与留出预算，val-only。
 
 M2 Harbor DSH训练与可复建总交付仍未完成；本结果不代表完整G1通过。
+
+## 独立 reload 实测通过
+
+- reload exit-code=0；05:27:08日志明确Loaded model from global_step_2/actor/model_world_size_1_rank_0.pt，非基础模型回退。
+- 唯一日志step为2，没有actor训练指标，没有新增模型checkpoint。
+- 两题reward均0.25、accuracy均0，与基线同预算；不宣称提升。
+- /workspace/reports/dsh-m1-v3-reload-audit.json：eligible=true，2/2组eligible-and-consumed、0 rejected、0 unmatched consumption。
+- 此证据限定固定7840 DSH与dcbd323训练组合；最新DSH Session API迁移需要独立审计，不自动继承通过状态。

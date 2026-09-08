@@ -2,6 +2,8 @@
 
 日期：2026-09-08。只读 GitHub API + 本地 Git 对象；未升级、修改任何仓库，未运行GPU/模型。远端查询快照，不承诺此后不移动。
 
+> 后续精确源码复核见 [Session API 影响审计](dsh-session-api-impact-audit.md)。当前格式为 v2；以下早期文档抽查涉及 v1 的描述不能作为最新格式合同。
+
 ## 1. 精确身份
 
 | 对象 | 实际查询结果 |
@@ -50,7 +52,7 @@
 
 ### D. Session索引与sandbox状态投影
 
-- `packages/compaction/compaction/src/tool-pairing.ts` / `compaction-tool-result-pruner/src/index.ts`：`session.events[seq]`→`session.eventAt(seq)`；Seq与LogOffset拆分brand。非连续或fork继承语义不能再假定seq等于数组位置。
+- `packages/compaction/compaction/src/tool-pairing.ts` / `compaction-tool-result-pruner/src/index.ts`：`session.events[seq]`→`session.eventAt(seq)`；Seq与LogOffset拆分brand。最新源码仍保证 seq 从 0 连续；风险是 Seq 与 exclusive LogOffset、fork cut 和迁移后的坐标混用，不能把局部 snapshot 下标当绝对 seq。
 - `packages/sandbox/sandbox-policy/src/session-mode.ts`：删除从完整events倒序fold的effectiveSandboxMode，改用共享projection状态。隔离mode依旧事件化并可恢复，但调用内部旧helper将破坏兼容。
 
 这些是底层接口/状态管理升级，不是“最新版本才拥有上下文压缩和sandbox”。

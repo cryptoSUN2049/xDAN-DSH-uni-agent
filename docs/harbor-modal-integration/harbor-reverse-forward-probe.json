@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "scope": "RunPod loopback \u2192 SSH reverse forward \u2192 Mac loopback HTTP",
+  "remote_bind": "127.0.0.1:47081",
+  "nonce_matched": true,
+  "model_calls": 0
+}

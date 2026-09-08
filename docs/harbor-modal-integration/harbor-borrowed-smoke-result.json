@@ -1,0 +1,9 @@
+{
+  "session_id": "dsh-borrowed-1a132e31d1fa",
+  "passed": true,
+  "cleanup_completed": true,
+  "binary_roundtrip": true,
+  "argv_literal": true,
+  "env_cwd": true,
+  "exit_code": true
+}

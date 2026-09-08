@@ -232,3 +232,10 @@ CPU通过不替代D5–D7；oracle通过不等于DSH执行或RL通过。
 用户已授权G1中的M2工程实现与现有GPU有界运行；不需要再次购买资源或重复申请该范围。此设计是适配现有RunPod无Docker这一实际限制的具体方案，须先审查API/文件清单再分批实施。任何运行仍有显式任务、时间、并发和产物预算；不扩展为无限模型调用或新增付费服务。
 
 当前只交付设计，D0–D8不据此标记完成。H0已证明评分正反例和清理，但没有证明独立verifier防篡改隔离，D1的该子项仍待验证。
+
+## 实测推进记录
+
+- BorrowedHarborSandbox已实现；真实Harbor0.16.1＋Docker无网络容器验证binary roundtrip、literal argv、env/cwd和exit-code，全部通过；容器清理独立核验无残留。证据harbor-borrowed-smoke-result.json。
+- 可重跑命令：`PYTHONPATH=. <Harbor venv>/bin/python deployment/checks/harbor_environment_smoke.py --task-dir examples/harbor/h0-file-write --output <全新目录>`，180秒边界。
+- SSH配置只读确认allowtcpforwarding=yes、gatewayports=no。RunPod127.0.0.1:47081→SSH反向转发→Mac临时loopback HTTP探针nonce一致；专用隧道/HTTP结束后关闭。此证据只覆盖控制通路，不覆盖Docker→Gateway模型通路。
+- DSH薄bridge开发中，尚未实测Harbor中的真实DSH/model执行。

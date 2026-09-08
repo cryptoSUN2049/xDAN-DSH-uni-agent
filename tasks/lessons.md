@@ -94,3 +94,9 @@
 
 - 网络卷上root也可能无法chown；解包官方已校验tar使用--no-same-owner，不把所有权恢复报错误判为文件内容损坏。
 - 本地研究commit未推送时，先检查已发布祖先与runtime源码是否一致；只读Deploy Key限定单仓，比向GPU主机复制个人PAT更合适。
+
+## 2026-09-08：DSH 架构升级必须审计真实消费者
+
+- 用户提醒旧 Session API 转换器依赖；不能仅比较 Python SDK 签名就宣称 runtime 兼容。必须追踪 converter、ContextPilot runner/exporter、事件坐标与 flush/snapshot 生命周期。
+- 版本以精确源码 catalog 为准，README 可能滞后；聚焦测试与完整构建分别记录 revision、退出状态，不把旧失败日志归因于新 HEAD。
+- 已通过的固定 runtime 继续工程验证；候选版本单独迁移，不直接改变进行中的训练基线。

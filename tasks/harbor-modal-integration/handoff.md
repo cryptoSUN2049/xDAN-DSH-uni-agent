@@ -2,14 +2,13 @@
 
 ## 当前状态覆盖（2026-09-08，优先于下方历史追加记录）
 
-- 用户已批准工程集成；Uni-Agent 89733ec 与配对 VERL fefb080 已进入本地迁移，替代旧 pin。
-- #109 使用 typed TaskResult；DSH 严格回执、整组准入、后处理防篡改与旧 dump 审计投影保留。
-- 回归：framework/tasks 422 passed、1 skipped（Linux /proc）；Gateway session/RLInsight 70 passed。
-- 另一次 parser 组合测试因本机缺少 vLLM 有 4 项失败，不计为通过；Linux GPU 验证仍待完成。
-- deployment/README.md 与 deployment-design.md 已落地；安装器/服务组合尚未实现。
-- 下一步：提交迁移、版本预检、恢复 DSH 发布物、Linux 安装与 Docker oracle，再真实 GPU update/reload。
-- 未购买 GPU、未启动新训练、未推送本分支；下方“未merge/等待批准/固定483b8a0”为历史快照。
-
+- 当前 worktree/分支：harbor-modal-integration / worktree-harbor-modal-integration；提交身份以 git HEAD 为准，已通过 GitHub 分发。
+- Uni-Agent 上游 89733ec + VERL fefb080 已适配；DSH runtime 保持 7840，不随 sibling 仓自动升级。
+- M1 v3：两步真实非零梯度更新，504 LoRA 张量变化、399 base 冻结；10/10 组消费审计通过。独立 reload exit0，2/2 组通过；留出 accuracy 仍为0，无能力提升证据。详见 m1-v3-results.md。
+- M2：Harbor H0 oracle=1/nop=0，真实 borrowed Docker 环境与 SSH 控制隧道探针通过；DSH BaseAgent bridge 已实现并做接口测试，实际 Harbor 模型训练尚未验收。
+- 独立 GitHub checkout cf2d3f5 + 新 venv 安装 exit0，CUDA 前后向通过；复用依赖缓存与既有 DSH wheel，不冒充新机器冷构建或再次完整训练。
+- 最新 DSH 审计见 docs/harbor-modal-integration/dsh-session-api-impact-audit.md：converter 本地3e93373修复，聚焦18测试通过；最新HEAD完整构建成功证据不足。ContextPilot仍有旧session.events与lineage条件冲突。
+- G1仍active：下一步完成真实 M2 模型通路、训练/reload与总版本固定交付；不新增付费资源。下方为历史快照，旧“未运行/未推送/等待批准”不代表当前状态。
 
 ## 1. TL;DR
 
@@ -267,3 +266,10 @@
 - checkpoint比较工具3bb1b46、审计读取器cf2d3f5；原始run代码dcbd323，未修改训练产物。
 - 独立reload已启动：工具28907，/workspace/runs/dsh-m1-v3-reload；日志/workspace/reports/dsh-m1-v3-reload.log。实际pid24470 timeout、24554 python；下一轮先核验，不重复启动。
 - Harbor borrowed adapter cf2d3f5已推送，76项相关测试通过；未运行真实DSH Harbor bridge。
+
+## M1 reload通过 / 复建启动 / DSH最新API审计
+
+- reload exit0，明确load step2模型，2/2回执消费审计通过，只有val step2、无actor指标/新checkpoint。
+- 实际Harbor borrowed容器测试通过并清理；SSH控制reverse-forward探针通过，模型通路尚未验证。
+- 独立复建已启动：工具52307，/workspace/rebuild/uni-agent-cf2d3f5 + /workspace/venvs/uni-agent-rebuild-cf2d3f5；日志/reports/rebuild-cf2d3f5.log（实际完整路径/workspace/reports/），退出码rebuild-cf2d3f5.exit；先查询，不重复启动。
+- 用户提醒DSH最新架构入口及旧Session API转换器构建问题；upstream_harbor_verl子代理正在独立只读审计，报告dsh-session-api-impact-audit.md。不升级固定7840。
