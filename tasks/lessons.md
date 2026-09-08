@@ -70,3 +70,10 @@
 - 用户明确4B终局：熟练DSH调用与调度、记忆/上下文管理、受控RSI行为、终端任务能力。Harness RL不能从范围中淡化成可有可无；分阶段实现而非删除目标。
 - 先检查Uni-Agent已有MemAgent、Gateway多轨迹与异步recipe，避免重复建设。当前teacher_client不支持，不能声称OPD配置即用。
 - ContextPilot保留专题原始资产，训练集成以Uni-Agent为主；树分支partial rollout与异步partial rollout分开设计。
+
+## 2026-09-08：用户确认三阶段主线
+
+- 第一阶段工程贯通：恢复复验历史DSH/Uni-Agent/VERL，接通Harbor/Docker最小增量；建立可信数据、更新/reload和评估，不把能力提分作为工程完成条件。
+- 第二阶段任务效果：围绕DSH专长、记忆/上下文、终端与RSI任务，按缺口选择SFT/OPD/Harness RL，以独立同预算评估证明收益。
+- 第三阶段性能与规模：全异步、并发和按需Modal云端环境；验收吞吐、成本、稳定性和质量不退化。使用必要云GPU不等于提前开展第三阶段。
+- S0—S11为交付物编号，不是严格顺序；不能把Harness RL/RSI推迟到Modal之后，也不能让OPD或Modal阻塞第一阶段。

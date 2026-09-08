@@ -2,6 +2,9 @@
 
 ## 1. TL;DR
 
+- 当前优先级：工程贯通 → 任务效果 → 性能与规模。全异步/Modal优化在第三阶段；
+  Harness RL/RSI属于第二阶段效果目标。S编号不是严格顺序，先读路线图三阶段说明。
+
 - 2026-09-08 用户确认本 worktree 继续全链路集成；docs/harbor-modal-integration/index.html
   已成为统一方案入口，覆盖 SFT / OPD / RL 与 Harness 演化（方案范围，不代表完成）。
 
