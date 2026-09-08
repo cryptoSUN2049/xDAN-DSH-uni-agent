@@ -394,3 +394,9 @@
 
 - 连接中断期间补完本地预检：prepare_m2_training在写secret YAML前lstat验证真实owner/0700，模拟网络盘忽略mode测试先红后绿，主进程14tests通过、Ruff双通过。
 - 新context实际离线build+keyless成功，报告harbor-context-image-rebuild-result.json；19输入文件hash匹配，但image ID d4956d...与原始846b46c...不同（文件metadata不在旧manifest内容hash中），不称bit-identical。不修改任务pin。verl_six_month_audit正在为原始固定image发布私有归档以支持精确docker load；勿重复发布。
+
+## 连接阻塞第二轮与部署锁汇总
+
+- 本轮重新SSH原端口仍exit255（握手前关闭），用户当前连接信息请求仍待回复；不购买/重建Pod。训练完整验收仍未完成。
+- deployment/versions/g1-deployment-lock.json集中固定源码/我方分支commit/配对VERL/DSH双wheel发布/Harbor镜像/模型/data/verifier与依赖清单引用，状态显式pinned-candidate-training-acceptance-incomplete。source-lock与旧first-gpu-candidate指向此入口；不是训练通过证明。
+- 镜像私有归档代理verl_six_month_audit仍收尾，当前产物/private/tmp/harbor-image-release-ie278j_0/harbor-dsh-0.1.3a2-1263ff5-linux-amd64.docker.tar.gz（212260885bytes）；须等最终发布和回读验证再写URL/hash。原image ID是OCI index digest，不能混用config digest，精确load目标Docker29.2.0+containerd snapshotter。

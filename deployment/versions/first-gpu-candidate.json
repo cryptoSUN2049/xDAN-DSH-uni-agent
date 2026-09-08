@@ -17,5 +17,7 @@
     "driver": "595.91.07"
   },
   "observed_date": "2026-09-08",
-  "blocking_rule": "Resolve all null identities and validate the complete combination before accepting a training run."
+  "blocking_rule": "Resolve all null identities and validate the complete combination before accepting a training run.",
+  "role": "historical-initial-candidate",
+  "current_deployment_lock": "deployment/versions/g1-deployment-lock.json"
 }

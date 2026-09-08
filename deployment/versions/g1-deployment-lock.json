@@ -1,0 +1,96 @@
+{
+  "schema": "dsh.g1-deployment-lock.v1",
+  "status": "pinned-candidate-training-acceptance-incomplete",
+  "integration": {
+    "repository": "https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent",
+    "maintenance_branch": "worktree-harbor-modal-integration",
+    "code_revision": "79efaead0f7cefda1fea933e8e57138a18c636ff",
+    "upstream_revision": "89733ec81a69c3cc93ac90479de7ea7f01e51c1f",
+    "verl_revision": "fefb080262e1c015a0ea05f958822a6a512dc795"
+  },
+  "dsh": {
+    "repository": "cryptoSUN2049/xDAN-DSH-Exp",
+    "source_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+    "version": "0.1.3a2",
+    "runtime_binary_sha256": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "sdk_wheel_sha256": "sha256:6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
+    "runtime_wheel_sha256": "sha256:59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+    "private_release_url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/tag/dsh-sdk-0.1.3a2-b236969-linux-x64"
+  },
+  "harbor": {
+    "version": "0.16.1",
+    "image_id": "sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97",
+    "image_source_revision": "1263ff59bfd06a36bf99122694de0df5869370ba",
+    "platform": "linux/amd64",
+    "runner_sha256": "sha256:a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+    "profile": "sdk-minimal",
+    "patches": [],
+    "verified_docker_server": "29.2.0",
+    "verified_image_store": "io.containerd.snapshotter.v1",
+    "execution_manifest": "deployment/versions/harbor-execution-image.json",
+    "execution_manifest_sha256": "sha256:9d6f8f7c38048494979d4e540ef59b2344a6608811ce1f0d1ab61ac672511c99"
+  },
+  "gpu_python": {
+    "version": "3.12.3",
+    "packages_file": "deployment/versions/g1-v2-installed-packages.json",
+    "packages_file_sha256": "sha256:dadd2fadaedecaf7aba5035ee257b81d1ab77ae438f0a91a03872b8b8b28828e",
+    "scope": "Resolved observed versions; GPU access currently unavailable. Installed-version list does not substitute for wheel-byte lock or fresh-host validation.",
+    "verl_uv_lock_sha256": "sha256:23c77fb2e841965f2f098d378d9d0cbbb0b5824ef7eda1a97ff9b5054f6baa12",
+    "validated_resolution_adjustment": {
+      "numpy": "2.3.5",
+      "reason": "mistral-common 1.11.3 requires numpy<2.4 on Python3.12; previous2.4.6 violated metadata",
+      "uv_pip_check": "257 installed packages compatible before GPU connection loss"
+    }
+  },
+  "student": {
+    "model": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c"
+  },
+  "m1_data": {
+    "source_revision": "c4f9c308e98dd002d491113691416e3ab8736306",
+    "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "files": {
+      "train.parquet": {
+        "path": "/workspace/data/dsh-evolution-v2-b236969/train.parquet",
+        "sha256": "sha256:5e3927a87e8a1296ab0e665c9ca9029d0825096310ec7529570e6a564ac2da04",
+        "size_bytes": 66935
+      },
+      "holdout.parquet": {
+        "path": "/workspace/data/dsh-evolution-v2-b236969/holdout.parquet",
+        "sha256": "sha256:b4fb8a1eff5e2c9349dcc4d441119919359321766bc75caee7159f31185bc4e7",
+        "size_bytes": 44071
+      },
+      "manifest.json": {
+        "path": "/workspace/data/dsh-evolution-v2-b236969/manifest.json",
+        "sha256": "sha256:1e22ec154e30d1d3394c394b837be6cddcb5067da32ab895058d5347298854d7",
+        "size_bytes": 6114
+      }
+    },
+    "scope": "16 train/8 holdout prepared; selected 4/2 trim are same-family engineering holdout, not blind generalization"
+  },
+  "m2_task": {
+    "schema": "dsh.harbor-task-inputs.v1",
+    "task_id": "m2-file-write",
+    "task_version": "v2",
+    "task_sha256": "sha256:182b1aa1d4fcb93808fbcbe4ae722d2449ed7eed11fac93bb255909f67913eb1",
+    "digest_method": "sha256 of sorted compact JSON mapping relative path to unprefixed file sha256",
+    "files": {
+      "environment/docker-compose.yaml": "2dcbdf0039babcbbb76ee24167f6a71dae3bf689cc97e06fd62220649fe0dda6",
+      "instruction.md": "fa710628dc9886749b85809cb9a1ed8c9cf10b7e6853e0fc2451ecda6a6677ff",
+      "solution/solve.sh": "6d68d1072e6a16141128a054f808a15bbd619357d58847db80dbbafa4ca3c73b",
+      "task.toml": "cd187048c0400eb12fa6a5d734390382be27e517c39a93478fcd27550981c514",
+      "tests/Dockerfile": "eb43604e50ab557b8a072b8470a02896009f2acc79d0a0f9c6167b6f84504a6c",
+      "tests/docker-compose.yaml": "17ceef0a82e7dfb63d9f5ce974350f392dd8a323eac174ec69d28a90c7de8388",
+      "tests/test.sh": "bbe5540ad6700aee6a39b9ab91f4eb5fa40ae9bbc7f0dcb4448575038cc11e98"
+    },
+    "agent_image": "sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97",
+    "verifier_base_image": "ubuntu@sha256:561618e2c15bf2397621dd04f96926663a3b5616c189cf7e38db7e82f5c538ea"
+  },
+  "pending_acceptance": [
+    "M2 corrected single-card run with real Gateway token, verifier reward and numerical parameter update",
+    "M2 independent checkpoint reload and same-task reevaluation",
+    "New DSH M1 real updates and independent holdout reload evaluation",
+    "GPU-side clean deployment/rebuild and evidence archive after connection recovery"
+  ],
+  "historical_evidence_rule": "Old M1 success and local deployment checks are not evidence that the new full training combination passed."
+}
