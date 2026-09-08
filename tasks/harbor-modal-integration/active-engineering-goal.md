@@ -16,7 +16,7 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 
 | 对象 | 当前候选/要求 |
 | --- | --- |
-| 集成代码 | 当前T2部署代码2c7281ff23ce72462e6ed240603110b41686bf67；每次run保存实际完整40位commit，维护分支worktree-harbor-modal-integration |
+| 集成代码 | 当前T2部署代码f0979706cf2001f23d54dfef93ca12eee9c6a3bb；每次run保存实际完整40位commit，维护分支worktree-harbor-modal-integration |
 | 上游Uni-Agent | 89733ec81a69c3cc93ac90479de7ea7f01e51c1f |
 | 配对VERL | fefb080262e1c015a0ea05f958822a6a512dc795 |
 | GPU依赖 | 复用此VERL的uv.lock，fsdp+vllm；记录lock SHA256和实际安装清单 |
@@ -138,7 +138,7 @@ M2 Harbor端到端验收仍为G1必需范围；完整RSI和显著效果保持后
 - [x] 来源绑定的56train/28dev决策；原生SFT累计56步，base399冻结、LoRA504数值更新；独立加载。
 - [x] SFT后学生public-dev 0/2，非法JSON/错误注册API；正确保留失败与fresh receipt，未改判据。
 - [x] 四条原注册决策补课64步，父BF16→FP32规范后LoRA504真实更新、optimizer64；不是新增示范。
-- [ ] 注册课程后独立完整学生评估（/root/runs/t2-registration-student-eval-r1进行中）。
+- [x] 注册课程后独立完整学生评估已执行：exit0、0/2严格成功；需继续执行能力课程。
 - [x] Harbor T2固定双镜像四Docker正反例：1/0/0/篡改拒绝，全部清理；私有Release回下载hash通过。
 - [ ] 新学生经Gateway→Harbor→Task业务重算→trajectory audit的完整准入。
 - [ ] 新版M1/M2真实在线RL消费和有效数值更新、独立reload、未参与训练的留出前后评估。

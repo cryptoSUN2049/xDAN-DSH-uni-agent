@@ -1,0 +1,59 @@
+{
+  "schema": "dsh.t2-registration-student-eval.v1",
+  "exit_code": 0,
+  "scope": "public dev after 64-step registration curriculum; no RL update",
+  "cases": [
+    {
+      "trace_sha256": "e6e783f6fd48fdbf75ae230302147ff242b6e9ac4fcd1f30c9d2965d1b4ad05c",
+      "tool_calls": [
+        "cordis_inspect_self",
+        "cordis_inspect_query",
+        "cordis_define",
+        "cordis_define",
+        "cordis_define",
+        "cordis_define",
+        "cordis_define",
+        "cordis_run",
+        "cordis_run",
+        "cordis_inspect_self",
+        "cordis_stop",
+        "cordis_stop",
+        "cordis_undefine",
+        "cordis_undefine"
+      ],
+      "error_results": 12
+    },
+    {
+      "trace_sha256": "a5902bf217fbd6554dc7c92b88c6a2370fef52ba17174dd7e457b98a6bdc1a2c",
+      "tool_calls": [
+        "cordis_inspect_self",
+        "cordis_inspect_query",
+        "cordis_define",
+        "cordis_define",
+        "cordis_run"
+      ],
+      "error_results": 1
+    }
+  ],
+  "receipts": [
+    {
+      "task_id": "log-tool-dev-01",
+      "reward": 0.0,
+      "eligible": true,
+      "fresh": true,
+      "finished": true,
+      "trace_sha256": "sha256:e6e783f6fd48fdbf75ae230302147ff242b6e9ac4fcd1f30c9d2965d1b4ad05c",
+      "receipt_id": "sha256:defc895cf7049eadf0ecf2f7f9d1de5228d1841061b806677be7a08b2a44064f"
+    },
+    {
+      "task_id": "log-tool-dev-02",
+      "reward": 0.0,
+      "eligible": true,
+      "fresh": true,
+      "finished": true,
+      "trace_sha256": "sha256:a5902bf217fbd6554dc7c92b88c6a2370fef52ba17174dd7e457b98a6bdc1a2c",
+      "receipt_id": "sha256:a2394644d3d310f897c10d477f8eb270280fd44fe279ea7bf732df364d63e1db"
+    }
+  ],
+  "limitation": "Both fail strict end-to-end acceptance; real tool definitions and one activation observed, not complete capability success."
+}

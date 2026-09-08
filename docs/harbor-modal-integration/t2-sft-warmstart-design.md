@@ -169,3 +169,26 @@ class DshDecisionSFTDataset:
 新增 `examples/dsh/capability_tasks/log_tool/prepare_sft_curriculum.py` 和对应 CPU tests。API `prepare(manifest_path, manifest_sha256, output)`；CLI `--manifest --manifest-sha256 --output-dir`。外部 hash 固定原 manifest，原 manifest 的 hash/rows 固定两份 parquet；严格验证 row schema、case/split/session/sample 唯一性，拒来源缺失/重复、未知 case、hash 错误及覆盖。课程 train 用 Arrow take 保留原 schema/值和原顺序；dev 原 bytes 复制。输出 owned 0700 新目录，sidecar 记录原 manifest 全体与 hash、输入/输出 hash、筛选 source IDs、目的 `registration-curriculum-not-new-data`；所有输入验证通过才创建输出。
 
 测试：精确 4 原 rows/28 原 dev bytes，重复/缺失定义，错 split/schema/hash，目录权限/覆盖，确定性产物与原目标不变。后续训练计划是原 SFT step56 adapter warmstart、新 optimizer、lr 5e-5、16 epochs（4×16=64 steps）、1800 秒；复用 native 尾参 `model.lora_adapter_path` 与 `trainer.total_epochs=16`，不改 launcher 的 64-step cap。此入口不启动训练，也不证明补课有效。
+
+## 已有 execute-given-tool 前置课程（邮箱脱敏）
+
+完整自编T2之前，复用既有 evolution-v2 的 redact_email 四train/两holdout：读取公开单字符串fixture，按给定完整实现定义工具，消费真实runtime IDs，调用并清理。保持原prompt/target与evolution_verifier七组件部分评分，不改T2严格终局评分。
+
+独立prepare-only selector `examples/dsh/prepare_redact_curriculum.py`：外部SHA绑定完整16/8 source manifest，验证完整源Parquet、选中fixture及当前verifier/runtime/patch路径合同，再原样选出4/2至新私有目录并保存provenance。非重叠holdout是已公开同族样本，不是新隐藏集；单字符串邮箱替换不宣称复杂日志业务或自主编程能力。准备入口不运行GPU。
+
+准备示例（固定部署仓库 cwd；只读取源，不执行模型）：
+
+```bash
+python -m examples.dsh.prepare_redact_curriculum \
+  --repository-root /workspace/rebuild/uni-agent-g1-v2 \
+  --source-dir /workspace/data/dsh-evolution-v2-b236969 \
+  --source-manifest-sha256 sha256:1e22ec154e30d1d3394c394b837be6cddcb5067da32ab895058d5347298854d7 \
+  --runtime-executable /absolute/path/to/verified/dsh \
+  --output-dir /root/runs/dsh-redact-execute-r1-data
+```
+
+`--runtime-executable` 须填实际可执行文件，不是 Python SDK 包目录；其 bytes SHA 必须与输入 manifest 的 environment_digest 一致。输出目录必须全新且在 checkout 外，目录 0700、文件 0600。两份 Parquet 保留源 schema 与 row 内容；输出 manifest 保存源完整两文件 SHA、源 indices、六 fixture SHA、原 task 身份及冻结 patch bytes SHA。源 fixture 绝对路径已编码在原 prompt，因此必须在原部署根运行；selector 对路径不符拒绝，不偷偷改 prompt。
+
+执行配置仍是 `examples/dsh/evolution_task_config_v2_fast.yaml`、`profile=sdk-minimal`、相对 patch `examples/dsh/evolution.patch.yml`，`DSH_RUNTIME_MODE=exe`，PATH 指向已经验收的 0.1.3a2 runtime。不能替成 Harbor `/opt/dsh-patches/...`，因为 metadata 绑定有序 patch 路径。最小运行参数为所选 train/holdout 文件、`TRAIN_MAX_SAMPLES=4 VAL_MAX_SAMPLES=2 DATA_SHUFFLE=False TRAIN_BATCH_SIZE=2 PPO_MINI_BATCH_SIZE=1 TOTAL_TRAINING_STEPS=2 ROLLOUT_N=4 VAL_ROLLOUT_N=1 CONCURRENCY=1 GATEWAY_COUNT=1 RESUME_MODE=disable`；初始 adapter 与 GPU 内存参数由实际部署入口另行固定，不由数据选择器批准。
+
+CPU 验证：10 tests 覆盖原 rows 完全保留、manifest/parquet/runtime/fixture SHA 拒绝、metadata/prompt/path/count 不一致拒绝、私有权限与 provenance 回读。完整自编 T2 的严格终局评分不变；本课程部分奖励仅表明相应执行环节达标。

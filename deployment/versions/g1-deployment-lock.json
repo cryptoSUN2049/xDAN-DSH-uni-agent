@@ -4,7 +4,7 @@
   "integration": {
     "repository": "https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent",
     "maintenance_branch": "worktree-harbor-modal-integration",
-    "code_revision": "2c7281ff23ce72462e6ed240603110b41686bf67",
+    "code_revision": "f0979706cf2001f23d54dfef93ca12eee9c6a3bb",
     "upstream_revision": "89733ec81a69c3cc93ac90479de7ea7f01e51c1f",
     "verl_revision": "fefb080262e1c015a0ea05f958822a6a512dc795"
   },
@@ -104,7 +104,7 @@
   "historical_evidence_rule": "Old M1 success and local deployment checks are not evidence that the new full training combination passed.",
   "harbor_t2": {
     "status": "scripted-integration-passed-student-training-pending",
-    "integration_revision": "2c7281ff23ce72462e6ed240603110b41686bf67",
+    "integration_revision": "f0979706cf2001f23d54dfef93ca12eee9c6a3bb",
     "task_ref": {
       "id": "t2-log-tool-dev-01",
       "sha256": "sha256:3504fcb2fc4f8d02bb0dd9eee3a0f6812bc17f080ae154a926cd92618eff0d67",
