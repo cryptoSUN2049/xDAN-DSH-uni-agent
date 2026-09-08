@@ -134,3 +134,11 @@ Review：新专题DSH数据层与完整训练路线.html包含11节、五类核�
 - [x] 检查main CI、记录交接与结果：pre-commit/docs/secrets-scan成功；Python3.11/3.12仍安装依赖，未宣称通过。
 
 Review：main本地/远端均d723b5f；正常快进无force，未修改集成工作区dirty文件；结果保存docs/dsh-adapter/main-sync-result.json。审计记录仅本地提交，不重复推送main。
+
+## 2026-09-08：面向RunPod全链路会话的参考MD
+
+- [x] 读取harbor最新handoff/active goal/源码与未提交工作，更新M1 reload和M2 worker状态。
+- [x] 形成单份可直接交给另一会话的MD：证据优先级、已完成、当前缺口、最小推进顺序、研究复用与验收。
+- [x] 核查路径和事实、保存版本/来源摘要，更新本分支handoff并提交；不修改另一会话工作区或远端服务。
+
+Review：参考MD共222行，已核对所有本地Markdown链接；独立源码复核补充Task注册、Gateway生命周期、训练身份与TQ接续入口。GPU和测试数字引用既有报告，本轮未复跑；未修改目标工作区或远端服务。

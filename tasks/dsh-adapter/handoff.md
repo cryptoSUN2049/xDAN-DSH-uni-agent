@@ -166,3 +166,15 @@
 | `docs/dsh-adapter/main-sync-result.json` | 47 | 版本、验证与CI快照 |
 | `tasks/todo.md` | 136 | 完成状态和Review |
 | `tasks/dsh-adapter/handoff.md` | 168 | 同步交接 |
+
+
+## 2026-09-08：RunPod工程会话参考MD
+
+- TL;DR：交付 `docs/dsh-adapter/runpod-full-chain-session-reference.md`（222行），可直接由另一个harbor会话读取；当前root仍为dsh-adapter，只提交文档，不推送。
+- 本轮文件：新增上述MD；更新tasks/todo.md与本handoff。内容涵盖版本、前期研究、最新M1/M2证据、源码入口、最短接续路线、数据合同及G1证据清单。
+- 最新快照：目标HEAD bf742c9，worker/executor/HTTP已有未提交实现；M1独立reload已通过，不能继续引用早期待完成结论。main d723b5f的CPU CI后续已成功，旧JSON的in_progress仅为历史快照。
+- 设计约束：保留目标会话既有G1、Qwen3-4B/DSH7840/配对verl；不把Qwen3.5、Session v2、OPD或记忆专项变成新增前置。未修改目标工作区、发送控制消息或操作远端服务。
+- 真实缺口：训练侧Remote Task/controller、实际Gateway远程路由生命周期、Framework训练身份传递、可信结果与token/TQ绑定。复用在途worker，不另建训练旁路。
+- 下一步：[ ] 目标会话核验最新diff并固定worker批次；[ ] 一个真实学生任务完成评分与消费；[ ] M2非零更新和独立reload；[ ] 固定版本复建交付。
+- 验证：本地Markdown链接全部存在；独立源码复核已纳入；git diff --check。测试/GPU数字来自已有报告，本轮无新的产品测试或远端实测。
+- 冷启动：先读新MD，再读目标worktree最新handoff和active-engineering-goal；以更新的源码/运行证据为准，不覆盖其他会话未提交工作。
