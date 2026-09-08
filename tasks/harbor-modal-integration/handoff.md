@@ -282,3 +282,13 @@
 - 实际构建上下文/private/tmp/dsh-harbor-image-eb536fb，wheel原件/private/tmp/dsh-harbor-runtime-7840，构建日志/private/tmp/dsh-harbor-image-build.log；镜像只在本机未发布registry。
 - 可重跑入口：deployment/checks/keyless_sdk_smoke.py（镜像内）、harbor_dsh_setup_smoke.py（Harbor宿主）；参数见deployment/harbor/README.md。
 - 下一步D2完整Gateway模型网络探针，再实现远程Task/结果绑定与M2真实更新/reload。当前GPU无计算进程（本轮查询），M1 v3与reload已结束；勿重复启动旧run。
+
+## M2 模型方向网络已实测（2026-09-08）
+
+- deployment/checks/harbor_model_route_probe.py 可复跑，固定镜像容器经host.docker.internal→Mac loopback SSH→RunPod节点动态端口，完整session path与nonce一致；报告harbor-model-route-result.json。
+- 无真实Gateway/模型调用；临时HTTP探针与SSH、Docker进程均已结束，失败探针无训练产物。
+- 初次探针readiness空连接让单次handle_request提前结束，已改等真实POST；不是网络限制，无需开放Mac局域网端口。
+- 下一实现：有界worker与Task协议、独立Harbor verifier，后续真实学生采样与训练；当前G1仍active。
+
+- 远程协议层uni_agent/tasks/harbor_dsh/protocol.py已实现：严格身份、独立policy、deadline/预算、幂等nonce/session与opaque artifact校验；69新测试+既有task/audit合计94 passed，两项Ruff通过。尚无HTTPworker/Task执行器；policy不能从请求反推，check_replay与ledger写入必须原子。
+- Harbor0.16.1 separate verifier默认仍给agent挂载host日志。下一批本仓SingleStepTrial子类覆盖_agent_env_mounts为空，保留verifier mounts，只显式收集/app/answer.txt；注意继承create硬编码返回SingleStepTrial，必须正确工厂实例化。详细只读审计由upstream_harbor_verl落盘harbor-isolated-verifier-audit.md。

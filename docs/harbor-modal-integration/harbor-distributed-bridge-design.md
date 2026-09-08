@@ -1,6 +1,6 @@
 # Harbor 分布式 DSH bridge 设计草案
 
-日期：2026-09-08。状态：**设计待评审，未实现、未启动服务或新增资源**。
+日期：2026-09-08。状态：**已授权分批实现；环境与模型方向网络探针通过，真实 Harbor 训练尚未完成**。
 执行入口仍是当前 Uni-Agent worktree；DSH runtime 改动由 DSH-Exp 仓库承担。
 本草案不改变正在执行的 M1，也不将 M1 的训练成功视为 Harbor 验收通过。
 
@@ -238,4 +238,15 @@ CPU通过不替代D5–D7；oracle通过不等于DSH执行或RL通过。
 - BorrowedHarborSandbox已实现；真实Harbor0.16.1＋Docker无网络容器验证binary roundtrip、literal argv、env/cwd和exit-code，全部通过；容器清理独立核验无残留。证据harbor-borrowed-smoke-result.json。
 - 可重跑命令：`PYTHONPATH=. <Harbor venv>/bin/python deployment/checks/harbor_environment_smoke.py --task-dir examples/harbor/h0-file-write --output <全新目录>`，180秒边界。
 - SSH配置只读确认allowtcpforwarding=yes、gatewayports=no。RunPod127.0.0.1:47081→SSH反向转发→Mac临时loopback HTTP探针nonce一致；专用隧道/HTTP结束后关闭。此证据只覆盖控制通路，不覆盖Docker→Gateway模型通路。
-- DSH薄bridge开发中，尚未实测Harbor中的真实DSH/model执行。
+- DSH薄bridge已实现；真实Harbor setup与容器内SDK initialize/shutdown通过，尚未完成真实模型执行。
+
+### 完整模型方向网络探针
+
+2026-09-08：`deployment/checks/harbor_model_route_probe.py` 实测通过 Docker
+`host.docker.internal` → Mac `127.0.0.1` SSH local-forward → RunPod 节点IP动态端口。
+POST `/sessions/<id>/v1/chat/completions` 路径及JSON nonce原样抵达并返回。
+报告：`harbor-model-route-result.json`。这里只使用短时HTTP探针，actual_gateway_used=false、model_called=false。
+无需监听Mac的0.0.0.0，不需要额外relay容器；保留后续Gateway认证及任务准入。
+
+初次探针服务器仅handle_request一次，SSH readiness空连接使其提前结束；修复为等实际POST或截止。
+不能把该探针实现错误误判为Docker无法访问宿主loopback。脚本有SSH连接、服务器、容器超时及finally清理。

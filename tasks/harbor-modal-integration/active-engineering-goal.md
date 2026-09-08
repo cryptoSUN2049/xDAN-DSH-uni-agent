@@ -46,7 +46,7 @@ G1 = 原生底座诊断（有界辅助） + M1 DSH工程复建 + M2 Harbor训练
 - [x] 固定GPU依赖和安装工具版本，执行CUDA有限数值前后向；vLLM/Ray/Transformers/TransferQueue/Uni-Agent/VERL可导入。
 - [ ] 运行选定模型的真实推理，验证Tokenizer、解析、结束原因和输出预算。
 - [x] 确定DSH Linux runtime可分发来源，构建后跑不调用模型的SDK协议检查。
-- [ ] 确定Harbor任务环境：实际验证Docker能力；若当前Pod不能运行，评估现有可用环境后明确方案，不自动购买新服务。
+- [x] 确定Harbor任务环境：RunPod无Docker；复用Mac Docker，固定amd64镜像实测SDK/Harbor setup与模型方向网络探针，无新付费服务。
 - 产物：安装log、uv.lock hash、package清单、GPU检查JSON、模型身份、DSH构建与smoke报告。
 
 ### G1.1 原生小任务诊断（E0a，辅助，不替代M1）

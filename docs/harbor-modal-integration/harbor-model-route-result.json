@@ -1,0 +1,9 @@
+{
+  "schema": "dsh.harbor-model-route-probe.v1",
+  "passed": true,
+  "route": "Docker host.docker.internal -> Mac loopback SSH local forward -> RunPod node IP HTTP probe",
+  "session_path_preserved": true,
+  "body_nonce_preserved": true,
+  "actual_gateway_used": false,
+  "model_called": false
+}

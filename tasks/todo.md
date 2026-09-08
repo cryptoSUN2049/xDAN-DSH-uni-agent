@@ -256,3 +256,11 @@ Review：本批只新增部署目录与设计；不将其标记为安装或部�
 - [x] 离线构建DSH执行镜像，真实SDK initialize/shutdown与Harbor setup。
 - [ ] Docker到Gateway模型网络、任务结果绑定与真实VERL更新/reload。
 - Review：当前先验证部署兼容性；网络控制探针与SDK boot都不能代替M2模型训练。
+
+### M2 远程任务接线
+
+- [x] Docker→Mac loopback SSH→RunPod节点动态端口；完整session path与nonce实测一致。
+- [x] 纯请求/产物合同及幂等边界测试；含DSH task/trajectory回归94 passed。
+- [ ] 无agent宿主挂载的独立verifier Trial，oracle/篡改实测。
+- [ ] 有界worker与Task接线、真实Gateway学生采样、更新/reload。
+- Review：探针不启动模型；独立verifier默认日志挂载需专门适配，不能仅凭separate配置宣布隔离。

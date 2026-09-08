@@ -88,3 +88,17 @@ It deletes its own Harbor environment in `finally`. Reports are in
 `docs/harbor-modal-integration/harbor-keyless-sdk-result.json` and
 `harbor-dsh-setup-result.json`. No model rollout or training is claimed.
 The image currently exists only in local Docker; no registry publication is claimed.
+
+## Model-route transport probe
+
+```sh
+python3 deployment/checks/harbor_model_route_probe.py \
+  --ssh-host root@216.243.220.244 --ssh-port 14682 \
+  --ssh-key ~/.ssh/id_ed25519 \
+  --image sha256:9ab3e43d3c3c35070668d1d0fca60e31516727df431f00aedfd875479855fb37 \
+  --output /absolute/path/to/new-route-report.json
+```
+
+This starts a short-lived HTTP probe on the remote node and preserves the full
+Gateway-shaped session path through a Mac loopback-only SSH forward. It does not
+start Gateway or call the model. Actual transport passed; use a new output path.
