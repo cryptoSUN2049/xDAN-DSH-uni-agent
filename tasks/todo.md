@@ -122,3 +122,15 @@ Review：官方模型卡分数按表格列核对；最新代码9b7dbdb明确旧D
 Review：新专题DSH数据层与完整训练路线.html包含11节、五类核心数据＋训练消费记录、D0—D7数据产品、SFT/纠错/GKD/PG-OPD/RL/long-loop分工与独立消融。以d606851/verl fefb080审计；20源码引用；55本地链接通过、手机390/桌面1440无页面溢出、15页A4无文字横向越界。独立复核后补齐终态无next-request、SFT与RL不同mask、credit与节点选择分开消融。未训练、未部署。
 
 追加仓库同步核查：2026-09-08 12:42 UTC+8，官方UA89733ec为harbor d606851祖先，origin harbor与本地一致；默认main6e00d83落后官方5提交，root也尚未含这5提交。配对verl fefb080与官方UA gitlink一致，独立verl main又领先54提交。本GitHub仓库private:false。只读查询未fetch/merge/push/SSH；详细远端身份保存到dsh-data-training-evidence.json。
+
+## 2026-09-08：更新默认main至最新集成代码
+
+用户已明确授权更新main。方案：冻结origin/worktree-harbor-modal-integration的已提交快照，保持配对verl，验证后仅快进main；不纳入集成工作区正在开发的未提交文件。
+
+- [x] 核查本地/远端身份、main祖先关系、工作区变化；main6e00d83可快进到d723b5f。
+- [x] 导出独立只读测试快照及固定verl fefb080，Ruff lint/format通过。
+- [x] 执行CPU回归与必要CI等价检查：471项通过；3项vLLM本机依赖限制留待Linux CI。
+- [x] 正常快进推送main，回读远端SHA并同步本地main引用：均为d723b5f。
+- [x] 检查main CI、记录交接与结果：pre-commit/docs/secrets-scan成功；Python3.11/3.12仍安装依赖，未宣称通过。
+
+Review：main本地/远端均d723b5f；正常快进无force，未修改集成工作区dirty文件；结果保存docs/dsh-adapter/main-sync-result.json。审计记录仅本地提交，不重复推送main。

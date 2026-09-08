@@ -1,0 +1,47 @@
+{
+  "snapshot": "/private/tmp/uni-agent-main-sync-51ndn0ur",
+  "target": "d723b5fbeb382a5094cd634f29455ebe48ef3ffd",
+  "previous_main": "6e00d8312d3d78996b2cb2de4061fea0d7c18680",
+  "verl_pin": "fefb080262e1c015a0ea05f958822a6a512dc795",
+  "checked_at": "2026-09-08T05:38:27.257553+00:00",
+  "operation": "normal fast-forward push to origin main, then compare-and-swap local main ref",
+  "remote_main_verified": "d723b5fbeb382a5094cd634f29455ebe48ef3ffd",
+  "local_main_verified": "d723b5fbeb382a5094cd634f29455ebe48ef3ffd",
+  "upstream_uni_agent_included": "89733ec81a69c3cc93ac90479de7ea7f01e51c1f",
+  "source_dirty_worktree": "not modified; only committed archive verified",
+  "validation": {
+    "ruff": "0.12.2 CI pin and 0.15.8 check + format passed; 173 files; rechecked immediately before push",
+    "compileall": "passed",
+    "mypy": "1.17.0 with no-site-packages to match isolated hook dependencies; 167 files passed; populated CPU environment initially triggered internal placeholder assertion",
+    "mkdocs": "strict build passed",
+    "cpu": "initial 462 passed; proxy-excluded debug case and Pillow-dependent Hermes case then passed: 464 unique passed, 1 skipped; 3 vLLM cases unavailable on local macOS environment",
+    "deployment_examples": "7 passed",
+    "total_unique_tests_passed": 471,
+    "diff_check": "upstream-owned results_claude_code_qwen3_coder_30b.svg trailing whitespace inherited unchanged; no source edits",
+    "github_ci": "triggered by main push; status tracked below"
+  },
+  "ci_snapshot": {
+    "checked_at": "2026-09-08T05:39:28.883827+00:00",
+    "pre_commit": {
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 34191317254
+    },
+    "docs": {
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 34191317255
+    },
+    "secrets_scan": {
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 34191317271
+    },
+    "python_backend": {
+      "status": "in_progress",
+      "step": "Install dependencies for Python3.11 and3.12",
+      "run_id": 34191317299,
+      "url": "https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent/actions/runs/34191317299"
+    }
+  }
+}

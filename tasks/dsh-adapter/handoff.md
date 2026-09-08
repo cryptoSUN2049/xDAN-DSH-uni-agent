@@ -149,3 +149,20 @@
 | `docs/dsh-adapter/dsh-expert-memory-context-remediation-evidence.json` | 342 | 文档hash与链接核验同步 |
 | `tasks/todo.md` | 124 | 任务与Review |
 | `tasks/dsh-adapter/handoff.md` | 151 | 本次交接 |
+
+
+## 2026-09-08：main同步完成
+
+- 用户明确要求main更新。已正常快进origin/main：6e00d83→d723b5f；API回读一致，本地main引用也同步。保留原工作区和全部未提交开发文件。
+- 配对verl fefb080不变；d723b5f包含当前官方UA89733ec。此次发布固定已提交快照，不自动纳入他人后续提交。
+- 在临时git archive快照检查，375个已提交路径与原对象一致；Ruff0.12.2/0.15.8、compileall、隔离依赖mypy、MkDocs严格构建通过；471项测试通过，3项依赖vLLM待Linux CI。
+- 结果：docs/dsh-adapter/main-sync-result.json；新增/更新本文件和tasks/todo.md。仅报告文件在root dsh-adapter；main未加入额外审计提交。
+- 冷启动先读结果JSON与main实时CI，后续开发继续对应集成worktree；不要因root仍在dsh-adapter就误判main没有更新。
+
+- main CI回执：pre-commit/docs/secrets-scan通过，Python Backend run34191317299仍在安装依赖。此状态为查询快照，不代表最终CPU结果。
+
+| 本轮文件 | 行数 | 内容 |
+| --- | ---: | --- |
+| `docs/dsh-adapter/main-sync-result.json` | 47 | 版本、验证与CI快照 |
+| `tasks/todo.md` | 136 | 完成状态和Review |
+| `tasks/dsh-adapter/handoff.md` | 168 | 同步交接 |
