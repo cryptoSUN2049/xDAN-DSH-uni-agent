@@ -441,6 +441,11 @@ def test_evolution_preparation_preserves_operator_binding(inputs, tmp_path, vari
     assert launch["postprocessor"][binding_key] == binding
     assert "t2_fixture" not in launch["postprocessor"]
     assert launch["environment"]["PROJECT_NAME"] == "harbor-evolution-engineering"
+    # Exercise the exact serializer/parser boundary used by the actual launcher.
+    parsed = OverridesParser.create().parse_overrides(build_overrides(launch))
+    post_key = "actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_kwargs"
+    post = next(item.value() for item in parsed if item.key_or_group == post_key and not item.is_delete())
+    assert post[binding_key] == binding
     rows = pq.read_table(inputs["output_dir"] / "train.parquet").to_pylist()
     assert (
         rows[0]["extra_info"]["public_fixture_case_id"]
@@ -479,3 +484,13 @@ def test_registered_wrapper_forwards_evolution_binding(monkeypatch, binding_key)
     assert result == ()
     assert captured[binding_key] is binding
     assert captured["policy"] == "registered-policy"
+
+
+@pytest.mark.parametrize(
+    "key", ["bad,key", "bad:key", "bad{key", "bad}key", "bad key", 'bad"key', "${secret}", "bad=key", "bad\\key"]
+)
+def test_hydra_rejects_unsafe_dictionary_keys(key):
+    from examples.harbor.train_m2_online_rl import _hydra
+
+    with pytest.raises(ValueError, match="Unexpected Hydra configuration key"):
+        _hydra({"source_sha256s": {key: "sha256:value"}})

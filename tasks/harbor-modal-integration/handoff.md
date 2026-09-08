@@ -167,3 +167,7 @@
 ### 检查点纪律与下一阻塞
 
 用户要求每个完成环节commit/push。Harbor v2 Docker四mode已通过，本次先保存；M2学生尚未启动。CPU启动预检发现train_m2_online_rl._hydra拒绝source_sha256s路径键，需局部修复及真实Hydra parser回归。私有准备目录/private/tmp/harbor-evolution-m2-v2-r1，deadline有时效，启动前重新核验。
+
+### M2启动器修复
+
+_hydra允许经过白名单校验的相对路径键；仍拒绝分隔符/插值等。66项定向测试通过，v1/v2实际prepare→build→Hydra parser回归通过，真实print-command通过。修复独立提交后更新GPU代码身份再启动。异步后续方案见docs/harbor-modal-integration/async-followup.md，未启动异步。

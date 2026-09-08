@@ -32,7 +32,9 @@ SINGLE_GPU_DEFAULTS = {
 
 def _hydra(value):
     if isinstance(value, dict):
-        if any(not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key) for key in value):
+        # Source digest maps use relative paths as literal Hydra dictionary keys.
+        # Keep delimiters, quoting, escapes, whitespace and interpolation excluded.
+        if any(not isinstance(key, str) or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_./-]*", key) for key in value):
             raise ValueError("Unexpected Hydra configuration key")
         return "{" + ",".join(key + ":" + _hydra(item) for key, item in value.items()) + "}"
     if isinstance(value, list):
