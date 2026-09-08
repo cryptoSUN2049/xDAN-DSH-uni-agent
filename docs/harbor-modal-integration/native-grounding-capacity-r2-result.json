@@ -1,0 +1,172 @@
+{
+  "schema": "dsh.capacity-sensitivity-result.v1",
+  "run": "/root/runs/dsh-grounding-capacity-r2",
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 300.008,
+    "pid": 104119,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "launch": {
+    "schema": "dsh.native-capability-baseline.v1",
+    "source_commit": "0fdcbeb4511ef91c39bd74cadad5b77ff650f31f",
+    "scope": "single bounded capacity sensitivity rerun; not same-budget improvement; no optimizer",
+    "command": [
+      "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+      "examples/inference/parallel_infer_verl.py",
+      "--data-path",
+      "/root/runs/dsh-grounding-capacity-r2-data/eval.parquet",
+      "--task-config",
+      "/root/runs/dsh-grounding-capacity-r2-data/task.yaml",
+      "--model-path",
+      "/workspace/models/Qwen3-4B-1cfa9a7",
+      "--served-model-name",
+      "Qwen/Qwen3-4B",
+      "--engine",
+      "vllm",
+      "--nnodes",
+      "1",
+      "--n-gpus-per-node",
+      "1",
+      "--tensor-parallel-size",
+      "1",
+      "--gpu-memory-utilization",
+      "0.40",
+      "--max-model-len",
+      "24576",
+      "--gateway-count",
+      "1",
+      "--concurrency",
+      "1",
+      "--tool-parser",
+      "hermes",
+      "--limit",
+      "1",
+      "--n",
+      "1",
+      "--require-result",
+      "--dsh-strict-audit",
+      "--log-dir",
+      "/root/runs/dsh-grounding-capacity-r2/agent-logs",
+      "--dsh-trace-root",
+      "/root/runs/dsh-grounding-capacity-r2/artifacts/traces",
+      "--dsh-result-root",
+      "/root/runs/dsh-grounding-capacity-r2/artifacts/results",
+      "--result-path",
+      "/root/runs/dsh-grounding-capacity-r2/result.json",
+      "--inference-evidence-path",
+      "/root/runs/dsh-grounding-capacity-r2/inference-evidence.json"
+    ],
+    "cwd": "/workspace/rebuild/uni-agent-native-n0-r1",
+    "python": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+    "wall_clock_seconds": 1800,
+    "inputs": {
+      "eval.parquet": "ec7934285c15857cf7a23a0af4bcb177daf7a12252c82fc063c3ddfcb5698733",
+      "task.yaml": "989ac3eb05268f8fce4fc22b2de2dcd5de97b2dac289d340e5da5aceb33708c6"
+    },
+    "overrides": {
+      "agent.model.max_total_tokens": 20480,
+      "max_model_len": 24576,
+      "unchanged_per_turn": 2048
+    },
+    "environment": {
+      "PATH": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+      "PYTHONPATH": "/workspace/rebuild/uni-agent-native-n0-r1:/workspace/rebuild/uni-agent-native-n0-r1/verl",
+      "PYTHONNOUSERSITE": "1",
+      "HF_HUB_OFFLINE": "1",
+      "CUDA_VISIBLE_DEVICES": "0",
+      "RAY_TMPDIR": "/root/ray-grounding-r2",
+      "DSH_RUNTIME_MODE": "exe"
+    }
+  },
+  "inference": {
+    "finished_at": "2026-09-08T17:24:50.255758Z",
+    "global_steps": null,
+    "partition_id": "val",
+    "readback": {
+      "final_keys": [
+        "3fc1fa4b-dbac-4aa7-9a6c-9a8b1ad3bf0c_0_0"
+      ],
+      "scores": [
+        0
+      ],
+      "traj_keys": [
+        "3fc1fa4b-dbac-4aa7-9a6c-9a8b1ad3bf0c_0_0"
+      ],
+      "uid_status": {
+        "3fc1fa4b-dbac-4aa7-9a6c-9a8b1ad3bf0c": "finished"
+      }
+    },
+    "samples": [
+      {
+        "metadata": {
+          "candidate_scope": "session-local-host-only",
+          "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+          "execution_budget": {
+            "max_tool_calls": 4,
+            "max_turns": 6
+          },
+          "family_id": "runtime-grounding",
+          "fixture_digest": "sha256:d5e5e77c6374b30022d6c35efec605928ab2dc8a728cd202f11cb58b0a7a7ad5",
+          "fixture_path": "examples/dsh/fixtures/evolution-v3-live/runtime-grounding.json",
+          "mutation_budget": {
+            "max_writes": 0,
+            "protected_paths": []
+          },
+          "patches_sha256": "sha256:22f9b1cfbb6eee6ad6f44655f413eaeb0091d812c2133e599154bb8206c3c608",
+          "profile": "sdk-minimal",
+          "scenario_contract_sha256": "sha256:4b5c3ae619cb0d66472805d76791e1ce26ef90c555d471effeaa24d192b54c33",
+          "scenario_id": "runtime-grounding-live-001",
+          "split": "test",
+          "task_id": "dsh/harness-evolution-v3/runtime-grounding/live-001",
+          "task_version": "1",
+          "verifier_code_digest": "sha256:64ac909099ac96631a2075a033438937db60518d5103e3437da11d7801d3fcbb",
+          "verifier_id": "dsh-harness-evolution-v3-live-verifier",
+          "verifier_version": "1"
+        },
+        "sample_index": 0,
+        "uid": "3fc1fa4b-dbac-4aa7-9a6c-9a8b1ad3bf0c"
+      }
+    ],
+    "schema": "dsh.inference-evidence.v1",
+    "started_at": "2026-09-08T17:20:12.247098Z",
+    "status": "completed"
+  },
+  "receipt": {
+    "accuracy": 0,
+    "artifact_sha256": "sha256:95eb5803c13cc25d4d5c0ea794b04e4fe8481b8d1dbd5a159159cccedc5b4b53",
+    "dsh_session_id": "dsh-session-sample-0-rollout-0-72240513a5354ed194265366c29506aa",
+    "eligible": true,
+    "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "evidence": [
+      "scenario_id:runtime-grounding-live-001",
+      "fixture_digest:sha256:d5e5e77c6374b30022d6c35efec605928ab2dc8a728cd202f11cb58b0a7a7ad5",
+      "trace_sha256:sha256:e5d046e98de4932a7f8857fa5e8a882aea7db788ae96ef3d01e5e89f8b24cffd",
+      "result:failed"
+    ],
+    "finished": true,
+    "fresh": true,
+    "issued_at": "2026-09-08T17:24:50.137Z",
+    "issuer": {
+      "id": "uni-agent-dsh",
+      "kind": "trusted-verifier"
+    },
+    "receipt_id": "sha256:8336babcf5ec4bec7cdb0da2c6d6bd78ce410e1b8ddde94d76b9c5503396fe74",
+    "reward": 0,
+    "schema": "dsh.verifier-receipt.v1",
+    "task_id": "dsh/harness-evolution-v3/runtime-grounding/live-001",
+    "task_version": "1",
+    "trace_sha256": "sha256:e5d046e98de4932a7f8857fa5e8a882aea7db788ae96ef3d01e5e89f8b24cffd",
+    "verifier": {
+      "code_digest": "sha256:64ac909099ac96631a2075a033438937db60518d5103e3437da11d7801d3fcbb",
+      "id": "dsh-harness-evolution-v3-live-verifier",
+      "version": "1"
+    }
+  },
+  "finished": true,
+  "response": "The available capabilities through the current runtime Tool inventory include a wide range of services and events that can be queried and utilized. Here is a summary of the key capabilities:\n\n### Services\n1. **Service Discovery**: \n   - `Service.listService` provides a directory of available services and their methods.\n   - This allows for progressive discovery of services, starting with a compact directory and then fetching the exact service contract.\n\n2. **Event Discovery**:\n   - `Event.listEvents` provides a directory of available events and their listeners.\n   - This allows for progressive discovery of events, starting with a compact directory and then fetching the exact event contract.\n\n3. **Builtin Services**:\n   - `Builtin.listBuiltins` provides a list of plain-JavaScript symbols available to the dynamic Host half.\n   - This includes a JSON data structure that outlines the available built-in services.\n\n4. **Tool Management**:\n   - `Tool.listTools` returns every tool schema currently callable by the requesting Agent.\n   - This allows for the discovery of all available tools that can be used in the current context.\n\n### Events\n1. **Agent Lifecycle Events**:\n   - Events such as `agent/created`, `agent/disposed`, and `agent/status` provide updates on the lifecycle of agents, including their status changes and creation/disposal.\n\n2. **Session Events**:\n   - Events like `api-session/added`, `api-session/removed`, and `api-session/status` track the lifecycle of sessions, including their addition, removal, and status changes.\n\n3. **Approval and Authorization**:\n   - Events such as `approval/request` and `authorization/settled` handle the approval process and authorization changes, allowing for the management of user permissions and decisions.\n\n4. **System Prompt and Tool Events**:\n   - Events like `system-prompt/assemble` and `tools/execute` manage the assembly of prompts and the execution of tools, providing a structured workflow for processing user inputs and tool dispatches.\n\n5. **Workflow Management**:\n   - Events such as `workflow/start`, `workflow/phase`, and `workflow/end` track the lifecycle of workflows, including their initiation, phases, and completion.\n\n### Summary\nThe current runtime Tool inventory provides a comprehensive set of services and events that can be queried and utilized to manage agent lifecycle, session management, approval processes, system prompts, and workflow execution. These capabilities allow for dynamic and interactive management of the runtime environment, enabling the development of plugins and tools that can leverage these services and events to achieve specific goals.",
+  "training": false,
+  "interpretation": "Larger capacity permits completion, reward remains zero; not capability improvement."
+}

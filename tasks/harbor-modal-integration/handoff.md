@@ -5,9 +5,10 @@
 - 当前 worktree `harbor-modal-integration`，分支 `worktree-harbor-modal-integration`；权威目标 `active-engineering-goal.md`，系统方案 `docs/harbor-modal-integration/uni-agent-system-plan-v3.html`。
 - Goal active，未完成。当前顺序：DSH/记忆/上下文/受控RSI真实任务与训练效果 → 独立结果复现；Harbor训练后置。SFT与大规模数据生产由其他会话承担。
 - M1 v2-r4真实两步RL、消费审计、504 LoRA更新/399 base冻结及独立reload已验收；两条公开题基线满分，不能宣称能力提升。
-- 2026-09-09：`0fdcbeb`已commit/push，GPU checkout `/workspace/rebuild/uni-agent-native-n0-r1`同步该提交。主线复用 `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，通过PYTHONPATH使用新checkout。不要修改运行中checkout。
+- 2026-09-09：`8ff2f3a`已commit/push，GPU checkout `/workspace/rebuild/uni-agent-native-n0-r1`同步该提交。主线复用 `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，通过PYTHONPATH使用新checkout。不要修改运行中checkout。
 - 四例上下文GPU r1已于325秒exit1：4题finished，reward全0，3eligible/1ineligible。原因是引用basename而非完整source ID，另有一次读表外路径；保留原失败，修订prompt消除歧义，不降低rubric。
-- 当前GPU容量对照 `/root/runs/dsh-grounding-capacity-r2`，supervisor PID104118，源0fdcbeb，单题n1/并发1/1800秒上限；窗口24576、总预算20480、perturn2048，保持题目与rubric。仅预算敏感性推理，不是同预算提升或RL更新。冷启动重查PID和supervisor-result.json。
+- 容量对照r2已300秒exit0，单条真实轨迹回读、finished=true、reward=0；扩大窗口只解除容量阻断，未解决Tool查询。报告native-grounding-capacity-r2-result.json。
+- 当前GPU `/root/runs/dsh-context-baseline-r2`，supervisor PID107665，源8ff2f3a，prompt_revision=2，四例n1/并发2/1800秒上限。冷启动重查PID和supervisor-result.json；仍是推理评估，无optimizer。
 
 ### 最新 N0/N1/P1 检查点
 
