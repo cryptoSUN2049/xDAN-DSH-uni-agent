@@ -324,3 +324,21 @@
 - Framework将7字段_runner_context覆盖样本输入，独立副本防runner修改污染postprocessor；framework目录158tests通过，Ray分支只测CPU提交参数。
 - worker取消改为独立executor Task、幂等cancel和shield等待；双取消/HTTP等待方取消/timeout后再取消三个测试先红后绿。最新Harbor+部署组合219tests通过；全仓Ruff check/format通过（195 files）。
 - GPU实查仍dcbd323+DSH7840、SDK/runtime均0.1.2a1，无计算进程。尚未部署新版；worker Task/Gateway动态登记/真正M2更新仍待做，G1不能complete。
+
+## 上游冻结与新版远程构建开始
+
+- a524c94提交worker/身份/候选，a6ad775将默认构建目标切到新版，均已推送。用户明确统一0.1.3-alpha.2；旧版仅历史回退，不再默认M2。
+- git ls-remote实际确认Uni-Agent main=89733ec、DSH master=c389f96；精确Uni-Agent tree的VERL gitlink=fefb080。本地main d723b5f已包含，dsh-adapter七个独有提交全为docs/tasks，无代码补合需要。新版source lock见deployment/versions/g1-source-lock.json。
+- 私有DSH sync-dsh-architecture已实查发布e4a628ed3e，包含固定b236969；之前422/未发布状态已解除。
+- 同一SSH工具session31983正在拉取独立/workspace/src/dsh-runtime-b236969；实际git clone pid29996/index-pack30000曾确认存活。完成clone后脚本会checkout b236、拉取/workspace/rebuild/uni-agent-a6ad775，并启动40分钟有界build。先poll同一handle/实际进程，不重复启动。
+- 构建日志/workspace/reports/dsh-v2-build.log，退出文件dsh-v2-build.exit，包装脚本dsh-v2-build.sh；clone未结束前这些可能尚不存在。不要将clone运行中记为runtime已构建。
+- unia_capability_audit正在实现client.py+客户端测试；保持其修改，后续需要Task/独立Gateway登记与真实训练。upstream_harbor_verl最新真实runner smoke报告已在本地待提交。
+
+## 当前远程流程纠正与客户端完成
+
+- 旧目录出现其他会话fetch PID30106，用户已处理关闭，主进程ps复查其退出。本会话先STOP包装29995，后仅TERM自己的29995/29996/30000，防止废弃流程自动checkout/build。包装已退出；子进程最后仍在退出中，不能直接声称完全清理。旧工具31983最后尚未返回终态，下一轮只核验，不恢复旧构建。
+- 唯一后续构建目录改为/workspace/src/dsh-g1-v2-b236969，工具session49380。用已有7840 Git对象本地clone（非hardlink），再从GitHub fetch固定b236969。clone文件100%已完成，后续fetch/checkout/build仍须核验。
+- 新构建输出/workspace/reports/dsh-g1-v2-build.log、dsh-g1-v2-build.exit；40分钟截止。旧dsh-v2-build路径废弃，不混用日志；本轮还没有runtime完成证据。
+- Harbor Dockerfile/keyless检查/README已改为0.1.3a2；尚未构建新镜像，旧镜像和task摘要暂保留为历史实际状态，不填假摘要。
+- 客户端client.py已实现；client+worker/HTTP主进程43tests通过，代理client+协议组合112通过；全仓Ruff通过197files。真实HTTP+SQLite，executor为fake；不冒充学生训练。
+- unia_capability_audit现正在实现task.py、独立Harbor receipt绑定及测试，设计harbor-task-binding-design.md；不覆盖其未完成文件。下一步runner/config注册、Gateway独立路由登记、真实M2仍必须实施。

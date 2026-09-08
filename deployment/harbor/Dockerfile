@@ -12,8 +12,8 @@ RUN cd /opt/wheelhouse \
     && sha256sum --strict -c SHA256SUMS \
     && python -m pip install --no-cache-dir --no-index --only-binary=:all: \
         --find-links=/opt/wheelhouse \
-        deepseek-harness-sdk==0.1.2a1 \
-        deepseek-harness-runtime-bin==0.1.2a1 \
+        deepseek-harness-sdk==0.1.3a2 \
+        deepseek-harness-runtime-bin==0.1.3a2 \
         pydantic==2.12.5 \
     && python -m pip check
 

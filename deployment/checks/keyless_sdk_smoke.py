@@ -24,8 +24,8 @@ def main() -> None:
     if platform.system() != "Linux" or architecture not in {"x86_64", "amd64"}:
         raise RuntimeError(f"Expected Linux amd64, got {platform.system()}/{architecture}")
     expected = {
-        "deepseek-harness-sdk": "0.1.2a1",
-        "deepseek-harness-runtime-bin": "0.1.2a1",
+        "deepseek-harness-sdk": "0.1.3a2",
+        "deepseek-harness-runtime-bin": "0.1.3a2",
         "pydantic": "2.12.5",
     }
     versions = {package: importlib.metadata.version(package) for package in expected}

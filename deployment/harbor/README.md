@@ -10,7 +10,7 @@ emulation, suitable for functional verification rather than throughput claims.
 Prepare a separate directory without credentials containing:
 
 - `wheelhouse/`: SDK and Linux x86_64 runtime wheels built from DSH
-  `7840bced35ee07ebefbdce0106b56dbc00bdc3ef`, both `0.1.2a1`; Pydantic `2.12.5`
+  `b2369692ea530007075ebcd18d39fdba0bbd3982`, both `0.1.3a2`; Pydantic `2.12.5`
   and all its transitive dependency wheels for Python 3.12 amd64.
 - `wheelhouse/SHA256SUMS`: every wheel's SHA256, with filenames relative to that
   directory. Include exactly one approved version per dependency, no unrelated
@@ -34,11 +34,11 @@ From this worktree, replacing the context path:
 ```sh
 docker buildx build --platform linux/amd64 --network=none --load \
   -f deployment/harbor/Dockerfile \
-  -t uni-agent-dsh:7840-amd64 /absolute/path/to/prepared-context
-docker image inspect uni-agent-dsh:7840-amd64 \
+  -t uni-agent-dsh:b236969-amd64 /absolute/path/to/prepared-context
+docker image inspect uni-agent-dsh:b236969-amd64 \
   --format '{{.Id}} {{.Os}}/{{.Architecture}}'
 docker run --rm --platform linux/amd64 --network none \
-  uni-agent-dsh:7840-amd64 python /opt/checks/keyless_sdk_smoke.py
+  uni-agent-dsh:b236969-amd64 python /opt/checks/keyless_sdk_smoke.py
 ```
 
 Base-image resolution may require registry access before offline build. Archive
@@ -47,6 +47,12 @@ bundled executable, initializes `sdk-minimal`, and shuts down. It uses a dummy
 key, unreachable loopback model endpoint, and no `session_prompt`/`harness.run`.
 Docker `--network none` supplies the additional network boundary. Success proves
 SDK boot only, not a rollout, terminal verifier, or training update.
+
+This recipe now targets Session v2. The existing `harbor-execution-image.json`
+and M2 task digest describe the previously verified 7840 image until the new
+image is actually built and tested; do not replace those hashes with guessed
+values. Promote the new image and regenerate the task release together after
+verification. Historical results retain their original version identities.
 
 ## Harbor use
 
