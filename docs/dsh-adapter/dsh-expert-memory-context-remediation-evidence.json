@@ -1,0 +1,341 @@
+{
+  "captured_at": "2026-09-08T12:03:51.664979+08:00",
+  "scope": "special remediation design; read-only product inspection; no implementation or training",
+  "repositories": {
+    "uni_agent": {
+      "root": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration",
+      "head": "9b7dbdb78cb5f0bb0f28e90515050ea5d476d8cf",
+      "branch": "worktree-harbor-modal-integration",
+      "status": [
+        "?? tasks/harbor-modal-integration/active-engineering-goal.md"
+      ]
+    },
+    "contextpilot": {
+      "root": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft",
+      "head": "0b048404c8655aec67666800ba25484d72994a80",
+      "branch": "worktree-feat-contextpilot-capability-sft",
+      "status": [
+        "M README.md",
+        " M docs/feat-contextpilot-capability-sft/architecture.md",
+        " M docs/feat-contextpilot-capability-sft/data-production-v1/training-data-guide.html",
+        " M docs/feat-contextpilot-capability-sft/data-production-v1/training-data-guide.validation.json",
+        " M docs/feat-contextpilot-capability-sft/design.html",
+        " M tasks/feat-contextpilot-capability-sft/handoff.md",
+        " M tasks/feat-contextpilot-capability-sft/todo.md",
+        " M tasks/lessons.md",
+        "?? docs/.DS_Store"
+      ]
+    },
+    "dsh_memory": {
+      "root": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft",
+      "head": "71ca762018beebb58635bb4e896ebfbb4c6c2556",
+      "branch": "worktree-feat-contextpilot-capability-sft",
+      "status": []
+    },
+    "dsh_training": {
+      "root": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/dsh-official-training",
+      "head": "1af5b00d6802db7acbc742c9b832f2b514297e97",
+      "branch": "worktree-dsh-official-training",
+      "status": [
+        "M tasks/dsh-official-training/handoff.md",
+        " M tasks/dsh-official-training/todo.md"
+      ]
+    }
+  },
+  "sources": {
+    "U1": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/examples/dsh/train_qwen3_4b_online_rl.sh",
+      "sha256": "b6211b74870996948b2642354e81567e9d25b1108229b4498f147ebe48d4eb84",
+      "lines": 318
+    },
+    "U2": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/examples/quickstart/training/train_qwen3p5_dense.sh",
+      "sha256": "42bac54bbb5d44068ce009a40d2d39d858de38e3dac2e10fc82013d95f2ab4eb",
+      "lines": 243
+    },
+    "U3": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/framework/framework.py",
+      "sha256": "1dbcc9eacf4cece791d27258c7a9d7201ca4856cb2c05cc03c421410c89acf17",
+      "lines": 1528
+    },
+    "U4": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/framework/entry.py",
+      "sha256": "d5f0fcf3cfb36224e14bb2bdb1a27cdb20d64cfb413288913da62627d3630401",
+      "lines": 163
+    },
+    "U5": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/agents/dsh/runner.py",
+      "sha256": "a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+      "lines": 134
+    },
+    "U6": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/agents/dsh/agent.py",
+      "sha256": "a3a90a1ad2158e3bc30f5140f7690670f1c4ec9beac4c5c946a4403d7531704b",
+      "lines": 318
+    },
+    "U7": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/agents/mem_agent/agent.py",
+      "sha256": "8298f1f9d4fc4528195826c713ab8701dc57297f08543d868f8b437e790e6bc7",
+      "lines": 341
+    },
+    "U8": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/tasks/hotpotqa/task.py",
+      "sha256": "3734319019e6d0016a9b42575c7d4966c72182e5600e8c9e7afb736ec8dcd3e9",
+      "lines": 74
+    },
+    "U9": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/tasks/hotpotqa/reward.py",
+      "sha256": "35896a159275ae3746013255b23e08e4ab2b47f41f92c7039aa41b7a1aeb9550",
+      "lines": 73
+    },
+    "U10": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/examples/mem_agent/train_mem_agent.sh",
+      "sha256": "a5a2226c5eb0a8ccdda4d9caf5dd20c87d2b2ee4f17576f715ad5f4e6b266223",
+      "lines": 199
+    },
+    "U11": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/examples/mem_agent/README.md",
+      "sha256": "cfacc645e33ab122301d6aa64dc50629b3dcc6d106563cb9d1651e758282b03e",
+      "lines": 213
+    },
+    "U12": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/deployment/checks/preflight.py",
+      "sha256": "d70e5b017add7ffed123019d3f41682f5105821e47325efbae0102678d4d3ecd",
+      "lines": 86
+    },
+    "U13": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/deployment/bootstrap/checkout.sh",
+      "sha256": "6d56e431b0a0466f0bf3160376c359a9313f59ed2d52171ec2217fd24e83060d",
+      "lines": 18
+    },
+    "U14": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/deployment/versions/first-gpu-candidate.json",
+      "sha256": "66a7bf2558a088bc43d9716eb8b87e282cead6c5fed5e6605f2f6829fc0d8a2c",
+      "lines": 21
+    },
+    "U15": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/examples/dsh/evolution_v3_live.py",
+      "sha256": "f0d528e441ba902e16051b817edf94cd322c46a14b50b662a87a441891b2dd11",
+      "lines": 485
+    },
+    "U16": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/tasks/dsh/trajectory_audit.py",
+      "sha256": "d3e231d5ad38e841432ed72397295337d9570a6b4ef4623ada86d3f59cbb3e77",
+      "lines": 280
+    },
+    "U17": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/framework/trajectory_identity.py",
+      "sha256": "ea23a7a90191950c39bc3f4a02f9af764ca9bde13ba732af92202d6c0602947d",
+      "lines": 6
+    },
+    "U18": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/tasks/harbor-modal-integration/handoff.md",
+      "sha256": "63d9c5fff4cdc943a0b2812e8deca42b725c05e31797baffde6509c21dcfbfdc",
+      "lines": 183
+    },
+    "U19": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/verl/verl/models/transformers/qwen3_5.py",
+      "sha256": "91651d51e44caf825c9ceda0d88fc659e9072b7ee9e30b0d1d7f9b881073b792",
+      "lines": 661
+    },
+    "U20": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/uni_agent/tasks/base.py",
+      "sha256": "f3e7c74e1616f73cb4299453203d698ac8795e47960688f13db21fb8c5233fe6",
+      "lines": 214
+    },
+    "U21": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/verl/verl/trainer/ppo/v1/trainer_base.py",
+      "sha256": "82db788a373d804a4be5d8a6fe276aa2fcfa005d1f8a57ae4c8285631f10948c",
+      "lines": 1924
+    },
+    "U22": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/verl/verl/trainer/ppo/core_algos.py",
+      "sha256": "0ec87b90cba24fa0aa959adff573efb2cc49434d705621cf546be231e56a8932",
+      "lines": 2548
+    },
+    "C1": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/README.md",
+      "sha256": "26a67d2b26ba4dad959590dc0515c3a6941df395cba3ebe44fb4f50e54f72fb1",
+      "lines": 210
+    },
+    "C2": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/docs/feat-contextpilot-capability-sft/architecture.md",
+      "sha256": "f9708234295af4e9d09cd15663006b05fa34c18763981c0c6ed51ffe387cf977",
+      "lines": 433
+    },
+    "C3": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/tasks/feat-contextpilot-capability-sft/handoff.md",
+      "sha256": "3880e2a3a45b58a9d542908f3f9fff67288017fe8f35b9adc1a030a795ad0c71",
+      "lines": 412
+    },
+    "C4": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/runtime/local/xdandsh_contextpilot_runtime/engine.py",
+      "sha256": "e0eabe303846170a221b941c6177a39c5c57acbef9a3a770167c710edae6074d",
+      "lines": 1784
+    },
+    "C5": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/training/xdandsh_contextpilot_training/release.py",
+      "sha256": "1635a56233260345958c91223799f096366a8085fa75d8eb25de8fa01194714b",
+      "lines": 988
+    },
+    "C6": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/evaluation/xdandsh_contextpilot_campaign/campaign.py",
+      "sha256": "80a069552b5a9228574925b225b6b6cd56da26834b6b004d7131f26620c8d2ff",
+      "lines": 445
+    },
+    "C7": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/evaluation/xdandsh_contextpilot_campaign/artifacts.py",
+      "sha256": "969f7bada67e49b11d60e3add997593548bc99e3bad18f4ea5eddcc784f6c55a",
+      "lines": 172
+    },
+    "C8": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/evaluation/xdandsh_contextpilot_evaluation/verifier.py",
+      "sha256": "4871f427ce73745099dbed0bd452801143d7508f26dda28306f2ab3088d19878",
+      "lines": 181
+    },
+    "C9": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/evaluation/runs/context-memory-pilot-20260907/summary.json",
+      "sha256": "70e7ea78c973654a58e36ab36c917ec63381cb3fcf5c71a3485327a7f09ee689",
+      "lines": 1
+    },
+    "C10": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/evaluation/runs/contextpilot-litellm-production-20260907T034616Z/summary.json",
+      "sha256": "9843adbc00a696f7751ad69bb13f8f673c91b57745835558c4c8974b7430cd91",
+      "lines": 1
+    },
+    "C11": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/train/verl/trainer/contextpilot/adv.py",
+      "sha256": "0c60a2342f5fcf659f94eaa68dd6c14a4c1c895e5144e33a8240c07964e582f3",
+      "lines": 72
+    },
+    "C12": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/train/verl/experimental/agent_loop/statelm_agent_loop.py",
+      "sha256": "ca964547b5905d8c4fd39b86f34ad90beaab272125e733e01179334ba8d267ed",
+      "lines": 1961
+    },
+    "C13": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-contextpilot/.Codex/worktrees/feat-contextpilot-capability-sft/train/verl/experimental/agent_loop/agent_loop.py",
+      "sha256": "6e0f9681eebcc9b8020772ac185b451af273d2b4b5dac68457432795b909ccb8",
+      "lines": 1681
+    },
+    "D1": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft/packages/experimental/contextpilot-training-runner/src/index.ts",
+      "sha256": "acd9ff32d73cf200f87172d89969cc5f8dca0e25dc48b56a9a4a9519f06b185b",
+      "lines": 233
+    },
+    "D2": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft/packages/experimental/contextpilot-training-fs/src/index.ts",
+      "sha256": "52970e07d0f1022df6075d523b66d0f13c8ee14e00b194eee5003f8b3c9475b4",
+      "lines": 298
+    },
+    "D3": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft/packages/experimental/contextpilot-training-source/src/index.ts",
+      "sha256": "72349791fb65a78304a8635c837991cdb1b230f0f08dfe0e74861945a88a8ed4",
+      "lines": 263
+    },
+    "D4": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft/tasks/feat-contextpilot-capability-sft/handoff.md",
+      "sha256": "fc9fa57b9390e82ba3471f2c14165c0023e9d713a61cfdf6c7ea062bb514acb5",
+      "lines": 218
+    },
+    "D5": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft/scripts/trace-training/export.ts",
+      "sha256": "d0dabae804d0a5f7ada47e0d04aa9483dc4738a9058662a9a60043e6d574e3c5",
+      "lines": 133
+    },
+    "D6": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/dsh-official-training/tasks/dsh-official-training/handoff.md",
+      "sha256": "3cddaa260a3acf06607be5e92ac6dae8b44987477e950c54d3d8c64a7bc63ff0",
+      "lines": 290
+    },
+    "D7": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft/packages/compaction/compaction-basic/src/index.ts",
+      "sha256": "d902d83329a1eda4ed7e29aa459c1a9663a19d5b7d95c76af118cb2c510a2edd",
+      "lines": 431
+    },
+    "D8": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft/packages/core/session/src/surface.ts",
+      "sha256": "85570bb2dfa0aaf1c9dbe9af525a4f53e8ffd9be78222bed588f7f88f1777bb8",
+      "lines": 460
+    },
+    "D9": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-Exp/.Codex/worktrees/feat-contextpilot-capability-sft/docs/feat-contextpilot-capability-sft/pilot-delivery-inventory.json",
+      "sha256": "1f15532161856931325d6fd83e9eab6cabf3558a7b80357bb71b2efb89f952ac",
+      "lines": 242
+    }
+  },
+  "artifact": {
+    "path": "docs/dsh-adapter/DSH专家小模型-记忆与Context专项整改方案.html",
+    "sha256": "d09c8a25f8b91133e5035f5aa30b864cf61c611184725f2bbb5bba2f2fc6e8ab",
+    "bytes": 89060
+  },
+  "external_research": {
+    "read_date": "2026-09-08",
+    "mechanism": "gstack browse; parent and independent agent sessions",
+    "sources": [
+      {
+        "title": "User article",
+        "url": "https://mp.weixin.qq.com/s/p_WJZ-CTBN5FW-W1eozY-w"
+      },
+      {
+        "title": "MiniCPM5-2B model card",
+        "url": "https://huggingface.co/openbmb/MiniCPM5-2B"
+      },
+      {
+        "title": "AA current model page",
+        "url": "https://artificialanalysis.ai/models/minicpm5-2b"
+      },
+      {
+        "title": "AA methodology",
+        "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking"
+      },
+      {
+        "title": "UltraData Agent SFT",
+        "url": "https://huggingface.co/datasets/openbmb/UltraData-SFT-Agent-2609"
+      },
+      {
+        "title": "UltraData RL",
+        "url": "https://huggingface.co/datasets/openbmb/UltraData-RL-2609"
+      },
+      {
+        "title": "Meshy pinned code",
+        "url": "https://github.com/OpenBMB/Meshy/tree/925fc950d70de5fdd643cd0011545a419206e21e"
+      },
+      {
+        "title": "JustRL II author method",
+        "url": "https://panhaoxuan.notion.site/justrl-ii-small-llms-to-128k-reasoning-with-a-critic-cn"
+      },
+      {
+        "title": "ContextPilot original paper",
+        "url": "https://arxiv.org/html/2608.28476v1"
+      }
+    ],
+    "score_caveats": [
+      "Article AA 23/Agentic20 vs observed current AA v4.3 Intelligence14 estimated; do not mix versions.",
+      "GDPval reported Elo891 is numerically compatible with card19.6 under official normalization; not independently reproduced raw Elo."
+    ],
+    "open_code_scope": "Meshy925fc95 scalar GRPO public; complete JustRL II critic reference implementation not confirmed in reviewed publication/code."
+  },
+  "validation": {
+    "validated_at": "2026-09-08T04:24:33.472935+00:00",
+    "html_links": 154,
+    "local_links_checked": 139,
+    "broken_local_links": [],
+    "source_files_hashed": 44,
+    "source_hash_mismatches": [],
+    "desktop": "1440x1000; scrollWidth1440",
+    "mobile": "390x844; scrollWidth390; no section overflow",
+    "filters": "UA=6/12; unmatched search=0/12; reset=12/12",
+    "navigation": "fragment navigation exercised",
+    "console": "cleared external-page buffer; reloaded local document; no console errors",
+    "print": "A4 24 pages; no text blocks beyond horizontal page bounds; page4 visually inspected",
+    "independent_reviews": [
+      "DSH facts passed",
+      "ContextPilot/GRPO corrections applied and rechecked",
+      "MiniCPM data and benchmark facts passed",
+      "Meshy/JustRLII and current verl boundaries passed"
+    ],
+    "product_tests": "not run for document-only task; no GPU/model/remote resource execution",
+    "artifact_sha256": "d09c8a25f8b91133e5035f5aa30b864cf61c611184725f2bbb5bba2f2fc6e8ab"
+  }
+}

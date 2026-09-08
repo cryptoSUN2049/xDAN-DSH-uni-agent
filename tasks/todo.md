@@ -85,3 +85,26 @@
 本轮为研究分析，不启动训练或付费资源，不修改产品代码。
 
 Review：官方模型卡分数按表格列核对；最新代码9b7dbdb明确旧DSH launcher拒绝qwen3_5，Qwen3.5 recipe默认64卡、MemAgent默认8卡。推荐区分“最快训练验证”（MemAgent）与“DSH业务优先”（工具/恢复）；OPD/SFT边界和GRPO组内方差信号已注明。详细结果：docs/dsh-adapter/qwen3.5-4b-capability-and-training-analysis.md。本轮没有训练或模型推理。
+
+
+## 2026-09-08：DSH 专家小模型与记忆/context专项整改方案
+
+- [x] 复核Uni-Agent最新版本、部署预检和MemAgent实际实现；读取当前目标与历史边界。
+- [x] 分仓审计DSH和ContextPilot实际代码/进度，区分上游方法、迁移实现和本机证据。
+- [x] 编写专项HTML：目标、事实、架构、整改项、接口/文件、数据/奖励、分阶段实验、验收及优先取舍。
+- [x] 独立事实复核、链接检查、桌面/手机与交互/打印验证。
+- [x] 更新交接并提交文档。
+
+规格：单文件离线HTML；交付到docs/dsh-adapter/，不改产品代码、不调用模型或创建资源。方案细化属于本次授权，后续实现按具体任务及既有工程授权推进。
+
+用户追加发布对标：核查MiniCPM5-2B官方模型/数据、AA口径、Meshy与JustRL II真实公开范围；补充公平比较、可借鉴数据与模型发布门槛。
+
+- [x] 完成MiniCPM5-2B跨来源核实并纳入正文、课程、SP0/SP6/SP7与验收。
+
+### 专项 Review
+
+- 审计Uni-Agent9b7dbdb/verl fefb080、DSH memory71ca762、CP0b04840与DSH training1af5b00；44个源码/记录文件SHA256复核一致，区分未提交文档与产品代码。
+- HTML含15节、12项整改、SP0—SP7、接口与文件、SFT/GRPO/ContextPilot完整路线，以及MiniCPM5-2B三轨发布对标与JustRL II独立候选实验。
+- 真实pilot仅5attempt/10Session/58generic rows，生产训练eligible为0；不能等同记忆/context已训好。
+- 独立事实复核通过。154链接中139本地链接/锚点有效；桌面1440和手机390无页面横向溢出，筛选/重置/目录与本页console通过；24页A4打印无文本横向越界并抽查截图。
+- 本轮只写文档，未运行模型、训练、部署或修改产品；历史测试/GPU成绩未在本轮重跑。提交不推送。

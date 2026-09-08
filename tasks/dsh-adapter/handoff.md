@@ -1,6 +1,6 @@
 # dsh-adapter 交接
 
-> 2026-09-08 架构审计补充：当前最新产品代码已在 `harbor-modal-integration / 7139f57`，配对 VERL `fefb080`。先读 [真实代码系统架构](../../docs/dsh-adapter/uni-agent系统架构.html) 及该 worktree 的交接；下列早期状态保留为历史，不应覆盖新 Git / 运行证据。
+> 2026-09-08 最新专项交付：先读 [DSH专家小模型、记忆与Context整改方案](../../docs/dsh-adapter/DSH专家小模型-记忆与Context专项整改方案.html)。最新产品基线为 `harbor-modal-integration / 9b7dbdb` + verl `fefb080`；新增MiniCPM5-2B发布对标。下方早期工程状态保留为历史，不覆盖最新worktree与本轮证据。
 
 更新时间：2026-09-07。新 session 首先读取本文件，再读本地状态快照及下一里程碑设计。
 
@@ -89,3 +89,43 @@
 - 107项相关CPU测试通过；桌面/手机、本地来源链接、筛选、目录和打印验证通过。非全仓CI或GPU验证。
 - 代码已具备DSH→Gateway→Framework→TQ→VERL训练接线；历史v2更新/reload存在，但升级后GPU组合、Harbor DSH bridge、OPD、paired uplift与自动RSI未验收。
 - 后续实施仍进入最新worktree，先读其handoff与实际Git状态；不要在根分支依旧历史todo重复修已完成的迁移。
+
+
+## 2026-09-08：专项方案与模型发布对标交付
+
+### TL;DR
+
+- 目标：DSH＋Qwen3.5-4B，经Uni-Agent训练专长、memory/context策略，并以MiniCPM5-2B作为发布对照。
+- 完成：跨仓真实代码审计、12项整改、SP0—SP7、数据/接口/奖励/验收、三轨对标；尚未实施或训练。
+- 先读新HTML与evidence JSON；最新产品实施进入harbor-modal-integration等对应工作区，不依旧根分支todo重复修已完成问题。
+
+### 本轮交付物
+
+| 路径 | 行数 | 说明 |
+| --- | ---: | --- |
+| `docs/dsh-adapter/DSH专家小模型-记忆与Context专项整改方案.html` | 126 | 专项方案与MiniCPM发布对标 |
+| `docs/dsh-adapter/dsh-expert-memory-context-remediation-evidence.json` | 341 | 源码身份、原始来源与验证证据 |
+| `tasks/todo.md` | 110 | 任务进度与Review |
+| `tasks/dsh-adapter/handoff.md` | 131 | 最新冷启动入口与交接 |
+
+### 设计约束与真实行为
+
+- DSH唯一产品loop；Uni-Agent编排/准入/训练；ContextPilot保留上游oracle、迁移方法；不复制旧vendored verl或另建训练主线。
+- DSH已有ActorFS、fresh Session、原生compaction；pilot仅read/write/edit，不能证明18项CP工具及自主context editing已接通。
+- CP两批累计5attempt/10Session/58generic rows、2任务/1family、manual0、production eligible0；专用source/真实动作producer/训练闭环仍需专项接入。
+- CP snapshot子树均值与query uid归一化不同于JustRL II token critic。E2/E3/E4同一SFT起点独立训练；不得用累计续训替代方法消融。
+- MiniCPM官方card与文章/AA有版本和指标口径差异；GDPval891与19.6可归一化相容。数据只有公开轨迹/题目不保证附带环境；固定条款、来源和去污后使用。
+- 当前Meshy925fc95公开recipe是标量GRPO；完整JustRL II参考代码未确认公开。当前verl虽已有critic/GAE，也不是完整方法。
+
+### 下一里程碑
+
+- [ ] SP0冻结模型、DSH发布物、parser/任务/verifier，加入MiniCPM共同环境基线。
+- [ ] SP1完成Qwen3.5小拓扑真实更新与独立reload；同步准备SP2/SP3 CPU课程与phase桥。
+- [ ] SP2—SP4复用DSH现有记忆与投影，建立可信SFT/RL；SP5完成有界分支与可重算credit。
+- [ ] SP6进行同DSH、公开Harness、端侧成本三轨评测；SP7交付模型包、profile、recipe、model card与复现依据。
+
+### 分支/部署状态与冷启动
+
+- 本轮仅根分支dsh-adapter文档提交；没有push、合并、资源创建、模型调用或部署。旧CI/GPU结果不代表本轮新组合验证。
+- 冷启动顺序：新HTML → evidence JSON → 本handoff → 目标产品worktree的handoff/todo → 实际Git状态；再按实施审批与隔离约定推进。
+- 本轮验证：44源文件hash一致；139本地链接有效；手机/桌面/筛选/打印通过；CP、DSH和MiniCPM/算法独立复核通过。
