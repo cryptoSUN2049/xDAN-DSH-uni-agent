@@ -53,10 +53,15 @@ def _git(root, *args):
     ).stdout.strip()
 
 
-def prepare(*, root, output, agent_image_digest):
+def prepare(*, root, output, agent_image_digest, verifier_image_digest=None):
     root, output = Path(root).resolve(), Path(output).absolute()
     if not isinstance(agent_image_digest, str) or re.fullmatch(r"sha256:[0-9a-f]{64}", agent_image_digest) is None:
         raise ValueError("agent_image_digest must be a fixed sha256 digest")
+    if verifier_image_digest is not None and (
+        not isinstance(verifier_image_digest, str)
+        or re.fullmatch(r"sha256:[0-9a-f]{64}", verifier_image_digest) is None
+    ):
+        raise ValueError("verifier_image_digest must be a fixed sha256 digest")
     if output.exists() or output.is_symlink():
         raise ValueError("Harbor T2 output must be new")
     patch = _read(root, PATCH)
@@ -111,12 +116,13 @@ def prepare(*, root, output, agent_image_digest):
             b"--input-dir /audit-input --output-dir /logs/verifier\n"
         ),
     }
+    verifier_pin = f'docker_image = "{verifier_image_digest}"\n' if verifier_image_digest is not None else ""
     files["task.toml"] = (
         'schema_version = "1.3"\nartifacts = []\n\n[agent]\ntimeout_sec = 600.0\n\n'
         f'[environment]\ndocker_image = "{agent_image_digest}"\nbuild_timeout_sec = 120.0\n'
         'cpus = 1\nmemory_mb = 2048\nstorage_mb = 2048\nworkdir = "/app"\n\n'
         '[verifier]\nenvironment_mode = "separate"\ntimeout_sec = 30.0\n\n'
-        "[verifier.environment]\nbuild_timeout_sec = 120.0\ncpus = 1\nmemory_mb = 512\n"
+        f"[verifier.environment]\n{verifier_pin}build_timeout_sec = 120.0\ncpus = 1\nmemory_mb = 512\n"
         'storage_mb = 1024\nworkdir = "/app"\n'
     ).encode()
     for path in VERIFIER_SOURCES:
@@ -146,6 +152,7 @@ def prepare(*, root, output, agent_image_digest):
         agent_parent_image_digest=PARENT_IMAGE,
         agent_parent_local_tag=PARENT_TAG,
         verifier_parent_image=VERIFIER_IMAGE,
+        verifier_image_digest=verifier_image_digest,
         platform="linux/amd64",
         runtime={
             k: image[k]
@@ -177,8 +184,14 @@ def main():
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--agent-image-digest", required=True)
+    parser.add_argument("--verifier-image-digest", help="Optional prebuilt verifier sha256 image identity")
     args = parser.parse_args()
-    manifest = prepare(root=args.root, output=args.output, agent_image_digest=args.agent_image_digest)
+    manifest = prepare(
+        root=args.root,
+        output=args.output,
+        agent_image_digest=args.agent_image_digest,
+        verifier_image_digest=args.verifier_image_digest,
+    )
     print(json.dumps({"task_dir": manifest["task_dir"], "task_ref": manifest["task_ref"]}))
 
 

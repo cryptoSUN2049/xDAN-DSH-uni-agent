@@ -174,3 +174,32 @@ def test_rejects_different_source_checkout_instead_of_mislabeling_imported_build
     with pytest.raises(ValueError, match="root must match"):
         prepare(root=root, output=tmp_path / "release", agent_image_digest=IMAGE)
     assert not (tmp_path / "release").exists()
+
+
+def test_explicit_verifier_image_is_pinned_in_task_and_manifest(tmp_path):
+    from examples.harbor.prepare_t2_task import prepare
+
+    verifier = "sha256:" + "b" * 64
+    output = tmp_path / "release"
+    manifest = prepare(root=ROOT, output=output, agent_image_digest=IMAGE, verifier_image_digest=verifier)
+    config = tomllib.loads((output / "task/task.toml").read_text())
+    assert config["verifier"]["environment"]["docker_image"] == verifier
+    assert manifest["verifier_image_digest"] == verifier
+    assert (output / "task/tests/Dockerfile").is_file()
+
+
+@pytest.mark.parametrize("image", ["latest", "sha256:bad", IMAGE + "\n", 123])
+def test_invalid_verifier_image_rejected_before_output(tmp_path, image):
+    from examples.harbor.prepare_t2_task import prepare
+
+    output = tmp_path / "release"
+    with pytest.raises(ValueError, match="verifier_image_digest"):
+        prepare(root=ROOT, output=output, agent_image_digest=IMAGE, verifier_image_digest=image)
+    assert not output.exists()
+
+
+def test_default_verifier_remains_build_context(tmp_path):
+    output, manifest = prepare(tmp_path)
+    config = tomllib.loads((output / "task/task.toml").read_text())
+    assert "docker_image" not in config["verifier"]["environment"]
+    assert manifest["verifier_image_digest"] is None
