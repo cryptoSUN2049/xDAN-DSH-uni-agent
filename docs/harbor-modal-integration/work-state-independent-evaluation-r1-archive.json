@@ -1,0 +1,30 @@
+{
+  "schema": "dsh.evidence-archive-verification.v1",
+  "archive": "/workspace/reports/work-state-independent-evaluation-r1-20260909.tar.gz",
+  "sha256": "c584f240d2276eb7e9b81bb0dd9553284ec735b150669ece194bbc8fd3a4ce01",
+  "archive_bytes": 1508657,
+  "manifest": "/workspace/reports/work-state-independent-evaluation-r1-20260909.manifest.json",
+  "manifest_sha256": "eb21b52de1c4d0807fbb22ce8572bf47a2966876b69902c02ee507157b717e31",
+  "data_members": 12247,
+  "uncompressed_source_bytes": 7644475,
+  "readback_all_members_passed": true,
+  "exclusions": [
+    {
+      "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01-data/training.env",
+      "reason": "Environment/credential filename excluded without reading"
+    },
+    {
+      "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03-data/training.env",
+      "reason": "Environment/credential filename excluded without reading"
+    },
+    {
+      "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05-data/training.env",
+      "reason": "Environment/credential filename excluded without reading"
+    },
+    {
+      "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06-data/training.env",
+      "reason": "Environment/credential filename excluded without reading"
+    }
+  ],
+  "original_runs_modified": false
+}

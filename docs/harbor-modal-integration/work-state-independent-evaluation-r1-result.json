@@ -1,0 +1,896 @@
+{
+  "captured_utc": "2026-09-09T10:45:38.757854+00:00",
+  "summary": {
+    "schema": "dsh.work-state-independent-evaluation.v1",
+    "suite_id": "ws-r4-isolated-eval-r1",
+    "mother_run": "/root/runs/work-state-train-r4",
+    "resume_from": "/workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8",
+    "identity": {
+      "integration_head": "9dea127bf7bb69eb916aebcc0ab69ff86f53df08",
+      "verl_head": "fefb080262e1c015a0ea05f958822a6a512dc795",
+      "verl_effective_source": {
+        "schema": "dsh.verl-source-overlay.v1",
+        "base_revision": "fefb080262e1c015a0ea05f958822a6a512dc795",
+        "overlay_id": "preserve-finish-reason-v1",
+        "state": "patched",
+        "patch_sha256": "sha256:2cb5eef7dbe70abc553fa002c3d608e6a93954afcdbe3c8e319d5ad1581df436",
+        "manifest_sha256": "sha256:15ecee86c9b4a290ff3a6d62de2c7da5cee995037f45c1f68aeab74deaf81fbd",
+        "files": {
+          "verl/workers/rollout/vllm_rollout/vllm_async_server.py": "sha256:2a4452e0c5123c8f5ed62961d048cef97c3f1f5234a8be573f2837f4e01e1d75"
+        }
+      },
+      "model_revision_declared": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "model_files": {
+        "/workspace/models/Qwen3-4B-1cfa9a7/config.json": "sha256:8ba006f74fecfaaeb392872a60f4a480e7ec9860153d2e1b769ec81f9a147f8a",
+        "/workspace/models/Qwen3-4B-1cfa9a7/tokenizer_config.json": "sha256:d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+      },
+      "runtime": {
+        "path": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-linux-x64",
+        "sha256": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "installed": {
+          "path": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-linux-x64",
+          "sdk": "0.1.3a2",
+          "runtime": "0.1.3a2"
+        }
+      },
+      "checkpoint_origin": {
+        "schema": "dsh.memory-checkpoint-origin.v1",
+        "mother_run": "/root/runs/work-state-train-r4",
+        "mother_source_head": "5b4b01b1d0ab656e960d3514d0a3630210913022",
+        "verl_effective_source": {
+          "schema": "dsh.verl-source-overlay.v1",
+          "base_revision": "fefb080262e1c015a0ea05f958822a6a512dc795",
+          "overlay_id": "preserve-finish-reason-v1",
+          "state": "patched",
+          "patch_sha256": "sha256:2cb5eef7dbe70abc553fa002c3d608e6a93954afcdbe3c8e319d5ad1581df436",
+          "manifest_sha256": "sha256:15ecee86c9b4a290ff3a6d62de2c7da5cee995037f45c1f68aeab74deaf81fbd",
+          "files": {
+            "verl/workers/rollout/vllm_rollout/vllm_async_server.py": "sha256:2a4452e0c5123c8f5ed62961d048cef97c3f1f5234a8be573f2837f4e01e1d75"
+          }
+        },
+        "checkpoint_path": "/workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8",
+        "step": 8,
+        "evidence": {
+          "/root/runs/work-state-train-r4/run-manifest.json": "sha256:63ace12b90bb72906a943029b10a116a038aa54074bf125a292032908fe0b08c",
+          "/root/runs/work-state-train-r4/memory-launch-plan.json": "sha256:15a4fa758413e92c2c165288937e7423014e21cf77df95bcd95f932f5e3ea777",
+          "/root/runs/work-state-train-r4-data/manifest.json": "sha256:15a4fa758413e92c2c165288937e7423014e21cf77df95bcd95f932f5e3ea777"
+        },
+        "files": {
+          "actor/extra_state_world_size_1_rank_0.pt": {
+            "sha256": "sha256:a0936015675db166f5e94aeafea2f46f8a1777f95a58f1326478c75e00acf070",
+            "size": 15205
+          },
+          "actor/fsdp_config.json": {
+            "sha256": "sha256:7315a2057e6b04e0b2e7d6ee8ad070eafd481f3e1029fb9c75c97723b6f98f36",
+            "size": 46
+          },
+          "actor/huggingface/chat_template.jinja": {
+            "sha256": "sha256:a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+            "size": 4168
+          },
+          "actor/huggingface/config.json": {
+            "sha256": "sha256:17608177d0d110e93b4bca08684cc56c1219b317e24cdaa2b83e216721fc18b5",
+            "size": 1625
+          },
+          "actor/huggingface/generation_config.json": {
+            "sha256": "sha256:6b08ea8d092c7dd1a9de07d899271ba71ab2fe74375900c7a6400356e88752b2",
+            "size": 213
+          },
+          "actor/huggingface/tokenizer.json": {
+            "sha256": "sha256:be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+            "size": 11422650
+          },
+          "actor/huggingface/tokenizer_config.json": {
+            "sha256": "sha256:d9bf1d78a80bad5eb65b83c2608910e3be00a9d3250c8153a5a393ad1257e1d6",
+            "size": 664
+          },
+          "actor/lora_train_meta.json": {
+            "sha256": "sha256:79e829adbcada25b80ae32ba7ab26a07ece2cb6ae168855fab519585a123e6e8",
+            "size": 67
+          },
+          "actor/model_world_size_1_rank_0.pt": {
+            "sha256": "sha256:0ce64d8d9bc5bf0ad96115c93db6e538729ca8daa2155a0bf884c50caa765659",
+            "size": 8889735011
+          },
+          "actor/optim_world_size_1_rank_0.pt": {
+            "sha256": "sha256:a39d66d3dd39264356485b486552faab6bf4ef2c6f357d1f08e52d48a55afdcb",
+            "size": 132552363
+          },
+          "data.pt": {
+            "sha256": "sha256:6b86c2deb21671c8f9faad8adf7737dc2548bf1d10d2f6df3eef1fdc6fe7c46d",
+            "size": 1499
+          }
+        },
+        "identity": "sha256:273d7288999fe43c35b9a49164b148ad8074d9d818d2d55dda9dd70a771b2911"
+      },
+      "wall_seconds": 3600,
+      "sampling_environment": {
+        "VAL_ROLLOUT_N": "1",
+        "VAL_MAX_SAMPLES": "1",
+        "MAX_PROMPT_LENGTH": "8192",
+        "MAX_RESPONSE_LENGTH": "8192",
+        "PPO_MAX_TOKEN_LEN_PER_GPU": "16384",
+        "ROLLOUT_MAX_NUM_SEQS": "1",
+        "CONCURRENCY": "1",
+        "GATEWAY_COUNT": "1"
+      }
+    },
+    "tasks": [
+      {
+        "task_id": "work-state-ws01-v1-s303",
+        "status": "verified",
+        "run_id": "ws-r4-isolated-eval-r1-ws01",
+        "run_root": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01",
+        "preparation_root": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01-data",
+        "manifest_sha256": "sha256:96b312d42b74b2ab6a62eb8dd2242e6bff994933fe0fb2650d31f5e3b6c97137",
+        "execution": {
+          "exit_code": 0,
+          "reason": "training-exited",
+          "elapsed_seconds": 490.011,
+          "pid": 270480,
+          "transient_health_failures": 0,
+          "recovered_health_windows": 0
+        },
+        "audit": {
+          "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01/consumption-audit.json",
+          "sha256": "sha256:b12e4bf12cd384bd2106aec68b992656a18ff754fca0daa19296c77b39fb2be2",
+          "passed": true,
+          "consumption_verified": true,
+          "summary": {
+            "groups": 1,
+            "consumed_groups": 1,
+            "consumed_rows": 2,
+            "unique_consumed_rows": 2
+          }
+        }
+      },
+      {
+        "task_id": "work-state-ws03-v1-s303",
+        "status": "verified",
+        "run_id": "ws-r4-isolated-eval-r1-ws03",
+        "run_root": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03",
+        "preparation_root": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03-data",
+        "manifest_sha256": "sha256:364fede32b0aea7314e7caed79441da123b980c390d5b3e11eab0dc1c7332860",
+        "execution": {
+          "exit_code": 0,
+          "reason": "training-exited",
+          "elapsed_seconds": 435.01,
+          "pid": 275680,
+          "transient_health_failures": 0,
+          "recovered_health_windows": 0
+        },
+        "audit": {
+          "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03/consumption-audit.json",
+          "sha256": "sha256:696939eb0e182cdb0488a848b3d13e37ccd8016d55a574072af3cb2cbf8b7122",
+          "passed": true,
+          "consumption_verified": true,
+          "summary": {
+            "groups": 1,
+            "consumed_groups": 1,
+            "consumed_rows": 2,
+            "unique_consumed_rows": 2
+          }
+        }
+      },
+      {
+        "task_id": "work-state-ws05-v1-s303",
+        "status": "verified",
+        "run_id": "ws-r4-isolated-eval-r1-ws05",
+        "run_root": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05",
+        "preparation_root": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05-data",
+        "manifest_sha256": "sha256:c38313a026db93a4da27097dc83c0868f33442371c9bcf84020ed28fba2a6924",
+        "execution": {
+          "exit_code": 0,
+          "reason": "training-exited",
+          "elapsed_seconds": 405.01,
+          "pid": 280630,
+          "transient_health_failures": 0,
+          "recovered_health_windows": 0
+        },
+        "audit": {
+          "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05/consumption-audit.json",
+          "sha256": "sha256:40fe9d477f79a0b00062139cf5298a316e5a324e4a904c0c4860a19d8e272dde",
+          "passed": true,
+          "consumption_verified": true,
+          "summary": {
+            "groups": 1,
+            "consumed_groups": 1,
+            "consumed_rows": 2,
+            "unique_consumed_rows": 2
+          }
+        }
+      },
+      {
+        "task_id": "work-state-ws06-v1-s303",
+        "status": "execution_failed",
+        "run_id": "ws-r4-isolated-eval-r1-ws06",
+        "run_root": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06",
+        "preparation_root": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06-data",
+        "manifest_sha256": "sha256:d297d8a0b6edc1877611e81867d81e7ae91f198941accd5247bdecfb0f1d93b9",
+        "execution": {
+          "exit_code": 1,
+          "reason": "training-exited",
+          "elapsed_seconds": 565.013,
+          "pid": 285519,
+          "transient_health_failures": 0,
+          "recovered_health_windows": 0
+        },
+        "audit": {
+          "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/consumption-audit.json",
+          "sha256": "sha256:b248640498ab6542f9ff6179c35f02ad42b44bd47dce46e9b4f2540df6c1b682",
+          "passed": false,
+          "consumption_verified": false,
+          "summary": {
+            "groups": 0,
+            "consumed_groups": 0,
+            "consumed_rows": 0,
+            "unique_consumed_rows": 0
+          }
+        }
+      }
+    ],
+    "stop_reason": null,
+    "all_attempted": true,
+    "all_verified": false,
+    "exit_code": 1
+  },
+  "summary_sha256": "9611fed462fe852c5bd2bdab960a22609ff5636ff971ea7a75285d6af99915be",
+  "tasks": [
+    {
+      "task_id": "work-state-ws01-v1-s303",
+      "audit": {
+        "schema": "dsh.memory-training-consumption-audit.v1",
+        "passed": true,
+        "consumption_verified": true,
+        "run_completed": true,
+        "run_id": "ws-r4-isolated-eval-r1-ws01",
+        "run_manifest_sha256": "sha256:68a120d8c3f1f420d207d8e6fc3577525986518851a163f55e398c67c19ce83e",
+        "inputs": [
+          {
+            "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01/validation/8.jsonl",
+            "sha256": "sha256:662f716ababd989961773c442015bc2571718a426bcf0af0af01697d1254c50a"
+          }
+        ],
+        "groups": [
+          {
+            "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01/chains/groups/7588de0ecec34bf88db8d0bc9ffc4458/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 8,
+            "partition": "val",
+            "global_steps": 8,
+            "uid": "0d62afea-fb44-4117-afe6-d023b8554308",
+            "crosswalk_sha256": "sha256:77393c5b5b2763a7bf274450f22e780a6f03ad727002eed8f1d04522e7ac36b9",
+            "stage_evidence_verified": true,
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          }
+        ],
+        "errors": [],
+        "unknown_or_unadmitted_consumption": [],
+        "duplicate_consumption": [],
+        "overlapping_crosswalk_keys": [],
+        "summary": {
+          "groups": 1,
+          "consumed_groups": 1,
+          "consumed_rows": 2,
+          "unique_consumed_rows": 2
+        },
+        "limitations": [
+          "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+          "Crosswalk and submission records alone never establish trainer consumption."
+        ]
+      },
+      "log_sha256": "236437bbfe885fddc383d2051cb6a31d6a02f1028685e8044dc6b0afb3c4eb1a",
+      "load_lines": [
+        "\u001b[36m(WorkerDict pid=273189)\u001b[0m INFO:2026-09-09 10:14:23,701:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/model_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=273189)\u001b[0m INFO:2026-09-09 10:14:24,251:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/optim_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=273189)\u001b[0m INFO:2026-09-09 10:14:24,270:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/extra_state_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=273189)\u001b[0m INFO:2026-09-09 10:14:24,270:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/extra_state_world_size_1_rank_0.pt"
+      ],
+      "error_tail": [],
+      "stage_receipts": [
+        {
+          "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01/chains/memory-9365cb92e65c45bab392ed81fc1dac47/writer/run/results/722a31d4e10281b26f20ab1d/verifier-receipt.json",
+          "sha256": "97336f150223941f00ce05465e038ff73aa9b00eab788f16b1373e7a7349c470",
+          "receipt": {
+            "accuracy": 0.0,
+            "artifact_sha256": "sha256:d76359d10b737fd7df7ad13b11982e568bdbe6f945d0f6276b6ffe96fef26eb2",
+            "dsh_session_id": "dsh-memory-A-f931b7983f54444099aca617c1fd6a5d",
+            "eligible": true,
+            "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+            "evidence": [
+              "sha256:620cd8a5079edec083336d793bd1279aa653cc028de2fcb176a39707c32f2492",
+              "sha256:f9a9ad91280d2621cf412e236b9cc332de246cc912b66b2007afab01bf4dd08d",
+              "sha256:2dda041be32016d9869102bd7e64fbcff295795a6d5edb008b7744b1b639ba8d"
+            ],
+            "finished": true,
+            "fresh": true,
+            "issued_at": "2026-09-09T10:16:00.746428+00:00",
+            "issuer": {
+              "id": "uni-agent-dsh",
+              "kind": "trusted-verifier"
+            },
+            "receipt_id": "sha256:156cabf426b16a044d571989536cb750d42ce1bfb7c4ecdc524a20413fdc3cce",
+            "reward": 0.0,
+            "schema": "dsh.verifier-receipt.v1",
+            "task_id": "dsh/work-state/memory-9365cb92e65c45bab392ed81fc1dac47/writer",
+            "task_version": "1",
+            "trace_sha256": "sha256:f9a9ad91280d2621cf412e236b9cc332de246cc912b66b2007afab01bf4dd08d",
+            "verifier": {
+              "code_digest": "sha256:bf1f37256fdecebbb5b3dae0f25e631874a9a379b8c82c28f5f1b9d14fc69133",
+              "id": "dsh-work-state-training-stage",
+              "version": "1"
+            }
+          },
+          "envelope_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01/chains/memory-9365cb92e65c45bab392ed81fc1dac47/writer/run/results/722a31d4e10281b26f20ab1d/agent-result.json",
+          "envelope_sha256": "d76359d10b737fd7df7ad13b11982e568bdbe6f945d0f6276b6ffe96fef26eb2",
+          "runtime_result": {
+            "adapter": "uni-agent-dsh",
+            "dsh_session_id": "dsh-memory-A-f931b7983f54444099aca617c1fd6a5d",
+            "event_count": 26,
+            "finish_reason": "completed",
+            "gateway_session_id": "memory-A-f931b7983f54444099aca617c1fd6a5d",
+            "keep_trace": true,
+            "patches_sha256": "sha256:42b0daf6cad8064881d8ce1ca55161c74992481b5ccb23245be7e777d3bb2ed5",
+            "profile": "sdk-minimal",
+            "trace_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01/chains/memory-9365cb92e65c45bab392ed81fc1dac47/writer/run/traces/01f84d000ebec605c1abe06f/session.jsonl",
+            "trace_sha256": "sha256:f9a9ad91280d2621cf412e236b9cc332de246cc912b66b2007afab01bf4dd08d"
+          },
+          "envelope_finished": true
+        },
+        {
+          "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01/chains/memory-9365cb92e65c45bab392ed81fc1dac47/reader/run/results/cc1395f35283c7af110f67f7/verifier-receipt.json",
+          "sha256": "d393b3b14315e00d13cd4dc4a9485ea6e16bcc4df1aa4c5a59af593640b9631f",
+          "receipt": {
+            "accuracy": 0.0,
+            "artifact_sha256": "sha256:65e0f45baf25050cce5f949c55dc2b8cf6679a71309f799c2e76755cf3f24d1e",
+            "dsh_session_id": "dsh-memory-B-92478cf79cbc42e580220d5f3c011601",
+            "eligible": true,
+            "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+            "evidence": [
+              "sha256:f769f7129dabb19f87ec1ed21b52e8a695b86de51b3e9598e7877d4a41866bec",
+              "sha256:0f0e8f4f25cfcee63c0d1702442da4e356567be857b63b1f42bb0d0a94c2e4fb",
+              "sha256:2dda041be32016d9869102bd7e64fbcff295795a6d5edb008b7744b1b639ba8d",
+              "sha256:156cabf426b16a044d571989536cb750d42ce1bfb7c4ecdc524a20413fdc3cce",
+              "sha256:a91035968d2b16302a621c294db93b5a21fa2cc8a6df5deafaeeaf45738db16a",
+              "sha256:f5155291bfde1e47b561c35cc40402924800f3db0bacb3811be34fb4fb5a5edf"
+            ],
+            "finished": true,
+            "fresh": true,
+            "issued_at": "2026-09-09T10:16:15.141864+00:00",
+            "issuer": {
+              "id": "uni-agent-dsh",
+              "kind": "trusted-verifier"
+            },
+            "receipt_id": "sha256:0479ec7701d13026d94957c902046ea056c77f7496a6f3396dc5c9302e06ed27",
+            "reward": 0.0,
+            "schema": "dsh.verifier-receipt.v1",
+            "task_id": "dsh/work-state/memory-9365cb92e65c45bab392ed81fc1dac47/reader",
+            "task_version": "1",
+            "trace_sha256": "sha256:0f0e8f4f25cfcee63c0d1702442da4e356567be857b63b1f42bb0d0a94c2e4fb",
+            "verifier": {
+              "code_digest": "sha256:bf1f37256fdecebbb5b3dae0f25e631874a9a379b8c82c28f5f1b9d14fc69133",
+              "id": "dsh-work-state-training-stage",
+              "version": "1"
+            }
+          },
+          "envelope_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01/chains/memory-9365cb92e65c45bab392ed81fc1dac47/reader/run/results/cc1395f35283c7af110f67f7/agent-result.json",
+          "envelope_sha256": "65e0f45baf25050cce5f949c55dc2b8cf6679a71309f799c2e76755cf3f24d1e",
+          "runtime_result": {
+            "adapter": "uni-agent-dsh",
+            "dsh_session_id": "dsh-memory-B-92478cf79cbc42e580220d5f3c011601",
+            "event_count": 26,
+            "finish_reason": "completed",
+            "gateway_session_id": "memory-B-92478cf79cbc42e580220d5f3c011601",
+            "keep_trace": true,
+            "patches_sha256": "sha256:6a9931a2d339e0c23c1184102730ca2452147d5f18cc834caeadc6e3eeb52666",
+            "profile": "sdk-minimal",
+            "trace_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws01/chains/memory-9365cb92e65c45bab392ed81fc1dac47/reader/run/traces/058a75d35134f3efa53b4c5a/session.jsonl",
+            "trace_sha256": "sha256:0f0e8f4f25cfcee63c0d1702442da4e356567be857b63b1f42bb0d0a94c2e4fb"
+          },
+          "envelope_finished": true
+        }
+      ]
+    },
+    {
+      "task_id": "work-state-ws03-v1-s303",
+      "audit": {
+        "schema": "dsh.memory-training-consumption-audit.v1",
+        "passed": true,
+        "consumption_verified": true,
+        "run_completed": true,
+        "run_id": "ws-r4-isolated-eval-r1-ws03",
+        "run_manifest_sha256": "sha256:beb2824a1b72900ef96c33d90cd29269a3898ed7e2f42bd40439a2fb2bd571bf",
+        "inputs": [
+          {
+            "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03/validation/8.jsonl",
+            "sha256": "sha256:58dc879929fe5bd06bfeadfb5ddf71e98b86871a197b66b4167c38f490cda52e"
+          }
+        ],
+        "groups": [
+          {
+            "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03/chains/groups/c9aac0b1545649d0a165e446aeade2fb/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 8,
+            "partition": "val",
+            "global_steps": 8,
+            "uid": "078fd0bd-f8fc-4bf1-8b8f-5f10b5e7878b",
+            "crosswalk_sha256": "sha256:fb1f6a2d118f2dc6b630e544e36b4f7e082eaba330d0e8a4f394af5d8936398a",
+            "stage_evidence_verified": true,
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          }
+        ],
+        "errors": [],
+        "unknown_or_unadmitted_consumption": [],
+        "duplicate_consumption": [],
+        "overlapping_crosswalk_keys": [],
+        "summary": {
+          "groups": 1,
+          "consumed_groups": 1,
+          "consumed_rows": 2,
+          "unique_consumed_rows": 2
+        },
+        "limitations": [
+          "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+          "Crosswalk and submission records alone never establish trainer consumption."
+        ]
+      },
+      "log_sha256": "3aab9d083483133420e4eb1128073b7424f7228b06fba048579668de7c2c680f",
+      "load_lines": [
+        "\u001b[36m(WorkerDict pid=278442)\u001b[0m INFO:2026-09-09 10:23:10,941:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/model_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=278442)\u001b[0m INFO:2026-09-09 10:23:11,025:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/optim_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=278442)\u001b[0m INFO:2026-09-09 10:23:11,039:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/extra_state_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=278442)\u001b[0m INFO:2026-09-09 10:23:11,039:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/extra_state_world_size_1_rank_0.pt"
+      ],
+      "error_tail": [],
+      "stage_receipts": [
+        {
+          "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03/chains/memory-5a2831ab5c284bdfb633d9f7dac9548e/writer/run/results/d26feb9a843bb752b196c6d6/verifier-receipt.json",
+          "sha256": "23d481b8cff00cdc4c25c3efeb7c4cae9c2c6a41a4d0a373ce7dd726888f3279",
+          "receipt": {
+            "accuracy": 0.0,
+            "artifact_sha256": "sha256:0190989851c28fa5a3de39afb28db62121424ce5582e06113bf1e51747b5b52c",
+            "dsh_session_id": "dsh-memory-A-529beceab541411695c4b2465cdaa5cd",
+            "eligible": true,
+            "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+            "evidence": [
+              "sha256:b4f8beaecf9321a535070eced7c60dee171640c94054c4bf7475498c3d4427c1",
+              "sha256:b1ed8fa150542a01ce23c3a76053dc0d486a26904694fd8c3bc8e6c984d52d1a",
+              "sha256:430eab189155f2a725f759e6aae966ed0ad4725794ab7007e19fb889fa36681b"
+            ],
+            "finished": true,
+            "fresh": true,
+            "issued_at": "2026-09-09T10:24:59.111081+00:00",
+            "issuer": {
+              "id": "uni-agent-dsh",
+              "kind": "trusted-verifier"
+            },
+            "receipt_id": "sha256:ae6d9d2163a4661b2958794132c323f2ed5fe2b2488f9c31261fba7f50be1fd1",
+            "reward": 0.0,
+            "schema": "dsh.verifier-receipt.v1",
+            "task_id": "dsh/work-state/memory-5a2831ab5c284bdfb633d9f7dac9548e/writer",
+            "task_version": "1",
+            "trace_sha256": "sha256:b1ed8fa150542a01ce23c3a76053dc0d486a26904694fd8c3bc8e6c984d52d1a",
+            "verifier": {
+              "code_digest": "sha256:bf1f37256fdecebbb5b3dae0f25e631874a9a379b8c82c28f5f1b9d14fc69133",
+              "id": "dsh-work-state-training-stage",
+              "version": "1"
+            }
+          },
+          "envelope_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03/chains/memory-5a2831ab5c284bdfb633d9f7dac9548e/writer/run/results/d26feb9a843bb752b196c6d6/agent-result.json",
+          "envelope_sha256": "0190989851c28fa5a3de39afb28db62121424ce5582e06113bf1e51747b5b52c",
+          "runtime_result": {
+            "adapter": "uni-agent-dsh",
+            "dsh_session_id": "dsh-memory-A-529beceab541411695c4b2465cdaa5cd",
+            "event_count": 61,
+            "finish_reason": "completed",
+            "gateway_session_id": "memory-A-529beceab541411695c4b2465cdaa5cd",
+            "keep_trace": true,
+            "patches_sha256": "sha256:a5332586a723875f1ba16c7447d45d5d90385a7503b1555dc888a390f34f90ca",
+            "profile": "sdk-minimal",
+            "trace_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03/chains/memory-5a2831ab5c284bdfb633d9f7dac9548e/writer/run/traces/0504015765f974c14b257a74/session.jsonl",
+            "trace_sha256": "sha256:b1ed8fa150542a01ce23c3a76053dc0d486a26904694fd8c3bc8e6c984d52d1a"
+          },
+          "envelope_finished": true
+        },
+        {
+          "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03/chains/memory-5a2831ab5c284bdfb633d9f7dac9548e/reader/run/results/9ded5d46581a12d5e79ea660/verifier-receipt.json",
+          "sha256": "d7bac7d22113064fcc82c1683352a12ad38d4b20b3626eab4be544ce245d9b7f",
+          "receipt": {
+            "accuracy": 0.0,
+            "artifact_sha256": "sha256:df7b99ba6e09c7b0090cd9fb6d3bb2c692decd7ea104d5aee5f2e0b0c59b8b74",
+            "dsh_session_id": "dsh-memory-B-b9381d77b5284e23a2a1bdaec75fce58",
+            "eligible": true,
+            "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+            "evidence": [
+              "sha256:ae6984456e22001230ce0a0dd882798ecbb3b6315637c5d860f15a3cd5c63fef",
+              "sha256:b0e992c08d0944672f057a91bcaf608855513c41d329db59c7d39652801827f4",
+              "sha256:430eab189155f2a725f759e6aae966ed0ad4725794ab7007e19fb889fa36681b",
+              "sha256:ae6d9d2163a4661b2958794132c323f2ed5fe2b2488f9c31261fba7f50be1fd1",
+              "sha256:82027b68157b9209729290a06734803e61eaae9b3e44673f01ecf291ce428282",
+              "sha256:1275e05604588d243a4ee0f33dd75b881d68bbb14940b0c03437a3bfc429f3c4"
+            ],
+            "finished": true,
+            "fresh": true,
+            "issued_at": "2026-09-09T10:25:10.147138+00:00",
+            "issuer": {
+              "id": "uni-agent-dsh",
+              "kind": "trusted-verifier"
+            },
+            "receipt_id": "sha256:f6e16bf9373c44d3d24566808b013d7ca7575ebe5e496f2c67e4dd9a9a686dd7",
+            "reward": 0.0,
+            "schema": "dsh.verifier-receipt.v1",
+            "task_id": "dsh/work-state/memory-5a2831ab5c284bdfb633d9f7dac9548e/reader",
+            "task_version": "1",
+            "trace_sha256": "sha256:b0e992c08d0944672f057a91bcaf608855513c41d329db59c7d39652801827f4",
+            "verifier": {
+              "code_digest": "sha256:bf1f37256fdecebbb5b3dae0f25e631874a9a379b8c82c28f5f1b9d14fc69133",
+              "id": "dsh-work-state-training-stage",
+              "version": "1"
+            }
+          },
+          "envelope_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03/chains/memory-5a2831ab5c284bdfb633d9f7dac9548e/reader/run/results/9ded5d46581a12d5e79ea660/agent-result.json",
+          "envelope_sha256": "df7b99ba6e09c7b0090cd9fb6d3bb2c692decd7ea104d5aee5f2e0b0c59b8b74",
+          "runtime_result": {
+            "adapter": "uni-agent-dsh",
+            "dsh_session_id": "dsh-memory-B-b9381d77b5284e23a2a1bdaec75fce58",
+            "event_count": 23,
+            "finish_reason": "completed",
+            "gateway_session_id": "memory-B-b9381d77b5284e23a2a1bdaec75fce58",
+            "keep_trace": true,
+            "patches_sha256": "sha256:2525218c6b093ac67ff602eaae1ae67ef12829a2deb131d7a9f2e93e7e9f6729",
+            "profile": "sdk-minimal",
+            "trace_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws03/chains/memory-5a2831ab5c284bdfb633d9f7dac9548e/reader/run/traces/f2a220869f283e44b041d2a2/session.jsonl",
+            "trace_sha256": "sha256:b0e992c08d0944672f057a91bcaf608855513c41d329db59c7d39652801827f4"
+          },
+          "envelope_finished": true
+        }
+      ]
+    },
+    {
+      "task_id": "work-state-ws05-v1-s303",
+      "audit": {
+        "schema": "dsh.memory-training-consumption-audit.v1",
+        "passed": true,
+        "consumption_verified": true,
+        "run_completed": true,
+        "run_id": "ws-r4-isolated-eval-r1-ws05",
+        "run_manifest_sha256": "sha256:f14bed59a1c049709bf5dd08d4d802a584526245296d1ae6d18e3da85f01f493",
+        "inputs": [
+          {
+            "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05/validation/8.jsonl",
+            "sha256": "sha256:f1da7356ec62016279ba84f4fc9240484bcc3488c733825a199590ae39bf496b"
+          }
+        ],
+        "groups": [
+          {
+            "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05/chains/groups/b0fa389247584dfcaacd8078acc9a7b8/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 8,
+            "partition": "val",
+            "global_steps": 8,
+            "uid": "2d0c52e5-212a-4776-9de2-fbf23d64c594",
+            "crosswalk_sha256": "sha256:8cdd9feaf0b568920219dfbb40ddab5af31ba93eb047143598c6a3118c8b0ee0",
+            "stage_evidence_verified": true,
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          }
+        ],
+        "errors": [],
+        "unknown_or_unadmitted_consumption": [],
+        "duplicate_consumption": [],
+        "overlapping_crosswalk_keys": [],
+        "summary": {
+          "groups": 1,
+          "consumed_groups": 1,
+          "consumed_rows": 2,
+          "unique_consumed_rows": 2
+        },
+        "limitations": [
+          "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+          "Crosswalk and submission records alone never establish trainer consumption."
+        ]
+      },
+      "log_sha256": "899efa1660f35f0a7ffef32d09eac8ee63c53049d31adea490c7798db9f9d449",
+      "load_lines": [
+        "\u001b[36m(WorkerDict pid=283408)\u001b[0m INFO:2026-09-09 10:31:18,084:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/model_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=283408)\u001b[0m INFO:2026-09-09 10:31:18,167:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/optim_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=283408)\u001b[0m INFO:2026-09-09 10:31:18,180:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/extra_state_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=283408)\u001b[0m INFO:2026-09-09 10:31:18,180:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/extra_state_world_size_1_rank_0.pt"
+      ],
+      "error_tail": [],
+      "stage_receipts": [
+        {
+          "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05/chains/memory-408ec2ddb4f34eeb9d6fff711c7c038b/writer/run/results/49aa39891bfe4936da0db98f/verifier-receipt.json",
+          "sha256": "e92fb41d24b9c9f29d8365e41e21aa8da71ba5822e4ab7edfec612fad93d13b7",
+          "receipt": {
+            "accuracy": 0.0,
+            "artifact_sha256": "sha256:a7d26636b21d6d542ca8d6d17dddd84652d3fc8e08202b599c269df2bb907c23",
+            "dsh_session_id": "dsh-memory-A-bf17bd39d7d44a25b4937fe00db4a8d8",
+            "eligible": true,
+            "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+            "evidence": [
+              "sha256:4e5c6857505c911748c6d4d34b1122a14245fa1cfb46275f0a70d28d6406f4e0",
+              "sha256:158734f82c8b70b7ea96dfbe562e7dd52bb0d71de503d147ada413ed6005892d",
+              "sha256:0c29b2a5efb2bfb0a72b2e5b33de0735c157cdda88c89a9a34a760c0ef34c308"
+            ],
+            "finished": true,
+            "fresh": true,
+            "issued_at": "2026-09-09T10:33:11.386891+00:00",
+            "issuer": {
+              "id": "uni-agent-dsh",
+              "kind": "trusted-verifier"
+            },
+            "receipt_id": "sha256:754aecbd7f6b0550dd635cf995660cfb8a37fb4956632bd091b3386aa51b20d8",
+            "reward": 0.0,
+            "schema": "dsh.verifier-receipt.v1",
+            "task_id": "dsh/work-state/memory-408ec2ddb4f34eeb9d6fff711c7c038b/writer",
+            "task_version": "1",
+            "trace_sha256": "sha256:158734f82c8b70b7ea96dfbe562e7dd52bb0d71de503d147ada413ed6005892d",
+            "verifier": {
+              "code_digest": "sha256:bf1f37256fdecebbb5b3dae0f25e631874a9a379b8c82c28f5f1b9d14fc69133",
+              "id": "dsh-work-state-training-stage",
+              "version": "1"
+            }
+          },
+          "envelope_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05/chains/memory-408ec2ddb4f34eeb9d6fff711c7c038b/writer/run/results/49aa39891bfe4936da0db98f/agent-result.json",
+          "envelope_sha256": "a7d26636b21d6d542ca8d6d17dddd84652d3fc8e08202b599c269df2bb907c23",
+          "runtime_result": {
+            "adapter": "uni-agent-dsh",
+            "dsh_session_id": "dsh-memory-A-bf17bd39d7d44a25b4937fe00db4a8d8",
+            "event_count": 76,
+            "finish_reason": "completed",
+            "gateway_session_id": "memory-A-bf17bd39d7d44a25b4937fe00db4a8d8",
+            "keep_trace": true,
+            "patches_sha256": "sha256:3591e7360220aa1802b2a06c4316099c0beed719949700f578c1675e734f5a24",
+            "profile": "sdk-minimal",
+            "trace_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05/chains/memory-408ec2ddb4f34eeb9d6fff711c7c038b/writer/run/traces/a09f181ee4daeb419768d1e7/session.jsonl",
+            "trace_sha256": "sha256:158734f82c8b70b7ea96dfbe562e7dd52bb0d71de503d147ada413ed6005892d"
+          },
+          "envelope_finished": true
+        },
+        {
+          "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05/chains/memory-408ec2ddb4f34eeb9d6fff711c7c038b/reader/run/results/9b105ab94961b4cd6420d89c/verifier-receipt.json",
+          "sha256": "0e772c98bd9dd94f7004aa0c05d36c96f2baef02920cacd2ba968de41f5e8cad",
+          "receipt": {
+            "accuracy": 0.0,
+            "artifact_sha256": "sha256:305d333da1398e5d85a4bbfbcce85f29ae121908f7900003c544466f669477fe",
+            "dsh_session_id": "dsh-memory-B-5b17c8caab2c4009b135e4a472fa9a0b",
+            "eligible": true,
+            "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+            "evidence": [
+              "sha256:b739d43045d607e304becb2acf43d15299d867cec3b3c4adb91fbd29bd756350",
+              "sha256:86773476915ed232ddc4ddd8f46ddaf98fd2ddae746ae7d5969125d03abba797",
+              "sha256:0c29b2a5efb2bfb0a72b2e5b33de0735c157cdda88c89a9a34a760c0ef34c308",
+              "sha256:754aecbd7f6b0550dd635cf995660cfb8a37fb4956632bd091b3386aa51b20d8",
+              "sha256:4b2362cc2019dc99cc7616ef7246aa514472280ff0e03e55b8375415ea26ecc6",
+              "sha256:bb8ade6edbaac079f6eecd5b5820ff7bb3577f7bd37a24857fca24435d25c6cd"
+            ],
+            "finished": true,
+            "fresh": true,
+            "issued_at": "2026-09-09T10:33:14.937773+00:00",
+            "issuer": {
+              "id": "uni-agent-dsh",
+              "kind": "trusted-verifier"
+            },
+            "receipt_id": "sha256:5b428e27900b21898b02765ea3dcdde5b103ce0afc1ea5cea3694a4954f54c01",
+            "reward": 0.0,
+            "schema": "dsh.verifier-receipt.v1",
+            "task_id": "dsh/work-state/memory-408ec2ddb4f34eeb9d6fff711c7c038b/reader",
+            "task_version": "1",
+            "trace_sha256": "sha256:86773476915ed232ddc4ddd8f46ddaf98fd2ddae746ae7d5969125d03abba797",
+            "verifier": {
+              "code_digest": "sha256:bf1f37256fdecebbb5b3dae0f25e631874a9a379b8c82c28f5f1b9d14fc69133",
+              "id": "dsh-work-state-training-stage",
+              "version": "1"
+            }
+          },
+          "envelope_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05/chains/memory-408ec2ddb4f34eeb9d6fff711c7c038b/reader/run/results/9b105ab94961b4cd6420d89c/agent-result.json",
+          "envelope_sha256": "305d333da1398e5d85a4bbfbcce85f29ae121908f7900003c544466f669477fe",
+          "runtime_result": {
+            "adapter": "uni-agent-dsh",
+            "dsh_session_id": "dsh-memory-B-5b17c8caab2c4009b135e4a472fa9a0b",
+            "event_count": 11,
+            "finish_reason": "completed",
+            "gateway_session_id": "memory-B-5b17c8caab2c4009b135e4a472fa9a0b",
+            "keep_trace": true,
+            "patches_sha256": "sha256:7286d1c408174f53de82f9ccb823f12cbe8dff3d320b3fbeb57fdd1a9ae63983",
+            "profile": "sdk-minimal",
+            "trace_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws05/chains/memory-408ec2ddb4f34eeb9d6fff711c7c038b/reader/run/traces/f67695f368210cb42c0f1cc7/session.jsonl",
+            "trace_sha256": "sha256:86773476915ed232ddc4ddd8f46ddaf98fd2ddae746ae7d5969125d03abba797"
+          },
+          "envelope_finished": true
+        }
+      ]
+    },
+    {
+      "task_id": "work-state-ws06-v1-s303",
+      "audit": {
+        "schema": "dsh.memory-training-consumption-audit.v1",
+        "passed": false,
+        "consumption_verified": false,
+        "run_completed": false,
+        "run_id": "ws-r4-isolated-eval-r1-ws06",
+        "run_manifest_sha256": "sha256:c445877125df4892d2337b64b4bc394ffa23251225da50f73cfdae45b3f85fcc",
+        "inputs": [],
+        "groups": [],
+        "errors": [],
+        "unknown_or_unadmitted_consumption": [],
+        "duplicate_consumption": [],
+        "overlapping_crosswalk_keys": [],
+        "summary": {
+          "groups": 0,
+          "consumed_groups": 0,
+          "consumed_rows": 0,
+          "unique_consumed_rows": 0
+        },
+        "limitations": [
+          "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+          "Crosswalk and submission records alone never establish trainer consumption."
+        ]
+      },
+      "log_sha256": "919b5b473a613af2c048c6cc5d05d9ce8a9dfbe385db71849398e30242548559",
+      "load_lines": [
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m INFO:2026-09-09 10:39:35,686:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/model_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m INFO:2026-09-09 10:39:35,775:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/optim_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m INFO:2026-09-09 10:39:35,789:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/extra_state_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m INFO:2026-09-09 10:39:35,789:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/extra_state_world_size_1_rank_0.pt"
+      ],
+      "error_tail": [
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m   return func(*args, **kwargs)",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m INFO:2026-09-09 10:39:35,686:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/model_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m INFO:2026-09-09 10:39:35,775:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/optim_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m /workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py:828: FutureWarning: FSDP.state_dict_type() and FSDP.set_state_dict_type() are being deprecated. Please use APIs, get_state_dict() and set_state_dict(), which can support different parallelisms, FSDP1, FSDP2, DDP. API doc: https://pytorch.org/docs/stable/distributed.checkpoint.html#torch.distributed.checkpoint.state_dict.get_state_dict .Tutorial: https://pytorch.org/tutorials/recipes/distributed_checkpoint_recipe.html .",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m   FullyShardedDataParallel.set_state_dict_type(",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m INFO:2026-09-09 10:39:35,789:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/extra_state_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m INFO:2026-09-09 10:39:35,789:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/extra_state_world_size_1_rank_0.pt",
+        "\u001b[36m(TaskRunnerV1 pid=287309)\u001b[0m INFO:2026-09-09 10:39:36,050:all initialize finished, ready to fit",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m /workspace/rebuild/uni-agent-work-state-singletons-r1/verl/verl/plugin/platform/platform_cuda.py:99: FutureWarning: torch.cuda._set_allocator_settings is deprecated. Use torch._C._accelerator_setAllocatorSettings instead.",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m   torch.cuda.memory._set_allocator_settings(settings)",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m /workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: UserWarning: When using ``NO_SHARD`` for ``ShardingStrategy``, full_state_dict will be returned.",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m   return func(*args, **kwargs)",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m /workspace/rebuild/uni-agent-work-state-singletons-r1/verl/verl/plugin/platform/platform_cuda.py:99: FutureWarning: torch.cuda._set_allocator_settings is deprecated. Use torch._C._accelerator_setAllocatorSettings instead.",
+        "\u001b[36m(WorkerDict pid=288257)\u001b[0m   torch.cuda.memory._set_allocator_settings(settings)",
+        "\u001b[36m(GlobalRequestLoadBalancer pid=289485)\u001b[0m W0909 10:39:54.469000 289485 torch/utils/cpp_extension.py:140] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'",
+        "\u001b[36m(TaskRunnerV1 pid=287309)\u001b[0m Creating file logger at /workspace/rebuild/uni-agent-work-state-singletons-r1/dsh-work-state/ws-r4-isolated-eval-r1-ws06.jsonl",
+        "\u001b[36m(AgentFrameworkWorker pid=289743)\u001b[0m Using blocking ray.get inside async actor. This blocks the event loop. Please use `await` on object ref with asyncio.gather if you want to yield execution to the event loop instead.",
+        "\u001b[36m(AgentFrameworkWorker pid=289743)\u001b[0m WARNING:2026-09-09 10:40:22,756:RL-Insight does not support agent_loop_session (requires >= 0.3.0); monitoring is disabled for this feature",
+        "\u001b[36m(_GatewayActor pid=289583)\u001b[0m W0909 10:40:45.087000 289583 torch/utils/cpp_extension.py:140] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'",
+        "\u001b[36m(vLLMHttpServer pid=288954)\u001b[0m WARNING 09-09 10:40:49 [input_processor.py:157] vLLM has deprecated support for supporting different tokenizers for different LoRAs. By default, vLLM uses base model's tokenizer. If you are using a LoRA with its own tokenizer, consider specifying `--tokenizer [lora_path]` to use the LoRA tokenizer.",
+        "\u001b[36m(vLLMHttpServer pid=288954)\u001b[0m WARNING 09-09 10:40:49 [input_processor.py:282] Passing raw prompts to InputProcessor is deprecated and will be removed in v0.18. You should instead pass the outputs of Renderer.render_cmpl() or Renderer.render_chat().",
+        "\u001b[36m(vLLMHttpServer pid=288954)\u001b[0m (Worker pid=289264) WARNING 09-09 10:40:49 [jit_monitor.py:106] Triton kernel JIT compilation during inference: _lora_expand_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.",
+        "\u001b[36m(vLLMHttpServer pid=288954)\u001b[0m (Worker pid=289264) WARNING 09-09 10:40:49 [jit_monitor.py:106] Triton kernel JIT compilation during inference: _lora_shrink_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.",
+        "\u001b[36m(vLLMHttpServer pid=288954)\u001b[0m (Worker pid=289264) WARNING 09-09 10:40:49 [jit_monitor.py:106] Triton kernel JIT compilation during inference: _topk_log_softmax_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.",
+        "Error executing job with overrides: ['trainer.use_v1=True', 'trainer.v1.trainer_mode=sync', 'trainer.v1.colocate_async.num_warmup_batches=1', 'trainer.v1.sampler.sync_refill_failed_groups=True', 'transfer_queue.enable=True', 'algorithm.adv_estimator=grpo', 'algorithm.use_kl_in_reward=False', 'data.train_files=/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06-data/train.parquet', 'data.val_files=/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06-data/validation.parquet', 'data.prompt_key=prompt', 'data.return_raw_chat=True', 'data.filter_overlong_prompts=True', 'data.truncation=error', 'data.dataloader_num_workers=0', 'data.shuffle=False', 'data.train_max_samples=8', 'data.val_max_samples=1', 'data.train_batch_size=1', 'data.max_prompt_length=8192', 'data.max_response_length=8192', '++data.apply_chat_template_kwargs.enable_thinking=False', 'actor_rollout_ref.model.path=/workspace/models/Qwen3-4B-1cfa9a7', '++actor_rollout_ref.model.override_config.attn_implementation=sdpa', 'actor_rollout_ref.actor.fsdp_config.model_dtype=bfloat16', 'actor_rollout_ref.model.use_remove_padding=True', 'actor_rollout_ref.model.enable_gradient_checkpointing=True', 'actor_rollout_ref.model.lora_rank=16', 'actor_rollout_ref.model.lora_alpha=16', 'actor_rollout_ref.model.target_modules=all-linear', 'actor_rollout_ref.actor.strategy=fsdp', 'actor_rollout_ref.actor.optim.lr=1e-5', 'actor_rollout_ref.actor.ppo_mini_batch_size=1', 'actor_rollout_ref.actor.ppo_epochs=1', 'actor_rollout_ref.actor.use_dynamic_bsz=True', 'actor_rollout_ref.actor.ppo_max_token_len_per_gpu=16384', 'actor_rollout_ref.actor.use_kl_loss=False', 'actor_rollout_ref.actor.entropy_coeff=0', 'actor_rollout_ref.actor.fsdp_config.param_offload=True', 'actor_rollout_ref.actor.fsdp_config.optimizer_offload=True', \"actor_rollout_ref.actor.checkpoint.save_contents=['model','optimizer','extra']\", \"actor_rollout_ref.actor.checkpoint.load_contents=['model','optimizer','extra']\", '++actor_rollout_ref.actor.checkpoint.save_lora_only=False', 'actor_rollout_ref.rollout.name=vllm', 'actor_rollout_ref.rollout.mode=async', 'actor_rollout_ref.rollout.tensor_model_parallel_size=1', 'actor_rollout_ref.rollout.gpu_memory_utilization=0.30', 'actor_rollout_ref.rollout.n=4', 'actor_rollout_ref.rollout.val_kwargs.n=1', 'actor_rollout_ref.rollout.load_format=safetensors', 'actor_rollout_ref.rollout.layered_summon=False', 'actor_rollout_ref.rollout.free_cache_engine=True', 'actor_rollout_ref.rollout.enforce_eager=True', 'actor_rollout_ref.rollout.max_num_seqs=1', 'actor_rollout_ref.rollout.enable_prefix_caching=False', '++actor_rollout_ref.rollout.engine_kwargs.vllm.cpu_offload_gb=0', 'actor_rollout_ref.rollout.log_prob_use_dynamic_bsz=True', 'actor_rollout_ref.rollout.log_prob_max_token_len_per_gpu=16384', 'actor_rollout_ref.rollout.prompt_length=8192', 'actor_rollout_ref.rollout.response_length=8192', 'actor_rollout_ref.rollout.max_model_len=16384', 'actor_rollout_ref.rollout.max_num_batched_tokens=16384', 'actor_rollout_ref.rollout.multi_turn.enable=True', 'actor_rollout_ref.rollout.multi_turn.max_parallel_calls=1', 'actor_rollout_ref.rollout.multi_turn.format=hermes', 'actor_rollout_ref.rollout.agent.num_workers=1', '++actor_rollout_ref.rollout.agent.agent_loop_manager_class=uni_agent.framework.entry.AgentFrameworkRolloutAdapter', '++actor_rollout_ref.rollout.custom.agent_framework.gateway_count=1', '++actor_rollout_ref.rollout.custom.agent_framework.log_dir=/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/agent-logs', '++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.runner_fqn=uni_agent.framework.task_runner.run_task', '++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.dispatch_mode=ray_task', '++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.max_concurrent_sessions=1', '++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.trajectory_selection=longest', '++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.runner_kwargs.task_config_path=/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06-data/task.yaml', '++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.runner_kwargs.model_name=Qwen/Qwen3-4B', '++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.runner_kwargs.require_result=True', '++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.runner_kwargs.dsh_trace_root=/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/unused-global-traces', '++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.runner_kwargs.dsh_result_root=/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/unused-global-results', '++actor_rollout_ref.rollout.custom.agent_framework.use_reward_loop_worker=False', '++actor_rollout_ref.rollout.custom.agent_framework.mask_unfinished_episode=True', '++actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error=True', '++actor_rollout_ref.rollout.custom.agent_framework.require_finished_episode=True', '++actor_rollout_ref.rollout.custom.agent_framework.require_verifier_reward=True', '++actor_rollout_ref.rollout.custom.agent_framework.require_trajectory_dump=True', '++actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_fqn=uni_agent.tasks.dsh.trajectory_audit.validate_trajectories', '++actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_pass_context=True', '++actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_kwargs.trace_root=/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/unused-global-traces', '++actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_kwargs.result_root=/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/unused-global-results', \"trainer.logger=['console','file']\", 'trainer.project_name=dsh-work-state', 'trainer.experiment_name=ws-r4-isolated-eval-r1-ws06', 'trainer.val_before_train=True', 'trainer.save_freq=4', 'trainer.test_freq=1', 'trainer.total_epochs=1', 'trainer.total_training_steps=1', 'trainer.default_local_dir=/workspace/uni-agent-g1/checkpoint/ws-r4-isolated-eval-r1-ws06', 'trainer.rollout_data_dir=/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/rollouts', 'trainer.validation_data_dir=/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/validation', 'trainer.nnodes=1', 'trainer.n_gpus_per_node=1', 'trainer.resume_from_path=/workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8', 'trainer.resume_mode=resume_path', 'trainer.val_only=True', '++actor_rollout_ref.rollout.custom.agent_framework.framework_class_fqn=\"uni_agent.framework.work_state.NativeWorkStateFramework\"', '++actor_rollout_ref.rollout.custom.agent_framework.memory_run_id=\"ws-r4-isolated-eval-r1-ws06\"', '++actor_rollout_ref.rollout.custom.agent_framework.memory_operator.root=\"/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/chains\"', '++actor_rollout_ref.rollout.custom.agent_framework.memory_operator.runner_python=\"/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python\"', '++actor_rollout_ref.rollout.custom.agent_framework.memory_operator.runtime_executable=\"/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-linux-x64\"', '++actor_rollout_ref.rollout.custom.agent_framework.memory_operator.environment_digest=\"sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb\"', '++actor_rollout_ref.rollout.custom.agent_framework.memory_operator.checkpoint_identity=\"sha256:273d7288999fe43c35b9a49164b148ad8074d9d818d2d55dda9dd70a771b2911\"', '++actor_rollout_ref.rollout.custom.agent_framework.memory_operator.family=\"work-state-v1\"', '++actor_rollout_ref.rollout.custom.agent_framework.memory_operator.task_manifest=\"/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06-data/work-state-tasks.json\"', '++actor_rollout_ref.rollout.custom.agent_framework.memory_operator.task_manifest_sha256=\"sha256:3cb62e2add89cc609a7a14d3ee90d5136462f827c7dbb0464222ec0ecc20c276\"', '++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.trajectory_selection=\"all\"', '++actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_fqn=null', '++actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_kwargs=null', '++actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_pass_context=false', '++actor_rollout_ref.rollout.agent.agent_loop_manager_class=\"uni_agent.framework.entry.StrictSyncValidationRolloutAdapter\"', '++actor_rollout_ref.rollout.custom.agent_framework.strict_validation_timeout_seconds=3600', 'trainer.total_epochs=1', 'trainer.test_freq=1', 'trainer.default_local_dir=/workspace/uni-agent-g1/checkpoint/ws-r4-isolated-eval-r1-ws06', 'trainer.val_only=True', 'trainer.val_before_train=True', 'trainer.del_local_ckpt_after_load=False', 'actor_rollout_ref.actor.checkpoint.load_contents=[model,optimizer,extra]']",
+        "\u001b[36m(TransferQueueController pid=287479)\u001b[0m 2026-09-09 10:44:06,452 - INFO - transfer_queue.utils.perf_utils - TQ_CONTROLLER_a1cf1861: [Performance] Total success requests: 3, Total req/min: 0.40, Total avg process time: 0.0005s; ",
+        "\u001b[36m(TransferQueueController pid=287479)\u001b[0m Time range: last 7.52 minutes; ",
+        "\u001b[36m(TransferQueueController pid=287479)\u001b[0m Per-operation statistics: KV_RETRIEVE_META: req_count=2, req/min=0.27, avg_time=0.000680s, max_time=0.000805s, min_time=0.000556s; SET_CUSTOM_META: req_count=1, req/min=0.13, avg_time=0.000021s, max_time=0.000021s, min_time=0.000021s",
+        "\u001b[36m(AgentFrameworkWorker pid=289743)\u001b[0m 2026-09-09 10:44:06 | framework.framework    | WARNING  | strict rollout group rejected for uid=f86a3299-6603-4225-8d98-4a56008a4cc1: 1/1 session(s) failed; no trajectories will be written",
+        "Traceback (most recent call last):",
+        "  File \"/workspace/rebuild/uni-agent-work-state-singletons-r1/verl/verl/trainer/main_ppo.py\", line 184, in main",
+        "    run_ppo(config, task_runner_class=TaskRunnerV1)",
+        "  File \"/workspace/rebuild/uni-agent-work-state-singletons-r1/verl/verl/trainer/main_ppo.py\", line 93, in run_ppo",
+        "    ray.get(runner.run.remote(config))",
+        "  File \"/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/ray/_private/auto_init_hook.py\", line 22, in auto_init_wrapper",
+        "    return fn(*args, **kwargs)",
+        "           ^^^^^^^^^^^^^^^^^^^",
+        "  File \"/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/ray/_private/client_mode_hook.py\", line 107, in wrapper",
+        "    return func(*args, **kwargs)",
+        "           ^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/ray/_private/worker.py\", line 2980, in get",
+        "    values, debugger_breakpoint = worker.get_objects(",
+        "                                  ^^^^^^^^^^^^^^^^^^^",
+        "  File \"/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/ray/_private/worker.py\", line 1023, in get_objects",
+        "    raise value.as_instanceof_cause()",
+        "ray.exceptions.RayTaskError(RuntimeError): \u001b[36mray::TaskRunnerV1.run()\u001b[39m (pid=287309, ip=172.26.0.2, actor_id=a20c64e69f92ce491584854801000000, repr=<main_ppo.TaskRunnerV1 object at 0x7b5a68f1f4d0>)",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/workspace/rebuild/uni-agent-work-state-singletons-r1/verl/verl/trainer/main_ppo.py\", line 155, in run",
+        "    self.trainer.fit(self.agent_loop_manager)",
+        "  File \"/workspace/rebuild/uni-agent-work-state-singletons-r1/verl/verl/trainer/ppo/v1/trainer_base.py\", line 418, in fit",
+        "    val_metrics = self._validate()",
+        "                  ^^^^^^^^^^^^^^^^",
+        "  File \"/workspace/rebuild/uni-agent-work-state-singletons-r1/verl/verl/trainer/ppo/v1/trainer_base.py\", line 1002, in _validate",
+        "    self.agent_loop_manager.generate_sequences(batch)",
+        "  File \"/workspace/rebuild/uni-agent-work-state-singletons-r1/uni_agent/framework/entry.py\", line 198, in generate_sequences",
+        "    ray.get(reference, timeout=self._validation_timeout)",
+        "           ^^^^^^^^^^^^^^^^^^^",
+        "           ^^^^^^^^^^^^^^^^^^^^^",
+        "                                  ^^^^^^^^^^^^^^^^^^^",
+        "ray.exceptions.RayTaskError(RuntimeError): \u001b[36mray::AgentFrameworkWorker.generate_sequences()\u001b[39m (pid=289743, ip=172.26.0.2, actor_id=b064333cdc241757f994f4e501000000, repr=<uni_agent.framework.entry.AgentFrameworkWorker object at 0x75bc21f41fd0>)",
+        "  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 449, in result",
+        "    return self.__get_result()",
+        "           ^^^^^^^^^^^^^^^^^^^",
+        "  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 401, in __get_result",
+        "    raise self._exception",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/workspace/rebuild/uni-agent-work-state-singletons-r1/uni_agent/framework/entry.py\", line 102, in generate_sequences",
+        "    await self.framework.generate_sequences(prompts)",
+        "  File \"/workspace/rebuild/uni-agent-work-state-singletons-r1/uni_agent/framework/framework.py\", line 596, in generate_sequences",
+        "    raise RuntimeError(",
+        "RuntimeError: rollout failure at global_steps=8: 1 session(s) failed; partition=val; failure_reasons=['TrajectoryAuditError:trajectory 0: reward_info must declare finished=true']",
+        "",
+        "Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.",
+        "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/run-manifest.json"
+      ],
+      "stage_receipts": [
+        {
+          "path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/chains/memory-1987587c4da1401181887df56b6842b1/writer/run/results/7f0cc75f821bfca666f8b438/verifier-receipt.json",
+          "sha256": "938e531623c0708402e368195909ab80e6eaf7253b23d8a3f540529c544db1f3",
+          "receipt": {
+            "accuracy": 0.0,
+            "artifact_sha256": "sha256:32789df2a13d18e82a1967bc5784181c56fe671d1b8c54d5ebbae0774ffe4c46",
+            "dsh_session_id": "dsh-memory-A-c4a7d3e1c7c64f279384b59a0505af6f",
+            "eligible": false,
+            "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+            "evidence": [
+              "sha256:cb6c97bce43566f04145c4eb122b6b5eea05f87cb40904783b25d0caa42ac7f0",
+              "sha256:0aeabee60858c5109401510d52d1df4a7276180b8279ff8826969c778ff1aacd",
+              "sha256:ecc7a01be1f8908d2d27ec23f099debfb1f5c5fea7ffd2d4444dc0b4fea995c6"
+            ],
+            "finished": false,
+            "fresh": true,
+            "issued_at": "2026-09-09T10:44:06.161320+00:00",
+            "issuer": {
+              "id": "uni-agent-dsh",
+              "kind": "trusted-verifier"
+            },
+            "receipt_id": "sha256:e7b5a260f5b7452c2eab5c47663dcd97fcb8fbccd8cf8bacf3abf7886a1fdaba",
+            "reward": 0.0,
+            "schema": "dsh.verifier-receipt.v1",
+            "task_id": "dsh/work-state/memory-1987587c4da1401181887df56b6842b1/writer",
+            "task_version": "1",
+            "trace_sha256": "sha256:0aeabee60858c5109401510d52d1df4a7276180b8279ff8826969c778ff1aacd",
+            "verifier": {
+              "code_digest": "sha256:bf1f37256fdecebbb5b3dae0f25e631874a9a379b8c82c28f5f1b9d14fc69133",
+              "id": "dsh-work-state-training-stage",
+              "version": "1"
+            }
+          },
+          "envelope_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/chains/memory-1987587c4da1401181887df56b6842b1/writer/run/results/7f0cc75f821bfca666f8b438/agent-result.json",
+          "envelope_sha256": "32789df2a13d18e82a1967bc5784181c56fe671d1b8c54d5ebbae0774ffe4c46",
+          "runtime_result": {
+            "adapter": "uni-agent-dsh",
+            "dsh_session_id": "dsh-memory-A-c4a7d3e1c7c64f279384b59a0505af6f",
+            "event_count": 246,
+            "finish_reason": "max-tokens",
+            "gateway_session_id": "memory-A-c4a7d3e1c7c64f279384b59a0505af6f",
+            "keep_trace": true,
+            "patches_sha256": "sha256:d00ec86905d9618b703be8b14c925f8ca58d8122695ea4e0e797387319c068e9",
+            "profile": "sdk-minimal",
+            "trace_path": "/root/runs/ws-r4-isolated-eval-r1/ws-r4-isolated-eval-r1-ws06/chains/memory-1987587c4da1401181887df56b6842b1/writer/run/traces/1b7a28669bb29557a0334f8f/session.jsonl",
+            "trace_sha256": "sha256:0aeabee60858c5109401510d52d1df4a7276180b8279ff8826969c778ff1aacd"
+          },
+          "envelope_finished": false
+        }
+      ]
+    }
+  ],
+  "schema": "dsh.work-state-independent-evaluation-result.v1",
+  "interpretation": {
+    "fixed_four_task_terminal_coverage": true,
+    "all_admitted_consumed": false,
+    "consumed_groups": 3,
+    "unique_consumed_rows": 6,
+    "business_reward1_tasks": 0,
+    "integrity_or_cleanup_stop": false,
+    "effective_learning_claim": false,
+    "checkpoint_postcheck": "Each completed launch passed recipe.check(after_run=True); all checkpoint origin files matched before audit and next dispatch. No new checkpoint mutation receipt invented."
+  }
+}

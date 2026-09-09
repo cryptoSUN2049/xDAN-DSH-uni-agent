@@ -1,6 +1,6 @@
 # 四题独立reload执行记录 r1
 
-状态：运行中，不能作为完成证据。源码9dea127bf7bb69eb916aebcc0ab69ff86f53df08已推送GitHub并部署独立checkout `/workspace/rebuild/uni-agent-work-state-singletons-r1`；复用 `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，固定VERL显式补丁核验通过。
+此为启动时记录。最终四题已于10:44:40UTC收尾，3题消费通过、WS06 max-tokens失败；见[最终结果](work-state-independent-evaluation-r1-result.md)。以下运行中记录保留原时间，不替代最终报告。源码9dea127bf7bb69eb916aebcc0ab69ff86f53df08已推送GitHub并部署独立checkout `/workspace/rebuild/uni-agent-work-state-singletons-r1`；复用 `/workspace/venvs/uni-agent-rebuild-cf2d3f5`，固定VERL显式补丁核验通过。
 
 ## 已通过检查
 

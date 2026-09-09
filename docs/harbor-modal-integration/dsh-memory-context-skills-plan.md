@@ -2,22 +2,22 @@
 
 从保存文件到可靠恢复工作：面向4B模型与长周期Agent任务。
 
-2026-09-09。根据用户最新澄清细化系统方案 v3 的 N3；本文同时记录课程设计与分阶段工程证据，不是新能力已经训练完成的报告。首批文件任务已实现，GPU 学生训练已完成r4的8步执行，消费与reload验收仍在进行；DSH/Uni-Agent/VERL pin 不因本设计自动更新。SFT、付费教师、Modal 和新增 GPU 不在本轮范围。
+2026-09-09。本文记录系统方案v3的N3课程设计与工程证据，不是能力已经训练完成的报告。状态快照截至10:44:40 UTC（18:44:40 UTC+8）：r4最终训练/消费/参数审计完成，逐题独立reload四题均已终态：WS01/WS03/WS05 verified，WS06 execution_failed；all_attempted=true、all_verified=false，suite exit1。DSH/Uni-Agent/VERL版本继续固定。
 
-**当前账本：r4真实8/8步完成，exit0，1920.038秒；尚非完整工作包验收。** step4/8 checkpoint已保存，全部8步奖励与梯度为0。最终完整组消费及参数审计正在独立核验；reload已通过preflight，尚未取得独立reload/fresh评估结果。见[r4执行报告](work-state-train-r4-execution.md)与[首步审计](r4-first-step-audit.md)，首步证据不能代替整轮审计。
+**当前账本：工程执行与评估收尾完成，3/4准入，非有效学习。r4完成8步、8个完整n4组、64条唯一A/B消费行，实际6个唯一任务；尚无有效学习。** 全部8步奖励/优势/梯度为0，checkpoint4→8的504个LoRA与399个base张量都未变化，optimizer moments全0。WS01/WS03/WS05独立reload已verified（3/4），各1组2条唯一A/B实际消费，共3组6行；WS06失败且0组0消费。四题全部尝试不等于四题全部通过。见[r4最终审计](work-state-train-r4-result.md)、[逐题reload最终报告](work-state-independent-evaluation-r1-result.md)与[零奖励独立诊断](work-state-r4-zero-reward-rootcause.md)。
 
 工程首阶段沿用[权威goal的E1—E4](../../tasks/harbor-modal-integration/active-engineering-goal.md)，不另设目标：
 
-- **E1 固定部署：已核验。** DSH SDK/runtime 0.1.3a2、runtime hash及显式VERL补丁等身份已固定，无需重建旧截图中尚未发布的runtime。
-- **E2 八步与唯一消费：运行已8/8，最终消费审计待核。** 保持原安全/证据门，合法零奖励未主动中止训练。
-- **E3 保存与版本绑定：step4/8已保存，完整性与参数审计待核。** 文件存在不等于有效更新。
-- **E4 独立reload与fresh评估：preflight已通过，实际验收待执行结果。** 核加载身份、逐题覆盖及原失败证据，确认母checkpoint未改。
+- **E1 固定部署：已核验。** DSH SDK/runtime0.1.3a2、runtime hash及显式VERL补丁身份固定。
+- **E2 八步与唯一消费：已核验。** 原审计passed=true，8/8组、64/64唯一行；3次被拒组未异常消费，8步不等于8道不同题。
+- **E3 保存与版本绑定：已核验；有效更新未通过。** step4/8模型文件SHA相同；独立reload已核母checkpoint11文件未变。保存成功与参数学习分列。
+- **E4 独立reload与fresh评估：四题全部尝试，3通过、1失败。** WS01/WS03/WS05各自独立加载model/optimizer/RNG/scheduler、1组2行消费及after-run核验通过；WS06 execution_failed、0消费。suite exit1、all_verified=false，前三题证据独立保存，未因最后一题失败丢失。
 
 上述仅为执行层。原W4的非零优势、有限非零任务梯度与有效参数/optimizer更新条件仍独立保留；目前不能宣称有效学习、能力提升或整个goal完成。
 
 [r2失败](work-state-train-r2-result.md)与[r3失败](work-state-train-r3-result.md)原证据保留：step4内嵌周期评估的WS06 A写只读来源被拒。r4将训练与严格独立评估分开，未放宽评分或安全规则。[protocol 3](work-state-protocol-revision3.md)只修正持久化/业务schema说明；[固定DSH结束原因canary](dsh-finish-reason-canary-r1-result.md)四项通过，不替代学生更新验收。历史DSH reported completed不能概括为“未耗尽token”，见[协议审计](work-state-online-protocol-audit.md)。
 
-操作入口：[完整RL复跑手册](work-state-rl-runbook.md) · [参数审计计划](work-state-parameter-audit-plan.md) · [本worktree交接](../../tasks/harbor-modal-integration/handoff.md)。完整长期课程设计保留如下；不跟踪实时GPU数值。
+操作入口：[总操作指南](native-work-state-end-to-end-runbook.md) · [完整RL复跑手册](work-state-rl-runbook.md) · [参数审计计划](work-state-parameter-audit-plan.md) · [本worktree交接](../../tasks/harbor-modal-integration/handoff.md)。完整长期课程设计保留如下；不跟踪实时GPU数值。
 
 ## 1. 核心目标与个人建议
 
@@ -78,9 +78,9 @@ flowchart TD
 
 ## 5. 对照现有实现：哪些真实可用
 
-- 首批 work-state WS01/03/05/06 已有模板、精确权限、字节bundle、独立verifier、Stage/Framework与recipe/消费audit；固定Linux无模型canary通过。r2/r3失败保留；r4已8步exit0且梯度全0，最终消费、参数与独立reload尚待验收。见[复跑手册](work-state-rl-runbook.md)。
+- 首批 work-state WS01/03/05/06 已有模板、精确权限、字节bundle、独立verifier、Stage/Framework与recipe/消费audit；固定Linux无模型canary通过。r2/r3失败保留；r4已8步exit0、8组64行消费通过，参数无变化；逐题独立reload四题已全部终态，3通过1失败（WS06），前三题共3组6行消费保留。见[复跑手册](work-state-rl-runbook.md)。
 - 历史 resident A/B 已通过真实 val：A写→冻结→新B读取、原token/版本/回执、2个key实际消费。见 [r2报告](memory-resident-val-r2-result.md)。它没有自主判断何时写、没有训练索引管理，也没有真实同会话compact。
-- 当前 NativeMemory 要求 writer reward=1 才进入 B。这适合先验工程诊断，但会排除“操作合法、记忆有遗漏”的学习样本。新版课程需独立版本化准入与评分；不能改当前评分器追认旧失败。
+- 旧legacy NativeMemory诊断保留writer reward=1门；当前work-state合同已允许合法A0进入真实B，安全/证据门不变。不能用新合同追认旧诊断失败。
 - 原生 MemAgent 有 token 分块→生成记忆→新 context→最终问答方法；当前仅复用其共同 Gateway/TQ/VERL 底座，未完成这一策略迁移。它适合作为方法来源，不必把整套 MemAgent loop 套在 DSH 外。见 [源码复用审计](memagent-native-memory-reuse-audit.md)。
 - DSH已有 compaction service、自动compaction和引用spill设施；`/compact` 是要求idle的人工命令，不能直接当作模型工具。固定训练pin尚无ContextPilot实验模块；ABI名字出现在设计或映射里，不证明模型能调用。细节见下方来源。
 - 本次只读核对：DSH主目录所查四个核心compaction/reference文件与训练pin b236969无差异。因此先用当前文件工具推进，无需因架构页面更新而再升级整套依赖。
@@ -106,7 +106,7 @@ flowchart TD
 
 保持在线RL：当前policy在DSH中实际选择读写/检索/请求操作，Gateway收集全部模型生成token、mask、logprob及真实权重版本；完整链经verifier后进入已有VERL末段终态GRPO。保留原阶段回执，信用分配记录与回执原分数不混淆。
 
-能力课程的准入应区分：可信完成但记忆有遗漏/检索低效属于可训练低分；越权、篡改、证据缺失或基础设施崩溃属于拒绝/隔离。当前writer“必须满分”不应永久保留为能力学习前置；新版本须先做安全与错误事实反例，再部署新run。
+能力课程的准入应区分：可信完成但记忆有遗漏/检索低效属于可训练低分；越权、篡改、证据缺失或基础设施崩溃属于拒绝/隔离。work-state已实现合法A0准入；旧legacy满分门仍按其历史合同解释，不混用回执。
 
 评分优先级：终局任务成功和关键事实保真为主；恢复成本、重复操作、检索成本、总token和耗时为次级。成本必须包括压缩、写入和后续读回，不能只算最后一个prompt。关键事实错误时不能靠高压缩率补分。不奖励写文件数量、索引长度或声称已compact。
 
@@ -114,7 +114,7 @@ flowchart TD
 
 ## 8. 工程与能力的两套验收
 
-**工程门：**真实动作→正确工件→真实隔离/请求变化→fresh回执→完整组实际消费→有限有效梯度→参数/optimizer/checkpoint→独立reload及新任务重跑。每项单独证据；目前A/B val只覆盖其中一部分。
+**工程门：** 真实动作、隔离工件、fresh回执、完整组消费、保存与版本绑定、独立reload及新任务重跑分别留证。r4训练消费已通过，逐题reload四题均已尝试，3通过1失败；有效梯度与参数变化另列学习门，零奖励不能被伪装成有效学习，也不阻止诚实的工程验收。
 
 **能力门：**固定同一DSH/model预算和公开输入，比较无持久化对照、工程师固定交接规则、模型自主管理三种策略。没有持久化的对照用于确认任务确实依赖恢复能力；真正的提升要超过固定规则基线，而不是只超过被故意清空记忆的模型。另做完整上下文参考作为信息上界，不把它误称等预算公平对照。
 
@@ -138,8 +138,8 @@ flowchart TD
 
 ## 10. 下一步和当前不应扩大宣称的范围
 
-1. 已保存memory train-r2失败：initial val的A正常且安全结束但写入错误事实，原质量门拒绝；无B、n4、更新或checkpoint。见[真实失败报告](memory-resident-train-r2-result.md)。独立reload仅在后续实际产生可用checkpoint后执行；不能把反复跑这条诊断作为C1推进的硬前置。
-2. C1首批“交接恢复、索引发现、事实更新、克制保存”文件任务已实现并通过真实工具canary；继续验收学生baseline、合法低分样本与同policy完整组消费，再执行有效更新与独立reload。
+1. 按[总操作指南](native-work-state-end-to-end-runbook.md)归档已结束的逐题独立reload套件与[最终报告](work-state-independent-evaluation-r1-result.md)：四题全部尝试，WS01/WS03/WS05各自verified，WS06失败且未消费。保留原失败原因、母checkpoint核验与前三题证据，不能把all_attempted=true改写成all_verified=true。
+2. 原四题reload与三题selected-r1均失败，分别保留[四题失败](work-state-train-r4-reload-result.md)和[三题失败](selected-r1-result.md)。工程完成后才进入效果阶段；[短动态事实课程](work-state-short-course-design.md)目前只设计、不实施，不覆盖r4零更新结论，也不用dev选择表现。
 3. 核实并接通模型可见的context操作后进入C2；没有实际request改变证据，不标compact能力通过。
 4. C3跨阶段长任务与留出效果；再做受控RSI改善记忆策略。候选只能改变获准策略，不能改用户目标或评分规则。
 
@@ -326,9 +326,11 @@ oracle可以是确定性脚本或人工确定的正确操作，用于证明环�
 | 固定Linux runtime canary | 8结构、106实际工具请求通过；oracle控制脚本，无学生或RL更新 |
 | work-state-val-r1 | 旧版WS01首A越权写只读source被拒；原失败保留 |
 | work-state-train-r2 | 已exit1；step1–3奖励/优势/梯度全0，step4周期val越权拒绝；checkpoint存在未验收有效更新或reload |
-| protocol3与r3 | 17b6e5589abc8d5a77c6238d0971a129135aa9b7 + protocol3 + 显式VERL补丁；13:24:15 UTC+8 launch PID232248已启动，加载/通过尚未验收 |
+| protocol3与r3 | 已失败归档，不能继续当运行中；原结果见work-state-train-r3-result.md |
+| r4训练与最终审计 | 8步exit0，8组64唯一行、6个唯一任务，消费passed=true；奖励/梯度/moments全0，参数无变化 |
+| 逐题独立reload | 四题全部终态：WS01/WS03/WS05各自verified，共3组6唯一行；WS06 execution_failed（A max-tokens，fresh=true / finished=false / eligible=false，未进入B）、0组0消费。all_attempted=true / all_verified=false / suite exit1 |
 | 固定DSH结束原因canary | 真实Linux四case通过，length不completed/不执行打印tool块，HTTP409→error；无学生更新 |
-| W2与能力门 | W2未完成；完整组消费、有效更新、checkpoint与独立reload须逐项留证，能力未通过 |
+| 四能力与学习门 | DSH调度、记忆/上下文、长流程、RSI的能力提升均未证明；compact同样未验收，不能用消费通过替代 |
 | 其余WS规格及更长真实场景 | 仍为设计，不以首批配置/计划任务替代全部长场景 |
 | 模型自主compact、索引维护、长期工作恢复提升 | 尚未验收，不能借A/B满分宣称通过 |
 
@@ -355,4 +357,4 @@ oracle可以是确定性脚本或人工确定的正确操作，用于证明环�
 - strict sync validation由本项目adapter等待原Ray任务异常，避免原失败被空TQ keys遮蔽；train继续原异步提交与sync补采行为，VERL pin不变。
 - 可解性canary→真实学生baseline→同policy n4完整消费→有效梯度/参数/optimizer/checkpoint→独立reload/fresh评估。没有有效组时如实报告，不以旧context更新替代本任务学习。
 
-这是实施依据。首批执行器/调度数据编译/recipe与消费audit已实现并通过CPU回归；固定Linux工具canary通过。r2已失败且无已验收有效梯度；r3以protocol3和显式VERL补丁启动，尚未验收本课程有效更新、独立reload或能力提升。后续审计按[参数审计计划](work-state-parameter-audit-plan.md)执行，具体操作见[工作状态RL手册](work-state-rl-runbook.md)。
+这是实施依据。首批执行器、recipe与独立消费audit已运行：r4八步及最终消费通过，参数未变化；逐题reload四题全部尝试，WS01/WS03/WS05通过，WS06失败（0消费）。四能力、自主compact和RSI提升未证明。当前复跑入口为[总操作指南](native-work-state-end-to-end-runbook.md)，结果以[r4最终审计](work-state-train-r4-result.md)、[逐题reload最终报告](work-state-independent-evaluation-r1-result.md)及交接中的逐题状态为准。原失败和原W4有效学习条件保留。

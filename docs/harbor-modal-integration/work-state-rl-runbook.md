@@ -2,7 +2,7 @@
 
 本指南对应 `prepare_memory_training --family work-state-v1`。固定 DSH 0.1.3a2、Uni-Agent upstream 89733ec、VERL官方基线fefb080 **加 preserve-finish-reason-v1 源码补丁**；有效版本不是裸fefb080。集成源码必须使用实验报告记录的完整 Git SHA。复用已有 Python 环境，不在运行中的 checkout 更新源码。
 
-**当前状态（2026-09-09）：** r4训练8/8步完成，消费审计8组/64行通过，实际6个独立任务；step4/8完整，梯度和参数变化均0。独立reload已证明加载model/optimizer/RNG/scheduler，但原四题因WS06越权尝试、三题补验因WS05 max-tokens分别失败，最终评估dump未完整生成。报告见[母训练](work-state-train-r4-result.md)、[三题补验](selected-r1-result.md)。下一步逐题独立评估并保留全部结果；不能将失败题删掉宣称完整通过。
+**当前状态（2026-09-09）：** r4训练8/8步完成，消费审计8组/64行通过，实际6个独立任务；step4/8完整，梯度和参数变化均0。独立四题隔离评估已全部收尾：WS01/03/05共3组6条唯一A/B消费通过，WS06 A max-tokens未B、未消费，原失败保留。all_attempted=true、all_verified=false、母checkpoint与清理检查通过。工程收尾完成，不是4/4业务成功或有效学习。见[最终评估](work-state-independent-evaluation-r1-result.md)、[母训练](work-state-train-r4-result.md)及[云盘归档](work-state-independent-evaluation-r1-archive.md)。此前原四题与三题失败仍独立保留。
 
 从源码部署到本课程运行的总入口：[端到端操作指南](native-work-state-end-to-end-runbook.md)。本指南中的历史run不得原地重启。
 
@@ -140,4 +140,4 @@ reload绑定完整checkpoint文件SHA及母运行清单，显式加载model/opti
  --resume-from "/workspace/uni-agent-g1/checkpoint/${WORK_STATE_TRAIN}/global_step_8"
 ```
 
-root/suite-id须全新。`summary.json`逐题落盘；`all_attempted`仅表示四题均有作业退出记录，`all_verified`才表示全部真实消费通过。只要存在失败最终退出非零，但失败任务不会让此前成功题dump丢失。每题独立`consumption-audit.json`保留原审计。模型/优化器实际加载和无再更新仍须核实际日志；不能只看resume配置。当前GPU验证结果另由实验报告记录，本节不代表已通过。
+root/suite-id须全新。`summary.json`逐题落盘；`all_attempted`仅表示四题均有作业退出记录，`all_verified`才表示全部真实消费通过。只要存在失败最终退出非零，但失败任务不会让此前成功题dump丢失。每题独立`consumption-audit.json`保留原审计。模型/优化器实际加载和无再更新仍须核实际日志；不能只看resume配置。本入口真实GPU结果见[四题最终报告](work-state-independent-evaluation-r1-result.md)：完整收尾，3题消费通过、1题max-tokens拒绝；不能称4/4通过。
