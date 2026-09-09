@@ -2,6 +2,8 @@
 
 ## 1. TL;DR
 
+- **最新补验运行中**：selected-r1 launch264372，16:26:10 UTC+8；新recipe726d1c0已push，Linux74项回归通过，独立/workspace/rebuild/uni-agent-work-state-eval-r1复用原venv/VERL补丁。新run/root/runs/work-state-r4-reload-selected-r1与-data/manifest.json，加载母5b4b01b的step8，显式三题WS01/03/05；原WS06拒绝保留。不改准入、不重训，待最终消费/reload审计。见work-state-selected-r1-execution.md。
+
 - **最新验收：E2/E3通过，E4尚待评估结果完整落盘。** r4最终8组/64唯一消费、289原生成段EOS通过，实际6unique任务/3拒组；模型4→8完全相同、base399不变、LoRA B252张量全0，8步grad0，无有效学习。原报告work-state-train-r4-result.md/json。独立reload child258242 exit1/545.014秒，已实际加载step8，第四个val未准入导致最后汇总未写（3crosswalk、0validation dump），GPU已释放。母checkpoint无改动；后续最小任务隔离补验，不重训，不改原VERL或奖励。
 
 - **最新：r4母训练8/8步exit0，独立reload已启动待验收。** child243079/1920.038秒；8步消费文件、CK4/8保存，8步grad/reward全0。最终CPU消费与参数审计进行中。reload launch PID258133，14:56:46 UTC+8，新/root/runs/work-state-train-r4-reload与-data/manifest.json，固定原5b4b01b源码、原venv，母step8绑定/val-only预检通过。不要因exit0宣称有效学习；以下旧进度保留作历史检查点。
