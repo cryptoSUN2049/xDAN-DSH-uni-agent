@@ -2,7 +2,8 @@
 
 本目录负责可复建的环境安装、服务管理与部署前检查。
 已具备版本锁、源码checkout、依赖安装、DSH发布物构建、服务监管和训练入口；完整干净环境复建仍待验收。
-现有GPU手动复跑入口：[当前M1操作说明](../docs/harbor-modal-integration/manual-gpu-runbook.md)。
+当前工作状态课程总入口：[从固定部署到训练/reload](../docs/harbor-modal-integration/native-work-state-end-to-end-runbook.md)。
+历史M1操作说明保留于`docs/harbor-modal-integration/manual-gpu-runbook.md`，不要混用不同课程的数据与运行清单。
 设计及验收：[部署设计](../docs/harbor-modal-integration/deployment-design.md)。
 
 ## 目录规划（待逐项实现）

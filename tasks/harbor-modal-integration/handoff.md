@@ -2,7 +2,9 @@
 
 ## 1. TL;DR
 
-- **最新补验运行中**：selected-r1 launch264372，16:26:10 UTC+8；新recipe726d1c0已push，Linux74项回归通过，独立/workspace/rebuild/uni-agent-work-state-eval-r1复用原venv/VERL补丁。新run/root/runs/work-state-r4-reload-selected-r1与-data/manifest.json，加载母5b4b01b的step8，显式三题WS01/03/05；原WS06拒绝保留。不改准入、不重训，待最终消费/reload审计。见work-state-selected-r1-execution.md。
+- **最新selected-r1已失败结束**：source726d1c0，child264469 exit1/685.015秒。WS05 A 78工具调用（72view）后max-tokens，finished=false；WS01/03已提交但整批dump缺失，2groups/0消费，原audit=false。加载model/optimizer/RNG/scheduler及母11文件未变已通过；Linux74项回归通过。见selected-r1-result.md/json。正实施固定四题各自独立reload/审计，保留失败并继续，禁止伪造消费。
+- **证据已保存云盘并回读通过**：/workspace/reports/work-state-r4-engineering-evidence-20260909-r1.tar.gz，18,128,085字节，168670源文件，SHA256 1d19e4f757a8d9df8610a9f3e3f6d52957a5ac3ea141c06ef85f2bee13b86093；未打包3份training.env。
+- **零奖励根因已独立核验**：32个B的业务重评均与原回执一致；0/32配置正确，仅1/32尝试读取index，不能通过放松评分凑非零梯度。原课程W4仍未通过。
 
 - **最新验收：E2/E3通过，E4尚待评估结果完整落盘。** r4最终8组/64唯一消费、289原生成段EOS通过，实际6unique任务/3拒组；模型4→8完全相同、base399不变、LoRA B252张量全0，8步grad0，无有效学习。原报告work-state-train-r4-result.md/json。独立reload child258242 exit1/545.014秒，已实际加载step8，第四个val未准入导致最后汇总未写（3crosswalk、0validation dump），GPU已释放。母checkpoint无改动；后续最小任务隔离补验，不重训，不改原VERL或奖励。
 

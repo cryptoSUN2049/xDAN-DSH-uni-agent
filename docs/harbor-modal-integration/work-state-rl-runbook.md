@@ -2,7 +2,9 @@
 
 本指南对应 `prepare_memory_training --family work-state-v1`。固定 DSH 0.1.3a2、Uni-Agent upstream 89733ec、VERL官方基线fefb080 **加 preserve-finish-reason-v1 源码补丁**；有效版本不是裸fefb080。集成源码必须使用实验报告记录的完整 Git SHA。复用已有 Python 环境，不在运行中的 checkout 更新源码。
 
-**当前状态：r3已失败，r4尚未启动。** [r3原始结果](work-state-train-r3-result.md)显示step4周期评估WS06 A写只读来源被拒，训练child exit1；不是合法零奖励主动终止。调度修复已在本地实现并通过27项recipe回归：work-state train设置`trainer.val_before_train=False`、`trainer.test_freq=0`，保留8步、n4、step4/8保存；严格val/reload独立执行。该调度变更须以主线程最终提交和新manifest核实，不能直接重启旧r3清单。
+**当前状态（2026-09-09）：** r4训练8/8步完成，消费审计8组/64行通过，实际6个独立任务；step4/8完整，梯度和参数变化均0。独立reload已证明加载model/optimizer/RNG/scheduler，但原四题因WS06越权尝试、三题补验因WS05 max-tokens分别失败，最终评估dump未完整生成。报告见[母训练](work-state-train-r4-result.md)、[三题补验](selected-r1-result.md)。下一步逐题独立评估并保留全部结果；不能将失败题删掉宣称完整通过。
+
+从源码部署到本课程运行的总入口：[端到端操作指南](native-work-state-end-to-end-runbook.md)。本指南中的历史run不得原地重启。
 
 DSH当前已是0.1.3a2 SDK/runtime，私有Release已存在，deployment lock固定b236源码与runtime SHA；旧截图“新版runtime未发布/仍需构建”不再适用。主线程已实查远端SDK与runtime-bin均为0.1.3a2，二进制SHA为d1a467…并匹配lock；本轮复用该环境，核hash后运行，不从零重建DSH或CUDA。
 
@@ -26,7 +28,7 @@ A在DSH中读来源并自行维护记忆文件；控制器冻结真实字节，B
 ```bash
 set -euo pipefail
 WORK_STATE_REPO=/workspace/rebuild/uni-agent-work-state-r4
-# r4尚未部署/启动；执行前用主线程实际已部署的新checkout路径替换。
+# 复跑请使用新固定checkout；此路径为已完成母实验源码，不原地更新。
 cd "$WORK_STATE_REPO"
 # 将下行替换为实验报告中的完整集成SHA。
 WORK_STATE_SHA=REPLACE_WITH_RECORDED_COMMIT
@@ -89,7 +91,7 @@ nvidia-smi
 
 ## 5. 训练与证据
 
-上一节`prepare`改成`--mode train`，所有目录和run-id替换为`WORK_STATE_TRAIN`，再运行对应`check/launch/audit`。新调度目标保持8步、n4、batch1、step4/8保存；同步训练，非全异步。work-state train关闭内嵌initial/periodic dev：有效配置应为`trainer.val_before_train=False`、`trainer.test_freq=0`。准备后用`check`核对新源码、新manifest和最终有效配置；不得把旧r3的True/4清单重新用于r4。该变更已通过27项recipe回归，待主线程提交/推送并固定新manifest；r4尚未启动。
+上一节`prepare`改成`--mode train`，所有目录和run-id替换为`WORK_STATE_TRAIN`，再运行对应`check/launch/audit`。新调度目标保持8步、n4、batch1、step4/8保存；同步训练，非全异步。work-state train关闭内嵌initial/periodic dev：有效配置应为`trainer.val_before_train=False`、`trainer.test_freq=0`。准备后用`check`核对新源码、新manifest和最终有效配置；不得把旧r3的True/4清单重新用于r4。该变更已部署在r4母实验5b4b01b1d0ab656e960d3514d0a3630210913022并实际完成8步；后续显式评估选择器在726d1c0通过Linux74项回归。
 
 训练上限7200秒。工程层验收是计划步数、可信完整组消费、checkpoint保存及独立reload；合法全0奖励/零梯度不主动打断这条流程。有效学习层另要求真实非零任务梯度、优势及参数/optimizer证据；能力提升再做同预算评估对照。训练自身出现安全/证据拒绝仍按原合同处理，本次解耦不豁免任何不合格轨迹。
 

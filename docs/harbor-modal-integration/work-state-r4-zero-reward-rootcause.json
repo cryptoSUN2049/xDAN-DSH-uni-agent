@@ -1,0 +1,1232 @@
+{
+  "schema": "dsh.work-state-reward-rootcause.v1",
+  "scope": "Read-only actual32 admitted B outputs plus prior selected-r1 WS05 loop; controller reference is diagnostic only, never training data.",
+  "cases": [
+    {
+      "step": 1,
+      "chain_id": "memory-1c9db4c3deaa42059cf87b8d63b33504",
+      "task_id": "work-state-ws01-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 1}",
+        "plan.json": "[\"config_update\"]"
+      },
+      "expected_config": {
+        "capacity": 168,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-1c9db4c3deaa42059cf87b8d63b33504/reader/fixture.json",
+      "fixture_sha256": "sha256:036f939fde3f6adf654184bf6bc363cf8b6b5f08cafe34c27d2f1e6f98677b1f"
+    },
+    {
+      "step": 1,
+      "chain_id": "memory-7a2219d27e9e4cf680e93d2685cb683c",
+      "task_id": "work-state-ws01-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": false,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Output paths must be exactly config.json and plan.json",
+          "Invalid config artifact: missing/non-bytes/oversized output",
+          "Invalid plan artifact: missing/non-bytes/oversized output"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {},
+      "expected_config": {
+        "capacity": 168,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-7a2219d27e9e4cf680e93d2685cb683c/reader/fixture.json",
+      "fixture_sha256": "sha256:76bf0686742d08ff8c2067ec6cb77e51c7a7ec43333e3bbe5a6df4a98d7259e4"
+    },
+    {
+      "step": 1,
+      "chain_id": "memory-932ef199c92548e99ee620351c71be2a",
+      "task_id": "work-state-ws01-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "tasks.json"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 1}",
+        "plan.json": "[\"config.json\", \"plan.json\"]"
+      },
+      "expected_config": {
+        "capacity": 168,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-932ef199c92548e99ee620351c71be2a/reader/fixture.json",
+      "fixture_sha256": "sha256:d581245b62f9640f6b819d17bad1bdf19ab0bc2b2b15a2a9100ee6708a20be8e"
+    },
+    {
+      "step": 1,
+      "chain_id": "memory-b9e083692a05481d94c91f186e144a23",
+      "task_id": "work-state-ws01-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": false,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Output paths must be exactly config.json and plan.json",
+          "Invalid config artifact: missing/non-bytes/oversized output",
+          "Invalid plan artifact: missing/non-bytes/oversized output"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {},
+      "expected_config": {
+        "capacity": 168,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-b9e083692a05481d94c91f186e144a23/reader/fixture.json",
+      "fixture_sha256": "sha256:b654a92577cbb12af52ada7b3f65db34d551d9b07fd138d49cf4dd09cb023485"
+    },
+    {
+      "step": 2,
+      "chain_id": "memory-1d31cca652bc41cd95a4df1c0b50fb24",
+      "task_id": "work-state-ws01-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "handoff.md",
+        "index.md"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 1}",
+        "plan.json": "[\"config.json\", \"plan.json\"]"
+      },
+      "expected_config": {
+        "capacity": 118,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-1d31cca652bc41cd95a4df1c0b50fb24/reader/fixture.json",
+      "fixture_sha256": "sha256:84f56e492a263893eb8214d5c878b005d2a3d614f57e4df810e960e9fe791ddc"
+    },
+    {
+      "step": 2,
+      "chain_id": "memory-537f3ae7b6a04fed8a67e3b5de96d140",
+      "task_id": "work-state-ws01-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 1}",
+        "plan.json": "[\"config.json\", \"plan.json\"]"
+      },
+      "expected_config": {
+        "capacity": 118,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-537f3ae7b6a04fed8a67e3b5de96d140/reader/fixture.json",
+      "fixture_sha256": "sha256:268851d036295ac3c7de9c1c95180456c77a908ea2b1479b32ef0c484d62a278"
+    },
+    {
+      "step": 2,
+      "chain_id": "memory-89cf91aa59834b6ca14a7d064a76e151",
+      "task_id": "work-state-ws01-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 1}",
+        "plan.json": "[\"configure_capacity\", \"validate_schema\", \"execute_migration\"]"
+      },
+      "expected_config": {
+        "capacity": 118,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-89cf91aa59834b6ca14a7d064a76e151/reader/fixture.json",
+      "fixture_sha256": "sha256:a7cb6a2a594003289f884d39a5ab1a275419f47caa10a6745110b47f1946d710"
+    },
+    {
+      "step": 2,
+      "chain_id": "memory-8b867b89f88d4ad0906664678f8fc94c",
+      "task_id": "work-state-ws01-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 1}",
+        "plan.json": "[\"configure_capacity\", \"define_schema_version\"]"
+      },
+      "expected_config": {
+        "capacity": 118,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-8b867b89f88d4ad0906664678f8fc94c/reader/fixture.json",
+      "fixture_sha256": "sha256:8e4ac9195c894dbaaf66cef79f3401f109ad39350a5176741927739987629b2a"
+    },
+    {
+      "step": 3,
+      "chain_id": "memory-14c5de78e19d4d8db16792bf5d6bdae1",
+      "task_id": "work-state-ws05-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": false,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Output paths must be exactly config.json and plan.json",
+          "Invalid config artifact: missing/non-bytes/oversized output",
+          "Invalid plan artifact: missing/non-bytes/oversized output"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "handoff.md",
+        "index.md"
+      ],
+      "actual_outputs": {},
+      "expected_config": {
+        "region": "local",
+        "retention": 168
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-14c5de78e19d4d8db16792bf5d6bdae1/reader/fixture.json",
+      "fixture_sha256": "sha256:674ce67977f36a994427be32934d7a7f261825b9d2d57452a43f102f1bdb9e60"
+    },
+    {
+      "step": 3,
+      "chain_id": "memory-2916e4b8bb8644fda076249807860414",
+      "task_id": "work-state-ws05-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": false,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Output paths must be exactly config.json and plan.json",
+          "Invalid config artifact: missing/non-bytes/oversized output",
+          "Invalid plan artifact: missing/non-bytes/oversized output"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {},
+      "expected_config": {
+        "region": "local",
+        "retention": 168
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-2916e4b8bb8644fda076249807860414/reader/fixture.json",
+      "fixture_sha256": "sha256:39a65a84ed73cc4748f5d3a863c3a11acf5626cb8179ccc08d5330b6b62fc7ba"
+    },
+    {
+      "step": 3,
+      "chain_id": "memory-502fe62a8b9d41f09945c99041b8e2a2",
+      "task_id": "work-state-ws05-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": false,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Output paths must be exactly config.json and plan.json",
+          "Invalid config artifact: missing/non-bytes/oversized output",
+          "Invalid plan artifact: missing/non-bytes/oversized output"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "handoff.md",
+        "index.md"
+      ],
+      "actual_outputs": {},
+      "expected_config": {
+        "region": "local",
+        "retention": 168
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-502fe62a8b9d41f09945c99041b8e2a2/reader/fixture.json",
+      "fixture_sha256": "sha256:92ac42972f0190d2b78c2024568c0e80dd4e9d2b74fb5104760ec96e2be9abad"
+    },
+    {
+      "step": 3,
+      "chain_id": "memory-d14c9a3f65f344ed9fe3e3008a314e7b",
+      "task_id": "work-state-ws05-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": false,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Output paths must be exactly config.json and plan.json",
+          "Invalid config artifact: missing/non-bytes/oversized output",
+          "Invalid plan artifact: missing/non-bytes/oversized output"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {},
+      "expected_config": {
+        "region": "local",
+        "retention": 168
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-d14c9a3f65f344ed9fe3e3008a314e7b/reader/fixture.json",
+      "fixture_sha256": "sha256:bf9c9660238cebb7b1926c404c37d50506dfc29119ce61a7513875ba8ed78f1f"
+    },
+    {
+      "step": 4,
+      "chain_id": "memory-4937a4424f3043a0a239dd8bfa4f53d3",
+      "task_id": "work-state-ws05-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": false,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Output paths must be exactly config.json and plan.json",
+          "Invalid config artifact: missing/non-bytes/oversized output",
+          "Invalid plan artifact: missing/non-bytes/oversized output"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {},
+      "expected_config": {
+        "region": "local",
+        "retention": 118
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-4937a4424f3043a0a239dd8bfa4f53d3/reader/fixture.json",
+      "fixture_sha256": "sha256:39a03735fe596c351940ce0f6467721fd406f15b91a8e54a97b64e509cc6bf93"
+    },
+    {
+      "step": 4,
+      "chain_id": "memory-abf9b7056c4e4ebeb6b30d2844dea492",
+      "task_id": "work-state-ws05-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": true
+        },
+        "errors": [
+          "Configuration violates current task requirements"
+        ],
+        "verified_progress": 0.5
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "handoff.md",
+        "index.md"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"region\": \"this-worktree\", \"retention\": 2}",
+        "plan.json": "[]"
+      },
+      "expected_config": {
+        "region": "local",
+        "retention": 118
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-abf9b7056c4e4ebeb6b30d2844dea492/reader/fixture.json",
+      "fixture_sha256": "sha256:980fbc90fa601e934fb35ae3b27f0997d2cabb5ecf757e010e24d5538d4836cc"
+    },
+    {
+      "step": 4,
+      "chain_id": "memory-ec96f35e8a314a5695c541470829c55d",
+      "task_id": "work-state-ws05-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": true
+        },
+        "errors": [
+          "Configuration violates current task requirements"
+        ],
+        "verified_progress": 0.5
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"region\": \"this-worktree\", \"retention\": 2}",
+        "plan.json": "[]"
+      },
+      "expected_config": {
+        "region": "local",
+        "retention": 118
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-ec96f35e8a314a5695c541470829c55d/reader/fixture.json",
+      "fixture_sha256": "sha256:5d7aff4f9447a6a94e86a781e953adebe520be5a7002dcf1a44f3624afa318d3"
+    },
+    {
+      "step": 4,
+      "chain_id": "memory-ee55259d69b84663a3eb47166ac9acca",
+      "task_id": "work-state-ws05-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": false,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Output paths must be exactly config.json and plan.json",
+          "Invalid config artifact: missing/non-bytes/oversized output",
+          "Invalid plan artifact: missing/non-bytes/oversized output"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": true,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {},
+      "expected_config": {
+        "region": "local",
+        "retention": 118
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-ee55259d69b84663a3eb47166ac9acca/reader/fixture.json",
+      "fixture_sha256": "sha256:f499779847f29bd277c7f58276bac95c88a9f80adca4af270054619c0efbe4ca"
+    },
+    {
+      "step": 5,
+      "chain_id": "memory-7d38e85654a04e6584aa5afed969f572",
+      "task_id": "work-state-ws06-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": false,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Output paths must be exactly config.json and plan.json",
+          "Invalid config artifact: missing/non-bytes/oversized output",
+          "Invalid plan artifact: missing/non-bytes/oversized output"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [],
+      "actual_outputs": {},
+      "expected_config": {
+        "capacity": 125
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-7d38e85654a04e6584aa5afed969f572/reader/fixture.json",
+      "fixture_sha256": "sha256:7f81bd80c7b525a315ffdfc1db48e3737b13bfabec9b2172300e73211a350d69"
+    },
+    {
+      "step": 5,
+      "chain_id": "memory-937313278f7b4e149722e731edecaae5",
+      "task_id": "work-state-ws06-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": true
+        },
+        "errors": [
+          "Configuration violates current task requirements"
+        ],
+        "verified_progress": 0.5
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 125, \"rule\": \"capacity = peak + reserve\"}",
+        "plan.json": "[]"
+      },
+      "expected_config": {
+        "capacity": 125
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-937313278f7b4e149722e731edecaae5/reader/fixture.json",
+      "fixture_sha256": "sha256:379aa447c97a77adb61ae2d6d7ca1285327213e5ba48f8fd43d69ef693a7fc88"
+    },
+    {
+      "step": 5,
+      "chain_id": "memory-d5d4d20887994d00a7e05874f50caf50",
+      "task_id": "work-state-ws06-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": true
+        },
+        "errors": [
+          "Configuration violates current task requirements"
+        ],
+        "verified_progress": 0.5
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100}",
+        "plan.json": "[]"
+      },
+      "expected_config": {
+        "capacity": 125
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-d5d4d20887994d00a7e05874f50caf50/reader/fixture.json",
+      "fixture_sha256": "sha256:8d593d6e0c6f99749d457714eb95ae24d58cd365870bc2ee8c39aa126ffd95b6"
+    },
+    {
+      "step": 5,
+      "chain_id": "memory-d9c1f1c4d5184ecc898ceb341498f1b2",
+      "task_id": "work-state-ws06-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": true
+        },
+        "errors": [
+          "Configuration violates current task requirements"
+        ],
+        "verified_progress": 0.5
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100}",
+        "plan.json": "[]"
+      },
+      "expected_config": {
+        "capacity": 125
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-d9c1f1c4d5184ecc898ceb341498f1b2/reader/fixture.json",
+      "fixture_sha256": "sha256:b68f58aa561f7dafa709293de19d821520f70ea614b8d8521279bab350665299"
+    },
+    {
+      "step": 6,
+      "chain_id": "memory-3de8564f6ace4ca68906ddb48806ba34",
+      "task_id": "work-state-ws01-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 1}",
+        "plan.json": "[\"configure_capacity\", \"set_schema_version\"]"
+      },
+      "expected_config": {
+        "capacity": 168,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-3de8564f6ace4ca68906ddb48806ba34/reader/fixture.json",
+      "fixture_sha256": "sha256:e5f116a1914ef5c460d32ee4e3feccea8a04f88057f2881749ce0ad93306fd9d"
+    },
+    {
+      "step": 6,
+      "chain_id": "memory-59d7c6b942a04c58b5e424c14b27f7a5",
+      "task_id": "work-state-ws01-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": false,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Output paths must be exactly config.json and plan.json",
+          "Invalid config artifact: missing/non-bytes/oversized output",
+          "Invalid plan artifact: missing/non-bytes/oversized output"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {},
+      "expected_config": {
+        "capacity": 168,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-59d7c6b942a04c58b5e424c14b27f7a5/reader/fixture.json",
+      "fixture_sha256": "sha256:ca799023ba3ba1cb0b5ed4fe4c9410e616e83fd82ec2d5ae8d62afb7ad1e11f3"
+    },
+    {
+      "step": 6,
+      "chain_id": "memory-f0c7fee362594503a74a79514ece0fd8",
+      "task_id": "work-state-ws01-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 2}",
+        "plan.json": "[\"action1\", \"action2\", \"action3\"]"
+      },
+      "expected_config": {
+        "capacity": 168,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-f0c7fee362594503a74a79514ece0fd8/reader/fixture.json",
+      "fixture_sha256": "sha256:d72c10e8922906e0623828b173329a5b48786d9cf7a4ffe578aab4293d69b540"
+    },
+    {
+      "step": 6,
+      "chain_id": "memory-f53794cb06784efe8fa90a21f82417ee",
+      "task_id": "work-state-ws01-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "handoff.md",
+        "index.md"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 1}",
+        "plan.json": "[\"config.json\", \"plan.json\"]"
+      },
+      "expected_config": {
+        "capacity": 168,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-f53794cb06784efe8fa90a21f82417ee/reader/fixture.json",
+      "fixture_sha256": "sha256:44170048991f09f07a8b9f408d3ce67efac79f9fb7fc6c5e5bd820f4b8703cae"
+    },
+    {
+      "step": 7,
+      "chain_id": "memory-93904139acfe468fa6074d805ede00a0",
+      "task_id": "work-state-ws01-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 1}",
+        "plan.json": "[\"config\",\"plan\"]"
+      },
+      "expected_config": {
+        "capacity": 118,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-93904139acfe468fa6074d805ede00a0/reader/fixture.json",
+      "fixture_sha256": "sha256:9e8afa93fe11c85ccd811a653a7659e82ae6e4476213c428c1b3c96b20357ccc"
+    },
+    {
+      "step": 7,
+      "chain_id": "memory-ade0e98fe35a4c18b889a1fc8f512d93",
+      "task_id": "work-state-ws01-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "handoff.md",
+        "index.md"
+      ],
+      "actual_outputs": {
+        "config.json": "{\n  \"capacity\": 100,\n  \"schema_version\": 2\n}",
+        "plan.json": "[\"configure_capacity\", \"validate_schema\"]"
+      },
+      "expected_config": {
+        "capacity": 118,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-ade0e98fe35a4c18b889a1fc8f512d93/reader/fixture.json",
+      "fixture_sha256": "sha256:ca8a728d2e7c81a9b9f4e610ecae915da1496c153e5b75469a0123fba9507bc3"
+    },
+    {
+      "step": 7,
+      "chain_id": "memory-bfcdf30cf37a4f438da1ce3ea361bbc0",
+      "task_id": "work-state-ws01-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 2}",
+        "plan.json": "[\"init_config\", \"validate_schema\", \"generate_report\"]"
+      },
+      "expected_config": {
+        "capacity": 118,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-bfcdf30cf37a4f438da1ce3ea361bbc0/reader/fixture.json",
+      "fixture_sha256": "sha256:cf7fc0891a9fc6e72ed99e7ae1cd6af5879972c62fc3d0d7188e27d59de372cd"
+    },
+    {
+      "step": 7,
+      "chain_id": "memory-ddc8c5761ec54978aa2afe54fd8acb85",
+      "task_id": "work-state-ws01-v0-s202",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Configuration violates current task requirements",
+          "Unknown/repeated/out-of-order/incomplete workflow action"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "decisions.md",
+        "handoff.md",
+        "index.md",
+        "memory.json",
+        "modules.md",
+        "tasks.json"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"capacity\": 100, \"schema_version\": 1}",
+        "plan.json": "[\"configuration_keys\",\"goal\",\"plan_format\"]"
+      },
+      "expected_config": {
+        "capacity": 118,
+        "schema_version": 2
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-ddc8c5761ec54978aa2afe54fd8acb85/reader/fixture.json",
+      "fixture_sha256": "sha256:9dcdc136f3f373e90117d7249937620ea9375237327ffa425b8776888587c1d3"
+    },
+    {
+      "step": 8,
+      "chain_id": "memory-2ac6ae381945463b97cd6afb113d4eaa",
+      "task_id": "work-state-ws03-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": true
+        },
+        "errors": [
+          "Configuration violates current task requirements"
+        ],
+        "verified_progress": 0.5
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [],
+      "actual_outputs": {
+        "config.json": "{\"database\": \"catalog_database\", \"cache\": \"catalog_cache\"}",
+        "plan.json": "[]"
+      },
+      "expected_config": {
+        "cache": "option-a",
+        "database": "option-b"
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-2ac6ae381945463b97cd6afb113d4eaa/reader/fixture.json",
+      "fixture_sha256": "sha256:a4c47b95bde4c2fc1fb7cb7c57716e1563fdf217e55bd3ba312ea9590c398129"
+    },
+    {
+      "step": 8,
+      "chain_id": "memory-471a7ee8c1054cc2b0bf448a2db693c3",
+      "task_id": "work-state-ws03-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": false,
+          "configuration": false,
+          "plan_execution": false
+        },
+        "errors": [
+          "Output paths must be exactly config.json and plan.json",
+          "Invalid config artifact: missing/non-bytes/oversized output",
+          "Invalid plan artifact: missing/non-bytes/oversized output"
+        ],
+        "verified_progress": 0.0
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "index.md"
+      ],
+      "actual_outputs": {},
+      "expected_config": {
+        "cache": "option-a",
+        "database": "option-b"
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-471a7ee8c1054cc2b0bf448a2db693c3/reader/fixture.json",
+      "fixture_sha256": "sha256:c409f7f0412976ca5594d0bb31d78c34460815b57edf0fabce5c7866e17ec51e"
+    },
+    {
+      "step": 8,
+      "chain_id": "memory-73a9472e72794d468b3aa7b12a8ac114",
+      "task_id": "work-state-ws03-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": true
+        },
+        "errors": [
+          "Configuration violates current task requirements"
+        ],
+        "verified_progress": 0.5
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "handoff.md",
+        "index.md"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"database\": \"db_catalog_option_id\", \"cache\": \"cache_catalog_option_id\"}",
+        "plan.json": "[]"
+      },
+      "expected_config": {
+        "cache": "option-a",
+        "database": "option-b"
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-73a9472e72794d468b3aa7b12a8ac114/reader/fixture.json",
+      "fixture_sha256": "sha256:e8becfcb6cac2341f1602d10719f0f7e7fa597fd0c6644a05fe6475aab08a685"
+    },
+    {
+      "step": 8,
+      "chain_id": "memory-c8c0424cb8c640b1bb88976d0d76a3e1",
+      "task_id": "work-state-ws03-v0-s101",
+      "recorded_reward": 0.0,
+      "independent_business_score": {
+        "reward": 0,
+        "checks": {
+          "output_contract": true,
+          "configuration": false,
+          "plan_execution": true
+        },
+        "errors": [
+          "Configuration violates current task requirements"
+        ],
+        "verified_progress": 0.5
+      },
+      "controller_reference_passes": true,
+      "index_view_attempted": false,
+      "memory_files": [
+        "handoff.md",
+        "index.md"
+      ],
+      "actual_outputs": {
+        "config.json": "{\"database\": \"db-catalog-1\", \"cache\": \"cache-catalog-2\"}",
+        "plan.json": "[]"
+      },
+      "expected_config": {
+        "cache": "option-a",
+        "database": "option-b"
+      },
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-c8c0424cb8c640b1bb88976d0d76a3e1/reader/fixture.json",
+      "fixture_sha256": "sha256:6cf0a1876c1706bdaef3734b9a2e4514f7c803b03934358e294be5e5fb75387e"
+    }
+  ],
+  "summary": {
+    "cases": 32,
+    "score_matches_original": 32,
+    "controller_reference_passes": 32,
+    "output_contract_passes": 21,
+    "configuration_passes": 0,
+    "plan_execution_passes": 8,
+    "index_view_attempted": 1,
+    "empty_memory_count": 6
+  },
+  "loop": {
+    "trace_path": "/root/runs/work-state-r4-reload-selected-r1/chains/memory-8b3761efa586466c857100a89d0fae27/writer/run/traces/2e2b813345156fba3b3d27da/session.jsonl",
+    "trace_sha256": "sha256:d66a4407d6d4ca87073df14bf04b953b3afa1e608b5be29e5289af098e5d1e9d",
+    "command_path_counts": [
+      {
+        "command": "view",
+        "basename": "decisions.json",
+        "count": 2
+      },
+      {
+        "command": "view",
+        "basename": "index.md",
+        "count": 12
+      },
+      {
+        "command": "create",
+        "basename": "index.md",
+        "count": 1
+      },
+      {
+        "command": "view",
+        "basename": "handoff.md",
+        "count": 12
+      },
+      {
+        "command": "create",
+        "basename": "handoff.md",
+        "count": 1
+      },
+      {
+        "command": "view",
+        "basename": "tasks.json",
+        "count": 12
+      },
+      {
+        "command": "create",
+        "basename": "tasks.json",
+        "count": 1
+      },
+      {
+        "command": "view",
+        "basename": "memory.json",
+        "count": 12
+      },
+      {
+        "command": "create",
+        "basename": "memory.json",
+        "count": 1
+      },
+      {
+        "command": "view",
+        "basename": "modules.md",
+        "count": 11
+      },
+      {
+        "command": "create",
+        "basename": "modules.md",
+        "count": 1
+      },
+      {
+        "command": "view",
+        "basename": "decisions.md",
+        "count": 11
+      },
+      {
+        "command": "create",
+        "basename": "decisions.md",
+        "count": 1
+      }
+    ],
+    "error_result_seqs": [
+      15,
+      30,
+      45,
+      60,
+      75,
+      90
+    ],
+    "finish_reason": "max-tokens"
+  },
+  "limitations": [
+    "Reference solutions only show scorer can accept valid outputs; not a universal proof of no scoring bugs.",
+    "Index view attempt does not prove successful reading or use.",
+    "Private expected_config values here are controller-only diagnostic evidence; never inject into model prompts."
+  ]
+}

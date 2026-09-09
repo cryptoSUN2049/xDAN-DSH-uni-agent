@@ -1,0 +1,26 @@
+{
+  "schema": "dsh.evidence-archive-verification.v1",
+  "archive": "/workspace/reports/work-state-r4-engineering-evidence-20260909-r1.tar.gz",
+  "sha256": "1d19e4f757a8d9df8610a9f3e3f6d52957a5ac3ea141c06ef85f2bee13b86093",
+  "archive_bytes": 18128085,
+  "manifest": "/workspace/reports/work-state-r4-engineering-evidence-20260909-r1.manifest.json",
+  "manifest_sha256": "e0e2ab2b94e8a856298193e1d4f41e064a1a0f56023bac63a09e2eb6d2accf84",
+  "data_members": 168670,
+  "uncompressed_source_bytes": 88467308,
+  "readback_all_members_passed": true,
+  "exclusions": [
+    {
+      "path": "/root/runs/work-state-train-r4-data/training.env",
+      "reason": "Environment/credential filename excluded without reading"
+    },
+    {
+      "path": "/root/runs/work-state-train-r4-reload-data/training.env",
+      "reason": "Environment/credential filename excluded without reading"
+    },
+    {
+      "path": "/root/runs/work-state-r4-reload-selected-r1-data/training.env",
+      "reason": "Environment/credential filename excluded without reading"
+    }
+  ],
+  "original_runs_modified": false
+}
