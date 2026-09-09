@@ -179,3 +179,8 @@
 - memory-resident-val-r1真实GPU构造失败：VERL默认传入reward_loop_worker_handles（8个worker），但DSH已有verifier reward时原Gateway优先使用TaskResult.reward。新NativeMemory仅因句柄非空便拒绝，混淆了对象存在与实际数据流。
 - CPU factory测试必须模拟生产默认依赖注入（非空handles且custom_reward_function=None），验证A/B原奖励不变、worker没有调用；不能只用None替身。NativeMemory显式禁止额外reward通道，同时保持strict verifier门，不改默认Gateway或VERL。
 - 已确认不可恢复的框架构造失败无需等待一小时预算：先核具体child命令和pgid，仅停止该run拥有的进程组，再检查GPU释放。外部SIGTERM可能使内层run-manifest仍running，终态以supervisor-result与活进程交叉核验，保留原始不一致而不伪造正常完成。
+
+### 2026-09-09：进展必须带运行身份和时间
+
+- 用户追问“上一轮失败是什么时候”：不能只说上一轮/已经跑通。每次故障或成功明确 run-id、Asia/Singapore时间、阶段、影响范围，与历史已通过实验区分。
+- 原始日志UTC保留，面向用户明确换算UTC+8；PID/显存/初始化与真实任务完成分别报告。

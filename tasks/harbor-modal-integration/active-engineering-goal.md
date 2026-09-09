@@ -60,6 +60,6 @@ M1 v2-r4及reload报告为当前通过证据，公开两题baseline已满分不�
 - constraints-r3与updates-r1：两族真实A写入→冻结→新B读取均reward1，身份/回执/事实及云盘归档通过；training=false，尚非memory RL或能力提升。
 - context-v2-curriculum-r1：12有效batch、48消费、11唯一题，6步非零梯度；step6→12全部504 LoRA变化、399 base冻结，optimizer6→12和1008 moments审计通过。严格原audit=false保留，D3被拒且未消费、D2补采。独立step12 reload已470.012秒exit0、4/4 fresh评估消费通过，无再训练；dev strict0/4，工程结果不宣称能力提升。
 - RSI配对worker准备器/监督入口已7c37cb2推送，仍未真实学生H0/H1比较或晋升。memory实际策略版本完整性2f1995a仅CPU通过，未部署当前GPU。
-- 下一接线：独立memory训练stage verifier、Framework单stage机械抽取、可信A/B阶段准备与整链TQ信用；旧eval回执不能改split冒充train。继续保留DSH唯一Agent Loop与固定resident backend。
+- memory resident verifier、Gateway单stage、可信A/B/整链TQ及消费审计已实现并CPU回归通过。r1真实运行因误拒VERL默认reward handles构造失败，零A/B、零消费，已保留并停止；修复c5dacdc已push，r2新run已385.009秒exit0，真实A/B reward1、1完整val链/2键实际消费且版本完整，专用审计passed=true；无更新。train-r2仅CPU准备。旧eval回执不能改split冒充train。继续保留DSH唯一Agent Loop与固定resident backend。
 
 当前即时进程与后续命令以handoff.md为准；上述新增证据不等于四能力训练和封存泛化验收完成。

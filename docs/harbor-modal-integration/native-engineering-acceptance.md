@@ -63,7 +63,7 @@
 
 **入口与证据**：[训练脚本](../../examples/dsh/train_qwen3_4b_online_rl.sh)、[ops启动入口](../../examples/dsh/ops/launch_qwen3_4b_online_rl.sh)、[逐张量delta](../../deployment/checks/checkpoint_delta.py)、[optimizer delta](../../deployment/checks/optimizer_delta.py)。run的`supervision/train.log`或旧run的`train.log`、trainer file metrics、checkpoint和数值审计JSON。监督器exit0是必要运行事实，不足以替代数值证明。
 
-**当前事实**：旧context两步首步有真实非零梯度，第二步同分零adv；step1→2的252个LoRA变化与动量/decay一致，399个base不变，optimizer step1→2，证据[CPU审计](context-v2-train-r1-cpu-audit.md)。母12步exit0/1000.024秒，step3/4/5/7/10/12共6步有非零adv和grad；step6→12有504个LoRA张量变化、399个base不变且全finite。该母课程专属optimizer完整状态比较与reload还需以新增报告验收，不能借用旧两步报告代替。
+**当前事实**：旧context两步首步有真实非零梯度，第二步同分零adv；step1→2的252个LoRA变化与动量/decay一致，399个base不变，optimizer step1→2，证据[CPU审计](context-v2-train-r1-cpu-audit.md)。母12步exit0/1000.024秒，step3/4/5/7/10/12共6步有非零adv和grad；step6→12有504个LoRA张量变化、399个base不变且全finite。该母课程专属optimizer step6→12已独立审计：504 active/37 empty，1008个moment张量变化且有限；step12独立reload与4条fresh消费已通过，见[课程reload报告](context-v2-curriculum-r1-reload-result.md)及[optimizer证据](context-v2-curriculum-r1-optimizer-delta-6-12.json)。
 
 ## E4：独立进程重新加载
 
@@ -88,7 +88,7 @@
 
 **入口与证据**：独立reload的新`artifacts/results`、`validation`、审计报告与归档manifest；[旧reload结果](context-v2-train-r1-reload-result.json)、[归档摘要](context-v2-train-r1-reload-archive.json)。
 
-**当前事实**：旧step2 reload有4条fresh且合格的dev结果，均值0.241875，严格准确率0；训练期dev均值0.255。证明保存→重新加载→新评估成立，不证明数值完全相同或能力提分。母12步dev step0/6/12均strict0/4、平均reward0.3979687579，尚无提分证据；新reload均值0.39796875、strict0/4，4/4新鲜评估消费审计通过，详细报告/归档正在收尾。
+**当前事实**：旧step2 reload有4条fresh且合格的dev结果，均值0.241875，严格准确率0；训练期dev均值0.255。证明保存→重新加载→新评估成立，不证明数值完全相同或能力提分。母12步dev step0/6/12均strict0/4、平均reward0.3979687579，尚无提分证据；新reload均值0.39796875、strict0/4，4/4新鲜评估消费审计通过，详细报告与云盘审计归档已完成，见[reload报告](context-v2-curriculum-r1-reload-result.md)及[归档摘要](context-v2-curriculum-r1-evidence-archive.json)。该归档为审计元数据包，不包含全部原始日志、token NPZ或权重。
 
 ## 人工验收记录应保留的最小结论
 

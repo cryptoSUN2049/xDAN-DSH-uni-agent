@@ -4,40 +4,92 @@
 
 每次一个 family、一条 train 和一条 val 调度记录。二者身份不同但语义相同，属于 `fixed-diagnostic-not-heldout`；不能当泛化留出集。默认 val-only，框架配置仍保留 train n4 / val n1。切到 train 才执行一次 n4 更新尝试。全部 B 同分意味着零 GRPO 信号，应报告消费工程情况，不能制造失败/伪造奖励来宣称学习。
 
-## 人工执行
+## 固定源码与独立运行身份
 
-先由主线程提交/push此批，再在空闲 GPU 上按精确新集成 SHA 检出。VERL 和 DSH pin 保持部署锁；不要留在旧 d3084f2，因为旧提交没有 NativeMemoryFramework。
+本版命令固定已推送的 `c5dacdc7ff90ad7cb15e826b41b0f6748c2139f0`，使用独立 r2 checkout `/workspace/rebuild/uni-agent-memory-resident-r2`。不要在旧 context checkout 或运行中的 checkout 上切版本；若此目录尚未部署，先由部署端从 GitHub 拉取固定提交、创建独立 worktree，并按部署锁初始化 VERL，再执行下文。这里复用既有验收 venv，不等于新环境从零复建已经通过。
+
+旧 [resident r1 失败记录](memory-resident-val-r1-failure.md)保留；该 run 在阶段执行前因 reward worker 句柄保护误判而退出，不能复用其身份或记为新版本已验收。本手册不声明 r2 GPU 已通过。
+
+以下各段在同一 Bash 会话执行。操作者自行设置 `MEMORY_LABEL`（仅字母、数字、连字符、下划线，建议不超过 20 字符）；追加 UUID 避免复制文档时复用历史目录。
 
 ```bash
-cd /workspace/rebuild/uni-agent-native-n0-r1
+set -euo pipefail
+cd /workspace/rebuild/uni-agent-memory-resident-r2
+MEMORY_CODE_SHA=c5dacdc7ff90ad7cb15e826b41b0f6748c2139f0
+test "$(git rev-parse HEAD)" = "$MEMORY_CODE_SHA"
 export PYTHON_BIN=/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python
 export PYTHONPATH="$PWD:$PWD/verl"
 unset PYTHONHOME RAY_ADDRESS PYTORCH_CUDA_ALLOC_CONF
 export CUDA_VISIBLE_DEVICES=''
-RUNTIME="$($PYTHON_BIN -c 'from deepseek_harness_runtime import bundled_runtime_path;print(bundled_runtime_path())')"
-$PYTHON_BIN -m examples.dsh.capabilities.prepare_memory_training prepare \
- --output-dir /root/runs/memory-resident-val-r1-data \
- --run-root /root/runs/memory-resident-val-r1 --run-id memory-resident-val-r1 \
- --runtime-executable "$RUNTIME" --runner-python "$PYTHON_BIN" \
- --model-path /workspace/models/Qwen3-4B-1cfa9a7 \
- --model-revision 1cfa9a7208912126459214e8b04321603b3df60c \
- --family constraints --mode val
-$PYTHON_BIN -m examples.dsh.capabilities.prepare_memory_training check \
- /root/runs/memory-resident-val-r1-data/manifest.json
+MEMORY_LABEL=my-memory-check
+MEMORY_FAMILY=constraints
+MEMORY_SUFFIX="$("$PYTHON_BIN" -c 'import uuid; print(uuid.uuid4().hex[:12])')"
+MEMORY_BASE="${MEMORY_LABEL}-${MEMORY_SUFFIX}"
+MEMORY_VAL_ID="${MEMORY_BASE}-val"
+MEMORY_TRAIN_ID="${MEMORY_BASE}-train"
+MEMORY_RUNTIME="$("$PYTHON_BIN" -c 'from deepseek_harness_runtime import bundled_runtime_path; print(bundled_runtime_path())')"
 ```
 
-`prepare` / `check` 不启动 GPU；检查实际 checkout/VERL、源与输入 hash、DSH SDK/runtime 0.1.3a2、runtime 字节摘要、模型 config/tokenizer config 摘要和跨 cwd 导入。模型 revision 必须等部署锁，但 revision 字符串并非外网来源证明；当前只测量清单列出的模型文件。
-
-完成审阅后真实启动（前台监督，另一个 SSH 窗口观察）：
+## 1. 准备、检查并执行 val
 
 ```bash
-$PYTHON_BIN -m examples.dsh.capabilities.prepare_memory_training launch \
- /root/runs/memory-resident-val-r1-data/manifest.json
+"$PYTHON_BIN" -m examples.dsh.capabilities.prepare_memory_training prepare \
+ --output-dir "/root/runs/${MEMORY_VAL_ID}-data" \
+ --run-root "/root/runs/${MEMORY_VAL_ID}" --run-id "$MEMORY_VAL_ID" \
+ --runtime-executable "$MEMORY_RUNTIME" --runner-python "$PYTHON_BIN" \
+ --model-path /workspace/models/Qwen3-4B-1cfa9a7 \
+ --model-revision 1cfa9a7208912126459214e8b04321603b3df60c \
+ --family "$MEMORY_FAMILY" --mode val
+"$PYTHON_BIN" -m examples.dsh.capabilities.prepare_memory_training check \
+ "/root/runs/${MEMORY_VAL_ID}-data/manifest.json"
+"$PYTHON_BIN" -m examples.dsh.capabilities.prepare_memory_training launch \
+ "/root/runs/${MEMORY_VAL_ID}-data/manifest.json"
 ```
 
-启动器清单环境显式设 CUDA=0，拒已有 GPU compute process，创建独占短 Ray 目录及 700 的 `run/chains`；监督墙钟 val 3600 秒、train 7200 秒，仅停止自己进程组。断开 SSH 的处理应由操作者使用 tmux 等持久终端，不把后台 PID 当成功证据。
+`prepare` / `check` 不启动 GPU；检查实际 checkout/VERL、源与输入 hash、DSH SDK/runtime 0.1.3a2、runtime 字节摘要、模型 config/tokenizer config 摘要和跨 cwd 导入。模型 revision 必须等于部署锁，但 revision 字符串并非外网来源证明；当前只测量清单列出的模型文件。
 
-val 完成后，重新 prepare 全新 `memory-resident-train-r1[-data]` 名称、`--mode train`，其余参数保持不变；仍先 `check` 再 `launch`。`--family updates` 也要全新名称。不能复用目录或复制旧回执；本批没有新增 reload recipe。
+`launch` 是真实 GPU 启动：清单环境显式设 `CUDA_VISIBLE_DEVICES=0`，不继承上述 CPU 预检的空值；拒绝已有 GPU compute process，创建独占短 Ray 目录及 0700 的 `run/chains`。监督墙钟 val 3600 秒、train 7200 秒，仅停止自己的进程组。可在 tmux 等持久终端运行，在另一 SSH 窗口观察；PID 或显存占用不是验收结果。
+
+## 2. 专用消费 audit：先验收 val，再决定 train
+
+等待监督进程退出后运行；审计命令自身为 CPU，只消费本项目可信产物，不连接 TQ 或调用模型。
+
+```bash
+CUDA_VISIBLE_DEVICES='' "$PYTHON_BIN" -m examples.dsh.capabilities.audit_memory_training \
+ "/root/runs/${MEMORY_VAL_ID}" \
+ --memory-root "/root/runs/${MEMORY_VAL_ID}/chains" \
+ --run-id "$MEMORY_VAL_ID" \
+ --output "/root/runs/${MEMORY_VAL_ID}/memory-consumption-audit.json"
+```
+
+该 CLI 只有 `passed=true` 才 exit 0：要求 run completed、所有 crosswalk 重新核验通过、实际 trainer JSONL 消费与准入 key 完整对应，且无未知/重复/错 reward 记录。审计失败会非零退出；保留日志与失败报告，定位原因后使用全新 run，不能改旧回执来通过。
+
+`passed=true` 只说明执行和消费合同满足，不自动表示 B 答案正确。还要查看链回执的 `terminal_reward`、A/B verifier 回执及真实响应，确认合法读写、freeze、新 B 的检索结果。此 val-only 不更新参数。
+
+## 3. 全新 train run：一次 n4 更新尝试，再审计
+
+确认 val 证据满足本轮目标后执行，勿把下面 train 命令与未审查的 val 自动串起来。它从同一固定 base 模型开始，**不会加载前一个 val 的产物**；默认先 initial val，再一个 n4 train group，更新后再 val。
+
+```bash
+"$PYTHON_BIN" -m examples.dsh.capabilities.prepare_memory_training prepare \
+ --output-dir "/root/runs/${MEMORY_TRAIN_ID}-data" \
+ --run-root "/root/runs/${MEMORY_TRAIN_ID}" --run-id "$MEMORY_TRAIN_ID" \
+ --runtime-executable "$MEMORY_RUNTIME" --runner-python "$PYTHON_BIN" \
+ --model-path /workspace/models/Qwen3-4B-1cfa9a7 \
+ --model-revision 1cfa9a7208912126459214e8b04321603b3df60c \
+ --family "$MEMORY_FAMILY" --mode train
+"$PYTHON_BIN" -m examples.dsh.capabilities.prepare_memory_training check \
+ "/root/runs/${MEMORY_TRAIN_ID}-data/manifest.json"
+"$PYTHON_BIN" -m examples.dsh.capabilities.prepare_memory_training launch \
+ "/root/runs/${MEMORY_TRAIN_ID}-data/manifest.json"
+CUDA_VISIBLE_DEVICES='' "$PYTHON_BIN" -m examples.dsh.capabilities.audit_memory_training \
+ "/root/runs/${MEMORY_TRAIN_ID}" \
+ --memory-root "/root/runs/${MEMORY_TRAIN_ID}/chains" \
+ --run-id "$MEMORY_TRAIN_ID" \
+ --output "/root/runs/${MEMORY_TRAIN_ID}/memory-consumption-audit.json"
+```
+
+切换 `MEMORY_FAMILY=updates` 时重新生成全套新身份，再走同样步骤。改变代码、数据或参数后也须重新 prepare；准备器拒绝目录复用，check 拒绝源码/输入漂移。此配方没有独立 reload 命令：train 内更新后 val 仍共享当前训练进程，不能冒充新进程 checkpoint reload。
 
 ## 证据位置和判据
 

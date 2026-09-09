@@ -2,7 +2,9 @@
 
 ## 1. TL;DR
 
-- **最新GPU任务已失败并停止**：memory-resident-val-r1，源码4168b628，supervisor exit=-15/540.012秒，owned child185194。NativeMemory构造误拒VERL默认非空reward handles，A/B尚0stage；主线程核PGID后SIGTERM该组，GPU已查无残留。原run-manifest仍running为外部终止留下的真实不一致，不能当活作业。局部修复及生产默认注入回归已完成，316项组合通过，主线程38项复核通过；修复后必须新commit/new prepare/new run，不能启动旧train-r1清单。
+- **最新GPU验收通过：memory-resident-val-r2**，2026-09-09 10:12:25启动（UTC+8），385.009秒exit0；源码 `/workspace/rebuild/uni-agent-memory-resident-r2` c5dacdc7ff90ad7cb15e826b41b0f6748c2139f0。真实A/B各reward1、独立freeze/新会话；专用消费审计passed=true，1完整val链/2 keys各消费一次，policy0各3/3段完整，unknown/duplicate=0。无训练更新/checkpoint，GPU已释放。报告memory-resident-val-r2-result.md/json。train-r2同源码CPU准备已通过，下一步真实n4；旧train-r1不可启动。
+
+- **上轮GPU任务已失败并停止**：memory-resident-val-r1，源码4168b628，supervisor exit=-15/540.012秒，owned child185194。NativeMemory构造误拒VERL默认非空reward handles，A/B尚0stage；主线程核PGID后SIGTERM该组，GPU已查无残留。原run-manifest仍running为外部终止留下的真实不一致，不能当活作业。局部修复及生产默认注入回归已完成，316项组合通过，主线程38项复核通过；修复后必须新commit/new prepare/new run，不能启动旧train-r1清单。
 
 - 人工SSH复跑入口：`docs/harbor-modal-integration/native-training-human-runbook.md`；逐节点E0—E5标准：`native-engineering-acceptance.md`。工程正确闭环为当前重点，提分/扩量非前置。
 

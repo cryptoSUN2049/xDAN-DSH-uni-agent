@@ -468,7 +468,8 @@ Review：训练进程正常结束与全组通过分开；数据量按独立任�
 
 - [x] 保留r1构造失败、零消费、专属SIGTERM及GPU释放证据。
 - [x] 修正默认reward handles注入误判，316项组合/主线程38项回归通过。
-- [ ] 提交推送后从GitHub固定新源码，重新prepare/check/launch val-r2。
-- [ ] 真正A/B执行、policy version、原奖励和trainer消费审计通过后，再准备train-r2。
+- [x] 提交推送后从GitHub固定c5dacdc新源码，重新prepare/check/launch val-r2。
+- [x] val-r2真正A/B执行、policy0原始版本、原奖励与2 keys实际消费审计passed=true；train-r2 CPU准备完成。
+- [ ] 启动train-r2真实n4，核原奖励/实际消费/有效adv/梯度/checkpoint，随后独立reload。
 
 Review：旧train-r1准备清单已作废，不修改旧JSON或追认r1成功。

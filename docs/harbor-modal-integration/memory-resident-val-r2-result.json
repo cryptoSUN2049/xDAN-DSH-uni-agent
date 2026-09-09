@@ -1,0 +1,193 @@
+{
+  "schema": "dsh.native-memory-resident-validation-result.v1",
+  "run_root": "/root/runs/memory-resident-val-r2",
+  "source_commit": "c5dacdc7ff90ad7cb15e826b41b0f6748c2139f0",
+  "verl_commit": "fefb080262e1c015a0ea05f958822a6a512dc795",
+  "supervision": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 385.009,
+    "pid": 191435,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "manifest_status": "completed",
+  "audit": {
+    "schema": "dsh.memory-training-consumption-audit.v1",
+    "passed": true,
+    "consumption_verified": true,
+    "run_completed": true,
+    "run_id": "memory-resident-val-r2",
+    "run_manifest_sha256": "sha256:4635ec7ddc17c1459a6a08382f79107a8685def8f0fede2c2e80f76643c2e796",
+    "inputs": [
+      {
+        "path": "/root/runs/memory-resident-val-r2/validation/0.jsonl",
+        "sha256": "sha256:569e3b51eb161e49f7d9d575f71da287bc0d59c06c86817a63c7f9499b13150e"
+      }
+    ],
+    "groups": [
+      {
+        "path": "/root/runs/memory-resident-val-r2/chains/groups/ad73c66314d44592ba31f946ed6ff08d/crosswalk.json",
+        "status": "consumed",
+        "crosswalk_consumption_verified": false,
+        "submission_verified": true,
+        "consumption_verified": true,
+        "reasons": [],
+        "missing_keys": [],
+        "expected_policy_version": 0,
+        "partition": "val",
+        "global_steps": 0,
+        "uid": "df31efa4-f38b-4db9-894c-5815ae9ebfdf",
+        "crosswalk_sha256": "sha256:fb2230274332a66c33c3b8e595c2ae78faa1ed60f52a75b2d6a1e14b66240707",
+        "stage_evidence_verified": true,
+        "duplicate_keys": [],
+        "score_mismatch_keys": []
+      }
+    ],
+    "errors": [],
+    "unknown_or_unadmitted_consumption": [],
+    "duplicate_consumption": [],
+    "overlapping_crosswalk_keys": [],
+    "summary": {
+      "groups": 1,
+      "consumed_groups": 1,
+      "consumed_rows": 2,
+      "unique_consumed_rows": 2
+    },
+    "limitations": [
+      "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+      "Crosswalk and submission records alone never establish trainer consumption."
+    ]
+  },
+  "chains": [
+    {
+      "chain_id": "memory-7808e6746fc04234b3508c97ccd25830",
+      "run_id": "memory-resident-val-r2",
+      "partition": "val",
+      "uid": "df31efa4-f38b-4db9-894c-5815ae9ebfdf",
+      "sibling": 0,
+      "weight_version": 0,
+      "checkpoint_identity": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "terminal_reward": 1.0,
+      "frozen": {
+        "content_sha256": "sha256:11a6c5b7532896b9e2bab79eac49ac5446a7002b7fc96e3626f85b3569029e5a",
+        "manifest_sha256": "sha256:0bf85455dfc72728a09f4faf97b45ec05e338b9f4dcdfc1812d76c4da6cecba4",
+        "memory_chain_id": "memory-7808e6746fc04234b3508c97ccd25830",
+        "parent_receipt_sha256": "sha256:ec1e8451a2b3adc25e12955502478a758673414ee71c346cd027874b12b09dfa",
+        "reader_session_id": "dsh-memory-B-dd118bdd2d1a422494ed6b61499476ba",
+        "source_version": "sha256:cd7ed8e1fe9e436bf37a552e3e4424dadd06a86dae7edb9ea414c28fe0b2ea47",
+        "writer_session_id": "dsh-memory-A-50972079284548cda61c0dc17f99663e"
+      },
+      "writer_receipt_sha256": "sha256:ec1e8451a2b3adc25e12955502478a758673414ee71c346cd027874b12b09dfa",
+      "reader_receipt_sha256": "sha256:45b3a148619f9b0b6e849855068bce64092375309f08be46eebcad65f4a75b36",
+      "credit_rule": "terminal-reader-grpo-v1"
+    }
+  ],
+  "stages": [
+    {
+      "role": "A",
+      "session": "memory-A-50972079284548cda61c0dc17f99663e",
+      "tq_key": "df31efa4-f38b-4db9-894c-5815ae9ebfdf_0_0",
+      "version_evidence": {
+        "generation_count": 3,
+        "max_global_steps": 0,
+        "min_global_steps": 0,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 3
+      },
+      "stage_reward": 1.0,
+      "token_sha256": "sha256:8b85c3a98406d6fdb5630f2f09f1fe52d2e55e3c2815ba05dda40533366cee34",
+      "model_token_count": 325,
+      "response_len": 505,
+      "dsh": {
+        "schema": "dsh.verifier-receipt.v1",
+        "receipt_sha256": "sha256:ec1e8451a2b3adc25e12955502478a758673414ee71c346cd027874b12b09dfa",
+        "freshness": "fresh",
+        "eligible": true,
+        "rollout_id": "memory-A-50972079284548cda61c0dc17f99663e",
+        "task_id": "dsh/memory-training/memory-7808e6746fc04234b3508c97ccd25830/writer",
+        "task_version": "1",
+        "split": "validation",
+        "dsh_session_id": "dsh-memory-A-50972079284548cda61c0dc17f99663e",
+        "trace_sha256": "sha256:b532366ccf6756e82b8cf5ffc7167d0887ff2ddbf40b90ccf7c51b028cfef24d",
+        "artifact_sha256": "sha256:4ce0f6fe5b710033e68a62941d15f6f3bb55c9a49edc66a772059c4e35f0386c",
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "verifier_id": "dsh-memory-file-chain-training-stage",
+        "verifier_version": "1",
+        "verifier_code_digest": "sha256:315e44c55fafb616b4670816e57b1d13d46e201a97877ff91460c26b90b80f5d",
+        "event_count": 21
+      }
+    },
+    {
+      "role": "B",
+      "session": "memory-B-dd118bdd2d1a422494ed6b61499476ba",
+      "tq_key": "df31efa4-f38b-4db9-894c-5815ae9ebfdf_0_1",
+      "version_evidence": {
+        "generation_count": 3,
+        "max_global_steps": 0,
+        "min_global_steps": 0,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 3
+      },
+      "stage_reward": 1.0,
+      "token_sha256": "sha256:b45de5a9f4f39e18574784e73f65d65c9f15ea99926cbb119469f3881e07928f",
+      "model_token_count": 242,
+      "response_len": 514,
+      "dsh": {
+        "schema": "dsh.verifier-receipt.v1",
+        "receipt_sha256": "sha256:45b3a148619f9b0b6e849855068bce64092375309f08be46eebcad65f4a75b36",
+        "freshness": "fresh",
+        "eligible": true,
+        "rollout_id": "memory-B-dd118bdd2d1a422494ed6b61499476ba",
+        "task_id": "dsh/memory-training/memory-7808e6746fc04234b3508c97ccd25830/reader",
+        "task_version": "1",
+        "split": "validation",
+        "dsh_session_id": "dsh-memory-B-dd118bdd2d1a422494ed6b61499476ba",
+        "trace_sha256": "sha256:17eb8656e247448dd22fdea9358f811bc1951a3c932257eae0430215d8d2e257",
+        "artifact_sha256": "sha256:c0d72b578d0fd4e51966c6ea05eafc9a46009f5f8769c3ccd075a976bbb73d26",
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "verifier_id": "dsh-memory-file-chain-training-stage",
+        "verifier_version": "1",
+        "verifier_code_digest": "sha256:315e44c55fafb616b4670816e57b1d13d46e201a97877ff91460c26b90b80f5d",
+        "event_count": 21
+      }
+    }
+  ],
+  "consumed_rows": [
+    {
+      "score": 1.0,
+      "step": 0,
+      "reward": 1.0,
+      "verifier_reward": 1.0,
+      "acc": 1.0,
+      "uid": "df31efa4-f38b-4db9-894c-5815ae9ebfdf_0_0"
+    },
+    {
+      "score": 1.0,
+      "step": 0,
+      "reward": 1.0,
+      "verifier_reward": 1.0,
+      "acc": 1.0,
+      "uid": "df31efa4-f38b-4db9-894c-5815ae9ebfdf_0_1"
+    }
+  ],
+  "crosswalk_status": "prepared-not-consumed",
+  "submission": {
+    "crosswalk_sha256": "sha256:fb2230274332a66c33c3b8e595c2ae78faa1ed60f52a75b2d6a1e14b66240707",
+    "keys": [
+      "df31efa4-f38b-4db9-894c-5815ae9ebfdf_0_0",
+      "df31efa4-f38b-4db9-894c-5815ae9ebfdf_0_1"
+    ],
+    "status": "tq-write-returned-not-consumed"
+  },
+  "training_metric_line_count": 0,
+  "rollout_files": [],
+  "checkpoint_files": [],
+  "log_sha256": "07c12192b320c5b10db0bfab8d56d334aaeb9933f5719046d4fc9264246fa400",
+  "gpu_processes_at_audit": "",
+  "limitations": [
+    "Validation-only, no optimizer update or learned capability improvement proved.",
+    "One fixed constraints diagnostic, not independent held-out generalization.",
+    "First real resident A/B engineering consumption gate; train n4 and reload remain separate gates."
+  ]
+}
