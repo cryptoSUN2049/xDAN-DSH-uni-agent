@@ -6,7 +6,7 @@
 - **新短课程已闭环**：ws-short-train-r1完成8步，8完整组/64唯一A/B、6独立任务。step2/4非零梯度；504 LoRA张量4→8变化，399base不变；零初始化B保存后非零。后四步零梯度，不称新增学习。
 - **独立评估通过**：901/902各新进程加载step8，原B奖励1，各1组2唯一消费；母11文件摘要均不变。d4401d3修正validation广播分数审计，原901失败报告保留。
 - **尚未完成**：短课程证据归档/HTML与交接收尾完成；四能力、提分对照、结果重复实验、空白环境复建、异步及Harbor仍后续。旧四族r4零更新不追认。
-- **GPU**：短课程两评估已exit0；RSI父基线H0已exit0并审计通过；新学生提议P于21:48:36(SGT)发起，PID320743、实际子进程320866，正在初始化，须核终态。入口：[短课程指南](../../docs/harbor-modal-integration/work-state-short-course-runbook.md) → [最终reload报告](../../docs/harbor-modal-integration/work-state-short-reload-final-result.md) → active-engineering-goal.md。
+- **GPU**：短课程两评估已exit0；RSI父基线H0已exit0并审计通过；学生提议P已exit0并原始审计通过，GPU已释放；下一步注册候选并评估H1。入口：[短课程指南](../../docs/harbor-modal-integration/work-state-short-course-runbook.md) → [最终reload报告](../../docs/harbor-modal-integration/work-state-short-reload-final-result.md) → active-engineering-goal.md。
 
 当前短课程母checkpoint：`/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8`。运行checkout：`/workspace/rebuild/uni-agent-work-state-short-r1`；只读审计checkout：`/workspace/rebuild/uni-agent-short-audit-d4401d3`。二者不可互换源码身份。
 
@@ -16,7 +16,7 @@
 
 短课程收尾之后，继续四能力目标。RSI worker/proposer 原入口仍要求 VERL 完全 clean，与已批准的 finish-reason overlay 冲突；本轮复用严格 overlay 校验并绑定有效来源，不退回未修补版本。准备器/worker/proposal 共用同一来源合同；旧 RSI manifest 必须重建。
 
-下一真实运行是父 H0 的 runtime 能力发现及文件约束取证两个开发任务；入口 `docs/harbor-modal-integration/rsi-parent-baseline-runbook.md`。这是固定权重评估，不是 RSI RL 或候选晋升。207项CPU与Ruff通过，b1c568b已推送；远端 `/workspace/rebuild/uni-agent-rsi-b1c568b` 已固定部署。`/root/runs/rsi-student-h0-r1/prepared/preparation-manifest.json` SHA256=f37d7cb1430c872ea339e3a8b4be76eb488c1337b5af2e0a376939930b113b68；21:38:04(SGT)启动PID316633，operator-launch.json/log在该root。H0已exit0（314.622秒），2题完整唯一消费、原始审计passed，均reward0；结果rsi-student-h0-r1-result.md/json。H0归档42文件逐项通过，见rsi-student-h0-r1-archive.md。P清单 `/root/runs/rsi-student-p-r1-data/preparation-manifest.json` SHA256=8c510da59bcb681cded5cb91e884b65f7d020fcef8c00457610b0f37fb5ee4da；21:48:36启动PID320743，子进程320866。日志 `/root/runs/rsi-student-p-r1-launch.log`，正式run `/root/runs/rsi-student-p-r1`。P尚未验收、未注册/晋升。
+下一真实运行是父 H0 的 runtime 能力发现及文件约束取证两个开发任务；入口 `docs/harbor-modal-integration/rsi-parent-baseline-runbook.md`。这是固定权重评估，不是 RSI RL 或候选晋升。207项CPU与Ruff通过，b1c568b已推送；远端 `/workspace/rebuild/uni-agent-rsi-b1c568b` 已固定部署。`/root/runs/rsi-student-h0-r1/prepared/preparation-manifest.json` SHA256=f37d7cb1430c872ea339e3a8b4be76eb488c1337b5af2e0a376939930b113b68；21:38:04(SGT)启动PID316633，operator-launch.json/log在该root。H0已exit0（314.622秒），2题完整唯一消费、原始审计passed，均reward0；结果rsi-student-h0-r1-result.md/json。H0归档42文件逐项通过，见rsi-student-h0-r1-archive.md。P清单 `/root/runs/rsi-student-p-r1-data/preparation-manifest.json` SHA256=8c510da59bcb681cded5cb91e884b65f7d020fcef8c00457610b0f37fb5ee4da；21:48:36启动PID320743，子进程320866。日志 `/root/runs/rsi-student-p-r1-launch.log`，正式run `/root/runs/rsi-student-p-r1`。P已exit0（265.645秒），42真实token、1条TQ消费、原始审计通过；生成增加inspect_list的合法候选，格式reward1。当前未注册/晋升，结果rsi-student-p-r1-result.md/json。
 
 跨课程审计 `docs/harbor-modal-integration/work-state-curriculum-warm-start-audit.md`：当前 train 禁止 resume，不能用短课程母 checkpoint 冒充旧课程。远程 step8 有 r16/alpha16 的 LoRA metadata，但无现成 PEFT adapter 目录。后续应明确初始化来源、导出等同性、新 optimizer 和 step，而不是放宽 reload 同课程门。
 

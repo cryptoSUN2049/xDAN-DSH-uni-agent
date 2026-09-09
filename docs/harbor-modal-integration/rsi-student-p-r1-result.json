@@ -1,0 +1,45 @@
+{
+  "schema": "dsh.rsi-proposal-result-report.v1",
+  "source": "b1c568bc4a158309f1435d907cd51ec96538ea92",
+  "run_id": "rsi-student-p-r1",
+  "training": false,
+  "registered": false,
+  "promoted": false,
+  "files": {
+    "supervisor-result.json": "96cf8afe72c310bf32a2a4c222226a58f010bdb3a33f8a9305d5ec80132c4177",
+    "proposal-audit.json": "8168a91f17ae3e24781fd74d679ac7af2e2442c2ac408b443bce88da77f32c20",
+    "inference-evidence.json": "92474538acbb91b4d12473255863b2993d8f4a97dbfd59f75086e433e08fed20",
+    "launch-manifest.json": "c03daf547f9a57f65c249b9462c6a5ee43f6e6ed9b1ee83c1e3086589487c222"
+  },
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 265.645,
+    "pid": 320866,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "audit": {
+    "promoted": false,
+    "proof": {
+      "artifact_sha256": "sha256:2d1fe123570b7bc317604b4d72f87ac33bc11bb3129387cd5efcd546665350f6",
+      "dsh_session_id": "dsh-session-sample-0-rollout-0-a4cfb22a09a04432b67f8818b779d884",
+      "dump_sha256": "sha256:9b105a5a2ba39f723b9e1ec4651700c746b8893921a7cb6f26803ea1ffdbdb86",
+      "inference_evidence_sha256": "sha256:92474538acbb91b4d12473255863b2993d8f4a97dbfd59f75086e433e08fed20",
+      "model_tokens": 42,
+      "npz_sha256": "sha256:ec210b1f656a027cfb83facaaab7b7e2b66b9576baabe5f4f4c8e682a20a30ea",
+      "receipt_sha256": "sha256:dac9a67b16ed328cc14a3417cc80494bbaba5aaacf327a6d7c77a5a352aeee24",
+      "trace_sha256": "sha256:a51898f994ee106043af793ca6a1c09bc6945f68350b4a47bbcf4046749f520f",
+      "transfer_queue_key": "7842adb6-dc55-43fb-9f64-a2da0dcc78d3_0_0",
+      "uid": "7842adb6-dc55-43fb-9f64-a2da0dcc78d3"
+    },
+    "registered": false,
+    "registration_ready": true,
+    "reward": 1.0,
+    "schema": "dsh.rsi-proposal-audit.v1",
+    "training": false
+  },
+  "responses": [
+    "{\n  \"schema\": \"dsh.rsi-profile.v1\",\n  \"profile\": \"sdk-minimal\",\n  \"allowed_tools\": [\"cordis_inspect_list\", \"str_replace_editor\"]\n}"
+  ]
+}
