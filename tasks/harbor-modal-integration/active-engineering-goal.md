@@ -118,3 +118,7 @@ M1 v2-r4及reload报告为当前通过证据，公开两题baseline已满分不�
 - memory resident verifier、Gateway单stage、可信A/B/整链TQ及消费审计已实现并CPU回归通过。r1真实运行因误拒VERL默认reward handles构造失败，零A/B、零消费，已保留并停止；修复c5dacdc已push，r2新run已385.009秒exit0，真实A/B reward1、1完整val链/2键实际消费且版本完整，专用审计passed=true；无更新。train-r2已在initial val因A写错事实被拒，exit1，尚无B/n4/消费/更新/CK，GPU释放；报告memory-resident-train-r2-result.md。旧eval回执不能改split冒充train。继续保留DSH唯一Agent Loop与固定resident backend。
 
 当前即时进程与后续命令以handoff.md为准；上述新增证据不等于四能力训练和封存泛化验收完成。
+
+## RSI 真实父基线增量（2026-09-09）
+
+`rsi-student-h0-r1` / b1c568b：H0两类开发任务真实GPU执行、2条唯一TQ读回及raw-token/receipt/trace重审通过，均finished/eligible=true、reward0。inspection被父策略拒绝；文件题读取成功但value格式错误。exit0、314.622秒，GPU已释放。207项CPU回归并固定VERL overlay适配完成；下一步真实学生P，不追认N4或RSI RL完成。证据rsi-student-h0-r1-result.md/json。

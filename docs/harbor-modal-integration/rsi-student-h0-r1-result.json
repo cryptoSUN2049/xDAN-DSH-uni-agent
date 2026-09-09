@@ -1,0 +1,163 @@
+{
+  "schema": "dsh.rsi-parent-result-report.v1",
+  "run_id": "rsi-student-h0-r1",
+  "source": "b1c568bc4a158309f1435d907cd51ec96538ea92",
+  "training": false,
+  "model_evaluation": true,
+  "promoted": false,
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 314.622,
+    "pid": 316725,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "audit": {
+    "passed": true,
+    "diagnostics": {
+      "schema": "dsh.rsi-parent-diagnostics.v1",
+      "pair_id": "rsi-student-h0-r1",
+      "parent_spec": {
+        "allowed_tools": [
+          "str_replace_editor"
+        ],
+        "profile": "sdk-minimal",
+        "schema": "dsh.rsi-profile.v1"
+      },
+      "cases": [
+        {
+          "task_id": "dsh/rsi-worker/inspect-discovery",
+          "reward": 0.0,
+          "finished": true,
+          "eligible": true,
+          "proof": {
+            "uid": "0520322f-0c4e-4d08-951b-57a408960104",
+            "dsh_session_id": "dsh-session-sample-0-rollout-0-e2d19e595eab4a3988859bf452eae293",
+            "artifact_sha256": "sha256:a2ee665d84267ee4801f549b949217db7d9fd2d2197437d039113ec84f969a99",
+            "trace_sha256": "sha256:cd9e38ff6b5a7374ffe4fd65908cb1523b1f39510fd6271bf0ee6cc1f586d90b",
+            "receipt_sha256": "sha256:3b8cff19125ca5780c2bf7861916f68c83bd0e3c0248a6a0b79d7103a11b1e96",
+            "dump_sha256": "sha256:6a43571df252ddf988d0b728ac81b71f73bd7ac4ecacaa90ca393b286ab04f0c",
+            "npz_sha256": "sha256:bef371bf31f5fbf72070a827767282485cd169085ce5ee602b6110bba1003d87",
+            "inference_evidence_sha256": "sha256:8e47a1ee70b452c45f16f4647ad4fbef2f5b43864250cb68c6cbd19327b44020",
+            "transfer_queue_key": "0520322f-0c4e-4d08-951b-57a408960104_0_0",
+            "model_tokens": 38
+          },
+          "successful_tools": [],
+          "denied_tools": [
+            "cordis_inspect_list"
+          ]
+        },
+        {
+          "task_id": "dsh/rsi-worker/file-constraint",
+          "reward": 0.0,
+          "finished": true,
+          "eligible": true,
+          "proof": {
+            "uid": "18929fe4-d604-45f1-845a-162c8ac32a29",
+            "dsh_session_id": "dsh-session-sample-1-rollout-0-4467df9d793447698a9ff56307178a57",
+            "artifact_sha256": "sha256:ae10c1d150b544c42aca928536f7cf73c30afaa7b744ce3734d5e0b5b7ec8531",
+            "trace_sha256": "sha256:2d0dc88f300ab664ac56e38872527077c6f5223149a15739860daefbf6857f7c",
+            "receipt_sha256": "sha256:8f06192604e077de07f31c747c95f7ff8e2cb503635a3afd588f4216d1c1b97c",
+            "dump_sha256": "sha256:1b6afa796743e36215a25ff56530fd22129a7398324e3fb6bdc84fbcf5ea100e",
+            "npz_sha256": "sha256:7ddf8340fbb8a650e9afa65a7d2df2204a5d01fe626a8465a3c5de438b82f8fa",
+            "inference_evidence_sha256": "sha256:8e47a1ee70b452c45f16f4647ad4fbef2f5b43864250cb68c6cbd19327b44020",
+            "transfer_queue_key": "18929fe4-d604-45f1-845a-162c8ac32a29_0_0",
+            "model_tokens": 89
+          },
+          "successful_tools": [
+            "str_replace_editor"
+          ],
+          "denied_tools": []
+        }
+      ]
+    }
+  },
+  "runtime_binding": {
+    "artifacts": {
+      "dsh/rsi-worker/file-constraint": {
+        "artifact_sha256": "sha256:ae10c1d150b544c42aca928536f7cf73c30afaa7b744ce3734d5e0b5b7ec8531",
+        "dsh_session_id": "dsh-session-sample-1-rollout-0-4467df9d793447698a9ff56307178a57",
+        "receipt_sha256": "sha256:4dc5aba124c52c458e20c3217aaab91a3c99f988938828e9d2b6922319aad199"
+      },
+      "dsh/rsi-worker/inspect-discovery": {
+        "artifact_sha256": "sha256:a2ee665d84267ee4801f549b949217db7d9fd2d2197437d039113ec84f969a99",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-e2d19e595eab4a3988859bf452eae293",
+        "receipt_sha256": "sha256:41b6837c59dfb8fbae2c979bcd3e009b1108fa4d7326d30d09d265d3f6ac4708"
+      }
+    },
+    "mode": "parent-baseline",
+    "overlay_sha256": "sha256:567f209b48d92cdf9509fa5139162c1884e50204c46c15382c18dfeeb8ab31c8",
+    "policy_self_attestation": false,
+    "promotion_verified": false,
+    "raw_token_reaudit": false,
+    "schema": "dsh.rsi-worker-runtime-binding.v1",
+    "scope": "SDK patch + canonical receipt + readback consistency; fixed strict runner owns token admission",
+    "sdk_patch_path_binding_verified": true,
+    "selection": {
+      "active_sha256": "sha256:fd91e253ae098b002f4fab62fcdf6ddf345ad421263f2d9ee47bc2e202a1dfc6",
+      "candidate_sha256": "sha256:d467e1af751f9a012d0d1082979261ab85800a828d7de68a6cabfedf1e8273f5",
+      "content_sha256": "sha256:403d63b4d31219db8de7c8613020b0df918550b790442745047e9a8b5cc7670d",
+      "runtime_deployed": false,
+      "selection": {
+        "action": "initialize",
+        "candidate_sha256": "sha256:d467e1af751f9a012d0d1082979261ab85800a828d7de68a6cabfedf1e8273f5",
+        "comparison_sha256": null,
+        "previous_sha256": null,
+        "schema": "dsh.rsi-selection.v1",
+        "sequence": 0
+      },
+      "spec": {
+        "allowed_tools": [
+          "str_replace_editor"
+        ],
+        "profile": "sdk-minimal",
+        "schema": "dsh.rsi-profile.v1"
+      }
+    },
+    "side": "H0",
+    "strict_readback_verified": true,
+    "training": false
+  },
+  "result": {
+    "model_path": "/workspace/models/Qwen3-4B-1cfa9a7",
+    "served_model_name": "Qwen3-4B-1cfa9a7",
+    "data_path": "/root/runs/rsi-student-h0-r1/prepared/H0/eval.parquet",
+    "task_config": "/root/runs/rsi-student-h0-r1/prepared/H0/task.yaml",
+    "n": 1,
+    "num_prompts": 2,
+    "num_scored_sessions": 2,
+    "mean_rm_score": 0.0,
+    "mean_rm_score_over_prompts": 0.0,
+    "scores": [
+      0.0,
+      0.0
+    ],
+    "scores_by_uid": {
+      "0520322f-0c4e-4d08-951b-57a408960104": [
+        0.0
+      ],
+      "18929fe4-d604-45f1-845a-162c8ac32a29": [
+        0.0
+      ]
+    }
+  },
+  "files": {
+    "parent-audit.json": "dc9f8f113acd6baa5bb623bf601024ca3d8269a4d15ba8de48eaca1b7ae9a193",
+    "prepared/preparation-manifest.json": "f37d7cb1430c872ea339e3a8b4be76eb488c1337b5af2e0a376939930b113b68",
+    "workers/H0/supervisor-result.json": "96246a2b18bdcf9c911733b7feb4959004ab8eca9f1835f0f3f513f04a819a07",
+    "workers/H0/runtime-binding.json": "8abc4d24d1109d24d450a413ad2dc71b4c0c7863cf31e2b3b4d1eaa9e5d436d9",
+    "workers/H0/result.json": "26f412e6e3b42614db857ba412976c4ec4095a75ef55a211f08d59a45dc94907",
+    "workers/H0/inference-evidence.json": "8e47a1ee70b452c45f16f4647ad4fbef2f5b43864250cb68c6cbd19327b44020"
+  },
+  "responses": [
+    {
+      "path": "/root/runs/rsi-student-h0-r1/workers/H0/artifacts/results/4528623a6fd0fb9ae9a166c9/agent-result.json",
+      "response": "{\"status\": \"answer\", \"value\": \"max_attempts=3\", \"citation\": {\"source\": \"sources/constraints.txt\", \"line\": 2, \"quote\": \"max_attempts=3\"}}"
+    },
+    {
+      "path": "/root/runs/rsi-student-h0-r1/workers/H0/artifacts/results/9c5ee6419e59bf310c565abf/agent-result.json",
+      "response": "{\"status\":\"unavailable\",\"platform\":null,\"provider\":null,\"method\":null}"
+    }
+  ]
+}
