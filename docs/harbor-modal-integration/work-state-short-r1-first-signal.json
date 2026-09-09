@@ -1,0 +1,402 @@
+{
+  "schema": "dsh.work-state-short-first-signal.v1",
+  "snapshot_at": "2026-09-09T11:58:28.339109+00:00",
+  "run_id": "ws-short-train-r1",
+  "scope": "step2 completed group only; training still active; no checkpoint/model reads",
+  "source_sha": "b47521df1d6cd6b930ab6ac85ef41c670f2405d2",
+  "overall_run_verified": false,
+  "parameter_delta_verified": false,
+  "ability_improvement_verified": false,
+  "crosswalk_path": "/root/runs/ws-short-train-r1/chains/groups/4ebc521570fa455da3a6c0d0466ce570/crosswalk.json",
+  "crosswalk_sha256": "sha256:94314f7b9c3f33e92897b634db13bf4fa1b2cad89d06dd2e96d1010f3d91184c",
+  "policy_version": 1,
+  "global_steps": 2,
+  "group_uid": "749d0533-9899-4e46-9cea-1eadd273383a",
+  "audit_step2": {
+    "path": "/root/runs/ws-short-train-r1/chains/groups/4ebc521570fa455da3a6c0d0466ce570/crosswalk.json",
+    "status": "consumed",
+    "crosswalk_consumption_verified": false,
+    "submission_verified": true,
+    "consumption_verified": true,
+    "reasons": [],
+    "missing_keys": [],
+    "expected_policy_version": 1,
+    "partition": "train",
+    "global_steps": 2,
+    "uid": "749d0533-9899-4e46-9cea-1eadd273383a",
+    "crosswalk_sha256": "sha256:94314f7b9c3f33e92897b634db13bf4fa1b2cad89d06dd2e96d1010f3d91184c",
+    "stage_evidence_verified": true,
+    "duplicate_keys": [],
+    "score_mismatch_keys": []
+  },
+  "interim_audit": {
+    "path": "/root/runs/ws-short-train-r1/interim-first-signal-r1.json",
+    "sha256": "sha256:21775e894641fffe2a5305ea2db03891e2aab5ff2b8bbae4c74a611a08ddd93b",
+    "summary": {
+      "groups": 4,
+      "consumed_groups": 4,
+      "consumed_rows": 32,
+      "unique_consumed_rows": 32
+    },
+    "passed": false,
+    "consumption_verified": true,
+    "run_completed": false,
+    "errors": []
+  },
+  "consumed_rows": [
+    {
+      "uid": "749d0533-9899-4e46-9cea-1eadd273383a_0_0",
+      "score": 0.0,
+      "step": 2
+    },
+    {
+      "uid": "749d0533-9899-4e46-9cea-1eadd273383a_0_1",
+      "score": 0.0,
+      "step": 2
+    },
+    {
+      "uid": "749d0533-9899-4e46-9cea-1eadd273383a_1_0",
+      "score": 0.0,
+      "step": 2
+    },
+    {
+      "uid": "749d0533-9899-4e46-9cea-1eadd273383a_1_1",
+      "score": 1.0,
+      "step": 2
+    },
+    {
+      "uid": "749d0533-9899-4e46-9cea-1eadd273383a_2_0",
+      "score": 0.0,
+      "step": 2
+    },
+    {
+      "uid": "749d0533-9899-4e46-9cea-1eadd273383a_2_1",
+      "score": 1.0,
+      "step": 2
+    },
+    {
+      "uid": "749d0533-9899-4e46-9cea-1eadd273383a_3_0",
+      "score": 0.0,
+      "step": 2
+    },
+    {
+      "uid": "749d0533-9899-4e46-9cea-1eadd273383a_3_1",
+      "score": 0.0,
+      "step": 2
+    }
+  ],
+  "siblings": [
+    {
+      "sibling": 0,
+      "task_id": "work-state-short-fact-v1-ws07-v0-s104",
+      "source_version": "sha256:025c365456c4721279d47767bd5026d69a51ec75fd388beddc7cc3579d7e8ea1",
+      "chain_id": "memory-388235e1c7c64086b368a2308d5aaea0",
+      "original_reward": 0.0,
+      "terminal_reward": 0.0,
+      "eligible": true,
+      "finished": true,
+      "fresh": true,
+      "rescored_reward": 0,
+      "checks": {
+        "output_contract": true,
+        "configuration": true,
+        "plan_execution": true,
+        "short_index_read": false,
+        "short_handoff_read": false,
+        "short_write_after_reads": false
+      },
+      "errors": [
+        "Short-course index/handoff reads must precede output generation"
+      ],
+      "unsafe": [],
+      "outputs": {
+        "config.json": "{\"capacity\": 187}",
+        "plan.json": "[]"
+      },
+      "receipt_path": "/root/runs/ws-short-train-r1/chains/memory-388235e1c7c64086b368a2308d5aaea0/reader/run/results/2176ed4d0da3e0999970abf5/verifier-receipt.json",
+      "receipt_sha256": "sha256:4bfbeb1e3b672caaaee814741a2d69e0d3b3700bc5091d338fdc5d93665cd0a1",
+      "trace_sha256": "sha256:3bf984026194139c08502195e122318a72834d95a02dcd7dba7b7a3ecd0b3af4",
+      "token_sha256": "sha256:36f4a563f7cf66a5a5443d13d80ecf14a68834974643789521d6e1358e667cba",
+      "npz_sha256": "sha256:88cb8b7bb53cf13874d11b0deb682e9aeb425a6dc8831250cf2f1d0deb08b1cc",
+      "version_evidence": {
+        "generation_count": 4,
+        "max_global_steps": 1,
+        "min_global_steps": 1,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 4
+      },
+      "tool_timing": [
+        {
+          "call_id": "call_57d437cc",
+          "command": "view",
+          "file": "index.md",
+          "generation_index": 8,
+          "call_index": 9,
+          "result_index": 10
+        },
+        {
+          "call_id": "call_da28a119",
+          "command": "view",
+          "file": "index.md",
+          "generation_index": 13,
+          "call_index": 14,
+          "result_index": 15
+        },
+        {
+          "call_id": "call_97e9106c",
+          "command": "create",
+          "file": "config.json",
+          "generation_index": 18,
+          "call_index": 19,
+          "result_index": 20
+        },
+        {
+          "call_id": "call_85ce8cb0",
+          "command": "create",
+          "file": "plan.json",
+          "generation_index": 18,
+          "call_index": 21,
+          "result_index": 22
+        }
+      ],
+      "zero_reward_reason": "A wrote identical capacity summaries into index.md and handoff.md; index lacks a relative handoff.md reference. B viewed index twice and never viewed handoff. Business outputs are correct but the declared navigation/read-before-write quality contract fails; eligible remains true."
+    },
+    {
+      "sibling": 1,
+      "task_id": "work-state-short-fact-v1-ws07-v0-s104",
+      "source_version": "sha256:025c365456c4721279d47767bd5026d69a51ec75fd388beddc7cc3579d7e8ea1",
+      "chain_id": "memory-8d2c1dbe6e1d44afb7834de2e0db91e1",
+      "original_reward": 1.0,
+      "terminal_reward": 1.0,
+      "eligible": true,
+      "finished": true,
+      "fresh": true,
+      "rescored_reward": 1,
+      "checks": {
+        "output_contract": true,
+        "configuration": true,
+        "plan_execution": true,
+        "short_index_read": true,
+        "short_handoff_read": true,
+        "short_write_after_reads": true
+      },
+      "errors": [],
+      "unsafe": [],
+      "outputs": {
+        "config.json": "{\"capacity\": 187}",
+        "plan.json": "[]"
+      },
+      "receipt_path": "/root/runs/ws-short-train-r1/chains/memory-8d2c1dbe6e1d44afb7834de2e0db91e1/reader/run/results/20d511c53cc4ab0b08c12e94/verifier-receipt.json",
+      "receipt_sha256": "sha256:a5885b5b94c6f3aace82a963a607954d5d09ddb784a17e17f4d0040487f7bf34",
+      "trace_sha256": "sha256:41de1b9898fb95924f92e30525f091407d766999c2ed371f2fa3029d548b06f7",
+      "token_sha256": "sha256:96dcbc2098b6b1baf93223a5bfc8284e21e6bfde7db971582be37f535213f0bb",
+      "npz_sha256": "sha256:c52f754f2c860cdd3fe1db0e03fd5bee6e39f8bd973e0d8d25814b1993b2f841",
+      "version_evidence": {
+        "generation_count": 4,
+        "max_global_steps": 1,
+        "min_global_steps": 1,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 4
+      },
+      "tool_timing": [
+        {
+          "call_id": "call_2955b1e2",
+          "command": "view",
+          "file": "index.md",
+          "generation_index": 8,
+          "call_index": 9,
+          "result_index": 10
+        },
+        {
+          "call_id": "call_4a2241b8",
+          "command": "view",
+          "file": "handoff.md",
+          "generation_index": 13,
+          "call_index": 14,
+          "result_index": 15
+        },
+        {
+          "call_id": "call_2facded5",
+          "command": "create",
+          "file": "config.json",
+          "generation_index": 18,
+          "call_index": 19,
+          "result_index": 20
+        },
+        {
+          "call_id": "call_9cbba2b4",
+          "command": "create",
+          "file": "plan.json",
+          "generation_index": 18,
+          "call_index": 21,
+          "result_index": 22
+        }
+      ]
+    },
+    {
+      "sibling": 2,
+      "task_id": "work-state-short-fact-v1-ws07-v0-s104",
+      "source_version": "sha256:025c365456c4721279d47767bd5026d69a51ec75fd388beddc7cc3579d7e8ea1",
+      "chain_id": "memory-065808754b02401892bc56be63af94fa",
+      "original_reward": 1.0,
+      "terminal_reward": 1.0,
+      "eligible": true,
+      "finished": true,
+      "fresh": true,
+      "rescored_reward": 1,
+      "checks": {
+        "output_contract": true,
+        "configuration": true,
+        "plan_execution": true,
+        "short_index_read": true,
+        "short_handoff_read": true,
+        "short_write_after_reads": true
+      },
+      "errors": [],
+      "unsafe": [],
+      "outputs": {
+        "config.json": "{\"capacity\": 187}",
+        "plan.json": "[]"
+      },
+      "receipt_path": "/root/runs/ws-short-train-r1/chains/memory-065808754b02401892bc56be63af94fa/reader/run/results/729cdabcf287501f9bf0da93/verifier-receipt.json",
+      "receipt_sha256": "sha256:7a232c149fa2a9cb90cd9718c2da9e00e97cc56230d3801dc6fbd80dd6350f23",
+      "trace_sha256": "sha256:c938bcd65caedf1b657272c32cfc2e1cd0e676e3a7de6a317da29a062efea860",
+      "token_sha256": "sha256:9fa4f6994bbd9473db931c2d3687c34f5595214bf5722572192cf3e24c5283ec",
+      "npz_sha256": "sha256:91e6f2defd40f9f0339c276e02959a5e55b42bad25ca9a66c4e0e017ccdabfe5",
+      "version_evidence": {
+        "generation_count": 4,
+        "max_global_steps": 1,
+        "min_global_steps": 1,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 4
+      },
+      "tool_timing": [
+        {
+          "call_id": "call_309dac4f",
+          "command": "view",
+          "file": "index.md",
+          "generation_index": 8,
+          "call_index": 9,
+          "result_index": 10
+        },
+        {
+          "call_id": "call_33dd67e8",
+          "command": "view",
+          "file": "handoff.md",
+          "generation_index": 13,
+          "call_index": 14,
+          "result_index": 15
+        },
+        {
+          "call_id": "call_519b08c0",
+          "command": "create",
+          "file": "config.json",
+          "generation_index": 18,
+          "call_index": 19,
+          "result_index": 20
+        },
+        {
+          "call_id": "call_0b406354",
+          "command": "create",
+          "file": "plan.json",
+          "generation_index": 18,
+          "call_index": 21,
+          "result_index": 22
+        }
+      ]
+    },
+    {
+      "sibling": 3,
+      "task_id": "work-state-short-fact-v1-ws07-v0-s104",
+      "source_version": "sha256:025c365456c4721279d47767bd5026d69a51ec75fd388beddc7cc3579d7e8ea1",
+      "chain_id": "memory-f2ff563d065a49d9a0051e96588c870d",
+      "original_reward": 0.0,
+      "terminal_reward": 0.0,
+      "eligible": true,
+      "finished": true,
+      "fresh": true,
+      "rescored_reward": 0,
+      "checks": {
+        "output_contract": true,
+        "configuration": true,
+        "plan_execution": true,
+        "short_index_read": false,
+        "short_handoff_read": false,
+        "short_write_after_reads": false
+      },
+      "errors": [
+        "Short-course index/handoff reads must precede output generation"
+      ],
+      "unsafe": [],
+      "outputs": {
+        "config.json": "{\"capacity\": 187}",
+        "plan.json": "[]"
+      },
+      "receipt_path": "/root/runs/ws-short-train-r1/chains/memory-f2ff563d065a49d9a0051e96588c870d/reader/run/results/3295b15adfdd46c298741637/verifier-receipt.json",
+      "receipt_sha256": "sha256:337c69f47f2fb62aeb4be7b108726e76b4b73799a0cf4840af74b5b8dbe02d8b",
+      "trace_sha256": "sha256:66b3427eb82b867d9ee8926fc2dd1efc56539bd397595c21122e6e0433cf7fe7",
+      "token_sha256": "sha256:d51a00f7f8c8b413f1f462cec63ccb0b49962da4ffb1cbb86f61e822eabf90fb",
+      "npz_sha256": "sha256:74b2498b160f9505b39119ec5803fc18752fafe8d96528113eb9a8ac875fca60",
+      "version_evidence": {
+        "generation_count": 5,
+        "max_global_steps": 1,
+        "min_global_steps": 1,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 5
+      },
+      "tool_timing": [
+        {
+          "call_id": "call_56485d21",
+          "command": "view",
+          "file": "index.md",
+          "generation_index": 8,
+          "call_index": 9,
+          "result_index": 10
+        },
+        {
+          "call_id": "call_2c400ce6",
+          "command": "view",
+          "file": "index.md",
+          "generation_index": 13,
+          "call_index": 14,
+          "result_index": 15
+        },
+        {
+          "call_id": "call_70eecb84",
+          "command": "create",
+          "file": "config.json",
+          "generation_index": 18,
+          "call_index": 19,
+          "result_index": 20
+        },
+        {
+          "call_id": "call_63536879",
+          "command": "create",
+          "file": "plan.json",
+          "generation_index": 23,
+          "call_index": 24,
+          "result_index": 25
+        }
+      ],
+      "zero_reward_reason": "A wrote identical capacity summaries into index.md and handoff.md; index lacks a relative handoff.md reference. B viewed index twice and never viewed handoff. Business outputs are correct but the declared navigation/read-before-write quality contract fails; eligible remains true."
+    }
+  ],
+  "metrics": {
+    "1": {
+      "actor/pg_loss": 0.0,
+      "actor/grad_norm": 0.0,
+      "critic/rewards/mean": 0.5,
+      "critic/advantages/max": 0.0,
+      "critic/advantages/min": 0.0
+    },
+    "2": {
+      "actor/pg_loss": -0.020112289115786552,
+      "actor/grad_norm": 0.14892578125,
+      "critic/rewards/mean": 0.25,
+      "critic/advantages/max": 0.8660238981246948,
+      "critic/advantages/min": -0.8660238981246948
+    }
+  },
+  "rollout2_sha256": "sha256:157b83dbc1c975a017ea84fd0f3c7a0af861ef4b59cdfa5caeb85b8f9eb67c74",
+  "interpretation": "Real within-group terminal B reward variance [0,1,1,0], not A-zero versus B-one; partial consumption and finite nonzero task gradient verified, parameter/optimizer/checkpoint change and ability gain not yet audited."
+}

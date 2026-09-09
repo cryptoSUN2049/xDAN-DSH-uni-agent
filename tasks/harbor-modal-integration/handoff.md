@@ -6,7 +6,7 @@
 - **工程已收尾**：r4八步、8完整n4组/64唯一A/B消费、6独立任务，CK4/8完整；独立固定四题全部终态，WS01/03/05共3组6行消费通过，WS06 A max-tokens未B/未消费；all_attempted=true/all_verified=false，不冒称4/4成功。
 - **学习未通过**：r4奖励/优势/梯度均0、参数未变化；独立评估实际业务奖励也全0。E1—E4与W5结果复跑完成，W4有效更新仍待；不把整个goal或记忆/RSI能力标完成。
 - **入口/证据**：[总操作指南](../../docs/harbor-modal-integration/native-work-state-end-to-end-runbook.md) → [最终报告](../../docs/harbor-modal-integration/work-state-independent-evaluation-r1-result.md) → [归档](../../docs/harbor-modal-integration/work-state-independent-evaluation-r1-archive.md)；HTML/MD已同步并通过1440/390视觉检查。母/旧失败与本suite分别归档/workspace/reports，原回执不改。
-- **正在运行**：ws-short-train-r1，2026-09-09T11:33:43UTC启动PID291342；CPU217项及真实Linux DSH canary8例通过，prepare/check通过。8steps/n4、无内联eval，新母checkpoint位于/workspace/uni-agent-g1/checkpoint/ws-short-train-r1。尚未验收有效更新，先监控/root/runs/ws-short-train-r1/supervision/train.log与supervisor-result.json，再实际消费/参数审计及独立reload。Harbor/异步/从零安装后置。
+- **当前收尾**：ws-short-train-r1已8/8、exit0/1770.035s（训练child291433），12:05:02UTC GPU0%/0MiB。step2/4非零grad约.149/.168，其余0；CK4/8保存，最终消费/参数审计进行中，随后同课程独立reload两开发题。原r4零更新保持；短课学习与四能力提升分开。
 
 较早运行快照已移至[notes.md](notes.md)，不得按其中旧running/旧命令重启作业。
 
