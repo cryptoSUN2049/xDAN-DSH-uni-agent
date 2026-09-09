@@ -65,3 +65,57 @@ export RSI_MANIFEST_SHA="$("$PYTHON_BIN" -c 'import sys;from examples.dsh.rsi_cl
 核 `workers/H0/supervisor-result.json`、原始 inference evidence、validation dump、trace/NPZ/receipt 与 `runtime-binding.json`。退出成功只表明子进程结束；还需原始消费审计、固定 policy 实际加载、两题逐题结果、active 未变。安全且完整的零分是有效诊断；截断、越权、来源不可信单列。
 
 随后由 `proposal_registration.audit_parent` 重审完整原始证据，才能准备真实学生 P。P 输出合法也不能立即晋升；必须注册未选中候选、执行 H1 配对比较、满足无回归与增益条件，再做真实加载及回滚。没有增益就保留拒绝结果。当前指南不是这些后续节点已通过的声明。
+
+## H0 完成后：真实学生提议 P
+
+以下仍在原固定执行 checkout 中运行，沿用 `RSI_MANIFEST` 及外部记录的 `RSI_MANIFEST_SHA`。prepare 会重审原H0证据，而不是信任手填成功字段。P使用同一base模型，禁止工具调用，仅输出候选声明；不产生训练更新。
+
+```bash
+export RSI_PROPOSAL="${RSI_ROUND}-proposal"
+"$PYTHON_BIN" - <<'PY'
+import os
+from examples.dsh.rsi_closed.proposal_registration import prepare_proposal
+prepare_proposal(os.environ['RSI_MANIFEST'], os.environ['RSI_MANIFEST_SHA'],
+    '/root/runs/' + os.environ['RSI_PROPOSAL'] + '-data',
+    '/root/runs/' + os.environ['RSI_PROPOSAL'])
+PY
+export RSI_P_MANIFEST="/root/runs/${RSI_PROPOSAL}-data/preparation-manifest.json"
+export RSI_P_SHA="$("$PYTHON_BIN" -c 'import sys;from examples.dsh.rsi_closed.prepare_worker_eval import digest;print(digest(sys.argv[1]))' "$RSI_P_MANIFEST")"
+"$PYTHON_BIN" -m examples.dsh.rsi_closed.launch_proposal \
+ --manifest "$RSI_P_MANIFEST" --manifest-sha256 "$RSI_P_SHA" --launch
+```
+
+查看真实 `proposal-audit.json`：格式reward0或registration_ready=false时保留失败，不调用注册器强行登记或让人代写候选。reward1也仅说明候选合法且改变了配置，不能证明收益。完整H0/P先归档，再进入登记。
+
+## 登记未晋升候选，并运行 H1
+
+下列注册函数会重新审核模型原文、SDK trace、原始token/receipt/TQ、父状态及监督证据；不接受用户传入任意candidate JSON。来源不可信或无变化会拒绝。
+
+```bash
+export RSI_REGISTRATION="/root/runs/${RSI_ROUND}-registration.json"
+"$PYTHON_BIN" - <<'PY'
+import os
+from examples.dsh.rsi_closed.proposal_registration import register_verified_proposal
+register_verified_proposal(os.environ['RSI_P_MANIFEST'], os.environ['RSI_P_SHA'],
+    os.environ['RSI_REGISTRATION'])
+PY
+export RSI_H1_NAME="${RSI_ROUND}-candidate"
+"$PYTHON_BIN" - <<'PY'
+import json, os
+from pathlib import Path
+from examples.dsh.rsi_closed.prepare_worker_eval import prepare
+root = Path('/root/runs') / os.environ['RSI_ROUND']
+config = json.loads((root / 'baseline-config.json').read_text())
+registration = json.loads(Path(os.environ['RSI_REGISTRATION']).read_text())
+config.update(mode='paired', candidate_sha256=registration['candidate_sha256'],
+    output_dir='/root/runs/' + os.environ['RSI_H1_NAME'] + '-data',
+    run_root='/root/runs/' + os.environ['RSI_H1_NAME'])
+prepare(**config)
+PY
+export RSI_H1_MANIFEST="/root/runs/${RSI_H1_NAME}-data/preparation-manifest.json"
+export RSI_H1_SHA="$("$PYTHON_BIN" -c 'import sys;from examples.dsh.rsi_closed.prepare_worker_eval import digest;print(digest(sys.argv[1]))' "$RSI_H1_MANIFEST")"
+"$PYTHON_BIN" -m examples.dsh.rsi_closed.launch_worker_eval \
+ --manifest "$RSI_H1_MANIFEST" --manifest-sha256 "$RSI_H1_SHA" --side H1 --launch
+```
+
+paired准备器会创建两侧配置；这里仅运行H1，比较使用先前真实完成的parent-baseline H0，不能把未执行的新H0配置当结果。H0/H1保持同一pair、模型、任务源、预算、verifier和固定父active。完成后必须用原始审计比较逐题收益；不能只比较两个平均分。运行时使用的是未晋升候选临时overlay，生产active仍是父策略。

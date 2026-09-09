@@ -18,3 +18,10 @@
 - 原始 A/B receipt 仍须各自严格重评分；validation 行另与已验证同链终态 B 奖励比较。不得覆盖原回执或放宽轨迹准入。
 - 测试必须执行实际 validation dump 路径；用 training `_log_rollout_data` 模拟 validation 会掩盖本次错误。
 - 修复离线审计器时，保留旧失败报告，以新审计 SHA 复核原运行，不能改母实验源码身份或要求无意义重训。
+
+## RSI 实测：合法失败、摘要语义与初始化耗时
+
+- H0 r1 两题均合法完成且reward0：inspection为父策略拒绝；文件题成功读取但value误写为整行。比较时把权限限制与模型输出错误分开，不能将所有零分归于Harness。
+- runtime-binding中的receipt_sha256是文件字节SHA，而trajectory/proposal proof中的receipt_sha256是canonical receipt身份。字段同名不能据此强行判定相等；必须核各生产函数定义及原绑定链。
+- H0监督314.622秒，任务生成51.7秒；P监督265.645秒，任务生成49.7秒。Ray/worker启动、模型加载、JIT属于不同阶段。CPU actor的CUDA runtime警告不代表GPU worker不可用，必须结合真实GPU内存、CUDA graph及任务回执判断。
+- SSH banner观察超时不代表作业停止。本次重试确认原PID继续运行并已加载约30GB显存，未重启或重装。

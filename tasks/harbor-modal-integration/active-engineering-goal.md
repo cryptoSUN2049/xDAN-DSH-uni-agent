@@ -124,3 +124,5 @@ M1 v2-r4及reload报告为当前通过证据，公开两题baseline已满分不�
 `rsi-student-h0-r1` / b1c568b：H0两类开发任务真实GPU执行、2条唯一TQ读回及raw-token/receipt/trace重审通过，均finished/eligible=true、reward0。inspection被父策略拒绝；文件题读取成功但value格式错误。exit0、314.622秒，GPU已释放。207项CPU回归并固定VERL overlay适配完成；下一步真实学生P，不追认N4或RSI RL完成。证据rsi-student-h0-r1-result.md/json。
 
 RSI P r1：真实学生生成声明式候选（增加inspect_list），42模型token、1条唯一消费及raw审计通过，格式reward1、exit0；尚未注册/晋升/训练，不代表开发收益。下一节点H1配对评估。
+
+RSI H1 r1：同模型/任务/预算真实执行，2条独立原始审计通过、exit0（266.021秒）；inspect0→1，file0→0，无观测回归。未晋升/回滚，组合比较入口正在补齐，不标记N4完成。

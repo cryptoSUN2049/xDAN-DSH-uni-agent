@@ -1,0 +1,100 @@
+{
+  "passed": true,
+  "training": false,
+  "promoted": false,
+  "items": [
+    {
+      "task_id": "dsh/rsi-worker/inspect-discovery",
+      "reward": 1.0,
+      "proof": {
+        "uid": "59439f59-3fb0-481f-a8e3-6977b51a8197",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-b38ad1413dc646e58f042e5ccfcb507d",
+        "artifact_sha256": "sha256:ec25f34fb992d9482c00480a9a7a419ccbcec8e57ecd0af6c79cb0ef0b6ae803",
+        "trace_sha256": "sha256:1eb8b0d67c7de17b24c1e32220c778fe2463027e61230917fd149d19637b02ad",
+        "receipt_sha256": "sha256:76c81046a3817b18fa64da291327a39ca74283f8991a9c331c65dc6bf82eb880",
+        "dump_sha256": "sha256:a0db84e2a592ddd983ea21d5293ecad6dadf13570b82452056aa24b21e3438b5",
+        "npz_sha256": "sha256:517cf09ef1657e588e5d782b2675c7b62a1e292691c330c0d4260a84e9ea1082",
+        "inference_evidence_sha256": "sha256:04d482efc41dab00e9a601c41f41840d9c9ee6888661227b8bfdbae668c0dc0a",
+        "transfer_queue_key": "59439f59-3fb0-481f-a8e3-6977b51a8197_0_0",
+        "model_tokens": 38
+      },
+      "response": "{\"status\":\"answer\",\"platform\":\"host\",\"provider\":\"Tool\",\"method\":\"listTools\"}"
+    },
+    {
+      "task_id": "dsh/rsi-worker/file-constraint",
+      "reward": 0.0,
+      "proof": {
+        "uid": "a34bcb97-e36e-470f-af16-1b50deb60d7f",
+        "dsh_session_id": "dsh-session-sample-1-rollout-0-92188c4d1b384453b093bfe4fc2df298",
+        "artifact_sha256": "sha256:0398a6b6160b7bd81535be5d387500dc75eb57fc0948e49ee00a2a922fcff0d8",
+        "trace_sha256": "sha256:d072275d1719aac6836a7a46e726ccdad71093c4c322934fa8770e9d8f5dbcd2",
+        "receipt_sha256": "sha256:910bc40c59f4436748e0867bd1c23217428bd295c0ca6de511c086fdae7bdd5e",
+        "dump_sha256": "sha256:cd4b58163300e73463669c892480f8c715734e775d3525a153751f8f1ac61419",
+        "npz_sha256": "sha256:21ef4b5ee674eb62f9a095d67d7fd9f3b48df1954244626b4ad96ed611ec30c0",
+        "inference_evidence_sha256": "sha256:04d482efc41dab00e9a601c41f41840d9c9ee6888661227b8bfdbae668c0dc0a",
+        "transfer_queue_key": "a34bcb97-e36e-470f-af16-1b50deb60d7f_0_0",
+        "model_tokens": 89
+      },
+      "response": "{\"status\": \"answer\", \"value\": \"max_attempts=3\", \"citation\": {\"source\": \"sources/constraints.txt\", \"line\": 2, \"quote\": \"max_attempts=3\"}}"
+    }
+  ],
+  "runtime_binding": {
+    "scope": "SDK patch + canonical receipt + readback consistency; fixed strict runner owns token admission",
+    "strict_readback_verified": true,
+    "raw_token_reaudit": false,
+    "schema": "dsh.rsi-worker-runtime-binding.v1",
+    "mode": "paired",
+    "side": "H1",
+    "training": false,
+    "promotion_verified": false,
+    "sdk_patch_path_binding_verified": true,
+    "policy_self_attestation": false,
+    "overlay_sha256": "sha256:5163ba3aeb31a1c61ec0de38f27f183ba159341ae544ddd77c29f56bba45036f",
+    "selection": {
+      "candidate_sha256": "sha256:438ad34856e6169fb0cdc92a219ea2b4c7f5c4f6440114879652f4ce3b2942a8",
+      "content_sha256": "sha256:8d2c65ae72f7552f48a36c4e18be1bc964f2aa0376b7827de0257d203dc99fa6",
+      "parent_active_sha256": "sha256:fd91e253ae098b002f4fab62fcdf6ddf345ad421263f2d9ee47bc2e202a1dfc6",
+      "parent_candidate_sha256": "sha256:d467e1af751f9a012d0d1082979261ab85800a828d7de68a6cabfedf1e8273f5",
+      "parent_selection": {
+        "action": "initialize",
+        "candidate_sha256": "sha256:d467e1af751f9a012d0d1082979261ab85800a828d7de68a6cabfedf1e8273f5",
+        "comparison_sha256": null,
+        "previous_sha256": null,
+        "schema": "dsh.rsi-selection.v1",
+        "sequence": 0
+      },
+      "phase": "candidate-evaluation",
+      "pins_sha256": "sha256:d5b60c1bf8f516457d8a3d296705429baa1fd77851350bad27e69f045ae34f79",
+      "promoted": false,
+      "runtime_deployed": false,
+      "spec": {
+        "allowed_tools": [
+          "cordis_inspect_list",
+          "str_replace_editor"
+        ],
+        "profile": "sdk-minimal",
+        "schema": "dsh.rsi-profile.v1"
+      }
+    },
+    "artifacts": {
+      "dsh/rsi-worker/file-constraint": {
+        "artifact_sha256": "sha256:0398a6b6160b7bd81535be5d387500dc75eb57fc0948e49ee00a2a922fcff0d8",
+        "receipt_sha256": "sha256:5b5c70f189b80817f5846cb405aa1885eea2e37c48af7d74743eec2cc1857e1b",
+        "dsh_session_id": "dsh-session-sample-1-rollout-0-92188c4d1b384453b093bfe4fc2df298"
+      },
+      "dsh/rsi-worker/inspect-discovery": {
+        "artifact_sha256": "sha256:ec25f34fb992d9482c00480a9a7a419ccbcec8e57ecd0af6c79cb0ef0b6ae803",
+        "receipt_sha256": "sha256:4e032fc851bbaa8f794c7196991798dd59f50b9c4f14cd27844859f79fd0fe3c",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-b38ad1413dc646e58f042e5ccfcb507d"
+      }
+    }
+  },
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 266.021,
+    "pid": 325100,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  }
+}
