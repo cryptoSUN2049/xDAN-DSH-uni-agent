@@ -161,3 +161,9 @@
 - root手写`RAY_TMPDIR=/tmp/dsh-memory-constraints-r3-reader`导致Ray MetricsHead Unix socket总路径超过107字节；dashboard失败不等于训练/推理失败，当前vLLM仍完成加载。
 - 后续监督入口用run摘要构造短且独立的/tmp目录，记录实际值并拒绝复用；不要把完整业务run名层层拼进Ray socket路径。
 - 将初始化、采样、参数更新的耗时分别记录。不能凭某一时刻GPU 0%判断CUDA未安装，也不能把显存驻留当吞吐提升。
+
+## 2026-09-09：工程闭环范围与启动实证
+
+- 本阶段首先验收真实执行、轨迹/奖励消费、有效参数更新、checkpoint保存、独立reload及评估产出；提分和数据扩量不作为工程闭环前置条件，但不得用异常更新冒充正确训练。
+- 拿到 supervisor PID 不等于模型启动。必须继续核监督日志、训练日志、子进程和GPU状态；启动断言失败应明确报告。
+- ops启动器即使PRINT_COMMAND也会创建RUN_ROOT/command.txt和run-manifest.json，并标completed。这只是打印命令成功，不能当作训练结果。打印预检使用独立scratch RUN_ROOT；正式run必须全新。保留失败证据，不删除或改写旧回执。

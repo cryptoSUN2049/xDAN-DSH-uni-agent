@@ -3,7 +3,7 @@
 ## 1. TL;DR
 
 - 当前worktree `harbor-modal-integration` / 分支 `worktree-harbor-modal-integration`。Goal active；四能力与结果复现优先，Harbor后置，SFT不属本轮。权威目标active-engineering-goal.md，总方案uni-agent-system-plan-v3.html。
-- **当前GPU作业**：`context-v2-curriculum-r1` 完整12题在线RL，supervisor162712，PID在 `/root/runs/context-v2-curriculum-r1-plan/supervisor.pid`；remote固定d3084f2、已验收venv，短独占 RAY_TMPDIR=/tmp/dsh-cv2c1，wall7200秒。12train/4dev、n4/batch1/epoch1、save/test6，checkpoint在/workspace。已启动尚未验收；真实日志已确认train dataset size=12、val=4、Total training steps=12。日志`/root/runs/context-v2-curriculum-r1/supervision/train.log`，不修改运行中checkout；实际唯一消费与非零adv组待审计。
+- **当前 reload**：`context-v2-curriculum-r1-reload-step12`，监督重试PID178933，plan/supervisor-retry1.log，wall3600秒，原d3084f2+已验收venv。前监督178761在启动前断言失败，未加载模型：PRINT_COMMAND已创建run目录。仅两份打印证据已原样移至同级 `context-v2-curriculum-r1-reload-step12-print-command-evidence`，无删除。当前重试需核实际日志/GPU，不能仅凭PID宣布加载成功。母12步exit0/1000.024秒，48消费覆盖11题（D3拒绝/D2补采），6步非零梯度，dev strict0/4。
 - **最新完成第二族**：`dsh-memory-updates-r1` A/B均exit0、reward1，finalize passed，旧eu-west-test被当前ap-south-test正确替代；独立CPU复核与云盘归档通过，training=false。报告native-memory-updates-r1-result.md/json。
 - **已完成记忆第一族**：`/root/runs/dsh-memory-constraints-r3`，reader监督PID152851；remote checkout `/workspace/rebuild/uni-agent-native-n0-r1` 固定 `d3084f2a771804f011c4e641ecf0986c7166bc86`，旧已验收venv，writer prompt revision2 已282.038秒exit0/score1，freeze严格通过；B已326.049秒exit0/reward1，主线程finalize整链passed。该run已完成，无训练。
 - **context独立reload已完成**：`context-v2-train-r1-reload` 415.009秒exit0，model/optimizer/RNG/lr_scheduler真实从step2加载；4/4fresh评估组被消费，无新增训练更新。reward均值.241875、严格准确率0；与训练dev均值.255不同，只证明结果重跑，非精确数值复现或效果提升。报告context-v2-train-r1-reload-report.md/result.json。

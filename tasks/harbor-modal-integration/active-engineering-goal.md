@@ -34,9 +34,9 @@ M1 v2-r4及reload报告为当前通过证据，公开两题baseline已满分不�
 
 ## 平台goal状态
 
-2026-09-09已通过get_goal核实：新版原生四能力objective已激活，status=active。继续按N0—N5推进，所有必要验收完成前不标complete。
+2026-09-09本次 get_goal 返回原生四能力 objective，平台 status=usageLimited；用户表示额度已解除，当前工具调用和子代理已恢复。目标内容未变、尚未完成；平台暂停/恢复由用户或系统控制，不能用 update_goal 伪造 active。继续执行已授权工作。
 
-## 2026-09-09 实测增量（不改变节点退出条件）
+## 2026-09-09 较早实测增量（历史，现状见下）
 
 - DSH runtime-grounding：8k失败；24k容量对照完整执行/轨迹回读，但reward0，模型仍未正确查询Tool。
 - 文件证据context r2：4/4严格执行通过，奖励全0，真实引用/读取覆盖不满足合同。仅文件证据基线，非真实context切换或RL训练。
@@ -51,5 +51,15 @@ M1 v2-r4及reload报告为当前通过证据，公开两题baseline已满分不�
 - 任务量、独立场景数与采样次数分别记账；重复行或n次rollout不增加独立任务数。没有可直接套用的“行业统一最小数量”。
 - context v2现有12 train/4公开dev，仅工程课程；两步更新不等于消费全部12题。必须报告实际消费任务、有效组、奖励分布与更新。
 - 2026-09-09 v2探索r2：4 dev×4独立采样，340.01秒exit1。统一失败源于verifier错误拒绝合法view_range，修复前不据此否定学生能力或直接扩大运行。旧回执保留。
-- memory新writer r2：源码d13bda9，已有venv复用；真实结果待核，不启动未通过writer对应的B。
+- memory旧writer r2已确认一次越权而拒绝，保留失败，不追认；后续prompt revision2的两族完整A/B已通过，见当前快照。
 - 后续扩大数据优先增加能力规则/难度/任务模板覆盖；封存测试不用于调提示或挑样本。工程跑通与能力增益分别验收。
+
+## 当前验收快照（不修改N0—N5/P1退出条件）
+
+- context-v2-train-r1：两步真实RL，实际消费2题/8尝试；仅首步有非零任务梯度。14组消费审计、252 LoRA变化/399 base冻结及optimizer审计通过；独立reload四组通过，严格准确率0。
+- constraints-r3与updates-r1：两族真实A写入→冻结→新B读取均reward1，身份/回执/事实及云盘归档通过；training=false，尚非memory RL或能力提升。
+- context-v2-curriculum-r1：12步训练已exit0、1000.024秒，GPU已空闲；固定d3084f2、已验收venv。初审有一组不足4条被拒绝，未见异常消费；实际唯一覆盖、参数变化及独立reload仍待完成验收。
+- RSI配对worker准备器/监督入口已7c37cb2推送，仍未真实学生H0/H1比较或晋升。memory实际策略版本完整性2f1995a仅CPU通过，未部署当前GPU。
+- 下一接线：独立memory训练stage verifier、Framework单stage机械抽取、可信A/B阶段准备与整链TQ信用；旧eval回执不能改split冒充train。继续保留DSH唯一Agent Loop与固定resident backend。
+
+当前即时进程与后续命令以handoff.md为准；上述新增证据不等于四能力训练和封存泛化验收完成。

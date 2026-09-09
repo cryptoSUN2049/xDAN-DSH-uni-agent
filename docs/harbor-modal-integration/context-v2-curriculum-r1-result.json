@@ -1,0 +1,247 @@
+{
+  "schema": "dsh.context-curriculum-result.v1",
+  "run_root": "/root/runs/context-v2-curriculum-r1",
+  "source": "d3084f2a771804f011c4e641ecf0986c7166bc86",
+  "terminal": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 1000.024,
+    "pid": 162716,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "native_audit_eligible": false,
+  "native_audit_summary": {
+    "eligible_groups": 24,
+    "groups": 25,
+    "legacy_unjoinable_files": 0,
+    "rejected_groups": 1,
+    "run_completed": true,
+    "unexpected_consumed_rows": 0,
+    "variance_groups": 6
+  },
+  "train_consumed_rows": 48,
+  "train_consumed_unique_keys": 48,
+  "train_consumed_unique_tasks": 11,
+  "train_task_counts": {
+    "dsh/context-v2/train-M1": 4,
+    "dsh/context-v2/train-C3": 4,
+    "dsh/context-v2/train-V1": 4,
+    "dsh/context-v2/train-V2": 4,
+    "dsh/context-v2/train-C1": 4,
+    "dsh/context-v2/train-M3": 4,
+    "dsh/context-v2/train-V3": 4,
+    "dsh/context-v2/train-M2": 4,
+    "dsh/context-v2/train-D1": 4,
+    "dsh/context-v2/train-D2": 8,
+    "dsh/context-v2/train-C2": 4
+  },
+  "train_groups_observed": 13,
+  "train_groups_consumed": 12,
+  "train_sessions_with_dump": 51,
+  "rejected_train_groups": [
+    {
+      "group_uid": "fa49da52-3421-4064-9e8d-5ca2e72f651f",
+      "step": 5,
+      "sessions": 3,
+      "reasons": [
+        "group_size_mismatch"
+      ],
+      "tasks": [
+        "dsh/context-v2/train-D3"
+      ]
+    }
+  ],
+  "training_metrics": [
+    {
+      "step": 1,
+      "gradient_norm": 0.0,
+      "advantage_min": 0.0,
+      "advantage_max": 0.0
+    },
+    {
+      "step": 2,
+      "gradient_norm": 0.0,
+      "advantage_min": 0.0,
+      "advantage_max": 0.0
+    },
+    {
+      "step": 3,
+      "gradient_norm": 0.2265625,
+      "advantage_min": -0.49997228384017944,
+      "advantage_max": 1.4999134540557861
+    },
+    {
+      "step": 4,
+      "gradient_norm": 0.140625,
+      "advantage_min": -0.49998047947883606,
+      "advantage_max": 1.4999338388442993
+    },
+    {
+      "step": 5,
+      "gradient_norm": 0.48828125,
+      "advantage_min": -1.4999134540557861,
+      "advantage_max": 0.49997228384017944
+    },
+    {
+      "step": 6,
+      "gradient_norm": 0.0,
+      "advantage_min": 0.0,
+      "advantage_max": 0.0
+    },
+    {
+      "step": 7,
+      "gradient_norm": 0.10302734375,
+      "advantage_min": -1.4999428987503052,
+      "advantage_max": 0.49998095631599426
+    },
+    {
+      "step": 8,
+      "gradient_norm": 0.0,
+      "advantage_min": 0.0,
+      "advantage_max": 0.0
+    },
+    {
+      "step": 9,
+      "gradient_norm": 0.0,
+      "advantage_min": 0.0,
+      "advantage_max": 0.0
+    },
+    {
+      "step": 10,
+      "gradient_norm": 0.2412109375,
+      "advantage_min": -1.499995231628418,
+      "advantage_max": 0.4999982714653015
+    },
+    {
+      "step": 11,
+      "gradient_norm": 0.0,
+      "advantage_min": 0.0,
+      "advantage_max": 0.0
+    },
+    {
+      "step": 12,
+      "gradient_norm": 0.33203125,
+      "advantage_min": -0.4999983608722687,
+      "advantage_max": 1.499995231628418
+    }
+  ],
+  "nonzero_gradient_steps": [
+    3,
+    4,
+    5,
+    7,
+    10,
+    12
+  ],
+  "nonzero_advantage_steps": [
+    3,
+    4,
+    5,
+    7,
+    10,
+    12
+  ],
+  "dev": [
+    {
+      "step": 0,
+      "groups": 4,
+      "strict_success": 0,
+      "mean_reward": 0.39796875789761543,
+      "tasks": [
+        {
+          "task": "dsh/context-v2/dev-M",
+          "reward": 0.10000000149011612,
+          "accuracy": 0.0
+        },
+        {
+          "task": "dsh/context-v2/dev-C",
+          "reward": 0.10000000149011612,
+          "accuracy": 0.0
+        },
+        {
+          "task": "dsh/context-v2/dev-V",
+          "reward": 0.7200000286102295,
+          "accuracy": 0.0
+        },
+        {
+          "task": "dsh/context-v2/dev-D",
+          "reward": 0.671875,
+          "accuracy": 0.0
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "groups": 4,
+      "strict_success": 0,
+      "mean_reward": 0.39796875789761543,
+      "tasks": [
+        {
+          "task": "dsh/context-v2/dev-D",
+          "reward": 0.671875,
+          "accuracy": 0.0
+        },
+        {
+          "task": "dsh/context-v2/dev-V",
+          "reward": 0.7200000286102295,
+          "accuracy": 0.0
+        },
+        {
+          "task": "dsh/context-v2/dev-M",
+          "reward": 0.10000000149011612,
+          "accuracy": 0.0
+        },
+        {
+          "task": "dsh/context-v2/dev-C",
+          "reward": 0.10000000149011612,
+          "accuracy": 0.0
+        }
+      ]
+    },
+    {
+      "step": 12,
+      "groups": 4,
+      "strict_success": 0,
+      "mean_reward": 0.39796875789761543,
+      "tasks": [
+        {
+          "task": "dsh/context-v2/dev-D",
+          "reward": 0.671875,
+          "accuracy": 0.0
+        },
+        {
+          "task": "dsh/context-v2/dev-M",
+          "reward": 0.10000000149011612,
+          "accuracy": 0.0
+        },
+        {
+          "task": "dsh/context-v2/dev-V",
+          "reward": 0.7200000286102295,
+          "accuracy": 0.0
+        },
+        {
+          "task": "dsh/context-v2/dev-C",
+          "reward": 0.10000000149011612,
+          "accuracy": 0.0
+        }
+      ]
+    }
+  ],
+  "checkpoint_delta": {
+    "schema": "dsh.single-rank-lora-delta.v1",
+    "passed": true,
+    "adapter_count": 504,
+    "adapter_changed": 504,
+    "base_count": 399,
+    "base_changed": 0,
+    "before": {
+      "path": "/workspace/uni-agent-g1/checkpoint/context-v2-curriculum-r1/global_step_6/actor/model_world_size_1_rank_0.pt",
+      "sha256": "d7fd20b26fb4ef9db7f0fd7401d1b6545cd9c3671f94b5b01b925bf98c11b7d9"
+    },
+    "after": {
+      "path": "/workspace/uni-agent-g1/checkpoint/context-v2-curriculum-r1/global_step_12/actor/model_world_size_1_rank_0.pt",
+      "sha256": "293e3ae4588a206371560b341cf30daa3812f4a57cedfbdf44cb73a7f5fa7533"
+    }
+  }
+}
