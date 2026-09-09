@@ -74,3 +74,23 @@ $PYTHON_BIN -m examples.dsh.capabilities.audit_memory_training "$RUN" \
 保存实际load日志：Resuming step8、model/optimizer/RNG/lr_scheduler对应真实文件。sync初始化发布weight8；4个fresh dev链的真实generation版本应为8，不是train step8采样的weight7。使用新run上的同一个memory消费审计命令；确认4个val sibling1、无train消费、无update指标/新model checkpoint；母checkpoint前后SHA不变。
 
 报告fresh dev四题每题reward/严格成功率与总成本，和母训练step8 dev对照。数值波动允许，不能将“独立重新执行”误称逐token完全复现；公开variant1 dev已用于课程开发，不是封存泛化验证。以上原始证据连同8/4实际任务覆盖归档`/workspace/reports/`并记录SHA，checkpoint留在`/workspace/uni-agent-g1/checkpoint/`。
+
+## r3 补充：学习信号仅出现在1–4步时如何验收
+
+2026-09-09只读核实，未修改运行中的r3。**不用为了覆盖5–8区间重新制造非零梯度，也不必先补存step0才能证明本课程有参数更新。** 当前4→8模型差分只能证明后半段权重变化；配合1–4真实消费组的B奖励方差/非零优势/有限非零梯度、成功optimizer step，可以报告“本课程存在任务梯度和实际参数更新”。不能据此说5–8有新学习，或已量化1–4净增量。
+
+更强且成本很低的现有证据是**确定为零的LoRA B初始化**（此B指LoRA矩阵，不是reader阶段）：
+
+- 固定VERL `workers/engine/fsdp/transformer_impl.py:322–349` 区分加载已有adapter与新建分支；新建 `LoraConfig` 没有覆盖`init_lora_weights`。
+- 已通过只读SSH直接读取既有venv源码，无模型导入。实际PEFT版本`0.19.1`与固定uv.lock一致；`peft/tuners/lora/config.py:513–523` 默认`init_lora_weights=True`；`layer.py:263–274` 在线性LoRA上执行随机初始化A、严格置零B。embedding分支相反，不能套用该结论；本课程需核checkpoint键确为目标linear层`lora_B.*.weight`。
+- 两文件SHA256：config `a9f95e1a143b8320cf2e0a3139f29c807d937876591f5fc1ce24fc4fd7833b59`；layer `444bba0e5dbc5c55ed51a288a8366c18aa7ebe533d081312a19347eb48b215b6`。实际读取路径均在`/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/`下。
+
+最短补证：课程结束后，CPU读取原step4/8完整state dict，记录每个linear LoRA B的有限性、非零元素数/范数和checkpoint SHA；同时核实际run `resume_mode=disable`、`lora_adapter_path=null`、没有另外加载adapter/optimizer或覆盖初始化。**零初始化B+fresh零优化器状态，仅靠AdamW weight decay或零梯度动量不可能从0变非0。** 因而step4已非零B可证明前半段确有梯度驱动参数改变；step8仍非零B则证明最终保存了非零adapter参数。不需要重建随机A或伪造step0。
+
+若要求“非零有效基座权重增量”而不只参数变化，可另在CPU核`(alpha/r)·BA`非零；B非零本身不在数学上保证BA非零。能力提升仍需fresh评估，不能从矩阵范数推断。
+
+还需同run的可核验训练日志：实际被消费的完整n4链与末B奖励、非零advantages、有限非零actor/grad_norm、非零学习率、无跳过更新；本recipe显式`use_kl_loss=False`和`entropy_coeff=0`，应以resolved配置确认，避免把正则项梯度说成任务学习。FSDP `optimizer_step():797–803` 非有限梯度会跳过，单条grad_norm日志不能单独证明step被执行。
+
+现脚本的证据边界保持不变：`checkpoint_delta.py`只判adapter差异+base不变+有限；`optimizer_delta.py`只判step推进、状态合法、已有moments非零，**不要求changed_moment_tensors>0，也不区分新梯度与旧moment衰减**。报告应另读取实际param_groups的lr/betas/weight_decay，不用默认值冒充run参数。5–8若原始指标全零，即使4→8差分或moment变化通过，也只记“optimizer继续推进及历史动量/衰减可解释变化”。
+
+若B在4/8均为0、初始化/续训来源无法确认、或非零梯度缺乏实际消费与optimizer证据，就保留结论缺口；最小后续是在**新run**增加一次真实初始或更早checkpoint，不改旧run、不延伸成新框架。当前只是补充验收方法，不声称r3已经产出上述成功证据。

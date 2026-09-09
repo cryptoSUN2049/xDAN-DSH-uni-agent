@@ -1,0 +1,401 @@
+{
+  "schema": "dsh.work-state-minimal-archive.v1",
+  "scope": "minimal-report-snapshot-not-portable-reproduction",
+  "runs": [
+    "work-state-val-r1",
+    "work-state-train-r2"
+  ],
+  "canary": "dsh-finish-reason-canary-r1",
+  "linux_tests": "work-state-r3-linux-checks",
+  "source_roots_preserved": true,
+  "credential_scan": "Whitelisted files scanned for common token/private-key/auth-URL patterns; no remaining matches. Sensitive structured fields and all command/environment fields removed. Heuristic scan is not universal secret detection.",
+  "excluded": [
+    "homes",
+    "provider configuration",
+    "credentials/auth tokens",
+    "raw DSH traces/events",
+    "NPZ token arrays",
+    "parquet",
+    "model weights",
+    "checkpoints",
+    "training full logs",
+    "full source code"
+  ],
+  "limitations": [
+    "This archive preserves selected reports and hashes, not complete portable evidence.",
+    "Raw traces/NPZ/source/parquet absent: original consumption or token audit cannot be recomputed from this archive alone.",
+    "Sanitized manifest is not original bytes; both source and archived hashes recorded.",
+    "Failed run, zero-gradient and passed=false conclusions remain unchanged.",
+    "Canary result retained, raw events excluded; simulator result does not certify model training."
+  ],
+  "members": [
+    {
+      "source": "/root/runs/dsh-finish-reason-canary-r1/result.json",
+      "member": "reports/root/runs/dsh-finish-reason-canary-r1/result.json",
+      "source_sha256": "cd8a979e05432b0e137e5a208ef1ca45fde0ad223b817b7000ef0a4a1d434af0",
+      "archived_sha256": "cd8a979e05432b0e137e5a208ef1ca45fde0ad223b817b7000ef0a4a1d434af0",
+      "source_bytes": 3591,
+      "archived_bytes": 3591,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-r3-linux-checks/junit.xml",
+      "member": "reports/root/runs/work-state-r3-linux-checks/junit.xml",
+      "source_sha256": "ab743b1e32d7e926b2616ad1d2ab8d2221b340721ef004557a8450515956ef24",
+      "archived_sha256": "ab743b1e32d7e926b2616ad1d2ab8d2221b340721ef004557a8450515956ef24",
+      "source_bytes": 5348,
+      "archived_bytes": 5348,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-r3-linux-checks/pytest.log",
+      "member": "reports/root/runs/work-state-r3-linux-checks/pytest.log",
+      "source_sha256": "75ac1492ebe9b287bb711cbbdf460f25cef45ff1e182a9c233ee3ba471c151ca",
+      "archived_sha256": "75ac1492ebe9b287bb711cbbdf460f25cef45ff1e182a9c233ee3ba471c151ca",
+      "source_bytes": 192,
+      "archived_bytes": 192,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-r3-linux-checks/result.json",
+      "member": "reports/root/runs/work-state-r3-linux-checks/result.sanitized.json",
+      "source_sha256": "407b42b8b49ccbe0f1c1db5e38692e1d1a123aa79fe8a3394155485dd00a566d",
+      "archived_sha256": "36f7ecac816c9acdbd30e1650a1c767065fa5e30b57eb8b34059f2c5ecc9529a",
+      "source_bytes": 911,
+      "archived_bytes": 413,
+      "sanitized": true,
+      "removed_fields": [
+        "/command"
+      ]
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/chains/groups/11412be6473e4e1b8b22824e1ec64911/crosswalk.json",
+      "member": "reports/root/runs/work-state-train-r2/chains/groups/11412be6473e4e1b8b22824e1ec64911/crosswalk.json",
+      "source_sha256": "bfb73ce0cc44be3fc9a8de2820ba340a8e5865830d9345df407d0e48acf571dc",
+      "archived_sha256": "bfb73ce0cc44be3fc9a8de2820ba340a8e5865830d9345df407d0e48acf571dc",
+      "source_bytes": 2987,
+      "archived_bytes": 2987,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/chains/groups/314bdcdd76b44c1291ce6d71fd9715bc/crosswalk.json",
+      "member": "reports/root/runs/work-state-train-r2/chains/groups/314bdcdd76b44c1291ce6d71fd9715bc/crosswalk.json",
+      "source_sha256": "60d716fd6926a5f41b5159f84aa4eb61781171f027b224fc256458c76278db9f",
+      "archived_sha256": "60d716fd6926a5f41b5159f84aa4eb61781171f027b224fc256458c76278db9f",
+      "source_bytes": 2985,
+      "archived_bytes": 2985,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/chains/groups/3c77b185be524d7795339ff6d68bb85d/crosswalk.json",
+      "member": "reports/root/runs/work-state-train-r2/chains/groups/3c77b185be524d7795339ff6d68bb85d/crosswalk.json",
+      "source_sha256": "07ffcf84e8ee44b6369960dcdcfecb8da4b877293db4be3a28f4ccd562bc927a",
+      "archived_sha256": "07ffcf84e8ee44b6369960dcdcfecb8da4b877293db4be3a28f4ccd562bc927a",
+      "source_bytes": 11130,
+      "archived_bytes": 11130,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/chains/groups/6c146a0d4bc4441380f09dbf04c02dba/crosswalk.json",
+      "member": "reports/root/runs/work-state-train-r2/chains/groups/6c146a0d4bc4441380f09dbf04c02dba/crosswalk.json",
+      "source_sha256": "cbc50379bae6e745ae8c78eca2f1ce096d0ea16b9164a6f1b535c7923ed51adc",
+      "archived_sha256": "cbc50379bae6e745ae8c78eca2f1ce096d0ea16b9164a6f1b535c7923ed51adc",
+      "source_bytes": 11132,
+      "archived_bytes": 11132,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/chains/groups/99b54d3f9975411fa59bd9e54b012610/crosswalk.json",
+      "member": "reports/root/runs/work-state-train-r2/chains/groups/99b54d3f9975411fa59bd9e54b012610/crosswalk.json",
+      "source_sha256": "ecb4a7cf9b1fa1ec3cde3ee29185e056d749ea5aea6befcaec65950afc268a57",
+      "archived_sha256": "ecb4a7cf9b1fa1ec3cde3ee29185e056d749ea5aea6befcaec65950afc268a57",
+      "source_bytes": 2985,
+      "archived_bytes": 2985,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/chains/groups/a38a27a3454c4307b2f6d9afddf3891f/crosswalk.json",
+      "member": "reports/root/runs/work-state-train-r2/chains/groups/a38a27a3454c4307b2f6d9afddf3891f/crosswalk.json",
+      "source_sha256": "915070c3f05496190272e53d415811a9107e57eb2f094669264b24b138061d55",
+      "archived_sha256": "915070c3f05496190272e53d415811a9107e57eb2f094669264b24b138061d55",
+      "source_bytes": 2985,
+      "archived_bytes": 2985,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/chains/groups/be3d33cbfe83403c8151d6eb1fe5ff58/crosswalk.json",
+      "member": "reports/root/runs/work-state-train-r2/chains/groups/be3d33cbfe83403c8151d6eb1fe5ff58/crosswalk.json",
+      "source_sha256": "4b26d5423ded81c555e8891ea689c965e69b22d8656d9db407161f97d33121a4",
+      "archived_sha256": "4b26d5423ded81c555e8891ea689c965e69b22d8656d9db407161f97d33121a4",
+      "source_bytes": 2985,
+      "archived_bytes": 2985,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/chains/groups/c542500c352a440ba5601d598e6e00f6/crosswalk.json",
+      "member": "reports/root/runs/work-state-train-r2/chains/groups/c542500c352a440ba5601d598e6e00f6/crosswalk.json",
+      "source_sha256": "3aa61ea5355de5bc5c6b16f5a06d659914c0edad026cf9992256b8bf0b9bfedd",
+      "archived_sha256": "3aa61ea5355de5bc5c6b16f5a06d659914c0edad026cf9992256b8bf0b9bfedd",
+      "source_bytes": 2987,
+      "archived_bytes": 2987,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/chains/groups/cafe104444b3485eba177cdf71d6183a/crosswalk.json",
+      "member": "reports/root/runs/work-state-train-r2/chains/groups/cafe104444b3485eba177cdf71d6183a/crosswalk.json",
+      "source_sha256": "3cd738f1e127ebad7abf584987136aad80e2077fb46fc9bda8faa9ce01b4e4ef",
+      "archived_sha256": "3cd738f1e127ebad7abf584987136aad80e2077fb46fc9bda8faa9ce01b4e4ef",
+      "source_bytes": 11126,
+      "archived_bytes": 11126,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/chains/groups/cddc661139d54ba0a8db3c41a58cddc8/crosswalk.json",
+      "member": "reports/root/runs/work-state-train-r2/chains/groups/cddc661139d54ba0a8db3c41a58cddc8/crosswalk.json",
+      "source_sha256": "d3a0fc67a39c792e9db1a4292cae23ca52dd24ab9a1e9d3ee1424c12112375d2",
+      "archived_sha256": "d3a0fc67a39c792e9db1a4292cae23ca52dd24ab9a1e9d3ee1424c12112375d2",
+      "source_bytes": 2987,
+      "archived_bytes": 2987,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/chains/groups/df32fe27f66b4588b726cb239b420a7d/crosswalk.json",
+      "member": "reports/root/runs/work-state-train-r2/chains/groups/df32fe27f66b4588b726cb239b420a7d/crosswalk.json",
+      "source_sha256": "4801ea90d2eb80285cfc9ab903ad264179cc7a3ecb299eb1a8bba3c2289a7a54",
+      "archived_sha256": "4801ea90d2eb80285cfc9ab903ad264179cc7a3ecb299eb1a8bba3c2289a7a54",
+      "source_bytes": 11126,
+      "archived_bytes": 11126,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/generation-boundaries-audit.json",
+      "member": "reports/root/runs/work-state-train-r2/generation-boundaries-audit.json",
+      "source_sha256": "d350604ab668d3abd1ac7dbdc3c76ab7361ca44ef55ae876af7b3a0d1f0ee1d8",
+      "archived_sha256": "d350604ab668d3abd1ac7dbdc3c76ab7361ca44ef55ae876af7b3a0d1f0ee1d8",
+      "source_bytes": 111528,
+      "archived_bytes": 111528,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/memory-launch-plan.json",
+      "member": "reports/root/runs/work-state-train-r2/memory-launch-plan.sanitized.json",
+      "source_sha256": "e59a1067c3ed303aa8b7725099ebceacd35f3d61b1606ccd90de0a7bd9a59b11",
+      "archived_sha256": "5ce89a00328a9f625bb748417b8039af5e65cd1ba77fa1cf8822cc0423972adf",
+      "source_bytes": 16394,
+      "archived_bytes": 11532,
+      "sanitized": true,
+      "removed_fields": [
+        "/environment",
+        "/command"
+      ]
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/run-manifest.json",
+      "member": "reports/root/runs/work-state-train-r2/run-manifest.sanitized.json",
+      "source_sha256": "d3bb4c98587a6c4a33fa4d452962ea74c318216494d6aae885bd3912263ae2c8",
+      "archived_sha256": "bac4f2789673fe8d2087eb2c7035da497d155b6f6b3fc6b090a730e96a754672",
+      "source_bytes": 5867,
+      "archived_bytes": 1874,
+      "sanitized": true,
+      "removed_fields": [
+        "/command",
+        "/command_file"
+      ]
+    },
+    {
+      "source": "/root/runs/work-state-train-r2/supervision/supervisor-result.json",
+      "member": "reports/root/runs/work-state-train-r2/supervision/supervisor-result.json",
+      "source_sha256": "090af55256db3df0fa13bbd2c3f3a93735ece0a5ddd37f0890762516c06c9f83",
+      "archived_sha256": "090af55256db3df0fa13bbd2c3f3a93735ece0a5ddd37f0890762516c06c9f83",
+      "source_bytes": 167,
+      "archived_bytes": 167,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-train-r2-data/manifest.json",
+      "member": "reports/root/runs/work-state-train-r2-data/manifest.sanitized.json",
+      "source_sha256": "e59a1067c3ed303aa8b7725099ebceacd35f3d61b1606ccd90de0a7bd9a59b11",
+      "archived_sha256": "5ce89a00328a9f625bb748417b8039af5e65cd1ba77fa1cf8822cc0423972adf",
+      "source_bytes": 16394,
+      "archived_bytes": 11532,
+      "sanitized": true,
+      "removed_fields": [
+        "/environment",
+        "/command"
+      ]
+    },
+    {
+      "source": "/root/runs/work-state-train-r2-data/work-state-tasks.json",
+      "member": "reports/root/runs/work-state-train-r2-data/work-state-tasks.json",
+      "source_sha256": "3cb62e2add89cc609a7a14d3ee90d5136462f827c7dbb0464222ec0ecc20c276",
+      "archived_sha256": "3cb62e2add89cc609a7a14d3ee90d5136462f827c7dbb0464222ec0ecc20c276",
+      "source_bytes": 1593,
+      "archived_bytes": 1593,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-val-r1/chains/groups/b02c1353c19a4a3f9f56d639dab109f2/crosswalk.json",
+      "member": "reports/root/runs/work-state-val-r1/chains/groups/b02c1353c19a4a3f9f56d639dab109f2/crosswalk.json",
+      "source_sha256": "74b4834175c7c1b820160a4b365fa46b039111b0a148a2c99f32f8a1b852dd8c",
+      "archived_sha256": "74b4834175c7c1b820160a4b365fa46b039111b0a148a2c99f32f8a1b852dd8c",
+      "source_bytes": 2971,
+      "archived_bytes": 2971,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-val-r1/consumption-audit.json",
+      "member": "reports/root/runs/work-state-val-r1/consumption-audit.json",
+      "source_sha256": "f54b75813076ebfd5b4e20a61169088ab5af959de17e30badee09dced7458280",
+      "archived_sha256": "f54b75813076ebfd5b4e20a61169088ab5af959de17e30badee09dced7458280",
+      "source_bytes": 1566,
+      "archived_bytes": 1566,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-val-r1/memory-launch-plan.json",
+      "member": "reports/root/runs/work-state-val-r1/memory-launch-plan.sanitized.json",
+      "source_sha256": "98358edf45e2c29d614c7219899a3c8e9ca813d93e4e0c48d3aff2317296381f",
+      "archived_sha256": "a9dc10020e538b6412bdc289c5c9ddd7a90e14483d6d02333e967bf69e1451fd",
+      "source_bytes": 16349,
+      "archived_bytes": 11520,
+      "sanitized": true,
+      "removed_fields": [
+        "/environment",
+        "/command"
+      ]
+    },
+    {
+      "source": "/root/runs/work-state-val-r1/result-summary.json",
+      "member": "reports/root/runs/work-state-val-r1/result-summary.json",
+      "source_sha256": "6d8bb239e0a738700d8826b24a2a88ac1a7e85c1dde8b292c4190150ab30ef05",
+      "archived_sha256": "6d8bb239e0a738700d8826b24a2a88ac1a7e85c1dde8b292c4190150ab30ef05",
+      "source_bytes": 7280,
+      "archived_bytes": 7280,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-val-r1/run-manifest.json",
+      "member": "reports/root/runs/work-state-val-r1/run-manifest.sanitized.json",
+      "source_sha256": "e26dde46b823843a55f72c189a4e7d0cd7de470ed0c739223afa727b03399416",
+      "archived_sha256": "4e0c7b21319e20de4eb237a4e5fb6a25559a84bc898a4341715f5b184647c5f6",
+      "source_bytes": 5816,
+      "archived_bytes": 1854,
+      "sanitized": true,
+      "removed_fields": [
+        "/command",
+        "/command_file"
+      ]
+    },
+    {
+      "source": "/root/runs/work-state-val-r1/supervision/supervisor-result.json",
+      "member": "reports/root/runs/work-state-val-r1/supervision/supervisor-result.json",
+      "source_sha256": "045f6abb3b88c5f5458a1fafdc22915c55b7251df48e2ab67ceaa6093e8ade31",
+      "archived_sha256": "045f6abb3b88c5f5458a1fafdc22915c55b7251df48e2ab67ceaa6093e8ade31",
+      "source_bytes": 167,
+      "archived_bytes": 167,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/root/runs/work-state-val-r1-data/manifest.json",
+      "member": "reports/root/runs/work-state-val-r1-data/manifest.sanitized.json",
+      "source_sha256": "98358edf45e2c29d614c7219899a3c8e9ca813d93e4e0c48d3aff2317296381f",
+      "archived_sha256": "a9dc10020e538b6412bdc289c5c9ddd7a90e14483d6d02333e967bf69e1451fd",
+      "source_bytes": 16349,
+      "archived_bytes": 11520,
+      "sanitized": true,
+      "removed_fields": [
+        "/environment",
+        "/command"
+      ]
+    },
+    {
+      "source": "/root/runs/work-state-val-r1-data/work-state-tasks.json",
+      "member": "reports/root/runs/work-state-val-r1-data/work-state-tasks.json",
+      "source_sha256": "3cb62e2add89cc609a7a14d3ee90d5136462f827c7dbb0464222ec0ecc20c276",
+      "archived_sha256": "3cb62e2add89cc609a7a14d3ee90d5136462f827c7dbb0464222ec0ecc20c276",
+      "source_bytes": 1593,
+      "archived_bytes": 1593,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/workspace/rebuild/uni-agent-work-state-r1/dsh-work-state/work-state-val-r1.jsonl",
+      "member": "reports/workspace/rebuild/uni-agent-work-state-r1/dsh-work-state/work-state-val-r1.jsonl",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archived_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_bytes": 0,
+      "archived_bytes": 0,
+      "sanitized": false,
+      "removed_fields": []
+    },
+    {
+      "source": "/workspace/rebuild/uni-agent-work-state-r2/dsh-work-state/work-state-train-r2.jsonl",
+      "member": "reports/workspace/rebuild/uni-agent-work-state-r2/dsh-work-state/work-state-train-r2.jsonl",
+      "source_sha256": "0b6b723cd71edfef2062dcf48e38db75164f4127c248319eb4640ae10ff5545a",
+      "archived_sha256": "0b6b723cd71edfef2062dcf48e38db75164f4127c248319eb4640ae10ff5545a",
+      "source_bytes": 10144,
+      "archived_bytes": 10144,
+      "sanitized": false,
+      "removed_fields": []
+    }
+  ],
+  "archive": "/workspace/reports/work-state-failed-runs-minimal-20260909-r1.tar.gz",
+  "archive_bytes": 42696,
+  "archive_sha256": "83b0d52c27c233ed51a07baaa038162bc19eecd44cacef787e872b5be19edfb1",
+  "tar_members": [
+    "reports/root/runs/dsh-finish-reason-canary-r1/result.json",
+    "reports/root/runs/work-state-r3-linux-checks/junit.xml",
+    "reports/root/runs/work-state-r3-linux-checks/pytest.log",
+    "reports/root/runs/work-state-r3-linux-checks/result.sanitized.json",
+    "reports/root/runs/work-state-train-r2/chains/groups/11412be6473e4e1b8b22824e1ec64911/crosswalk.json",
+    "reports/root/runs/work-state-train-r2/chains/groups/314bdcdd76b44c1291ce6d71fd9715bc/crosswalk.json",
+    "reports/root/runs/work-state-train-r2/chains/groups/3c77b185be524d7795339ff6d68bb85d/crosswalk.json",
+    "reports/root/runs/work-state-train-r2/chains/groups/6c146a0d4bc4441380f09dbf04c02dba/crosswalk.json",
+    "reports/root/runs/work-state-train-r2/chains/groups/99b54d3f9975411fa59bd9e54b012610/crosswalk.json",
+    "reports/root/runs/work-state-train-r2/chains/groups/a38a27a3454c4307b2f6d9afddf3891f/crosswalk.json",
+    "reports/root/runs/work-state-train-r2/chains/groups/be3d33cbfe83403c8151d6eb1fe5ff58/crosswalk.json",
+    "reports/root/runs/work-state-train-r2/chains/groups/c542500c352a440ba5601d598e6e00f6/crosswalk.json",
+    "reports/root/runs/work-state-train-r2/chains/groups/cafe104444b3485eba177cdf71d6183a/crosswalk.json",
+    "reports/root/runs/work-state-train-r2/chains/groups/cddc661139d54ba0a8db3c41a58cddc8/crosswalk.json",
+    "reports/root/runs/work-state-train-r2/chains/groups/df32fe27f66b4588b726cb239b420a7d/crosswalk.json",
+    "reports/root/runs/work-state-train-r2/generation-boundaries-audit.json",
+    "reports/root/runs/work-state-train-r2/memory-launch-plan.sanitized.json",
+    "reports/root/runs/work-state-train-r2/run-manifest.sanitized.json",
+    "reports/root/runs/work-state-train-r2/supervision/supervisor-result.json",
+    "reports/root/runs/work-state-train-r2-data/manifest.sanitized.json",
+    "reports/root/runs/work-state-train-r2-data/work-state-tasks.json",
+    "reports/root/runs/work-state-val-r1/chains/groups/b02c1353c19a4a3f9f56d639dab109f2/crosswalk.json",
+    "reports/root/runs/work-state-val-r1/consumption-audit.json",
+    "reports/root/runs/work-state-val-r1/memory-launch-plan.sanitized.json",
+    "reports/root/runs/work-state-val-r1/result-summary.json",
+    "reports/root/runs/work-state-val-r1/run-manifest.sanitized.json",
+    "reports/root/runs/work-state-val-r1/supervision/supervisor-result.json",
+    "reports/root/runs/work-state-val-r1-data/manifest.sanitized.json",
+    "reports/root/runs/work-state-val-r1-data/work-state-tasks.json",
+    "reports/workspace/rebuild/uni-agent-work-state-r1/dsh-work-state/work-state-val-r1.jsonl",
+    "reports/workspace/rebuild/uni-agent-work-state-r2/dsh-work-state/work-state-train-r2.jsonl",
+    "ARCHIVE-MANIFEST.json"
+  ],
+  "readback_verified": true
+}

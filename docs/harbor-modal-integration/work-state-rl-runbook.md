@@ -90,7 +90,7 @@ nvidia-smi
 
 ## 6. 独立reload与故障处理
 
-训练与数值门通过且存在真实checkpoint后，新建`WORK_STATE_RELOAD`身份；使用相同prepare参数，改为`--mode reload --resume-from /workspace/uni-agent-g1/checkpoint/<母run>/global_step_N --mother-run /root/runs/<母run>`。新的output/run目录必须独立，然后check/launch/audit。
+母训练以exit0完成、真实checkpoint的结构和版本身份通过后，即可先验收独立reload；不因合法零奖励或零梯度阻止工程加载检查。非零任务梯度/参数变化是另一个验收层，未通过时明确报告“流程完成，尚无有效学习证据”。新建`WORK_STATE_RELOAD`身份；使用相同prepare参数，改为`--mode reload --resume-from /workspace/uni-agent-g1/checkpoint/<母run>/global_step_N --mother-run /root/runs/<母run>`。新的output/run目录必须独立，然后check/launch/audit。
 
 reload绑定完整checkpoint文件SHA及母运行清单，显式加载model/optimizer/extra，仅评估；不会重新训练或删除母checkpoint。比较同预算开发任务结果，照实记录波动和失败；不以提分作为工程验收前置。
 

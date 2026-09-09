@@ -2,6 +2,8 @@
 
 ## 1. TL;DR
 
+- **用户最新优先级纠偏**：工程执行/真实消费/保存/reload先完成，非零更新证据其次，任务效果最后。r3合法全零时继续既定运行，不主动停、不再继续堆提示；原安全/证据门不降，W4有效更新仍须独立补证，不能把流程完成标成学会能力。
+
 - **当前作业work-state-train-r3**：2026-09-09 13:24:15 UTC+8外层launch PID232248；主运行13:24:52开始。独立`/workspace/rebuild/uni-agent-work-state-r3`固定`17b6e5589abc8d5a77c6238d0971a129135aa9b7`，VERL fef+preserve-finish-reason-v1（patch2cb5eef7、target2a4452e0、manifest15ecee86）。清单/root/runs/work-state-train-r3-data/manifest.json已check通过，run manifest实记新VERL导入目录；13:26:20仍框架启动阶段，尚未收到任务或更新结果。
 - **已完成新协议实际验收**：固定Linux DSH finish canary4/4、既有vLLM环境30项HTTP/解析器测试通过；报告`dsh-finish-reason-canary-r1-result.md/json`、远端`/root/runs/work-state-r3-linux-checks`。未重装环境。后续查r3日志与完整业务/梯度/消费证据，不能把canary当训练。
 

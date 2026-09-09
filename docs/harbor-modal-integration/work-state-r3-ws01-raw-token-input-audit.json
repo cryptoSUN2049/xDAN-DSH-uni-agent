@@ -1,0 +1,124 @@
+{
+  "schema": "dsh.work-state-raw-token-input-audit.v1",
+  "run_id": "work-state-train-r3",
+  "chain_id": "memory-0b8f6cf731284850bf928c390e4d12c7",
+  "partition": "val",
+  "gateway_session_id": "memory-B-16e47a454753487eae4e4ac68e42bca5",
+  "method": "Decode stored original NPZ prompt_ids and response_ids/mask with fixed local tokenizer; no re-tokenization or apply_chat_template used.",
+  "model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "token_counts": {
+    "prompt": 1427,
+    "response": 608,
+    "generated": 300,
+    "observation": 308
+  },
+  "generation_response_ranges": [
+    [
+      0,
+      76
+    ],
+    [
+      235,
+      331
+    ],
+    [
+      405,
+      492
+    ],
+    [
+      567,
+      608
+    ]
+  ],
+  "second_generation_input_tokens": 1662,
+  "first_tool_result_trace_seq": 10,
+  "first_tool_call_trace_seq": 9,
+  "checks": {
+    "full_stored_actor_prompt_in_original_prompt_decode": true,
+    "stored_prompt_matches_envelope": true,
+    "full_reader_goal_in_original_prompt_decode": true,
+    "exact_index_path_in_original_prompt_decode": true,
+    "read_index_rule_in_original_prompt_decode": true,
+    "first_call_is_notice_view": true,
+    "first_notice_call_path_in_original_generation": true,
+    "complete_trace_tool_text_in_gap": true,
+    "complete_trace_tool_text_in_second_input": true,
+    "tool_result_not_in_initial_prompt": true,
+    "tool_result_enclosed_in_original_user_turn": true,
+    "second_generation_has_assistant_prefix": true
+  },
+  "decoded_hashes": {
+    "initial_prompt": "sha256:bfb613c6c20f161501dfea357624ba40e5aaa10f2d30e0ea4a637bba198e2e50",
+    "full_response": "sha256:a9c28cc776949bcccca78d9d08d8863eeba4002371f5e5cbed642d7b683862fc",
+    "second_input": "sha256:8d573385837f0348024634cace7bbdcc10f1abe1d6e06b8800ac63772a666977",
+    "first_tool_gap": "sha256:53ecb76bb85b4dd8aec72309d17c06782d90abca844d670dea65bce232298ddf",
+    "stored_actor_prompt": "sha256:38ec64a0848c132de9b9cb9327568e22638af708c45ec6b1857d58a9225e322a",
+    "notice_source": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967"
+  },
+  "first_gap_template_excerpt": "\n<|im_start|>user\n<tool_response>\nHere's the content of /root/runs/work-state-tr ... tion names\"\n     8  }\n     9  \n\n</tool_response><|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+  "first_tool_call": {
+    "command": "view",
+    "path": "/root/runs/work-state-train-r3/chains/memory-0b8f6cf731284850bf928c390e4d12c7/reader-data/sources/notice.json"
+  },
+  "trace_tool_result_text_hashes": [
+    "sha256:48d3fb27339bc4e4899cea76a3e787afbae01e20bf472ae110475fa83bcc3efd"
+  ],
+  "evidence": [
+    {
+      "path": "/root/runs/work-state-train-r3/agent-logs/step_0/memory-B-16e47a454753487eae4e4ac68e42bca5/trajectory.npz",
+      "sha256": "sha256:93c1fb2a8a478027b77b58b9966365ea308c5add2d443d754e71bca44fea8939",
+      "bytes": 3941
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/agent-logs/step_0/memory-B-16e47a454753487eae4e4ac68e42bca5/trajectory.json",
+      "sha256": "sha256:0196be2860b0d00bc927a88f7c590f04365738ff6061bf92193abc7d924ce03f",
+      "bytes": 1698
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/chains/memory-0b8f6cf731284850bf928c390e4d12c7/reader/fixture.json",
+      "sha256": "sha256:86ddedbb0aa3738699b60592d615b5e41c92a8e14c0db2b705a03fd0ae76e5ac",
+      "bytes": 7237
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/chains/memory-0b8f6cf731284850bf928c390e4d12c7/reader/prompt.json",
+      "sha256": "sha256:35d0bd2833de72b1408dd9dc454f0af50f60002b58cb68a3c4ee193e430fe415",
+      "bytes": 2168
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/chains/memory-0b8f6cf731284850bf928c390e4d12c7/reader/run/results/d223624ed3db070df866174f/agent-result.json",
+      "sha256": "sha256:564e45f2673f747a014f27633c9e0b9ac894bfeaeabb287a97b8d4860fcfccd4",
+      "bytes": 4072
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/chains/memory-0b8f6cf731284850bf928c390e4d12c7/reader/run/traces/d16ac7233f3953e38a8ba799/session.jsonl",
+      "sha256": "sha256:84bb32125f3c0f7503329f1a254cf086875bb4da9bdd58cf141985f559af8d5f",
+      "bytes": 18469
+    },
+    {
+      "path": "/workspace/models/Qwen3-4B-1cfa9a7/tokenizer.json",
+      "sha256": "sha256:aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "bytes": 11422654
+    },
+    {
+      "path": "/workspace/models/Qwen3-4B-1cfa9a7/tokenizer_config.json",
+      "sha256": "sha256:d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "bytes": 9732
+    },
+    {
+      "path": "/workspace/models/Qwen3-4B-1cfa9a7/config.json",
+      "sha256": "sha256:8ba006f74fecfaaeb392872a60f4a480e7ec9860153d2e1b769ec81f9a147f8a",
+      "bytes": 726
+    },
+    {
+      "path": "/workspace/models/Qwen3-4B-1cfa9a7/generation_config.json",
+      "sha256": "sha256:2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "bytes": 239
+    }
+  ],
+  "limitations": [
+    "This is one completed WS01 validation B trajectory; not an assertion for every stage/run.",
+    "Flattened NPZ/mask proves the materialized recorded history prefix, not an independently intercepted backend request for every generation.",
+    "Input presence does not establish model attention/compliance or positive RL learning.",
+    "No complete decoded model prompt or credential values are stored in this report."
+  ]
+}
