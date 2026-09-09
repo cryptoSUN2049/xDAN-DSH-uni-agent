@@ -1,5 +1,11 @@
 # Harbor / Modal 工程交接
 
+## GPU即将关闭：冷启动优先入口
+
+最新主线：核心记忆/context，异步暂停。当前不启动新GPU作业。恢复指南：[gpu-reconnect-runbook.md](../../docs/harbor-modal-integration/gpu-reconnect-runbook.md)。挂载原network volume，先检查既有venv/模型/DSH发布物，不盲目重装。旧/root/runs可能丢失，关键短课证据tar在/workspace/reports，checkpoint独立在/workspace/uni-agent-g1/checkpoint。
+
+32条事实诊断完成：23条必要事实已保存但B未读取；4条A缺失；1条读index后未完成；WS06单列。见core-memory-fact-flow-audit.md/json。下一core课程52train/16dev只是设计，尚未实现或生成，不宣称已训练。原r1有效更新、r2零更新结论保持。
+
 ## 1. TL;DR
 
 - **位置**：worktree-harbor-modal-integration；主目录main未动。运行源码b47521d，独立审计d4401d3，文档提交以git HEAD为准。

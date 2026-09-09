@@ -1,0 +1,3145 @@
+{
+  "schema": "dsh.core-memory-fact-flow-audit.v1",
+  "audited_utc_date": "2026-09-09",
+  "scope": "Existing r4 32 chains only; read-only, no GPU, no rescoring or data generation",
+  "verification": {
+    "chain_count": 32,
+    "original_reader_fixture_hashes": 32,
+    "frozen_bundle_manifest_and_unpacked_file_hashes": 32,
+    "writer_reader_source_file_hashes": 32,
+    "receipt_trace_and_fixture_evidence_bindings": 64,
+    "successful_B_views_full_source_line_match": 19,
+    "original_outputs_match": 32
+  },
+  "classification_counts": {
+    "B_no_memory_read_with_facts_available": 23,
+    "B_after_memory_read_no_artifacts": 1,
+    "B_no_public_read": 3,
+    "B_public_read_schema_error": 1,
+    "A_required_facts_missing": 4
+  },
+  "limits": [
+    "Observed trace actions do not identify model cognition or counterfactual success.",
+    "Source version equality verified between fixtures; no fresh canonical source-version recomputation.",
+    "Receipts bind fixture and trace; no new crosswalk/admission/tensor audit; existing r4 audit remains authority.",
+    "Memory fact presence is semantic source comparison, not JSON parser acceptance; defects separately flagged.",
+    "No external migration/deployment execution, context compaction verification, or learned improvement."
+  ],
+  "cases": [
+    {
+      "ordinal": 1,
+      "chain_id": "memory-1c9db4c3deaa42059cf87b8d63b33504",
+      "task_id": "work-state-ws01-v0-s101",
+      "step": 1,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:036f939fde3f6adf654184bf6bc363cf8b6b5f08cafe34c27d2f1e6f98677b1f",
+        "writer_fixture_sha256": "sha256:564dac4e1c40f3d5340def42dd6763b6bc61cb143695ba2b09ee534d6ef1aa72",
+        "source_version": "sha256:2c025ca9edff09c7f84301f31b822130b0b154ab0a92e25a1260bc60018677ad",
+        "frozen_sha256": "sha256:9e2f2f50eb9528bc75aea0ac027547bc6a7ec4385e704773651a870af999f4d6",
+        "manifest_sha256": "sha256:23a48d5a2b8e82473b3113bd9499f03e64d0460ba2d966c4bb1e8041c73f0db9",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:17384150abb353345849371c8f30fb070a8f83dc9135308db53bfd370bfb1336",
+            "receipt_id": "sha256:5ae6daf93f7cdbe702084078e207989021764188d3256e7935afd7898ecd274b",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:b05abe9672acece21d89b0519fca33a5133eb30e103f7b59847732aca9bf04ce",
+            "receipt_id": "sha256:67e6992de32b18340f091d0d944f918c5242a20a770b19732059a6a07e72b415",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:520cf146187a0f33f3b5218661eef10f86c3f229cd95a7ff13dbfd66c75905f1",
+      "reader_trace_sha256": "sha256:65d69ca8ef2faf15ea45a456a5419b9daaa7029616b96f086b4a62a14381ffbc",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:c09ecff89935304446a1d3bbfd718db0000eb958b30b5b3d28761695746f0bf5",
+          "bytes": 484
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:9e787a1503a5ff3c648fe8170823acf6388312b2d6b0796efcda552a7b4288b8",
+          "bytes": 476
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:0c25e705d11de9397dba37838b864e8cfa40cd0941ebac909d85ae7ecb63f7c4",
+          "bytes": 378
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:a8f3570560d21f303091da6099419160ef67d4a32acf733239d567f0db8beace",
+          "bytes": 695
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:4fd590af868b2a0ed1e7895d4fc490ea7a0c93d6dd09c918fd9fc5a35e8778aa",
+          "bytes": 360
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:3a8431d99238122f844b34715eecc14fc44eda0c32b89819c8c12bef6eb17025",
+          "bytes": 215
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:28aa7785d68653968d5b5c383cd3b0d4f625679a420d1778d292c2b73e6645d3",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:307787ffe9ed2a6cb2d932cc3d3c838b13ee8e9b9c33f3f385ce6a7707807274"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:2548783c15a9a513b89d13660c1ffdaeb239a0626203e2428b8dda43d6a86dcd"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 1
+        },
+        "plan.json": [
+          "config_update"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 2,
+      "chain_id": "memory-7a2219d27e9e4cf680e93d2685cb683c",
+      "task_id": "work-state-ws01-v0-s101",
+      "step": 1,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:76bf0686742d08ff8c2067ec6cb77e51c7a7ec43333e3bbe5a6df4a98d7259e4",
+        "writer_fixture_sha256": "sha256:1c272e228c9544a3fdb75053cd0a18baba7f31e41eabc217252472400fd84e76",
+        "source_version": "sha256:2c025ca9edff09c7f84301f31b822130b0b154ab0a92e25a1260bc60018677ad",
+        "frozen_sha256": "sha256:3d74bfabcedd15a40e0e3dfeb725a07a6cb0c30b7b78eaa646f218677d1eae54",
+        "manifest_sha256": "sha256:c7134265c723699576ca93225fa405edc687c6402f51af4468a07a5c62d7c185",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:016f20d9c09273081df869eabf93384dca94c52b541a23426c2ab9e6e05eceab",
+            "receipt_id": "sha256:271e65439d20eae0ae3fadc5ac1838bca399b2cbd0efaaa5693f452d9e68ad25",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:c70b0482bb3cccec7581866cb3a6b7c5239153ee5dfc19585c20ab49d82cc5c4",
+            "receipt_id": "sha256:7f549ca11780a94bd7813443ff0e50d2313ef615411a310ca75c0016353453f4",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:41047586a74fbb51cc20bb906ae03fa7ce24d19ac0e40208806eb1410d444608",
+      "reader_trace_sha256": "sha256:49341aec88de344be903d468693f6e7d83cc2c89e1f6fc6253c2abe24064e55a",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:ac2794aaf202ce351f9d9072853fb82c4426342ebc50a9fe1b6d309abab56242",
+          "bytes": 116
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:b912b5d2d5141336bfad4a293984b2bddce34a4cf0d460e1853c5942dbfbb095",
+          "bytes": 532
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:6ed982c45f4a4876b2de6cc2f5fa3afeb1828df2f0cdf8c691fec2d2d67fa8a9",
+          "bytes": 319
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:19590e28025571f48e1fcbdc55ad6ba22f9b46ec8c5fb25d3582587280b909e9",
+          "bytes": 233
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:eb5b9efb03f2133cc0c7bb68d7019aaaed2de1cddf315d5ce111551336da8b16",
+          "bytes": 114
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:19590e28025571f48e1fcbdc55ad6ba22f9b46ec8c5fb25d3582587280b909e9",
+          "bytes": 233
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [],
+      "successful_reads": [],
+      "outputs": {},
+      "business_checks": {
+        "output_contract": false,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 3,
+      "chain_id": "memory-932ef199c92548e99ee620351c71be2a",
+      "task_id": "work-state-ws01-v0-s101",
+      "step": 1,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:d581245b62f9640f6b819d17bad1bdf19ab0bc2b2b15a2a9100ee6708a20be8e",
+        "writer_fixture_sha256": "sha256:256163d22a65bf90a07a23b3ac12b5033fd7a34661beef92060a65abcb4bb8c7",
+        "source_version": "sha256:2c025ca9edff09c7f84301f31b822130b0b154ab0a92e25a1260bc60018677ad",
+        "frozen_sha256": "sha256:62e19e4165618b8502e9203f148e5d75e5cdddded7e5640c13723a4261f62425",
+        "manifest_sha256": "sha256:93e432010e5de60f4e504d58364bf412ed5f8c36efa4d7736bfe7e70fb761c9c",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:4a8defbcaddd88c41dbe42a6b5e56e1156fdfe81f5fa5aed541ae668e28a12e2",
+            "receipt_id": "sha256:7141649bf04d66b2937d54bcdf266f1a962bee5c132c8606a8cd2c98d21883bf",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:fd9c0bcd02c410764bf9ed1c5089e034848e9a738283f789675d3ee0fa8df436",
+            "receipt_id": "sha256:d8e8c167c7c5a655b7020956cbc9e22a01bc9e69bc3b0d41018f0eaaa02ab171",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:b114098710b58d0ebf3b30caf0a6f1a34d63360364c9ae0d520fb0aba372e82b",
+      "reader_trace_sha256": "sha256:4c772fe9396ee62e0195fbaf5149ad01b7ae993b2cff5f2ba67a4633888af9d0",
+      "memory_files": [
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:35de78189f349fc1d1f43745d349e775ad01a68c756e06226fcedb7f99e29bb1",
+          "bytes": 320
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:6ed982c45f4a4876b2de6cc2f5fa3afeb1828df2f0cdf8c691fec2d2d67fa8a9",
+          "bytes": 319
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:8df8bd9c8a13f721732246b4870149fd2067fe292ac6d864afb23bd733be7476",
+          "bytes": 387
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:3a8431d99238122f844b34715eecc14fc44eda0c32b89819c8c12bef6eb17025",
+          "bytes": 215
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:f3f734e469bc0fb23e907014757bbaf3208e15f15a9ac7a5dfe326b6e129f3fd",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:ec43c50430917020115d8a880d49d6149dab2987057b546d292261b6c71b8b46"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:e8e9d522e44ddc2f3bad0e70d416aab8ae27c625741b301d7d23f649d95473ec"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 1
+        },
+        "plan.json": [
+          "config.json",
+          "plan.json"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 4,
+      "chain_id": "memory-b9e083692a05481d94c91f186e144a23",
+      "task_id": "work-state-ws01-v0-s101",
+      "step": 1,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:b654a92577cbb12af52ada7b3f65db34d551d9b07fd138d49cf4dd09cb023485",
+        "writer_fixture_sha256": "sha256:3af8414bfe7899d9a623834a6330bbad79be30dd7d5a09630112f6931485a162",
+        "source_version": "sha256:2c025ca9edff09c7f84301f31b822130b0b154ab0a92e25a1260bc60018677ad",
+        "frozen_sha256": "sha256:2800d625c35b9566966614ddd8c492b8df6fdf657682036cde01fbe1bb92e0d0",
+        "manifest_sha256": "sha256:5f348cf352e0a8e933dc0ac1f28ec59030adae764ed62ee7f1838bfa923f6cfa",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:51e7b33df8c887066f466144fdfcbdc4c1c3e8d734ceca7abe11556899b979ef",
+            "receipt_id": "sha256:45b34ed8216cef5f5d5b93962e619cf1434c7b2e20cc507c261d71404d9a1afc",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:9ee067b8c9b0c84d88d43cdd3dea433ed83fb793cf04a6090083f2515a5f2198",
+            "receipt_id": "sha256:05a351ca46e110a4688b8e7e6bb2f8ccf7af0b043a2df52f9ab5e2dafe5a2d16",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:8e3e26676331ec214b8d2ba3afc82ccdb23327c13cce58a60d903107d96e0066",
+      "reader_trace_sha256": "sha256:77b48b37ca8ecb7448b4b8089fb461a07fdde25ca3ffb16d05dd01b22340455f",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:3afa4f643e2d4cfd05d4c534573f2e3528304a4aa2c0b6a9e4e1eda57f84b6eb",
+          "bytes": 257
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:174c0f990855e8ec72ce2805ab24e9a646fb8a21c70328e086b6efbf9fdce6d3",
+          "bytes": 386
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:aca3648a3342124490842a9acc4ad9ae407fe5c6165beb1c1d44a49881b29ed6",
+          "bytes": 331
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:0044a7fb7774d71650c4a3348a0484af874980ec055b0e202d6d9fa98d6ac020",
+          "bytes": 233
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:552b9ffb943c0818567d917740929145d9d0db5dfaa7ef830d02eab27e601992",
+          "bytes": 261
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:0044a7fb7774d71650c4a3348a0484af874980ec055b0e202d6d9fa98d6ac020",
+          "bytes": 233
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [
+        "辅助 handoff 将 initialize 自依赖；index 正确，B 未读，不能确定影响"
+      ],
+      "reader_events": [],
+      "successful_reads": [],
+      "outputs": {},
+      "business_checks": {
+        "output_contract": false,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 5,
+      "chain_id": "memory-1d31cca652bc41cd95a4df1c0b50fb24",
+      "task_id": "work-state-ws01-v0-s202",
+      "step": 2,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:84f56e492a263893eb8214d5c878b005d2a3d614f57e4df810e960e9fe791ddc",
+        "writer_fixture_sha256": "sha256:e6002bfb87af10b25056047251d608070d2706d717f0cfc3f8639b655b582264",
+        "source_version": "sha256:bd7411cc6105ba27c5a14313e1c0b3cc90963f02006f8f2825a10a22c3913f5d",
+        "frozen_sha256": "sha256:1fe231c94c78b8745fcea7ffcc4ff584222639340ef04431c2271950a0fe32b5",
+        "manifest_sha256": "sha256:16f24440211b6a35c0c9dc8872347407c866d61cd8065a97f2225fce00060413",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:1cff1ad431443e32b5c64d350f1a1d6b6c97e491677781fe9484920829717ac5",
+            "receipt_id": "sha256:3567c12260cd2092b641ffc6326f19bbcaec02932805b2f3e7cc6303679b7bc9",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:e209f4cab85e3ae124a8df4a2e2f88626207e216cd14aab9cfeac3bb15ed8765",
+            "receipt_id": "sha256:448922580774f73f6c83cb53602f37c1bb86c90c4ae9b4aa08acb2fb3f58aaa8",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:2bc05d12ce6833cef3db3b0585ae2f4a6ae5562d8571677822183b10582c8f37",
+      "reader_trace_sha256": "sha256:f72b2b71453c14c49ccc705825ec5d3336d820fc97eb8f52b27a4f089deb14b6",
+      "memory_files": [
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:e83c957052372cbefca90b786a59cd0a9d2659a47cbb9e1707a28fc885e81443",
+          "bytes": 219
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:bbe301c700349ecf06319c16cc90547302d937e6f40c4033bcb4487a8a9e38bd",
+          "bytes": 378
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:1b4a85dfabd8829523c0ee6d6f31304569251ec95b27b943afe50ab9e8d0e144",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:a4598fc832c59774212b5659d9c215c8586d98526b2a8d468313eb452411b0bc"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:79852d71c9eebd3524a9e658345249e7de38a4b410a2d038752f6ec65573b963"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 1
+        },
+        "plan.json": [
+          "config.json",
+          "plan.json"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 6,
+      "chain_id": "memory-537f3ae7b6a04fed8a67e3b5de96d140",
+      "task_id": "work-state-ws01-v0-s202",
+      "step": 2,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:268851d036295ac3c7de9c1c95180456c77a908ea2b1479b32ef0c484d62a278",
+        "writer_fixture_sha256": "sha256:1d2c99506985513c16976ec16116de450cf15ebdc0528333ada10619642b7b15",
+        "source_version": "sha256:bd7411cc6105ba27c5a14313e1c0b3cc90963f02006f8f2825a10a22c3913f5d",
+        "frozen_sha256": "sha256:0070939dbe1ecc7201fe7f9b759cd437cdd30f22146fa6ca2fbbb4259b1dfb0a",
+        "manifest_sha256": "sha256:561a5ddb95677db82fc644057e742619950555e9a034077cd621474913733a1c",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:845a181f665241149aeb534fd1856014b8f6374824043a9fa5270ae789ad966d",
+            "receipt_id": "sha256:ce86a1ae58e6339e25e0ce1bf795f04d15102aa097a3ed82241192231177f04e",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:2e9bb33327a8be5d2f9aa240450999f7bdb808d0f2597e355abbf4bb7b35271e",
+            "receipt_id": "sha256:fbb521384be5be7796cb1eb8cd70231ced27d556f535de2896198798c276e0a3",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:90069aa18c235de16d7bb69334dd95008c282736c1fe273d09e72cd4010cec33",
+      "reader_trace_sha256": "sha256:aa0605d1c572b6da16a33dd4d01106b5a268adba36dd274b9972d1932257bddb",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:16d27bf7a861678120e016fc829ce0179825e80f5571762223bb8228d405e3c7",
+          "bytes": 435
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:86dd52e0762713498345bd3880c1522792d84659eecc529dde3680d0a1d2a54a",
+          "bytes": 539
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:6703f28b6f4053856c8fe16e96b7e68d5e1f183a221801f6fbf14d7c3f225bc3",
+          "bytes": 376
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:ea467115d283caf65c843c21b4e0744824d757a5dab48fee2b73601a65737d42",
+          "bytes": 694
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:65c5bc462d4314d8b3d98d73e31cb653f5e95b64b74cb62a2826f5908266f19d",
+          "bytes": 366
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:3a8431d99238122f844b34715eecc14fc44eda0c32b89819c8c12bef6eb17025",
+          "bytes": 215
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:90e83f71957d9c28032a86f91eabe5a6716430bdfe4eedd43bde14a207162e2b",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:80a572c29f351578e4ef5ad13f13b5dbae56334f24078ddbf31522ae9a75c5d9"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:0d0759c2d43be5805ca665763fc64cb05be0892d22ce3c70d5640801463b2b2b"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 1
+        },
+        "plan.json": [
+          "config.json",
+          "plan.json"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 7,
+      "chain_id": "memory-89cf91aa59834b6ca14a7d064a76e151",
+      "task_id": "work-state-ws01-v0-s202",
+      "step": 2,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:a7cb6a2a594003289f884d39a5ab1a275419f47caa10a6745110b47f1946d710",
+        "writer_fixture_sha256": "sha256:fb2d456861e634901ed8c16c497432ee53de13715f8eca0371888b415920d9e9",
+        "source_version": "sha256:bd7411cc6105ba27c5a14313e1c0b3cc90963f02006f8f2825a10a22c3913f5d",
+        "frozen_sha256": "sha256:25bb1fa259793f06b5e025c1d0858c7594ccd7719a6fdeda7a1c7fb066929a35",
+        "manifest_sha256": "sha256:90404db071f13f6c5e8f837947e4abe054c31adb2b9dff343310f03434311a2b",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:b43bb674cc3b6e2ed72cd57f56437f9cdadebb75827e702448e36825393263b5",
+            "receipt_id": "sha256:a51201fb7d2a094f424711b9ca120339ae89131df72ede784a97d9876b87be06",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:bfe6f9ee1220e7a504be8f9f01d90cbb02f464220c61b0abe98673920bd54c8c",
+            "receipt_id": "sha256:31ea71168dfa640903aca31a70bf415b35d20cac6ca11d5227d277849434583e",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:c6bd861e904d390447d81ef5bc102d5fad3745c96a93e0f6f41e07a2e8175447",
+      "reader_trace_sha256": "sha256:76e138f47af3c343df31223bd11a6e808338dfc8440c0c0c6e40e81139457dcf",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:9adb8240e2b210d99b13f1f8df42a26abbdb362345177d46cf4dd1f9d5f7dcbe",
+          "bytes": 373
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:0dca25302743d04f8de290608f6c583c7d247b800b401cbcd7cf3c37f2ea5e3b",
+          "bytes": 379
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:bbe301c700349ecf06319c16cc90547302d937e6f40c4033bcb4487a8a9e38bd",
+          "bytes": 378
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:881bd9d1b08efcea77b8d4696f2dae941285ccb1a75ba7656f04e37e0dbc7760",
+          "bytes": 370
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:9cad3cbf802559cc4c7273e9d223af05e7fa90b3fa1b3542646c739f753da013",
+          "bytes": 371
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:6bd42e3d077816905283627a2e0c02c6591f254f06cb43d92373ed6cefa63b58",
+          "bytes": 369
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:19b8724422499642e7b3017c5135a280e00ef1f1e79201f8ac1cb0c0ed7231f9",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:bd149683c93765cd4465b2385dc161169cba50a713ca196b8df8f9dfda678ebb"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:096c4a9504dbdd5091989bcda23e4825510e57af00e8a12b43f35b76eff6d70a"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 1
+        },
+        "plan.json": [
+          "configure_capacity",
+          "validate_schema",
+          "execute_migration"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 8,
+      "chain_id": "memory-8b867b89f88d4ad0906664678f8fc94c",
+      "task_id": "work-state-ws01-v0-s202",
+      "step": 2,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:8e4ac9195c894dbaaf66cef79f3401f109ad39350a5176741927739987629b2a",
+        "writer_fixture_sha256": "sha256:92acc7a192ad0e7d2d8371e0ba3ab453cbe01255522bf37667e8bdb0f9949229",
+        "source_version": "sha256:bd7411cc6105ba27c5a14313e1c0b3cc90963f02006f8f2825a10a22c3913f5d",
+        "frozen_sha256": "sha256:ac059fd244144f67c6d87ff14feac6a807d5fd8447f389cfcafd90ad6b155ef9",
+        "manifest_sha256": "sha256:539fb311ec77f31e2b13006e62feadcae4d260e608bda59b2c0f1a3337db4257",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:3f6ed8f840a42eb595df8c71694bfb9fc670d515ca6343bf21a036f7b4d56d12",
+            "receipt_id": "sha256:ebdfc3a86fa41d64543f8bf78a643c47e75880c304cff4e530b86e11214b353f",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:7c4af7c345b5f6f842728641e03a8def40b6a80dc5ec7afc8d978f11427e10ea",
+            "receipt_id": "sha256:0371c03aa63887ca96efd9646ad81ba969a81fb9e5e66bc82d2b548883b00ebc",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:d37ee610220560521157af278dba57db3441b37fcfdaf82242f2553c6bd4a33d",
+      "reader_trace_sha256": "sha256:52ad44aedd152866cef0b4f87d6b2bf43c4d9b775df03294d43b2eb7c5648750",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:85a57005e25cb35f75318544578047624eb37a3b362aaabee9f81499b7ade48f",
+          "bytes": 353
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:01f17b421ad70738aa43bbb3084ff3e1377729f7f58f4c8c6c0b96e99e450103",
+          "bytes": 325
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:0686699cbe72a4cc06202e6633517b47d9ce89c3eea815c11cc98320ffd6f32a",
+          "bytes": 331
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:c39bf0f099c07a14e954865b9a7f45c2f242c10355411009b47c19b54f3ed002",
+          "bytes": 233
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:163f3437ae4ede7b3dacd081106bfcd099165de47a67cf0d2e335340172f142e",
+          "bytes": 295
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:c39bf0f099c07a14e954865b9a7f45c2f242c10355411009b47c19b54f3ed002",
+          "bytes": 233
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:e0e9278fbbcd6917425de6811e27e0ccf5f99f5367f11ab373deb752e1211ac4",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:16bf7527f1aa2011b6c5ec65a1646d338d3b4bf480253058975bc9e1953c6862"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:05d434b63b751d9c8872b6cfa4a5b6a880e093f9b7d6bd9d41a47842eb70d836"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 1
+        },
+        "plan.json": [
+          "configure_capacity",
+          "define_schema_version"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 9,
+      "chain_id": "memory-14c5de78e19d4d8db16792bf5d6bdae1",
+      "task_id": "work-state-ws05-v0-s101",
+      "step": 3,
+      "family": "WS05",
+      "evidence": {
+        "fixture_sha256": "sha256:674ce67977f36a994427be32934d7a7f261825b9d2d57452a43f102f1bdb9e60",
+        "writer_fixture_sha256": "sha256:d1ef67693ccf211214b38f74364f777b02485fb83e935f61fa2f5e8b7d5070f2",
+        "source_version": "sha256:0d20e5deda4eee1fa2894e2aebead7705fe6dae0869ec81edc6de504b5b35311",
+        "frozen_sha256": "sha256:187925f9c825367317a5102b1ee09bd54953b3e583a81436a5366827aa9d66f5",
+        "manifest_sha256": "sha256:9fc7de9b4befd2524a244f1e306126d83882edcc6a1bb6b29168faf5c087f343",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:c168122fc9317d87ac585543e77929e784037654f747d14ef1aee1d159af5b4a",
+            "receipt_id": "sha256:a0fee0ea313e606f25c58ee478ec663d3b0da9d179626aa7d7f21be97db94830",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:98395fc410f0f4cb1b4ad469a56ac142b2450e95b37f3a6c1fc55290fe0c8f0e",
+            "receipt_id": "sha256:70c1c532de8d361188a0900cc29032dc5ff6d62cfafd4276b23c6dc6ad268544",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:9cbd560e699cbc814312c362b6596861aaaac99a8cd0df574367675883a86b2d",
+      "reader_trace_sha256": "sha256:bffceb8932112e6a4003672f3795358411f040b888f3374b4ee1ca5fcefff272",
+      "memory_files": [
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:03ed5d738c85509755ed97d3a897c086e8b961ea42405cd7ddedb55e85bb8bbf",
+          "bytes": 339
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:c7a042181dee5a4db64338f2911c72ac893097aa4eac0a2afb14e2e8c2fc7eee",
+          "bytes": 438
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/decisions.json"
+        }
+      ],
+      "memory_content_summary": "包含跨 scope 高 revision 诱饵、本 scope 旧值与新值。",
+      "presentation_flags": [],
+      "reader_events": [],
+      "successful_reads": [],
+      "outputs": {},
+      "business_checks": {
+        "output_contract": false,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 10,
+      "chain_id": "memory-2916e4b8bb8644fda076249807860414",
+      "task_id": "work-state-ws05-v0-s101",
+      "step": 3,
+      "family": "WS05",
+      "evidence": {
+        "fixture_sha256": "sha256:39a65a84ed73cc4748f5d3a863c3a11acf5626cb8179ccc08d5330b6b62fc7ba",
+        "writer_fixture_sha256": "sha256:f3af856e07c139e41a11b49accf31e8900c1968be9b2be5a631fb17531599679",
+        "source_version": "sha256:0d20e5deda4eee1fa2894e2aebead7705fe6dae0869ec81edc6de504b5b35311",
+        "frozen_sha256": "sha256:564b38cfd836bbe4a012e837b0bd86bdc9ac1616c25424940dd1bbd494d18bf4",
+        "manifest_sha256": "sha256:d3f6e3d37b469d4474cb80f6f0b157389a89cab203634304c143f94220a44d3d",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:55ee73ba7e3b83d623c0ae557ea1074cdb01822fe7fa11129955dd06838dc518",
+            "receipt_id": "sha256:958ad31b5a87115c6e874732a4d733af1e908592f50af884f3b2d4ee4cf492ac",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:96c9bf554b2886f4685d9daaba46c1b8059973533f0c66d059f4b24c24de0c69",
+            "receipt_id": "sha256:98dea4198447716489a09050833b2daacfce9400660619726f67ce96b34efc33",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:3ffd1a6d6fb7c2e62253817ff25ab0ca3b40e4647c56c3277b943585591eb5fb",
+      "reader_trace_sha256": "sha256:7d0b44d6e92fbbcddfd2993dc7d6453a2d6e946b44bb80c1afa5dac6a357fd6c",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:906e510cb6f3a23ae58fa4361bfd4b0401aa705763f38db9a8aaa781a2466733",
+          "bytes": 368
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:fd1a4ad38d803d60e7885a94c382f06f3e21ea98e07ee7a15300622b04f0085e",
+          "bytes": 454
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:dee30308195768965cc1d528968c606476afd368e27f23c843a16a8688f39785",
+          "bytes": 388
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:1c494d097e3b045ea1d28f5803c9042799f934e8429d051598c7ad9ccc6e1263",
+          "bytes": 59
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/decisions.json"
+        }
+      ],
+      "memory_content_summary": "包含跨 scope 高 revision 诱饵、本 scope 旧值与新值。",
+      "presentation_flags": [],
+      "reader_events": [],
+      "successful_reads": [],
+      "outputs": {},
+      "business_checks": {
+        "output_contract": false,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 11,
+      "chain_id": "memory-502fe62a8b9d41f09945c99041b8e2a2",
+      "task_id": "work-state-ws05-v0-s101",
+      "step": 3,
+      "family": "WS05",
+      "evidence": {
+        "fixture_sha256": "sha256:92ac42972f0190d2b78c2024568c0e80dd4e9d2b74fb5104760ec96e2be9abad",
+        "writer_fixture_sha256": "sha256:b47314620f63dda57145160ecee486ddc7be9723b47c541fc1683b22d86017e8",
+        "source_version": "sha256:0d20e5deda4eee1fa2894e2aebead7705fe6dae0869ec81edc6de504b5b35311",
+        "frozen_sha256": "sha256:8039ba55d9e132673eab9c374ae913b4a265fe1ab5f42f429ec93bcbc7ea6dd2",
+        "manifest_sha256": "sha256:9a26a5b76eebb527d97abfd5c213b133eed8c93ba7fcadfea59c800cdaa638c6",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:2a6b5dbdb9aacd1e4b367ede0b00da1a05f2187b93927da678842783e1429750",
+            "receipt_id": "sha256:b47a3b41eba7ca9fab75e20f5f8dd0e64f03bad77eca7dccdbbc564b572ec1f4",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:33fffda8b048312ec1b1c66607c5d6821017718f314f4c893b0549cadaac611c",
+            "receipt_id": "sha256:3da5f9d771087f7fea3e5093fb88ffd535352f1ef7084a0e3934b1930fe77f47",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:8c1556b33d741f4806fb8aca7c9f89d98b6b4430aa932ec6c3b1b051c34ef2d2",
+      "reader_trace_sha256": "sha256:e6416daf78cd29cd4bd1684dd7508d5bb5fe2126748ae61618989c5dec445d8f",
+      "memory_files": [
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:4e135978e7fc3fd8025fc86aa0771c72bd63064bed5009167e32d2d245e55e8c",
+          "bytes": 237
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:dd45f55548638b33e92e033d48c490ef940bbf58b5fc436caef20b176eb6e2f4",
+          "bytes": 464
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/decisions.json"
+        }
+      ],
+      "memory_content_summary": "包含跨 scope 高 revision 诱饵、本 scope 旧值与新值。",
+      "presentation_flags": [
+        "JSON 展示含字面量换行转义，事实仍存在"
+      ],
+      "reader_events": [],
+      "successful_reads": [],
+      "outputs": {},
+      "business_checks": {
+        "output_contract": false,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 12,
+      "chain_id": "memory-d14c9a3f65f344ed9fe3e3008a314e7b",
+      "task_id": "work-state-ws05-v0-s101",
+      "step": 3,
+      "family": "WS05",
+      "evidence": {
+        "fixture_sha256": "sha256:bf9c9660238cebb7b1926c404c37d50506dfc29119ce61a7513875ba8ed78f1f",
+        "writer_fixture_sha256": "sha256:9ac8b7a2a0e3f39caeec98f06d4ad6dd9b092d29ac22d76f9d8ee63cb4d61a6c",
+        "source_version": "sha256:0d20e5deda4eee1fa2894e2aebead7705fe6dae0869ec81edc6de504b5b35311",
+        "frozen_sha256": "sha256:63d0c6b7306542690c4baecad853bbf1a43998be60a996b75325aab5a12e58aa",
+        "manifest_sha256": "sha256:1daaa972b74921517d9b92aa283b678a5e75739f9cc669efcc98be51c7e793c7",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:9d64cd4f9c1881556249268a96700b4744de8c44fb54a83e2c93fbf02eda430f",
+            "receipt_id": "sha256:59da8b0b414063dc939c25832e956f098ce38036b8d385913755db9814a3493e",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:95fd85a76f45085c9828e9b337e6c60a2bf40c98baa6c3ef71e48395afede56e",
+            "receipt_id": "sha256:7261965f31787de8909e602006c40050fd33889553de8dcb565e38819208b992",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:550075df5673e5ec6fec879c0485f85cce785576f5135b23f5dc4bc2afcb1e55",
+      "reader_trace_sha256": "sha256:8809e97ae94979afaf260e0631db95afc4a36ac3f178e12414c3f543ea56de57",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:44bc18499975a36bcfaabad167c64fc88154a200ced3b10b87368ad5fb998a33",
+          "bytes": 371
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:eb3fdcc0a52b8ae887b001c3b95244a7ba652ca87bd8bc3dcbe3076d4af71fb0",
+          "bytes": 392
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:e0a5c64f8f00777bb5d38a9ba46db4b378a06180486e4069ca8ba01073d62da1",
+          "bytes": 391
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:b01547dc5aad5c955663840d43c6629cc27e2c7430c107f4c4b4e684819af1c5",
+          "bytes": 79
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/decisions.json"
+        }
+      ],
+      "memory_content_summary": "包含跨 scope 高 revision 诱饵、本 scope 旧值与新值。",
+      "presentation_flags": [
+        "JSON 外层引号/数组格式损坏，事实仍存在"
+      ],
+      "reader_events": [],
+      "successful_reads": [],
+      "outputs": {},
+      "business_checks": {
+        "output_contract": false,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 13,
+      "chain_id": "memory-4937a4424f3043a0a239dd8bfa4f53d3",
+      "task_id": "work-state-ws05-v0-s202",
+      "step": 4,
+      "family": "WS05",
+      "evidence": {
+        "fixture_sha256": "sha256:39a03735fe596c351940ce0f6467721fd406f15b91a8e54a97b64e509cc6bf93",
+        "writer_fixture_sha256": "sha256:9582b2cc4f86295cdd87c283b853c40afe175dde84bb24289123b282d5980db6",
+        "source_version": "sha256:f2e6cf2133437975ded840deffaaff4fe9365648b01a83625b2b0626d7779eaa",
+        "frozen_sha256": "sha256:11042102de69025a4d9977e7207e0f3c28f06c4345d43030d2dbcefb50af57a3",
+        "manifest_sha256": "sha256:030c2db3bc1afbee7dfeab0b6687ec3f5137f658394b3b2e88d4e8b6a430ea52",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:044aca504c2afc1028f152ac73336c3ae60a34e6afc0f652ccb7e6ddf41d4e55",
+            "receipt_id": "sha256:5409feebf1f2761d05b4442d950fa42b8a426c217136705f1145cf034cafd274",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:f9f54337acfbd23902753b98c5c31c156b51d570ace1cad3c045517186dac396",
+            "receipt_id": "sha256:0c768d5af4623aad1bce3aa0eb6a2b6d002e66566d78fea61df76efa4a26c4fc",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:19c05e99efedb40672ce6982f2e4d3e4095f5a66ebea04abb7e6fae55e57e4f1",
+      "reader_trace_sha256": "sha256:0a33d8ebbf4c214c460d7050d8a7c0e37b5aaf4efd7497015b40e4ec68745bdd",
+      "memory_files": [
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:09ddbee9d83d46ef101f571855ab4224d85139368fb0027c975730913ba8b200",
+          "bytes": 302
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:88adf15705f0c3c9df6d1105a073a7a8aec27c9cb14c71f274b99082d9c04c89",
+          "bytes": 441
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:92aad49112480b7404c1c369ed28a3e851788c49b35c0d2f5992e7fd794b1197",
+          "bytes": 61
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/decisions.json"
+        }
+      ],
+      "memory_content_summary": "包含跨 scope 高 revision 诱饵、本 scope 旧值与新值。",
+      "presentation_flags": [
+        "index 多余右花括号",
+        "handoff 指向 writer 绝对路径；index 本身含完整事实"
+      ],
+      "reader_events": [],
+      "successful_reads": [],
+      "outputs": {},
+      "business_checks": {
+        "output_contract": false,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 14,
+      "chain_id": "memory-abf9b7056c4e4ebeb6b30d2844dea492",
+      "task_id": "work-state-ws05-v0-s202",
+      "step": 4,
+      "family": "WS05",
+      "evidence": {
+        "fixture_sha256": "sha256:980fbc90fa601e934fb35ae3b27f0997d2cabb5ecf757e010e24d5538d4836cc",
+        "writer_fixture_sha256": "sha256:4883ec03879f7b06cf4747ea4fc1b0f35d3802d7dd43bb8cf9a8fd87a68692f8",
+        "source_version": "sha256:f2e6cf2133437975ded840deffaaff4fe9365648b01a83625b2b0626d7779eaa",
+        "frozen_sha256": "sha256:63699bc53e94d1fdb3056fcfb910b70de8e8f326ca6c6c1099362f4623f0495e",
+        "manifest_sha256": "sha256:aea0302059316f304543bb014e1a12aebe0ba0ac36a1cb070f6413d77393d974",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:859118c624aa48358389670d6da67d7ab71b270caf575c4ba7d9febca904ea30",
+            "receipt_id": "sha256:da1e6e46e82db4ed9a8bb78557910745a6ce6584fa7db428716e26924364a898",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:9b02585a218df98bcd759b0bc118e2ae8d7c2cd8cfb4fc003d79eb9d52992a08",
+            "receipt_id": "sha256:e06164d187b3f88560222cc8552a0678df8a151b1fe4314c3a4d03df648c5294",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:8eac2435e0a63611b49c3032529d5a4f1f72c6230fcb8a02f4e6df2825c4bb38",
+      "reader_trace_sha256": "sha256:bfd9e43515290e82a44faaf9e63702b09b58584ab988df196da25bc26191af04",
+      "memory_files": [
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:8351c93276d8f25df434a39b4db39d28b06faae2d1962086c1b9d48bf1b4d5e5",
+          "bytes": 42
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:773eafeabd73236144124372e99e90e72c73cfdd7c6ae332efc1c68b75ae314a",
+          "bytes": 399
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/decisions.json"
+        }
+      ],
+      "memory_content_summary": "包含跨 scope 高 revision 诱饵、本 scope 旧值与新值。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/policy.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:8d24db6bb034acbe4fab71dc6f335ea5076749e5d6f3b93c22cb320d25f4298d",
+          "source_sha256": "sha256:cd6230d040bc82c4a860e72d19a99129d2820f8546b762a6e7d03d42d268b013",
+          "full_source_lines_match": true,
+          "source_line_count": 10
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:ba64c9f9f385afc724110709e783400c8a2fa049195e0fc79fc7b9e057280a30"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:a3315ec853df954de803b55e9028b7ae74161cf26a308ce782749e663d943dab"
+        }
+      ],
+      "successful_reads": [
+        "sources/policy.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "region": "this-worktree",
+          "retention": 2
+        },
+        "plan.json": []
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": true
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 15,
+      "chain_id": "memory-ec96f35e8a314a5695c541470829c55d",
+      "task_id": "work-state-ws05-v0-s202",
+      "step": 4,
+      "family": "WS05",
+      "evidence": {
+        "fixture_sha256": "sha256:5d7aff4f9447a6a94e86a781e953adebe520be5a7002dcf1a44f3624afa318d3",
+        "writer_fixture_sha256": "sha256:93a592ba40dfbc6a762852db1d43044fa2cb521daa789447a058bf1d42e7f218",
+        "source_version": "sha256:f2e6cf2133437975ded840deffaaff4fe9365648b01a83625b2b0626d7779eaa",
+        "frozen_sha256": "sha256:46b6ba075322ac3e9929054b0258a42da42a9a6b0b27ba002eb2a3cf81dd77e1",
+        "manifest_sha256": "sha256:6dd737029a05e1ef7cad1945155bea8725dd60669ed907324214241a78b4549f",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:40798eb8054ec14fb3fc5fa10e2a49fad169b7b2872e96af5e459d4e4580f0f2",
+            "receipt_id": "sha256:eb2ed83ca5154d420b3bc04b9aa1f1349eecd12d38d26a4659a9f445000974a3",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:e81d8a5f034b6ee84b756b502fb296a3ae56da259d09f353958c09d54af42f0b",
+            "receipt_id": "sha256:46e3294e2dcee6a6bef527ed4520e0db5c01dc91e4ef1e4e14dd49fbc22a7313",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:7c8dba0471f5bf4e52f582de0c22885ee190a4b91e9ee67fac23d88cd46aa006",
+      "reader_trace_sha256": "sha256:16029024e77fd360dd1840d717b4b006b0eebcabe5a8c873464b80aab4e454bc",
+      "memory_files": [
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:8860cdd3408260d42321459a68df8fe8aabc7c359f2f38aa41d893c7f0ce5e21",
+          "bytes": 294
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:8ca1befddb338a6762b14387b454c3b348c750ae11a38d590986ede6193a063b",
+          "bytes": 436
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:8824055fbbb7ee0a732b804ca247393114707bda09517334d9fdbfbc47049e26",
+          "bytes": 65
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/decisions.json"
+        }
+      ],
+      "memory_content_summary": "包含跨 scope 高 revision 诱饵、本 scope 旧值与新值。",
+      "presentation_flags": [
+        "代码块未闭合，事实仍存在"
+      ],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/policy.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:e3efb9b1df7627e8ab22163d6b9f5a86215de5ca4d622fe293395cac17f49c30",
+          "source_sha256": "sha256:cd6230d040bc82c4a860e72d19a99129d2820f8546b762a6e7d03d42d268b013",
+          "full_source_lines_match": true,
+          "source_line_count": 10
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:b846095592b88bf4d3134a60722237336e73c254eb465096bd22b503c43bfd85"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:6a5f3e3d02cdd0cda20e0fa8d4c4bf474ef810946a2b4b1f964597411012083c"
+        }
+      ],
+      "successful_reads": [
+        "sources/policy.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "region": "this-worktree",
+          "retention": 2
+        },
+        "plan.json": []
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": true
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 16,
+      "chain_id": "memory-ee55259d69b84663a3eb47166ac9acca",
+      "task_id": "work-state-ws05-v0-s202",
+      "step": 4,
+      "family": "WS05",
+      "evidence": {
+        "fixture_sha256": "sha256:f499779847f29bd277c7f58276bac95c88a9f80adca4af270054619c0efbe4ca",
+        "writer_fixture_sha256": "sha256:434c3970fa82c4c4b889fc24b4ced643cbe5ce0cab6860c2a276c5f2ef58cf0f",
+        "source_version": "sha256:f2e6cf2133437975ded840deffaaff4fe9365648b01a83625b2b0626d7779eaa",
+        "frozen_sha256": "sha256:708c09e0c546be248edc842b7c9d589056aec5a362a6749e271eef4d61f6bcb7",
+        "manifest_sha256": "sha256:94b4473ea8b2c12c82b24bc1cf764c47515dc7bd742bf84cc12e184b81d602e6",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:55ece3e00045abf3fe6e89c42331796f0b23677f034c0ba6f93f2c25ce94573d",
+            "receipt_id": "sha256:cc28fcc35efb54e61deaea260ecb4a5491570113d343400c14dae4ebeedb0b43",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:b0b21570c7481de63401e3d296bc977436d98325905d2f6d9edc21d8d87ebb32",
+            "receipt_id": "sha256:8ddbc50cc7fdff44b25a547463f933757f807c0a5e488d72d4cf3eacfa990c66",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:aff96e41e3498ffb74892a1e723c7ee8c56e6796a1541c31b39e53b65ef3bf8f",
+      "reader_trace_sha256": "sha256:27208cb9e1173d5bba5f0aad21de776cedb92569e569e3c9e7363775d87af196",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:5f00cccc2f9ce68cac0c97a8b107ade05592be83e5eee4dd3b856376794b1852",
+          "bytes": 486
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:0843152967ec849bf8b4f6b53041eed64ad5698879174f7fcd0bb9cf0b8df8ef",
+          "bytes": 131
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:773eafeabd73236144124372e99e90e72c73cfdd7c6ae332efc1c68b75ae314a",
+          "bytes": 399
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:7a4eddd4ce5bdee305241dff0c3b49725f693d369ba9e90d9830854400255560",
+          "bytes": 462
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:5f00cccc2f9ce68cac0c97a8b107ade05592be83e5eee4dd3b856376794b1852",
+          "bytes": 486
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:7a4eddd4ce5bdee305241dff0c3b49725f693d369ba9e90d9830854400255560",
+          "bytes": 462
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/decisions.json"
+        }
+      ],
+      "memory_content_summary": "包含跨 scope 高 revision 诱饵、本 scope 旧值与新值。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/memory/index.md",
+          "is_error": false,
+          "returned_text_sha256": "sha256:3a887c4099daf3b35fabde3b30130e2839ed2f7f820252dece8e045e679d0b57",
+          "source_sha256": "sha256:773eafeabd73236144124372e99e90e72c73cfdd7c6ae332efc1c68b75ae314a",
+          "full_source_lines_match": true,
+          "source_line_count": 28
+        }
+      ],
+      "successful_reads": [
+        "memory/index.md"
+      ],
+      "outputs": {},
+      "business_checks": {
+        "output_contract": false,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_after_memory_read_no_artifacts",
+      "assessment": "成功读完整 index 全部决策，但未读公共 scope/revision 选择规则，未写任何最终产物；不能断言已具备并误用完整任务上下文。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 17,
+      "chain_id": "memory-7d38e85654a04e6584aa5afed969f572",
+      "task_id": "work-state-ws06-v0-s202",
+      "step": 5,
+      "family": "WS06",
+      "evidence": {
+        "fixture_sha256": "sha256:7f81bd80c7b525a315ffdfc1db48e3737b13bfabec9b2172300e73211a350d69",
+        "writer_fixture_sha256": "sha256:3e5fec07f74a880edbb78eb6359e67f20a299c74ffafe55f53b95d8670b85a0a",
+        "source_version": "sha256:05770cea35ab4f0edfe56152f3f201c7be8624cf9fbb7fe2fa45dbd26a050052",
+        "frozen_sha256": "sha256:f7c2322d5a45c9b4c9e3f0563a80c1d3bc9a23ec1c63ad2d4adcb9dd089dbb83",
+        "manifest_sha256": "sha256:ca5e1105a2aa27d37c09f150e7114c3b9f55243f6cf40fbf209c9169ee7042bf",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:6a1c2732c2387999ea69323186a744e69f39c9cc98bd57dc87705c2e83cb727d",
+            "receipt_id": "sha256:f54b63e7c118967b55ea7d773848c3cb1d17352f37c7d81b41cb6bb899142693",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:2b6e67d76d10d268e4e98881d2a57e6bb4167e249d282d1cad86e1324f04b9c4",
+            "receipt_id": "sha256:b15f3897b91876b066a0eba19e268de721a7ee4ef057a26d17236dbd217e1c4f",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:37ec76118b372bad0008d39a6f41dbdedea0ac435cf21fdc65c03db50d870c6f",
+      "reader_trace_sha256": "sha256:f7914c9507478018a9fed2e23e9deccdfd695b95c171660bd6d305ed99255ef7",
+      "memory_files": [],
+      "required_facts_in_frozen_memory": null,
+      "index_missing": true,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [],
+      "memory_content_summary": "无需 A memory；B 未读公开请求，缺产物或默认 capacity=100。",
+      "presentation_flags": [],
+      "reader_events": [],
+      "successful_reads": [],
+      "outputs": {},
+      "business_checks": {
+        "output_contract": false,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_public_read",
+      "assessment": "无需 A memory；B 未读公开请求，缺产物或默认 capacity=100。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 18,
+      "chain_id": "memory-937313278f7b4e149722e731edecaae5",
+      "task_id": "work-state-ws06-v0-s202",
+      "step": 5,
+      "family": "WS06",
+      "evidence": {
+        "fixture_sha256": "sha256:379aa447c97a77adb61ae2d6d7ca1285327213e5ba48f8fd43d69ef693a7fc88",
+        "writer_fixture_sha256": "sha256:d57913e6e95d4c075da5e8a942a19537b58baeac6dde4c655a988d894c1a5f3f",
+        "source_version": "sha256:05770cea35ab4f0edfe56152f3f201c7be8624cf9fbb7fe2fa45dbd26a050052",
+        "frozen_sha256": "sha256:f7c2322d5a45c9b4c9e3f0563a80c1d3bc9a23ec1c63ad2d4adcb9dd089dbb83",
+        "manifest_sha256": "sha256:8659b4c7a3bfc976b1974f3dca776bb5d65b017b459ea15b43186b2372c69ea5",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:872e4dc565242ff660755694af20d226b6e7e6be50b27ab3b425d05659158706",
+            "receipt_id": "sha256:010a6469686937db46e824c207b073e4dc7d78534b4d4319946c830022fc823b",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:c5e2fc86e56d5bba87166687d0034af5d3b6c83f5d3070a7b004b07c51d1bf41",
+            "receipt_id": "sha256:c49d2ae563e857b030909d51066f3a404ddde40a6fe87384c70bff6269184f1b",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:1eaa12528a3019cd857932e7c9d6745c1507a79401c0fcc4f3d2bad83e7aebb2",
+      "reader_trace_sha256": "sha256:c5aed81979abde3b15e8339ca490091e5e04c2f8774158149fcee9781fd6ad20",
+      "memory_files": [],
+      "required_facts_in_frozen_memory": null,
+      "index_missing": true,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [],
+      "memory_content_summary": "读到 peak=118/reserve=7，capacity=125 正确，但额外 rule 字段使精确 config 合同失败。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/request.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:5e79eb4390f0a61e8653090b8cd6076b9d5fb3c05152c54c133d9edbafa27146",
+          "source_sha256": "sha256:b76bcb0b8125f4e53a9a10740dc091ade4acbea7771da03a99f0c38117728578",
+          "full_source_lines_match": true,
+          "source_line_count": 6
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:556c1c46aeffe3168fa7174813340a85beaccd8419e85c05c0df9bcc53060395"
+        },
+        {
+          "seq": 16,
+          "result_seq": 17,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:7689f77385e34cdf92fef3af59a9b6a61acb069badad156b74c44fd9a09c7366"
+        }
+      ],
+      "successful_reads": [
+        "sources/request.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 125,
+          "rule": "capacity = peak + reserve"
+        },
+        "plan.json": []
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": true
+      },
+      "classification": "B_public_read_schema_error",
+      "assessment": "读到 peak=118/reserve=7，capacity=125 正确，但额外 rule 字段使精确 config 合同失败。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 19,
+      "chain_id": "memory-d5d4d20887994d00a7e05874f50caf50",
+      "task_id": "work-state-ws06-v0-s202",
+      "step": 5,
+      "family": "WS06",
+      "evidence": {
+        "fixture_sha256": "sha256:8d593d6e0c6f99749d457714eb95ae24d58cd365870bc2ee8c39aa126ffd95b6",
+        "writer_fixture_sha256": "sha256:7aa481b34236826f9804b22f6636d7546a933a2e33498509a00399c2f0456ba7",
+        "source_version": "sha256:05770cea35ab4f0edfe56152f3f201c7be8624cf9fbb7fe2fa45dbd26a050052",
+        "frozen_sha256": "sha256:f7c2322d5a45c9b4c9e3f0563a80c1d3bc9a23ec1c63ad2d4adcb9dd089dbb83",
+        "manifest_sha256": "sha256:0cbe968beac78e0ef40e1136bc5ef6f613cfc66eb372e8f95786358caed4e0e9",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:e0708dc5ee9c2090f5bf23915f50301d6b412e5d43220418ba9abfe9ad292668",
+            "receipt_id": "sha256:68741a8df0e0f864e2f722b14e31d87a9bc0a079f2969edb7f2bcb12b4e58c17",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:7fca5e955f16f2c478db6e9c48ad9ef50f72f8eb044abe8415ddaa488a928b07",
+            "receipt_id": "sha256:4db36fa82686c4ecb9dfdd45050b844f853475469a383dc1d8995cc27b1c2e55",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:c49d7c5ffca5a99bfc4fce81acac00a4f5dffdb0ade7ec5e8de5a43eaf882068",
+      "reader_trace_sha256": "sha256:ebf15f3a15cf194ab71329ebd59b9156fcf5550d3a4c8f98ad860f720129d32c",
+      "memory_files": [],
+      "required_facts_in_frozen_memory": null,
+      "index_missing": true,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [],
+      "memory_content_summary": "无需 A memory；B 未读公开请求，缺产物或默认 capacity=100。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/outputs/config.json",
+          "is_error": true,
+          "returned_text_sha256": "sha256:faf1035359f5ce3935b31b09e24d19aa73cb37cb6ec1df09c30930e9aeabf1c8"
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:ac001b62c41fc137a06eaf6bf1e636c28dbec9cc8d9e7c57d0d41e0d28f784c4"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:372319f555165763444013a25412846dcb8408d9a170e6e6d432c781a81f30d9"
+        }
+      ],
+      "successful_reads": [],
+      "outputs": {
+        "config.json": {
+          "capacity": 100
+        },
+        "plan.json": []
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": true
+      },
+      "classification": "B_no_public_read",
+      "assessment": "无需 A memory；B 未读公开请求，缺产物或默认 capacity=100。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 20,
+      "chain_id": "memory-d9c1f1c4d5184ecc898ceb341498f1b2",
+      "task_id": "work-state-ws06-v0-s202",
+      "step": 5,
+      "family": "WS06",
+      "evidence": {
+        "fixture_sha256": "sha256:b68f58aa561f7dafa709293de19d821520f70ea614b8d8521279bab350665299",
+        "writer_fixture_sha256": "sha256:7e06de3fbc0a1be9f9651de5bf039507f70f77e144f0a0c4162251267134bd9a",
+        "source_version": "sha256:05770cea35ab4f0edfe56152f3f201c7be8624cf9fbb7fe2fa45dbd26a050052",
+        "frozen_sha256": "sha256:f7c2322d5a45c9b4c9e3f0563a80c1d3bc9a23ec1c63ad2d4adcb9dd089dbb83",
+        "manifest_sha256": "sha256:3de70076beef1d5b88976c39de695e07313f35693f53503dde9346caa5064e29",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:2f067aeb3e391ba57c95b84cd3eb694e345d30f35d9ec1684f2553d6b45f7fb3",
+            "receipt_id": "sha256:045c2ebf9ebc91fbeb54d701ec078c1a5e031feeb91647891d8cb5a702252faf",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:f4174b555789ebe2eda86383a7ad859bbaa1a98ad5c1c50a4484f01cf711af3c",
+            "receipt_id": "sha256:8829a7e66a3e6ee41d3a26edeca711ee6dee745015554c473c2a58f76acb15db",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:2ad2828f1cb48ec76c5cf204f61b7c0fe2461397065ca9d2948e5ac81d243779",
+      "reader_trace_sha256": "sha256:d7494182231c3f077b97bdfa6c2fbc30ca96f3f2cb0f390f2c5a620c2af1a7cd",
+      "memory_files": [],
+      "required_facts_in_frozen_memory": null,
+      "index_missing": true,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [],
+      "memory_content_summary": "无需 A memory；B 未读公开请求，缺产物或默认 capacity=100。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:34df681dbe54eba7c1e1630a46e29682a337f888b676656000eafb65f7026e0a"
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:8112b62f852ff2f68b05b083d3696965a620b80cc7817c434b8e6298fd5deed2"
+        }
+      ],
+      "successful_reads": [],
+      "outputs": {
+        "config.json": {
+          "capacity": 100
+        },
+        "plan.json": []
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": true
+      },
+      "classification": "B_no_public_read",
+      "assessment": "无需 A memory；B 未读公开请求，缺产物或默认 capacity=100。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 21,
+      "chain_id": "memory-3de8564f6ace4ca68906ddb48806ba34",
+      "task_id": "work-state-ws01-v0-s101",
+      "step": 6,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:e5f116a1914ef5c460d32ee4e3feccea8a04f88057f2881749ce0ad93306fd9d",
+        "writer_fixture_sha256": "sha256:8b707ca86e12d5fd8b0113e5e685b8fb77b76f8232d8fd2de30e9173f7c669cd",
+        "source_version": "sha256:2c025ca9edff09c7f84301f31b822130b0b154ab0a92e25a1260bc60018677ad",
+        "frozen_sha256": "sha256:cd8acc0ee92d798f3145c2eef5916608c068fcff90edeaa83e7e6184c6807495",
+        "manifest_sha256": "sha256:cc775639ab696a5107cfbf63c28b0f9311e1855830c893d9ef133a31f9fa36f9",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:77ac49f2c24b9444d45d693283720728bd8de38ab80ed2ce3b677733d3721c5a",
+            "receipt_id": "sha256:eeb1b76bbc6205a7b2d53407c71ebc982d74792b10a41f3e84a51440b45fc5d8",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:56184770a18d462d0be5c4c9742d896271e7e54159008349b83830514402bf56",
+            "receipt_id": "sha256:89eb6e0fb12748de67fd4e459eefd7cc99780d2a1c68d053f315ab5c93a509b5",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:bc35fd27aa2bdf25fd33b2fe879d1393189c3f430bdb9cf3fdf70bfc3ce6506c",
+      "reader_trace_sha256": "sha256:ac5252ed6ae63ce68cac74f76c6565749f1be9c8967e7896a04eb56585f767ee",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:83c4cfba8892c5aff2b111e928e15d60aac1fdd736dbb183a3889a2aaa411841",
+          "bytes": 69
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:28f1241e175ae4249944d1931bb1e7843595ec9af4753b469754e04cc734c41a",
+          "bytes": 379
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:0c25e705d11de9397dba37838b864e8cfa40cd0941ebac909d85ae7ecb63f7c4",
+          "bytes": 378
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:4a778101658f682afd3a2e342f95988de20013b7244d2d8f4eb5e06966e1336a",
+          "bytes": 65
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:6d58d2f1a21daf3f7f70d5e34984af19a2ccd827f55a6586e7572d4c7f8ac801",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:7f48e184cc96e7b3e774bd82881ec7144b46f4bcdd0ac0fc9bbdfe4c7f06aac6"
+        },
+        {
+          "seq": 16,
+          "result_seq": 17,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:7dabd26dfa45db32bf85008b635aa89cf4b7ac81e037ac7155b2c2f0400d07d5"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 1
+        },
+        "plan.json": [
+          "configure_capacity",
+          "set_schema_version"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 22,
+      "chain_id": "memory-59d7c6b942a04c58b5e424c14b27f7a5",
+      "task_id": "work-state-ws01-v0-s101",
+      "step": 6,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:ca799023ba3ba1cb0b5ed4fe4c9410e616e83fd82ec2d5ae8d62afb7ad1e11f3",
+        "writer_fixture_sha256": "sha256:767449b9083546d869ab6136ecf263da340a8e5723eb95e0030c0fa30d3ac9ef",
+        "source_version": "sha256:2c025ca9edff09c7f84301f31b822130b0b154ab0a92e25a1260bc60018677ad",
+        "frozen_sha256": "sha256:f863cdccaf6093444e046ddaf8d7d70c956ecbf46dc269700dde8b827f73ba42",
+        "manifest_sha256": "sha256:d88527cd507976a734af2fda4cde0de165cabe597ba30a6f31cbc37976651463",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:8b56eab610a419e067ddd702f8a21cc2941d9fff411502bc995c84ce192bfeb9",
+            "receipt_id": "sha256:dae315ad1683c2f89721cd276b759179ccabe87273bf4b97a922c496af4a6738",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:e57399bcad3f3529f9d996837590e12e3d5180812c5b2d8f5a1d663445077c92",
+            "receipt_id": "sha256:53b3da7ae664595a566ea8eae2689be6abb63ee405ede0b7a735e51df9dd965b",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:ce4533edd62e53ac07d9aac5343a8d89af309b09b441a1cd1a4df7e448650482",
+      "reader_trace_sha256": "sha256:2c60e8c02f9201ba077e55ce3a6f13d77dba20acfddf8de217306466115cd88b",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:6cb36cf3e566ce78f687cabd38541c1c1f955516ac288f6cbc633bd5c86b7795",
+          "bytes": 267
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:221b1d250fae122d3221aa6582c6aa582e2411a6069a63a6d65169ab6933dba2",
+          "bytes": 470
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:2e30d94f79b9d5d0448fe24d05c786704df93edceb2e585fbb6b96f24cb3086a",
+          "bytes": 393
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:0044a7fb7774d71650c4a3348a0484af874980ec055b0e202d6d9fa98d6ac020",
+          "bytes": 233
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:de6d2c813f4ab0e7b127a914fce327445f3122668cca25aa3a8bb3f4391c2bc3",
+          "bytes": 253
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:0044a7fb7774d71650c4a3348a0484af874980ec055b0e202d6d9fa98d6ac020",
+          "bytes": 233
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [
+        "handoff 指向 writer 绝对路径；index 本身含完整事实"
+      ],
+      "reader_events": [],
+      "successful_reads": [],
+      "outputs": {},
+      "business_checks": {
+        "output_contract": false,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 23,
+      "chain_id": "memory-f0c7fee362594503a74a79514ece0fd8",
+      "task_id": "work-state-ws01-v0-s101",
+      "step": 6,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:d72c10e8922906e0623828b173329a5b48786d9cf7a4ffe578aab4293d69b540",
+        "writer_fixture_sha256": "sha256:b6a8bbfe67a685bb2339ffea0da472a47d04f93b4cf9d8e09aaeb695b6b3d0b5",
+        "source_version": "sha256:2c025ca9edff09c7f84301f31b822130b0b154ab0a92e25a1260bc60018677ad",
+        "frozen_sha256": "sha256:f7c2322d5a45c9b4c9e3f0563a80c1d3bc9a23ec1c63ad2d4adcb9dd089dbb83",
+        "manifest_sha256": "sha256:eb0369297f417ddb95a1c335425f988e6975bd9cf507ea0c9d72237aac1372ad",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:a1008d2d54bdcdf81b5fa04e2e21769ae368d273c13882dab4bdc5ead74062a0",
+            "receipt_id": "sha256:c4a55f752f7736dfaa331f513e748963d7f866136361663cc30b9b5d8a9731c9",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:959f2282d72dafa508062cd4d1fe5d3cc564aed75590741ee06a62309430bf54",
+            "receipt_id": "sha256:f20b8c21bb77a01d4f0ae9c9d75db2123f1a20d1d02e43bdc0bd3e844fb7acfa",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:de02a21e302320a38a2b219c1ff010d4289d057e20194968cb4967d55959b28d",
+      "reader_trace_sha256": "sha256:121b259eaf5abe92bbb5942d9fb703fed27ab12e85c4ee4065843893ca6e7c4f",
+      "memory_files": [],
+      "required_facts_in_frozen_memory": false,
+      "index_missing": true,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [],
+      "memory_content_summary": "A 未调用工具，冻结包为空。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:7044ee1e5ca3612ec04b24fbb22f8095784647fabe1ab735281b0e8899060641",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:47c8b8891f2092dcf63cfda590a8d1459bbd684005955f691d0a273f969ace54"
+        },
+        {
+          "seq": 16,
+          "result_seq": 17,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:617deb84293ee865ae2d7c6c5558da9192b54dc072ea22e5c082ac15fd370229"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 2
+        },
+        "plan.json": [
+          "action1",
+          "action2",
+          "action3"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "A_required_facts_missing",
+      "assessment": "A 未调用工具，冻结包为空。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 24,
+      "chain_id": "memory-f53794cb06784efe8fa90a21f82417ee",
+      "task_id": "work-state-ws01-v0-s101",
+      "step": 6,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:44170048991f09f07a8b9f408d3ce67efac79f9fb7fc6c5e5bd820f4b8703cae",
+        "writer_fixture_sha256": "sha256:35a81240017707ea63e0af5938ae9f92bf5c9a89b02963b14be3658f174c64b8",
+        "source_version": "sha256:2c025ca9edff09c7f84301f31b822130b0b154ab0a92e25a1260bc60018677ad",
+        "frozen_sha256": "sha256:7aa4c64a4fd15bbd98e64dd128597d2fc0263b3fa33c414909ab82c888120bc8",
+        "manifest_sha256": "sha256:0fa195586547765069947363cca2544879d653fe6182f7945cc6fff0e2aee274",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:43f4712a3dccb5ed6d2a53d6b810a04e999b4b81661965ac6e5398a4aab90d74",
+            "receipt_id": "sha256:b2e0f1c74f3aec876ffb9fb9bc6373026311dff9926a2582d07aaedb2b262932",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:99d7a50c3fabdd4c112d0d246870954b8d3ef18b3632f62663fb92cf9831b621",
+            "receipt_id": "sha256:f68f2111f192b312dc9a40af663f0146b88e509a15178864a9933684f76d43ee",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:fd4acf3bfa62c08b42ffffa1c4f3cc2a3ebac3e1c1748025498f38bbb50cb392",
+      "reader_trace_sha256": "sha256:ea081c640481b5144b8248913c4d1bd220a0a8f451357cd43995895c075e993e",
+      "memory_files": [
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:ce27757fab2c847c9034961bafc3023b63b525703dd54f00005345a4f5593048",
+          "bytes": 314
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:847c58b4e819663bd7194582cb70ed93ceb95321f6a87386af125f4b4f8ca14a",
+          "bytes": 268
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:bcccd52b69724367df9041df03e01cd84456dd3d4772675fb72c195588b0304e",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:f9c270b1ca0487637ed3497662c9f8719138e5e676723c891eeffe042e711af9"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:53aa0f565ee2bc5cfbcd2da2113899006b1b2bffa032c3957b5a48ee7207deac"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 1
+        },
+        "plan.json": [
+          "config.json",
+          "plan.json"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 25,
+      "chain_id": "memory-93904139acfe468fa6074d805ede00a0",
+      "task_id": "work-state-ws01-v0-s202",
+      "step": 7,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:9e8afa93fe11c85ccd811a653a7659e82ae6e4476213c428c1b3c96b20357ccc",
+        "writer_fixture_sha256": "sha256:197b54e5a16144a05ea88d5a04a178d5600a4c4ede321878b72366e2b37999cd",
+        "source_version": "sha256:bd7411cc6105ba27c5a14313e1c0b3cc90963f02006f8f2825a10a22c3913f5d",
+        "frozen_sha256": "sha256:6a4652220201e2050781bee8beeab32064dff644ea142331cf23204bafa54bda",
+        "manifest_sha256": "sha256:7a5384b13f12210fbf89803ff5b23017267bb1427070eafcc57dda9d308390ea",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:a4225e7be3d5164a12b8a69b3106c6013ce76ec559f92233a09934e4ebcb0efd",
+            "receipt_id": "sha256:7eea43390c079f4d43a89a222f0b98e9cca8d67a13003ca8305a32bbe0b89d00",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:c7a0dd3f59d55c8bd8acce3a01499eb4c38fe7f28884dc409428a297db593022",
+            "receipt_id": "sha256:b455792dae870bd9fe223ed4bc3399e4f92e105ef2c6cdb87a53fd6bb1cd28a2",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:2453b8351ca5988a16dac96d63e741e9f750c62b631f0f250931a880ed88e999",
+      "reader_trace_sha256": "sha256:99128242ce14d31392ede2f40efe26c9e70da859b015515f57fa38c556048f7a",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:fa51e959d09cb4247763d58b809edf8ac767442dc20f6a45247efca19bfcf3cb",
+          "bytes": 42
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:0686699cbe72a4cc06202e6633517b47d9ce89c3eea815c11cc98320ffd6f32a",
+          "bytes": 331
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:9bd0bf186680589f7060eea0ae4246a8013208871fa12479dee6075071697257",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:34c58619534cc41ef52b2f65b0b53708b1e8a71e524829fc222ee7e6b9db03ff"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:c8ef660002d5c5dc841104d9f1a9c717e90b2f715e77b9e711fc205d9d731c43"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 1
+        },
+        "plan.json": [
+          "config",
+          "plan"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 26,
+      "chain_id": "memory-ade0e98fe35a4c18b889a1fc8f512d93",
+      "task_id": "work-state-ws01-v0-s202",
+      "step": 7,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:ca8a728d2e7c81a9b9f4e610ecae915da1496c153e5b75469a0123fba9507bc3",
+        "writer_fixture_sha256": "sha256:d9721dcf4e280f0d962cbbc6bcf53359de5d2a44257e362a9d78203c7b00e60d",
+        "source_version": "sha256:bd7411cc6105ba27c5a14313e1c0b3cc90963f02006f8f2825a10a22c3913f5d",
+        "frozen_sha256": "sha256:ac09c523a2e793e65c1a14c01de0b3ef663312854f6c10d0b505611acc6fa031",
+        "manifest_sha256": "sha256:c3c6f93485d23c325985c072cf664db92a0199af8aeb6d44fae444dd8e01bdbc",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:0371f8826e42a84ea4ca9e98327708fa9456f7b100ea175314f95310b5d1e091",
+            "receipt_id": "sha256:4b71ff1e26eb5f0b18e3c1f6ee5a08829860ce9708baa8bbc80a69a346ce70e2",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:ea5c284923943dbe14003a469a800209062498164086fe696a484a06c28a8845",
+            "receipt_id": "sha256:426234573d9eda5794b953fda19dc97749ab8bbe534b1eadc7e5fcc90cb88f0d",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:9e11eead2a40951c930f779e51210cfbf0a7304f8351c39e7764892403beb1aa",
+      "reader_trace_sha256": "sha256:8b90bf0164d7203cab1beaad1c9f3946bb520d0138b373cc52bba6667da39a9e",
+      "memory_files": [
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:b18f0a264bc87275e113ea3390af19fc869629cb83bf539f18f1f194786862a6",
+          "bytes": 359
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:2cfd6483bbb2d5218e91ebf2e5eaa723db719af665b8115537459de6c3adc93f",
+          "bytes": 424
+        }
+      ],
+      "required_facts_in_frozen_memory": false,
+      "index_missing": false,
+      "index_placeholder_or_dangling": true,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "A 已读 workflow，但只保存泛化文件说明；capacity/schema/依赖事实缺失，引用的 workflow/tasks 等文件不在包中。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:3cb59179e63ae79c5e279c828d4562073e8f86c03eb86fc3f10238b23d987c2e",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:6125e3a68873060f82d4c06caf3f85538d81a7513d2c691e8453b5a823d9f1d9"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:3cec240d61ae556accc956844bb1462f9991aff2722b2f8b9c63867d243dfce6"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 2
+        },
+        "plan.json": [
+          "configure_capacity",
+          "validate_schema"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "A_required_facts_missing",
+      "assessment": "A 已读 workflow，但只保存泛化文件说明；capacity/schema/依赖事实缺失，引用的 workflow/tasks 等文件不在包中。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 27,
+      "chain_id": "memory-bfcdf30cf37a4f438da1ce3ea361bbc0",
+      "task_id": "work-state-ws01-v0-s202",
+      "step": 7,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:cf7fc0891a9fc6e72ed99e7ae1cd6af5879972c62fc3d0d7188e27d59de372cd",
+        "writer_fixture_sha256": "sha256:986e6029eb9781d22619b2104fd1c4e66424b2d60ab677e9e2cfc30b91ddcfb2",
+        "source_version": "sha256:bd7411cc6105ba27c5a14313e1c0b3cc90963f02006f8f2825a10a22c3913f5d",
+        "frozen_sha256": "sha256:3e2356d07ed79d38816b8d2451f7751bae9fa51bf296b211e3d3f2e20d6fbaad",
+        "manifest_sha256": "sha256:ae0df8dbd6f062e860812a962326a46bf55f078765d194ad32fd4effc250716b",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:edc6ab51c9b2e1a7130600bbf58be5950cb40e015e252e2eaae00c19732e9384",
+            "receipt_id": "sha256:4fc00dcb90e26678c97f89324b8ec0c28a06d3fc732bb8a3bd888687346f7356",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:23f84370ba3cd6ab5c7f8c5906c2c8889c6201478917bb4563838c372fe320db",
+            "receipt_id": "sha256:241c0670e719b0cb4c75e2eebe8b5393c8c35790bf6729488191bc66572b18cc",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:af45421dba420b8661396edd8413caa8bd07bc88e32908354372c12d2ae9452b",
+      "reader_trace_sha256": "sha256:51e8f92ec0cb36062a1617a413f209dc06b01cdfa9851bddae39b7916a5f436c",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:72a46f86ccaade3486bb44fd3866922d9d453d5ce89dae8e54b098fbce005723",
+          "bytes": 82
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:4f48e539ec8fe9c8e732ca468d0a0152d485c6142c1f7373387a9055a28b25c5",
+          "bytes": 186
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:bbe301c700349ecf06319c16cc90547302d937e6f40c4033bcb4487a8a9e38bd",
+          "bytes": 378
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:139b7c0fd36348a3050bd04fb9c313ea75c69e1d6903c40bec48aaf7d1685b24",
+          "bytes": 78
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:453dee674e0254f330e4e1fb1e7eb9778d6018a2226c72d8dd40684a07ac097f"
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:ae3e4d785fe9586b7776a6736a5b8e4770b39a4840c7e91d519213e3d7e51136"
+        }
+      ],
+      "successful_reads": [],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 2
+        },
+        "plan.json": [
+          "init_config",
+          "validate_schema",
+          "generate_report"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 28,
+      "chain_id": "memory-ddc8c5761ec54978aa2afe54fd8acb85",
+      "task_id": "work-state-ws01-v0-s202",
+      "step": 7,
+      "family": "WS01",
+      "evidence": {
+        "fixture_sha256": "sha256:9dcdc136f3f373e90117d7249937620ea9375237327ffa425b8776888587c1d3",
+        "writer_fixture_sha256": "sha256:1302bc8794aeebb63a0278cdd5060421f8e6d433584fecc7b21f1a238c31929f",
+        "source_version": "sha256:bd7411cc6105ba27c5a14313e1c0b3cc90963f02006f8f2825a10a22c3913f5d",
+        "frozen_sha256": "sha256:5609bdeb45b3039e265d9945127bb9671c2781f62f85e08977ddec9cc2edcb94",
+        "manifest_sha256": "sha256:9214f9fd7105b4ee551d1020bebdebe94f912fa5a7336964a46854300e84d914",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:58d4972cdcae61e9771b5873abf812d30664e177bda178ea9c958de7a693e365",
+            "receipt_id": "sha256:3eacdb2837618ae9aebacd950d95556d7f2b3a0d49a38feff0bcd94e35db06ee",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:c2c8e417330e3cd216f882479f1fb423f631fb254ac2fe80b87fe2fecf174040",
+            "receipt_id": "sha256:f98004e3b50056263f60f9fcb4295bdb8f20b0693886d62eef188fc32df0fce3",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:f2e00704fd1757be7535a12ccfc9db5a52de5576876b13c45b3a35e29bb9afca",
+      "reader_trace_sha256": "sha256:7f20340dc900b7d19b9a1b8fd12c95bb29374edc353ddaf0f25449d0d33b21fc",
+      "memory_files": [
+        {
+          "path": "decisions.md",
+          "sha256": "sha256:641bade6a72d7f091f8c214c01de6985185cb42d94b2fb19c0336bfb009734e4",
+          "bytes": 396
+        },
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:bc3b3b80d8b1dd3a94d2fef7b4007a729b0d36f68aea635278f77cef9473878f",
+          "bytes": 422
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:de8940270875ce6c8e84a917705a265950a759fb442bc619b7075aba4c6f1924",
+          "bytes": 300
+        },
+        {
+          "path": "memory.json",
+          "sha256": "sha256:9fd59a7cd7db3203db9908f71e88ab661b6b8366e131efd937f662e21a571073",
+          "bytes": 387
+        },
+        {
+          "path": "modules.md",
+          "sha256": "sha256:01f67f83e8f9df48bd2b0a4675fadf89453ceda34c4eac73973f78dedf119bc1",
+          "bytes": 311
+        },
+        {
+          "path": "tasks.json",
+          "sha256": "sha256:720f8e2e0f9d1ef1ef7f20213d4fed558ad841ebe867d563a730038b7795b772",
+          "bytes": 319
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/workflow.json"
+        }
+      ],
+      "memory_content_summary": "包含配置、completed、required 与线性依赖。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/notice.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:4fb96b549baa2c3b1191adb0b521d15d6b03b6e3d954a98e21e346bc731331a0",
+          "source_sha256": "sha256:562be4839d05ce3855580f24a8fc71c66fe3f3e36e2bc0de7e157a13a4178967",
+          "full_source_lines_match": true,
+          "source_line_count": 8
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:f2dbffad67e0c915075b5624165e3c3421ac9a0946c7718eee92b924b7798527"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:83a0c11240d4e730d99cd2283f852f6e1bd20a938b91b4671574eec410ef4889"
+        }
+      ],
+      "successful_reads": [
+        "sources/notice.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "capacity": 100,
+          "schema_version": 1
+        },
+        "plan.json": [
+          "configuration_keys",
+          "goal",
+          "plan_format"
+        ]
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 29,
+      "chain_id": "memory-2ac6ae381945463b97cd6afb113d4eaa",
+      "task_id": "work-state-ws03-v0-s101",
+      "step": 8,
+      "family": "WS03",
+      "evidence": {
+        "fixture_sha256": "sha256:a4c47b95bde4c2fc1fb7cb7c57716e1563fdf217e55bd3ba312ea9590c398129",
+        "writer_fixture_sha256": "sha256:418f9f3e98a23f6348416362576ef8c69c0dc1cbd0fbdd3ddb715f33182f8165",
+        "source_version": "sha256:064ed18d771fc8ea5c3872f3fff2efb5891cc93c5e2783499c30e53da97a1dc9",
+        "frozen_sha256": "sha256:f7c2322d5a45c9b4c9e3f0563a80c1d3bc9a23ec1c63ad2d4adcb9dd089dbb83",
+        "manifest_sha256": "sha256:1424be72bab3b0ba25d61886a4bfa6b3524a6a8942df8de2f470fc8869b4783f",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:53fa2d2a187448c46428d57a944170752279aae6b06a72b4bd891f92ebfb78e1",
+            "receipt_id": "sha256:742280ab9f3f89be99a78a5c5fcc8b664d86d3015388ace141799c1d3f090132",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:2f9aaa7934db4e1f1f1783f7d64d69999cb175d5c583e73ca7f4c52ca7f56698",
+            "receipt_id": "sha256:c6aaf868cec8f429c97578f5b011f42cfee66f3db14e03f1a311970e1aa01a5f",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:82a1bea1577d51afd38e1a41f0dc0f53e9cf02f50134dc5fd2422739779b8b53",
+      "reader_trace_sha256": "sha256:2eb841d249792170165abe83b6fe06b196576bbb63d6bb967ea9c50fc6518da0",
+      "memory_files": [],
+      "required_facts_in_frozen_memory": false,
+      "index_missing": true,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [],
+      "memory_content_summary": "A 未调用工具，冻结包为空。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/request.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:df13e237b63cecbdeb25e612a5d31c59c84a033c2d85d8cf0b417f5814593fba",
+          "source_sha256": "sha256:f5a03a4d6594720f60d44fb9829ad84973bec8ef6ef69b2941684ab846873f60",
+          "full_source_lines_match": true,
+          "source_line_count": 11
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:fa9320ebe7520b2d823c4c6d9861cf4f0780aea1fd221ba985a6408e7a8e77a3"
+        },
+        {
+          "seq": 16,
+          "result_seq": 17,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:749c6ee9250ac84d92fc68a19d97a058a966f854ae06059f3e9e5fd94de86d40"
+        }
+      ],
+      "successful_reads": [
+        "sources/request.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "database": "catalog_database",
+          "cache": "catalog_cache"
+        },
+        "plan.json": []
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": true
+      },
+      "classification": "A_required_facts_missing",
+      "assessment": "A 未调用工具，冻结包为空。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 30,
+      "chain_id": "memory-471a7ee8c1054cc2b0bf448a2db693c3",
+      "task_id": "work-state-ws03-v0-s101",
+      "step": 8,
+      "family": "WS03",
+      "evidence": {
+        "fixture_sha256": "sha256:c409f7f0412976ca5594d0bb31d78c34460815b57edf0fabce5c7866e17ec51e",
+        "writer_fixture_sha256": "sha256:1b46d04c110e138eef0e5d7912d4b41c31021362775fc2f9b6723c4911e520ea",
+        "source_version": "sha256:064ed18d771fc8ea5c3872f3fff2efb5891cc93c5e2783499c30e53da97a1dc9",
+        "frozen_sha256": "sha256:b33491688cef901f6f1f95aa7920566172eb76cd4509b81fb803873771ffecab",
+        "manifest_sha256": "sha256:61586b3b3bca1fe6fd871903897a5d8938b66ceb666cf845572d5bad14856cef",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:01718f884ab1cb855805bcb15e5facc2f44b726fcbb8e28b3423bfa252f8661a",
+            "receipt_id": "sha256:cb99f2ed530dcfeed63c05480f1a117e5331880ecae3026bb9a678d291a42916",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:f03c7ae11d6e2d6eeb6f5eaff614a1307553b6e7e1138ac52285583e341025d1",
+            "receipt_id": "sha256:c629d5f592fc001488c3ec347e919154c42f1c4bd5b6e63cb35b9a8b48b180fe",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:8d54e752fd5450f5d2a7ce7b6bad163b053a2aa74bb9dab257d17e594652e7e0",
+      "reader_trace_sha256": "sha256:dad36e820f9f17112280eb20d665fc92415127a2b649d376a032abf0e035b1f3",
+      "memory_files": [
+        {
+          "path": "index.md",
+          "sha256": "sha256:b6a8ebb47e76847dc3e4b1eb4fd8dd7639b20dcbb92af9d13735dbf3c09d6c3a",
+          "bytes": 384
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/database.json"
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "path": "writer-data/sources/cache.json"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "path": "writer-data/sources/requirements.json"
+        }
+      ],
+      "memory_content_summary": "包含数据库/cache 全部选项和匹配/事务要求。",
+      "presentation_flags": [],
+      "reader_events": [],
+      "successful_reads": [],
+      "outputs": {},
+      "business_checks": {
+        "output_contract": false,
+        "configuration": false,
+        "plan_execution": false
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 31,
+      "chain_id": "memory-73a9472e72794d468b3aa7b12a8ac114",
+      "task_id": "work-state-ws03-v0-s101",
+      "step": 8,
+      "family": "WS03",
+      "evidence": {
+        "fixture_sha256": "sha256:e8becfcb6cac2341f1602d10719f0f7e7fa597fd0c6644a05fe6475aab08a685",
+        "writer_fixture_sha256": "sha256:11fc4b571b6653ae368762fda42130cea75069b20adbb0416999441995a90722",
+        "source_version": "sha256:064ed18d771fc8ea5c3872f3fff2efb5891cc93c5e2783499c30e53da97a1dc9",
+        "frozen_sha256": "sha256:8221fe6d4b6448c7ddfb5c76a5a0c6e9e3040d1d4b0231f14e41eb90889614c1",
+        "manifest_sha256": "sha256:3d248b74022c9735824bacb5f323df62f9077d21a8171f487797bd7ce2d74f52",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:a0834c0722d76e42ef8229811c35930dce7a84edbb23425f2389248e278f7457",
+            "receipt_id": "sha256:d1512f11c7f28414a0fe25cdbbb68a81b54db35f0944bd5fdc471ff0f3a4b5e5",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:3c340dc052c755bb9c076a3ef2a96ebdb26a6cb00de14d2853f10b0da95802db",
+            "receipt_id": "sha256:9a4bc0dba2f9e3a95ac51ea44d3355f5008bd3a54387748474e8c2a3cf17e8fa",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:c4b1162e55e5ae52e16cb7720aff6a2f1e369125293ba3e66389e075d009f345",
+      "reader_trace_sha256": "sha256:3739d403253c84c9e845584ace5d5e1a98889c500a823e586ff7a1fb7fea09d2",
+      "memory_files": [
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:4d50f661a216e0c37291026b6124cfb523e4b8b5e820845ea11dabde490b56d4",
+          "bytes": 530
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:b116c118f00ff266defd1ed21ff6ad9fc43cbfd55c6dc6865714df0c13c015d7",
+          "bytes": 401
+        }
+      ],
+      "required_facts_in_frozen_memory": true,
+      "index_missing": false,
+      "index_placeholder_or_dangling": false,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/database.json"
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "path": "writer-data/sources/cache.json"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "path": "writer-data/sources/requirements.json"
+        }
+      ],
+      "memory_content_summary": "包含数据库/cache 全部选项和匹配/事务要求。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/request.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:82189f44546e604bb9fe63e8827e5b554c5848a0becb8997d11089cc9bfdd554",
+          "source_sha256": "sha256:f5a03a4d6594720f60d44fb9829ad84973bec8ef6ef69b2941684ab846873f60",
+          "full_source_lines_match": true,
+          "source_line_count": 11
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:c0740226c0d54ee267a139b75eb9ea3f8b2b27a9d32bf814b6e29ef4884ebd14"
+        },
+        {
+          "seq": 16,
+          "result_seq": 17,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:1a8a52d93ca885ed7f08d7920846998e32191d1b492aca396c1f1a5c714be166"
+        }
+      ],
+      "successful_reads": [
+        "sources/request.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "database": "db_catalog_option_id",
+          "cache": "cache_catalog_option_id"
+        },
+        "plan.json": []
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": true
+      },
+      "classification": "B_no_memory_read_with_facts_available",
+      "assessment": "冻结 index 已含必要源事实；B 没有任何成功 memory 文件读取。",
+      "reader_terminal_kind": "completed"
+    },
+    {
+      "ordinal": 32,
+      "chain_id": "memory-c8c0424cb8c640b1bb88976d0d76a3e1",
+      "task_id": "work-state-ws03-v0-s101",
+      "step": 8,
+      "family": "WS03",
+      "evidence": {
+        "fixture_sha256": "sha256:6cf0a1876c1706bdaef3734b9a2e4514f7c803b03934358e294be5e5fb75387e",
+        "writer_fixture_sha256": "sha256:d4fca656c3901da4f2c67a06b72765fb77cf768d2f1133d762b43dc3651dccf3",
+        "source_version": "sha256:064ed18d771fc8ea5c3872f3fff2efb5891cc93c5e2783499c30e53da97a1dc9",
+        "frozen_sha256": "sha256:ac59831f709a337c5341cfb9d1e92b489bd3fd50760afac1c96808bcbdeb7a07",
+        "manifest_sha256": "sha256:de3b6a7dc6e75dc69d99c8a2b46019a92526fc1fb186e6e02cb631353c2b1150",
+        "receipts": {
+          "writer": {
+            "file_sha256": "sha256:2183789735c2175342ecd1c84abff87965a614786b2faff7e20961b14f7d8267",
+            "receipt_id": "sha256:66da0d940461d38979657d962d1e2c2c7ac6f94bc891bc4a02b8dee4b49d85b2",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          },
+          "reader": {
+            "file_sha256": "sha256:17a41b1cbd059646a370ed9eca9b9388a03ccc68f468134c1f2b5d7805772ba2",
+            "receipt_id": "sha256:e71d363ca16235eb4a914e6ce2fe7bf7b07315008192c9f4daba7726a9337f24",
+            "trace_binding_verified": true,
+            "fixture_in_evidence": true
+          }
+        }
+      },
+      "writer_trace_sha256": "sha256:39f0e1296a45c6edee424bf74b6ff04e949e110815d9c8d62de62f77c421638f",
+      "reader_trace_sha256": "sha256:8ec8dae15de676da880a697f3ce2176de6d06ce351f3fa46be6798b679217c10",
+      "memory_files": [
+        {
+          "path": "handoff.md",
+          "sha256": "sha256:735302f50b7b6b6d6caf9e4a18fe96aba66c05c897282830c4b7a3ec2a9514cb",
+          "bytes": 250
+        },
+        {
+          "path": "index.md",
+          "sha256": "sha256:3aa45f7fd1a7037d68e4ab828d3d91b81557ef94b86b7543416c2a7f34d78de3",
+          "bytes": 251
+        }
+      ],
+      "required_facts_in_frozen_memory": false,
+      "index_missing": false,
+      "index_placeholder_or_dangling": true,
+      "writer_successful_source_reads": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "path": "writer-data/sources/database.json"
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "path": "writer-data/sources/cache.json"
+        },
+        {
+          "seq": 19,
+          "result_seq": 20,
+          "path": "writer-data/sources/requirements.json"
+        }
+      ],
+      "memory_content_summary": "A 已读三个源文件，但只保存指向未打包 database/cache/requirements 的链接，组件选项事实缺失。",
+      "presentation_flags": [],
+      "reader_events": [
+        {
+          "seq": 9,
+          "result_seq": 10,
+          "command": "view",
+          "path": "reader-data/sources/request.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:bf5412aa90de618bd33aeb13677d622639f4d32f0fb6fda127dcfd86c785d438",
+          "source_sha256": "sha256:f5a03a4d6594720f60d44fb9829ad84973bec8ef6ef69b2941684ab846873f60",
+          "full_source_lines_match": true,
+          "source_line_count": 11
+        },
+        {
+          "seq": 14,
+          "result_seq": 15,
+          "command": "create",
+          "path": "reader-data/outputs/config.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:dacb8b7111a31865c3301e1780a7f53a76a030d0c4bd0d7aa6b9e890fc105505"
+        },
+        {
+          "seq": 16,
+          "result_seq": 17,
+          "command": "create",
+          "path": "reader-data/outputs/plan.json",
+          "is_error": false,
+          "returned_text_sha256": "sha256:7be41ce15bb7683246367bf12cf4071156b76295cb5dca5040ae43a4b8b3dfec"
+        }
+      ],
+      "successful_reads": [
+        "sources/request.json"
+      ],
+      "outputs": {
+        "config.json": {
+          "database": "db-catalog-1",
+          "cache": "cache-catalog-2"
+        },
+        "plan.json": []
+      },
+      "business_checks": {
+        "output_contract": true,
+        "configuration": false,
+        "plan_execution": true
+      },
+      "classification": "A_required_facts_missing",
+      "assessment": "A 已读三个源文件，但只保存指向未打包 database/cache/requirements 的链接，组件选项事实缺失。",
+      "reader_terminal_kind": "completed"
+    }
+  ]
+}
