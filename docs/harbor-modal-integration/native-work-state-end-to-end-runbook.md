@@ -123,7 +123,7 @@ export WORK_STATE_TRAIN="ws-train-$(date -u +%Y%m%dT%H%M%S)"
  --mother-run "/root/runs/${WORK_STATE_TRAIN}"
 ```
 
-然后check、launch、原消费audit。固定四题可用`--evaluation-task-id`逐题隔离，每题独立run。失败题保留原失败，全部任务结果汇总；成功题必须有实际validation消费而不只是TQ提交。正在实现的串行控制器见[收尾设计](work-state-independent-evaluation-plan.md)，只有其对应实跑报告才能证明通过。
+然后check、launch、原消费audit。固定四题可用`--evaluation-task-id`逐题隔离，每题独立run。失败题保留原失败，全部任务结果汇总；成功题必须有实际validation消费而不只是TQ提交。串行控制器命令见[课程指南](work-state-rl-runbook.md#四题分别运行并统一报告)，设计见[收尾设计](work-state-independent-evaluation-plan.md)；只有对应实跑报告才能证明GPU验收通过。
 
 ## 7. 故障与保存
 

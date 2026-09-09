@@ -125,3 +125,19 @@ reload绑定完整checkpoint文件SHA及母运行清单，显式加载model/opti
 补验可先用新的独立 reload 同批执行 WS01/WS03/WS05，保留原 WS06 失败；若子集仍因某题失败退出，可另建单题诊断。不得把选择后三题的结果报告成完整四题通过或总体能力得分。固定 trainer 在整个评估完成后才写最终消费 dump，先前任务曾提交 TQ 不代表已有独立消费证据。失败记录与新子集报告必须共同呈现。
 
 新 selector recipe 可以来自不同于母训练的本仓 commit；新清单绑定新 recipe SHA，checkpoint_origin 保留母 SHA，并继续核母 run/plan 一致、完整 checkpoint SHA、相同 runtime/模型声明及有效 VERL 复合身份。不得改母清单伪造相同 SHA，也不得借选择器放宽任务准入或改变奖励。
+
+### 四题分别运行并统一报告
+
+`evaluate_work_state_tasks`复用上述prepare/check/launch及原auditor，不修改固定VERL。每题重新加载同一个母checkpoint，串行运行WS01/03/05/06各自的variant1 seed303。每题使用独立目录，失败后保留原结果继续其余题；准备/身份/证据损坏或GPU未释放会停止派发，取消不会被吞掉。
+
+```bash
+"$PYTHON_BIN" -m examples.dsh.capabilities.evaluate_work_state_tasks \
+ --root /root/runs/work-state-singletons-r1 --suite-id work-state-singletons-r1 \
+ --runtime-executable "$WORK_STATE_RUNTIME" --runner-python "$PYTHON_BIN" \
+ --model-path /workspace/models/Qwen3-4B-1cfa9a7 \
+ --model-revision 1cfa9a7208912126459214e8b04321603b3df60c \
+ --mother-run "/root/runs/${WORK_STATE_TRAIN}" \
+ --resume-from "/workspace/uni-agent-g1/checkpoint/${WORK_STATE_TRAIN}/global_step_8"
+```
+
+root/suite-id须全新。`summary.json`逐题落盘；`all_attempted`仅表示四题均有作业退出记录，`all_verified`才表示全部真实消费通过。只要存在失败最终退出非零，但失败任务不会让此前成功题dump丢失。每题独立`consumption-audit.json`保留原审计。模型/优化器实际加载和无再更新仍须核实际日志；不能只看resume配置。当前GPU验证结果另由实验报告记录，本节不代表已通过。

@@ -481,7 +481,7 @@ def prepare(
     return manifest
 
 
-def check(manifest_path):
+def check(manifest_path, *, after_run=False):
     manifest = json.loads(Path(manifest_path).read_text())
     if manifest["schema"] != "dsh.memory-resident-preparation.v1" or Path(manifest["repository_root"]) != ROOT:
         raise ValueError("Wrong manifest/checkout")
@@ -585,7 +585,7 @@ def check(manifest_path):
     runtime_probe(Path(env["PYTHON_BIN"]), Path(manifest["runtime"]["path"]))
     for key in ("RUN_ROOT", "CKPTS_DIR", "RAY_TMPDIR"):
         path = Path(env[key])
-        if path.exists() or path.is_symlink():
+        if not after_run and (path.exists() or path.is_symlink()):
             raise ValueError("Run path already exists")
     subprocess.run(
         [

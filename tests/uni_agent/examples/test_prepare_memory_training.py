@@ -455,3 +455,28 @@ def test_selected_reload_allows_new_recipe_commit(inputs, tmp_path):
     )
     assert result["integration_head"] == recipe.revision(recipe.ROOT)
     assert recipe.check(inputs["output_dir"] / "manifest.json")["checkpoint_origin"] == result["checkpoint_origin"]
+
+
+@pytest.mark.parametrize("mutation", [None, "source", "checkpoint"])
+def test_after_run_recheck_only_skips_new_directory_gate(inputs, tmp_path, monkeypatch, mutation):
+    extra = mother_checkpoint(inputs, tmp_path)
+    recipe.prepare(**inputs, mode="reload", **extra)
+    inputs["run_root"].mkdir()
+    path = inputs["output_dir"] / "manifest.json"
+    real_run = recipe.subprocess.run
+
+    def run(args, **kwargs):
+        if len(args) > 2 and args[1] == "-c" and "NativeMemoryFramework" in args[2]:
+            return subprocess.CompletedProcess(args, 0)
+        return real_run(args, **kwargs)
+
+    monkeypatch.setattr(recipe.subprocess, "run", run)
+    if mutation is None:
+        with pytest.raises(ValueError, match="Run path already exists"):
+            recipe.check(path)
+        assert recipe.check(path, after_run=True)["mode"] == "reload"
+    else:
+        target = inputs["model_path"] / "config.json" if mutation == "source" else extra["resume_from"] / "data.pt"
+        target.write_bytes(b"changed-after-execution")
+        with pytest.raises(ValueError, match="changed"):
+            recipe.check(path, after_run=True)
