@@ -18,7 +18,61 @@ AF = "actor_rollout_ref.rollout.custom.agent_framework."
 
 
 def digest(path):
-    return "sha256:" + hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    value = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            value.update(block)
+    return "sha256:" + value.hexdigest()
+
+
+def checkpoint_origin(resume_from, mother_run, *, family, model_revision, runtime_sha, verl_head):
+    checkpoint, mother = Path(resume_from), Path(mother_run)
+    if not checkpoint.is_absolute() or not mother.is_absolute():
+        raise ValueError("Checkpoint and mother run must be absolute")
+    match = re.fullmatch(r"global_step_(0|[1-9][0-9]*)", checkpoint.name)
+    if not match or checkpoint.resolve() != checkpoint or mother.resolve() != mother:
+        raise ValueError("Invalid canonical checkpoint path")
+    run_file, plan_file = mother / "run-manifest.json", mother / "memory-launch-plan.json"
+    run, plan = json.loads(run_file.read_text()), json.loads(plan_file.read_text())
+    dataset = Path(run["paths"]["dataset_manifest"])
+    if (
+        run.get("status") != "completed"
+        or run.get("exit_code") != 0
+        or run.get("run_root") != str(mother)
+        or plan.get("mode") != "train"
+        or plan["environment"]["RUN_ROOT"] != str(mother)
+        or checkpoint.parent != Path(plan["environment"]["CKPTS_DIR"])
+        or run.get("uni_agent_sha") != plan["integration_head"]
+        or not re.fullmatch(r"[0-9a-f]{40}", plan["integration_head"])
+        or run.get("verl_sha") != plan["verl_head"]
+        or plan["verl_head"] != verl_head
+        or plan["model_revision_declared"] != model_revision
+        or plan["runtime"]["sha256"] != runtime_sha
+        or f'++{AF}memory_operator.family="{family}"' not in plan["command"]
+        or digest(dataset) != run["sha256"]["dataset_manifest"]
+        or json.loads(dataset.read_text()) != plan
+    ):
+        raise ValueError("Mother evidence/config does not bind this checkpoint")
+    required = [checkpoint / "actor" / f"{name}_world_size_1_rank_0.pt" for name in ("model", "optim", "extra_state")]
+    if any(not p.is_file() or p.is_symlink() for p in required):
+        raise ValueError("Missing regular model/optimizer/extra checkpoint")
+    paths = sorted(checkpoint.rglob("*"))
+    if any(p.is_symlink() for p in paths):
+        raise ValueError("Checkpoint symlinks are not supported")
+    files = {
+        str(p.relative_to(checkpoint)): dict(sha256=digest(p), size=p.stat().st_size) for p in paths if p.is_file()
+    }
+    body = dict(
+        schema="dsh.memory-checkpoint-origin.v1",
+        mother_run=str(mother),
+        mother_source_head=plan["integration_head"],
+        checkpoint_path=str(checkpoint),
+        step=int(match[1]),
+        evidence={str(p): digest(p) for p in (run_file, plan_file, dataset)},
+        files=files,
+    )
+    identity = "sha256:" + hashlib.sha256(json.dumps(body, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    return {**body, "identity": identity}
 
 
 def revision(root):
@@ -65,9 +119,15 @@ def prepare(
     model_revision,
     family="constraints",
     mode="val",
+    resume_from=None,
+    mother_run=None,
 ):
-    if mode not in ("val", "train") or family not in ("constraints", "updates"):
-        raise ValueError("Only val/train and fixed diagnostic families are supported")
+    if mode not in ("val", "train", "reload") or family not in ("constraints", "updates"):
+        raise ValueError("Only val/train/reload and fixed diagnostic families are supported")
+    if (mode == "reload" and (not resume_from or not mother_run)) or (
+        mode != "reload" and (resume_from is not None or mother_run is not None)
+    ):
+        raise ValueError("Reload requires resume_from and mother_run; other modes forbid them")
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,59}", run_id):
         raise ValueError("Invalid run identity")
     if not re.fullmatch(r"[0-9a-f]{40}", model_revision):
@@ -95,7 +155,23 @@ def prepare(
         raise ValueError("VERL pin mismatch")
     installed = runtime_probe(python, runtime)
     model_hashes = {str(model / name): digest(model / name) for name in ("config.json", "tokenizer_config.json")}
+    origin = None
+    if mode == "reload":
+        for new in (output, run, checkpoint, ray):
+            for old in (Path(resume_from), Path(mother_run)):
+                if new.resolve().is_relative_to(old.resolve()) or old.resolve().is_relative_to(new.resolve()):
+                    raise ValueError("Reload outputs must not overlap mother/checkpoint")
+        origin = checkpoint_origin(
+            resume_from,
+            mother_run,
+            family=family,
+            model_revision=model_revision,
+            runtime_sha=digest(runtime),
+            verl_head=verl_head,
+        )
     output.mkdir(parents=True, mode=0o700)
+    if origin:
+        (output / "checkpoint-origin.json").write_text(json.dumps(origin, indent=2) + "\n")
     # These are scheduling records. Private A/B task prompts/fixtures are created by StageSpec.
     for split in ("train", "validation"):
         row = dict(
@@ -131,9 +207,9 @@ def prepare(
         MODEL_PATH=str(model),
         MODEL_ID="Qwen/Qwen3-4B",
         MODEL_LICENSE_APPROVED="1",
-        VAL_ONLY="True" if mode == "val" else "False",
-        RESUME_MODE="disable",
-        RESUME_FROM_PATH="",
+        VAL_ONLY="False" if mode == "train" else "True",
+        RESUME_MODE="resume_path" if origin else "disable",
+        RESUME_FROM_PATH=str(resume_from) if origin else "",
         TRAINER_MODE="sync",
         DATA_ROOT=str(output),
         TRAIN_FILE=str(output / "train.parquet"),
@@ -179,7 +255,7 @@ def prepare(
         runner_python=str(python),
         runtime_executable=str(runtime),
         environment_digest=digest(runtime),
-        checkpoint_identity=model_revision,
+        checkpoint_identity=origin["identity"] if origin else model_revision,
         family=family,
     )
     overrides = {
@@ -199,6 +275,15 @@ def prepare(
         else:
             tail.append("++" + key + "=" + json.dumps(value))
     tail.extend(["trainer.total_epochs=1", "trainer.test_freq=1", "trainer.default_local_dir=" + str(checkpoint)])
+    if origin:
+        tail.extend(
+            [
+                "trainer.val_only=True",
+                "trainer.val_before_train=True",
+                "trainer.del_local_ckpt_after_load=False",
+                "actor_rollout_ref.actor.checkpoint.load_contents=[model,optimizer,extra]",
+            ]
+        )
     command = ["bash", str(ROOT / "examples/dsh/ops/launch_qwen3_4b_online_rl.sh"), "--foreground", *tail]
     sources = set((ROOT / "examples/dsh/capabilities").glob("memory*.py")) | {Path(__file__), template}
     sources.update((ROOT / "examples/dsh").glob("*.py"))
@@ -233,12 +318,13 @@ def prepare(
         verl_head=verl_head,
         model_revision_declared=model_revision,
         model_files=model_hashes,
+        checkpoint_origin=origin,
         runtime=dict(path=str(runtime), sha256=digest(runtime), installed=installed),
         sources={str(p): digest(p) for p in sorted(sources)},
         files={str(p): digest(p) for p in sorted(output.iterdir())},
         environment=env,
         command=command,
-        wall_seconds=3600 if mode == "val" else 7200,
+        wall_seconds=7200 if mode == "train" else 3600,
         caveats=[
             "Train/val are the same fixed family, not independently held out.",
             "All-equal B rewards imply zero GRPO signal; never manufacture failures.",
@@ -265,6 +351,41 @@ def check(manifest_path):
     if digest(manifest["runtime"]["path"]) != manifest["runtime"]["sha256"]:
         raise ValueError("Runtime changed")
     env = manifest["environment"]
+    if manifest["mode"] == "reload" and not manifest.get("checkpoint_origin"):
+        raise ValueError("Reload requires checkpoint origin")
+    if manifest.get("checkpoint_origin"):
+        origin = manifest["checkpoint_origin"]
+        actual = checkpoint_origin(
+            origin["checkpoint_path"],
+            origin["mother_run"],
+            family=next(
+                json.loads(x.split("=", 1)[1])
+                for x in manifest["command"]
+                if x.startswith("++" + AF + "memory_operator.family=")
+            ),
+            model_revision=manifest["model_revision_declared"],
+            runtime_sha=manifest["runtime"]["sha256"],
+            verl_head=manifest["verl_head"],
+        )
+        if actual != origin or json.loads((Path(env["DATA_ROOT"]) / "checkpoint-origin.json").read_text()) != origin:
+            raise ValueError("Checkpoint or mother evidence changed")
+        if (
+            manifest["mode"] != "reload"
+            or env["VAL_ONLY"] != "True"
+            or env["RESUME_MODE"] != "resume_path"
+            or env["RESUME_FROM_PATH"] != origin["checkpoint_path"]
+        ):
+            raise ValueError("Invalid reload-only configuration")
+        overrides = dict(x.lstrip("+").split("=", 1) for x in manifest["command"][3:] if "=" in x)
+        expected = {
+            "trainer.val_only": "True",
+            "trainer.val_before_train": "True",
+            "trainer.del_local_ckpt_after_load": "False",
+            "actor_rollout_ref.actor.checkpoint.load_contents": "[model,optimizer,extra]",
+            AF + "memory_operator.checkpoint_identity": json.dumps(origin["identity"]),
+        }
+        if any(overrides.get(k) != v for k, v in expected.items()):
+            raise ValueError("Reload protected overrides changed")
     runtime_probe(Path(env["PYTHON_BIN"]), Path(manifest["runtime"]["path"]))
     for key in ("RUN_ROOT", "CKPTS_DIR", "RAY_TMPDIR"):
         path = Path(env[key])
@@ -326,7 +447,9 @@ def main():
         "model-revision",
     ):
         prep.add_argument("--" + key, required=True)
-    prep.add_argument("--mode", choices=("val", "train"), default="val")
+    prep.add_argument("--mode", choices=("val", "train", "reload"), default="val")
+    prep.add_argument("--resume-from", type=Path)
+    prep.add_argument("--mother-run", type=Path)
     prep.add_argument("--family", choices=("constraints", "updates"), default="constraints")
     for name in ("check", "launch"):
         sub.add_parser(name).add_argument("manifest_path", type=Path)

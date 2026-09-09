@@ -1,3 +1,4 @@
+import ast
 import json
 import os
 import subprocess
@@ -37,9 +38,46 @@ def inputs(tmp_path, monkeypatch):
     )
 
 
-@pytest.mark.parametrize("mode", ["val", "train"])
+def mother_checkpoint(inputs, tmp_path):
+    mother = tmp_path / "mother"
+    mother.mkdir()
+    checkpoint = tmp_path / "mother-checkpoint" / "global_step_1"
+    (checkpoint / "actor").mkdir(parents=True)
+    for name in ("model", "optim", "extra_state"):
+        (checkpoint / "actor" / f"{name}_world_size_1_rank_0.pt").write_bytes(name.encode())
+    (checkpoint / "data.pt").write_bytes(b"data")
+    plan = dict(
+        mode="train",
+        integration_head=recipe.revision(recipe.ROOT),
+        verl_head=recipe.revision(recipe.ROOT / "verl"),
+        model_revision_declared=inputs["model_revision"],
+        runtime=dict(sha256=recipe.digest(inputs["runtime_executable"])),
+        environment=dict(RUN_ROOT=str(mother), CKPTS_DIR=str(checkpoint.parent)),
+        command=[f'++{recipe.AF}memory_operator.family="constraints"'],
+    )
+    dataset = mother / "dataset-manifest.json"
+    dataset.write_text(json.dumps(plan))
+    (mother / "memory-launch-plan.json").write_text(json.dumps(plan))
+    (mother / "run-manifest.json").write_text(
+        json.dumps(
+            dict(
+                status="completed",
+                exit_code=0,
+                run_root=str(mother),
+                uni_agent_sha=plan["integration_head"],
+                verl_sha=plan["verl_head"],
+                paths=dict(dataset_manifest=str(dataset)),
+                sha256=dict(dataset_manifest=recipe.digest(dataset)),
+            )
+        )
+    )
+    return dict(resume_from=checkpoint, mother_run=mother)
+
+
+@pytest.mark.parametrize("mode", ["val", "train", "reload"])
 def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode):
-    manifest = recipe.prepare(**inputs, mode=mode)
+    extra = mother_checkpoint(inputs, tmp_path) if mode == "reload" else {}
+    manifest = recipe.prepare(**inputs, mode=mode, **extra)
     assert manifest["dataset_kind"] == "fixed-diagnostic-not-heldout"
     assert manifest["environment"]["ROLLOUT_N"] == "4"
     assert manifest["environment"]["VAL_ROLLOUT_N"] == "1"
@@ -76,10 +114,18 @@ def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode):
     assert af.framework_class_fqn == "uni_agent.framework.memory_chain.NativeMemoryFramework"
     assert af.trajectory_postprocessor_fqn is None and af.trajectory_postprocessor_kwargs is None
     assert af.trajectory_postprocessor_pass_context is False
-    assert config.trainer.val_only == (mode == "val")
+    assert config.trainer.val_only == (mode != "train")
     framework = NativeMemoryFramework.from_config(config=config, gateway_manager=Manager([]))
     assert framework._memory_operator.root == inputs["run_root"] / "chains"
     assert framework._memory_operator.family == "constraints"
+    if mode == "reload":
+        assert config.trainer.resume_mode == "resume_path"
+        assert config.trainer.resume_from_path == str(extra["resume_from"])
+        assert config.trainer.del_local_ckpt_after_load is False
+        assert config.trainer.val_before_train is True
+        assert list(config.actor_rollout_ref.actor.checkpoint.load_contents) == ["model", "optimizer", "extra"]
+        assert framework._memory_operator.checkpoint_identity == manifest["checkpoint_origin"]["identity"]
+        assert framework._memory_operator.checkpoint_identity != inputs["model_revision"]
 
 
 def test_reuse_bad_runtime_and_source_mutation_rejected(inputs):
@@ -105,6 +151,76 @@ def test_memory_recipe_module_exists():
     from examples.dsh.capabilities.prepare_memory_training import prepare
 
     assert callable(prepare)
+
+
+@pytest.mark.parametrize(
+    "mode,extra", [("reload", {}), ("val", {"resume_from": "/tmp/x"}), ("train", {"mother_run": "/tmp/x"})]
+)
+def test_reload_mode_conflicts(inputs, mode, extra):
+    with pytest.raises(ValueError, match="Reload requires"):
+        recipe.prepare(**inputs, mode=mode, **extra)
+
+
+@pytest.mark.parametrize("change", ["missing", "mother_incomplete", "source_mismatch", "checkpoint_path"])
+def test_reload_requires_actual_mother_evidence(inputs, tmp_path, change):
+    extra = mother_checkpoint(inputs, tmp_path)
+    if change == "missing":
+        (extra["resume_from"] / "actor/optim_world_size_1_rank_0.pt").unlink()
+    elif change == "checkpoint_path":
+        extra["resume_from"] = extra["resume_from"].parent / "not-a-step"
+    else:
+        path = extra["mother_run"] / "run-manifest.json"
+        record = json.loads(path.read_text())
+        record["status" if change == "mother_incomplete" else "uni_agent_sha"] = "wrong"
+        path.write_text(json.dumps(record))
+    with pytest.raises(ValueError):
+        recipe.prepare(**inputs, mode="reload", **extra)
+    assert not inputs["output_dir"].exists()
+
+
+def test_reload_identity_excludes_new_run_and_detects_weight_change(inputs, tmp_path):
+    extra = mother_checkpoint(inputs, tmp_path)
+    first = recipe.prepare(**inputs, mode="reload", **extra)
+    other = {**inputs, "output_dir": tmp_path / "data2", "run_root": tmp_path / "run2", "run_id": "reload-2"}
+    second = recipe.prepare(**other, mode="reload", **extra)
+    assert first["checkpoint_origin"] == second["checkpoint_origin"]
+    assert first["checkpoint_origin"]["step"] == 1
+    path = inputs["output_dir"] / "manifest.json"
+    assert recipe.check(path)["mode"] == "reload"
+    weight = extra["resume_from"] / "actor/model_world_size_1_rank_0.pt"
+    weight.write_bytes(b"tampered")
+    with pytest.raises(ValueError, match="Checkpoint or mother evidence changed"):
+        recipe.check(path)
+
+
+@pytest.mark.parametrize("override", ["trainer.val_only=False", "trainer.del_local_ckpt_after_load=True"])
+def test_reload_rejects_training_or_delete_override(inputs, tmp_path, override):
+    extra = mother_checkpoint(inputs, tmp_path)
+    manifest = recipe.prepare(**inputs, mode="reload", **extra)
+    manifest["command"].append(override)
+    path = inputs["output_dir"] / "manifest.json"
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="protected overrides"):
+        recipe.check(path)
+
+
+def test_reload_output_cannot_overlap_mother(inputs, tmp_path):
+    extra = mother_checkpoint(inputs, tmp_path)
+    inputs["output_dir"] = extra["resume_from"] / "reload-data"
+    with pytest.raises(ValueError, match="overlap"):
+        recipe.prepare(**inputs, mode="reload", **extra)
+
+
+def test_fixed_verl_val_only_returns_before_training_increment():
+    path = recipe.ROOT / "verl/verl/trainer/ppo/v1/trainer_base.py"
+    tree = ast.parse(path.read_text())
+    fit = next(n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef) and n.name == "fit")
+    val_only = next(n for n in ast.walk(fit) if isinstance(n, ast.If) and "val_only" in ast.unparse(n.test))
+    assert any(isinstance(n, ast.Return) for n in val_only.body)
+    increment = min(
+        n.lineno for n in ast.walk(fit) if isinstance(n, ast.AugAssign) and ast.unparse(n.target) == "self.global_steps"
+    )
+    assert val_only.end_lineno < increment
 
 
 def test_launch_creates_actual_private_writer_parent(inputs, monkeypatch, tmp_path):

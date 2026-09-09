@@ -1,0 +1,163 @@
+{
+  "schema": "dsh.native-memory-resident-training-result.v1",
+  "source_commit": "c5dacdc7ff90ad7cb15e826b41b0f6748c2139f0",
+  "run_root": "/root/runs/memory-resident-train-r2",
+  "supervision": {
+    "exit_code": 1,
+    "reason": "training-exited",
+    "elapsed_seconds": 380.009,
+    "pid": 196565,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "manifest_status": "failed",
+  "audit": {
+    "schema": "dsh.memory-training-consumption-audit.v1",
+    "passed": false,
+    "consumption_verified": false,
+    "run_completed": false,
+    "run_id": "memory-resident-train-r2",
+    "run_manifest_sha256": "sha256:9541b76641c8b81aa3b12fd2fe46796009ae40714ef0b82fa6312fca3335309e",
+    "inputs": [],
+    "groups": [],
+    "errors": [],
+    "unknown_or_unadmitted_consumption": [],
+    "duplicate_consumption": [],
+    "overlapping_crosswalk_keys": [],
+    "summary": {
+      "groups": 0,
+      "consumed_groups": 0,
+      "consumed_rows": 0,
+      "unique_consumed_rows": 0
+    },
+    "limitations": [
+      "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+      "Crosswalk and submission records alone never establish trainer consumption."
+    ]
+  },
+  "stages": [
+    {
+      "session": "memory-A-67d69f8f1d764050a9a98a14bb163523",
+      "partition": "val",
+      "trainer_step": 0,
+      "trajectories": [
+        {
+          "finished": true,
+          "reward_score": 0.0,
+          "model_token_count": 383,
+          "response_len": 553
+        }
+      ]
+    }
+  ],
+  "receipt": {
+    "accuracy": 0.0,
+    "artifact_sha256": "sha256:f399d0b1dcee0b4418a9f99d45625fb9dc8572b8203f81c3e0c4c81dd30e781b",
+    "dsh_session_id": "dsh-memory-A-67d69f8f1d764050a9a98a14bb163523",
+    "eligible": true,
+    "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "evidence": [
+      "sha256:c1ae67577484c73b3f0436b58e52c12dda14654945fe8fc13b0d2e69cc1b247f",
+      "sha256:704b3c67e6d85d61c8cfe8c4f13fbeb9377c9b98ce06cabdb44e54650113dc75",
+      "sha256:cc5fcde17df41e2c8d424856f3dc730515afce4464eade1ec0ece22ae0c0d5ac"
+    ],
+    "finished": true,
+    "fresh": true,
+    "issued_at": "2026-09-09T02:34:30.560676+00:00",
+    "issuer": {
+      "id": "uni-agent-dsh",
+      "kind": "trusted-verifier"
+    },
+    "receipt_id": "sha256:7709e8f53dc9a6f9061892373ad44e133d4171ecf553d2469283cc4f07257708",
+    "reward": 0.0,
+    "schema": "dsh.verifier-receipt.v1",
+    "task_id": "dsh/memory-training/memory-18d7dc491673491a934b45fc17bb847e/writer",
+    "task_version": "1",
+    "trace_sha256": "sha256:704b3c67e6d85d61c8cfe8c4f13fbeb9377c9b98ce06cabdb44e54650113dc75",
+    "verifier": {
+      "code_digest": "sha256:315e44c55fafb616b4670816e57b1d13d46e201a97877ff91460c26b90b80f5d",
+      "id": "dsh-memory-file-chain-training-stage",
+      "version": "1"
+    }
+  },
+  "independent_rescore": {
+    "reward": 0.0,
+    "accuracy": 0.0,
+    "eligible": true,
+    "finished": true,
+    "extra_info": {
+      "chain_id": "memory-18d7dc491673491a934b45fc17bb847e",
+      "role": "writer",
+      "training": false,
+      "credit_assignment": "none",
+      "matched": false,
+      "unsafe": [],
+      "memory_sha256": "sha256:7d3c628f0c38ad3f6508f896f5a7c625afa2cb1b909be36f592550b12e931d66",
+      "reads": [
+        "/root/runs/memory-resident-train-r2/chains/memory-18d7dc491673491a934b45fc17bb847e/writer-data/source.json"
+      ]
+    }
+  },
+  "source_facts": {
+    "forbidden": "public_bucket",
+    "region": "eu-west-test"
+  },
+  "written_facts": {
+    "key1": "value1",
+    "key2": "value2"
+  },
+  "assistant_tool_batches": [
+    {
+      "seq": 8,
+      "step": 1,
+      "tool_calls": [
+        {
+          "id": "call_d63a714c",
+          "name": "str_replace_editor",
+          "command": "view"
+        },
+        {
+          "id": "call_028e177b",
+          "name": "str_replace_editor",
+          "command": "create"
+        }
+      ]
+    },
+    {
+      "seq": 15,
+      "step": 2,
+      "tool_calls": []
+    }
+  ],
+  "trace_sha256": "704b3c67e6d85d61c8cfe8c4f13fbeb9377c9b98ce06cabdb44e54650113dc75",
+  "log_sha256": "24ff993770f7dd15418241d4108c059d1ffde647429867b0c881de514f1582a9",
+  "frozen_artifacts": 0,
+  "crosswalks": 0,
+  "training_metric_line_count": 0,
+  "checkpoint_files": [],
+  "gpu_processes_at_audit": "",
+  "cause_order": [
+    "Initial validation writer generated view and create together before seeing source tool result; wrote placeholder facts.",
+    "Writer finished, fresh and safe but semantic reward=0; current StageSpec rejects writer quality and does not freeze/start B.",
+    "Strict val group rejected, then pinned trainer attempts empty TQ keys and exits1."
+  ],
+  "limitations": [
+    "No train n4 group or optimizer update reached.",
+    "No chain crosswalk means no admitted A/B actual-policy-version evidence to certify.",
+    "Training run name does not mean training was performed."
+  ],
+  "manifest_times": {
+    "started_at": {
+      "utc": "2026-09-09T02:28:34.282107+00:00",
+      "utc_plus_8": "2026-09-09T10:28:34.282107+08:00"
+    },
+    "finished_at": {
+      "utc": "2026-09-09T02:34:37.468645+00:00",
+      "utc_plus_8": "2026-09-09T10:34:37.468645+08:00"
+    },
+    "updated_at": {
+      "utc": "2026-09-09T02:34:37.468645+00:00",
+      "utc_plus_8": "2026-09-09T10:34:37.468645+08:00"
+    }
+  }
+}
