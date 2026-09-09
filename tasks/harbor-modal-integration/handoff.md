@@ -2,13 +2,10 @@
 
 ## 1. TL;DR
 
-- **用户最新优先级纠偏**：工程执行/真实消费/保存/reload先完成，非零更新证据其次，任务效果最后。r3合法全零时继续既定运行，不主动停、不再继续堆提示；原安全/证据门不降，W4有效更新仍须独立补证，不能把流程完成标成学会能力。
-
-- **当前作业work-state-train-r3**：2026-09-09 13:24:15 UTC+8外层launch PID232248；主运行13:24:52开始。独立`/workspace/rebuild/uni-agent-work-state-r3`固定`17b6e5589abc8d5a77c6238d0971a129135aa9b7`，VERL fef+preserve-finish-reason-v1（patch2cb5eef7、target2a4452e0、manifest15ecee86）。清单/root/runs/work-state-train-r3-data/manifest.json已check通过，run manifest实记新VERL导入目录；13:26:20仍框架启动阶段，尚未收到任务或更新结果。
-- **已完成新协议实际验收**：固定Linux DSH finish canary4/4、既有vLLM环境30项HTTP/解析器测试通过；报告`dsh-finish-reason-canary-r1-result.md/json`、远端`/root/runs/work-state-r3-linux-checks`。未重装环境。后续查r3日志与完整业务/梯度/消费证据，不能把canary当训练。
-
-- **work-state-train-r2已失败退出，GPU已释放**：child221585、exit1/1195.029秒，step4 periodic val WS06 A尝试修改只读来源被拒。step1–3记录grad/adv0；step4 CK存在但无该步gradient/消费dump，不能称有效更新。独立audit7组/32行消费、194段EOS、unknown/duplicate0，整体passed=false。报告`work-state-train-r2-result.md/json`。
-- **下一轮候选在制**：protocol3补齐业务输出schema/空目录可create/聊天不转交B（62主线程回归、独立40实例源truth不变）；VERL原fef加显式finish-reason-v1补丁，Gateway length不执行tool/terminal abort失败。复合源码身份接prepare/run/reload、固定Linuxcanary待新commit实际部署。旧r2 step4不可作为已验收母训练checkpoint。
+- **当前状态：r3已失败，r4尚未启动。** r3 child232331 exit1/1275.026秒，global_steps4周期val WS06 writer A尝试写只读source被拒，未进入B；原始报告`work-state-train-r3-result.md/json`。step1–3记录reward/adv/grad全0，step4 CK存在未验收有效更新或独立reload。主线程interim audit11groups/7consumed/32rows，无errors；不能据此标整轮passed。
+- **用户当前优先级：工程运行→有效更新证据→能力效果。** 合法全0不主动停止；原安全/证据拒绝仍不放宽。本地调度修复已通过27项recipe回归：work-state train关闭`val_before_train`、`test_freq=0`，保留8steps/n4/save4与8；独立严格val/reload保留，单个评估任务被拒不再通过内嵌周期val拖停训练。待主线程提交/推送、固定新manifest后再启动r4，不能沿用旧r3数据清单。
+- **可复用固定部署**：r3源码`17b6e5589abc8d5a77c6238d0971a129135aa9b7`，protocol3，VERL fef+preserve-finish-reason-v1显式补丁；DSH SDK/runtime已0.1.3a2/b236且私有Release/lock存在。旧截图“runtime未发布需重建”已过时；不重装GPU环境，先核新checkout/venv/runtimehash。
+- **已通过工程证据**：固定Linux DSH工具canary8结构/106请求、finish canary4/4与vLLM环境30项HTTP/解析测试。它们不替代学生训练验收。手工入口`docs/harbor-modal-integration/work-state-rl-runbook.md`；r2/r3 failed原产物不修改，W4学习证据仍独立待验。
 
 以下为此前检查点，时间与身份保留，不覆盖上述当前状态。
 

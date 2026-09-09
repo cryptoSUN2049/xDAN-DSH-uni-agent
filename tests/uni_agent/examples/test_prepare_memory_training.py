@@ -133,6 +133,11 @@ def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode, famil
     assert af.trajectory_postprocessor_fqn is None and af.trajectory_postprocessor_kwargs is None
     assert af.trajectory_postprocessor_pass_context is False
     assert config.trainer.val_only == (mode != "train")
+    if work_state:
+        assert config.trainer.val_before_train == (mode != "train")
+        assert config.trainer.test_freq == (0 if mode == "train" else 1)
+        if mode == "train":
+            assert config.trainer.save_freq == 4
     framework = framework_class.from_config(config=config, gateway_manager=Manager([]))
     assert framework._memory_operator.root == inputs["run_root"] / "chains"
     assert framework._memory_operator.family == family
@@ -336,3 +341,13 @@ def test_reload_rejects_different_mother_effective_verl(inputs, tmp_path):
     run_file.write_text(json.dumps(run))
     with pytest.raises(ValueError, match="Mother evidence/config"):
         recipe.prepare(**inputs, mode="reload", family="work-state-v1", **extra)
+
+
+@pytest.mark.parametrize("override", ["trainer.test_freq=4", "trainer.val_before_train=True"])
+def test_work_state_train_rejects_inline_evaluation(inputs, override):
+    manifest = recipe.prepare(**inputs, mode="train", family="work-state-v1")
+    manifest["command"].append(override)
+    path = inputs["output_dir"] / "manifest.json"
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="independent evaluation"):
+        recipe.check(path)

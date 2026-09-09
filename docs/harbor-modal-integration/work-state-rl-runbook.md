@@ -2,6 +2,10 @@
 
 本指南对应 `prepare_memory_training --family work-state-v1`。固定 DSH 0.1.3a2、Uni-Agent upstream 89733ec、VERL官方基线fefb080 **加 preserve-finish-reason-v1 源码补丁**；有效版本不是裸fefb080。集成源码必须使用实验报告记录的完整 Git SHA。复用已有 Python 环境，不在运行中的 checkout 更新源码。
 
+**当前状态：r3已失败，r4尚未启动。** [r3原始结果](work-state-train-r3-result.md)显示step4周期评估WS06 A写只读来源被拒，训练child exit1；不是合法零奖励主动终止。调度修复已在本地实现并通过27项recipe回归：work-state train设置`trainer.val_before_train=False`、`trainer.test_freq=0`，保留8步、n4、step4/8保存；严格val/reload独立执行。该调度变更须以主线程最终提交和新manifest核实，不能直接重启旧r3清单。
+
+DSH当前已是0.1.3a2 SDK/runtime，私有Release已存在，deployment lock固定b236源码与runtime SHA；旧截图“新版runtime未发布/仍需构建”不再适用。主线程已实查远端SDK与runtime-bin均为0.1.3a2，二进制SHA为d1a467…并匹配lock；本轮复用该环境，核hash后运行，不从零重建DSH或CUDA。
+
 ## 1. 本次任务与边界
 
 | 任务族 | 学生需要完成 | 判定依据 |
@@ -21,7 +25,8 @@ A在DSH中读来源并自行维护记忆文件；控制器冻结真实字节，B
 
 ```bash
 set -euo pipefail
-WORK_STATE_REPO=/workspace/rebuild/uni-agent-work-state-r1
+WORK_STATE_REPO=/workspace/rebuild/uni-agent-work-state-r4
+# r4尚未部署/启动；执行前用主线程实际已部署的新checkout路径替换。
 cd "$WORK_STATE_REPO"
 # 将下行替换为实验报告中的完整集成SHA。
 WORK_STATE_SHA=REPLACE_WITH_RECORDED_COMMIT
@@ -59,7 +64,7 @@ nvidia-smi
 
 验证stop、length、截断文本内打印工具块无副作用，以及terminal abort明确失败；检查通过后仍须真实GPU采样/训练。补丁清单在`deployment/versions/verl-runtime-patches.json`，prepare/check与run manifest记录复合身份及真实VERL导入目录，任何未知修改均拒绝。母checkpoint reload要求相同有效VERL身份。
 
-## 4. 准备并启动GPU学生基线
+## 4. 独立GPU学生评估（与训练分开执行）
 
 ```bash
 "$PYTHON_BIN" -m examples.dsh.capabilities.prepare_memory_training prepare \
@@ -80,9 +85,13 @@ nvidia-smi
 
 `prepare/check`不加载GPU，`launch`使用清单的`CUDA_VISIBLE_DEVICES=0`，拒绝已占用GPU。可在tmux中运行，监督器对本run设wall-clock限制。基线要求真实执行/完整消费与逐族结果可审计，不要求四题全满分。
 
+本节val仍严格执行原安全/证据门：失败就保留该评估run的failed，不生成替代TQ、不放宽准入。它是独立诊断，不应作为第5节工程训练的隐式硬前置；按当前工程优先级，可先执行第5节，再在独立进程运行val/reload。不要把四题满分或非零奖励作为启动工程链路的条件。
+
 ## 5. 训练与证据
 
-上一节`prepare`改成`--mode train`，所有目录和run-id替换为`WORK_STATE_TRAIN`，再运行对应`check/launch/audit`。默认8步、n4、batch1，step4/8保存；同步训练，非全异步。初始及定期dev均为真实新会话。训练上限7200秒；未到步数/无有效梯度不能算完整验收。
+上一节`prepare`改成`--mode train`，所有目录和run-id替换为`WORK_STATE_TRAIN`，再运行对应`check/launch/audit`。新调度目标保持8步、n4、batch1、step4/8保存；同步训练，非全异步。work-state train关闭内嵌initial/periodic dev：有效配置应为`trainer.val_before_train=False`、`trainer.test_freq=0`。准备后用`check`核对新源码、新manifest和最终有效配置；不得把旧r3的True/4清单重新用于r4。该变更已通过27项recipe回归，待主线程提交/推送并固定新manifest；r4尚未启动。
+
+训练上限7200秒。工程层验收是计划步数、可信完整组消费、checkpoint保存及独立reload；合法全0奖励/零梯度不主动打断这条流程。有效学习层另要求真实非零任务梯度、优势及参数/optimizer证据；能力提升再做同预算评估对照。训练自身出现安全/证据拒绝仍按原合同处理，本次解耦不豁免任何不合格轨迹。
 
 观察：`<run>/supervision/train.log`、`supervisor-result.json`、`<run>/chains/groups/*/crosswalk.json`、`<run>/rollouts/*.jsonl`、`<run>/validation/*.jsonl`。checkpoint位于`/workspace/uni-agent-g1/checkpoint/<run-id>/global_step_N`。记录实际任务ID、完整组、奖励方差、梯度、参数差分、冻结base与optimizer步数；数据重复采样不增加独立任务数。
 

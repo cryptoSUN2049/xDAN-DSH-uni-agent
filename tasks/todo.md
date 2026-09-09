@@ -6,7 +6,7 @@
 
 唯一当前顺序以权威goal的W0—W6为准；下面旧S/P/N历史段的“当前/下一步”不覆盖本节。
 
-用户最新纠偏：先完成工程执行、真实消费、保存及独立reload，再补有效更新证据，最后看任务成功率/奖励改善。合法全零不主动停r3；不继续用复杂任务优化阻塞整条流程。W4仍需真实非零梯度与参数证据，不能用zero-grad exit0替代。
+用户最新纠偏：先完成工程执行、真实消费、保存及独立reload，再补有效更新证据，最后看任务成功率/奖励改善。r3已因周期评估安全拒绝退出，r4尚未启动；合法全零不主动停止，不继续用复杂任务优化阻塞整条流程。W4仍需真实非零梯度与参数证据，不能用zero-grad exit0替代。
 
 - [x] 核对既有goal状态、设计、handoff、实际代码与证据边界。
 - [x] 更新goal：双目标、W0—W6退出条件、长期四能力与当前工程工作包分开。
@@ -17,11 +17,15 @@
 - [ ] W5 本课程checkpoint独立reload和新鲜任务结果复跑。
 - [ ] W6 手动脚本/指南/证据/交接与逐节点commit/push。
 
-本次goal Review：沿用已批准设计；能力提分不是工程退出前置，CPU通过也不计GPU验收。平台仍usageLimited，未虚报激活或完成。当前实现与protocol3/VERL结束语义补丁已17b6e55推送；r2失败保留，r3于13:24:15 UTC+8启动，有效梯度和reload仍待实证。
+本次goal Review：沿用已批准设计；能力提分不是工程退出前置，CPU通过也不计GPU验收。平台仍usageLimited，未虚报激活或完成。当前protocol3/VERL结束语义补丁已17b6e55推送；r2/r3失败保留，r3 step4周期val WS06 A越权拒绝，未完成8步。r4尚未启动，调度修复已通过27项recipe回归，待主线程提交/推送并固定版本。有效梯度和reload仍待实证。
 
 - [x] 修复并锁定length/stop保真补丁，Gateway截断不执行工具、terminal abort失败；固定Linuxruntime四项canary和既有vLLM环境30项测试通过。
 - [x] 修复公开业务schema与空目录create/聊天不跨会话说明，独立40实例对照确认源事实/truth不变。
-- [ ] r3本课程实际任务消费、非零梯度与参数、独立reload全部验收；此项不因新checkpoint存在自动通过。
+- [x] 归档r3 failed：原supervisor/WS06 A越权trace/receipt、step1–3零梯度及step4 checkpoint库存；不追认有效学习。
+- [x] 实现并测试work-state train关闭val_before_train/test_freq=0，保留8steps/n4/save4/8；27项recipe回归通过，独立val/reload严格门不变。
+- [ ] 固定新提交与r4 manifest，核复合VERL身份与已发布DSH0.1.3a2 runtime；不重建现有SDK环境。
+- [ ] r4新run完成工程步数、真实完整消费、保存与独立reload；当前尚未启动。
+- [ ] 单独验收有效梯度/优势/参数与optimizer，再评能力效果；工程exit0与checkpoint存在不自动通过本项。
 
 历史逐项验收入口：[三阶段任务路线图](../docs/harbor-modal-integration/task-roadmap.html)。其版本迁移、环境复建、Harbor顺序不再是当前执行优先级。
 

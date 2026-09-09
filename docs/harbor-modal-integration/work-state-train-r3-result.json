@@ -1,0 +1,724 @@
+{
+  "schema": "dsh.work-state-train-result.v1",
+  "status": "failed",
+  "captured_utc": "2026-09-09T05:50:24.959939+00:00",
+  "run_id": "work-state-train-r3",
+  "run_root": "/root/runs/work-state-train-r3",
+  "checkout": "17b6e5589abc8d5a77c6238d0971a129135aa9b7",
+  "supervisor": {
+    "exit_code": 1,
+    "reason": "training-exited",
+    "elapsed_seconds": 1275.026,
+    "pid": 232331,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "failure": {
+    "global_steps": 4,
+    "partition": "val",
+    "chain_id": "memory-56ea8a81af354e958904e734c6f206b9",
+    "task_id": "work-state-ws06-v1-s303",
+    "stage": "writer",
+    "protocol_revision": 3,
+    "receipt": {
+      "finished": true,
+      "eligible": false,
+      "reward": 0,
+      "fresh": true,
+      "evidence": [
+        "sha256:a3412e7c7750faa3b93a80aef65594dee757fc590ad4bdf1936c21f59d86b497",
+        "sha256:dd279edc61a64d1f9e7ab017f0f49d3af5f731739c68b4a3aa2ca2b6e83625cf",
+        "sha256:7bc9f98b50233797a9dba76228f8a155e7af4e7acdaefade2f2416ce95d02ba2"
+      ]
+    },
+    "event_count": 46,
+    "finish_reason": "completed",
+    "tool_calls": [
+      {
+        "seq": 9,
+        "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer-data/sources/request.json\"}",
+        "callId": "call_d1284d80",
+        "name": "str_replace_editor",
+        "step": 1,
+        "turn": 1
+      },
+      {
+        "seq": 14,
+        "arguments": "{\"command\": \"str_replace\", \"path\": \"/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer-data/sources/request.json\", \"old_str\": \"plan: \\\"No workflow actions; submit an empty array.\\\"\", \"new_str\": \"plan: \\\"No workflow actions; submit an empty array.\\\"\"}",
+        "callId": "call_76f5f123",
+        "name": "str_replace_editor",
+        "step": 2,
+        "turn": 1
+      },
+      {
+        "seq": 19,
+        "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer-data/memory/index.md\"}",
+        "callId": "call_5e252274",
+        "name": "str_replace_editor",
+        "step": 3,
+        "turn": 1
+      },
+      {
+        "seq": 24,
+        "arguments": "{\"command\": \"create\", \"path\": \"/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer-data/memory/index.md\", \"file_text\": \"This is a new file created for memory storage.\"}",
+        "callId": "call_ced38f41",
+        "name": "str_replace_editor",
+        "step": 4,
+        "turn": 1
+      },
+      {
+        "seq": 29,
+        "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer-data/memory/index.md\"}",
+        "callId": "call_3a4fb486",
+        "name": "str_replace_editor",
+        "step": 5,
+        "turn": 1
+      },
+      {
+        "seq": 34,
+        "arguments": "{\"command\": \"str_replace\", \"path\": \"/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer-data/memory/index.md\", \"old_str\": \"This is a new file created for memory storage.\", \"new_str\": \"This is a new file created for memory storage.\"}",
+        "callId": "call_1e5f6e18",
+        "name": "str_replace_editor",
+        "step": 6,
+        "turn": 1
+      },
+      {
+        "seq": 39,
+        "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer-data/memory/index.md\"}",
+        "callId": "call_43d5db9a",
+        "name": "str_replace_editor",
+        "step": 7,
+        "turn": 1
+      }
+    ],
+    "reader_receipt_exists": false,
+    "final_response": "I have successfully created and viewed the memory file at `/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer-data/memory/index.md`. The file contains the text:\n\n```\nThis is a new file created for memory storage.\n```\n\nLet me know if you need to make any changes to this file or if you have any other tasks to perform."
+  },
+  "metric_rows": [
+    {
+      "step": 0,
+      "metrics": {
+        "val-aux/dsh/work-state/v1/reward/mean@1": 0,
+        "val-aux/dsh/work-state/v1/verifier_reward/mean@1": 0
+      }
+    },
+    {
+      "step": 1,
+      "metrics": {
+        "actor/pg_loss": 0,
+        "actor/grad_norm": 0,
+        "critic/rewards/mean": 0,
+        "critic/rewards/max": 0,
+        "critic/rewards/min": 0,
+        "critic/advantages/mean": 0,
+        "critic/advantages/max": 0,
+        "critic/advantages/min": 0
+      }
+    },
+    {
+      "step": 2,
+      "metrics": {
+        "actor/pg_loss": 0,
+        "actor/grad_norm": 0,
+        "critic/rewards/mean": 0,
+        "critic/rewards/max": 0,
+        "critic/rewards/min": 0,
+        "critic/advantages/mean": 0,
+        "critic/advantages/max": 0,
+        "critic/advantages/min": 0
+      }
+    },
+    {
+      "step": 3,
+      "metrics": {
+        "actor/pg_loss": 0,
+        "actor/grad_norm": 0,
+        "critic/rewards/mean": 0,
+        "critic/rewards/max": 0,
+        "critic/rewards/min": 0,
+        "critic/advantages/mean": 0,
+        "critic/advantages/max": 0,
+        "critic/advantages/min": 0
+      }
+    }
+  ],
+  "stage_records": [
+    {
+      "chain": "memory-0b8f6cf731284850bf928c390e4d12c7",
+      "task_id": "work-state-ws01-v1-s303",
+      "split": "validation",
+      "group_uid": "eee87e36-f6ff-4db0-b05b-83dc5a1060bf",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-db8c8f3c13e341ae83b5ea37312dae0c",
+      "task_id": "work-state-ws03-v1-s303",
+      "split": "validation",
+      "group_uid": "5aab55c7-c468-4755-a791-fa4c806c5fdd",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-78c17d58e4334767b66903fcceef3996",
+      "task_id": "work-state-ws05-v1-s303",
+      "split": "validation",
+      "group_uid": "7b52a42a-b96d-49da-a8de-eb79edb145bf",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-02c75d94e89c404b8b4b2514ab286c08",
+      "task_id": "work-state-ws06-v1-s303",
+      "split": "validation",
+      "group_uid": "b35d187c-0e54-41f2-93df-dfc721706ced",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-b0fda3acbbeb45c0b7d9dcb6779dfd34",
+      "task_id": "work-state-ws01-v0-s101",
+      "split": "train",
+      "group_uid": "42619fb9-7999-437a-9c97-d0c72ad91bdf",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-c48aa5c61c3a4ab1ae1094f421bf4d89",
+      "task_id": "work-state-ws01-v0-s101",
+      "split": "train",
+      "group_uid": "42619fb9-7999-437a-9c97-d0c72ad91bdf",
+      "sibling": 1,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-4f50828060144f948c7c3b4c9287fdbf",
+      "task_id": "work-state-ws01-v0-s101",
+      "split": "train",
+      "group_uid": "42619fb9-7999-437a-9c97-d0c72ad91bdf",
+      "sibling": 2,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-1591d7eab61a4de6a2a6b4e8499ff160",
+      "task_id": "work-state-ws01-v0-s101",
+      "split": "train",
+      "group_uid": "42619fb9-7999-437a-9c97-d0c72ad91bdf",
+      "sibling": 3,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-f7a149066bf443aab26fe9569e3af6ad",
+      "task_id": "work-state-ws01-v0-s202",
+      "split": "train",
+      "group_uid": "bb2c0d55-58ad-46f5-b034-f2b327f50f73",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-dd0b63d67e974610bb5f5dbf908f6e55",
+      "task_id": "work-state-ws01-v0-s202",
+      "split": "train",
+      "group_uid": "bb2c0d55-58ad-46f5-b034-f2b327f50f73",
+      "sibling": 1,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-cb0ee2d1de1147a0bffaed3cf6e09783",
+      "task_id": "work-state-ws01-v0-s202",
+      "split": "train",
+      "group_uid": "bb2c0d55-58ad-46f5-b034-f2b327f50f73",
+      "sibling": 2,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-19e19a66f9214a93bf5b952008fa7660",
+      "task_id": "work-state-ws01-v0-s202",
+      "split": "train",
+      "group_uid": "bb2c0d55-58ad-46f5-b034-f2b327f50f73",
+      "sibling": 3,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-b89e36fe142e401893e54a8c9b754d47",
+      "task_id": "work-state-ws03-v0-s101",
+      "split": "train",
+      "group_uid": "8878f9b0-3e33-43dd-adbe-8714b225045e",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-d43e1d00a7e0460aaffbc729903d8e54",
+      "task_id": "work-state-ws03-v0-s101",
+      "split": "train",
+      "group_uid": "8878f9b0-3e33-43dd-adbe-8714b225045e",
+      "sibling": 1,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-fdb69e5ae29b4834b8ca27971ece8aae",
+      "task_id": "work-state-ws03-v0-s101",
+      "split": "train",
+      "group_uid": "8878f9b0-3e33-43dd-adbe-8714b225045e",
+      "sibling": 2,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-76d666d616bb4671b3929f9b1839db0b",
+      "task_id": "work-state-ws03-v0-s101",
+      "split": "train",
+      "group_uid": "8878f9b0-3e33-43dd-adbe-8714b225045e",
+      "sibling": 3,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-9ca0f2cf6e454f0cbb34d64f8b854038",
+      "task_id": "work-state-ws03-v0-s202",
+      "split": "train",
+      "group_uid": "51eebcb3-d4a1-48cc-a441-20e929400751",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-ce96793db1604891ac9e23d495b8901b",
+      "task_id": "work-state-ws03-v0-s202",
+      "split": "train",
+      "group_uid": "51eebcb3-d4a1-48cc-a441-20e929400751",
+      "sibling": 1,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-e94b3805270f400f8f5211f76e910cb8",
+      "task_id": "work-state-ws03-v0-s202",
+      "split": "train",
+      "group_uid": "51eebcb3-d4a1-48cc-a441-20e929400751",
+      "sibling": 2,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-8ac21400cc9246639f11eedc37ca3f87",
+      "task_id": "work-state-ws03-v0-s202",
+      "split": "train",
+      "group_uid": "51eebcb3-d4a1-48cc-a441-20e929400751",
+      "sibling": 3,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-eade73c4304941b79c812da2ed5ae503",
+      "task_id": "work-state-ws01-v1-s303",
+      "split": "validation",
+      "group_uid": "efeb2ef0-7214-4315-9dcc-0f0915687148",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-49e2ed10779542469a8863ecb88f3351",
+      "task_id": "work-state-ws03-v1-s303",
+      "split": "validation",
+      "group_uid": "6c102e1b-7799-4748-8912-d61ede1d21ab",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-682afa5d79eb45f9a5e50bc3e7850975",
+      "task_id": "work-state-ws05-v1-s303",
+      "split": "validation",
+      "group_uid": "6bd281eb-8e71-454a-8dfb-41377d26ccb0",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        },
+        "reader": {
+          "finished": true,
+          "eligible": true,
+          "reward": 0
+        }
+      }
+    },
+    {
+      "chain": "memory-56ea8a81af354e958904e734c6f206b9",
+      "task_id": "work-state-ws06-v1-s303",
+      "split": "validation",
+      "group_uid": "e08b543b-6c49-4aa5-821a-3b0ee3f09b39",
+      "sibling": 0,
+      "roles": {
+        "writer": {
+          "finished": true,
+          "eligible": false,
+          "reward": 0
+        }
+      }
+    }
+  ],
+  "rollout_files": [
+    {
+      "path": "/root/runs/work-state-train-r3/rollouts/1.jsonl",
+      "bytes": 90858,
+      "sha256": "sha256:04a7aa82407a3536fbebcd1cd703a91c08dff06bd0a09e0f45a3af6a55d56338"
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/rollouts/2.jsonl",
+      "bytes": 72498,
+      "sha256": "sha256:9b1759067a15c08d55ae49feda2c8ca18c3580e3852109bd332ee6b95fa45e79"
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/rollouts/3.jsonl",
+      "bytes": 77149,
+      "sha256": "sha256:2c491b4448160e2b1912ce413f8ee2250601a87404ed32beb963ef7501744c65"
+    }
+  ],
+  "validation_files": [
+    {
+      "path": "/root/runs/work-state-train-r3/validation/0.jsonl",
+      "bytes": 84402,
+      "sha256": "sha256:77451be1f20deba94c8564f85b533d0ffb848bccff0fc80e95129f6bbf9051ac"
+    }
+  ],
+  "checkpoint_inventory": [
+    {
+      "path": "global_step_4/actor/extra_state_world_size_1_rank_0.pt",
+      "bytes": 15141
+    },
+    {
+      "path": "global_step_4/actor/fsdp_config.json",
+      "bytes": 46
+    },
+    {
+      "path": "global_step_4/actor/huggingface/chat_template.jinja",
+      "bytes": 4168
+    },
+    {
+      "path": "global_step_4/actor/huggingface/config.json",
+      "bytes": 1625
+    },
+    {
+      "path": "global_step_4/actor/huggingface/generation_config.json",
+      "bytes": 213
+    },
+    {
+      "path": "global_step_4/actor/huggingface/tokenizer.json",
+      "bytes": 11422650
+    },
+    {
+      "path": "global_step_4/actor/huggingface/tokenizer_config.json",
+      "bytes": 664
+    },
+    {
+      "path": "global_step_4/actor/lora_train_meta.json",
+      "bytes": 67
+    },
+    {
+      "path": "global_step_4/actor/model_world_size_1_rank_0.pt",
+      "bytes": 8889735011
+    },
+    {
+      "path": "global_step_4/actor/optim_world_size_1_rank_0.pt",
+      "bytes": 132552363
+    },
+    {
+      "path": "global_step_4/data.pt",
+      "bytes": 1499
+    },
+    {
+      "path": "latest_checkpointed_iteration.txt",
+      "bytes": 1
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "/root/runs/work-state-train-r3/supervision/supervisor-result.json",
+      "bytes": 167,
+      "sha256": "sha256:9bfda014f1be42314502659f1b4f18a2ea399de6f097e6c8364d10fffe1e03f5"
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/supervision/train.log",
+      "bytes": 168582,
+      "sha256": "sha256:d1d6687110951f79baa47da6725155922e1db018be7b3843ed093c473a6e1336"
+    },
+    {
+      "path": "/workspace/rebuild/uni-agent-work-state-r3/dsh-work-state/work-state-train-r3.jsonl",
+      "bytes": 10147,
+      "sha256": "sha256:9552319708d5cce862d63dba556f225373fee435084cf216e4e552d9540b2ac1"
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer/run/traces/b5179b599ff24653d00a0316/session.jsonl",
+      "bytes": 30300,
+      "sha256": "sha256:dd279edc61a64d1f9e7ab017f0f49d3af5f731739c68b4a3aa2ca2b6e83625cf"
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer/run/traces/b5179b599ff24653d00a0316/result.json",
+      "bytes": 921,
+      "sha256": "sha256:b162a1227ca3df30f41a480ba4c290915bcc987c23edd4c072fd3688fd958414"
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer/run/results/026307abefc1a6ac4d3ed996/verifier-receipt.json",
+      "bytes": 1124,
+      "sha256": "sha256:f34d95ae0f1edd6fef2545449347999209338c647f7f736720fa319c42d8e530"
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer/fixture.json",
+      "bytes": 4592,
+      "sha256": "sha256:a3412e7c7750faa3b93a80aef65594dee757fc590ad4bdf1936c21f59d86b497"
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/chains/memory-56ea8a81af354e958904e734c6f206b9/writer/prompt.json",
+      "bytes": 2282,
+      "sha256": "sha256:23dff6e0e5cda043498524ae81dd30293d8164cd299f638bf1319966eddc5bbc"
+    },
+    {
+      "path": "/root/runs/work-state-train-r3/run-manifest.json",
+      "bytes": 6525,
+      "sha256": "sha256:81d81f8c8dee60d5513556da70829391fba9e5eb6e94a8b3b477366f9f35d55a"
+    }
+  ],
+  "limits": [
+    "No checkpoint tensor loading/delta or independent reload performed in this audit",
+    "Stage existence is not proof of actual TQ consumption",
+    "No step4 metric inferred from checkpoint existence"
+  ]
+}

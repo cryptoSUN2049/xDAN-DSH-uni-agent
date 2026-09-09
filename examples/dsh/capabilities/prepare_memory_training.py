@@ -312,7 +312,7 @@ def prepare(
             VAL_MAX_SAMPLES="4",
             TOTAL_TRAINING_STEPS="8" if mode == "train" else "1",
             SAVE_FREQ="4",
-            TEST_FREQ="4" if mode == "train" else "1",
+            TEST_FREQ="0" if mode == "train" else "1",
             PROJECT_NAME="dsh-work-state",
         )
     overrides = {
@@ -348,6 +348,8 @@ def prepare(
             "trainer.default_local_dir=" + str(checkpoint),
         ]
     )
+    if work_state and mode == "train":
+        tail.append("trainer.val_before_train=False")
     if origin:
         tail.extend(
             [
@@ -452,6 +454,13 @@ def check(manifest_path):
             or json.loads(task_path.read_text()) != _work_state_dataset()[0]
         ):
             raise ValueError("Work-state task manifest identity changed")
+    if work_state and manifest["mode"] == "train":
+        if (
+            env["TEST_FREQ"] != "0"
+            or overrides.get("trainer.test_freq") != "0"
+            or overrides.get("trainer.val_before_train") != "False"
+        ):
+            raise ValueError("Work-state training must use independent evaluation")
     if manifest["mode"] == "reload" and not manifest.get("checkpoint_origin"):
         raise ValueError("Reload requires checkpoint origin")
     if manifest.get("checkpoint_origin"):
