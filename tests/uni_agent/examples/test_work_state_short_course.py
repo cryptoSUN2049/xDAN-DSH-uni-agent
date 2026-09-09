@@ -257,3 +257,25 @@ def test_original_four_families_are_byte_equivalent_to_pre_course_source():
     items = [make_task(f, v, s) for f in ("WS01", "WS03", "WS05", "WS06") for v in (0, 1) for s in (101, 303)]
     digest = hashlib.sha256(json.dumps(items, sort_keys=True).encode()).hexdigest()
     assert digest == "ee13fc76964f4f922cf9f4b7a2b7110b3e571c9afb09910738eb4878965f0e6e"
+
+
+@pytest.mark.parametrize("reference", ["handoff.md.backup", r"C:\memory\handoff.md", r"..\handoff.md", "../handoff.md"])
+def test_short_index_rejects_non_relative_basename(tmp_path, reference):
+    from examples.dsh.capabilities.work_state.short_read_evidence import verify_reads
+
+    fixture, events = read_case(tmp_path)
+    text = f"Read {reference}.\n"
+    (tmp_path / "memory" / "index.md").write_text(text)
+    events[2]["data"]["message"]["content"][0]["content"][0]["text"] = text
+    assert not all(verify_reads(fixture, events).values())
+
+
+@pytest.mark.parametrize("reference", ["handoff.md.", "[handoff](handoff.md)", "./handoff.md", "`handoff.md`"])
+def test_short_index_accepts_relative_link_and_sentence_punctuation(tmp_path, reference):
+    from examples.dsh.capabilities.work_state.short_read_evidence import verify_reads
+
+    fixture, events = read_case(tmp_path)
+    text = f"Read {reference}\n"
+    (tmp_path / "memory" / "index.md").write_text(text)
+    events[2]["data"]["message"]["content"][0]["content"][0]["text"] = text
+    assert all(verify_reads(fixture, events).values())

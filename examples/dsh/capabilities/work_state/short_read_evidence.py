@@ -83,7 +83,8 @@ def verify_reads(fixture, events) -> dict:
         index_raw = read_regular(index_path, fixture["max_bytes"])
         handoff_raw = read_regular(handoff_path, fixture["max_bytes"])
         # A relative link/name, never an absolute source path or ../ traversal reference.
-        if not re.search(r"(?<![\w./-])(?:\./)?handoff\.md(?![\w/-])", index_raw.decode("utf-8")):
+        reference = r"""(?<![\w./\\:-])(?:\./)?handoff\.md(?=$|[\s`'"\)\],;!?。，；：！？]|\.(?=$|\s))"""
+        if not re.search(reference, index_raw.decode("utf-8")):
             return checks
     except (FileNotFoundError, ValueError, UnicodeError):
         return checks
