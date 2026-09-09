@@ -34,6 +34,28 @@ def _json(path):
     return value
 
 
+def _validate_task_course(task, run_root):
+    course = task.get("course_id", "work-state-v1")
+    expected = "work-state-short-fact-v1" if task["family"] == "WS07" else "work-state-v1"
+    _require(course == expected, "Work-state task course mismatch")
+    plan_path = Path(run_root) / "memory-launch-plan.json"
+    if not plan_path.exists() and course == "work-state-v1":
+        return  # Historical CPU fixtures predate the optional course identity.
+    plan = _json(plan_path)
+    _require(plan.get("course_id", "work-state-v1") == course, "Work-state run/task course mismatch")
+    if plan.get("checkpoint_origin"):
+        _require(
+            plan["checkpoint_origin"].get("course_id", "work-state-v1") == course, "Work-state mother course mismatch"
+        )
+    if course == "work-state-short-fact-v1":
+        run = _json(Path(run_root) / "run-manifest.json")
+        raw = read_regular(run["paths"]["dataset_manifest"])
+        _require(
+            sha(raw) == run["sha256"]["dataset_manifest"] and json.loads(raw) == plan,
+            "Work-state course plan binding mismatch",
+        )
+
+
 def _work_state_lineage(record, item, result_root):
     # Lazy import keeps old runs independent of optional work-state implementation.
     from examples.dsh.capabilities.work_state import verifier
@@ -78,6 +100,7 @@ def _work_state_lineage(record, item, result_root):
         "Work-state task identity mismatch",
     )
     task = fixture["task"]
+    _validate_task_course(task, fixture_path.parents[3])
     _require(task == make_task(task["family"], task["variant"], task["seed"]), "Work-state task definition changed")
     _require(
         sha(canonical(task)) == fixture["source_version"] == chain["frozen"]["source_version"],

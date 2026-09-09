@@ -81,7 +81,7 @@ def test_untrusted_sample_or_manifest_rejected_before_root(inputs, kind):
     assert not (op.root / "chain").exists()
 
 
-def execute_synthetic_stage(spec, *, bad_memory=False):
+def execute_synthetic_stage(spec, *, bad_memory=False, transform_events=None):
     """Actual Task/subprocess/audit artifacts from synthetic CPU actions, no model."""
     import asyncio
     import hashlib
@@ -119,6 +119,8 @@ def execute_synthetic_stage(spec, *, bad_memory=False):
                 _result(str(i), "created"),
             ]
         )
+    if transform_events is not None:
+        events = transform_events(fixture, events)
     response = "done"
     events.append({"type": "turn/end", "data": {"reason": {"kind": "completed"}}})
     raw = b"".join(canonical(event) for event in events)

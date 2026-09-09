@@ -10,6 +10,7 @@ from examples.dsh.capabilities import memory_verifier as memory
 from examples.dsh.capabilities.memory_verifier import canonical, loads, read_regular, sha
 from examples.dsh.capabilities.work_state.bundle import pack_bundle
 from examples.dsh.capabilities.work_state.scoring import score_task
+from examples.dsh.capabilities.work_state.short_read_evidence import verify_reads
 from examples.dsh.evolution_verifier_v2 import _complete_pairs
 from uni_agent.tasks.dsh import memory_artifacts
 
@@ -26,7 +27,16 @@ def bundle_digest():
                 "parent_bundle": memory.bundle_digest(),
                 **{
                     name: sha((root / name).read_bytes())
-                    for name in ("tasks.py", "scoring.py", "bundle.py", "policy.mjs", "profile.py", "verifier.py")
+                    for name in (
+                        "tasks.py",
+                        "short_tasks.py",
+                        "short_read_evidence.py",
+                        "scoring.py",
+                        "bundle.py",
+                        "policy.mjs",
+                        "profile.py",
+                        "verifier.py",
+                    )
                 },
             }
         )
@@ -121,6 +131,12 @@ def score(fixture, events, response, finished, session_id):
                 # Unsafe file identity is not ordinary malformed JSON.
                 raise ValueError("Invalid output file identity/budget") from error
         quality = score_task(fixture["task"], outputs)
+        if fixture["task"]["family"] == "WS07":
+            checks = verify_reads(fixture, events)
+            quality["checks"].update(checks)
+            quality["reward"] = int(quality["reward"] == 1 and all(checks.values()))
+            if not all(checks.values()):
+                quality["errors"].append("Short-course index/handoff reads must precede output generation")
         if pack_bundle(Path(fixture["output_root"]), fixture["task"]["result_paths"], fixture["max_bytes"]) != snapshot:
             raise ValueError("Output artifacts changed during scoring")
     reward = int(eligible and quality["reward"] == 1)

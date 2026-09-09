@@ -132,7 +132,16 @@ def _prepare(operator, context, chain_id, gateway_session_id, root, fixture, pro
     ]
     paths += [
         Path(__file__).with_name(name)
-        for name in ("tasks.py", "scoring.py", "bundle.py", "policy.mjs", "profile.py", "verifier.py")
+        for name in (
+            "tasks.py",
+            "short_tasks.py",
+            "short_read_evidence.py",
+            "scoring.py",
+            "bundle.py",
+            "policy.mjs",
+            "profile.py",
+            "verifier.py",
+        )
     ]
     return StageSpec(
         operator,
@@ -198,6 +207,15 @@ def prepare_writer_stage(operator, context, *, chain_id, gateway_session_id, sam
         "receive a different memory directory. Source paths are provenance only and are inaccessible "
         "to B: preserve the useful evidence itself, not just links to A's source directory."
     )
+    if task["family"] == "WS07":
+        prompt = (
+            task["writer_goal"]
+            + "\nRead-only source: "
+            + ", ".join(read_files)
+            + "\nWrite these two initially absent files: "
+            + ", ".join(fixture["write_files"])
+            + "\nUse absolute paths in tool calls, but the relative name handoff.md in index.md."
+        )
     return _prepare(operator, context, chain_id, gateway_session_id, root, fixture, prompt)
 
 

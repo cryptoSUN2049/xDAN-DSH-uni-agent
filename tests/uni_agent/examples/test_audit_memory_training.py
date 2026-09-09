@@ -270,3 +270,52 @@ async def test_original_stage_scope_and_context_count_checked(wired, field, valu
     # Exercise the semantic check independently of the earlier crosswalk SHA gate.
     with pytest.raises(ValueError, match="Stage"):
         _stage_lineage(record)
+
+
+def test_short_course_requires_bound_run_plan(tmp_path):
+    from examples.dsh.capabilities.audit_memory_training import _validate_task_course
+
+    task = {"family": "WS07", "course_id": "work-state-short-fact-v1"}
+    with pytest.raises((ValueError, FileNotFoundError)):
+        _validate_task_course(task, tmp_path)
+    plan = tmp_path / "memory-launch-plan.json"
+    plan.write_text(json.dumps({"course_id": "work-state-v1"}))
+    with pytest.raises(ValueError, match="course"):
+        _validate_task_course(task, tmp_path)
+
+
+def test_short_course_rechecks_dataset_plan_binding(tmp_path):
+    from examples.dsh.capabilities.audit_memory_training import _validate_task_course, sha
+
+    task = {"family": "WS07", "course_id": "work-state-short-fact-v1"}
+    plan = tmp_path / "memory-launch-plan.json"
+    plan.write_text(json.dumps({"course_id": task["course_id"]}))
+    manifest = tmp_path / "run-manifest.json"
+    manifest.write_text(
+        json.dumps({"paths": {"dataset_manifest": str(plan)}, "sha256": {"dataset_manifest": sha(plan.read_bytes())}})
+    )
+    _validate_task_course(task, tmp_path)
+    plan.write_text(plan.read_text() + " ")
+    with pytest.raises(ValueError, match="binding"):
+        _validate_task_course(task, tmp_path)
+
+
+def test_legacy_course_does_not_need_new_plan(tmp_path):
+    from examples.dsh.capabilities.audit_memory_training import _validate_task_course
+
+    _validate_task_course({"family": "WS01"}, tmp_path)
+    with pytest.raises(ValueError, match="course"):
+        _validate_task_course({"family": "WS01", "course_id": "work-state-short-fact-v1"}, tmp_path)
+
+
+def test_short_course_cannot_reload_foreign_course(tmp_path):
+    from examples.dsh.capabilities.audit_memory_training import _validate_task_course, sha
+
+    task = {"family": "WS07", "course_id": "work-state-short-fact-v1"}
+    plan = tmp_path / "memory-launch-plan.json"
+    plan.write_text(json.dumps({"course_id": task["course_id"], "checkpoint_origin": {"course_id": "work-state-v1"}}))
+    (tmp_path / "run-manifest.json").write_text(
+        json.dumps({"paths": {"dataset_manifest": str(plan)}, "sha256": {"dataset_manifest": sha(plan.read_bytes())}})
+    )
+    with pytest.raises(ValueError, match="mother course"):
+        _validate_task_course(task, tmp_path)

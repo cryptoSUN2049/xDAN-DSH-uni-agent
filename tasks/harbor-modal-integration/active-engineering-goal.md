@@ -44,6 +44,19 @@
 
 **当前工作包完成 = W0—W6全部有证据。** 四能力终局、能力增益、封存泛化与性能目标继续保留，不能随本工作包一起自动勾选。C1的跨会话状态恢复不等于C2模型自主compact；后者须先验证固定runtime的真实动作接口。
 
+## W4 后续短课程执行包（2026-09-09，用户已批准继续）
+
+旧 WS01/03/05/06 的 r4 结论保持：执行闭环完成，有效更新未通过。为诊断并补齐真实学习信号，新增独立 `work-state-short-fact-v1` / WS07 课程与新母实验；不能用它追认旧 r4 已更新，也不能将单事实恢复等同于四类能力完成。设计见 [短课程设计](../../docs/harbor-modal-integration/work-state-short-course-design.md)。
+
+- [x] S1 任务与因果读取合同：8 个独立训练实例、2 个公开开发实例；A 实际保存，B 新会话读取后完成配置；正反例、旧任务回归通过。核心103、recipe62、audit/canary37、credit7，共209项CPU通过；未据此宣称Linux或GPU通过。
+- [ ] S2 固定源码与课程身份：prepare/check/audit/reload 绑定 course、数据、runtime 与有效 VERL；Ruff 双门后 commit/push，GitHub 固定部署，真实 Linux DSH canary。
+- [ ] S3 新母实验真实 GPU 在线 RL：既定 8 步、每组 n4、无内联评估；核实际消费、奖励分布和有限非零优势/梯度。合法零奖励不停止或人为改分。
+- [ ] S4 更新与保存：新课程 checkpoint/optimizer 与冻结 base 审计，给出实际参数变化；无变化则如实保留并定位，不以运行结束判完成。
+- [ ] S5 新课程独立 reload 与公开开发评估：加载新母 checkpoint，原始失败照实记录，验证新鲜轨迹、消费及母工件不变；不给旧 r4 换课程身份。
+- [ ] S6 操作指南、证据归档、goal/handoff 与必要 HTML 视觉检查，commit/push。
+
+任务得分与工程验收分开；公开开发题不用于调提示、选择温度或挑 checkpoint。当前课程只有一个训练结构、一个开发结构，8 次采样不算 8 个新任务。
+
 ## N3最新语义（用户2026-09-09澄清）
 
 记忆/context目标是适时保存goal/tasks/handoff/memory、维护索引、offload、获准compact及中断后继续工作；恢复结果、事实保真与总成本分别评估。完整[训练任务与设计](../../docs/harbor-modal-integration/dsh-memory-context-skills-plan.md)细化为C1文件工作状态→C2真实上下文操作→C3联合长任务，含WS01—WS12开发规格。当前规格不是已运行数据；不以固定A/B诊断或共有训练底座冒称完整MemAgent/ContextPilot集成。

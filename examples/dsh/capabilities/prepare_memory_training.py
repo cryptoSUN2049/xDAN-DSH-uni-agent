@@ -25,7 +25,8 @@ def digest(path):
     return "sha256:" + value.hexdigest()
 
 
-def checkpoint_origin(resume_from, mother_run, *, family, model_revision, runtime_sha, verl_head):
+def checkpoint_origin(resume_from, mother_run, *, family, model_revision, runtime_sha, verl_head, course_id=None):
+    course_id = _resolve_course(family, course_id)
     checkpoint, mother = Path(resume_from), Path(mother_run)
     if not checkpoint.is_absolute() or not mother.is_absolute():
         raise ValueError("Checkpoint and mother run must be absolute")
@@ -55,6 +56,8 @@ def checkpoint_origin(resume_from, mother_run, *, family, model_revision, runtim
         or json.loads(dataset.read_text()) != plan
     ):
         raise ValueError("Mother evidence/config does not bind this checkpoint")
+    if _resolve_course(family, plan.get("course_id")) != course_id:
+        raise ValueError("Mother course does not match requested course")
     required = [checkpoint / "actor" / f"{name}_world_size_1_rank_0.pt" for name in ("model", "optim", "extra_state")]
     if any(not p.is_file() or p.is_symlink() for p in required):
         raise ValueError("Missing regular model/optimizer/extra checkpoint")
@@ -66,6 +69,7 @@ def checkpoint_origin(resume_from, mother_run, *, family, model_revision, runtim
     }
     body = dict(
         schema="dsh.memory-checkpoint-origin.v1",
+        course_id=course_id,
         mother_run=str(mother),
         mother_source_head=plan["integration_head"],
         verl_effective_source=plan["verl_effective_source"],
@@ -117,24 +121,73 @@ def runtime_probe(python, runtime):
     return installed
 
 
-def _work_state_dataset():
+COURSES = ("work-state-v1", "work-state-short-fact-v1")
+
+
+def _resolve_course(family, course_id):
+    if family == "work-state-v1":
+        resolved = "work-state-v1" if course_id is None else course_id
+        if resolved not in COURSES:
+            raise ValueError("Unknown work-state course")
+        return resolved
+    if family not in ("constraints", "updates") or course_id is not None:
+        raise ValueError("Explicit course is only supported for work-state family")
+    return None
+
+
+def _course_coverage(dataset, course_id, evaluation_ids=None):
     from examples.dsh.capabilities.work_state.tasks import make_task
 
-    rows, structures, visible = {}, {"train": set(), "validation": set()}, {"train": set(), "validation": set()}
-    for family in ("WS01", "WS03", "WS05", "WS06"):
-        for variant, seed, split in ((0, 101, "train"), (0, 202, "train"), (1, 303, "validation")):
-            task = make_task(family, variant, seed)
-            rows[task["task_id"]] = dict(family=family, variant=variant, seed=seed, split=split)
-            structures[split].add((family, variant))
-            observed = {name: task[name] for name in ("writer_files", "reader_files")}
-            visible[split].add(hashlib.sha256(json.dumps(observed, sort_keys=True).encode()).hexdigest())
-    return dict(schema="dsh.work-state-dataset.v1", tasks=rows), dict(
-        family_count=4,
+    structures = {"train": set(), "validation": set()}
+    visible = {"train": set(), "validation": set()}
+    values = {"train": set(), "validation": set()}
+    for task_id, row in dataset["tasks"].items():
+        split = row["split"]
+        if split == "validation" and evaluation_ids is not None and task_id not in evaluation_ids:
+            continue
+        task = make_task(row["family"], row["variant"], row["seed"])
+        structures[split].add((row["family"], row["variant"]))
+        observed = {name: task[name] for name in ("writer_files", "reader_files")}
+        visible[split].add(hashlib.sha256(json.dumps(observed, sort_keys=True).encode()).hexdigest())
+        if course_id == "work-state-short-fact-v1":
+            values[split].add(task["truth"]["expected_config"]["capacity"])
+    coverage = dict(
+        family_count=len({row["family"] for row in dataset["tasks"].values()}),
         structures={k: len(v) for k, v in structures.items()},
         distinct_visible_inputs={k: len(v) for k, v in visible.items()},
         visibility="public-development-not-sealed",
         note="Seed or task ID multiplicity is not structural diversity.",
     )
+    if course_id == "work-state-short-fact-v1":
+        coverage["distinct_fact_values"] = {k: len(v) for k, v in values.items()}
+    return coverage
+
+
+def _dataset_for_course(course_id):
+    from examples.dsh.capabilities.work_state.tasks import make_task
+
+    if course_id == "work-state-v1":
+        schedule = [
+            (family, variant, seed, split)
+            for family in ("WS01", "WS03", "WS05", "WS06")
+            for variant, seed, split in ((0, 101, "train"), (0, 202, "train"), (1, 303, "validation"))
+        ]
+    elif course_id == "work-state-short-fact-v1":
+        schedule = [("WS07", 0, seed, "train") for seed in range(101, 109)] + [
+            ("WS07", 1, seed, "validation") for seed in (901, 902)
+        ]
+    else:
+        raise ValueError("Unknown dataset course")
+    rows = {}
+    for family, variant, seed, split in schedule:
+        task = make_task(family, variant, seed)
+        rows[task["task_id"]] = dict(family=family, variant=variant, seed=seed, split=split)
+    dataset = dict(schema="dsh.work-state-dataset.v1", tasks=rows)
+    return dataset, _course_coverage(dataset, course_id)
+
+
+def _work_state_dataset():
+    return _dataset_for_course("work-state-v1")
 
 
 def _evaluation_ids(dataset, requested, mode):
@@ -196,15 +249,16 @@ def prepare(
     resume_from=None,
     mother_run=None,
     evaluation_task_ids=None,
+    course_id=None,
 ):
     if mode not in ("val", "train", "reload") or family not in ("constraints", "updates", "work-state-v1"):
         raise ValueError("Only val/train/reload and fixed diagnostic families are supported")
     work_state = family == "work-state-v1"
-    dataset, coverage = _work_state_dataset() if work_state else (None, None)
+    course_id = _resolve_course(family, course_id)
+    dataset, coverage = _dataset_for_course(course_id) if work_state else (None, None)
     evaluation_ids = _evaluation_ids(dataset, evaluation_task_ids, mode)
     if work_state:
-        coverage["structures"]["validation"] = len(evaluation_ids)
-        coverage["distinct_visible_inputs"]["validation"] = len(evaluation_ids)
+        coverage = _course_coverage(dataset, course_id, evaluation_ids)
     if (mode == "reload" and (not resume_from or not mother_run)) or (
         mode != "reload" and (resume_from is not None or mother_run is not None)
     ):
@@ -247,6 +301,7 @@ def prepare(
             resume_from,
             mother_run,
             family=family,
+            course_id=course_id,
             model_revision=model_revision,
             runtime_sha=digest(runtime),
             verl_head=verl_head,
@@ -445,6 +500,7 @@ def prepare(
         schema="dsh.memory-resident-preparation.v1",
         status="prepared-not-run",
         mode=mode,
+        course_id=course_id,
         dataset_kind="public-structural-development" if work_state else "fixed-diagnostic-not-heldout",
         counts=counts,
         coverage=coverage,
@@ -497,17 +553,19 @@ def check(manifest_path, *, after_run=False):
         raise ValueError("Runtime changed")
     env = manifest["environment"]
     overrides = dict(x.lstrip("+").split("=", 1) for x in manifest["command"][3:] if "=" in x)
-    work_state = overrides.get(AF + "memory_operator.family") == json.dumps("work-state-v1")
+    family = json.loads(overrides[AF + "memory_operator.family"])
+    work_state = family == "work-state-v1"
+    course_id = _resolve_course(family, manifest.get("course_id"))
     if work_state:
         task_path = Path(json.loads(overrides[AF + "memory_operator.task_manifest"]))
         expected_task_path = Path(env["DATA_ROOT"]) / "work-state-tasks.json"
         if (
             task_path != expected_task_path
             or digest(task_path) != json.loads(overrides[AF + "memory_operator.task_manifest_sha256"])
-            or json.loads(task_path.read_text()) != _work_state_dataset()[0]
+            or json.loads(task_path.read_text()) != _dataset_for_course(course_id)[0]
         ):
             raise ValueError("Work-state task manifest identity changed")
-        dataset = _work_state_dataset()[0]
+        dataset = _dataset_for_course(course_id)[0]
         run_id = env["EXP_NAME"]
         requested = None
         if manifest["mode"] in ("val", "reload"):
@@ -523,9 +581,7 @@ def check(manifest_path, *, after_run=False):
         elif manifest.get("evaluation_selection") is not None:
             raise ValueError("Training cannot select evaluation tasks")
         selected = _evaluation_ids(dataset, requested, manifest["mode"])
-        expected_coverage = _work_state_dataset()[1]
-        expected_coverage["structures"]["validation"] = len(selected)
-        expected_coverage["distinct_visible_inputs"]["validation"] = len(selected)
+        expected_coverage = _course_coverage(dataset, course_id, selected)
         if manifest["coverage"] != expected_coverage:
             raise ValueError("Work-state evaluation coverage changed")
         expected_counts = {}
@@ -560,6 +616,7 @@ def check(manifest_path, *, after_run=False):
                 for x in manifest["command"]
                 if x.startswith("++" + AF + "memory_operator.family=")
             ),
+            course_id=course_id,
             model_revision=manifest["model_revision_declared"],
             runtime_sha=manifest["runtime"]["sha256"],
             verl_head=manifest["verl_head"],
@@ -644,6 +701,7 @@ def main():
         "model-revision",
     ):
         prep.add_argument("--" + key, required=True)
+    prep.add_argument("--course", dest="course_id", choices=COURSES)
     prep.add_argument("--mode", choices=("val", "train", "reload"), default="val")
     prep.add_argument("--resume-from", type=Path)
     prep.add_argument("--mother-run", type=Path)

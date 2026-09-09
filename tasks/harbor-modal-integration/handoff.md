@@ -6,9 +6,11 @@
 - **工程已收尾**：r4八步、8完整n4组/64唯一A/B消费、6独立任务，CK4/8完整；独立固定四题全部终态，WS01/03/05共3组6行消费通过，WS06 A max-tokens未B/未消费；all_attempted=true/all_verified=false，不冒称4/4成功。
 - **学习未通过**：r4奖励/优势/梯度均0、参数未变化；独立评估实际业务奖励也全0。E1—E4与W5结果复跑完成，W4有效更新仍待；不把整个goal或记忆/RSI能力标完成。
 - **入口/证据**：[总操作指南](../../docs/harbor-modal-integration/native-work-state-end-to-end-runbook.md) → [最终报告](../../docs/harbor-modal-integration/work-state-independent-evaluation-r1-result.md) → [归档](../../docs/harbor-modal-integration/work-state-independent-evaluation-r1-archive.md)；HTML/MD已同步并通过1440/390视觉检查。母/旧失败与本suite分别归档/workspace/reports，原回执不改。
-- **下一步**：GPU最近10:44:42UTC为0%/0MiB，未启动下一训练。先看[零奖励根因](../../docs/harbor-modal-integration/work-state-r4-zero-reward-rootcause.md)与[独立短课程设计](../../docs/harbor-modal-integration/work-state-short-course-design.md)，以有价值且可学的跨会话任务补真实非零更新；新课程尚未实现。Harbor/异步/从零安装后置。
+- **下一步**：GPU最近10:44:42UTC为0%/0MiB，未启动下一训练。先看[零奖励根因](../../docs/harbor-modal-integration/work-state-r4-zero-reward-rootcause.md)与[独立短课程设计](../../docs/harbor-modal-integration/work-state-short-course-design.md)，以有价值且可学的跨会话任务补真实非零更新；用户已批准短课程实施，代码与209项CPU回归完成；尚未固定部署或启动新GPU训练。Harbor/异步/从零安装后置。
 
 较早运行快照已移至[notes.md](notes.md)，不得按其中旧running/旧命令重启作业。
+
+当前新增执行包见 active-engineering-goal.md 的 S1—S6；短课程手动命令见 [WS07指南](../../docs/harbor-modal-integration/work-state-short-course-runbook.md)。短课程与旧 r4 分别保持母实验身份。
 
 ## 2. 本轮交付物
 

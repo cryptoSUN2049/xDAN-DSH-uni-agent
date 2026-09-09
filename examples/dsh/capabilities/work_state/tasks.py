@@ -62,6 +62,10 @@ def _business_output_contract(family, variant):
 
 
 def make_task(family: str, variant: int = 0, seed: int = 0) -> dict:
+    if family == "WS07":
+        from examples.dsh.capabilities.work_state.short_tasks import make_short_task
+
+        return make_short_task(variant, seed)
     if family not in ("WS01", "WS03", "WS05", "WS06") or type(variant) is not int or variant not in (0, 1):
         raise ValueError("Unsupported family/structural variant")
     if type(seed) is not int or seed < 0:
@@ -258,6 +262,11 @@ def make_task(family: str, variant: int = 0, seed: int = 0) -> dict:
 
 def oracle_memory(task: dict) -> dict[str, bytes]:
     """Controller canary only; never inject into student episodes."""
+    if task["family"] == "WS07":
+        return {
+            "index.md": b"Read handoff.md for the service capacity.\n",
+            "handoff.md": "\n".join(task["writer_files"].values()).encode(),
+        }
     if task["family"] == "WS06":
         return {}
     files = task["writer_files"]

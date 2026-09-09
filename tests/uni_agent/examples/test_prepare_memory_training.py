@@ -41,7 +41,7 @@ def inputs(tmp_path, monkeypatch):
     )
 
 
-def mother_checkpoint(inputs, tmp_path, family="constraints"):
+def mother_checkpoint(inputs, tmp_path, family="constraints", course_id=None):
     mother = tmp_path / "mother"
     mother.mkdir()
     checkpoint = tmp_path / "mother-checkpoint" / "global_step_1"
@@ -59,6 +59,8 @@ def mother_checkpoint(inputs, tmp_path, family="constraints"):
         environment=dict(RUN_ROOT=str(mother), CKPTS_DIR=str(checkpoint.parent)),
         command=[f'++{recipe.AF}memory_operator.family="{family}"'],
     )
+    if course_id is not None:
+        plan["course_id"] = course_id
     dataset = mother / "dataset-manifest.json"
     dataset.write_text(json.dumps(plan))
     (mother / "memory-launch-plan.json").write_text(json.dumps(plan))
@@ -80,10 +82,12 @@ def mother_checkpoint(inputs, tmp_path, family="constraints"):
 
 
 @pytest.mark.parametrize("mode", ["val", "train", "reload"])
-@pytest.mark.parametrize("family", ["constraints", "work-state-v1"])
-def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode, family):
-    extra = mother_checkpoint(inputs, tmp_path, family) if mode == "reload" else {}
-    manifest = recipe.prepare(**inputs, mode=mode, family=family, **extra)
+@pytest.mark.parametrize(
+    "family,course_id", [("constraints", None), ("work-state-v1", None), ("work-state-v1", "work-state-short-fact-v1")]
+)
+def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode, family, course_id):
+    extra = mother_checkpoint(inputs, tmp_path, family, course_id) if mode == "reload" else {}
+    manifest = recipe.prepare(**inputs, mode=mode, family=family, course_id=course_id, **extra)
     work_state = family == "work-state-v1"
     assert manifest["dataset_kind"] == (
         "public-structural-development" if work_state else "fixed-diagnostic-not-heldout"
@@ -145,7 +149,7 @@ def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode, famil
         from examples.dsh.capabilities.memory_training_stage import GroupContext
         from examples.dsh.capabilities.work_state.stage import _task
 
-        assert manifest["counts"] == {"train": 8, "validation": 4}
+        assert manifest["counts"] == {"train": 8, "validation": 2 if course_id else 4}
         for split, partition in [("train", "train"), ("validation", "val")]:
             for row in pq.read_table(inputs["output_dir"] / f"{split}.parquet").to_pylist():
                 task = _task(
@@ -480,3 +484,59 @@ def test_after_run_recheck_only_skips_new_directory_gate(inputs, tmp_path, monke
         target.write_bytes(b"changed-after-execution")
         with pytest.raises(ValueError, match="changed"):
             recipe.check(path, after_run=True)
+
+
+def test_short_course_selection_coverage_and_source_closure(inputs):
+    selected = ["work-state-short-fact-v1-ws07-v1-s902"]
+    manifest = recipe.prepare(
+        **inputs, family="work-state-v1", course_id="work-state-short-fact-v1", evaluation_task_ids=selected
+    )
+    assert manifest["course_id"] == "work-state-short-fact-v1"
+    assert manifest["counts"] == {"train": 8, "validation": 1}
+    assert manifest["coverage"]["structures"] == {"train": 1, "validation": 1}
+    assert manifest["coverage"]["distinct_visible_inputs"] == {"train": 8, "validation": 1}
+    assert manifest["coverage"]["distinct_fact_values"] == {"train": 8, "validation": 1}
+    dataset = json.loads((inputs["output_dir"] / "work-state-tasks.json").read_text())
+    assert len(dataset["tasks"]) == 10
+    assert set(dataset["tasks"]) == {f"work-state-short-fact-v1-ws07-v0-s{s}" for s in range(101, 109)} | {
+        f"work-state-short-fact-v1-ws07-v1-s{s}" for s in (901, 902)
+    }
+    assert all(set(row) == {"family", "variant", "seed", "split"} for row in dataset["tasks"].values())
+    for name in ("short_tasks.py", "short_read_evidence.py"):
+        assert str(recipe.ROOT / "examples/dsh/capabilities/work_state" / name) in manifest["sources"]
+    assert recipe.check(inputs["output_dir"] / "manifest.json")["course_id"] == manifest["course_id"]
+
+
+@pytest.mark.parametrize(
+    "family,course",
+    [("constraints", "work-state-v1"), ("updates", "work-state-short-fact-v1"), ("work-state-v1", "unknown")],
+)
+def test_invalid_course_rejected_before_output(inputs, family, course):
+    with pytest.raises(ValueError, match="course"):
+        recipe.prepare(**inputs, family=family, course_id=course)
+    assert not inputs["output_dir"].exists()
+
+
+@pytest.mark.parametrize(
+    "mother_course,target_course", [(None, "work-state-short-fact-v1"), ("work-state-short-fact-v1", "work-state-v1")]
+)
+def test_short_course_rejects_other_course_mother(inputs, tmp_path, mother_course, target_course):
+    extra = mother_checkpoint(inputs, tmp_path, "work-state-v1", mother_course)
+    with pytest.raises(ValueError, match="course"):
+        recipe.prepare(**inputs, mode="reload", family="work-state-v1", course_id=target_course, **extra)
+    assert not inputs["output_dir"].exists()
+
+
+@pytest.mark.parametrize("mutation", ["course", "coverage", "selection"])
+def test_short_course_rehashed_drift_rejected(inputs, mutation):
+    manifest = recipe.prepare(**inputs, family="work-state-v1", course_id="work-state-short-fact-v1")
+    if mutation == "course":
+        manifest["course_id"] = "work-state-v1"
+    elif mutation == "coverage":
+        manifest["coverage"]["structures"]["validation"] = 2
+    else:
+        manifest["evaluation_task_ids"] = ["work-state-ws01-v1-s303"]
+    path = inputs["output_dir"] / "manifest.json"
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="course|manifest|coverage|evaluation"):
+        recipe.check(path)
