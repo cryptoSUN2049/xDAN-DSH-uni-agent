@@ -2,6 +2,20 @@
 
 从保存文件到可靠恢复工作：面向4B模型与长周期Agent任务。
 
+## 独立 RSI 学生链路进展：H0 → P → 登记 → H1
+
+固定执行源码 `b1c568b`，这是工具权限候选的独立开发实验，不是记忆/context 提分证据。
+
+| 阶段 | 当前真实结果 | 原始证据 |
+| --- | --- | --- |
+| H0 父策略 | 两题 `(0, 0)`；原始审计 passed。inspection 被父权限拒绝，文件读取正确但输出字段格式错误 | [H0 结果](rsi-student-h0-r1-result.md) |
+| P 学生提议与登记 | 真实生成 42 token；合法声明的格式奖励 1；原始证据重审后登记候选，父 active 未晋升 | [P 与登记](rsi-student-p-r1-result.md) |
+| H1 隔离候选 | 两题 `(1, 0)`；两条唯一真实消费；独立 result_binding 与 audit_episode passed。inspection 成功，文件输出格式错误仍在 | [H1 独立审计](rsi-student-h1-r1-result.md) |
+
+**尚未完成：**组合比较、晋升、回滚、RSI RL。两题各一次仅是开发观察，不证明统计泛化或模型参数更新；P 格式奖励不是候选收益，也不能将该实验写成记忆能力提升。组合比较必须联合重验真实 H0、P 来源、H1 和两边身份，不拿未执行的 paired H0 占位替代原基线。
+
+**复杂多文件下一步：**[warm-start 初始化设计](work-state-curriculum-initialization-design.md)已落盘、尚未实现。计划显式加载短课程 adapter，在原四族使用全新 optimizer/step/dataloader；项目薄 TaskRunner 在 init 后、fit 前保存真实 step0 并审计，保持固定 VERL 身份。它不改变原 r4 零更新结论，也不替代后续 offload、真实 compact 与长任务恢复目标。
+
 ## 最新短课程：训练→真实更新→独立reload评估闭环通过
 
 课程 `work-state-short-fact-v1`，训练源码 `b47521df1d6cd6b930ab6ac85ef41c670f2405d2`。A实际写入索引与handoff，冻结真实文件后由新B检索动态事实并输出配置；B奖励要求读后再生成正确写入，未用控制端答案替代在线轨迹。

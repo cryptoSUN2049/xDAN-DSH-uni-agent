@@ -26,3 +26,26 @@
 - `/private/tmp/uni-agent-short-visual-20260909/mobile-next-390.png`
 
 本次只验证文档呈现；训练结论来自消费、参数与独立reload原始报告，不能由截图替代。页面不追踪实时GPU数值。
+
+## RSI H0/P/H1 与复杂课程设计增量检查
+
+2026-09-09。对应 HTML/MD 新增独立 RSI 进展：H0 `(0,0)`、P 真实 42 token/格式 reward1 及已登记、H1 `(1,0)` 独立原始审计 passed。当前快照仍未完成组合比较、晋升、回滚和 RSI RL；复杂多文件 warm-start 仅设计落盘，未实现。原 r4 零更新与短课程真实更新边界保留，未将 RSI 写成 memory 提分。
+
+使用 gstack browse 独立 daemon，状态文件 `/private/tmp/uni-agent-rsi-visual-20260909/browse.json`。通过 `file://` 加载本地页面，未复用其他会话 tab；全部截图均用 view_image 实际查看。手机补拍 H1、未完成验收和复杂课程区，使用 instant scroll 避免平滑滚动中途截图。
+
+| 检查 | 实测结果 |
+| --- | --- |
+| 桌面 1440×1000 | 双列 RSI 卡片、四条证据/设计入口清晰；scrollWidth=1440，无横向溢出 |
+| 手机 390×844 | 单列卡片，标题与长技术字段正常换行；scrollWidth=390，无横向溢出 |
+| 手机 H1 与后续边界 | H1、未完成验收、warm-start 说明完整可读，无遮挡 |
+| 全页内部锚点 | brokenAnchors=[]，新增 RSI 导航目标存在 |
+| console error/warning | 无 |
+| 相对文档链接 | 31 处全部存在；属于本地文件存在性校验，不冒充 HTTP 跳转验收 |
+
+截图仅位于本地临时目录，未纳入 Git：
+
+- `/private/tmp/uni-agent-rsi-visual-20260909/desktop-rsi-1440.png`
+- `/private/tmp/uni-agent-rsi-visual-20260909/mobile-rsi-390.png`
+- `/private/tmp/uni-agent-rsi-visual-20260909/mobile-rsi-detail-390.png`
+
+本轮只修改方案 HTML、同名 MD 和本验证记录；不含实现、commit 或 push。RSI 后续比较/晋升若产生新回执，应再更新状态，不能提前标完成。
