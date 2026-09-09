@@ -1,0 +1,279 @@
+{
+  "schema": "dsh.work-state-short-parameter-audit.v1",
+  "run_id": "ws-short-train-r1",
+  "source": "b47521df1d6cd6b930ab6ac85ef41c670f2405d2",
+  "collected_at_utc": "2026-09-09T12:11:04.076596+00:00",
+  "elapsed_seconds": 98.63814520835876,
+  "commands": [
+    {
+      "argv": [
+        "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+        "/workspace/rebuild/uni-agent-work-state-short-r1/deployment/checks/checkpoint_delta.py",
+        "/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_4/actor/model_world_size_1_rank_0.pt",
+        "/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8/actor/model_world_size_1_rank_0.pt",
+        "--output",
+        "/root/runs/ws-short-train-r1/final-audit-r1/checkpoint-delta-4-8.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+        "/workspace/rebuild/uni-agent-work-state-short-r1/deployment/checks/optimizer_delta.py",
+        "/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_4/actor/optim_world_size_1_rank_0.pt",
+        "/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8/actor/optim_world_size_1_rank_0.pt",
+        "--output",
+        "/root/runs/ws-short-train-r1/final-audit-r1/optimizer-delta-4-8.json"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "checkpoint_delta": {
+    "schema": "dsh.single-rank-lora-delta.v1",
+    "passed": true,
+    "adapter_count": 504,
+    "adapter_changed": 504,
+    "base_count": 399,
+    "base_changed": 0,
+    "before": {
+      "path": "/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_4/actor/model_world_size_1_rank_0.pt",
+      "sha256": "db90f72eef26a34f2e584e04c6f146dd05fa3c07fec416ba4b435216ab446ca3"
+    },
+    "after": {
+      "path": "/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8/actor/model_world_size_1_rank_0.pt",
+      "sha256": "a80708dac43e507702f4f60beb13df2d8ac194030861b5f31b26612a6f79151d"
+    }
+  },
+  "optimizer_delta": {
+    "schema": "dsh.native-optimizer-delta.v1",
+    "passed": true,
+    "errors": [],
+    "before": {
+      "steps": [
+        8
+      ],
+      "active_state_count": 504,
+      "empty_state_count": 37,
+      "tensor_count": 1512,
+      "all_finite": true,
+      "nonzero_moment_tensors": 1008
+    },
+    "after": {
+      "steps": [
+        16
+      ],
+      "active_state_count": 504,
+      "empty_state_count": 37,
+      "tensor_count": 1512,
+      "all_finite": true,
+      "nonzero_moment_tensors": 1008
+    },
+    "active_state_count": 504,
+    "empty_state_count": 37,
+    "changed_moment_tensors": 504,
+    "optimizer_step_advanced": true,
+    "files": {
+      "before": {
+        "path": "/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_4/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "6b6ab275143862118b65c0c38d67d3c7262d6bf516837634e3b7d98270261cdc"
+      },
+      "after": {
+        "path": "/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "e69527500dd9c8e5f333aa88934520888524f391c46335f76e55dd40e4843189"
+      }
+    },
+    "input_scope": "Trusted checkpoints produced by this project's own run; weights_only=True, CPU only"
+  },
+  "lora_b": {
+    "4": {
+      "tensor_count": 252,
+      "nonzero_tensor_count": 252,
+      "all_finite": true,
+      "max_abs": 4.1961669921875e-05
+    },
+    "8": {
+      "tensor_count": 252,
+      "nonzero_tensor_count": 252,
+      "all_finite": true,
+      "max_abs": 8.249282836914062e-05
+    }
+  },
+  "initialization_source_sha256": {
+    "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/peft/tuners/lora/config.py": "a9f95e1a143b8320cf2e0a3139f29c807d937876591f5fc1ce24fc4fd7833b59",
+    "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/peft/tuners/lora/layer.py": "444bba0e5dbc5c55ed51a288a8366c18aa7ebe533d081312a19347eb48b215b6"
+  },
+  "resume_mode": "disable",
+  "course_id": "work-state-short-fact-v1",
+  "metrics": [
+    {
+      "step": 1,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "actor/lr": 1e-05,
+        "critic/rewards/max": 1.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 2,
+      "metrics": {
+        "actor/pg_loss": -0.020112289115786552,
+        "actor/loss": -0.020112289115786552,
+        "actor/grad_norm": 0.14892578125,
+        "actor/lr": 1e-05,
+        "critic/rewards/max": 1.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.8660238981246948,
+        "critic/advantages/min": -0.8660238981246948
+      }
+    },
+    {
+      "step": 3,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "actor/lr": 1e-05,
+        "critic/rewards/max": 1.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 4,
+      "metrics": {
+        "actor/pg_loss": -0.008506059646606445,
+        "actor/loss": -0.008506059646606445,
+        "actor/grad_norm": 0.16845703125,
+        "actor/lr": 1e-05,
+        "critic/rewards/max": 1.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.4999989867210388,
+        "critic/advantages/min": -1.4999970197677612
+      }
+    },
+    {
+      "step": 5,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "actor/lr": 1e-05,
+        "critic/rewards/max": 1.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 6,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "actor/lr": 1e-05,
+        "critic/rewards/max": 1.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 7,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "actor/lr": 1e-05,
+        "critic/rewards/max": 1.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 8,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "actor/lr": 1e-05,
+        "critic/rewards/max": 1.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/root/runs/ws-short-train-r1/final-audit-r1/commands.json",
+      "sha256": "66c16d20cd305d2489406c99748bf5bf73a1d922b9e70fb7db5cd121a7aedd29"
+    },
+    {
+      "path": "/root/runs/ws-short-train-r1/final-audit-r1/checkpoint-delta-4-8.json",
+      "sha256": "108a3ecf042facec8771d980a86bdf33325cc4413b2fd1fb717e8ada303bee0f"
+    },
+    {
+      "path": "/root/runs/ws-short-train-r1/final-audit-r1/optimizer-delta-4-8.json",
+      "sha256": "c453cd10b87717b65af488ed4a06b31379b57e813d608ba8470c636ac261797b"
+    },
+    {
+      "path": "/root/runs/ws-short-train-r1/final-audit-r1/lora-b-observation.json",
+      "sha256": "868b0e9e3fda034ea13c8abee9d5a75426a0f7ec9ee8d3523038ff55e52b4565"
+    },
+    {
+      "path": "/root/runs/ws-short-train-r1/final-audit-r1/step-metrics.json",
+      "sha256": "5647e9f190eb64aeeb35715163ccaec7a1ce69d96e0956c8c2dafc9a04e25bf6"
+    }
+  ],
+  "remote_original_report": {
+    "path": "/root/runs/ws-short-train-r1/final-audit-r1/parameter-result.json",
+    "sha256": "851f22784387a727734d0f68b826dcdc8a97ff045d9bfa582069b6e03fe54d5a"
+  },
+  "configuration_evidence": {
+    "path": "/root/runs/ws-short-train-r1/final-audit-r1/configuration-evidence.json",
+    "sha256": "4eece0441d957dc2bb981d0e72e08cc4cdb6e0564f86353bd8011d00f76751e3",
+    "log_sha256": "9e218f84c07acd2d5ea6dc81b099ef931ad07f464a83574edea52f0ad7061188",
+    "resolved": {
+      "resume_mode": "disable",
+      "lora_adapter_path": null,
+      "use_kl_loss": false,
+      "use_kl_in_reward": false,
+      "entropy_coeff": 0
+    },
+    "optimizer_param_group": {
+      "lr": 1e-05,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.01
+    }
+  },
+  "interpretation": {
+    "parameter_change_observed": true,
+    "base_equality_scope": "checkpoint4-to-checkpoint8 only",
+    "nonzero_task_gradient_steps": [
+      2,
+      4
+    ],
+    "zero_gradient_later_steps": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "later_parameter_change_explanation": "Consistent with retained AdamW momentum and weight decay, not fresh task gradients.",
+    "initialization_evidence": "Fresh-run config and matched installed PEFT linear LoRA B zero-initialization source; not an observed step0 checkpoint.",
+    "consumed_sibling_reward_variance": "Must be established by the separate actual-consumption audit; aggregate critic/rewards min/max includes writer A0 and is insufficient.",
+    "ability_improvement_verified": false,
+    "independent_reload_scope": "Owned by parent task, not this parameter audit."
+  }
+}
