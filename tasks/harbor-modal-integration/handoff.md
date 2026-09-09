@@ -2,6 +2,8 @@
 
 ## 1. TL;DR
 
+- **当前四题独立补验运行中**：source9dea127已push，部署/workspace/rebuild/uni-agent-work-state-singletons-r1，原venv。driver270247，/root/runs/ws-r4-isolated-eval-r1/summary.json；Linux追加3项after_run通过。10:12:39UTC首题WS01权重加载，尚无消费结论。完整命令见work-state-rl-runbook.md，启动记录work-state-independent-evaluation-r1-execution.md。不要重复启动或更新运行中checkout。
+
 - **最新selected-r1已失败结束**：source726d1c0，child264469 exit1/685.015秒。WS05 A 78工具调用（72view）后max-tokens，finished=false；WS01/03已提交但整批dump缺失，2groups/0消费，原audit=false。加载model/optimizer/RNG/scheduler及母11文件未变已通过；Linux74项回归通过。见selected-r1-result.md/json。正实施固定四题各自独立reload/审计，保留失败并继续，禁止伪造消费。
 - **证据已保存云盘并回读通过**：/workspace/reports/work-state-r4-engineering-evidence-20260909-r1.tar.gz，18,128,085字节，168670源文件，SHA256 1d19e4f757a8d9df8610a9f3e3f6d52957a5ac3ea141c06ef85f2bee13b86093；未打包3份training.env。
 - **零奖励根因已独立核验**：32个B的业务重评均与原回执一致；0/32配置正确，仅1/32尝试读取index，不能通过放松评分凑非零梯度。原课程W4仍未通过。
