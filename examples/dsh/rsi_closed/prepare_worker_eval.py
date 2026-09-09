@@ -225,6 +225,14 @@ def require_clean_sources():
         raise ValueError("VERL tracked sources must match the pinned checkout")
 
 
+def evaluation_sides(mode, candidate_sha256):
+    if mode == "parent-baseline" and candidate_sha256 is None:
+        return ("H0",)
+    if mode == "paired" and isinstance(candidate_sha256, str) and candidate_sha256:
+        return ("H0", "H1")
+    raise ValueError("Invalid evaluation mode/candidate combination")
+
+
 def prepare(
     *,
     cases_root,
@@ -233,7 +241,8 @@ def prepare(
     registry_root,
     pins_sha256,
     parent_active_sha256,
-    candidate_sha256,
+    candidate_sha256=None,
+    mode="paired",
     runner_python,
     runtime_executable,
     output_dir,
@@ -242,6 +251,7 @@ def prepare(
     per_turn=512,
     wall_seconds=1800,
 ):
+    expected_sides = evaluation_sides(mode, candidate_sha256)
     output, run, cases, model = [Path(path).absolute() for path in (output_dir, run_root, cases_root, model_path)]
     if any(path.exists() or path.is_symlink() for path in (output, run)):
         raise FileExistsError("Preparation and run roots must be new")
@@ -259,7 +269,8 @@ def prepare(
         raise ValueError("Invalid bounded inference budget")
     registry = Registry(registry_root, pins_sha256)
     active = registry.load_active(parent_active_sha256)
-    registry.load_registered(candidate_sha256, parent_active_sha256)
+    if mode == "paired":
+        registry.load_registered(candidate_sha256, parent_active_sha256)
     rows, case_files = frozen_cases(cases)
     weights = model_files(model)
     expected = _input_pins(case_files, weights, pair_id, max_tokens, active["spec"])
@@ -277,7 +288,7 @@ def prepare(
     output.mkdir(parents=True, mode=0o700, exist_ok=False)
     sides = {}
     read_files = [cases / "file-constraint/sources/constraints.txt"]
-    for side in ("H0", "H1"):
+    for side in expected_sides:
         data, execution = output / side, run / side
         data.mkdir(mode=0o700)
         render = (
@@ -313,6 +324,7 @@ def prepare(
                 **row["metadata"],
                 "rsi_pair_id": pair_id,
                 "rsi_side": side,
+                "rsi_evaluation_mode": mode,
                 "rsi_parent_active_sha256": parent_active_sha256,
                 "rsi_candidate_sha256": render["selection"]["candidate_sha256"],
                 "rsi_content_sha256": render["selection"]["content_sha256"],
@@ -339,10 +351,13 @@ def prepare(
             "patch_paths_sha256": "sha256:" + hashlib.sha256(patch_paths).hexdigest(),
             "command": command_for(data, execution, runner_python, model),
         }
-    registry.load_registered(candidate_sha256, parent_active_sha256)
+    registry.load_active(parent_active_sha256)
+    if mode == "paired":
+        registry.load_registered(candidate_sha256, parent_active_sha256)
     manifest = dict(
         schema="dsh.rsi-worker-evaluation.v1",
         status="prepared-not-run",
+        mode=mode,
         pair_id=pair_id,
         training=False,
         promoted=False,

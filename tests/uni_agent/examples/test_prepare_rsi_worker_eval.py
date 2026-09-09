@@ -11,7 +11,7 @@ from uni_agent.tasks.dsh.rsi_candidates import Registry, initialize
 
 
 @pytest.fixture
-def inputs(tmp_path, monkeypatch):
+def parent_inputs(tmp_path, monkeypatch):
     # Development tests run before commit; production preparation must pass the real Git gate.
     monkeypatch.setattr(prep, "require_clean_sources", lambda: None)
     cases = tmp_path / "cases"
@@ -39,9 +39,6 @@ def inputs(tmp_path, monkeypatch):
     pins = prep.input_pins(cases, model, "pair-test", 4096, spec)
     registry = tmp_path / "registry"
     ids = initialize(registry, spec, pins)
-    candidate = Registry(registry, ids["pins_sha256"]).register(
-        {**spec, "allowed_tools": ["str_replace_editor", "cordis_inspect_list"]}, ids["candidate_sha256"]
-    )
     return dict(
         cases_root=cases,
         model_path=model,
@@ -49,12 +46,81 @@ def inputs(tmp_path, monkeypatch):
         registry_root=registry,
         pins_sha256=ids["pins_sha256"],
         parent_active_sha256=ids["active_sha256"],
-        candidate_sha256=candidate,
         runner_python=Path(sys.executable),
         runtime_executable=runtime,
         output_dir=tmp_path / "prepared",
         run_root=tmp_path / "runs",
     )
+
+
+@pytest.fixture
+def inputs(parent_inputs):
+    args = dict(parent_inputs)
+    registry = Registry(args["registry_root"], args["pins_sha256"])
+    active = registry.load_active(args["parent_active_sha256"])
+    args["candidate_sha256"] = registry.register(
+        {**active["spec"], "allowed_tools": ["str_replace_editor", "cordis_inspect_list"]},
+        active["candidate_sha256"],
+    )
+    return args
+
+
+def test_parent_baseline_requires_no_registered_candidate(parent_inputs, monkeypatch):
+    from examples.dsh.rsi_closed.launch_worker_eval import preflight
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Baseline must not consume or register a child")
+
+    monkeypatch.setattr(Registry, "load_registered", forbidden)
+    monkeypatch.setattr(Registry, "register", forbidden)
+    root = parent_inputs["registry_root"]
+    before = {p.name: p.read_bytes() for p in root.iterdir()}
+    manifest = prep.prepare(**parent_inputs, mode="parent-baseline")
+    assert manifest["candidate_sha256"] is None
+    assert set(manifest["sides"]) == {"H0"}
+    path = parent_inputs["output_dir"] / "preparation-manifest.json"
+    prepared = preflight(path, prep.digest(path), "H0")
+    assert len(prepared["rows"]) == 2
+    assert "--dsh-strict-audit" in prepared["command"]
+    assert before == {p.name: p.read_bytes() for p in root.iterdir()}
+    with pytest.raises(ValueError):
+        preflight(path, prep.digest(path), "H1")
+
+
+@pytest.mark.parametrize("mode", ["paired", "unknown"])
+def test_missing_candidate_invalid_outside_baseline(parent_inputs, mode):
+    with pytest.raises(ValueError):
+        prep.prepare(**parent_inputs, mode=mode)
+    assert not parent_inputs["output_dir"].exists()
+
+
+def test_baseline_rejects_supplied_candidate(inputs):
+    with pytest.raises(ValueError):
+        prep.prepare(**inputs, mode="parent-baseline")
+
+
+@pytest.mark.parametrize("fault", ["active", "paired-artifact", "wrong-side"])
+def test_baseline_rejects_changed_identity(parent_inputs, fault):
+    import json
+
+    from examples.dsh.rsi_closed.launch_worker_eval import preflight
+
+    manifest = prep.prepare(**parent_inputs, mode="parent-baseline")
+    path = parent_inputs["output_dir"] / "preparation-manifest.json"
+    if fault == "active":
+        manifest["parent_active_sha256"] = "sha256:" + "0" * 64
+    elif fault == "wrong-side":
+        manifest["sides"]["H1"] = manifest["sides"].pop("H0")
+    else:
+        data = parent_inputs["output_dir"] / "H0/eval.parquet"
+        rows = pq.read_table(data).to_pylist()
+        for row in rows:
+            row["extra_info"]["tools_kwargs"]["task"]["metadata"]["rsi_evaluation_mode"] = "paired"
+        pq.write_table(prep.pa.Table.from_pylist(rows), data)
+        manifest["files"]["H0/eval.parquet"] = prep.digest(data)
+    path.write_text(json.dumps(manifest))
+    with pytest.raises((ValueError, RuntimeError)):
+        preflight(path, prep.digest(path), "H0")
 
 
 def test_prepare_pair_same_fixtures_separate_runs_no_promotion(inputs):
@@ -179,8 +245,7 @@ def test_supervisor_failure_does_not_claim_execution(prepared, monkeypatch):
     assert not (inputs["run_root"] / "H1").exists()
 
 
-@pytest.fixture
-def unit_results(prepared):
+def make_unit_results(prepared, side):
     """Synthetic CPU artifacts only: never student evaluation or GPU admission evidence."""
     import json
     from types import SimpleNamespace
@@ -190,7 +255,7 @@ def unit_results(prepared):
     from uni_agent.tasks.dsh.trajectory_audit import _canonical_json_bytes
 
     _, manifest, path, sha = prepared
-    value = preflight(path, sha, "H1")
+    value = preflight(path, sha, side)
     samples, keys, scores, statuses = [], [], [], {}
     for i, row in enumerate(value["rows"]):
         meta = row["extra_info"]["tools_kwargs"]["task"]["metadata"]
@@ -202,7 +267,7 @@ def unit_results(prepared):
             "gateway_session_id": f"unit-{i}",
             "trace_sha256": "sha256:" + "1" * 64,
             "profile": "sdk-minimal",
-            "patches_sha256": manifest["sides"]["H1"]["patch_paths_sha256"],
+            "patches_sha256": manifest["sides"][side]["patch_paths_sha256"],
         }
         envelope = {"schema": "dsh.uni-agent.task-result.v1", "finished": True, "metadata": meta, "dsh": dsh}
         prep.write_json(target / "agent-result.json", envelope)
@@ -237,6 +302,42 @@ def unit_results(prepared):
         },
     )
     return value
+
+
+@pytest.fixture
+def unit_results(prepared):
+    return make_unit_results(prepared, "H1")
+
+
+def test_baseline_supervised_launch_failure(parent_inputs, monkeypatch):
+    manifest = prep.prepare(**parent_inputs, mode="parent-baseline")
+    path = parent_inputs["output_dir"] / "preparation-manifest.json"
+    test_supervisor_failure_does_not_claim_execution((parent_inputs, manifest, path, prep.digest(path)), monkeypatch)
+
+
+@pytest.mark.parametrize("fault", [None, "missing", "wrong-mode"])
+def test_baseline_result_gate(parent_inputs, fault):
+    import json
+
+    from examples.dsh.rsi_closed.launch_worker_eval import result_binding
+
+    manifest = prep.prepare(**parent_inputs, mode="parent-baseline")
+    path = parent_inputs["output_dir"] / "preparation-manifest.json"
+    value = make_unit_results((parent_inputs, manifest, path, prep.digest(path)), "H0")
+    artifact = value["run"] / "artifacts/results/0/agent-result.json"
+    if fault == "missing":
+        artifact.unlink()
+    elif fault == "wrong-mode":
+        data = json.loads(artifact.read_text())
+        data["metadata"]["rsi_evaluation_mode"] = "paired"
+        artifact.write_text(json.dumps(data))
+    if fault is not None:
+        with pytest.raises(ValueError):
+            result_binding(value, "H0")
+    else:
+        report = result_binding(value, "H0")
+        assert len(report["artifacts"]) == 2
+        assert not report["promotion_verified"]
 
 
 def test_runtime_binding_is_explicitly_not_raw_token_reaudit(unit_results):

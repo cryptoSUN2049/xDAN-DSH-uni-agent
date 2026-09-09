@@ -327,3 +327,202 @@ CPU 单元测试中生成的 envelope/receipt/readback 始终只是 unit fixture
 本增量 CPU 验证：最初新模块缺失 RED；完成后 28 项准备/启动/结果门测试通过，连同 worker、Registry、
 policy、context v1/v2 回归共 198 项通过（1 条既有 Ray import deprecation warning）；Ruff check 与 format check通过。
 尚未在 Linux 部署该新入口或运行 H0/H1 学生评估；未创建实际比较/晋升回执。
+
+## 10. 下一阶段设计：真实学生提议到受控晋升（仅设计，尚未实现）
+
+本节只读审计基于当前源码 HEAD `bb381bf`。目标是一轮固定 4B 模型 M0 的真实学生工程实验，
+`training=false`；不会在本轮更新模型参数，也不把格式奖励称作 RSI RL。
+所有候选内容必须来自本轮真实 P session 的原始模型 response，不能由 root 填写 expected candidate。
+候选空间仍是当前 renderer 支持的 sdk-minimal 和两个工具组合，是有限声明式策略演化；
+不能据此声称任意动态代码 Harness 自进化已经完成。
+
+### 10.1 最短执行顺序及实际缺口
+
+1. 固定现两项 worker fixture、模型文件清单、runtime、worker verifier、预算、pair_id；
+   用现 `input_pins` 和 `Registry.initialize` 初始化唯一父 H0。初始化父架构属于控制端基线配置，
+   不属于学生生成候选。此时绝不 register 一个 dummy H1。
+2. **真实 H0 baseline**：同一 M0 在父 policy 下执行 inspect-discovery/file-constraint 各一次。
+   两题可以是合法业务 0；但缺 token/trace/回执或越权导致不能作为可信开发比较，先结束本轮。
+3. 控制端从真实 H0 已验证证据生成只读诊断摘要，冻结输入后用现 DSH Task+strict inference 执行
+   **唯一 proposer P**。P 必须输出自己的声明式 spec；本阶段 n=1，不循环采样到成功。
+4. 验证 P 的实际输入、原始 response、token/trace、fresh receipt 与模型/父版本；合法且不同于父时
+   将精确解析出的 spec 交给现 `Registry.register`，落独立来源 sidecar。失败/no-change 原样保存并结束，
+   不替学生补工具、修 JSON、截取 fenced code、改成手写候选或降级审核。
+5. 在 **未晋升 H1** 下用同一 M0、同两题、同预算执行各一次。复用步骤2的真实 H0 作对照，
+   不把新配置路径假装成旧 H0 的实际运行路径。开发比较始终明确引用各侧自己的 manifest/hash。
+6. 控制端独立重验四份 worker episode 后构造现 `dsh.rsi-development-comparison.v1`；
+   每题 H1≥H0 且至少一题严格提升才尝试原子 CAS `Registry.promote`。合法无增益/回归写拒绝报告；
+   证据不可信写审计失败，不能当成“候选得0分后仍可比较”。
+7. 晋升后新 Python 进程 `load_active`，新固定 DSH runtime 作真实 allow/deny canary；
+   调用真实 rollback 后再开新进程确认父 spec/能力恢复。没有发生晋升就没有可伪造的 rollback：
+   拒绝路径仅验证 active 未变并新进程复核父策略，报告正向晋升分支尚未实证。
+
+现代码的三个明确缺口：
+
+- `prepare_worker_eval.prepare` 在 H0 也先 `load_registered(H1)`；必须新增显式
+  `parent-baseline` 准备模式（只需 active），不能先注册硬编码 child 来运行父诊断。
+- 晋升后的 H1 已不是 pending child，`build_evaluation_patch` 会正确拒绝。后续 reload 使用
+  `Registry.load_active`/production `build_patch`，不能保留旧 parent SHA 冒充 pending evaluation。
+- `runtime-binding.json` 目前不重新加载原始 token dump。晋升之前必须增加真实 dump 审计桥，
+  不能仅凭它的路径绑定字段或两个 reward 数字构造可信生产比较。
+
+### 10.2 父只读 policy 下，P 如何获得必要诊断
+
+控制端创建不可变 `diagnostics.json`，其 SHA 与实际 H0 manifest/artifact/receipt/dump hashes 绑定。
+只抽取明确白名单字段：公开任务目标、父 profile/allowed_tools、允许的候选工具及其公开用途、
+真实 finished/eligible/reward、真实匹配动作摘要、实际 `RSI_POLICY_DENIED` 是否出现及所属工具。
+不复制 verifier 源码、目标 oracle、隐藏测试答案、访问 token、完整环境变量或可执行脚本。
+对于本来就是公开开发源的模型回答可保留其事实来源，不能补上模型未获得的正确答案。
+
+**推荐最短方案：把这个固定摘要的完整 JSON 直接放入 P 的 user message**；
+这是来自真实 baseline 的受控观察输入，不需要让受限父策略绕过 deny 去自查。
+proposal fixture 保存完整预期 messages 与 diagnostics SHA；独立 verifier 校验实际 envelope.prompt
+和 fixture 完全一致，诊断每个引用均指向本轮已验证 H0证据。框架现 strict token/trace 审计仍照常执行。
+P 的 policy 保持父工具集合；若需复查文件，只允许 view 这一个 operator 诊断文件。
+读取不是额外得分门：已直接注入的观察不要求再做重复文件读取，也不要求学生输出内部 call_id。
+未知源、写入、define、shell 等动作拒绝；不把 Tool 全局 inventory 等同于 guard 后的实际权限。
+
+不告诉模型“最终必须输出某个固定 allowed_tools 数组”。描述目标是改善诊断中真实暴露的限制、
+保持原有任务能力，并仅列出可选工具目录；候选取舍由 M0 自己生成。
+现固定 policy 对 view_range 的拒绝保留；合法只读参数导致的 deny 不赋予证据，但也不因此改 policy/hash。
+
+### 10.3 proposal 合同与身份
+
+提议 response 必须是单个 JSON 对象（允许普通 JSON 空白），精确 schema：
+
+```json
+{"schema":"dsh.rsi-profile.v1","profile":"sdk-minimal","allowed_tools":["由学生从公开允许目录选择"]}
+```
+
+只接受这三个字段；allowed_tools 为非空、唯一字符串数组，元素限制在当前 renderer 的
+`str_replace_editor`、`cordis_inspect_list`。未知/嵌套额外字段、路径、代码、verifier/test 配置、环境变量、
+promote 指令、工具名越权全部拒绝。禁止 duplicate JSON keys、NaN/Infinity 和非对象响应。
+保留原始 response UTF-8 字节 SHA；用同一已固定解析器验证后，复用 Registry `_spec` 的排序规范计算
+canonical content SHA，两种 hash 分开，不把 canonical 重编码冒充原始模型输出。
+
+新增独立 `verifier_id=dsh-rsi-proposal`、task/verifier version=1、task_id=dsh/rsi-proposal/<pair_id>，
+split=validation、dataset_role=development、phase=proposal。P 使用相同冻结 M0/runtime，
+但 proposal verifier bundle 单独固定；**不要把 registry.pins.verifier_sha256 从 worker bundle 改成 proposal bundle**。
+registry 中现有 verifier pin 只服务于 worker 开发比较；P 的独立 bundle/hash 保存在 round/proposal manifest。
+
+proposal fixture 至少绑定：pair_id、parent active/candidate/content SHA、registry pins SHA、
+model file manifest SHA、runtime SHA、worker devset SHA、diagnostics SHA、预期 messages、允许 schema/tool集合。
+P 的 raw artifact/trace/receipt/TQ sample/NPZ 与这些字段精确关联；本轮预期正好一个 P session。
+
+局部评分只用于工程诊断：合法、不同于父且观察身份正确的提议 reward=1；合法 no-change/普通 JSON
+格式失败为业务0，安全且完成时 eligible可为true；越权字段/动作/伪来源拒绝 eligible=false。
+源/hash/trace不匹配属于完整性错误。**这个1不是候选实际收益**，本阶段既不训练也不用于晋升。
+未来 RSI RL 的 proposer reward 必须来自经过验证的 H0/H1差值，不能把这个格式奖励替代任务收益。
+
+### 10.4 精确注册来源与竞争条件
+
+建议 API（待实现，不是现有 CLI）：
+
+- `build_diagnostics(parent_run_manifest, expected_sha, output)`：独立审计后产出摘要，不调用模型。
+- `prepare_proposal(round_manifest, expected_sha, output, run_root)`：固定单题 Task config/Parquet/父overlay，
+  委托同一 parallel_infer_verl strict入口和supervisor，不新建 Agent Loop。
+- `register_verified_proposal(proposal_run, expected_manifest_sha, registry, expected_parent_active_sha)`：
+  重验完整证据；只取原始 response 的验证结果注册；返回 private provenance sidecar路径/hash。
+
+来源 sidecar `schema=dsh.rsi-student-registration.v1` 保存 proposal run/manifest/input/diagnostics SHA、
+model/runtime身份、DSH session、trace/NPZ/receipt ID、原始response SHA、canonical content SHA、
+父active与candidate记录SHA、新candidate记录SHA。每条都有实际来源，禁止operator传入候选JSON替代response。
+下游学生 round 入口必须要求 sidecar外部SHA与candidate匹配；既有独立worker准备器仍可作手工对照诊断，
+但仅凭它不能声称候选来自学生。
+
+当前 `register(spec,parent_sha)` 不对active做CAS：调用前后都重验预期active；若注册过程中父变化，
+留存 orphan候选诊断并停止，不删除历史或继续评估。候选对象本身不改变active；所有后续render/launch
+仍重验父快照，最终promote仍使用已有CAS。若注册后写sidecar失败，该候选不能进入学生round下游。
+
+### 10.5 四份实际开发证据到现 Registry 比较格式
+
+复用现 `examples/dsh/ops/audit_qwen3_4b_online_rl.py` 的 `_audit_dump` / `_load_dump_trajectory` 与
+`uni_agent/tasks/dsh/trajectory_audit.validate_trajectory`，不要重写 Gateway token或Session解析。
+现 strict inference 已启用 require_trajectory_dump，数据是 `uni-agent.trajectory-dump.v2` 的
+trajectory.json + trajectory.npz（allow_pickle=false）；验证NPZ SHA、mask/logprob长度/数值、trace、
+artifact、receipt以及 transfer_queue_key，再逐项对照本run inference-evidence的sample/readback。
+不要直接套用带M1训练manifest假设的 audit_trajectory_groups 总入口，也不能仅查NPZ文件存在。
+
+第一轮要求每registered episode恰好一个完整trajectory；若实际出现多个则报告接口差异、停止设计外推，
+不猜分段合并规则。`tokens = sum(response_mask)`，并从实际NPZ重算；len(response_ids)含interstitial
+context token，不能冒充模型生成数。比较中每题每侧对应自己的唯一real receipt ID，四者不重用。
+
+控制端比较准入逐项固定：同pair_id、父active、M0文件hash、runtime、worker bundle、fixture/prompt字节、
+生成/最大context/per-turn/总token预算、执行源码与采样配置；候选spec/content及各自overlay bytehash
+符合renderer。H0/H1可以来自两个不同准备manifest，使用各自真实路径，不能重新标注旧H0的patch path hash。
+真实baseline已被P观察并不构成封存测试，明确这两题只是开发集，不声称泛化。
+
+构造现有比较格式所需字段：schema、pins_sha256、parent_sha256、candidate_sha256、
+cases[{case_id,parent:{finished,eligible,reward,tokens,receipt_sha256},candidate:{...}}]。
+同时保存独立 comparison-evidence sidecar，绑定P来源、四run证据及两侧manifest哈希；因为现比较schema
+不允许额外字段，不能偷偷把来源混入它或放宽Registry字段校验。
+外部比较文件SHA只证明固定，**不是签名认证**；只有完成上述审计的私有控制端可以调用promote。
+新入口绝不接收学生给出的reward、tokens、receipt路径或“已经promote”的声明作为控制指令。
+
+### 10.6 最小 reload/rollback 验收与文件范围
+
+最短轮次为H0两题+P一题+H1两题，共五个真实学生episode。晋升及回滚后的加载检查可复用
+`deployment/checks/dsh_rsi_policy_canary.py::stage` 的新Python profile加载与新SDK真实调用，
+传入**真实现有registry和实际active**；不能调用其会initialize并构造synthetic比较的完整 `run()`。
+stage 的 PUBLIC-FACT/private探针文件由控制端新建，独立于开发任务，只做工具allow/deny检查。
+父/候选/回滚均绑定实际candidate/content/policy/runtime SHA；canary标记model_evaluation=false，
+不生成开发比较receipt、不冒充新增学生任务或能力评测。后续效果实验再安排reload/rollback各两题模型复跑。
+
+最小实现文件：
+
+| 文件 | 职责 |
+| --- | --- |
+| 新 `examples/dsh/rsi_closed/proposal.py` | 版本化proposal fixture/严格parser/独立verifier；命令prepare/verify职责显式分开 |
+| 新 `examples/dsh/rsi_closed/student_round.py` | diagnostics、证据审计、register、compare、决定/受控active canary；有限阶段控制端，不是Agent Loop |
+| 改 `prepare_worker_eval.py` / `launch_worker_eval.py` | parent-baseline免child入口、固定proposal单题准备/监督接线；保留当前双worker默认路径与验收规则 |
+| 新两份proposal/round测试，扩现准备器测试 | 原始输出来源、拒绝/竞争、真实格式dump审计、阶段身份与无synthetic晋升 |
+
+命令草案（**未实现，不能现在执行**）：
+
+```text
+student_round prepare-parent --round-config <operator-json>
+launch_worker_eval ... --side H0 --launch                 # 既有监督入口，待parent-baseline扩展
+student_round prepare-proposal --parent-run <...> --expected-sha <...>
+student_round run-proposal --manifest <...> --expected-sha <...>  # 委托相同strict入口
+student_round register-proposal --run <...> --expected-sha <...>
+prepare_worker_eval --config <bound-worker-json>           # 既有API，candidate来自已验sidecar
+launch_worker_eval ... --side H1 --launch
+student_round decide --round <...> --expected-sha <...>    # 审计后真实promote或原样reject
+student_round verify-active --phase promoted --expected-active <...>
+student_round rollback --expected-active <...>            # 真实Registry.rollback后新进程canary
+```
+
+负例至少包含：父baseline缺证据；prompt/诊断替换；手工response覆盖、codefence/duplicate key/未知字段；
+no-change被偷偷改写；旧P/receipt跨pair复用；register前后active变化；缺任一worker/重复sample/session；
+只改readback或NPZ；把全部response长度冒充model tokens；不同预算/模型/fixture/overlay；
+有回归但总分上涨；无增益强制promote；已晋升候选误走pending渲染；reload只读JSON未启动SDK；
+把synthetic canary receipt放入真实comparison。阶段失败保留全部原始材料，不重写旧结果以通过。
+
+先完成这轮工程实证，再讨论proposer RL信用归因、长期候选搜索和性能并行。本节未改代码、未启动GPU。
+
+补充固定 SDK 的输出绑定核实：DSH 源码 pin `b2369692ea530007075ebcd18d39fdba0bbd3982` 中
+`python/sdk/src/deepseek_harness/api.py::final_response(events)` 已按逆序读取最后一条
+assistant/message，支持 data.message.content / data.content，并只拼接 text blocks。
+proposal verifier 应在选定的固定 SDK 环境复用这个函数，从真实 trace 重建最后提交的文本，
+要求与 envelope.response **完全一致**；assistant/attempt 不能替代成功消息。
+同时冻结该 SDK api.py 的实际源码hash/发布wheel身份，不能拿本机持续更新的 DSH main 实现代替。
+本节“原始 response”具体指未经修复的 SDK final_response / Task envelope.response 文本 UTF-8 字节，
+不是整条 HTTP/SSE wire payload，也不把隐藏 reasoning 或 canonical spec 重编码当成原始 response。
+这补上“只改artifact.response再自报候选”的负例；仍需原始trajectory审计证明模型生成来源。
+
+### 10.1 Parent baseline 独立准备增量
+
+仅修改 `prepare_worker_eval.py`、`launch_worker_eval.py` 与对应准备器测试。新增显式 `mode=parent-baseline`，candidate 必须省略或为 null，仅生成 H0 两题；默认 paired 仍要求已注册候选并生成 H0/H1。基线开始、监督期间和结束均核对原 active 快照，禁止注册 dummy candidate。任务、runtime、模型、预算、strict token 及 canonical receipt/result 门沿用原实现。每行 metadata 绑定 evaluation mode；准备清单的 side 集合必须与 mode 相符，拒绝跨模式产物复用。
+
+CPU 验证覆盖无子候选准备与真实 CLI preflight、registry 字节不变、错误 mode/side、缺候选/多余候选、active 变化、paired 行伪装 baseline。默认 paired 的完整回归保留。这里仅补 H0 执行能力，不宣称已经生成学生候选或完成比较晋升。
+
+调用准备器仍用现有 JSON `--config` 入口：共同输入字段为 cases_root、model_path、pair_id、registry_root、pins_sha256、parent_active_sha256、runner_python、runtime_executable、output_dir、run_root、max_tokens、per_turn、wall_seconds；基线额外指定 `"mode":"parent-baseline"`，省略 candidate_sha256。默认 paired 继续传 candidate_sha256。准备后先 CPU preflight：
+
+```sh
+python -m examples.dsh.rsi_closed.prepare_worker_eval --config /root/runs/NEW/baseline-config.json
+python -m examples.dsh.rsi_closed.launch_worker_eval --manifest /root/runs/NEW/data/preparation-manifest.json --manifest-sha256 sha256:ACTUAL_MANIFEST_HASH --side H0
+```
+
+真正运行仅在第二条末尾添加已有 `--launch`；须用固定环境 Python、独立输出根及准确清单 SHA。此文档中的路径是占位符，不代表已准备或执行 GPU。旧清单未写 mode 时按 paired 解释；执行源码哈希变化后仍须重新准备，不绕过旧产物冻结。
+
+本增量验证：最初 7 项新增用例因缺少 mode 实参失败；实现后准备器与 RSI worker/registry/policy canary 共 131 项 CPU 测试通过（1 项上游 Ray 弃用警告）。包括 baseline 两题 canonical receipt/result 门、错误 mode 行产物、缺题、监督失败不宣称完成；CPU 构造的结果 fixture 明确为合成测试数据，不是学生评价凭证。

@@ -16,11 +16,25 @@ from uni_agent.tasks.dsh.rsi_candidates import Registry
 
 
 def _live_inputs(manifest, output, side):
+    mode = manifest.get("mode", "paired")
+    sides = prep.evaluation_sides(mode, manifest.get("candidate_sha256"))
+    if set(manifest["sides"]) != set(sides) or side not in sides:
+        raise ValueError("Evaluation mode/side mismatch")
     registry = Registry(manifest["registry_root"], manifest["pins_sha256"])
-    registry.load_registered(manifest["candidate_sha256"], manifest["parent_active_sha256"])
+    registry.load_active(manifest["parent_active_sha256"])
+    if mode == "paired":
+        registry.load_registered(manifest["candidate_sha256"], manifest["parent_active_sha256"])
     prep.checked_files(output, manifest["files"])
     prep.checked_files(Path(manifest["cases_root"]), manifest["case_files"])
     prep.checked_files(prep.ROOT, manifest["sources"])
+    for bound_side in sides:
+        rows = pq.read_table(output / bound_side / "eval.parquet").to_pylist()
+        if len(rows) != 2 or any(
+            row["extra_info"]["tools_kwargs"]["task"]["metadata"].get("rsi_evaluation_mode", "paired") != mode
+            or row["extra_info"]["tools_kwargs"]["task"]["metadata"].get("rsi_side") != bound_side
+            for row in rows
+        ):
+            raise ValueError("Prepared rows belong to a different evaluation mode/side")
     read_files = [Path(manifest["cases_root"]) / "file-constraint/sources/constraints.txt"]
     args = (manifest["registry_root"], manifest["pins_sha256"], manifest["parent_active_sha256"])
     render = (
@@ -195,6 +209,7 @@ def result_binding(prepared, side):
         "strict_readback_verified": True,
         "raw_token_reaudit": False,
         "schema": "dsh.rsi-worker-runtime-binding.v1",
+        "mode": manifest.get("mode", "paired"),
         "side": side,
         "training": False,
         "promotion_verified": False,
@@ -215,6 +230,7 @@ def launch(manifest_path, manifest_sha256, side):
         run / "launch-manifest.json",
         {
             "schema": "dsh.rsi-worker-launch.v1",
+            "mode": manifest.get("mode", "paired"),
             "prepared_manifest_sha256": manifest_sha256,
             "side": side,
             "command": prepared["command"],
