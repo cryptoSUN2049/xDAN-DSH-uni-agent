@@ -17,7 +17,20 @@ def consumed(tmp_path, crosswalk):
     record = json.loads(crosswalk.read_text())
     folder = root / ("rollouts" if record["partition"] == "train" else "validation")
     folder.mkdir(exist_ok=True)
-    rows = [dict(uid=i["tq_key"], step=record["global_steps"], score=i["stage_reward"]) for i in record["items"]]
+    terminal = {
+        json.loads(Path(c["receipt_path"]).read_text())["chain_id"]: json.loads(Path(c["receipt_path"]).read_text())[
+            "terminal_reward"
+        ]
+        for c in record["chains"]
+    }
+    rows = [
+        dict(
+            uid=i["tq_key"],
+            step=record["global_steps"],
+            score=terminal[i["chain_id"]] if record["partition"] == "val" else i["stage_reward"],
+        )
+        for i in record["items"]
+    ]
     file = folder / "7.jsonl"
     file.write_text("".join(json.dumps(row) + "\n" for row in rows))
     return root, file, rows
@@ -149,7 +162,7 @@ async def test_failed_queue_write_never_claims_submitted(wired, tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_fixed_verl_logger_retains_a1_b0_scores(wired, tmp_path, monkeypatch):
+async def test_fixed_verl_training_logger_retains_a1_b0_scores(wired, tmp_path, monkeypatch):
     """Execute pinned logger/write methods over actual framework TQ fields on CPU."""
     import ast
     import os
@@ -178,7 +191,7 @@ async def test_fixed_verl_logger_retains_a1_b0_scores(wired, tmp_path, monkeypat
 
     monkeypatch.setattr(_HarnessTask, "build_agent", altered_reader)
     framework, _, queue, _ = wired
-    await run(framework, "val")
+    await run(framework, "train")
     crosswalk = next(framework._memory_operator.root.glob("groups/*/crosswalk.json"))
     root, file, _ = consumed(tmp_path, crosswalk)
     file.unlink()
@@ -211,10 +224,16 @@ async def test_fixed_verl_logger_retains_a1_b0_scores(wired, tmp_path, monkeypat
     exec(compile(ast.Module(body=methods, type_ignores=[]), str(source), "exec"), scope)
     trainer = SimpleNamespace(tokenizer=SimpleNamespace(pad_token_id=0, decode=lambda ids, **kw: "CPU"))
     trainer._dump_generations = lambda **kw: scope["_write_generations"](**kw, global_steps=7)
-    scope["_log_rollout_data"](trainer, SimpleNamespace(keys=batch["keys"], partition_id="val"), {}, str(file.parent))
+    scope["_log_rollout_data"](trainer, SimpleNamespace(keys=batch["keys"], partition_id="train"), {}, str(file.parent))
     rows = [json.loads(line) for line in file.read_text().splitlines()]
-    assert [row["score"] for row in rows] == [1.0, 0.0]
+    assert [row["score"] for row in rows] == [1.0, 0.0] * 4
     assert audit_memory_training(root, memory_root=framework._memory_operator.root, expected_run_id="memory-run")[
+        "passed"
+    ]
+    # Validation-style broadcast is invalid for the training rollout logger.
+    rows[0]["score"] = 0.0
+    file.write_text("".join(json.dumps(row) + "\n" for row in rows))
+    assert not audit_memory_training(root, memory_root=framework._memory_operator.root, expected_run_id="memory-run")[
         "passed"
     ]
     # The actual advantage writeback cannot overwrite rm_scores.
@@ -319,3 +338,70 @@ def test_short_course_cannot_reload_foreign_course(tmp_path):
     )
     with pytest.raises(ValueError, match="mother course"):
         _validate_task_course(task, tmp_path)
+
+
+@pytest.mark.asyncio
+async def test_validation_broadcasts_verified_terminal_reward(wired, tmp_path, monkeypatch):
+    from tests.uni_agent.tasks.test_dsh_task import _HarnessTask
+
+    original = _HarnessTask.build_agent
+
+    def altered_reader(self):
+        agent = original(self)
+        original_run = agent.run
+
+        async def run_agent(**kwargs):
+            result = await original_run(**kwargs)
+            if self.config.metadata["task_id"].endswith("/reader"):
+                result.output["response"] = '{"status":"answer","facts":{},"source_version":"wrong"}'
+            return result
+
+        agent.run = run_agent
+        return agent
+
+    monkeypatch.setattr(_HarnessTask, "build_agent", altered_reader)
+    framework, *_ = wired
+    await run(framework, "val")
+    crosswalk = next(framework._memory_operator.root.glob("groups/*/crosswalk.json"))
+    record = json.loads(crosswalk.read_text())
+    assert [item["stage_reward"] for item in record["items"]] == [1.0, 0.0]
+    root, file, rows = consumed(tmp_path, crosswalk)
+    assert [row["score"] for row in rows] == [0.0, 0.0]
+    assert audit_memory_training(root, memory_root=framework._memory_operator.root, expected_run_id="memory-run")[
+        "passed"
+    ]
+    rows[0]["score"] = 1.0
+    file.write_text("".join(json.dumps(row) + "\n" for row in rows))
+    assert not audit_memory_training(root, memory_root=framework._memory_operator.root, expected_run_id="memory-run")[
+        "passed"
+    ]
+
+
+def test_pinned_validation_dump_broadcasts_final_sample_per_session():
+    """Execute the actual pinned validation dump block with unequal A/B scores."""
+    import ast
+    from types import SimpleNamespace
+
+    source = Path("verl/verl/trainer/ppo/v1/trainer_base.py")
+    tree = ast.parse(source.read_text())
+    validate = next(n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef) and n.name == "_validate")
+    block = next(
+        n
+        for n in validate.body
+        if isinstance(n, ast.If) and isinstance(n.test, ast.Name) and n.test.id == "val_data_dir"
+    )
+    captured = {}
+    scope = dict(
+        self=SimpleNamespace(_dump_generations=lambda **kw: captured.update(kw)),
+        val_data_dir="unused",
+        dump_all_keys=["group_0_1", "group_0_0", "other_0_0", "other_0_1"],
+        dump_all_inputs=["B", "A", "A2", "B2"],
+        dump_all_outputs=["b", "a", "a2", "b2"],
+        session_to_sample_idx={"group_0": 0, "other_0": 1},
+        sample_gts=["truth", "truth2"],
+        sample_scores=[1.0, 0.0],
+        reward_extra_infos_dict={},
+    )
+    exec(compile(ast.Module(body=[block], type_ignores=[]), str(source), "exec"), scope)
+    assert captured["reward_extra_infos_dict"]["uid"] == ["group_0_0", "group_0_1", "other_0_0", "other_0_1"]
+    assert captured["scores"] == [1.0, 1.0, 0.0, 0.0]

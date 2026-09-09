@@ -287,11 +287,24 @@ def audit_memory_training(run_root: Path, *, memory_root: Path, expected_run_id:
             admitted.update(keys)
             missing = [key[2] for key in keys if counts[key] == 0]
             duplicate = [key[2] for key in keys if counts[key] > 1]
+            # Pinned VERL _validate broadcasts the session's final B score to
+            # every dumped context. Training _log_rollout_data retains stage
+            # rm_scores. Crosswalk and original stage lineage above have already
+            # verified each chain's scope, sibling, final B reward and receipts.
+            terminal_by_chain = {
+                chain["chain_id"]: chain["terminal_reward"]
+                for chain in (_json(ref["receipt_path"]) for ref in record["chains"])
+            }
+            expected_scores = [
+                terminal_by_chain[item["chain_id"]] if scope[0] == "val" else item["stage_reward"]
+                for item in record["items"]
+            ]
+            group["dump_score_semantics"] = "session-final" if scope[0] == "val" else "original-stage"
             mismatched = [
                 key[2]
-                for key, item in zip(keys, record["items"], strict=True)
+                for key, expected_score in zip(keys, expected_scores, strict=True)
                 if key in row_by_key
-                and not math.isclose(row_by_key[key]["score"], item["stage_reward"], rel_tol=1e-6, abs_tol=1e-7)
+                and not math.isclose(row_by_key[key]["score"], expected_score, rel_tol=1e-6, abs_tol=1e-7)
             ]
             group.update(missing_keys=missing, duplicate_keys=duplicate, score_mismatch_keys=mismatched)
             if missing:
