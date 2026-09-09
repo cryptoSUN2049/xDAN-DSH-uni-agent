@@ -36,8 +36,13 @@ class Queue:
         self.cleared.append(kwargs)
 
 
+class ForbiddenRewardWorker:
+    def __getattr__(self, name):
+        raise AssertionError("NativeMemory must never call an injected reward worker")
+
+
 @pytest.fixture
-def wired(tmp_path, monkeypatch):
+def wired(tmp_path, monkeypatch, request):
     runtime = tmp_path / "runtime"
     runtime.write_bytes(b"runtime")
     runtime.chmod(0o700)
@@ -89,7 +94,11 @@ def wired(tmp_path, monkeypatch):
             algorithm={"adv_estimator": "grpo", "use_kl_in_reward": False},
         )
     )
-    framework = NativeMemoryFramework.from_config(config=full_config, gateway_manager=manager)
+    framework = NativeMemoryFramework.from_config(
+        config=full_config,
+        gateway_manager=manager,
+        reward_loop_worker_handles=[ForbiddenRewardWorker()] if getattr(request, "param", False) else None,
+    )
     assert framework._memory_operator == operator
     framework.test_full_config = full_config
     specs, observations = {}, []
@@ -195,6 +204,7 @@ async def test_crosswalk_rejects_modified_stage_npz(wired):
 
 
 @pytest.mark.asyncio
+@pytest.mark.parametrize("wired", [False, True], indirect=True)
 async def test_terminal_reader_zero_does_not_rewrite_writer_reward(wired, monkeypatch):
     from tests.uni_agent.tasks.test_dsh_task import _HarnessTask
 
@@ -376,3 +386,42 @@ def test_pinned_sync_hooks_and_fit_order_bind_policy_version():
 def test_invalid_sync_schedule_rejected(step, partition):
     with pytest.raises(ValueError):
         memory_module.expected_sync_policy_version(step, partition)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("wired", [True], indirect=True)
+async def test_verl_injected_reward_handles_never_override_real_stage_rewards(wired):
+    framework, manager, queue, observations = wired
+    assert framework.reward_loop_worker_handles is None
+    result = await run(framework, "train")
+    assert result["num_success_sessions"] == 4
+    assert len(manager.finalized) == 8
+    assert [x.task_result.reward for x in observations] == [1.0] * 8
+    assert [x.trajectories[0].reward_score for x in observations] == [1.0] * 8
+    assert len(queue.batches) == 1
+
+
+def test_custom_reward_still_rejected_even_when_handles_are_ignored(wired):
+    framework, manager, _, _ = wired
+    config = OmegaConf.create(OmegaConf.to_container(framework.test_full_config))
+    OmegaConf.update(config, "reward.custom_reward_function.path", "unapproved.py", force_add=True)
+    with pytest.raises(ValueError, match="custom reward"):
+        NativeMemoryFramework.from_config(
+            config=config, gateway_manager=manager, reward_loop_worker_handles=[ForbiddenRewardWorker()]
+        )
+
+
+def test_direct_constructor_does_not_forward_injected_reward_handles(wired):
+    framework, manager, _, _ = wired
+    instance = NativeMemoryFramework(
+        gateway_manager=manager,
+        runner_registry=framework.runner_registry,
+        rollout_config=framework._rollout_config,
+        log_dir=framework._log_dir,
+        reward_loop_worker_handles=[ForbiddenRewardWorker()],
+        fail_on_rollout_error=True,
+        require_finished_episode=True,
+        require_verifier_reward=True,
+        require_trajectory_dump=True,
+    )
+    assert instance.reward_loop_worker_handles is None

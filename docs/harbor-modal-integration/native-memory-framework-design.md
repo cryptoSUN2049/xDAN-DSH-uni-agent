@@ -103,3 +103,11 @@ Framework 保留 GroupContext、TQ tag、stage context 的调度 `global_steps`�
 `expected_policy_version`：train 要求 step >= 1 并取 k-1，val 要求 step >= 0 并取 k。
 crosswalk 显式记录两者；credit、chain receipt 与实际 generation min/max 对照权重版本。
 不修改真实 version evidence，也不把缺失版本补成推断版本。
+
+## r1 真实注入修复：reward worker 句柄不等于奖励来源
+
+真实 VERL 会把非空 reward_loop_worker_handles 注入 Framework；原 NativeMemory 构造器把其存在直接当作会覆盖奖励而拒绝，导致 r1 在阶段执行前失败。原 Gateway 的实际优先级是 custom+worker、已有 TaskResult.reward、worker fallback；DSH 的 reward 已由 verifier 绑定，不能因基础设施传入句柄而拒绝启动。
+
+局部修改 `memory_chain.py` 构造器：仍拒绝 custom_reward_function_configured，并在调用 Gateway 父构造器前明确把句柄置为 None，使该 NativeMemory 实例没有 worker fallback 或覆盖通路。from_config 继续接受 VERL 标准参数，阶段要求 verifier_reward 的硬门不变，A/B 原回执与原 reward、末 B GRPO 归因均不修改。测试必须向真实 from_config 与直接构造器传非空会在任何调用时报错的 fake handles，并执行真实 CPU stage/verifier/freeze/TQ 构建（模型/Ray/TQ是测试替身）；B=0/A=1 的原奖励仍分别保留。custom reward 配置继续拒绝。
+
+验证记录：修复前定向 RED 为 2 failed / 2 errors / 1 passed（非空句柄在构造期复现失败）；修复后 NativeMemory 38 项通过，共享 Framework + memory credit/GRPO/stage/verifier/audit 回归 316 项通过。Ruff 与 diff whitespace 检查通过。本项为 CPU 合同验证，旧 GPU r1 失败仍保留，新 GPU run 尚待重新验收。

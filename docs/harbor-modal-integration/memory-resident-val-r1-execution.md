@@ -1,6 +1,6 @@
 # 第一个 resident memory GPU 验证
 
-状态：固定代码已通过 Git 部署，任务准备与跨目录预检通过；监督PID185117已提交启动，尚待真实模型加载/A/B/消费验收。plan为 `/root/runs/memory-resident-val-r1-plan`，启动argv、非敏感父环境与manifest摘要见launch.json。
+状态：真实GPU运行失败。模型引擎已加载，但NativeMemory构造误拒上游默认reward worker句柄，A/B尚未执行；主线程只停止已核实归属的child185194进程组，supervisor exit=-15/540.012秒，GPU已释放。原始run/日志保留；后续修复需新版本和新运行。
 
 - integration：`4168b628f3a2ff4c301dcffb60f016f8ecb770f2`；配对 VERL `fefb080262e1c015a0ea05f958822a6a512dc795`。
 - 独立源码：`/workspace/rebuild/uni-agent-memory-resident-r1`，detached worktree；旧 context checkout 不改。

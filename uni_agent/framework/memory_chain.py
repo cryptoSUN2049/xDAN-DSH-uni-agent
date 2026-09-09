@@ -212,9 +212,12 @@ class NativeMemoryFramework(GatewayAgentFramework):
         ):
             _require(kwargs.get(flag) is True, f"NativeMemoryFramework requires {flag}=True")
         _require(
-            not kwargs.get("reward_loop_worker_handles") and not kwargs.get("custom_reward_function_configured"),
-            "Memory terminal credit cannot use reward workers",
+            not kwargs.get("custom_reward_function_configured"),
+            "Memory terminal credit cannot use a custom reward function",
         )
+        # VERL injects shared handles even when the DSH verifier supplies reward.
+        # Do not forward them: neither worker overrides nor fallback may score A/B.
+        kwargs["reward_loop_worker_handles"] = None
         _require(
             kwargs.get("trajectory_postprocessor") is None and not kwargs.get("trajectory_postprocessor_pass_context"),
             "Use mandatory StageSpec validator instead of a static trajectory postprocessor",

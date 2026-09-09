@@ -2,11 +2,11 @@
 
 ## 1. TL;DR
 
-- **最新GPU任务**：memory-resident-val-r1，监督PID185117，plan `/root/runs/memory-resident-val-r1-plan`；运行源码独立 `/workspace/rebuild/uni-agent-memory-resident-r1` 固定4168b628f3a2ff4c301dcffb60f016f8ecb770f2，配对VERL不变，旧已验收venv。准备/check已通过，已提交启动，真实加载/A/B/消费待验收；val-only、单固定constraints族、wall3600。不可修改运行中checkout。日志run/supervision/train.log，入口见native-memory-recipe-runbook.md与memory-resident-val-r1-execution.md。
+- **最新GPU任务已失败并停止**：memory-resident-val-r1，源码4168b628，supervisor exit=-15/540.012秒，owned child185194。NativeMemory构造误拒VERL默认非空reward handles，A/B尚0stage；主线程核PGID后SIGTERM该组，GPU已查无残留。原run-manifest仍running为外部终止留下的真实不一致，不能当活作业。局部修复及生产默认注入回归已完成，316项组合通过，主线程38项复核通过；修复后必须新commit/new prepare/new run，不能启动旧train-r1清单。
 
 - 人工SSH复跑入口：`docs/harbor-modal-integration/native-training-human-runbook.md`；逐节点E0—E5标准：`native-engineering-acceptance.md`。工程正确闭环为当前重点，提分/扩量非前置。
 
-- 当前worktree `harbor-modal-integration` / 分支 `worktree-harbor-modal-integration`。Goal active；四能力与结果复现优先，Harbor后置，SFT不属本轮。权威目标active-engineering-goal.md，总方案uni-agent-system-plan-v3.html。
+- 当前worktree `harbor-modal-integration` / 分支 `worktree-harbor-modal-integration`。Goal工具当前usageLimited；文档目标仍未完成、继续执行。四能力与结果复现优先，Harbor后置，SFT不属本轮。权威目标active-engineering-goal.md，总方案uni-agent-system-plan-v3.html。
 - **当前 reload**：`context-v2-curriculum-r1-reload-step12`，监督重试PID178933，plan/supervisor-retry1.log，wall3600秒，原d3084f2+已验收venv。前监督178761在启动前断言失败，未加载模型：PRINT_COMMAND已创建run目录。仅两份打印证据已原样移至同级 `context-v2-curriculum-r1-reload-step12-print-command-evidence`，无删除。重试已exit0/470.012秒、实际加载step12并产出4题dev指标，GPU已释放；最终4/4 fresh消费与无更新审计通过；母课程optimizer6→12专属审计通过（1008 moments变化且有限）。报告context-v2-curriculum-r1-reload-result.md及配套JSON，云盘审计归档已保存。母12步exit0/1000.024秒，48消费覆盖11题（D3拒绝/D2补采），6步非零梯度，dev strict0/4。
 - **最新完成第二族**：`dsh-memory-updates-r1` A/B均exit0、reward1，finalize passed，旧eu-west-test被当前ap-south-test正确替代；独立CPU复核与云盘归档通过，training=false。报告native-memory-updates-r1-result.md/json。
 - **已完成记忆第一族**：`/root/runs/dsh-memory-constraints-r3`，reader监督PID152851；remote checkout `/workspace/rebuild/uni-agent-native-n0-r1` 固定 `d3084f2a771804f011c4e641ecf0986c7166bc86`，旧已验收venv，writer prompt revision2 已282.038秒exit0/score1，freeze严格通过；B已326.049秒exit0/reward1，主线程finalize整链passed。该run已完成，无训练。

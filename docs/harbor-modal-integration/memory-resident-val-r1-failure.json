@@ -1,0 +1,69 @@
+{
+  "schema": "dsh.memory-resident-failure-audit.v1",
+  "run_root": "/root/runs/memory-resident-val-r1",
+  "source_commit": "4168b628f3a2ff4c301dcffb60f016f8ecb770f2",
+  "supervision": {
+    "exit_code": -15,
+    "reason": "training-exited",
+    "elapsed_seconds": 540.012,
+    "pid": 185194,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "run_manifest_status": "running",
+  "stage_dumps": 0,
+  "crosswalks": 0,
+  "log_sha256": "a9de3d553eece46fd2588534c921529fb0f39bc04c644bea2ddff4761badf70a",
+  "log_evidence": [
+    {
+      "line": 690,
+      "text": "(TaskRunnerV1 pid=187050)  'custom_reward_function': {'name': None, 'path': None},"
+    },
+    {
+      "line": 804,
+      "text": "(TaskRunnerV1 pid=187050)             'custom_reward_function': {'name': 'compute_score', 'path': None},"
+    },
+    {
+      "line": 1158,
+      "text": "(AgentFrameworkWorker pid=189569) ValueError: Memory terminal credit cannot use reward workers"
+    },
+    {
+      "line": 1159,
+      "text": "(TaskRunnerV1 pid=187050) INFO:2026-09-09 01:52:26,402:pending: 1, running: 0, finished: 0, failure: 0"
+    },
+    {
+      "line": 1163,
+      "text": "(TaskRunnerV1 pid=187050) INFO:2026-09-09 01:53:26,451:pending: 1, running: 0, finished: 0, failure: 0"
+    },
+    {
+      "line": 1164,
+      "text": "(TaskRunnerV1 pid=187050) INFO:2026-09-09 01:54:26,497:pending: 1, running: 0, finished: 0, failure: 0"
+    }
+  ],
+  "gpu_processes_at_audit": "",
+  "cause": "NativeMemoryFramework rejects nonempty default reward worker handles at construction although custom reward path is None; no A/B session was executed.",
+  "consumption_audit": {
+    "schema": "dsh.memory-training-consumption-audit.v1",
+    "passed": false,
+    "consumption_verified": false,
+    "run_completed": false,
+    "run_id": "memory-resident-val-r1",
+    "run_manifest_sha256": "sha256:2ddf84eb471667365bb362078299465e0f369bd43e6f4238fe029d09f5df48f5",
+    "inputs": [],
+    "groups": [],
+    "errors": [],
+    "unknown_or_unadmitted_consumption": [],
+    "duplicate_consumption": [],
+    "overlapping_crosswalk_keys": [],
+    "summary": {
+      "groups": 0,
+      "consumed_groups": 0,
+      "consumed_rows": 0,
+      "unique_consumed_rows": 0
+    },
+    "limitations": [
+      "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+      "Crosswalk and submission records alone never establish trainer consumption."
+    ]
+  }
+}

@@ -173,3 +173,9 @@
 - 案例：context-v2-curriculum-r1-reload-step12。外层ops先建RUN_ROOT并写manifest，内层PRINT_COMMAND打印后exit0，外层误把打印结果记为completed；正式supervisor因目录已存在拒绝启动。根因是预检副作用，不是CUDA故障。
 - 处理：确认目录仅含command.txt/run-manifest.json后，原样重命名为独立print-command-evidence目录保存；保持正式新目录检查，不设置ALLOW_REUSE、不删除证据。随后重新启动，实际step12 reload已470.012秒exit0，4/4新鲜评估消费通过。
 - 防复发：预检使用独立scratch身份与所有输出路径，优先只读JSON命令清单；首次PID后继续核真实训练日志、模型加载、GPU和最终消费证据。打印模式的completed绝不能计为训练完成。
+
+## 2026-09-09：默认worker句柄不等于实际奖励路径
+
+- memory-resident-val-r1真实GPU构造失败：VERL默认传入reward_loop_worker_handles（8个worker），但DSH已有verifier reward时原Gateway优先使用TaskResult.reward。新NativeMemory仅因句柄非空便拒绝，混淆了对象存在与实际数据流。
+- CPU factory测试必须模拟生产默认依赖注入（非空handles且custom_reward_function=None），验证A/B原奖励不变、worker没有调用；不能只用None替身。NativeMemory显式禁止额外reward通道，同时保持strict verifier门，不改默认Gateway或VERL。
+- 已确认不可恢复的框架构造失败无需等待一小时预算：先核具体child命令和pgid，仅停止该run拥有的进程组，再检查GPU释放。外部SIGTERM可能使内层run-manifest仍running，终态以supervisor-result与活进程交叉核验，保留原始不一致而不伪造正常完成。

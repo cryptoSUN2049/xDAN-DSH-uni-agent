@@ -463,3 +463,12 @@ Review：训练进程正常结束与全组通过分开；数据量按独立任�
 - [x] 完成独立memory数据/recipe清单和trainer真实消费审计器，CPU通过并push。
 - [ ] 固定新integration commit、复用既有venv，GPU验证resident A/B及n4路径。
 - [ ] 按实际reward差异报告有效学习信号，不人为制造奖励方差。
+
+### Resident memory r1失败后的r2计划
+
+- [x] 保留r1构造失败、零消费、专属SIGTERM及GPU释放证据。
+- [x] 修正默认reward handles注入误判，316项组合/主线程38项回归通过。
+- [ ] 提交推送后从GitHub固定新源码，重新prepare/check/launch val-r2。
+- [ ] 真正A/B执行、policy version、原奖励和trainer消费审计通过后，再准备train-r2。
+
+Review：旧train-r1准备清单已作废，不修改旧JSON或追认r1成功。
