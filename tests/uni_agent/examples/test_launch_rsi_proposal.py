@@ -201,3 +201,23 @@ def test_sdk_probe_always_hides_gpu(monkeypatch):
     monkeypatch.setattr(launcher.subprocess, "run", lambda *a, **k: calls.append(k))
     launcher.check_sdk("python", {"CUDA_VISIBLE_DEVICES": "0"})
     assert calls[0]["env"]["CUDA_VISIBLE_DEVICES"] == ""
+
+
+@pytest.mark.parametrize("fault", ["missing", "manifest", "live"])
+def test_proposal_preflight_rejects_verl_identity_drift(prepared, monkeypatch, fault):
+    path, sha, _, baseline = prepared
+    manifest = json.loads(path.read_text())
+    assert manifest["verl_effective_source"] == baseline["verl_effective_source"]
+    changed = {**manifest["verl_effective_source"], "manifest_sha256": "sha256:" + "0" * 64}
+    if fault == "live":
+        monkeypatch.setattr(launcher.worker, "verl_source_identity", lambda: changed)
+    else:
+        if fault == "missing":
+            del manifest["verl_effective_source"]
+        else:
+            manifest["verl_effective_source"] = changed
+        path.write_text(json.dumps(manifest))
+        sha = launcher.worker.digest(path)
+    with pytest.raises(ValueError, match="VERL effective source"):
+        launcher.preflight(path, sha)
+    assert not Path(manifest["run_root"]).exists()

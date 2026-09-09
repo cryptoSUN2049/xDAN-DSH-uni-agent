@@ -266,6 +266,7 @@ def prepare_proposal(parent_manifest, parent_manifest_sha256, output_dir, run_ro
     command[command.index("--limit") + 1] = "1"
     manifest = {
         "schema": "dsh.rsi-proposal-preparation.v1",
+        "verl_effective_source": baseline["verl_effective_source"],
         "checkout": {"integration": worker.git_state(worker.ROOT), "verl": worker.git_state(worker.ROOT / "verl")},
         "status": "prepared-not-run",
         "training": False,
@@ -305,6 +306,7 @@ def register_verified_proposal(manifest_path, expected_manifest_sha256, output_p
     checkout = {"integration": worker.git_state(worker.ROOT), "verl": worker.git_state(worker.ROOT / "verl")}
     if manifest["checkout"] != checkout:
         raise ValueError("Proposal checkout changed")
+    worker.check_verl_source(manifest)
     worker.checked_files(path.parent, manifest["files"])
     worker.checked_files(worker.ROOT, manifest["sources"])
     baseline, diagnostics = audit_parent(manifest["parent_manifest"], manifest["parent_manifest_sha256"])

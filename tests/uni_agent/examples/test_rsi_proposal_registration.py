@@ -285,3 +285,17 @@ def test_registration_requires_actual_bounded_launch_binding(proposal_run, fault
     with pytest.raises((ValueError, FileNotFoundError)):
         registration.register_verified_proposal(path, sha, target)
     assert not target.exists()
+
+
+def test_registration_rejects_changed_verl_manifest_before_registry_write(proposal_run):
+    import json
+
+    path, _, target, registry, _, baseline = proposal_run
+    manifest = json.loads(path.read_text())
+    manifest["verl_effective_source"]["manifest_sha256"] = "sha256:" + "0" * 64
+    path.write_text(json.dumps(manifest))
+    before = registry.load_active(baseline["parent_active_sha256"])
+    with pytest.raises(ValueError, match="VERL effective source"):
+        registration.register_verified_proposal(path, registration.worker.digest(path), target)
+    assert not target.exists()
+    assert registry.load_active(baseline["parent_active_sha256"]) == before

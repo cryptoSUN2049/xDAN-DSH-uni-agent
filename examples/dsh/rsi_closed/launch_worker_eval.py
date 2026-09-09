@@ -16,6 +16,9 @@ from uni_agent.tasks.dsh.rsi_candidates import Registry
 
 
 def _live_inputs(manifest, output, side):
+    prep.check_verl_source(manifest)
+    if set(manifest["sources"]) != set(prep.SOURCES):
+        raise ValueError("Source inventory differs from fixed entry")
     mode = manifest.get("mode", "paired")
     sides = prep.evaluation_sides(mode, manifest.get("candidate_sha256"))
     if set(manifest["sides"]) != set(sides) or side not in sides:
@@ -58,8 +61,6 @@ def preflight(manifest_path, manifest_sha256, side):
     if manifest.get("schema") != "dsh.rsi-worker-evaluation.v1" or side not in ("H0", "H1"):
         raise ValueError("Invalid RSI evaluation side/schema")
     output = path.parent
-    if set(manifest["sources"]) != set(prep.SOURCES):
-        raise ValueError("Source inventory differs from fixed entry")
     _live_inputs(manifest, output, side)
     actual = {str(p.relative_to(output)) for p in output.rglob("*") if p.is_file() and p != path}
     if actual != set(manifest["files"]):

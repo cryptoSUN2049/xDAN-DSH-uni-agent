@@ -41,6 +41,7 @@ def check_sdk(python, environment):
 def live_inputs(path, sha, baseline):
     check_launcher_source()
     manifest = registration.load_bound(path, sha)
+    worker.check_verl_source(manifest)
     worker.checked_files(path.parent, manifest["files"])
     worker.checked_files(worker.ROOT, manifest["sources"])
     actual = {str(p.relative_to(path.parent)) for p in path.parent.rglob("*") if p.is_file() and p != path}

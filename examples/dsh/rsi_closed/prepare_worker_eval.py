@@ -43,6 +43,9 @@ SOURCES = [
     "examples/inference/parallel_infer_verl.py",
     "deployment/services/harbor_training_supervisor.py",
     "deployment/versions/g1-deployment-lock.json",
+    "deployment/checks/verl_source_overlay.py",
+    "deployment/versions/verl-runtime-patches.json",
+    "deployment/patches/verl/fefb080-preserve-finish-reason.patch",
 ]
 
 
@@ -213,16 +216,18 @@ def require_clean_sources():
     )
     if status.stdout.strip():
         raise ValueError("Commit the execution source files before preparing a reproducible run")
-    status = subprocess.run(
-        ["git", "status", "--porcelain", "--untracked-files=no"],
-        cwd=ROOT / "verl",
-        check=True,
-        capture_output=True,
-        text=True,
-        timeout=15,
-    )
-    if status.stdout.strip():
-        raise ValueError("VERL tracked sources must match the pinned checkout")
+    verl_source_identity()
+
+
+def verl_source_identity():
+    from deployment.checks.verl_source_overlay import verify_verl_source
+
+    return verify_verl_source(ROOT / "verl", require_patched=True)
+
+
+def check_verl_source(manifest):
+    if manifest.get("verl_effective_source") != verl_source_identity():
+        raise ValueError("VERL effective source changed; prepare a new run")
 
 
 def evaluation_sides(mode, candidate_sha256):
@@ -284,6 +289,7 @@ def prepare(
     if checkout["verl"]["head"] != lock["integration"]["verl_revision"]:
         raise ValueError("VERL checkout differs from deployment lock")
     require_clean_sources()
+    effective_verl = verl_source_identity()
     sources = {path: digest(ROOT / path) for path in SOURCES}
     output.mkdir(parents=True, mode=0o700, exist_ok=False)
     sides = {}
@@ -374,6 +380,7 @@ def prepare(
         per_turn=per_turn,
         wall_seconds=wall_seconds,
         checkout=checkout,
+        verl_effective_source=effective_verl,
         sources=sources,
         sides=sides,
         environment={"DSH_RUNTIME_MODE": "exe", "PYTHONPATH": f"{ROOT}:{ROOT / 'verl'}"},

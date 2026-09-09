@@ -12,6 +12,14 @@
 
 云盘归档：`/workspace/reports/ws-short-r1-engineering-evidence-20260909.tar.gz`，SHA256 `d7764c1422ce5a9f89df862a927059224ca5ede201fd2756a40468ef505d8823`；18,197,593字节，173,735成员逐项回读通过。checkpoint单独保留，归档不含凭据。
 
+## 当前接续：RSI 基线与跨课程初始化审计
+
+短课程收尾之后，继续四能力目标。RSI worker/proposer 原入口仍要求 VERL 完全 clean，与已批准的 finish-reason overlay 冲突；本轮复用严格 overlay 校验并绑定有效来源，不退回未修补版本。准备器/worker/proposal 共用同一来源合同；旧 RSI manifest 必须重建。
+
+下一真实运行是父 H0 的 runtime 能力发现及文件约束取证两个开发任务；入口 `docs/harbor-modal-integration/rsi-parent-baseline-runbook.md`。这是固定权重评估，不是 RSI RL 或候选晋升。新部署及运行状态另补实际证据，不能凭脚本存在勾选完成。
+
+跨课程审计 `docs/harbor-modal-integration/work-state-curriculum-warm-start-audit.md`：当前 train 禁止 resume，不能用短课程母 checkpoint 冒充旧课程。远程 step8 有 r16/alpha16 的 LoRA metadata，但无现成 PEFT adapter 目录。后续应明确初始化来源、导出等同性、新 optimizer 和 step，而不是放宽 reload 同课程门。
+
 ## 2. 本轮交付物
 
 | 路径 | 行数 | 说明 |

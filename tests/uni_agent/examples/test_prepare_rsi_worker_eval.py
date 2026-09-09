@@ -14,6 +14,15 @@ from uni_agent.tasks.dsh.rsi_candidates import Registry, initialize
 def parent_inputs(tmp_path, monkeypatch):
     # Development tests run before commit; production preparation must pass the real Git gate.
     monkeypatch.setattr(prep, "require_clean_sources", lambda: None)
+    monkeypatch.setattr(
+        prep,
+        "verl_source_identity",
+        lambda: {
+            "overlay_id": "preserve-finish-reason-v1",
+            "state": "patched",
+            "manifest_sha256": "sha256:" + "1" * 64,
+        },
+    )
     cases = tmp_path / "cases"
     prepare_cases(cases)
     model = tmp_path / "model"
@@ -441,3 +450,34 @@ def test_launch_gpu_busy_check_does_not_attach_to_other_process(monkeypatch):
     )
     with pytest.raises(RuntimeError, match="active compute processes"):
         launcher._gpu_idle()
+
+
+def test_preparation_binds_effective_verl_source(inputs):
+    manifest = prep.prepare(**inputs)
+    assert manifest["verl_effective_source"] == prep.verl_source_identity()
+    assert {
+        "deployment/checks/verl_source_overlay.py",
+        "deployment/versions/verl-runtime-patches.json",
+        "deployment/patches/verl/fefb080-preserve-finish-reason.patch",
+    } <= set(manifest["sources"])
+
+
+@pytest.mark.parametrize("fault", ["missing", "manifest", "live"])
+def test_preflight_rejects_effective_verl_identity_drift(prepared, monkeypatch, fault):
+    import json
+
+    from examples.dsh.rsi_closed.launch_worker_eval import preflight
+
+    _, manifest, path, sha = prepared
+    changed = {**prep.verl_source_identity(), "manifest_sha256": "sha256:" + "0" * 64}
+    if fault == "live":
+        monkeypatch.setattr(prep, "verl_source_identity", lambda: changed)
+    else:
+        if fault == "missing":
+            manifest.pop("verl_effective_source", None)
+        else:
+            manifest["verl_effective_source"] = changed
+        path.write_text(json.dumps(manifest))
+        sha = prep.digest(path)
+    with pytest.raises(ValueError, match="VERL effective source"):
+        preflight(path, sha, "H0")

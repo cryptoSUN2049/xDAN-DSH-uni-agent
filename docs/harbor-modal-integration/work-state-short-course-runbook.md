@@ -31,6 +31,8 @@ Canary 使用控制器提供的确定性响应检查真实 DSH 工具与评分�
 
 ## 判读与独立评估
 
+**执行源码与审计源码分开记录。** 已完成的 `ws-short-train-r1` 及两次 reload 使用 `b47521d`；这个版本的离线 auditor 不理解 VERL validation 将终态 B 分数广播到 A/B 行的语义。重审现有产物使用已修复的 `d4401d3` 或包含它的固定提交，在独立 checkout 中运行 `audit_memory_training`，保留原失败报告。`prepare_memory_training.check(after_run=True)` 则必须在该 run 原执行 checkout 中运行，不能用新 checkout 冒充原源码身份。新实验统一使用包含修复的已发布完整 SHA，prepare 与 launch 保持同一源码。参见[最终 reload 证据](work-state-short-reload-final-result.md)。
+
 先按完整部署指南审计实际消费及 checkpoint。必须分别记录合法零奖励、拒绝组、实际独立任务数、非零优势和有限梯度。所有 sibling 同分时 GRPO 没有组内区分信号；不得通过改分、复制正例或筛除合法低分伪造更新。
 
 独立 reload 沿用准备器的 `--mode reload`、`--resume-from`、`--mother-run` 参数，并**同样传入 `--family work-state-v1 --course work-state-short-fact-v1`**。母 checkpoint 必须来自本短课程；旧四族 r4 不得作为短课程母实验。公开开发题用于预定最终评估，不用于挑提示、温度或 checkpoint。具体实验运行名、文件摘要、实际参数变化与评估结果在完成后另行归档；本指南不是已通过声明。
