@@ -1,0 +1,20 @@
+{
+  "schema": "dsh.evidence-archive-verification.v1",
+  "archive": "/workspace/reports/rsi-student-p-r1-20260909.tar.gz",
+  "sha256": "8aa2f1aeaecca0ade45f69313a50e45102159961bd40674dbac5e7e9115557d7",
+  "archive_bytes": 35250,
+  "manifest": "/workspace/reports/rsi-student-p-r1-20260909.manifest.json",
+  "manifest_sha256": "3de8fde203d2d6732babd6811ba3107b4b56170ea425180c69802c6d3b94ab0f",
+  "data_members": 24,
+  "uncompressed_source_bytes": 97387,
+  "readback_all_members_passed": true,
+  "exclusions": [],
+  "selected_roots": [
+    "/root/runs/rsi-student-p-r1-data",
+    "/root/runs/rsi-student-p-r1",
+    "/root/runs/rsi-student-p-r1-launch.json",
+    "/root/runs/rsi-student-p-r1-launch.log"
+  ],
+  "original_runs_modified": false,
+  "registration_included": false
+}

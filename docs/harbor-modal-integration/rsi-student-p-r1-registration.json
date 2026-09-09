@@ -1,0 +1,37 @@
+{
+  "candidate_sha256": "sha256:438ad34856e6169fb0cdc92a219ea2b4c7f5c4f6440114879652f4ce3b2942a8",
+  "changed": true,
+  "content_sha256": "sha256:8d2c65ae72f7552f48a36c4e18be1bc964f2aa0376b7827de0257d203dc99fa6",
+  "diagnostics_sha256": "sha256:49b8eb1d657b633e93c0ab5af3d8193066a3eb27a645d7624d45bafc7ee69d76",
+  "launch_manifest_sha256": "sha256:c03daf547f9a57f65c249b9462c6a5ee43f6e6ed9b1ee83c1e3086589487c222",
+  "model_sha256": "sha256:a01dc055d36e26428430e8aaf7c3c6ba865aa60dbbc310ce8b0c5aff2481b003",
+  "parent_active_sha256": "sha256:fd91e253ae098b002f4fab62fcdf6ddf345ad421263f2d9ee47bc2e202a1dfc6",
+  "parent_candidate_sha256": "sha256:d467e1af751f9a012d0d1082979261ab85800a828d7de68a6cabfedf1e8273f5",
+  "promoted": false,
+  "proof": {
+    "artifact_sha256": "sha256:2d1fe123570b7bc317604b4d72f87ac33bc11bb3129387cd5efcd546665350f6",
+    "dsh_session_id": "dsh-session-sample-0-rollout-0-a4cfb22a09a04432b67f8818b779d884",
+    "dump_sha256": "sha256:9b105a5a2ba39f723b9e1ec4651700c746b8893921a7cb6f26803ea1ffdbdb86",
+    "inference_evidence_sha256": "sha256:92474538acbb91b4d12473255863b2993d8f4a97dbfd59f75086e433e08fed20",
+    "model_tokens": 42,
+    "npz_sha256": "sha256:ec210b1f656a027cfb83facaaab7b7e2b66b9576baabe5f4f4c8e682a20a30ea",
+    "receipt_sha256": "sha256:dac9a67b16ed328cc14a3417cc80494bbaba5aaacf327a6d7c77a5a352aeee24",
+    "trace_sha256": "sha256:a51898f994ee106043af793ca6a1c09bc6945f68350b4a47bbcf4046749f520f",
+    "transfer_queue_key": "7842adb6-dc55-43fb-9f64-a2da0dcc78d3_0_0",
+    "uid": "7842adb6-dc55-43fb-9f64-a2da0dcc78d3"
+  },
+  "proposal_manifest_sha256": "sha256:8c510da59bcb681cded5cb91e884b65f7d020fcef8c00457610b0f37fb5ee4da",
+  "raw_response_sha256": "sha256:95b9a917c2332ae8e2a23123eebb287a1d4f96e3dc9cdb68bc88993f0f4f5cec",
+  "runtime_sha256": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+  "schema": "dsh.rsi-student-registration.v1",
+  "spec": {
+    "allowed_tools": [
+      "cordis_inspect_list",
+      "str_replace_editor"
+    ],
+    "profile": "sdk-minimal",
+    "schema": "dsh.rsi-profile.v1"
+  },
+  "supervisor_result_sha256": "sha256:96cf8afe72c310bf32a2a4c222226a58f010bdb3a33f8a9305d5ec80132c4177",
+  "training": false
+}
