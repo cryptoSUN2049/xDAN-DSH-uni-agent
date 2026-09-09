@@ -15,7 +15,7 @@
 - memory writer r2：4steps/3工具调用，拒绝一次后成功创建正确memory；因一次越权硬拒，未freeze/B。初始操作协议revision2已`5867fcf`推送、57项回归通过，r3已真实两工具调用成功、无越权、fresh receipt=1，独立重评分及冻结摘要通过。reader152851已成功，A/B独立身份及读取/回答复核通过；training=false，不能复用r2或追认通过。
 - M1 v2-r4既有两步真实RL、504 LoRA更新/399 base冻结、optimizer与消费审计、独立reload已通过；两公开题原本满分，不能宣称能力提升。RSI固定Linux父/子/回滚18工具调用通过，但synthetic选择不计学生训练；未晋升候选隔离评估入口已208dfcb推送，46项CPU通过；真实学生开发比较未实现。
 - 数据审计native-data-coverage-audit.md：context12 train/4 dev；memory两固定模板；封存能力测试已验收数0。独立任务、采样尝试、实际消费分开报告。最新诊断云盘归档摘要见native-diagnostics-archive-through-context-v2-r2.json。
-- 下一步：constraints-r3及updates-r1两族A→冻结→B已整链通过（固定诊断题，无训练）；核当前12题context课程实际消费/学习信号，再独立reload，后续RSI学生评估。context训练/reload日志、数据、审计与metrics已归档 `/workspace/reports/context-v2-train-r1-reload-20260909.tar.gz`，摘要见context-v2-train-r1-reload-archive.json；checkpoint已在/workspace。清单驱动inference launcher已补齐，避免手写相对PYTHONPATH；后续使用精确checkout配套清单。
+- 下一步：constraints-r3及updates-r1两族A→冻结→B已整链通过（固定诊断题，无训练）；12步context消费、参数/optimizer及独立reload已完成；下一步补齐NativeMemory recipe/真实消费审计并做GPU resident A/B训练路径，后续RSI学生评估。context训练/reload日志、数据、审计与metrics已归档 `/workspace/reports/context-v2-train-r1-reload-20260909.tar.gz`，摘要见context-v2-train-r1-reload-archive.json；checkpoint已在/workspace。清单驱动inference launcher已补齐，避免手写相对PYTHONPATH；后续使用精确checkout配套清单。
 
 ### 最新 N0/N1/P1 检查点
 
@@ -258,3 +258,7 @@ _hydra允许经过白名单校验的相对路径键；仍拒绝分隔符/插值�
 - 后续context 12题完整课程覆盖计划见context-online-rl-v2-runbook.md末节；12步/n4计划48尝试，实际覆盖与有效组必须审计，不能宣称已执行。
 
 - 最新本地/push实现：2f1995a新增Gateway实际生成版本完整性（108 CPU）；7c37cb2新增RSI配对准备/监督入口（root74 CPU）。均未部署当前d3084f2训练，不以新代码覆盖旧run身份。
+
+### NativeMemory 接线复核：训练步数与权重版本
+
+固定VERL sync初始化发布weight0，fit先把训练step增为1后采样；每步更新后发布该step权重，再验证。因此训练prompt step=s对应实际weight=s-1，val step=s对应weight=s。新接线必须分别记录调度step和expected_policy_version，真实generation版本仍需完整且相等，禁止缺失时补写。主线程已发现原接线将二者等同的问题，正在用固定源码时序与CPU反例修正；尚未部署该接线到GPU。

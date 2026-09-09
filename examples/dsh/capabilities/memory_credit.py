@@ -109,15 +109,17 @@ def _trajectory(trajectory, stage, version):
 
 
 def validate_credit_group(chains, *, expected_version, expected_group_uid, expected_run_id, expected_partition):
-    """Validate exactly four independent A/B chains and return annotations only.
+    """Validate four training or one validation A/B chains; return annotations only.
 
     Original trajectories (including their stage rewards) remain untouched.
     The later Framework integration must explicitly bind these annotations to
     a new chain receipt before assigning training rewards or writing TQ.
     """
     _require(type(expected_version) is int and expected_version >= 0, "Invalid expected version")
-    _require(len(chains) == 4, "Expected four real siblings")
-    _require(sorted(c.writer.sibling for c in chains) == list(range(4)), "Invalid or duplicate sibling indices")
+    _require(expected_partition in ("train", "val"), "Invalid partition")
+    size = 4 if expected_partition == "train" else 1
+    _require(len(chains) == size, "Expected four real siblings" if size == 4 else "Expected one validation chain")
+    _require(sorted(c.writer.sibling for c in chains) == list(range(size)), "Invalid or duplicate sibling indices")
     first = chains[0].writer
     seen_sessions, seen_chains, seen_receipts, seen_manifests, seen_trajectories = set(), set(), set(), set(), set()
     assignments = []

@@ -189,3 +189,16 @@ def test_incomplete_per_generation_evidence_rejected_even_when_span_matches(evid
     chains[0].writer.trajectories[0].extra_fields = {"min_global_steps": 7, "max_global_steps": 7, **evidence}
     with pytest.raises(ValueError):
         validate(chains)
+
+
+def test_validation_uses_one_chain_with_same_full_contract():
+    chain = group()[0]
+    chain = replace(chain, writer=replace(chain.writer, partition="val"), reader=replace(chain.reader, partition="val"))
+    result = validate_credit_group(
+        [chain], expected_version=7, expected_group_uid="group", expected_run_id="run", expected_partition="val"
+    )
+    assert len(result) == 1 and result[0].reward == chain.reader.reward
+    with pytest.raises(ValueError):
+        validate_credit_group(
+            [chain] * 4, expected_version=7, expected_group_uid="group", expected_run_id="run", expected_partition="val"
+        )
