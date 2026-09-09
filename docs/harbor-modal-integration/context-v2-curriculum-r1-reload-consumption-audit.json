@@ -1,0 +1,94 @@
+{
+  "eligible": true,
+  "groups": [
+    {
+      "eligible": true,
+      "expected_sessions": 1,
+      "global_steps": 12,
+      "group_uid": "2c05f263-adab-408f-9d58-ab4dfbae6875",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 1,
+      "partition_id": "val",
+      "reasons": [],
+      "reward_values": [
+        0.72
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "2c05f263-adab-408f-9d58-ab4dfbae6875_0_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 1,
+      "global_steps": 12,
+      "group_uid": "340f6849-f129-459d-b86a-1be89c9fdca8",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 1,
+      "partition_id": "val",
+      "reasons": [],
+      "reward_values": [
+        0.1
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "340f6849-f129-459d-b86a-1be89c9fdca8_0_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 1,
+      "global_steps": 12,
+      "group_uid": "9c5defb7-357e-41e4-97d3-22af1dc6c9fd",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 1,
+      "partition_id": "val",
+      "reasons": [],
+      "reward_values": [
+        0.671875
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "9c5defb7-357e-41e4-97d3-22af1dc6c9fd_0_0"
+      ]
+    },
+    {
+      "eligible": true,
+      "expected_sessions": 1,
+      "global_steps": 12,
+      "group_uid": "e7e3af8b-fb26-47ba-89dc-1c1b1dcabb98",
+      "has_reward_variance": false,
+      "missing_consumed_keys": [],
+      "observed_sessions": 1,
+      "partition_id": "val",
+      "reasons": [],
+      "reward_values": [
+        0.1
+      ],
+      "status": "eligible-and-consumed",
+      "transfer_queue_keys": [
+        "e7e3af8b-fb26-47ba-89dc-1c1b1dcabb98_0_0"
+      ]
+    }
+  ],
+  "legacy_unjoinable": [],
+  "run_manifest_sha256": "sha256:03b8951abb0e28358395b3b230b30121fed8b874f8ac1923a739e384c0484de6",
+  "run_status": "completed",
+  "schema": "dsh.trajectory-group-audit.v1",
+  "summary": {
+    "eligible_groups": 4,
+    "groups": 4,
+    "legacy_unjoinable_files": 0,
+    "rejected_groups": 0,
+    "run_completed": true,
+    "unexpected_consumed_rows": 0,
+    "variance_groups": 0
+  },
+  "unexpected_consumed": {
+    "train": [],
+    "val": []
+  }
+}

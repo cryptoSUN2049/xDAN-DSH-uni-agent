@@ -1,0 +1,177 @@
+{
+  "schema": "dsh.context-v2-curriculum-reload-audit.v1",
+  "run_root": "/root/runs/context-v2-curriculum-r1-reload-step12",
+  "checkpoint_source": "/workspace/uni-agent-g1/checkpoint/context-v2-curriculum-r1/global_step_12",
+  "supervision": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 470.012,
+    "pid": 178937,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "consumption": {
+    "eligible_groups": 4,
+    "groups": 4,
+    "legacy_unjoinable_files": 0,
+    "rejected_groups": 0,
+    "run_completed": true,
+    "unexpected_consumed_rows": 0,
+    "variance_groups": 0
+  },
+  "load_evidence": [
+    "(WorkerDict pid=181758) INFO:2026-09-09 01:03:33,611:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/context-v2-curriculum-r1/global_step_12/actor/model_world_size_1_rank_0.pt",
+    "(WorkerDict pid=181758) INFO:2026-09-09 01:03:34,313:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/context-v2-curriculum-r1/global_step_12/actor/optim_world_size_1_rank_0.pt",
+    "(WorkerDict pid=181758) INFO:2026-09-09 01:03:34,329:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/context-v2-curriculum-r1/global_step_12/actor/extra_state_world_size_1_rank_0.pt",
+    "(WorkerDict pid=181758) INFO:2026-09-09 01:03:34,329:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/context-v2-curriculum-r1/global_step_12/actor/extra_state_world_size_1_rank_0.pt"
+  ],
+  "trajectories": [
+    {
+      "session": "session-sample-0-rollout-0-49ebf426c6ff4bb5a4e1e99d4b0ee5f4",
+      "partition": "val",
+      "global_steps": 12,
+      "transfer_queue_key": "9c5defb7-357e-41e4-97d3-22af1dc6c9fd_0_0",
+      "finished": true,
+      "dsh": {
+        "schema": "dsh.verifier-receipt.v1",
+        "receipt_sha256": "sha256:9b9df032ea7ab077a558de32e13a57418ab17c01264d5e29d3f34af31ec7dab2",
+        "freshness": "fresh",
+        "eligible": true,
+        "rollout_id": "session-sample-0-rollout-0-49ebf426c6ff4bb5a4e1e99d4b0ee5f4",
+        "task_id": "dsh/context-v2/dev-D",
+        "task_version": "2",
+        "split": "validation",
+        "dsh_session_id": "dsh-session-sample-0-rollout-0-49ebf426c6ff4bb5a4e1e99d4b0ee5f4",
+        "trace_sha256": "sha256:757a50c52e6455e27db762a890f3a44b5b5f2d521e848beae3fc8959ce54791b",
+        "artifact_sha256": "sha256:1838e22ff34f805473090ac2b57f33a81ab372a78f4144067357e5654f01d94f",
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "verifier_id": "dsh-context-file-evidence-v2",
+        "verifier_version": "2",
+        "verifier_code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+        "event_count": 22
+      }
+    },
+    {
+      "session": "session-sample-1-rollout-0-15edb296c1b04b0783342237de756d2b",
+      "partition": "val",
+      "global_steps": 12,
+      "transfer_queue_key": "e7e3af8b-fb26-47ba-89dc-1c1b1dcabb98_0_0",
+      "finished": true,
+      "dsh": {
+        "schema": "dsh.verifier-receipt.v1",
+        "receipt_sha256": "sha256:950da2cbca9eeaa78b1ac6df12f0820f731c368b0c1e5076b7ff7a0e8dc8f998",
+        "freshness": "fresh",
+        "eligible": true,
+        "rollout_id": "session-sample-1-rollout-0-15edb296c1b04b0783342237de756d2b",
+        "task_id": "dsh/context-v2/dev-C",
+        "task_version": "2",
+        "split": "validation",
+        "dsh_session_id": "dsh-session-sample-1-rollout-0-15edb296c1b04b0783342237de756d2b",
+        "trace_sha256": "sha256:a6c9d3f722d09f1aec4f3117a2b7e2a4e13ef92cf1f2dcb93df839d0d07317a5",
+        "artifact_sha256": "sha256:963d0258741e413f83733ad6004ae6bb3dba1b35228c0dea727873b1cfc05297",
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "verifier_id": "dsh-context-file-evidence-v2",
+        "verifier_version": "2",
+        "verifier_code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+        "event_count": 24
+      }
+    },
+    {
+      "session": "session-sample-2-rollout-0-66661f4e19c040348f4033df5ff93c37",
+      "partition": "val",
+      "global_steps": 12,
+      "transfer_queue_key": "340f6849-f129-459d-b86a-1be89c9fdca8_0_0",
+      "finished": true,
+      "dsh": {
+        "schema": "dsh.verifier-receipt.v1",
+        "receipt_sha256": "sha256:0ec213ac58a0c06de86224170c4b2b359d7b7080f221dffda320f0aa1cf3eda7",
+        "freshness": "fresh",
+        "eligible": true,
+        "rollout_id": "session-sample-2-rollout-0-66661f4e19c040348f4033df5ff93c37",
+        "task_id": "dsh/context-v2/dev-M",
+        "task_version": "2",
+        "split": "validation",
+        "dsh_session_id": "dsh-session-sample-2-rollout-0-66661f4e19c040348f4033df5ff93c37",
+        "trace_sha256": "sha256:35eca67dc0ef607122a99bf3e37e7cc28f12afc1d56e37bae75f1f81402096ab",
+        "artifact_sha256": "sha256:c4b29e931b2c2eaf6ae4ee0dadfec371e31c8430069a9935f8d2efd47bcfd3e2",
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "verifier_id": "dsh-context-file-evidence-v2",
+        "verifier_version": "2",
+        "verifier_code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+        "event_count": 22
+      }
+    },
+    {
+      "session": "session-sample-3-rollout-0-7de0e7911f8a44f789886cd763e49e66",
+      "partition": "val",
+      "global_steps": 12,
+      "transfer_queue_key": "2c05f263-adab-408f-9d58-ab4dfbae6875_0_0",
+      "finished": true,
+      "dsh": {
+        "schema": "dsh.verifier-receipt.v1",
+        "receipt_sha256": "sha256:90645cc36205fa141238ca2fbcfdc61073836790964fba111ca5d53f26ba8a63",
+        "freshness": "fresh",
+        "eligible": true,
+        "rollout_id": "session-sample-3-rollout-0-7de0e7911f8a44f789886cd763e49e66",
+        "task_id": "dsh/context-v2/dev-V",
+        "task_version": "2",
+        "split": "validation",
+        "dsh_session_id": "dsh-session-sample-3-rollout-0-7de0e7911f8a44f789886cd763e49e66",
+        "trace_sha256": "sha256:a170926e112f6e5ae796909390336628bb92853e54878b272d351f79a76007ee",
+        "artifact_sha256": "sha256:bf2cbd4501964b007d81eaf28fde1995df3e694de3551853f5a82987edca2cc5",
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "verifier_id": "dsh-context-file-evidence-v2",
+        "verifier_version": "2",
+        "verifier_code_digest": "sha256:d8548f9c4173a78455e5b66a0d69686d8ded8385695bfcb4b3c172cd9841b546",
+        "event_count": 22
+      }
+    }
+  ],
+  "fresh_sessions_disjoint_from_mother": true,
+  "validation_rows": [
+    {
+      "score": 0.7200000286102295,
+      "step": 12,
+      "reward": 0.7200000286102295,
+      "verifier_reward": 0.72,
+      "acc": 0.0,
+      "uid": "2c05f263-adab-408f-9d58-ab4dfbae6875_0_0"
+    },
+    {
+      "score": 0.10000000149011612,
+      "step": 12,
+      "reward": 0.10000000149011612,
+      "verifier_reward": 0.1,
+      "acc": 0.0,
+      "uid": "340f6849-f129-459d-b86a-1be89c9fdca8_0_0"
+    },
+    {
+      "score": 0.671875,
+      "step": 12,
+      "reward": 0.671875,
+      "verifier_reward": 0.671875,
+      "acc": 0.0,
+      "uid": "9c5defb7-357e-41e4-97d3-22af1dc6c9fd_0_0"
+    },
+    {
+      "score": 0.10000000149011612,
+      "step": 12,
+      "reward": 0.10000000149011612,
+      "verifier_reward": 0.1,
+      "acc": 0.0,
+      "uid": "e7e3af8b-fb26-47ba-89dc-1c1b1dcabb98_0_0"
+    }
+  ],
+  "mean_verifier_reward": 0.39796875,
+  "strict_success": 0.0,
+  "training_metric_line_count": 0,
+  "rollout_files": [],
+  "checkpoint_target_exists": true,
+  "checkpoint_target_files": [],
+  "limitations": [
+    "Four existing dev tasks, not an independent held-out effect study.",
+    "Strict success remains 0/4; no measured improvement.",
+    "Mother curriculum has 12 consumed batches but 11 unique tasks after D3 rejection and D2 refill."
+  ],
+  "passed": true
+}

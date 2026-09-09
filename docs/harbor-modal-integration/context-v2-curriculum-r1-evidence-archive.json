@@ -1,0 +1,7 @@
+{
+  "path": "/workspace/reports/context-v2-curriculum-r1-step12-reload-evidence.tar.gz",
+  "sha256": "e98f4d3ef4e04f8cd18318a22d8fb8ac6d9cfcf6ec97b3b1ff8898a61f9d8a0f",
+  "bytes": 33349,
+  "members": 76,
+  "scope": "Explicit audit/optimizer/parameter/terminal reports and trajectory JSON metadata only; excludes tokens NPZ, prompts, raw logs, environment, model and checkpoint binaries."
+}

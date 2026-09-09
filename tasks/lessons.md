@@ -167,3 +167,9 @@
 - 本阶段首先验收真实执行、轨迹/奖励消费、有效参数更新、checkpoint保存、独立reload及评估产出；提分和数据扩量不作为工程闭环前置条件，但不得用异常更新冒充正确训练。
 - 拿到 supervisor PID 不等于模型启动。必须继续核监督日志、训练日志、子进程和GPU状态；启动断言失败应明确报告。
 - ops启动器即使PRINT_COMMAND也会创建RUN_ROOT/command.txt和run-manifest.json，并标completed。这只是打印命令成功，不能当作训练结果。打印预检使用独立scratch RUN_ROOT；正式run必须全新。保留失败证据，不删除或改写旧回执。
+
+### PRINT_COMMAND目录冲突：已核实案例与处理规则
+
+- 案例：context-v2-curriculum-r1-reload-step12。外层ops先建RUN_ROOT并写manifest，内层PRINT_COMMAND打印后exit0，外层误把打印结果记为completed；正式supervisor因目录已存在拒绝启动。根因是预检副作用，不是CUDA故障。
+- 处理：确认目录仅含command.txt/run-manifest.json后，原样重命名为独立print-command-evidence目录保存；保持正式新目录检查，不设置ALLOW_REUSE、不删除证据。随后重新启动，实际step12 reload已470.012秒exit0，4/4新鲜评估消费通过。
+- 防复发：预检使用独立scratch身份与所有输出路径，优先只读JSON命令清单；首次PID后继续核真实训练日志、模型加载、GPU和最终消费证据。打印模式的completed绝不能计为训练完成。
