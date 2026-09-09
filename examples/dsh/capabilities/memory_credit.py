@@ -108,13 +108,16 @@ def _trajectory(trajectory, stage, version):
     )
 
 
-def validate_credit_group(chains, *, expected_version, expected_group_uid, expected_run_id, expected_partition):
+def validate_credit_group(
+    chains, *, expected_version, expected_group_uid, expected_run_id, expected_partition, contract_id="legacy-memory-v1"
+):
     """Validate four training or one validation A/B chains; return annotations only.
 
     Original trajectories (including their stage rewards) remain untouched.
     The later Framework integration must explicitly bind these annotations to
     a new chain receipt before assigning training rewards or writing TQ.
     """
+    _require(contract_id in ("legacy-memory-v1", "work-state-v1"), "Unknown memory credit contract")
     _require(type(expected_version) is int and expected_version >= 0, "Invalid expected version")
     _require(expected_partition in ("train", "val"), "Invalid partition")
     size = 4 if expected_partition == "train" else 1
@@ -165,7 +168,9 @@ def validate_credit_group(chains, *, expected_version, expected_group_uid, expec
                 _require(id(trajectory) not in seen_trajectories, "Trajectory object reused")
                 seen_trajectories.add(id(trajectory))
                 _trajectory(trajectory, stage, expected_version)
-        _require(a.reward == 1 and a.parent_receipt_sha256 is None, "Writer must pass existing freeze gate")
+        _require(a.parent_receipt_sha256 is None, "Writer cannot claim a parent receipt")
+        if contract_id == "legacy-memory-v1":
+            _require(a.reward == 1, "Writer must pass existing freeze gate")
         _require(
             a.frozen_manifest_sha256 is None and a.frozen_content_sha256 is None, "Writer cannot claim reader binding"
         )
@@ -203,6 +208,9 @@ def validate_credit_group(chains, *, expected_version, expected_group_uid, expec
                 expected_run_id,
                 expected_partition,
                 a.checkpoint_identity,
+                "terminal-reader-grpo-v1"
+                if contract_id == "legacy-memory-v1"
+                else "work-state-terminal-reader-grpo-v1",
             )
         )
     return tuple(assignments)

@@ -202,3 +202,35 @@ def test_validation_uses_one_chain_with_same_full_contract():
         validate_credit_group(
             [chain] * 4, expected_version=7, expected_group_uid="group", expected_run_id="run", expected_partition="val"
         )
+
+
+def test_work_state_contract_keeps_deferred_writer_zero_and_reader_credit():
+    chains = group()
+    for chain in chains:
+        chain.writer.reward = 0.0
+        chain.writer.trajectories[0].reward_score = 0.0
+    with pytest.raises(ValueError, match="Writer"):
+        validate(chains)
+    assignments = validate_credit_group(
+        chains,
+        expected_version=7,
+        expected_group_uid="group",
+        expected_run_id="run",
+        expected_partition="train",
+        contract_id="work-state-v1",
+    )
+    assert [item.reward for item in assignments] == [0, 1, 0, 1]
+    assert all(item.credit_rule == "work-state-terminal-reader-grpo-v1" for item in assignments)
+    assert all(item.trajectories[0].reward_score == 0 for item in assignments)
+
+
+def test_unknown_memory_credit_contract_is_not_a_permissive_fallback():
+    with pytest.raises(ValueError, match="contract"):
+        validate_credit_group(
+            group(),
+            expected_version=7,
+            expected_group_uid="group",
+            expected_run_id="run",
+            expected_partition="train",
+            contract_id="model-selected-loose",
+        )

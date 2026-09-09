@@ -68,6 +68,12 @@ def audit_memory_chain_crosswalk(path):
     _require(record["partition"] in ("train", "val"), "Wrong partition")
     expected_version = expected_sync_policy_version(record["global_steps"], record["partition"])
     _require(record["expected_policy_version"] == expected_version, "Wrong expected policy version")
+    contract_id = record.get("contract_id", "legacy-memory-v1")
+    credit_rules = {
+        "legacy-memory-v1": "terminal-reader-grpo-v1",
+        "work-state-v1": "work-state-terminal-reader-grpo-v1",
+    }
+    _require(contract_id in credit_rules, "Unknown chain contract")
     keys, rewards, covered = [], [], []
     chain_ids, siblings, sessions = set(), set(), set()
     for chain in record["chains"]:
@@ -75,7 +81,8 @@ def audit_memory_chain_crosswalk(path):
         _require(sha(canonical(receipt)) == chain["receipt_sha256"], "Chain receipt hash changed")
         body = {k: v for k, v in receipt.items() if k != "receipt_id"}
         _require(receipt["receipt_id"] == sha(canonical(body)), "Chain receipt identity changed")
-        _require(receipt["credit_rule"] == "terminal-reader-grpo-v1", "Wrong credit rule")
+        _require(receipt.get("contract_id", "legacy-memory-v1") == contract_id, "Chain contract mismatch")
+        _require(receipt["credit_rule"] == credit_rules[contract_id], "Wrong credit rule")
         _require(
             receipt["chain_id"] not in chain_ids and receipt["sibling"] not in siblings, "Duplicate chain or sibling"
         )
@@ -203,6 +210,18 @@ class _PendingChain:
 
 
 class NativeMemoryFramework(GatewayAgentFramework):
+    operator_type = OperatorSpec
+    contract_id = "legacy-memory-v1"
+
+    def _prepare_writer(self, operator, context, *, sample_fields, **kwargs):
+        return prepare_writer_stage(operator, context, **kwargs)
+
+    def _freeze_reader(self, writer_spec, execution, **kwargs):
+        return freeze_and_prepare_reader(writer_spec, execution, **kwargs)
+
+    def _validate_stage(self, spec, execution):
+        return validate_stage_execution(spec, execution)
+
     def __init__(self, *args, memory_operator=None, memory_run_id=None, **kwargs):
         for flag in (
             "fail_on_rollout_error",
@@ -274,14 +293,17 @@ class NativeMemoryFramework(GatewayAgentFramework):
         )
         af = config.actor_rollout_ref.rollout.custom.agent_framework
         spec = dict(OmegaConf.to_container(af.memory_operator, resolve=True))
-        for name in ("root", "runner_python", "runtime_executable"):
-            spec[name] = Path(spec[name])
-        instance._memory_operator = OperatorSpec(**spec)
+        for name in ("root", "runner_python", "runtime_executable", "task_manifest"):
+            if name in spec:
+                spec[name] = Path(spec[name])
+        instance._memory_operator = cls.operator_type(**spec)
         instance._memory_run_id = str(af.memory_run_id)
         return instance
 
     async def _run_prompt_rollouts(self, *, sample_fields, sample_index, global_steps, partition_id, num_sessions):
-        _require(isinstance(self._memory_operator, OperatorSpec) and self._memory_run_id, "Memory operator is required")
+        _require(
+            isinstance(self._memory_operator, self.operator_type) and self._memory_run_id, "Memory operator is required"
+        )
         _require(
             partition_id in ("train", "val") and num_sessions == (4 if partition_id == "train" else 1),
             "Invalid memory group size",
@@ -340,9 +362,8 @@ class NativeMemoryFramework(GatewayAgentFramework):
             dump_consumption_crosswalk=False,
         )
 
-    @staticmethod
-    def _outcome(spec, execution):
-        receipt, envelope, scored, fixture = validate_stage_execution(spec, execution)
+    def _outcome(self, spec, execution):
+        receipt, envelope, scored, fixture = self._validate_stage(spec, execution)
         binding = fixture.get("writer_binding", {})
         return StageOutcome(
             run_id=spec.context.run_id,
@@ -382,10 +403,11 @@ class NativeMemoryFramework(GatewayAgentFramework):
         context = GroupContext(self._memory_run_id, partition_id, uid, session_index, global_steps)
         chain_id = "memory-" + uuid4().hex
         writer = await asyncio.to_thread(
-            prepare_writer_stage,
+            self._prepare_writer,
             self._memory_operator,
             context,
             chain_id=chain_id,
+            sample_fields=sample_fields,
             gateway_session_id="memory-A-" + uuid4().hex,
         )
         args = dict(
@@ -401,13 +423,13 @@ class NativeMemoryFramework(GatewayAgentFramework):
         )
         a = await self._stage(writer, **args)
         reader = await asyncio.to_thread(
-            freeze_and_prepare_reader, writer, a, reader_gateway_session_id="memory-B-" + uuid4().hex
+            self._freeze_reader, writer, a, reader_gateway_session_id="memory-B-" + uuid4().hex
         )
         b = await self._stage(reader, **args)
         wa, rb = await asyncio.to_thread(self._outcome, writer, a), await asyncio.to_thread(self._outcome, reader, b)
         # Verify the persisted receipt ID; legacy dsh.receipt_sha256 is this ID, not the file hash.
-        writer_receipt = validate_stage_execution(writer, a)[0]
-        reader_fixture = validate_stage_execution(reader, b)[3]
+        writer_receipt = self._validate_stage(writer, a)[0]
+        reader_fixture = self._validate_stage(reader, b)[3]
         binding = reader_fixture["writer_binding"]
         _require(
             binding["receipt_id"] == writer_receipt["receipt_id"]
@@ -482,6 +504,7 @@ class NativeMemoryFramework(GatewayAgentFramework):
                     index += 1
             body = dict(
                 schema="dsh.memory-chain-credit.v1",
+                contract_id=self.contract_id,
                 credit_rule=assignment.credit_rule,
                 status="admitted-not-consumed",
                 chain_id=assignment.memory_chain_id,
@@ -509,6 +532,7 @@ class NativeMemoryFramework(GatewayAgentFramework):
             path,
             dict(
                 schema="uni-agent.memory-chain-crosswalk.v1",
+                contract_id=self.contract_id,
                 status="prepared-not-consumed",
                 run_id=self._memory_run_id,
                 uid=uid,
@@ -530,7 +554,7 @@ class NativeMemoryFramework(GatewayAgentFramework):
                 (saved.writer_spec, saved.writer_execution),
                 (saved.reader_spec, saved.reader_execution),
             ):
-                await asyncio.to_thread(validate_stage_execution, spec, execution)
+                await asyncio.to_thread(self._validate_stage, spec, execution)
             original = saved.outcome.writer.trajectories + saved.outcome.reader.trajectories
             _require(
                 len(trajectories) == len(original) and all(a is b for a, b in zip(trajectories, original, strict=True)),
@@ -542,6 +566,7 @@ class NativeMemoryFramework(GatewayAgentFramework):
             expected_group_uid=uid,
             expected_run_id=self._memory_run_id,
             expected_partition=partition_id,
+            contract_id=self.contract_id,
         )
         path = await asyncio.to_thread(self._prepare_crosswalk, uid, pending, assignments, partition_id, global_steps)
         audit = await asyncio.to_thread(audit_memory_chain_crosswalk, path)

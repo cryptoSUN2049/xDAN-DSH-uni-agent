@@ -2361,3 +2361,26 @@ async def test_validation_metrics_exclude_receipt_but_preserve_audit(fake_tq):
     metrics = process_validation_metrics(["dsh"], ["uid-0"], {k: [v] for k, v in extra["reward_extra_info"].items()})
     assert metrics["dsh"]["acc"]["mean@1"] == 1.0
     assert metrics["dsh"]["verifier_reward"]["mean@1"] == 0.5
+
+
+@pytest.mark.asyncio
+async def test_strict_failure_retains_bounded_cause_without_credentials(fake_tq):
+    async def runner(**kwargs):
+        raise ValueError(
+            "Writer failed quality gate; api_key=PRIVATE_VALUE Authorization: Bearer PRIVATE_BEARER\n" + "x" * 2000
+        )
+
+    framework = await _build_framework_with_agent_runners(
+        agent_runners={"runner": _inline_runner_config(runner)},
+        gateway_manager=_FakeGatewayManager({}),
+        n=1,
+        val_n=1,
+        fail_on_rollout_error=True,
+    )
+    with pytest.raises(RuntimeError, match="Writer failed quality gate") as error:
+        await framework.generate_sequences(_build_prompts(count=1, validate=True, global_steps=0))
+    message = str(error.value)
+    assert "ValueError" in message and "partition=val" in message
+    assert "PRIVATE_VALUE" not in message and "PRIVATE_BEARER" not in message
+    assert len(message) < 2200
+    assert fake_tq.batch_puts == []

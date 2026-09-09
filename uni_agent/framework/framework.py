@@ -26,6 +26,7 @@ from tensordict.tensorclass import NonTensorData, NonTensorStack
 
 from uni_agent.gateway.session import SessionHandle, Trajectory
 from uni_agent.logging import LogContext, sample_logging
+from uni_agent.logging.redaction import _redact_sensitive_text
 from uni_agent.rlinsight_adapter import agent_loop_session
 from uni_agent.tasks import TaskResult
 from uni_agent.tasks.base import build_reward_info
@@ -586,8 +587,15 @@ class GatewayAgentFramework(AgentFramework):
             num_sessions=num_sessions,
         )
         if self._fail_on_rollout_error and stats["num_failed_sessions"] > 0:
+            # Keep the existing short causes, not task arguments or response bodies.
+            causes = []
+            for reason in stats["failure_reasons"][:4]:
+                first_line = str(reason).splitlines()[0] if str(reason) else "unknown failure"
+                safe = _redact_sensitive_text(first_line)
+                causes.append(safe[:512])
             raise RuntimeError(
-                f"rollout failure at global_steps={global_steps}: {stats['num_failed_sessions']} session(s) failed"
+                f"rollout failure at global_steps={global_steps}: {stats['num_failed_sessions']} session(s) failed; "
+                f"partition={partition_id}; failure_reasons={causes}"
             )
         logger.info(
             "generate_sequences summary: num_input_prompts=%s num_success_sessions=%s "
