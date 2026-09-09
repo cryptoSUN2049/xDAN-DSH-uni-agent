@@ -536,10 +536,10 @@ Review：以工作状态任务完成新原生链，不以旧固定facts诊断反
 
 - [x] 复核旧 r4 工程闭环与零更新证据；已批准短课程设计。
 - [x] S1 WS07 任务、真实读取因果与旧族回归；四组209项CPU通过。
-- [ ] S2 课程身份绑定、CPU/Ruff、commit/push、固定 Linux 部署及 DSH canary。
-- [ ] S3 新课程 GPU 8 步训练与实际消费/梯度审计。
-- [ ] S4 参数、optimizer、checkpoint 审计。
-- [ ] S5 新母 checkpoint 独立 reload/fresh 评估。
-- [ ] S6 证据、手动指南与交接收尾，commit/push。
+- [x] S2 课程身份绑定、CPU/Ruff、commit/push、固定 Linux 部署及 DSH canary。
+- [x] S3 新课程 GPU 8 步训练与实际消费/梯度审计。
+- [x] S4 参数、optimizer、checkpoint 审计。
+- [x] S5 新母 checkpoint 独立 reload/fresh 评估；d4401d3新审计两题通过，原失败保留。
+- [x] S6 证据、手动指南与交接收尾；归档逐项核验、HTML视觉检查、分阶段commit/push。
 
 Review：短课程独立命名；旧课程零更新不改写。合法低分不阻断工程执行，不人为制造 GRPO 奖励方差。

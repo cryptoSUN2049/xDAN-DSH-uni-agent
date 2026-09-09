@@ -2,7 +2,7 @@
 
 当前流程：DSH SDK/runtime → Uni-Agent/Gateway在线采样 → 原奖励 → VERL训练 → checkpoint → 独立reload评估。DSH保持唯一任务执行循环。本阶段不需要Harbor、Docker、Modal或SFT。
 
-**验收状态**：固定部署和本课程8步训练/消费/checkpoint已验；独立四题评估已完整收尾（3题消费通过、1题max-tokens失败保留），本课程有效参数更新仍未通过。下列为可手工执行的分阶段入口，不是已验收的空白主机一键安装承诺。当前状态看[goal](../../tasks/harbor-modal-integration/active-engineering-goal.md)及[handoff](../../tasks/harbor-modal-integration/handoff.md)。
+**验收状态**：旧四族r4完成8步执行与独立四题收尾，但有效参数更新未通过。独立短课程现已验证真实非零梯度、参数变化及两题独立reload/fresh评估，见[短课程操作指南](work-state-short-course-runbook.md)与[最终评估报告](work-state-short-reload-final-result.md)。两课程身份与结论分开。下列为可手工执行的分阶段入口，不是已验收的空白主机一键安装承诺。当前状态看[goal](../../tasks/harbor-modal-integration/active-engineering-goal.md)及[handoff](../../tasks/harbor-modal-integration/handoff.md)。
 
 ## 0. 选择实验与准备机器
 

@@ -5,10 +5,12 @@
 - **位置**：worktree-harbor-modal-integration；主目录main未动。运行源码b47521d，独立审计d4401d3，文档提交以git HEAD为准。
 - **新短课程已闭环**：ws-short-train-r1完成8步，8完整组/64唯一A/B、6独立任务。step2/4非零梯度；504 LoRA张量4→8变化，399base不变；零初始化B保存后非零。后四步零梯度，不称新增学习。
 - **独立评估通过**：901/902各新进程加载step8，原B奖励1，各1组2唯一消费；母11文件摘要均不变。d4401d3修正validation广播分数审计，原901失败报告保留。
-- **尚未完成**：最终证据归档/HTML与交接收尾正在做；四能力、提分对照、结果重复实验、空白环境复建、异步及Harbor仍后续。旧四族r4零更新不追认。
+- **尚未完成**：短课程证据归档/HTML与交接收尾完成；四能力、提分对照、结果重复实验、空白环境复建、异步及Harbor仍后续。旧四族r4零更新不追认。
 - **GPU**：两评估都exit0，最近实查0%/0MiB，无任务。不要重启已完成作业。入口：[短课程指南](../../docs/harbor-modal-integration/work-state-short-course-runbook.md) → [最终reload报告](../../docs/harbor-modal-integration/work-state-short-reload-final-result.md) → active-engineering-goal.md。
 
 当前短课程母checkpoint：`/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8`。运行checkout：`/workspace/rebuild/uni-agent-work-state-short-r1`；只读审计checkout：`/workspace/rebuild/uni-agent-short-audit-d4401d3`。二者不可互换源码身份。
+
+云盘归档：`/workspace/reports/ws-short-r1-engineering-evidence-20260909.tar.gz`，SHA256 `d7764c1422ce5a9f89df862a927059224ca5ede201fd2756a40468ef505d8823`；18,197,593字节，173,735成员逐项回读通过。checkpoint单独保留，归档不含凭据。
 
 ## 2. 本轮交付物
 
@@ -154,7 +156,7 @@
 - [x] 总指南/专题HTML/goal与冷启动记录同步；控制器19项和Linux追加3项通过。
 - [ ] W4：补本课程可归因的非零优势、有限非零梯度和参数/optimizer变化；不能引用别的课程更新抵扣。
 - [x] 短课程独立实现、217项CPU、8项Linux canary及8步真实训练完成；有效更新已审计，旧r4不追改。
-- [ ] 完成短课程两题独立reload的新离线审计、证据归档与HTML更新。
+- [x] 完成短课程两题独立reload的新离线审计、证据归档与HTML更新。
 - [ ] 后续效果对照、四能力、单卡异步与Harbor另阶段推进，不新增工程前置。
 
 ## 6. 分支/部署状态

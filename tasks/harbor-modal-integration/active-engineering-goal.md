@@ -53,7 +53,7 @@
 - [x] S3 新母实验真实 GPU 在线 RL：既定 8 步、每组 n4、无内联评估；核实际消费、奖励分布和有限非零优势/梯度。合法零奖励不停止或人为改分。ws-short-train-r1已8/8 exit0；最终8组64唯一消费、6独立任务，step2/4非零梯度均与原B奖励绑定。
 - [x] S4 更新与保存：新课程 checkpoint/optimizer 与冻结 base 审计，给出实际参数变化；无变化则如实保留并定位，不以运行结束判完成。实测4→8共504个adapter变化、399base不变、全finite；fresh LoRA_B保存后非零与step2/4梯度联合支持新课程有效更新，后四步零梯度不称新学习。
 - [x] S5 新课程独立 reload 与公开开发评估：加载新母 checkpoint，原始失败照实记录，验证新鲜轨迹、消费及母工件不变；不给旧 r4 换课程身份。901/902均exit0、原B1，各1组2唯一A/B；d4401d3离线审计均passed，母11文件after_run不变；旧901审计false保留，见work-state-short-reload-final-result.md。
-- [ ] S6 操作指南、证据归档、goal/handoff 与必要 HTML 视觉检查，commit/push。
+- [x] S6 操作指南、证据归档、goal/handoff 与必要 HTML 视觉检查，分阶段commit/push。证据归档18,197,593字节、173,735源文件逐项回读通过；1440/390视觉检查通过，详work-state-short-r1-archive.md。
 
 任务得分与工程验收分开；公开开发题不用于调提示、选择温度或挑 checkpoint。当前课程只有一个训练结构、一个开发结构，8 次采样不算 8 个新任务。
 

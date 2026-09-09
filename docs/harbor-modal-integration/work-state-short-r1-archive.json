@@ -1,0 +1,31 @@
+{
+  "schema": "dsh.evidence-archive-verification.v1",
+  "archive": "/workspace/reports/ws-short-r1-engineering-evidence-20260909.tar.gz",
+  "sha256": "d7764c1422ce5a9f89df862a927059224ca5ede201fd2756a40468ef505d8823",
+  "archive_bytes": 18197593,
+  "manifest": "/workspace/reports/ws-short-r1-engineering-evidence-20260909.manifest.json",
+  "manifest_sha256": "338c88daeee58b2734e40e8132740f0627acf52a5872e56e9ccced47dcdd9d4f",
+  "data_members": 173735,
+  "uncompressed_source_bytes": 88079882,
+  "readback_all_members_passed": true,
+  "exclusions": [
+    {
+      "path": "/root/runs/ws-short-train-r1-data/training.env",
+      "reason": "Environment/credential filename excluded without reading"
+    },
+    {
+      "path": "/root/runs/ws-short-reload-901-r1-data/training.env",
+      "reason": "Environment/credential filename excluded without reading"
+    },
+    {
+      "path": "/root/runs/ws-short-reload-902-r1-data/training.env",
+      "reason": "Environment/credential filename excluded without reading"
+    }
+  ],
+  "original_runs_modified": false,
+  "checkpoint_files_included": false,
+  "source_checkout_included": false,
+  "execution_source": "b47521df1d6cd6b930ab6ac85ef41c670f2405d2",
+  "audit_source": "d4401d33c47af623d202a8b52be8266da5ec86f2"
+}
+
