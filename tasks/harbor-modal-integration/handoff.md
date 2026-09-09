@@ -2,7 +2,11 @@
 
 ## 1. TL;DR
 
-- **最新GPU验收通过：memory-resident-val-r2**，2026-09-09 10:12:25启动（UTC+8），385.009秒exit0；源码 `/workspace/rebuild/uni-agent-memory-resident-r2` c5dacdc7ff90ad7cb15e826b41b0f6748c2139f0。真实A/B各reward1、独立freeze/新会话；专用消费审计passed=true，1完整val链/2 keys各消费一次，policy0各3/3段完整，unknown/duplicate=0。无训练更新/checkpoint，GPU已释放。报告memory-resident-val-r2-result.md/json。train-r2同源码CPU准备已通过，下一步真实n4；旧train-r1不可启动。
+- **用户最新能力目标已细化**：训练模型适时管理goal/tasks/handoff/memory/index，执行offload、获准compact并可靠恢复长周期工作；不是仅A/B文件问答。完整设计 `docs/harbor-modal-integration/dsh-memory-context-skills-plan.md`（16节、12个开发种子规格、信息矩阵/数据schema/reward/验收），HTML为概览。下一能力批次先WS01/03/05/06；模型自主compact需真实工具与request变化验收，不能从实验ABI推断可用。
+- **最新GPU已退出，无运行作业**：memory-resident-train-r2，主训练2026-09-09 10:28:34→10:34:37 UTC+8，supervisor child196565 exit1/380.009秒，GPU已释放。仅initial val A，finished/fresh/eligible但reward0：同轮预生成view与create，未看到源就写key1/key2；原writer质量门拒绝，B/n4/消费/更新/ckpt均0。空TQ keys是后续错误，报告memory-resident-train-r2-result.md/json。不要循环重跑或放宽旧门追认成功。
+- **独立reload入口CPU完成**：prepare_memory_training新增mode=reload/resume-from/mother-run，绑定母实验证据和完整checkpoint SHA，强制val-only不删除原CK；组合89项/主线程19项回归通过。train-r2无CK，因此尚不能GPU reload。
+
+- **最新GPU验收通过：memory-resident-val-r2**，2026-09-09 10:12:25启动（UTC+8），385.009秒exit0；源码 `/workspace/rebuild/uni-agent-memory-resident-r2` c5dacdc7ff90ad7cb15e826b41b0f6748c2139f0。真实A/B各reward1、独立freeze/新会话；专用消费审计passed=true，1完整val链/2 keys各消费一次，policy0各3/3段完整，unknown/duplicate=0。无训练更新/checkpoint，GPU已释放。报告memory-resident-val-r2-result.md/json。train-r2同源码CPU准备已通过，后续train-r2已失败，见顶部；旧train-r1不可启动。
 
 - **上轮GPU任务已失败并停止**：memory-resident-val-r1，源码4168b628，supervisor exit=-15/540.012秒，owned child185194。NativeMemory构造误拒VERL默认非空reward handles，A/B尚0stage；主线程核PGID后SIGTERM该组，GPU已查无残留。原run-manifest仍running为外部终止留下的真实不一致，不能当活作业。局部修复及生产默认注入回归已完成，316项组合通过，主线程38项复核通过；修复后必须新commit/new prepare/new run，不能启动旧train-r1清单。
 

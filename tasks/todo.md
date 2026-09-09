@@ -470,6 +470,29 @@ Review：训练进程正常结束与全组通过分开；数据量按独立任�
 - [x] 修正默认reward handles注入误判，316项组合/主线程38项回归通过。
 - [x] 提交推送后从GitHub固定c5dacdc新源码，重新prepare/check/launch val-r2。
 - [x] val-r2真正A/B执行、policy0原始版本、原奖励与2 keys实际消费审计passed=true；train-r2 CPU准备完成。
-- [ ] 启动train-r2真实n4，核原奖励/实际消费/有效adv/梯度/checkpoint，随后独立reload。
+- [x] 启动train-r2并保留失败：initial val A行为错误，未到n4，无checkpoint；不能标训练验收通过。
+- [x] 独立reload入口完成CPU实现与回归；待后续合格母checkpoint再真实验证。
 
 Review：旧train-r1准备清单已作废，不修改旧JSON或追认r1成功。
+
+## 2026-09-09 用户明确记忆/context能力目标
+
+- [x] 明确A/B文件传递是工程诊断，不等于完整MemAgent复用或工作状态管理能力。
+- [x] 对照DSH固定版本与ContextPilot设计核实接口：文件工具可用；人工compact/自动compact/实验ABI与模型工具分开。
+- [x] 形成完整16节训练设计MD与HTML概览：12开发种子规格、信息矩阵、奖励、数据/验收路线。
+- [ ] 当前train-r2及独立reload单独收尾；不把其单题成绩宣称为新版能力覆盖。
+
+Review：用户核心是适时管理工作状态，奖励以恢复后的任务完成/事实保真为主，压缩率和写文件次数不作为成功指标。
+
+Review：下一步WS01/03/05/06任务实现与新版合法低质量memory合同；当前GPU无任务。训练框架二级空keys错误仍未修复，不与A真实行为根因混淆。
+
+## 工作状态原生RL工程主线（用户已批准）
+
+- [x] 完整训练设计MD与HTML，任务/运行时/消费三线独立review。
+- [ ] 新版多文件任务与权限、冻结bundle、合法低质量A/B verifier与oracle反例。
+- [ ] 复用NativeMemory编排和原TQ/VERL，版本化stage/credit/消费合同。
+- [ ] strict sync validation及时传播原失败，保留train补采。
+- [ ] CPU/真实DSH工具canary后固定新commit，GPU工作状态基线与n4有效训练。
+- [ ] 本任务checkpoint/optimizer审计、独立reload/fresh评估、复跑手册和证据归档。
+
+Review：以工作状态任务完成新原生链，不以旧固定facts诊断反复重跑为前置；pin未变，性能和compact后置。

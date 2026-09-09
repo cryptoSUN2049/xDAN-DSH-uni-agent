@@ -8,6 +8,10 @@
 
 复用固定DSH 0.1.3a2 + Uni-Agent + 配对VERL，优先跑通DSH调度、跨会话记忆、上下文管理、受控RSI四类真实任务，再以固定模型/任务/配置/verifier独立重跑验证结果复现。环境从零安装作为后续交付项，不阻塞能力主线。工程、能力、泛化与性能分别验收，不以checkpoint变化代替能力提升。
 
+## N3最新语义（用户2026-09-09澄清）
+
+记忆/context目标是适时保存goal/tasks/handoff/memory、维护索引、offload、获准compact及中断后继续工作；恢复结果、事实保真与总成本分别评估。完整[训练任务与设计](../../docs/harbor-modal-integration/dsh-memory-context-skills-plan.md)细化为C1文件工作状态→C2真实上下文操作→C3联合长任务，含WS01—WS12开发规格。当前规格不是已运行数据；不以固定A/B诊断或共有训练底座冒称完整MemAgent/ContextPilot集成。
+
 ## 节点
 
 - [x] M1原生最小RL：真实更新、消费审计、独立reload与公开留出评估通过。
@@ -60,6 +64,6 @@ M1 v2-r4及reload报告为当前通过证据，公开两题baseline已满分不�
 - constraints-r3与updates-r1：两族真实A写入→冻结→新B读取均reward1，身份/回执/事实及云盘归档通过；training=false，尚非memory RL或能力提升。
 - context-v2-curriculum-r1：12有效batch、48消费、11唯一题，6步非零梯度；step6→12全部504 LoRA变化、399 base冻结，optimizer6→12和1008 moments审计通过。严格原audit=false保留，D3被拒且未消费、D2补采。独立step12 reload已470.012秒exit0、4/4 fresh评估消费通过，无再训练；dev strict0/4，工程结果不宣称能力提升。
 - RSI配对worker准备器/监督入口已7c37cb2推送，仍未真实学生H0/H1比较或晋升。memory实际策略版本完整性2f1995a仅CPU通过，未部署当前GPU。
-- memory resident verifier、Gateway单stage、可信A/B/整链TQ及消费审计已实现并CPU回归通过。r1真实运行因误拒VERL默认reward handles构造失败，零A/B、零消费，已保留并停止；修复c5dacdc已push，r2新run已385.009秒exit0，真实A/B reward1、1完整val链/2键实际消费且版本完整，专用审计passed=true；无更新。train-r2仅CPU准备。旧eval回执不能改split冒充train。继续保留DSH唯一Agent Loop与固定resident backend。
+- memory resident verifier、Gateway单stage、可信A/B/整链TQ及消费审计已实现并CPU回归通过。r1真实运行因误拒VERL默认reward handles构造失败，零A/B、零消费，已保留并停止；修复c5dacdc已push，r2新run已385.009秒exit0，真实A/B reward1、1完整val链/2键实际消费且版本完整，专用审计passed=true；无更新。train-r2已在initial val因A写错事实被拒，exit1，尚无B/n4/消费/更新/CK，GPU释放；报告memory-resident-train-r2-result.md。旧eval回执不能改split冒充train。继续保留DSH唯一Agent Loop与固定resident backend。
 
 当前即时进程与后续命令以handoff.md为准；上述新增证据不等于四能力训练和封存泛化验收完成。
