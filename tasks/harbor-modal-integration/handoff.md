@@ -2,6 +2,9 @@
 
 ## 1. TL;DR
 
+- **12:41:38 UTC+8检查点**：work-state-train-r2真实GPU45%/38928MiB；初始4dev已返回全0，step1/2已生成并被训练器消费（rollouts/1、2），每组n4 terminal B全0、advantages全0、grad_norm=0。因此没有本课程有效学习验收；继续查工具parser/任务理解与实际消费边界。
+- **协议审计纠正**：固定VERL合并length/stop为completed，DSH completed不足以证明自然结束。r1 WS01 A原NPZ到16384且非EOS，撤回“不是token耗尽”。新增只读generation-boundary audit（19项CPU回归）核已消费原token各生成段EOS，不改原回执，不修改运行中的12902fb源码。
+
 - **当前GPU作业：work-state-train-r2**，2026-09-09 12:26:17 UTC+8 launch PID221508；源码`/workspace/rebuild/uni-agent-work-state-r2`固定`12902fb8849d9fdfa118686207669bbedfcfec37`。任务protocol2只澄清A交接角色/停止条件/相对索引，80CPU回归通过；复用旧venv，初始严格val→最多8步RL，日志`/root/runs/work-state-train-r2/supervision/train.log`。尚无本课程更新或checkpoint验收。
 - **work-state-val-r1已失败结束**：主运行12:05:05→12:23:31 UTC+8，exit1/1125.024秒；WS01/03不准入，WS06未完成；WS05真实合法A0→B0仅写TQ，独立audit1group/0消费，无更新/CK。原receipt不改。详见`work-state-val-r1-result.md/json`；旧work-state-train-r1-data未启动，不得沿用。下面“val-r1正在运行”属此前快照。
 
