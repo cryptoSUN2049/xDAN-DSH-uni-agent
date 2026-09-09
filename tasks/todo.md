@@ -8,7 +8,7 @@
 
 - [x] 核对既有goal状态、设计、handoff、实际代码与证据边界。
 - [x] 更新goal：双目标、W0—W6退出条件、长期四能力与当前工程工作包分开。
-- [ ] W1 任务/冻结/权限/verifier/框架组合回归与真实DSH canary。
+- [x] W1 任务/冻结/权限/verifier/框架回归与真实DSH canary：8种结构/106次工具请求通过，见work-state-runtime-canary-r1-result.md。
 - [ ] W2 四族数据清单与真实学生基线。
 - [ ] W3 同策略完整组的真实在线RL消费审计。
 - [ ] W4 本课程有效梯度、参数/optimizer与checkpoint审计。

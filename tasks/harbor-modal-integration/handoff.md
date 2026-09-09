@@ -2,7 +2,11 @@
 
 ## 1. TL;DR
 
-- **当前执行goal已按用户双目标更新**：有价值的工作状态任务 + 用同一批任务验收原生在线RL，按`active-engineering-goal.md`的W0—W6推进。W0设计完成；W1组合/真实canary、W2数据基线、W3真实消费、W4有效更新/CK、W5独立reload、W6复跑交付仍未完成。提分另行对照，Harbor/异步/从零安装后置。
+- **最新执行状态（2026-09-09 12:04:27 UTC+8）**：已启动GPU学生`work-state-val-r1`监督PID214082，独立源码`/workspace/rebuild/uni-agent-work-state-r1`固定`801083579318ed5268cc92caf45c3ce04ef6d099`；复用旧venv/模型，4公开dev、val-only。启动不等于模型加载；须继续查`/root/runs/work-state-val-r1/supervision/train.log`与最终消费audit，不按PID报通过。母训练尚未启动。
+- **W1完成**：core6085a13、recipe/audit8010835均已push；229Python+6Node核心回归、31recipe/audit组合通过。Linux真实DSH canary8结构/106请求通过（无模型），报告`work-state-runtime-canary-r1-result.md`；手动全流程`work-state-rl-runbook.md`。W2学生基线进行中，W3—W6未完成。下面旧“在制/未提交/GPU释放”描述为此前检查点。
+
+
+- **当前执行goal已按用户双目标更新**：有价值的工作状态任务 + 用同一批任务验收原生在线RL，按`active-engineering-goal.md`的W0—W6推进。W0设计和W1合同/真实canary完成；W2数据基线、W3真实消费、W4有效更新/CK、W5独立reload、W6复跑交付仍未完成。提分另行对照，Harbor/异步/从零安装后置。
 - 本次goal文档交付：`tasks/harbor-modal-integration/active-engineering-goal.md`（92行，双目标与退出条件）、本`handoff.md`（277行，当前状态与冷启动）、`tasks/todo.md`（513行，当前可勾选计划）、`tasks/lessons.md`（198行，双目标纠偏）。文档链接/节点状态、Ruff check/format、diff检查通过；本次未启动GPU。提交身份用本次docs(goal)提交核验，未提交实现保留在工作区。
 - **本地在制实现，不是GPU结果**：work_state任务/评分35项、verifier19项、stage14项新测试；bundle/profile及Node权限测试、框架A0+B0→TQ组合回归已由独立代理通过。新bundle消费审计、recipe和真实DSH/GPU验收仍待补齐。各测试组重叠，不累加为总通过数；当前代码未随本次goal文档检查点提交或部署。
 - **用户最新能力目标已细化**：训练模型适时管理goal/tasks/handoff/memory/index，执行offload、获准compact并可靠恢复长周期工作；不是仅A/B文件问答。完整设计 `docs/harbor-modal-integration/dsh-memory-context-skills-plan.md`（17节、12个开发种子规格、信息矩阵/数据schema/reward/验收），HTML为概览。下一能力批次先WS01/03/05/06；模型自主compact需真实工具与request变化验收，不能从实验ABI推断可用。
