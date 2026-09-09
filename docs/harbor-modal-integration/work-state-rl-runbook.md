@@ -106,3 +106,20 @@ reload绑定完整checkpoint文件SHA及母运行清单，显式加载model/opti
 若失败：保留原目录/日志/回执，先查第一异常，再以新代码/新清单/新run复验。不要让PRINT_COMMAND占正式目录，不设置ALLOW_REUSE，不全局ray stop/pkill，不修改旧评分。不在`/workspace`放需要0700的私有运行目录；脱敏证据归档与checkpoint保留在云盘。
 
 验收清单：[当前goal W0—W6](../../tasks/harbor-modal-integration/active-engineering-goal.md)。当前运行进度另见实验报告和handoff，本指南本身不证明GPU已通过。
+
+
+### 显式选择独立评估子集
+
+仅 work-state 的 `val/reload` 可追加可重复参数，例如在上述 prepare 命令末尾加：
+
+```bash
+ --evaluation-task-id work-state-ws01-v1-s303 \
+ --evaluation-task-id work-state-ws03-v1-s303 \
+ --evaluation-task-id work-state-ws05-v1-s303
+```
+
+省略参数仍评估完整四题。单题诊断只传一个 ID；重复、空列表、未知或训练 ID 均拒绝，`train` 不允许选择。完整 `work-state-tasks.json` 仍包含原始12题；只缩减 validation.parquet，按声明顺序保留 UID 和 metadata。`eval-selection.json` 记录请求/解析后的 ID、模式、run 身份和完整任务清单摘要，prepared manifest 再绑定该文件摘要。counts、validation coverage 和 VAL_MAX_SAMPLES 表示实际子集；check 核对这些字段及实际 parquet 顺序/身份，防止更新文件哈希后掩盖内容漂移。
+
+补验可先用新的独立 reload 同批执行 WS01/WS03/WS05，保留原 WS06 失败；若子集仍因某题失败退出，可另建单题诊断。不得把选择后三题的结果报告成完整四题通过或总体能力得分。固定 trainer 在整个评估完成后才写最终消费 dump，先前任务曾提交 TQ 不代表已有独立消费证据。失败记录与新子集报告必须共同呈现。
+
+新 selector recipe 可以来自不同于母训练的本仓 commit；新清单绑定新 recipe SHA，checkpoint_origin 保留母 SHA，并继续核母 run/plan 一致、完整 checkpoint SHA、相同 runtime/模型声明及有效 VERL 复合身份。不得改母清单伪造相同 SHA，也不得借选择器放宽任务准入或改变奖励。

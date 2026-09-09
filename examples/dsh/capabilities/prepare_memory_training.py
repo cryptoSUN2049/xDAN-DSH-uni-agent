@@ -137,6 +137,51 @@ def _work_state_dataset():
     )
 
 
+def _evaluation_ids(dataset, requested, mode):
+    available = [key for key, value in dataset["tasks"].items() if value["split"] == "validation"] if dataset else []
+    if requested is None:
+        return available
+    if (
+        mode not in ("val", "reload")
+        or dataset is None
+        or not isinstance(requested, list)
+        or not requested
+        or any(not isinstance(key, str) or key not in available for key in requested)
+        or len(requested) != len(set(requested))
+    ):
+        raise ValueError("Invalid evaluation task selection; requires unique validation IDs in work-state val/reload")
+    return list(requested)
+
+
+def _task_rows(run_id, family, split, identities, work_state):
+    rows = []
+    for identity in identities:
+        metadata = (
+            dict(work_state_task_id=identity) if work_state else dict(family=family, split=split, diagnostic_only=True)
+        )
+        rows.append(
+            dict(
+                data_source="dsh/work-state/v1" if work_state else "dsh/memory-fixed-diagnostic/" + family,
+                uid=run_id + "-" + identity,
+                agent_name="task",
+                prompt=[dict(role="user", content="Execute the trusted memory chain.")],
+                extra_info=dict(tools_kwargs=dict(task=dict(name="dsh_architecture", metadata=metadata))),
+            )
+        )
+    return rows
+
+
+def _selection_body(run_id, mode, requested, resolved, task_hash):
+    return dict(
+        schema="dsh.work-state-evaluation-selection.v1",
+        run_id=run_id,
+        mode=mode,
+        task_manifest_sha256=task_hash,
+        requested_task_ids=requested,
+        resolved_task_ids=resolved,
+    )
+
+
 def prepare(
     *,
     output_dir,
@@ -150,9 +195,16 @@ def prepare(
     mode="val",
     resume_from=None,
     mother_run=None,
+    evaluation_task_ids=None,
 ):
     if mode not in ("val", "train", "reload") or family not in ("constraints", "updates", "work-state-v1"):
         raise ValueError("Only val/train/reload and fixed diagnostic families are supported")
+    work_state = family == "work-state-v1"
+    dataset, coverage = _work_state_dataset() if work_state else (None, None)
+    evaluation_ids = _evaluation_ids(dataset, evaluation_task_ids, mode)
+    if work_state:
+        coverage["structures"]["validation"] = len(evaluation_ids)
+        coverage["distinct_visible_inputs"]["validation"] = len(evaluation_ids)
     if (mode == "reload" and (not resume_from or not mother_run)) or (
         mode != "reload" and (resume_from is not None or mother_run is not None)
     ):
@@ -202,10 +254,21 @@ def prepare(
     output.mkdir(parents=True, mode=0o700)
     if origin:
         (output / "checkpoint-origin.json").write_text(json.dumps(origin, indent=2) + "\n")
-    work_state = family == "work-state-v1"
-    dataset, coverage = _work_state_dataset() if work_state else (None, None)
     if dataset:
         (output / "work-state-tasks.json").write_text(json.dumps(dataset, sort_keys=True, indent=2) + "\n")
+    selection_ref = None
+    if work_state and mode in ("val", "reload"):
+        selection_path = output / "eval-selection.json"
+        selection_path.write_text(
+            json.dumps(
+                _selection_body(
+                    run_id, mode, evaluation_task_ids, evaluation_ids, digest(output / "work-state-tasks.json")
+                ),
+                indent=2,
+            )
+            + "\n"
+        )
+        selection_ref = dict(path=str(selection_path), sha256=digest(selection_path))
     counts = {}
     # Only trusted task IDs reach actors; truth and task generation remain controller-side.
     for split in ("train", "validation"):
@@ -214,20 +277,8 @@ def prepare(
             if dataset
             else {split: {}}
         )
-        rows = []
-        for identity in records:
-            metadata = (
-                dict(work_state_task_id=identity) if dataset else dict(family=family, split=split, diagnostic_only=True)
-            )
-            rows.append(
-                dict(
-                    data_source="dsh/work-state/v1" if work_state else "dsh/memory-fixed-diagnostic/" + family,
-                    uid=run_id + "-" + identity,
-                    agent_name="task",
-                    prompt=[dict(role="user", content="Execute the trusted memory chain.")],
-                    extra_info=dict(tools_kwargs=dict(task=dict(name="dsh_architecture", metadata=metadata))),
-                )
-            )
+        identities = evaluation_ids if work_state and split == "validation" else list(records)
+        rows = _task_rows(run_id, family, split, identities, work_state)
         counts[split] = len(rows)
         pq.write_table(pa.Table.from_pylist(rows), output / (split + ".parquet"))
     # Ops requires a task file; actual execution always substitutes a private StageSpec file.
@@ -309,7 +360,7 @@ def prepare(
         )
         env.update(
             TRAIN_MAX_SAMPLES="8",
-            VAL_MAX_SAMPLES="4",
+            VAL_MAX_SAMPLES=str(counts["validation"]),
             TOTAL_TRAINING_STEPS="8" if mode == "train" else "1",
             SAVE_FREQ="4",
             TEST_FREQ="0" if mode == "train" else "1",
@@ -397,6 +448,8 @@ def prepare(
         dataset_kind="public-structural-development" if work_state else "fixed-diagnostic-not-heldout",
         counts=counts,
         coverage=coverage,
+        evaluation_selection=selection_ref,
+        evaluation_task_ids=evaluation_task_ids,
         training=False,
         learning_signal_verified=False,
         repository_root=str(ROOT),
@@ -454,6 +507,40 @@ def check(manifest_path):
             or json.loads(task_path.read_text()) != _work_state_dataset()[0]
         ):
             raise ValueError("Work-state task manifest identity changed")
+        dataset = _work_state_dataset()[0]
+        run_id = env["EXP_NAME"]
+        requested = None
+        if manifest["mode"] in ("val", "reload"):
+            selection_path = Path(env["DATA_ROOT"]) / "eval-selection.json"
+            ref = dict(path=str(selection_path), sha256=digest(selection_path))
+            if manifest.get("evaluation_selection") != ref:
+                raise ValueError("Work-state evaluation selection digest/location changed")
+            selection = json.loads(selection_path.read_text())
+            requested = manifest["evaluation_task_ids"]
+            resolved = _evaluation_ids(dataset, requested, manifest["mode"])
+            if selection != _selection_body(run_id, manifest["mode"], requested, resolved, digest(task_path)):
+                raise ValueError("Work-state evaluation selection changed")
+        elif manifest.get("evaluation_selection") is not None:
+            raise ValueError("Training cannot select evaluation tasks")
+        selected = _evaluation_ids(dataset, requested, manifest["mode"])
+        expected_coverage = _work_state_dataset()[1]
+        expected_coverage["structures"]["validation"] = len(selected)
+        expected_coverage["distinct_visible_inputs"]["validation"] = len(selected)
+        if manifest["coverage"] != expected_coverage:
+            raise ValueError("Work-state evaluation coverage changed")
+        expected_counts = {}
+        for split in ("train", "validation"):
+            ids = (
+                selected
+                if split == "validation"
+                else [key for key, value in dataset["tasks"].items() if value["split"] == split]
+            )
+            expected_counts[split] = len(ids)
+            actual = pq.read_table(Path(env["DATA_ROOT"]) / (split + ".parquet")).to_pylist()
+            if actual != _task_rows(run_id, "work-state-v1", split, ids, True):
+                raise ValueError("Work-state parquet rows/order/identity changed")
+        if manifest["counts"] != expected_counts or env["VAL_MAX_SAMPLES"] != str(len(selected)):
+            raise ValueError("Work-state evaluation counts/limit changed")
     if work_state and manifest["mode"] == "train":
         if (
             env["TEST_FREQ"] != "0"
@@ -560,6 +647,7 @@ def main():
     prep.add_argument("--mode", choices=("val", "train", "reload"), default="val")
     prep.add_argument("--resume-from", type=Path)
     prep.add_argument("--mother-run", type=Path)
+    prep.add_argument("--evaluation-task-id", dest="evaluation_task_ids", action="append")
     prep.add_argument("--family", choices=("constraints", "updates", "work-state-v1"), default="constraints")
     for name in ("check", "launch"):
         sub.add_parser(name).add_argument("manifest_path", type=Path)

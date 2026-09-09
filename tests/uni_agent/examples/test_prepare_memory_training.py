@@ -351,3 +351,107 @@ def test_work_state_train_rejects_inline_evaluation(inputs, override):
     path.write_text(json.dumps(manifest))
     with pytest.raises(ValueError, match="independent evaluation"):
         recipe.check(path)
+
+
+@pytest.mark.parametrize("mode", ["val", "reload"])
+@pytest.mark.parametrize(
+    "selection", [None, ["work-state-ws05-v1-s303"], ["work-state-ws05-v1-s303", "work-state-ws01-v1-s303"]]
+)
+def test_explicit_evaluation_selection_keeps_canonical_tasks(inputs, tmp_path, mode, selection):
+    extra = mother_checkpoint(inputs, tmp_path, "work-state-v1") if mode == "reload" else {}
+    result = recipe.prepare(**inputs, family="work-state-v1", mode=mode, evaluation_task_ids=selection, **extra)
+    expected = selection or [
+        "work-state-ws01-v1-s303",
+        "work-state-ws03-v1-s303",
+        "work-state-ws05-v1-s303",
+        "work-state-ws06-v1-s303",
+    ]
+    data = inputs["output_dir"]
+    assert json.loads((data / "work-state-tasks.json").read_text()) == recipe._work_state_dataset()[0]
+    rows = pq.read_table(data / "validation.parquet").to_pylist()
+    assert [r["extra_info"]["tools_kwargs"]["task"]["metadata"]["work_state_task_id"] for r in rows] == expected
+    assert [r["uid"] for r in rows] == [inputs["run_id"] + "-" + task for task in expected]
+    assert result["counts"] == {"train": 8, "validation": len(expected)}
+    assert result["coverage"]["structures"]["validation"] == len(expected)
+    assert result["coverage"]["distinct_visible_inputs"]["validation"] == len(expected)
+    assert result["environment"]["VAL_MAX_SAMPLES"] == str(len(expected))
+    source = json.loads((data / "eval-selection.json").read_text())
+    assert source["requested_task_ids"] == selection and source["resolved_task_ids"] == expected
+    assert source["task_manifest_sha256"] == recipe.digest(data / "work-state-tasks.json")
+    assert result["evaluation_selection"]["sha256"] == recipe.digest(data / "eval-selection.json")
+    assert recipe.check(data / "manifest.json")["evaluation_selection"] == result["evaluation_selection"]
+
+
+@pytest.mark.parametrize(
+    "mode,family,ids",
+    [
+        ("train", "work-state-v1", ["work-state-ws01-v1-s303"]),
+        ("val", "constraints", ["work-state-ws01-v1-s303"]),
+        ("val", "work-state-v1", []),
+        ("val", "work-state-v1", ["unknown"]),
+        ("val", "work-state-v1", ["work-state-ws01-v0-s101"]),
+        ("val", "work-state-v1", ["work-state-ws01-v1-s303"] * 2),
+        ("val", "work-state-v1", "work-state-ws01-v1-s303"),
+    ],
+)
+def test_invalid_evaluation_selections_rejected_before_output(inputs, mode, family, ids):
+    with pytest.raises(ValueError, match="evaluation"):
+        recipe.prepare(**inputs, mode=mode, family=family, evaluation_task_ids=ids)
+    assert not inputs["output_dir"].exists()
+
+
+@pytest.mark.parametrize(
+    "mutation", ["selection", "parquet-order", "parquet-uid", "parquet-metadata", "counts", "val-limit"]
+)
+def test_rehashed_evaluation_tampering_still_rejected(inputs, mutation):
+    import pyarrow as pa
+
+    result = recipe.prepare(
+        **inputs,
+        family="work-state-v1",
+        mode="val",
+        evaluation_task_ids=["work-state-ws05-v1-s303", "work-state-ws01-v1-s303"],
+    )
+    data = inputs["output_dir"]
+    path = data / "manifest.json"
+    if mutation == "selection":
+        selected = json.loads((data / "eval-selection.json").read_text())
+        selected["resolved_task_ids"].reverse()
+        (data / "eval-selection.json").write_text(json.dumps(selected))
+        result["evaluation_selection"]["sha256"] = recipe.digest(data / "eval-selection.json")
+    elif mutation.startswith("parquet"):
+        rows = pq.read_table(data / "validation.parquet").to_pylist()
+        if mutation == "parquet-order":
+            rows.reverse()
+        elif mutation == "parquet-uid":
+            rows[0]["uid"] = "another-run-task"
+        else:
+            rows[0]["extra_info"]["tools_kwargs"]["task"]["metadata"]["work_state_task_id"] = "work-state-ws06-v1-s303"
+        pq.write_table(pa.Table.from_pylist(rows), data / "validation.parquet")
+    elif mutation == "counts":
+        result["counts"]["validation"] = 4
+    else:
+        result["environment"]["VAL_MAX_SAMPLES"] = "4"
+    result["files"] = {p: recipe.digest(Path(p)) for p in result["files"]}
+    path.write_text(json.dumps(result))
+    with pytest.raises(ValueError, match="evaluation|parquet"):
+        recipe.check(path)
+
+
+def test_selected_reload_allows_new_recipe_commit(inputs, tmp_path):
+    extra = mother_checkpoint(inputs, tmp_path, "work-state-v1")
+    mother = extra["mother_run"]
+    plan = json.loads((mother / "memory-launch-plan.json").read_text())
+    plan["integration_head"] = "a" * 40
+    assert recipe.revision(recipe.ROOT) != plan["integration_head"]
+    for name in ("memory-launch-plan.json", "dataset-manifest.json"):
+        (mother / name).write_text(json.dumps(plan))
+    run = json.loads((mother / "run-manifest.json").read_text())
+    run["uni_agent_sha"] = plan["integration_head"]
+    run["sha256"]["dataset_manifest"] = recipe.digest(mother / "dataset-manifest.json")
+    (mother / "run-manifest.json").write_text(json.dumps(run))
+    result = recipe.prepare(
+        **inputs, family="work-state-v1", mode="reload", evaluation_task_ids=["work-state-ws01-v1-s303"], **extra
+    )
+    assert result["integration_head"] == recipe.revision(recipe.ROOT)
+    assert recipe.check(inputs["output_dir"] / "manifest.json")["checkpoint_origin"] == result["checkpoint_origin"]
