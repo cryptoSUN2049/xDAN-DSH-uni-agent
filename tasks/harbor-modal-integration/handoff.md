@@ -2,6 +2,8 @@
 
 ## 1. TL;DR
 
+- **独立reload首题通过**：10:17:18UTC WS01 child270480 exit0/490.011秒，1组2unique A/B实际消费，原audit passed=true；真实加载母step8的model/optimizer/RNG/scheduler，post-run母hash与GPU清理核验通过。WS03继续运行，不能称四题已完成。首题证据work-state-independent-evaluation-r1-first-task.md/json。
+
 - **当前四题独立补验运行中**：source9dea127已push，部署/workspace/rebuild/uni-agent-work-state-singletons-r1，原venv。driver270247，/root/runs/ws-r4-isolated-eval-r1/summary.json；Linux追加3项after_run通过。10:12:39UTC首题WS01权重加载，尚无消费结论。完整命令见work-state-rl-runbook.md，启动记录work-state-independent-evaluation-r1-execution.md。不要重复启动或更新运行中checkout。
 
 - **最新selected-r1已失败结束**：source726d1c0，child264469 exit1/685.015秒。WS05 A 78工具调用（72view）后max-tokens，finished=false；WS01/03已提交但整批dump缺失，2groups/0消费，原audit=false。加载model/optimizer/RNG/scheduler及母11文件未变已通过；Linux74项回归通过。见selected-r1-result.md/json。正实施固定四题各自独立reload/审计，保留失败并继续，禁止伪造消费。
