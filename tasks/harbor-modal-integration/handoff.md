@@ -12,6 +12,18 @@
 
 云盘归档：`/workspace/reports/ws-short-r1-engineering-evidence-20260909.tar.gz`，SHA256 `d7764c1422ce5a9f89df862a927059224ca5ede201fd2756a40468ef505d8823`；18,197,593字节，173,735成员逐项回读通过。checkpoint单独保留，归档不含凭据。
 
+## 当前优先：短课程独立重复实验 r2
+
+用户明确恢复训练主线；聊天面板需求为误发，不实施。RSI 比较与课程扩展暂后置。
+
+- 新实验 `ws-short-train-r2`，执行源码 `f419bbb3d72fd49abc0b37cea94fde699d1c03ac`，远程 checkout `/workspace/rebuild/uni-agent-rsi-compare-f419bbb`；固定 VERL overlay 与 DSH 0.1.3a2、现有 venv。
+- prepare/check 已通过；后台 launch PID `328842`，日志 `/root/runs/ws-short-train-r2-launch.log`。这只是已发起，尚未宣称训练完成。
+- 数据8训练/2公开开发、8步、n4、同步模式；checkpoint `/workspace/uni-agent-g1/checkpoint/ws-short-train-r2`。首次实验保留。
+- [ ] 核实 GPU 模型加载与实际任务消费。
+- [ ] 训练终态后核消费组、独立任务数、梯度、参数与 optimizer 变化。
+- [ ] 使用 r2 step8 串行独立 reload 901/902，核母文件不变与实际评分。
+- [ ] 对照 r1 汇总，归档、commit/push；奖励不必逐项一致，无有效更新不得算复现通过。
+
 ## 当前接续：RSI 基线与跨课程初始化审计
 
 短课程收尾之后，继续四能力目标。RSI worker/proposer 原入口仍要求 VERL 完全 clean，与已批准的 finish-reason overlay 冲突；本轮复用严格 overlay 校验并绑定有效来源，不退回未修补版本。准备器/worker/proposal 共用同一来源合同；旧 RSI manifest 必须重建。
