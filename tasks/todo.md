@@ -2,11 +2,26 @@
 
 最新权威目标：[原生四能力 Goal](harbor-modal-integration/active-engineering-goal.md)。Harbor 后置，以下旧路线仅作历史记录。
 
-逐项验收入口：[三阶段任务路线图](../docs/harbor-modal-integration/task-roadmap.html)。下一批P1.1版本迁移、P1.2环境复建、P1.3Harbor正反例。
+## 2026-09-09 当前执行计划：有价值的工作状态任务 × 原生 RL 验收
+
+唯一当前顺序以权威goal的W0—W6为准；下面旧S/P/N历史段的“当前/下一步”不覆盖本节。
+
+- [x] 核对既有goal状态、设计、handoff、实际代码与证据边界。
+- [x] 更新goal：双目标、W0—W6退出条件、长期四能力与当前工程工作包分开。
+- [ ] W1 任务/冻结/权限/verifier/框架组合回归与真实DSH canary。
+- [ ] W2 四族数据清单与真实学生基线。
+- [ ] W3 同策略完整组的真实在线RL消费审计。
+- [ ] W4 本课程有效梯度、参数/optimizer与checkpoint审计。
+- [ ] W5 本课程checkpoint独立reload和新鲜任务结果复跑。
+- [ ] W6 手动脚本/指南/证据/交接与逐节点commit/push。
+
+本次goal文档Review：沿用已批准设计；能力提分不是工程退出前置，CPU通过也不计GPU验收。平台仍usageLimited，未虚报激活或完成；当前存在未提交实现，文档检查点只提交本次文档。
+
+历史逐项验收入口：[三阶段任务路线图](../docs/harbor-modal-integration/task-roadmap.html)。其版本迁移、环境复建、Harbor顺序不再是当前执行优先级。
 
 用户确认优先级：**第一阶段工程贯通 → 第二阶段任务效果 → 第三阶段性能与规模**。S0—S11为交付物编号，不是严格执行顺序。
 
-当前权威执行顺序：[工程路线图 S0—S11](../docs/harbor-modal-integration/engineering-roadmap.html)。下方旧计划保留阶段来源，冲突时以此路线的依赖与证据范围为准。
+历史工程路线：[工程路线图 S0—S11](../docs/harbor-modal-integration/engineering-roadmap.html)。下方旧计划保留阶段来源，冲突时以当前active-engineering-goal.md为准。
 
 仓库职责以 [用户确认的项目记忆](lessons.md) 为准：本仓负责训练集成，DSH-Exp 负责 DSH 本体与历史研究。
 

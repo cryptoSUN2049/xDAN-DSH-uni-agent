@@ -2,7 +2,10 @@
 
 ## 1. TL;DR
 
-- **用户最新能力目标已细化**：训练模型适时管理goal/tasks/handoff/memory/index，执行offload、获准compact并可靠恢复长周期工作；不是仅A/B文件问答。完整设计 `docs/harbor-modal-integration/dsh-memory-context-skills-plan.md`（16节、12个开发种子规格、信息矩阵/数据schema/reward/验收），HTML为概览。下一能力批次先WS01/03/05/06；模型自主compact需真实工具与request变化验收，不能从实验ABI推断可用。
+- **当前执行goal已按用户双目标更新**：有价值的工作状态任务 + 用同一批任务验收原生在线RL，按`active-engineering-goal.md`的W0—W6推进。W0设计完成；W1组合/真实canary、W2数据基线、W3真实消费、W4有效更新/CK、W5独立reload、W6复跑交付仍未完成。提分另行对照，Harbor/异步/从零安装后置。
+- 本次goal文档交付：`tasks/harbor-modal-integration/active-engineering-goal.md`（92行，双目标与退出条件）、本`handoff.md`（277行，当前状态与冷启动）、`tasks/todo.md`（513行，当前可勾选计划）、`tasks/lessons.md`（198行，双目标纠偏）。文档链接/节点状态、Ruff check/format、diff检查通过；本次未启动GPU。提交身份用本次docs(goal)提交核验，未提交实现保留在工作区。
+- **本地在制实现，不是GPU结果**：work_state任务/评分35项、verifier19项、stage14项新测试；bundle/profile及Node权限测试、框架A0+B0→TQ组合回归已由独立代理通过。新bundle消费审计、recipe和真实DSH/GPU验收仍待补齐。各测试组重叠，不累加为总通过数；当前代码未随本次goal文档检查点提交或部署。
+- **用户最新能力目标已细化**：训练模型适时管理goal/tasks/handoff/memory/index，执行offload、获准compact并可靠恢复长周期工作；不是仅A/B文件问答。完整设计 `docs/harbor-modal-integration/dsh-memory-context-skills-plan.md`（17节、12个开发种子规格、信息矩阵/数据schema/reward/验收），HTML为概览。下一能力批次先WS01/03/05/06；模型自主compact需真实工具与request变化验收，不能从实验ABI推断可用。
 - **最新GPU已退出，无运行作业**：memory-resident-train-r2，主训练2026-09-09 10:28:34→10:34:37 UTC+8，supervisor child196565 exit1/380.009秒，GPU已释放。仅initial val A，finished/fresh/eligible但reward0：同轮预生成view与create，未看到源就写key1/key2；原writer质量门拒绝，B/n4/消费/更新/ckpt均0。空TQ keys是后续错误，报告memory-resident-train-r2-result.md/json。不要循环重跑或放宽旧门追认成功。
 - **独立reload入口CPU完成**：prepare_memory_training新增mode=reload/resume-from/mother-run，绑定母实验证据和完整checkpoint SHA，强制val-only不删除原CK；组合89项/主线程19项回归通过。train-r2无CK，因此尚不能GPU reload。
 
@@ -169,6 +172,8 @@
 
 ## 5. 下一里程碑清单
 
+**当前只执行active-engineering-goal.md的W1—W6。以下旧M1/Harbor checklist作为历史保留，不可据此启动旧run。**
+
 - [ ] 读v2准入设计和本检查点测试记录；远端新checkout/HEAD固定后，不沿用旧run目录。
 - [ ] 从`/root/runs/dsh-redact-execute-r1-data`发布v2新目录，源manifest SHA`3e75ccb8973a5e2703a97a12ee88638ebb6e11b567dde97d836c14dc3e5c4fe0`。
 - [ ] 使用生成task-config.yaml及新4/2parquet，复用redact-m1-r1-launch-manifest.json预算，新run两步；保留真实0分失败与全部拒绝明细。
@@ -191,11 +196,11 @@
 
 ## 7. 冷启动 checklist
 
-1. 先读本handoff → active-engineering-goal.md → docs/harbor-modal-integration/evolution-v2-policy-failure-admission-design.md。
+1. 先读本handoff顶部 → active-engineering-goal.md的W0—W6 → docs/harbor-modal-integration/dsh-memory-context-skills-plan.md及三份work-state review。
 2. 核对git status、当前branch/HEAD、origin、VERL子模块；查远端GPU进程，不复用旧run。
-3. 查看docs/harbor-modal-integration/redact-m1-r1-result.json确认零学习失败已保留。
-4. 按redact-m1-runbook.md继承预算，但新run改用v2生成配置/数据与新commit；旧文档的reload gate针对失败r1不能直接执行。
-5. 先M1有效更新门，Harbor参考evolution-harbor-wiring-plan.md与harbor-transport-jitter-tolerance.md。
+3. 查看memory-resident-train-r2-result.md确认本课程之前没有可用memory训练checkpoint；不能拿context更新抵扣新课程验收。
+4. 核对在制work_state模块、NativeWorkStateFramework及memory_credit合同；先补新bundle消费复核、recipe和真实DSH canary，再固定提交启动新GPU run。
+5. 按W2—W6执行真实基线、完整组RL、有效更新、独立reload及人工复跑交付；每节点验证后commit/push。保持旧合同/失败证据不变，Harbor与性能后置。
 6. 更早历史按需读handoff-history-20260908.md；其中running/旧地址/旧pin均为历史，不覆盖本页。
 
 ## 本次提交补充
