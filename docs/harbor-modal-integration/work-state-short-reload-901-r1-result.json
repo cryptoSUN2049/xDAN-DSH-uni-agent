@@ -1,0 +1,177 @@
+{
+  "schema": "dsh.work-state-short-reload-result.v1",
+  "snapshot_at": "2026-09-09T12:35:03.411457+00:00",
+  "run_id": "ws-short-reload-901-r1",
+  "source_sha": "b47521df1d6cd6b930ab6ac85ef41c670f2405d2",
+  "run_manifest_status": "completed",
+  "after_run": {
+    "after_run_check_passed": true,
+    "checked_at": "2026-09-09T12:27:01.056839+00:00",
+    "manifest": "/root/runs/ws-short-reload-901-r1-data/manifest.json",
+    "mother_checkpoint": "/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8",
+    "mother_files_count": 11,
+    "mother_identity": "sha256:c90ddf22c1e841fa111efed98b583dbf69dd8f9c5fe71520df8e0e325fd30de2"
+  },
+  "audit": {
+    "schema": "dsh.memory-training-consumption-audit.v1",
+    "passed": false,
+    "consumption_verified": false,
+    "run_completed": true,
+    "run_id": "ws-short-reload-901-r1",
+    "run_manifest_sha256": "sha256:63db6905199c6c4a7c78d4ecc0e3cf396377c5294c35b7c48c2b4a4096c565c7",
+    "inputs": [
+      {
+        "path": "/root/runs/ws-short-reload-901-r1/validation/8.jsonl",
+        "sha256": "sha256:4d735097cb7fa2ca0f726fc383b3c1f1a89bf8c23b850c95bcff4214c95536c5"
+      }
+    ],
+    "groups": [
+      {
+        "path": "/root/runs/ws-short-reload-901-r1/chains/groups/e41213eb039b40cf80fe953700da62af/crosswalk.json",
+        "status": "submitted-unconsumed",
+        "crosswalk_consumption_verified": false,
+        "submission_verified": true,
+        "consumption_verified": false,
+        "reasons": [
+          "stage_score_mismatch"
+        ],
+        "missing_keys": [],
+        "expected_policy_version": 8,
+        "partition": "val",
+        "global_steps": 8,
+        "uid": "1d6b7bd7-9df3-40fd-9fa8-b6ad971a45ee",
+        "crosswalk_sha256": "sha256:b680ecf778a0834d69fd28fe56ba97825febbd50944d97bdc719abf1e89ca6cb",
+        "stage_evidence_verified": true,
+        "duplicate_keys": [],
+        "score_mismatch_keys": [
+          "1d6b7bd7-9df3-40fd-9fa8-b6ad971a45ee_0_0"
+        ]
+      }
+    ],
+    "errors": [],
+    "unknown_or_unadmitted_consumption": [],
+    "duplicate_consumption": [],
+    "overlapping_crosswalk_keys": [],
+    "summary": {
+      "groups": 1,
+      "consumed_groups": 0,
+      "consumed_rows": 2,
+      "unique_consumed_rows": 2
+    },
+    "limitations": [
+      "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+      "Crosswalk and submission records alone never establish trainer consumption."
+    ]
+  },
+  "stages": [
+    {
+      "role": "A",
+      "task_id": "work-state-short-fact-v1-ws07-v1-s901",
+      "gateway_session_id": "memory-A-805c587661ab4448bc7510cf32d6f4a1",
+      "receipt_id": "sha256:d669c5fd31853a6599aebe106efc28c02ef898e1147f6a5ba7d2d2c07eae8b87",
+      "reward": 0.0,
+      "eligible": true,
+      "fresh": true,
+      "finished": true,
+      "version_evidence": {
+        "generation_count": 3,
+        "max_global_steps": 8,
+        "min_global_steps": 8,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 3
+      },
+      "tq_key": "1d6b7bd7-9df3-40fd-9fa8-b6ad971a45ee_0_0"
+    },
+    {
+      "role": "B",
+      "task_id": "work-state-short-fact-v1-ws07-v1-s901",
+      "gateway_session_id": "memory-B-3bb006134fa5465b91177e8aee5cc3bc",
+      "receipt_id": "sha256:2b9802a131d7b2589a6d850e8cce60567918a6b563b8969b5babd0a995fb77cc",
+      "reward": 1.0,
+      "eligible": true,
+      "fresh": true,
+      "finished": true,
+      "version_evidence": {
+        "generation_count": 4,
+        "max_global_steps": 8,
+        "min_global_steps": 8,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 4
+      },
+      "tq_key": "1d6b7bd7-9df3-40fd-9fa8-b6ad971a45ee_0_1"
+    }
+  ],
+  "load_evidence": [
+    "(TaskRunnerV1 pid=308103) INFO:2026-09-09 12:18:56,502:Resuming from /workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8, setting global step to 8",
+    "(WorkerDict pid=309034) INFO:2026-09-09 12:18:59,548:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8/actor/model_world_size_1_rank_0.pt",
+    "(WorkerDict pid=309034) INFO:2026-09-09 12:18:59,639:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8/actor/optim_world_size_1_rank_0.pt",
+    "(WorkerDict pid=309034) INFO:2026-09-09 12:18:59,652:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8/actor/extra_state_world_size_1_rank_0.pt",
+    "(WorkerDict pid=309034) INFO:2026-09-09 12:18:59,652:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8/actor/extra_state_world_size_1_rank_0.pt"
+  ],
+  "validation_only": "True",
+  "resume_mode": "resume_path",
+  "resume_path": "/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8",
+  "mother_checkpoint_identity": "sha256:c90ddf22c1e841fa111efed98b583dbf69dd8f9c5fe71520df8e0e325fd30de2",
+  "mother_files": {
+    "actor/extra_state_world_size_1_rank_0.pt": {
+      "sha256": "sha256:dcbdf42e08da20833062ccfef8f49c52ba7010fc9dbc9d885313f0d0d4673aa3",
+      "size": 15141
+    },
+    "actor/fsdp_config.json": {
+      "sha256": "sha256:7315a2057e6b04e0b2e7d6ee8ad070eafd481f3e1029fb9c75c97723b6f98f36",
+      "size": 46
+    },
+    "actor/huggingface/chat_template.jinja": {
+      "sha256": "sha256:a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+      "size": 4168
+    },
+    "actor/huggingface/config.json": {
+      "sha256": "sha256:17608177d0d110e93b4bca08684cc56c1219b317e24cdaa2b83e216721fc18b5",
+      "size": 1625
+    },
+    "actor/huggingface/generation_config.json": {
+      "sha256": "sha256:6b08ea8d092c7dd1a9de07d899271ba71ab2fe74375900c7a6400356e88752b2",
+      "size": 213
+    },
+    "actor/huggingface/tokenizer.json": {
+      "sha256": "sha256:be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "size": 11422650
+    },
+    "actor/huggingface/tokenizer_config.json": {
+      "sha256": "sha256:d9bf1d78a80bad5eb65b83c2608910e3be00a9d3250c8153a5a393ad1257e1d6",
+      "size": 664
+    },
+    "actor/lora_train_meta.json": {
+      "sha256": "sha256:79e829adbcada25b80ae32ba7ab26a07ece2cb6ae168855fab519585a123e6e8",
+      "size": 67
+    },
+    "actor/model_world_size_1_rank_0.pt": {
+      "sha256": "sha256:a80708dac43e507702f4f60beb13df2d8ac194030861b5f31b26612a6f79151d",
+      "size": 8889735011
+    },
+    "actor/optim_world_size_1_rank_0.pt": {
+      "sha256": "sha256:e69527500dd9c8e5f333aa88934520888524f391c46335f76e55dd40e4843189",
+      "size": 132552363
+    },
+    "data.pt": {
+      "sha256": "sha256:eacf37a4b9af41cb90faa56d5540b83f3bb7ad90d1cb2eea26a0520f9a0dfc0f",
+      "size": 1499
+    }
+  },
+  "training_rollout_files": [],
+  "new_checkpoint_path": "/workspace/uni-agent-g1/checkpoint/ws-short-reload-901-r1",
+  "new_checkpoint_exists": true,
+  "new_checkpoint_files": [],
+  "validation_files": [
+    "/root/runs/ws-short-reload-901-r1/validation/8.jsonl"
+  ],
+  "training_update_observed": false,
+  "ability_improvement_verified": false,
+  "evidence_sha256": {
+    "/root/runs/ws-short-reload-901-r1/supervision/train.log": "sha256:a066ebef8ed8df4909ec8f059113379975a1d4ca205b87fd742abce170d8e208",
+    "/root/runs/ws-short-reload-901-r1/run-manifest.json": "sha256:63db6905199c6c4a7c78d4ecc0e3cf396377c5294c35b7c48c2b4a4096c565c7",
+    "/root/runs/ws-short-reload-901-r1/final-audit-r1/consumption.json": "sha256:68fe3b3dbba77a86be4d7c51d540ade51e37e769052120ac750914786c4940ce",
+    "/root/runs/ws-short-reload-901-r1/final-audit-r1/after-run-check.json": "sha256:6af4d73092532895ea2ce75f901ec9dd2c00913133afb73395a60bf4c5714252",
+    "/root/runs/ws-short-reload-901-r1/validation/8.jsonl": "sha256:4d735097cb7fa2ca0f726fc383b3c1f1a89bf8c23b850c95bcff4214c95536c5"
+  }
+}

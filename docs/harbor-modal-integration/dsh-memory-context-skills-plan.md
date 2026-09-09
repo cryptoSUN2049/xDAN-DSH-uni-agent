@@ -2,9 +2,22 @@
 
 从保存文件到可靠恢复工作：面向4B模型与长周期Agent任务。
 
-2026-09-09。本文记录系统方案v3的N3课程设计与工程证据，不是能力已经训练完成的报告。状态快照截至10:44:40 UTC（18:44:40 UTC+8）：r4最终训练/消费/参数审计完成，逐题独立reload四题均已终态：WS01/WS03/WS05 verified，WS06 execution_failed；all_attempted=true、all_verified=false，suite exit1。DSH/Uni-Agent/VERL版本继续固定。
+## 最新短课程：训练→真实更新→独立reload评估闭环通过
 
-**当前账本：工程执行与评估收尾完成，3/4准入，非有效学习。r4完成8步、8个完整n4组、64条唯一A/B消费行，实际6个唯一任务；尚无有效学习。** 全部8步奖励/优势/梯度为0，checkpoint4→8的504个LoRA与399个base张量都未变化，optimizer moments全0。WS01/WS03/WS05独立reload已verified（3/4），各1组2条唯一A/B实际消费，共3组6行；WS06失败且0组0消费。四题全部尝试不等于四题全部通过。见[r4最终审计](work-state-train-r4-result.md)、[逐题reload最终报告](work-state-independent-evaluation-r1-result.md)与[零奖励独立诊断](work-state-r4-zero-reward-rootcause.md)。
+课程 `work-state-short-fact-v1`，训练源码 `b47521df1d6cd6b930ab6ac85ef41c670f2405d2`。A实际写入索引与handoff，冻结真实文件后由新B检索动态事实并输出配置；B奖励要求读后再生成正确写入，未用控制端答案替代在线轨迹。
+
+- **8/8步完成，实际消费8个完整n4组、64条唯一A/B行，覆盖6个独立实例。** 原消费审计通过；第2、4步四个B奖励分别为 `[0,1,1,0]`、`[1,0,1,1]`，形成有限非零任务梯度。
+- **参数更新已核实。** step4→8的504个LoRA张量变化、399个base张量不变，optimizer数值有限。第5—8步任务梯度为0，后半程变化与既有AdamW动量及weight decay相容，不算四次新任务学习。
+- **独立reload的901/902均exit0、日志终态reward=1。** 两次after-run检查确认母checkpoint11个文件未变；修复版独立离线审计两题均passed，各1个完整组、2条唯一A/B消费行。旧审计的 `stage_score_mismatch` 保留，修复 `d4401d3` 在独立checkout重新核验评估整链分数，两题通过，未修改原回执。
+- **范围：** 8个训练实例只有一个结构，本轮实际消费6个；两题是公开开发集，未做训练前后封存对照。S6文档归档仍在进行；不能据此声称记忆泛化、长期context、RSI能力提升、全新环境从零部署已验收或全goal完成。
+
+这里的短课程WS07与第12节长期offload规格的WS07属于不同course，必须用course_id和task_id识别，不可因编号相同混为已实现offload。
+
+证据：[短课程操作指南](work-state-short-course-runbook.md) · [消费与梯度](work-state-short-train-r1-consumption-result.md) · [参数/optimizer审计](work-state-short-train-r1-parameter-result.md)。
+
+2026-09-09。本文记录系统方案v3的N3课程设计与工程证据，不是能力已经训练完成的报告。历史 r4 快照截至10:44:40 UTC（18:44:40 UTC+8）：r4最终训练/消费/参数审计完成，逐题独立reload四题均已终态：WS01/WS03/WS05 verified，WS06 execution_failed；all_attempted=true、all_verified=false，suite exit1。DSH/Uni-Agent/VERL版本继续固定。
+
+**历史 r4 账本：工程执行与评估收尾完成，3/4准入，非有效学习。r4完成8步、8个完整n4组、64条唯一A/B消费行，实际6个唯一任务；尚无有效学习。** 全部8步奖励/优势/梯度为0，checkpoint4→8的504个LoRA与399个base张量都未变化，optimizer moments全0。WS01/WS03/WS05独立reload已verified（3/4），各1组2条唯一A/B实际消费，共3组6行；WS06失败且0组0消费。四题全部尝试不等于四题全部通过。见[r4最终审计](work-state-train-r4-result.md)、[逐题reload最终报告](work-state-independent-evaluation-r1-result.md)与[零奖励独立诊断](work-state-r4-zero-reward-rootcause.md)。
 
 工程首阶段沿用[权威goal的E1—E4](../../tasks/harbor-modal-integration/active-engineering-goal.md)，不另设目标：
 
@@ -13,7 +26,7 @@
 - **E3 保存与版本绑定：已核验；有效更新未通过。** step4/8模型文件SHA相同；独立reload已核母checkpoint11文件未变。保存成功与参数学习分列。
 - **E4 独立reload与fresh评估：四题全部尝试，3通过、1失败。** WS01/WS03/WS05各自独立加载model/optimizer/RNG/scheduler、1组2行消费及after-run核验通过；WS06 execution_failed、0消费。suite exit1、all_verified=false，前三题证据独立保存，未因最后一题失败丢失。
 
-上述仅为执行层。原W4的非零优势、有限非零任务梯度与有效参数/optimizer更新条件仍独立保留；目前不能宣称有效学习、能力提升或整个goal完成。
+上述仅为执行层。原W4的非零优势、有限非零任务梯度与有效参数/optimizer更新条件仍独立保留；r4不能宣称有效学习；后续独立短课程的新证据见上方，不能回填r4或宣称整个goal完成。
 
 [r2失败](work-state-train-r2-result.md)与[r3失败](work-state-train-r3-result.md)原证据保留：step4内嵌周期评估的WS06 A写只读来源被拒。r4将训练与严格独立评估分开，未放宽评分或安全规则。[protocol 3](work-state-protocol-revision3.md)只修正持久化/业务schema说明；[固定DSH结束原因canary](dsh-finish-reason-canary-r1-result.md)四项通过，不替代学生更新验收。历史DSH reported completed不能概括为“未耗尽token”，见[协议审计](work-state-online-protocol-audit.md)。
 
@@ -139,7 +152,7 @@ flowchart TD
 ## 10. 下一步和当前不应扩大宣称的范围
 
 1. 按[总操作指南](native-work-state-end-to-end-runbook.md)归档已结束的逐题独立reload套件与[最终报告](work-state-independent-evaluation-r1-result.md)：四题全部尝试，WS01/WS03/WS05各自verified，WS06失败且未消费。保留原失败原因、母checkpoint核验与前三题证据，不能把all_attempted=true改写成all_verified=true。
-2. 原四题reload与三题selected-r1均失败，分别保留[四题失败](work-state-train-r4-reload-result.md)和[三题失败](selected-r1-result.md)。工程完成后才进入效果阶段；[短动态事实课程](work-state-short-course-design.md)目前只设计、不实施，不覆盖r4零更新结论，也不用dev选择表现。
+2. 原四题reload与三题selected-r1均失败，分别保留[四题失败](work-state-train-r4-reload-result.md)和[三题失败](selected-r1-result.md)。工程完成后才进入效果阶段；[短动态事实课程](work-state-short-course-design.md)已完成8步真实训练、消费与参数更新核验，独立reload两题均exit0/reward1；修复版独立审计两题均passed，各1组2行；继续文档归档，不覆盖r4零更新结论，也不用dev选择表现。
 3. 核实并接通模型可见的context操作后进入C2；没有实际request改变证据，不标compact能力通过。
 4. C3跨阶段长任务与留出效果；再做受控RSI改善记忆策略。候选只能改变获准策略，不能改用户目标或评分规则。
 
@@ -330,6 +343,7 @@ oracle可以是确定性脚本或人工确定的正确操作，用于证明环�
 | r4训练与最终审计 | 8步exit0，8组64唯一行、6个唯一任务，消费passed=true；奖励/梯度/moments全0，参数无变化 |
 | 逐题独立reload | 四题全部终态：WS01/WS03/WS05各自verified，共3组6唯一行；WS06 execution_failed（A max-tokens，fresh=true / finished=false / eligible=false，未进入B）、0组0消费。all_attempted=true / all_verified=false / suite exit1 |
 | 固定DSH结束原因canary | 真实Linux四case通过，length不completed/不执行打印tool块，HTTP409→error；无学生更新 |
+| 短课程work-state-short-fact-v1 | 8步、8组64唯一行、6实例；step2/4非零任务梯度与真实LoRA更新已核；901/902 reload exit0/reward1、母11文件未变，修复版独立审计两题均passed，各1组2行；S6文档归档进行中 |
 | 四能力与学习门 | DSH调度、记忆/上下文、长流程、RSI的能力提升均未证明；compact同样未验收，不能用消费通过替代 |
 | 其余WS规格及更长真实场景 | 仍为设计，不以首批配置/计划任务替代全部长场景 |
 | 模型自主compact、索引维护、长期工作恢复提升 | 尚未验收，不能借A/B满分宣称通过 |
@@ -357,4 +371,4 @@ oracle可以是确定性脚本或人工确定的正确操作，用于证明环�
 - strict sync validation由本项目adapter等待原Ray任务异常，避免原失败被空TQ keys遮蔽；train继续原异步提交与sync补采行为，VERL pin不变。
 - 可解性canary→真实学生baseline→同policy n4完整消费→有效梯度/参数/optimizer/checkpoint→独立reload/fresh评估。没有有效组时如实报告，不以旧context更新替代本任务学习。
 
-这是实施依据。首批执行器、recipe与独立消费audit已运行：r4八步及最终消费通过，参数未变化；逐题reload四题全部尝试，WS01/WS03/WS05通过，WS06失败（0消费）。四能力、自主compact和RSI提升未证明。当前复跑入口为[总操作指南](native-work-state-end-to-end-runbook.md)，结果以[r4最终审计](work-state-train-r4-result.md)、[逐题reload最终报告](work-state-independent-evaluation-r1-result.md)及交接中的逐题状态为准。原失败和原W4有效学习条件保留。
+这是实施依据。首批执行器、recipe与独立消费audit已运行：r4八步及最终消费通过，参数未变化；逐题reload四题全部尝试，WS01/WS03/WS05通过，WS06失败（0消费）。四能力、自主compact和RSI提升未证明。当前复跑入口为[总操作指南](native-work-state-end-to-end-runbook.md)，结果以[r4最终审计](work-state-train-r4-result.md)、[逐题reload最终报告](work-state-independent-evaluation-r1-result.md)及交接中的逐题状态为准。原失败保留。短课程真实更新证据见本文顶部；全目标仍须逐阶段验收。

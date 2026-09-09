@@ -2,15 +2,13 @@
 
 ## 1. TL;DR
 
-- **位置/源码**：本地worktree-harbor-modal-integration；新课程GPU源码固定b47521df1d6cd6b930ab6ac85ef41c670f2405d2，/workspace/rebuild/uni-agent-work-state-short-r1；母r4源码5b4b01b。主目录main未修改。
-- **工程已收尾**：r4八步、8完整n4组/64唯一A/B消费、6独立任务，CK4/8完整；独立固定四题全部终态，WS01/03/05共3组6行消费通过，WS06 A max-tokens未B/未消费；all_attempted=true/all_verified=false，不冒称4/4成功。
-- **学习未通过**：r4奖励/优势/梯度均0、参数未变化；独立评估实际业务奖励也全0。E1—E4与W5结果复跑完成，W4有效更新仍待；不把整个goal或记忆/RSI能力标完成。
-- **入口/证据**：[总操作指南](../../docs/harbor-modal-integration/native-work-state-end-to-end-runbook.md) → [最终报告](../../docs/harbor-modal-integration/work-state-independent-evaluation-r1-result.md) → [归档](../../docs/harbor-modal-integration/work-state-independent-evaluation-r1-archive.md)；HTML/MD已同步并通过1440/390视觉检查。母/旧失败与本suite分别归档/workspace/reports，原回执不改。
-- **当前收尾**：ws-short-train-r1已8/8、exit0/1770.035s（训练child291433），12:05:02UTC GPU0%/0MiB。step2/4非零grad约.149/.168，其余0；CK4/8保存，最终消费/参数审计进行中，随后同课程独立reload两开发题。原r4零更新保持；短课学习与四能力提升分开。
+- **位置**：worktree-harbor-modal-integration；主目录main未动。运行源码b47521d，独立审计d4401d3，文档提交以git HEAD为准。
+- **新短课程已闭环**：ws-short-train-r1完成8步，8完整组/64唯一A/B、6独立任务。step2/4非零梯度；504 LoRA张量4→8变化，399base不变；零初始化B保存后非零。后四步零梯度，不称新增学习。
+- **独立评估通过**：901/902各新进程加载step8，原B奖励1，各1组2唯一消费；母11文件摘要均不变。d4401d3修正validation广播分数审计，原901失败报告保留。
+- **尚未完成**：最终证据归档/HTML与交接收尾正在做；四能力、提分对照、结果重复实验、空白环境复建、异步及Harbor仍后续。旧四族r4零更新不追认。
+- **GPU**：两评估都exit0，最近实查0%/0MiB，无任务。不要重启已完成作业。入口：[短课程指南](../../docs/harbor-modal-integration/work-state-short-course-runbook.md) → [最终reload报告](../../docs/harbor-modal-integration/work-state-short-reload-final-result.md) → active-engineering-goal.md。
 
-较早运行快照已移至[notes.md](notes.md)，不得按其中旧running/旧命令重启作业。
-
-当前新增执行包见 active-engineering-goal.md 的 S1—S6；短课程手动命令见 [WS07指南](../../docs/harbor-modal-integration/work-state-short-course-runbook.md)。短课程与旧 r4 分别保持母实验身份。
+当前短课程母checkpoint：`/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8`。运行checkout：`/workspace/rebuild/uni-agent-work-state-short-r1`；只读审计checkout：`/workspace/rebuild/uni-agent-short-audit-d4401d3`。二者不可互换源码身份。
 
 ## 2. 本轮交付物
 
@@ -155,12 +153,13 @@
 - [x] 固定部署、真实训练消费与checkpoint、独立四题结果收尾、云盘归档。
 - [x] 总指南/专题HTML/goal与冷启动记录同步；控制器19项和Linux追加3项通过。
 - [ ] W4：补本课程可归因的非零优势、有限非零梯度和参数/optimizer变化；不能引用别的课程更新抵扣。
-- [ ] 根据短课程设计形成独立版本与测试，真实可达性诊断后再训练；旧r4分数/任务/回执不追改，dev不用于挑参数。
+- [x] 短课程独立实现、217项CPU、8项Linux canary及8步真实训练完成；有效更新已审计，旧r4不追改。
+- [ ] 完成短课程两题独立reload的新离线审计、证据归档与HTML更新。
 - [ ] 后续效果对照、四能力、单卡异步与Harbor另阶段推进，不新增工程前置。
 
 ## 6. 分支/部署状态
 
-- 本地分支worktree-harbor-modal-integration；文档提交看git HEAD/origin，GPU仍固定9dea127，不原地更新。远端CI状态本轮未查询，不从本地测试推断。
+- 本地分支worktree-harbor-modal-integration；文档提交看git HEAD/origin，GPU运行源码固定b47521d，不原地更新；新离线审计源码d4401d3单独部署。远端CI状态本轮未查询，不从本地测试推断。
 - SSH root@216.243.220.178 -p 14465 -i ~/.ssh/id_ed25519；RTX PRO6000。当前suite /root/runs/ws-r4-isolated-eval-r1已退出，GPU最近为空。
 - venv /workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4B-1cfa9a7；DSH0.1.3a2、VERL fefb080+显式补丁。
 - 母checkpoint /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8；四次reload均核11文件不变，无再训练。
@@ -169,8 +168,8 @@
 
 ## 7. 冷启动 checklist
 
-1. 读本页 → active-engineering-goal.md → 四题最终报告与零奖励根因，确认工程收尾已完成但W4未完成。
-2. 核本地git status/branch/HEAD/origin；对照GPU固定9dea127及母5b4b01b，复用现venv，不重装或重启已完suite。
+1. 读本页 → active-engineering-goal.md → 四题最终报告与零奖励根因，区分旧r4未更新与新短课程有效更新/独立reload已通过。
+2. 核本地git status/branch/HEAD/origin；对照新课程运行b47521d与离线审计d4401d3（旧r4母5b4b01b保留），复用现venv，不重装或重启已完suite。
 3. 读总操作指南与独立短课程设计；后续新run必须新身份、固定新提交、保留母谱系。
 4. 启动新GPU任务前只读核占用和版本；使用现prepare/check/launch及原audit，不能伪造TQ或放宽原分数。
 5. 完成每节点后更新goal/handoff、Ruff check/format、commit/push。历史只按需看notes.md及handoff-history-20260908.md。
