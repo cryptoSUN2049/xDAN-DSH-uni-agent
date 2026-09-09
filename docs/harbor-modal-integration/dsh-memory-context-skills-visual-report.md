@@ -37,3 +37,11 @@
 本机临时截图：`/tmp/dsh-memory-skills-status-desktop.png`、`/tmp/dsh-memory-skills-status-mobile.png`（全页）；`/tmp/dsh-memory-skills-status-desktop-top.png`、`/tmp/dsh-memory-skills-status-mobile-top.png`（实际视口）。视觉检查不代表GPU任务已通过。
 
 状态后续更正：移除首页短时GPU占用数值，改为稳定的“GPU基线已启动、尚未通过”。WS01首A真实只读来源写入越权失败与正常completed并列，未误记max-token故障；链接handoff跟踪最新结果，W2仍未完成。
+
+## r2失败 / r3启动状态复核
+
+2026-09-09，专题HTML及MD当前账本更新为：work-state r2已失败，已记录step1–3梯度全0，step4 checkpoint存在不等于有效更新；r3固定17b6e55 + protocol3 + 显式VERL结束原因补丁，13:24:15 UTC+8启动，不等于GPU加载/任务通过。保留完整长期设计、W2未完成和能力门未通过，移除旧“不token耗尽”的确定性表述。已链接r2结果、protocol3、真实finish canary、runbook；不写实时GPU数值。
+
+实际gstack browse检查1440×1000及390×844，scrollWidth分别1440/390，缺失内部锚点0，console无错误；27个本地链接均存在。已查看桌面与手机实际视口截图：状态区、长版本说明和链接正常换行，无横向溢出/遮挡。
+
+截图：`/tmp/dsh-memory-skills-r3-desktop.png`、`/tmp/dsh-memory-skills-r3-mobile.png`。仅3文档修改，未改代码、其他报告、goal或handoff。

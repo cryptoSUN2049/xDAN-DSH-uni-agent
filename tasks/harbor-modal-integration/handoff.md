@@ -2,6 +2,9 @@
 
 ## 1. TL;DR
 
+- **当前作业work-state-train-r3**：2026-09-09 13:24:15 UTC+8外层launch PID232248；主运行13:24:52开始。独立`/workspace/rebuild/uni-agent-work-state-r3`固定`17b6e5589abc8d5a77c6238d0971a129135aa9b7`，VERL fef+preserve-finish-reason-v1（patch2cb5eef7、target2a4452e0、manifest15ecee86）。清单/root/runs/work-state-train-r3-data/manifest.json已check通过，run manifest实记新VERL导入目录；13:26:20仍框架启动阶段，尚未收到任务或更新结果。
+- **已完成新协议实际验收**：固定Linux DSH finish canary4/4、既有vLLM环境30项HTTP/解析器测试通过；报告`dsh-finish-reason-canary-r1-result.md/json`、远端`/root/runs/work-state-r3-linux-checks`。未重装环境。后续查r3日志与完整业务/梯度/消费证据，不能把canary当训练。
+
 - **work-state-train-r2已失败退出，GPU已释放**：child221585、exit1/1195.029秒，step4 periodic val WS06 A尝试修改只读来源被拒。step1–3记录grad/adv0；step4 CK存在但无该步gradient/消费dump，不能称有效更新。独立audit7组/32行消费、194段EOS、unknown/duplicate0，整体passed=false。报告`work-state-train-r2-result.md/json`。
 - **下一轮候选在制**：protocol3补齐业务输出schema/空目录可create/聊天不转交B（62主线程回归、独立40实例源truth不变）；VERL原fef加显式finish-reason-v1补丁，Gateway length不执行tool/terminal abort失败。复合源码身份接prepare/run/reload、固定Linuxcanary待新commit实际部署。旧r2 step4不可作为已验收母训练checkpoint。
 

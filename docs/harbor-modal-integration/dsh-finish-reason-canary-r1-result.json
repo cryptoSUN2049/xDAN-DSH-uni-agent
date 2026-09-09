@@ -1,0 +1,113 @@
+{
+  "report": {
+    "schema": "dsh.finish-reason-canary.v1",
+    "passed": true,
+    "scope": "scripted loopback HTTP + fixed SDK/runtime; no GPU/model/RL admission",
+    "runtime_source": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+    "runtime_version": "0.1.3a2",
+    "runtime_sha256": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "sdk_version": "0.1.3a2",
+    "script_sha256": "sha256:1492a224e72bf33ef2e3aa36fe16f1bb6d07e20b9238fdb43cf16779d11997a2",
+    "lock_sha256": "sha256:22a57acb13f61c1bf490d59588df7135cc955b47ec3a4c0ce7a2180d4c531d66",
+    "cases": [
+      {
+        "mode": "stop",
+        "passed": true,
+        "trace_available": true,
+        "trace_sha256": "sha256:88c69b83a6398646edbdc0f0fa5aa4069e266fdea53d99024ce5427ba12a6653",
+        "session_id": "finish-canary-51a0f66db005429e80f8aee5cb85222c",
+        "final_response_sha256": "sha256:6260780fafe408da8f67ddd05d4700df305874e4d3f95267e4316e767d3aaf1f",
+        "finish_reason": "completed",
+        "finished": true,
+        "terminal_reasons": [
+          "completed"
+        ],
+        "tool_calls": 0,
+        "side_effect": false,
+        "requests": [
+          {
+            "body_sha256": "sha256:909e4d5569ce52eb89f2fc5ab07c53b5bd18c90f4a5084cbaf768a4de07aea61",
+            "bytes": 5345,
+            "status": 200
+          }
+        ],
+        "http_errors": []
+      },
+      {
+        "mode": "length",
+        "passed": true,
+        "trace_available": true,
+        "trace_sha256": "sha256:5fe6038945ef74c2446f7aa3b229121c8397df164db848152b7283aea588385c",
+        "session_id": "finish-canary-11aea200de4d4958bba09aba8c37e982",
+        "final_response_sha256": "sha256:6260780fafe408da8f67ddd05d4700df305874e4d3f95267e4316e767d3aaf1f",
+        "finish_reason": "max-tokens",
+        "finished": false,
+        "terminal_reasons": [
+          "max-tokens"
+        ],
+        "tool_calls": 0,
+        "side_effect": false,
+        "requests": [
+          {
+            "body_sha256": "sha256:909e4d5569ce52eb89f2fc5ab07c53b5bd18c90f4a5084cbaf768a4de07aea61",
+            "bytes": 5345,
+            "status": 200
+          }
+        ],
+        "http_errors": []
+      },
+      {
+        "mode": "length-tool-text",
+        "passed": true,
+        "trace_available": true,
+        "trace_sha256": "sha256:0d9524269ff0423b667ec8b2574633e7a9197a26dc774cacbd986a33ffc4e63f",
+        "session_id": "finish-canary-359eabf197704b48a7968958199c9403",
+        "final_response_sha256": "sha256:ff21663fdb78495bed70714b43e301bbe13b089fe8ececb13c5b98b113daecbd",
+        "finish_reason": "max-tokens",
+        "finished": false,
+        "terminal_reasons": [
+          "max-tokens"
+        ],
+        "tool_calls": 0,
+        "side_effect": false,
+        "requests": [
+          {
+            "body_sha256": "sha256:909e4d5569ce52eb89f2fc5ab07c53b5bd18c90f4a5084cbaf768a4de07aea61",
+            "bytes": 5345,
+            "status": 200
+          }
+        ],
+        "http_errors": []
+      },
+      {
+        "mode": "abort409",
+        "passed": true,
+        "trace_available": true,
+        "trace_sha256": "sha256:d3f4851fc360b14d03070738b2b7d19f36d921a5097fb0fe425c6f54623d5344",
+        "session_id": "finish-canary-c633fb76b7314bab9355bff77dc30245",
+        "final_response_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "finish_reason": "error",
+        "finished": false,
+        "terminal_reasons": [
+          "error"
+        ],
+        "tool_calls": 0,
+        "side_effect": false,
+        "requests": [
+          {
+            "body_sha256": "sha256:909e4d5569ce52eb89f2fc5ab07c53b5bd18c90f4a5084cbaf768a4de07aea61",
+            "bytes": 5345,
+            "status": 409
+          }
+        ],
+        "http_errors": []
+      }
+    ]
+  },
+  "report_sha256": "sha256:cd8a979e05432b0e137e5a208ef1ca45fde0ad223b817b7000ef0a4a1d434af0",
+  "report_path": "/root/runs/dsh-finish-reason-canary-r1/result.json",
+  "checkout": "17b6e5589abc8d5a77c6238d0971a129135aa9b7",
+  "captured_utc": "2026-09-09T05:19:12.412567+00:00",
+  "mode_permissions": "0o600",
+  "trace_hashes_match": true
+}

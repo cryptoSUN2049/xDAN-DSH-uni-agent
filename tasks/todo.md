@@ -15,7 +15,11 @@
 - [ ] W5 本课程checkpoint独立reload和新鲜任务结果复跑。
 - [ ] W6 手动脚本/指南/证据/交接与逐节点commit/push。
 
-本次goal文档Review：沿用已批准设计；能力提分不是工程退出前置，CPU通过也不计GPU验收。平台仍usageLimited，未虚报激活或完成；当前存在未提交实现，文档检查点只提交本次文档。
+本次goal Review：沿用已批准设计；能力提分不是工程退出前置，CPU通过也不计GPU验收。平台仍usageLimited，未虚报激活或完成。当前实现与protocol3/VERL结束语义补丁已17b6e55推送；r2失败保留，r3于13:24:15 UTC+8启动，有效梯度和reload仍待实证。
+
+- [x] 修复并锁定length/stop保真补丁，Gateway截断不执行工具、terminal abort失败；固定Linuxruntime四项canary和既有vLLM环境30项测试通过。
+- [x] 修复公开业务schema与空目录create/聊天不跨会话说明，独立40实例对照确认源事实/truth不变。
+- [ ] r3本课程实际任务消费、非零梯度与参数、独立reload全部验收；此项不因新checkpoint存在自动通过。
 
 历史逐项验收入口：[三阶段任务路线图](../docs/harbor-modal-integration/task-roadmap.html)。其版本迁移、环境复建、Harbor顺序不再是当前执行优先级。
 

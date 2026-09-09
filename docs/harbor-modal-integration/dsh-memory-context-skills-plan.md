@@ -4,9 +4,13 @@
 
 2026-09-09。根据用户最新澄清细化系统方案 v3 的 N3；本文同时记录课程设计与分阶段工程证据，不是新能力已经训练完成的报告。首批文件任务已实现，GPU 学生验证进行中；DSH/Uni-Agent/VERL pin 不因本设计自动更新。SFT、付费教师、Modal 和新增 GPU 不在本轮范围。
 
-**状态快照：2026-09-09 12:13:55（UTC+8；04:13:55 UTC）。** 首批 WS01/03/05/06 的任务、真实多文件冻结、A0→B终态评分与训练接线已实现：核心 `6085a13`、recipe/消费 audit `801083579318ed5268cc92caf45c3ce04ef6d099` 已推送。主线程核心回归229项Python+6项Node、recipe/audit组合31项通过。固定 Linux runtime canary 的8种结构、106次真实工具请求通过，见[原始范围与结果](work-state-runtime-canary-r1-result.md)。
+**当前账本：2026-09-09 13:24:15 UTC+8（05:24:15 UTC）。** 首批WS01/03/05/06已实现；此前核心229 Python+6 Node、recipe/audit31项及Linux8结构/106实际工具请求通过，不等于学生能力通过。
 
-`work-state-val-r1` 于12:04:27 UTC+8（04:04:27 UTC）启动，**GPU基线尚未通过，W2未完成，能力门未通过**。截至12:15:03，WS01首个A原回执为finished=true/eligible=false/reward0：第2个工具动作尝试修改只读来源，75 steps/74 calls后正常completed；不是max-token失败。该阶段无B、无训练更新，整体baseline仍在核验。原失败保留，不通过改写提示追认。后续状态见[本worktree交接](../../tasks/harbor-modal-integration/handoff.md)，不以GPU占用或PID作为成功证据。操作入口：[完整RL复跑手册](work-state-rl-runbook.md) · [参数审计计划](work-state-parameter-audit-plan.md)。
+[work-state-train-r2](work-state-train-r2-result.md)已失败结束：step4周期评估的WS06 A写只读来源被拒；已记录step1–3奖励/优势/梯度全0，step4 checkpoint存在但未证明有效更新，未完成8步或独立reload。原失败与零学习信号保留。DSH reported completed仅是runtime记录；不能泛称“不是token耗尽”，原始结束原因缺失的边界见[协议审计](work-state-online-protocol-audit.md)。
+
+新`work-state-train-r3`使用源码`17b6e5589abc8d5a77c6238d0971a129135aa9b7`、[protocol revision 3](work-state-protocol-revision3.md)及显式VERL结束原因补丁（apply/verify通过）。13:24:15 UTC+8已启动launch PID232248；**启动不等于GPU已加载或任务通过，W2未完成，能力门未通过**。revision3只修正持久化和业务输出schema说明，不改源事实、oracle或二元评分。[固定DSH finish-reason真实canary](dsh-finish-reason-canary-r1-result.md)的stop/length/打印工具块/HTTP409四case通过，不能替代真实学生更新验收。
+
+操作入口：[完整RL复跑手册](work-state-rl-runbook.md) · [参数审计计划](work-state-parameter-audit-plan.md) · [本worktree交接](../../tasks/harbor-modal-integration/handoff.md)。这里记录版本与通过边界，不跟踪实时GPU数值。
 
 ## 1. 核心目标与个人建议
 
@@ -67,7 +71,7 @@ flowchart TD
 
 ## 5. 对照现有实现：哪些真实可用
 
-- 首批 work-state WS01/03/05/06 已有模板、精确权限、字节bundle、独立verifier、Stage/Framework与recipe/消费audit；固定Linux无模型canary通过。真实学生val运行中，终局任务结果、有效更新与独立reload尚未验收。见[复跑手册](work-state-rl-runbook.md)。
+- 首批 work-state WS01/03/05/06 已有模板、精确权限、字节bundle、独立verifier、Stage/Framework与recipe/消费audit；固定Linux无模型canary通过。r2失败且无已验收有效梯度；r3新版本已启动，终局任务结果、有效更新与独立reload尚未验收。见[复跑手册](work-state-rl-runbook.md)。
 - 历史 resident A/B 已通过真实 val：A写→冻结→新B读取、原token/版本/回执、2个key实际消费。见 [r2报告](memory-resident-val-r2-result.md)。它没有自主判断何时写、没有训练索引管理，也没有真实同会话compact。
 - 当前 NativeMemory 要求 writer reward=1 才进入 B。这适合先验工程诊断，但会排除“操作合法、记忆有遗漏”的学习样本。新版课程需独立版本化准入与评分；不能改当前评分器追认旧失败。
 - 原生 MemAgent 有 token 分块→生成记忆→新 context→最终问答方法；当前仅复用其共同 Gateway/TQ/VERL 底座，未完成这一策略迁移。它适合作为方法来源，不必把整套 MemAgent loop 套在 DSH 外。见 [源码复用审计](memagent-native-memory-reuse-audit.md)。
@@ -313,7 +317,10 @@ oracle可以是确定性脚本或人工确定的正确操作，用于证明环�
 | memory独立reload入口 | CPU实现与回归完成，真实GPU待可用母checkpoint |
 | WS01/03/05/06首批文件任务 | 核心6085a13与recipe/audit8010835已push；229 Python+6 Node、31 recipe/audit通过 |
 | 固定Linux runtime canary | 8结构、106实际工具请求通过；oracle控制脚本，无学生或RL更新 |
-| work-state-val-r1 | 801083579318ed5268cc92caf45c3ce04ef6d099；12:04:27 UTC+8启动；WS01首A越权改只读source被拒，无B/更新；整体基线尚未通过 |
+| work-state-val-r1 | 旧版WS01首A越权写只读source被拒；原失败保留 |
+| work-state-train-r2 | 已exit1；step1–3奖励/优势/梯度全0，step4周期val越权拒绝；checkpoint存在未验收有效更新或reload |
+| protocol3与r3 | 17b6e5589abc8d5a77c6238d0971a129135aa9b7 + protocol3 + 显式VERL补丁；13:24:15 UTC+8 launch PID232248已启动，加载/通过尚未验收 |
+| 固定DSH结束原因canary | 真实Linux四case通过，length不completed/不执行打印tool块，HTTP409→error；无学生更新 |
 | W2与能力门 | W2未完成；完整组消费、有效更新、checkpoint与独立reload须逐项留证，能力未通过 |
 | 其余WS规格及更长真实场景 | 仍为设计，不以首批配置/计划任务替代全部长场景 |
 | 模型自主compact、索引维护、长期工作恢复提升 | 尚未验收，不能借A/B满分宣称通过 |
@@ -341,4 +348,4 @@ oracle可以是确定性脚本或人工确定的正确操作，用于证明环�
 - strict sync validation由本项目adapter等待原Ray任务异常，避免原失败被空TQ keys遮蔽；train继续原异步提交与sync补采行为，VERL pin不变。
 - 可解性canary→真实学生baseline→同policy n4完整消费→有效梯度/参数/optimizer/checkpoint→独立reload/fresh评估。没有有效组时如实报告，不以旧context更新替代本任务学习。
 
-这是实施依据。首批执行器/调度数据编译/recipe与消费audit已实现并通过CPU回归；固定Linux工具canary通过。GPU学生验证已启动但尚未验收本课程更新、独立reload或能力提升。后续审计按[参数审计计划](work-state-parameter-audit-plan.md)执行，具体操作见[工作状态RL手册](work-state-rl-runbook.md)。
+这是实施依据。首批执行器/调度数据编译/recipe与消费audit已实现并通过CPU回归；固定Linux工具canary通过。r2已失败且无已验收有效梯度；r3以protocol3和显式VERL补丁启动，尚未验收本课程有效更新、独立reload或能力提升。后续审计按[参数审计计划](work-state-parameter-audit-plan.md)执行，具体操作见[工作状态RL手册](work-state-rl-runbook.md)。
