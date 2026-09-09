@@ -14,7 +14,7 @@
 
 ## 当前优先：短课程独立重复实验 r2
 
-用户明确恢复训练主线；聊天面板需求为误发，不实施。RSI 比较与课程扩展暂后置。
+用户明确恢复训练主线；聊天面板需求为误发，不实施。r2已结束：工程复现通过，有效更新未复现（32终态B全部满分、8步零梯度）；两题reload均通过。完整证据见ws-short-repeat-r2-result.md/json。最新优先单卡colocate_async性能对照，设计native-work-state-async-design.md；准备器适配与框架兼容性审计进行中，尚未启动异步GPU。四能力数据方向保存在four-capability-data-plan.md，144条为预算而非已有数据。
 
 - 新实验 `ws-short-train-r2`，执行源码 `f419bbb3d72fd49abc0b37cea94fde699d1c03ac`，远程 checkout `/workspace/rebuild/uni-agent-rsi-compare-f419bbb`；固定 VERL overlay 与 DSH 0.1.3a2、现有 venv。
 - prepare/check 已通过；后台 launch PID `328842`，日志 `/root/runs/ws-short-train-r2-launch.log`。这只是已发起，尚未宣称训练完成。

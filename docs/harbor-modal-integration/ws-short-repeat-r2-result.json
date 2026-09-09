@@ -1,0 +1,484 @@
+{
+  "run": "ws-short-train-r2",
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 1500.03,
+    "pid": 328949,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "consumption": {
+    "schema": "dsh.memory-training-consumption-audit.v1",
+    "passed": true,
+    "consumption_verified": true,
+    "run_completed": true,
+    "run_id": "ws-short-train-r2",
+    "run_manifest_sha256": "sha256:d43dbecb187aa565f956da981ea15b93ee51d8f1e25d609aa5d932138db416c4",
+    "errors": [],
+    "unknown_or_unadmitted_consumption": [],
+    "duplicate_consumption": [],
+    "overlapping_crosswalk_keys": [],
+    "summary": {
+      "groups": 8,
+      "consumed_groups": 8,
+      "consumed_rows": 64,
+      "unique_consumed_rows": 64
+    },
+    "limitations": [
+      "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+      "Crosswalk and submission records alone never establish trainer consumption."
+    ]
+  },
+  "checkpoint_delta": {
+    "schema": "dsh.single-rank-lora-delta.v1",
+    "passed": false,
+    "adapter_count": 504,
+    "adapter_changed": 0,
+    "base_count": 399,
+    "base_changed": 0,
+    "before": {
+      "path": "/workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_4/actor/model_world_size_1_rank_0.pt",
+      "sha256": "3af8e4f40844e5215d37a1ce9f6f2de5d018a1c8db0bab75212d40604471808f"
+    },
+    "after": {
+      "path": "/workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_8/actor/model_world_size_1_rank_0.pt",
+      "sha256": "3af8e4f40844e5215d37a1ce9f6f2de5d018a1c8db0bab75212d40604471808f"
+    }
+  },
+  "optimizer": {
+    "schema": "dsh.native-optimizer-delta.v1",
+    "passed": false,
+    "errors": [
+      "ValueError: All optimizer moments are zero"
+    ],
+    "files": {
+      "before": {
+        "path": "/workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_4/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "a2a543f47f5f9b717cf40f6200ca06192155f588915f6165a252377aa4f1b071"
+      },
+      "after": {
+        "path": "/workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_8/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "a39d66d3dd39264356485b486552faab6bf4ef2c6f357d1f08e52d48a55afdcb"
+      }
+    },
+    "input_scope": "Trusted checkpoints produced by this project's own run; weights_only=True, CPU only"
+  },
+  "groups": [
+    {
+      "step": 3,
+      "uid": "24e62230-a73e-4c7d-9e72-98895a5cee0a",
+      "task_id": "work-state-short-fact-v1-ws07-v0-s104",
+      "terminal_rewards": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "step": 2,
+      "uid": "21c79a02-c5be-4756-ac45-3f78487e964e",
+      "task_id": "work-state-short-fact-v1-ws07-v0-s103",
+      "terminal_rewards": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "step": 6,
+      "uid": "5eb25429-d388-48f6-848f-c5df12febc9b",
+      "task_id": "work-state-short-fact-v1-ws07-v0-s108",
+      "terminal_rewards": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "step": 1,
+      "uid": "d1ac9f3f-cf5f-49a7-a15f-72f7eebae510",
+      "task_id": "work-state-short-fact-v1-ws07-v0-s102",
+      "terminal_rewards": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "step": 4,
+      "uid": "88bad722-9c85-4634-b681-2f9e95e91a94",
+      "task_id": "work-state-short-fact-v1-ws07-v0-s106",
+      "terminal_rewards": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "step": 5,
+      "uid": "860c8425-4f78-4e83-96ce-dcc38daae01a",
+      "task_id": "work-state-short-fact-v1-ws07-v0-s107",
+      "terminal_rewards": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "step": 7,
+      "uid": "6aa3cc56-c6c3-4b48-9d3e-d9ec17bae325",
+      "task_id": "work-state-short-fact-v1-ws07-v0-s101",
+      "terminal_rewards": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "step": 8,
+      "uid": "aac4d1a3-a2f8-4b16-bf97-1424f0adb44a",
+      "task_id": "work-state-short-fact-v1-ws07-v0-s102",
+      "terminal_rewards": [
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "step": 1,
+      "data": {
+        "training/rollout_failure/evicted_samples": 1,
+        "actor/grad_norm": 0,
+        "actor/lr": 0.00001,
+        "critic/advantages/max": 0,
+        "critic/advantages/min": 0
+      }
+    },
+    {
+      "step": 2,
+      "data": {
+        "actor/grad_norm": 0,
+        "actor/lr": 0.00001,
+        "critic/advantages/max": 0,
+        "critic/advantages/min": 0
+      }
+    },
+    {
+      "step": 3,
+      "data": {
+        "actor/grad_norm": 0,
+        "actor/lr": 0.00001,
+        "critic/advantages/max": 0,
+        "critic/advantages/min": 0
+      }
+    },
+    {
+      "step": 4,
+      "data": {
+        "training/rollout_failure/evicted_samples": 1,
+        "actor/grad_norm": 0,
+        "actor/lr": 0.00001,
+        "critic/advantages/max": 0,
+        "critic/advantages/min": 0
+      }
+    },
+    {
+      "step": 5,
+      "data": {
+        "actor/grad_norm": 0,
+        "actor/lr": 0.00001,
+        "critic/advantages/max": 0,
+        "critic/advantages/min": 0
+      }
+    },
+    {
+      "step": 6,
+      "data": {
+        "actor/grad_norm": 0,
+        "actor/lr": 0.00001,
+        "critic/advantages/max": 0,
+        "critic/advantages/min": 0
+      }
+    },
+    {
+      "step": 7,
+      "data": {
+        "actor/grad_norm": 0,
+        "actor/lr": 0.00001,
+        "critic/advantages/max": 0,
+        "critic/advantages/min": 0
+      }
+    },
+    {
+      "step": 8,
+      "data": {
+        "actor/grad_norm": 0,
+        "actor/lr": 0.00001,
+        "critic/advantages/max": 0,
+        "critic/advantages/min": 0
+      }
+    }
+  ],
+  "after_run_passed": true,
+  "full_remote_report": {
+    "path": "/root/runs/ws-short-train-r2/repeat-audit-r1/summary.json",
+    "sha256": "a88a85049e466875510433a48abd36874abe7cf2367decef79008da10aa52250"
+  },
+  "schema": "dsh.short-course-repeat.v1",
+  "status": "completed-without-effective-learning-update",
+  "unique_consumed_tasks": 7,
+  "learning_update_reproduced": false,
+  "reloads": [
+    {
+      "schema": "dsh.memory-training-consumption-audit.v1",
+      "passed": true,
+      "consumption_verified": true,
+      "run_completed": true,
+      "run_id": "ws-short-r2-reload-901-r1",
+      "run_manifest_sha256": "sha256:d145005b4159083b0b2b817816bbc7fca95932366ae8058e80283c84a8830497",
+      "inputs": [
+        {
+          "path": "/root/runs/ws-short-r2-reload-901-r1/validation/8.jsonl",
+          "sha256": "sha256:339591bd5e7016a6c2b19db02f7a29d8844574faa5cbd7e2253bc43d7a7b6474"
+        }
+      ],
+      "groups": [
+        {
+          "path": "/root/runs/ws-short-r2-reload-901-r1/chains/groups/88723a2478fb488fbbcaa8116afd1d91/crosswalk.json",
+          "status": "consumed",
+          "crosswalk_consumption_verified": false,
+          "submission_verified": true,
+          "consumption_verified": true,
+          "reasons": [],
+          "missing_keys": [],
+          "expected_policy_version": 8,
+          "partition": "val",
+          "global_steps": 8,
+          "uid": "078583e4-0329-4ee1-9312-636991dbe81b",
+          "crosswalk_sha256": "sha256:435f20898edc9c8a8cfa2733fbeb828230e4db6b180534115229f11c7082aee9",
+          "stage_evidence_verified": true,
+          "dump_score_semantics": "session-final",
+          "duplicate_keys": [],
+          "score_mismatch_keys": []
+        }
+      ],
+      "errors": [],
+      "unknown_or_unadmitted_consumption": [],
+      "duplicate_consumption": [],
+      "overlapping_crosswalk_keys": [],
+      "summary": {
+        "groups": 1,
+        "consumed_groups": 1,
+        "consumed_rows": 2,
+        "unique_consumed_rows": 2
+      },
+      "limitations": [
+        "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+        "Crosswalk and submission records alone never establish trainer consumption."
+      ],
+      "after_run_passed": true,
+      "supervisor": {
+        "exit_code": 0,
+        "reason": "training-exited",
+        "elapsed_seconds": 420.009,
+        "pid": 342206,
+        "transient_health_failures": 0,
+        "recovered_health_windows": 0
+      },
+      "loaded_evidence": [
+        "\u001b[36m(WorkerDict pid=344929)\u001b[0m INFO:2026-09-09 15:02:19,860:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_8/actor/model_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=344929)\u001b[0m INFO:2026-09-09 15:02:19,943:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_8/actor/optim_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=344929)\u001b[0m INFO:2026-09-09 15:02:19,956:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_8/actor/extra_state_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=344929)\u001b[0m INFO:2026-09-09 15:02:19,956:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_8/actor/extra_state_world_size_1_rank_0.pt"
+      ],
+      "reader_receipts": [
+        {
+          "eligible": true,
+          "finished": true,
+          "fresh": true,
+          "receipt_id": "sha256:ef217fc0497b6399d9db12a8d1bc7a6de925528683a4e628b35ceded74150d2b",
+          "reward": 1
+        }
+      ]
+    },
+    {
+      "schema": "dsh.memory-training-consumption-audit.v1",
+      "passed": true,
+      "consumption_verified": true,
+      "run_completed": true,
+      "run_id": "ws-short-r2-reload-902-r1",
+      "run_manifest_sha256": "sha256:bc6f3b1086aefb9bf78fcd496e2d100a446deeb063455f7b8fef2bd991aecd6a",
+      "inputs": [
+        {
+          "path": "/root/runs/ws-short-r2-reload-902-r1/validation/8.jsonl",
+          "sha256": "sha256:64cd5399ac8825d099e1036a7702f31f2895d1c4b9f793445c1fd995157a9b06"
+        }
+      ],
+      "groups": [
+        {
+          "path": "/root/runs/ws-short-r2-reload-902-r1/chains/groups/99228c60765047138df8f31a895b4ff2/crosswalk.json",
+          "status": "consumed",
+          "crosswalk_consumption_verified": false,
+          "submission_verified": true,
+          "consumption_verified": true,
+          "reasons": [],
+          "missing_keys": [],
+          "expected_policy_version": 8,
+          "partition": "val",
+          "global_steps": 8,
+          "uid": "1694505a-6aaf-41a7-9b9d-17755c021eeb",
+          "crosswalk_sha256": "sha256:6b0438fce7767fd88150a25d9754a8cc7afb03747602f30d639946b61b3daff6",
+          "stage_evidence_verified": true,
+          "dump_score_semantics": "session-final",
+          "duplicate_keys": [],
+          "score_mismatch_keys": []
+        }
+      ],
+      "errors": [],
+      "unknown_or_unadmitted_consumption": [],
+      "duplicate_consumption": [],
+      "overlapping_crosswalk_keys": [],
+      "summary": {
+        "groups": 1,
+        "consumed_groups": 1,
+        "consumed_rows": 2,
+        "unique_consumed_rows": 2
+      },
+      "limitations": [
+        "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+        "Crosswalk and submission records alone never establish trainer consumption."
+      ],
+      "after_run_passed": true,
+      "supervisor": {
+        "exit_code": 0,
+        "reason": "training-exited",
+        "elapsed_seconds": 390.01,
+        "pid": 347110,
+        "transient_health_failures": 0,
+        "recovered_health_windows": 0
+      },
+      "loaded_evidence": [
+        "\u001b[36m(WorkerDict pid=349895)\u001b[0m INFO:2026-09-09 15:12:42,744:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_8/actor/model_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=349895)\u001b[0m INFO:2026-09-09 15:12:42,827:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_8/actor/optim_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=349895)\u001b[0m INFO:2026-09-09 15:12:42,840:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_8/actor/extra_state_world_size_1_rank_0.pt",
+        "\u001b[36m(WorkerDict pid=349895)\u001b[0m INFO:2026-09-09 15:12:42,840:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/ws-short-train-r2/global_step_8/actor/extra_state_world_size_1_rank_0.pt"
+      ],
+      "reader_receipts": [
+        {
+          "eligible": true,
+          "finished": true,
+          "fresh": true,
+          "receipt_id": "sha256:33e9bff567bdc4092e3d71ad4001e0e8d5c45ebcb6cae33f340e55ffb842a760",
+          "reward": 1
+        }
+      ]
+    }
+  ],
+  "execution_source": "f419bbb3d72fd49abc0b37cea94fde699d1c03ac",
+  "optimizer_zero_detail": [
+    {
+      "checkpoint_step": 4,
+      "optimizer_steps": [
+        8
+      ],
+      "active_states": 504,
+      "moment_tensors": 1008,
+      "all_finite": true,
+      "nonzero_moment_tensors": 0,
+      "param_groups": [
+        {
+          "lr": 0.00001,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-8,
+          "weight_decay": 0.01,
+          "amsgrad": false,
+          "maximize": false,
+          "foreach": null,
+          "capturable": false,
+          "differentiable": false,
+          "fused": null,
+          "decoupled_weight_decay": true,
+          "initial_lr": 0.00001
+        }
+      ]
+    },
+    {
+      "checkpoint_step": 8,
+      "optimizer_steps": [
+        16
+      ],
+      "active_states": 504,
+      "moment_tensors": 1008,
+      "all_finite": true,
+      "nonzero_moment_tensors": 0,
+      "param_groups": [
+        {
+          "lr": 0.00001,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-8,
+          "weight_decay": 0.01,
+          "amsgrad": false,
+          "maximize": false,
+          "foreach": null,
+          "capturable": false,
+          "differentiable": false,
+          "fused": null,
+          "decoupled_weight_decay": true,
+          "initial_lr": 0.00001
+        }
+      ]
+    }
+  ],
+  "engineering_repeated": true,
+  "last_observed_gpu": {
+    "utilization_percent": 0,
+    "memory_used_mib": 0
+  },
+  "archive": {
+    "schema": "dsh.evidence-archive-verification.v1",
+    "archive": "/workspace/reports/ws-short-r2-engineering-evidence-20260909.tar.gz",
+    "sha256": "15e23af2bb646d3b7c3efc456131b4d9c21a6ccfc50eeba7671cb6dc5dd46cee",
+    "archive_bytes": 15300169,
+    "manifest": "/workspace/reports/ws-short-r2-engineering-evidence-20260909.manifest.json",
+    "manifest_sha256": "54c6fc87e3b69cf41d684fe8df9c8fcb43857573532c8da43711161d71992de2",
+    "data_members": 145945,
+    "uncompressed_source_bytes": 74147083,
+    "readback_all_members_passed": true,
+    "exclusions": [
+      {
+        "path": "/root/runs/ws-short-train-r2-data/training.env",
+        "reason": "Environment/credential filename excluded without reading"
+      },
+      {
+        "path": "/root/runs/ws-short-r2-reload-901-r1-data/training.env",
+        "reason": "Environment/credential filename excluded without reading"
+      },
+      {
+        "path": "/root/runs/ws-short-r2-reload-902-r1-data/training.env",
+        "reason": "Environment/credential filename excluded without reading"
+      }
+    ],
+    "original_runs_modified": false,
+    "checkpoint_files_included": false,
+    "source_checkout_included": false,
+    "execution_source": "f419bbb3d72fd49abc0b37cea94fde699d1c03ac",
+    "audit_source": "f419bbb3d72fd49abc0b37cea94fde699d1c03ac"
+  }
+}
