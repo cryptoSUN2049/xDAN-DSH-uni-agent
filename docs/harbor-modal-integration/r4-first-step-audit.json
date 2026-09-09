@@ -1,0 +1,334 @@
+{
+  "schema": "dsh.work-state-r4-first-step-audit.v1",
+  "run_id": "work-state-train-r4",
+  "started_at_utc": "2026-09-09T06:33:49.136570+00:00",
+  "completed_at_utc": "2026-09-09T06:33:49.368100+00:00",
+  "repository": "/workspace/rebuild/uni-agent-work-state-r4",
+  "source": "5b4b01b1d0ab656e960d3514d0a3630210913022",
+  "scope": "Completed first training step only; one interim full audit snapshot of active run, not final acceptance.",
+  "task_ids": [
+    "work-state-ws01-v0-s101"
+  ],
+  "group_uid": "a89c1881-f30c-4080-8106-57797eca9408",
+  "global_step": 1,
+  "expected_policy_version": 0,
+  "first_group_audit": {
+    "path": "/root/runs/work-state-train-r4/chains/groups/8f4e60de5c114b5d98f30212626ed68a/crosswalk.json",
+    "status": "consumed",
+    "crosswalk_consumption_verified": false,
+    "submission_verified": true,
+    "consumption_verified": true,
+    "reasons": [],
+    "missing_keys": [],
+    "expected_policy_version": 0,
+    "partition": "train",
+    "global_steps": 1,
+    "uid": "a89c1881-f30c-4080-8106-57797eca9408",
+    "crosswalk_sha256": "sha256:dbcd3878f420b9d055397b787251def009dedae3ad25198addb97713f0774fae",
+    "stage_evidence_verified": true,
+    "duplicate_keys": [],
+    "score_mismatch_keys": []
+  },
+  "overall_interim_audit": {
+    "passed": false,
+    "run_completed": false,
+    "consumption_verified": true,
+    "summary": {
+      "groups": 2,
+      "consumed_groups": 2,
+      "consumed_rows": 16,
+      "unique_consumed_rows": 16
+    },
+    "errors": [],
+    "unknown_or_unadmitted_consumption": [],
+    "duplicate_consumption": [],
+    "overlapping_crosswalk_keys": []
+  },
+  "rows": [
+    {
+      "uid": "a89c1881-f30c-4080-8106-57797eca9408_0_0",
+      "step": 1,
+      "score": 0.0
+    },
+    {
+      "uid": "a89c1881-f30c-4080-8106-57797eca9408_0_1",
+      "step": 1,
+      "score": 0.0
+    },
+    {
+      "uid": "a89c1881-f30c-4080-8106-57797eca9408_1_0",
+      "step": 1,
+      "score": 0.0
+    },
+    {
+      "uid": "a89c1881-f30c-4080-8106-57797eca9408_1_1",
+      "step": 1,
+      "score": 0.0
+    },
+    {
+      "uid": "a89c1881-f30c-4080-8106-57797eca9408_2_0",
+      "step": 1,
+      "score": 0.0
+    },
+    {
+      "uid": "a89c1881-f30c-4080-8106-57797eca9408_2_1",
+      "step": 1,
+      "score": 0.0
+    },
+    {
+      "uid": "a89c1881-f30c-4080-8106-57797eca9408_3_0",
+      "step": 1,
+      "score": 0.0
+    },
+    {
+      "uid": "a89c1881-f30c-4080-8106-57797eca9408_3_1",
+      "step": 1,
+      "score": 0.0
+    }
+  ],
+  "stages": [
+    {
+      "chain_id": "memory-b9e083692a05481d94c91f186e144a23",
+      "role": "A",
+      "tq_key": "a89c1881-f30c-4080-8106-57797eca9408_0_0",
+      "stage_reward": 0.0,
+      "receipt_reward": 0.0,
+      "receipt_eligible": true,
+      "receipt_fresh": true,
+      "receipt_finished": true,
+      "receipt_id": "sha256:45b34ed8216cef5f5d5b93962e619cf1434c7b2e20cc507c261d71404d9a1afc",
+      "version_evidence": {
+        "generation_count": 8,
+        "max_global_steps": 0,
+        "min_global_steps": 0,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 8
+      },
+      "npz_path": "/root/runs/work-state-train-r4/agent-logs/step_1/memory-A-332e9d08f9fe4087af685358d76dbe18/trajectory.npz",
+      "npz_sha256": "sha256:a13a3b49721dc6e50ced28794b84e38f7c56d09a6e391cdc4759a4ac8399a5e8",
+      "receipt_path": "/root/runs/work-state-train-r4/chains/memory-b9e083692a05481d94c91f186e144a23/writer/run/results/a2c35b9b474cc8fa62e5c199/verifier-receipt.json",
+      "receipt_sha256": "sha256:51e7b33df8c887066f466144fdfcbdc4c1c3e8d734ceca7abe11556899b979ef",
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-b9e083692a05481d94c91f186e144a23/writer/fixture.json",
+      "fixture_sha256": "sha256:3af8414bfe7899d9a623834a6330bbad79be30dd7d5a09630112f6931485a162"
+    },
+    {
+      "chain_id": "memory-b9e083692a05481d94c91f186e144a23",
+      "role": "B",
+      "tq_key": "a89c1881-f30c-4080-8106-57797eca9408_0_1",
+      "stage_reward": 0.0,
+      "receipt_reward": 0.0,
+      "receipt_eligible": true,
+      "receipt_fresh": true,
+      "receipt_finished": true,
+      "receipt_id": "sha256:05a351ca46e110a4688b8e7e6bb2f8ccf7af0b043a2df52f9ab5e2dafe5a2d16",
+      "version_evidence": {
+        "generation_count": 1,
+        "max_global_steps": 0,
+        "min_global_steps": 0,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 1
+      },
+      "npz_path": "/root/runs/work-state-train-r4/agent-logs/step_1/memory-B-4e44918b4efa48749741ab82be3e4e14/trajectory.npz",
+      "npz_sha256": "sha256:87863f379d36ecd9bfe7998d5066b2f41b1dd947d52be669faaf6ebd52bd6608",
+      "receipt_path": "/root/runs/work-state-train-r4/chains/memory-b9e083692a05481d94c91f186e144a23/reader/run/results/8afe3f4ca499b96328af0023/verifier-receipt.json",
+      "receipt_sha256": "sha256:9ee067b8c9b0c84d88d43cdd3dea433ed83fb793cf04a6090083f2515a5f2198",
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-b9e083692a05481d94c91f186e144a23/reader/fixture.json",
+      "fixture_sha256": "sha256:b654a92577cbb12af52ada7b3f65db34d551d9b07fd138d49cf4dd09cb023485"
+    },
+    {
+      "chain_id": "memory-932ef199c92548e99ee620351c71be2a",
+      "role": "A",
+      "tq_key": "a89c1881-f30c-4080-8106-57797eca9408_1_0",
+      "stage_reward": 0.0,
+      "receipt_reward": 0.0,
+      "receipt_eligible": true,
+      "receipt_fresh": true,
+      "receipt_finished": true,
+      "receipt_id": "sha256:7141649bf04d66b2937d54bcdf266f1a962bee5c132c8606a8cd2c98d21883bf",
+      "version_evidence": {
+        "generation_count": 6,
+        "max_global_steps": 0,
+        "min_global_steps": 0,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 6
+      },
+      "npz_path": "/root/runs/work-state-train-r4/agent-logs/step_1/memory-A-e85eb2bbb2124647bfe379b76dea7e09/trajectory.npz",
+      "npz_sha256": "sha256:31060e7bf24a71d0d63bd59ed6ac861d072c3cf62cdf8857f8b0021a207df7ce",
+      "receipt_path": "/root/runs/work-state-train-r4/chains/memory-932ef199c92548e99ee620351c71be2a/writer/run/results/64ffd08eea88bee196cbef2c/verifier-receipt.json",
+      "receipt_sha256": "sha256:4a8defbcaddd88c41dbe42a6b5e56e1156fdfe81f5fa5aed541ae668e28a12e2",
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-932ef199c92548e99ee620351c71be2a/writer/fixture.json",
+      "fixture_sha256": "sha256:256163d22a65bf90a07a23b3ac12b5033fd7a34661beef92060a65abcb4bb8c7"
+    },
+    {
+      "chain_id": "memory-932ef199c92548e99ee620351c71be2a",
+      "role": "B",
+      "tq_key": "a89c1881-f30c-4080-8106-57797eca9408_1_1",
+      "stage_reward": 0.0,
+      "receipt_reward": 0.0,
+      "receipt_eligible": true,
+      "receipt_fresh": true,
+      "receipt_finished": true,
+      "receipt_id": "sha256:d8e8c167c7c5a655b7020956cbc9e22a01bc9e69bc3b0d41018f0eaaa02ab171",
+      "version_evidence": {
+        "generation_count": 4,
+        "max_global_steps": 0,
+        "min_global_steps": 0,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 4
+      },
+      "npz_path": "/root/runs/work-state-train-r4/agent-logs/step_1/memory-B-7ebaae06b9a2455ab503371b5aab061b/trajectory.npz",
+      "npz_sha256": "sha256:5fdb95409d6ffe212ea347463cfae2062821bfbbb99cd66afebd141aee9783cc",
+      "receipt_path": "/root/runs/work-state-train-r4/chains/memory-932ef199c92548e99ee620351c71be2a/reader/run/results/e231947161f92f3735394de4/verifier-receipt.json",
+      "receipt_sha256": "sha256:fd9c0bcd02c410764bf9ed1c5089e034848e9a738283f789675d3ee0fa8df436",
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-932ef199c92548e99ee620351c71be2a/reader/fixture.json",
+      "fixture_sha256": "sha256:d581245b62f9640f6b819d17bad1bdf19ab0bc2b2b15a2a9100ee6708a20be8e"
+    },
+    {
+      "chain_id": "memory-7a2219d27e9e4cf680e93d2685cb683c",
+      "role": "A",
+      "tq_key": "a89c1881-f30c-4080-8106-57797eca9408_2_0",
+      "stage_reward": 0.0,
+      "receipt_reward": 0.0,
+      "receipt_eligible": true,
+      "receipt_fresh": true,
+      "receipt_finished": true,
+      "receipt_id": "sha256:271e65439d20eae0ae3fadc5ac1838bca399b2cbd0efaaa5693f452d9e68ad25",
+      "version_evidence": {
+        "generation_count": 8,
+        "max_global_steps": 0,
+        "min_global_steps": 0,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 8
+      },
+      "npz_path": "/root/runs/work-state-train-r4/agent-logs/step_1/memory-A-64c29ee1da9244aa8602e04e70bccaf3/trajectory.npz",
+      "npz_sha256": "sha256:18b7fd3767531fcf8c93642dd78ad94cc0ad2fcd926da2874b0a8371193b198e",
+      "receipt_path": "/root/runs/work-state-train-r4/chains/memory-7a2219d27e9e4cf680e93d2685cb683c/writer/run/results/c372a9cf0ef5c1b34c75e9e5/verifier-receipt.json",
+      "receipt_sha256": "sha256:016f20d9c09273081df869eabf93384dca94c52b541a23426c2ab9e6e05eceab",
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-7a2219d27e9e4cf680e93d2685cb683c/writer/fixture.json",
+      "fixture_sha256": "sha256:1c272e228c9544a3fdb75053cd0a18baba7f31e41eabc217252472400fd84e76"
+    },
+    {
+      "chain_id": "memory-7a2219d27e9e4cf680e93d2685cb683c",
+      "role": "B",
+      "tq_key": "a89c1881-f30c-4080-8106-57797eca9408_2_1",
+      "stage_reward": 0.0,
+      "receipt_reward": 0.0,
+      "receipt_eligible": true,
+      "receipt_fresh": true,
+      "receipt_finished": true,
+      "receipt_id": "sha256:7f549ca11780a94bd7813443ff0e50d2313ef615411a310ca75c0016353453f4",
+      "version_evidence": {
+        "generation_count": 1,
+        "max_global_steps": 0,
+        "min_global_steps": 0,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 1
+      },
+      "npz_path": "/root/runs/work-state-train-r4/agent-logs/step_1/memory-B-a60c7ebd721c419baae44729fb12c4e0/trajectory.npz",
+      "npz_sha256": "sha256:2ca23bb0983771640412c3a972dc016b5b4c7d44f56a70fb936b557326927ef7",
+      "receipt_path": "/root/runs/work-state-train-r4/chains/memory-7a2219d27e9e4cf680e93d2685cb683c/reader/run/results/827a9b0d2a4b12115a62c23b/verifier-receipt.json",
+      "receipt_sha256": "sha256:c70b0482bb3cccec7581866cb3a6b7c5239153ee5dfc19585c20ab49d82cc5c4",
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-7a2219d27e9e4cf680e93d2685cb683c/reader/fixture.json",
+      "fixture_sha256": "sha256:76bf0686742d08ff8c2067ec6cb77e51c7a7ec43333e3bbe5a6df4a98d7259e4"
+    },
+    {
+      "chain_id": "memory-1c9db4c3deaa42059cf87b8d63b33504",
+      "role": "A",
+      "tq_key": "a89c1881-f30c-4080-8106-57797eca9408_3_0",
+      "stage_reward": 0.0,
+      "receipt_reward": 0.0,
+      "receipt_eligible": true,
+      "receipt_fresh": true,
+      "receipt_finished": true,
+      "receipt_id": "sha256:5ae6daf93f7cdbe702084078e207989021764188d3256e7935afd7898ecd274b",
+      "version_evidence": {
+        "generation_count": 8,
+        "max_global_steps": 0,
+        "min_global_steps": 0,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 8
+      },
+      "npz_path": "/root/runs/work-state-train-r4/agent-logs/step_1/memory-A-a801430d99954a6eae1f81ad52cd8e5a/trajectory.npz",
+      "npz_sha256": "sha256:9770e7431d53bd8ac41f42c953710ca45cb309435b23d61fbbadb8af0a521f84",
+      "receipt_path": "/root/runs/work-state-train-r4/chains/memory-1c9db4c3deaa42059cf87b8d63b33504/writer/run/results/94177dee5f347250a57175c9/verifier-receipt.json",
+      "receipt_sha256": "sha256:17384150abb353345849371c8f30fb070a8f83dc9135308db53bfd370bfb1336",
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-1c9db4c3deaa42059cf87b8d63b33504/writer/fixture.json",
+      "fixture_sha256": "sha256:564dac4e1c40f3d5340def42dd6763b6bc61cb143695ba2b09ee534d6ef1aa72"
+    },
+    {
+      "chain_id": "memory-1c9db4c3deaa42059cf87b8d63b33504",
+      "role": "B",
+      "tq_key": "a89c1881-f30c-4080-8106-57797eca9408_3_1",
+      "stage_reward": 0.0,
+      "receipt_reward": 0.0,
+      "receipt_eligible": true,
+      "receipt_fresh": true,
+      "receipt_finished": true,
+      "receipt_id": "sha256:67e6992de32b18340f091d0d944f918c5242a20a770b19732059a6a07e72b415",
+      "version_evidence": {
+        "generation_count": 4,
+        "max_global_steps": 0,
+        "min_global_steps": 0,
+        "version_evidence_complete": true,
+        "versioned_generation_count": 4
+      },
+      "npz_path": "/root/runs/work-state-train-r4/agent-logs/step_1/memory-B-14f4fb97f95342bc996a800a8c21a932/trajectory.npz",
+      "npz_sha256": "sha256:87002c91fa0dff0520325de478610067532de74b2f4eaa997ece759644d61298",
+      "receipt_path": "/root/runs/work-state-train-r4/chains/memory-1c9db4c3deaa42059cf87b8d63b33504/reader/run/results/95abc624c806c08e694734f7/verifier-receipt.json",
+      "receipt_sha256": "sha256:b05abe9672acece21d89b0519fca33a5133eb30e103f7b59847732aca9bf04ce",
+      "fixture_path": "/root/runs/work-state-train-r4/chains/memory-1c9db4c3deaa42059cf87b8d63b33504/reader/fixture.json",
+      "fixture_sha256": "sha256:036f939fde3f6adf654184bf6bc363cf8b6b5f08cafe34c27d2f1e6f98677b1f"
+    }
+  ],
+  "step1_metrics": {
+    "actor/pg_loss": 0.0,
+    "actor/loss": 0.0,
+    "actor/grad_norm": 0.0,
+    "critic/rewards/max": 0.0,
+    "critic/rewards/min": 0.0,
+    "critic/advantages/max": 0.0,
+    "critic/advantages/min": 0.0
+  },
+  "learning_signal_verified": false,
+  "full_run_completed": false,
+  "checkpoint_or_reload_audited": false,
+  "raw_audit_path": "/root/runs/work-state-train-r4/interim-r1/memory-consumption-audit.json",
+  "evidence": [
+    {
+      "path": "/root/runs/work-state-train-r4/interim-r1/memory-consumption-audit.json",
+      "sha256": "sha256:6ad5cdea29f9d3894461c552c32aa34cae805c16643c2af9c0810428b2721ad4",
+      "bytes": 2408
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/rollouts/1.jsonl",
+      "sha256": "sha256:90ce45d23d6f56d4ba29f4134b96c8ba682ebc3ea4033887419c2d9857639940",
+      "bytes": 83970
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/chains/groups/8f4e60de5c114b5d98f30212626ed68a/crosswalk.json",
+      "sha256": "sha256:dbcd3878f420b9d055397b787251def009dedae3ad25198addb97713f0774fae",
+      "bytes": 11126
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/run-manifest.json",
+      "sha256": "sha256:60c266da1ba5512725c13da050eb9ed0a760fc89e87f5693e88fdb694e2ec2c1",
+      "bytes": 6486
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/memory-launch-plan.json",
+      "sha256": "sha256:15a4fa758413e92c2c165288937e7423014e21cf77df95bcd95f932f5e3ea777",
+      "bytes": 19598
+    }
+  ],
+  "metrics_snapshot": {
+    "path": "/workspace/rebuild/uni-agent-work-state-r4/dsh-work-state/work-state-train-r4.jsonl",
+    "sha256": "sha256:779b6015a8fa96d61d7deff5f17b9a359651f92190bd6bbeb1bf6aacf10664a1",
+    "bytes": 6580,
+    "note": "Metrics file may grow; hash identifies bytes observed in this snapshot."
+  },
+  "limitations": [
+    "First-group n4/A+B consumption is distinct from new task learning; terminal B scores and actor gradients are zero.",
+    "Other pending groups may legitimately remain unconsumed while the run is active; preserve overall passed=false.",
+    "Uses original stage NPZ/receipt and independent trace lineage scoring via fixed audit; no reward rewriting or GPU execution."
+  ]
+}
