@@ -191,6 +191,10 @@ def prepare_writer_stage(operator, context, *, chain_id, gateway_session_id, sam
         + ", ".join(read_files)
         + "\nOptional memory files (write only these exact paths): "
         + ", ".join(fixture["write_files"])
+        + "\nFor tool calls use the exact absolute paths above. Inside published memory, link to "
+        "other published files relative to the memory directory (for example, handoff.md). B will "
+        "receive a different memory directory. Source paths are provenance only and are inaccessible "
+        "to B: preserve the useful evidence itself, not just links to A's source directory."
     )
     return _prepare(operator, context, chain_id, gateway_session_id, root, fixture, prompt)
 

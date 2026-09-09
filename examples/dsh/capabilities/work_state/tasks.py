@@ -160,13 +160,21 @@ def make_task(family: str, variant: int = 0, seed: int = 0) -> dict:
         "Never modify source files or controller evidence. "
     )
     writer_goal = common + (
-        "A fresh session will continue this work from index.md and the memory files you publish. "
-        "Your source files and conversation will not be copied to it. Preserve enough evidence "
-        "to finish the stated configuration/workflow task."
+        "Your role in session A is to prepare recovery state only. Do not execute the configuration "
+        "or workflow task, advance completed actions, or change any source. Session B will perform "
+        "that task in a fresh conversation. Read the authoritative sources, then preserve useful "
+        "facts, requirements, dependencies, completed work and unresolved questions exactly as supported "
+        "by those sources; distinguish observed state from requested targets. Do not change requested "
+        "values or increment version numbers. Your source files and conversation will not be copied "
+        "to B. Choose only useful memory files and make any saved state discoverable from index.md. "
+        "The available memory paths are optional destinations, not a checklist of files that must exist. "
+        "Once useful recovery state has been saved and any chosen verification is complete, finish with "
+        "a brief handoff summary. Do not repeatedly probe absent optional files."
     )
     if family == "WS06":
         writer_goal = (
-            common + "The next session already receives the complete short request; persistence is unnecessary."
+            common + "The next session already receives the complete short request; persistence is unnecessary. "
+            "You may finish immediately with a short handoff summary without creating or inspecting memory files."
         )
     reader_goal = (
         common + "Recover relevant work state from the memory index if present and your public sources. "
@@ -175,6 +183,7 @@ def make_task(family: str, variant: int = 0, seed: int = 0) -> dict:
     )
     return dict(
         schema="dsh.work-state-task.v1",
+        protocol_revision=2,
         task_id=task_id,
         family=family,
         variant=variant,
