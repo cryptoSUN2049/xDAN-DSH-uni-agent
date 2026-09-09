@@ -526,3 +526,51 @@ python -m examples.dsh.rsi_closed.launch_worker_eval --manifest /root/runs/NEW/d
 真正运行仅在第二条末尾添加已有 `--launch`；须用固定环境 Python、独立输出根及准确清单 SHA。此文档中的路径是占位符，不代表已准备或执行 GPU。旧清单未写 mode 时按 paired 解释；执行源码哈希变化后仍须重新准备，不绕过旧产物冻结。
 
 本增量验证：最初 7 项新增用例因缺少 mode 实参失败；实现后准备器与 RSI worker/registry/policy canary 共 131 项 CPU 测试通过（1 项上游 Ray 弃用警告）。包括 baseline 两题 canonical receipt/result 门、错误 mode 行产物、缺题、监督失败不宣称完成；CPU 构造的结果 fixture 明确为合成测试数据，不是学生评价凭证。
+
+### 10.8 Proposer 第一批 CPU 实施与边界
+
+新增 `examples/dsh/rsi_closed/proposal.py` 与 `proposal_registration.py`、对应 `test_rsi_proposal.py`、`test_rsi_proposal_registration.py`。不改已提交的 parent-baseline/paired 准备器，不新增 Agent Loop、trainer、teacher 或 promote controller。
+
+实际 API：
+
+- `proposal.parse_response(raw, parent_spec)`：严格单 JSON、拒重复键/非有限数、精确三字段及当前两工具子集；返回 spec、changed、原始 response SHA 与 canonical content SHA。绝不补 JSON、替学生添加工具、截取代码围栏。
+- `proposal.score(contract, envelope, events)` / `python -m examples.dsh.rsi_closed.proposal`：复用现 Task verifier 环境与身份检查。实际 prompt 必须匹配冻结 message；导入固定 SDK `api.final_response` 后先核 `api.py` SHA，再要求该函数从 trace 得到的文本与 envelope.response 完全一致。合法不同候选仅获格式诊断 1；no-change/普通解析失败 0；越权字段或动作不准入；这里的 1 不是收益或晋升。
+- `proposal_registration.audit_episode(run, metadata, max_tokens=...)`：仅消费现 strict inference 的 val partition/validation task，恰一个完整 v2 dump、一个 registered episode，复用 `_audit_dump`、`_load_dump_trajectory` 和既有 `validate_trajectory`，核实际 NPZ/hash/mask/logprobs/trace/receipt/TQ readback；生成 token 数用 `sum(response_mask)`。没有“已审核”布尔输入或 candidate 参数。
+- `audit_parent(parent_manifest_path, expected_sha)`：要求真实 parent-baseline H0 两题，沿用 worker 结果门并重审两题原始 dump；只抽取实际任务 ID、reward、finished/eligible、真实成功工具与 RSI_POLICY_DENIED 工具。完整证明链 hash 保留私有诊断文件，学生 prompt 仅含白名单观察字段，不注入测试答案、verifier 源码或内部证明 hash。
+- `prepare_proposal(parent_manifest_path, expected_sha, output_dir, run_root)`：生成 diagnostics.json、contract.json、父策略 overlay.json、eval.parquet（恰一题）、task.yaml 和 preparation-manifest.json；清单绑定自身两源码 hash、Git checkout、真实父清单/hash、runtime/model/pins、输入和严格推理完整 command。源码必须已跟踪且 clean，输出及运行根必须全新独立。配置继承父预算，仅将现 command 的 `--limit` 设为 1，仍 n=1、strict audit。此函数不执行模型。
+- `register_verified_proposal(manifest_path, expected_sha, output_path)`：重验源码/checkout/输入/模型/固定 runtime/当前父 active、真实 H0 诊断、P 唯一 sample 和原始证据、实际 SDK patch 路径绑定，然后重新独立评分，仅将未改写的学生 response 解析结果传给现 Registry.register。注册前后核 active，生成 0600 provenance sidecar；若发生竞争，可能留下不可用 orphan candidate，但不发有效 sidecar、不晋升、不删除历史。
+
+父 policy 最小子集保留；proposer 这一题进一步明确**不调用任何工具**，必要诊断完整放在 prompt。任何实际 tool/call/tool/result 都违反此提议合同；不需要另开文件权限或修改固定 ESM。worker 仍按其原任务规则真实调用工具，此限制只属于 proposal 阶段。
+
+固定 SDK 核验依据为部署 lock 的 b2369692ea530007075ebcd18d39fdba0bbd3982；`python/sdk/src/deepseek_harness/api.py` SHA 为 `sha256:9e24adee62987e38e0577c4ba051b15b015f61cd5d5412dc56882094f5e52c2b`。从本地 Git archive 到 `/private/tmp/rsi-proposal-sdk-b2369692`，实际 import 固定 SDK 后完成 message 文本、失败 attempt 排除、旧 content 形状三个 CPU 检查；本地主仓更新后的 api.py SHA=39f441e3... 被版本门拒绝，未自动放宽。没有启动 runtime/model/GPU。
+
+验证证据分层：parser/评分/注册 API 的控制端单测使用明确标注的合成 CPU fixture；原始 NPZ/trace/receipt 正向及篡改负例实际调用现审计代码，未 mock 审计函数；固定 SDK 提取器另有上述实际源码 import 检查。不能把这些称作真实学生提议或生产晋升凭证。现 raw-token 审计验证的是框架原始 token 记录及证据关联，没有额外声称 tokenizer 逐字 decode 对齐到 SDK 文本；SDK 文本一致性由固定函数与 trace/envelope 绑定负责。完整链依赖私有控制端来源信任，hash 不是签名认证。
+
+**尚未实现/执行**：proposal 专用受监督 launcher（清单已有标准 strict CLI command，可交给现 supervisor，但本批不新写第二套 launcher）；真实 GPU H0→P→H1；真实比较 sidecar/晋升 controller；实际加载及回滚验收。本轮只交付 proposer 任务和注册 API，下一阶段应复用现 supervisor，以实际运行 manifest 回填身份，不能直接执行未受监督的 command 来冒充已具备全轮监管。root 正独立整理整套手工 runbook。
+
+注册额外 fail-closed 门：必须存在实际受监督启动的 `launch-manifest.json`，精确字段为 schema=`dsh.rsi-proposal-launch.v1`、prepared_manifest_sha256、command、environment、wall_seconds，后四项与准备清单逐项相等；同时现 supervisor 真实输出 `supervisor-result.json` 的 exit_code 必须为整数 0。provenance 记录二者 SHA。这样不会仅凭一份“准备过但未实际按此模型/预算启动”的清单接受注册。下一批 launcher 应在启动前用这个合同写真实记录，再调用既有 supervisor；本批未实现该 launcher，不能以手工填成功 supervisor 文件替代实际运行。本地单测生成的启动/结果记录仅为明确标注的 CPU 测试替身。
+
+CPU 回归记录：新增 proposer/parser/registration 测试 47 项通过；与既有 parent-baseline、paired、worker、registry、policy canary、原始轨迹审计组合共 187 项通过（仅上游 Ray 弃用警告）。最后补充的实际 SDK profile=`sdk-minimal` 门再单独复跑上述 47 项。Ruff check/format 与 diff-check 通过。所有生产样本/注册/晋升状态仍为未执行。
+
+### 10.9 Proposer 受监督入口补齐（替代 10.8 的 launcher 缺口记录）
+
+新增 `examples/dsh/rsi_closed/launch_proposal.py` 与 `tests/uni_agent/examples/test_launch_rsi_proposal.py`，不修改原 prepare/registration API，也不自动注册/晋升。先前 10.8 的“专用 launcher 尚未实现”是上一批状态，现已由本增量补齐；真实 GPU P/H1、比较和晋升仍未执行。
+
+```sh
+# 用部署 pin 的 Python；省略 --launch 只做 CPU 预检
+python -m examples.dsh.rsi_closed.launch_proposal --manifest /root/runs/NEW/proposal/preparation-manifest.json --manifest-sha256 sha256:ACTUAL_MANIFEST_HASH
+# 仅显式 --launch 才检查 GPU 并启动单题严格推理
+python -m examples.dsh.rsi_closed.launch_proposal --manifest /root/runs/NEW/proposal/preparation-manifest.json --manifest-sha256 sha256:ACTUAL_MANIFEST_HASH --launch
+```
+
+预检按固定准备清单复核：自身 launcher 必须逐字匹配 Git HEAD 已提交源码；manifest 外部 hash、精确准备文件和源码清单、checkout、原始 H0 两题审核、当前 active/pins、完整 task.yaml（包括父预算）、单题 parquet/metadata/prompt、固定 command/model、唯一环境映射与 SDK api.py 源码。`check_sdk` 用冻结 runner Python 做纯 CPU 导入/提取检查；无需加载模型或启动 runtime。继承的 DSH_*、RAY_ADDRESS、PYTHONHOME 等会被清理，再注入固定环境；使用该解释器 bin 优先 PATH 和独立 `/tmp/rsi-proposer-<hash12>` Ray 目录，拒绝路径复用。
+
+执行顺序：CPU preflight → 现 `_gpu_idle()` → 新建 0700 run → 写 0600 launch-manifest（严格匹配注册 API 的五字段合同）及 launcher-evidence（源码 hash、Ray 路径、不自动注册）→ 现 `supervise` 创建独立进程组并限制父墙钟预算 → 周期核 active/source/input/overlay → 子进程成功退出后重新审核 H0 与 P 的原始 NPZ/trace/receipt，以及实际 SDK profile/patch/评分一致性。失败保持非零或显式审计异常，不写成功 proposal-audit；所有输出留在本 run，supervisor 只处理自建进程组。
+
+`proposal-audit.json` 只表示已审计的本次提议结果：格式 reward=1 时 registration_ready=true；合法 no-change/格式失败 reward=0 时仍可完成业务诊断，但 registration_ready=false。两者 registered/promoted/training 都为 false。后续必须单独调用 `register_verified_proposal` 再完整重审，不能用 proposal-audit 中的布尔值替代审核；模型能力提升仍需真实 H0/H1 比较。
+
+CPU 用例覆盖无 GPU 预检、错误 hash/command/env/预算、parquet 篡改、已有 run、短 Ray 冲突、SDK probe 失败、GPUbusy、监督非零、active 运行中变化、真实启动记录合同、合法 reward 0/1 不自动注册、exit0 但原始 NPZ 无效。GPU/模型进程由显式测试替身代替；现 supervisor 自身的墙钟/进程组测试一起回归，不生成生产证明。
+
+本增量验证：15 项新 launcher CPU 用例通过；与 proposer/registration、parent-baseline/paired 及现 supervisor 合计 127 项通过（1 项上游 Ray 弃用警告），Ruff check/format 和 diff-check 通过。未执行 GPU，未产生真实学生提议或注册。
+
+单卡设备绑定修正：launcher 的模型子进程显式 `CUDA_VISIBLE_DEVICES=0`，不继承 CPU 预检父进程的空值或其他设备序号；`launcher-evidence.json` 记录实际 cuda_visible_devices。SDK 导入探针自身强制 CUDA 空值。固定 command 仍为 n_gpus_per_node=1，注册要求的 launch-manifest 五字段保持兼容，实际设备信息单独落证据文件。新增父环境 CUDA 为空/7 及 SDK 探针隔离回归。
