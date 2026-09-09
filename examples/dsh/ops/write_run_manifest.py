@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import subprocess
 from datetime import datetime, timezone
@@ -43,6 +44,17 @@ def _read_json(path: Path) -> dict[str, Any] | None:
     except (OSError, UnicodeError, json.JSONDecodeError):
         return None
     return value if isinstance(value, dict) else None
+
+
+def _actual_verl_identity(verl_root: Path) -> tuple[dict[str, Any], str]:
+    from deployment.checks.verl_source_overlay import verify_verl_source
+
+    identity = verify_verl_source(verl_root, require_patched=True)
+    spec = importlib.util.find_spec("verl")
+    expected = (verl_root / "verl/__init__.py").resolve()
+    if spec is None or spec.origin is None or Path(spec.origin).resolve() != expected:
+        raise ValueError("VERL import does not use the verified checkout")
+    return identity, str(expected)
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -134,6 +146,14 @@ def main() -> None:
                 if isinstance(dataset.get("source"), dict)
                 else None,
             }
+            if "verl_effective_source" in dataset:
+                if args.verl_root is None:
+                    raise ValueError("VERL effective source requires --verl-root")
+                actual, module_path = _actual_verl_identity(args.verl_root)
+                if actual != dataset["verl_effective_source"]:
+                    raise ValueError("VERL effective source differs from prepared dataset")
+                manifest["verl_effective_source"] = actual
+                manifest["verl_import_source"] = module_path
     if args.repo_root:
         manifest["uni_agent_sha"] = _git_revision(args.repo_root)
     if args.verl_root:

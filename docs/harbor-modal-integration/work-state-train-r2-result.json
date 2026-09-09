@@ -1,0 +1,505 @@
+{
+  "schema": "dsh.work-state-train-r2-result.v1",
+  "run_id": "work-state-train-r2",
+  "repository": "/workspace/rebuild/uni-agent-work-state-r2",
+  "source": "12902fb8849d9fdfa118686207669bbedfcfec37",
+  "protocol_revision": 2,
+  "supervisor": {
+    "exit_code": 1,
+    "reason": "training-exited",
+    "elapsed_seconds": 1195.029,
+    "pid": 221585,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "failure": {
+    "task_id": "work-state-ws06-v1-s303",
+    "role": "writer",
+    "chain_id": "memory-57baab3f7c5549b4b7ab196eda12fc0d",
+    "global_steps": 4,
+    "partition": "val",
+    "receipt": {
+      "accuracy": 0.0,
+      "artifact_sha256": "sha256:97a1a841720f1d0265d8e220bd5717a7091f97d990982265b9244d9ae57ff190",
+      "dsh_session_id": "dsh-memory-A-3697fbbb53e843159d40200bb2142f66",
+      "eligible": false,
+      "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+      "evidence": [
+        "sha256:bb18ab088830b7a50a4ef032c52682368c05068731e98cabc9b471d42e2cd1f3",
+        "sha256:eb0647353d33472bed8c15bdda50b6c7f2e3ecd49c8c17b26016d871ba983271",
+        "sha256:f13a21de643e53de360d219cb565731f9899f299887b9570e15f599cd4f8aece"
+      ],
+      "finished": true,
+      "fresh": true,
+      "issued_at": "2026-09-09T04:46:25.892400+00:00",
+      "issuer": {
+        "id": "uni-agent-dsh",
+        "kind": "trusted-verifier"
+      },
+      "receipt_id": "sha256:2f7300856108bce4921484c6e8d01717eeaf524a61834441b99b3a7a7f1c6285",
+      "reward": 0.0,
+      "schema": "dsh.verifier-receipt.v1",
+      "task_id": "dsh/work-state/memory-57baab3f7c5549b4b7ab196eda12fc0d/writer",
+      "task_version": "1",
+      "trace_sha256": "sha256:eb0647353d33472bed8c15bdda50b6c7f2e3ecd49c8c17b26016d871ba983271",
+      "verifier": {
+        "code_digest": "sha256:03d9d9c38b5310270f1f1d1f2c9f304eb76b34f0193420dae1bbeacb83d76633",
+        "id": "dsh-work-state-training-stage",
+        "version": "1"
+      }
+    },
+    "finish_reason": "completed",
+    "calls": [
+      {
+        "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/work-state-train-r2/chains/memory-57baab3f7c5549b4b7ab196eda12fc0d/writer-data/sources/request.json\"}",
+        "callId": "call_30572d96",
+        "name": "str_replace_editor",
+        "step": 1,
+        "turn": 1
+      },
+      {
+        "arguments": "{\"command\": \"str_replace\", \"path\": \"/root/runs/work-state-train-r2/chains/memory-57baab3f7c5549b4b7ab196eda12fc0d/writer-data/sources/request.json\", \"old_str\": \"plan: \\\"No workflow actions; submit an empty array.\\\"\", \"new_str\": \"plan: \\\"No workflow actions; submit an empty array.\\\"\"}",
+        "callId": "call_6c83f832",
+        "name": "str_replace_editor",
+        "step": 2,
+        "turn": 1
+      },
+      {
+        "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/work-state-train-r2/chains/memory-57baab3f7c5549b4b7ab196eda12fc0d/writer-data/memory/handoff.md\"}",
+        "callId": "call_8f0334ea",
+        "name": "str_replace_editor",
+        "step": 3,
+        "turn": 1
+      },
+      {
+        "arguments": "{\"command\": \"create\", \"path\": \"/root/runs/work-state-train-r2/chains/memory-57baab3f7c5549b4b7ab196eda12fc0d/writer-data/memory/handoff.md\", \"file_text\": \"Handoff summary: No changes were made to the source file as it was read-only. The task is complete.\"}",
+        "callId": "call_db43bd56",
+        "name": "str_replace_editor",
+        "step": 4,
+        "turn": 1
+      }
+    ],
+    "reason": "Attempted str_replace on read-only request source; policy denied; normal completed ending does not clear unsafe admission."
+  },
+  "metric_rows": [
+    {
+      "step": 0,
+      "metrics": {
+        "val-aux/dsh/work-state/v1/reward/mean@1": 0.0,
+        "val-aux/dsh/work-state/v1/verifier_reward/mean@1": 0.0,
+        "val-core/dsh/work-state/v1/acc/mean@1": 0.0
+      }
+    },
+    {
+      "step": 1,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "critic/rewards/max": 0.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 2,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "critic/rewards/max": 0.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 3,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "critic/rewards/max": 0.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    }
+  ],
+  "receipt_counts": [
+    {
+      "split": "train",
+      "family": "WS01",
+      "role": "reader",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 8
+    },
+    {
+      "split": "train",
+      "family": "WS01",
+      "role": "writer",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 8
+    },
+    {
+      "split": "train",
+      "family": "WS03",
+      "role": "reader",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 8
+    },
+    {
+      "split": "train",
+      "family": "WS03",
+      "role": "writer",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 8
+    },
+    {
+      "split": "validation",
+      "family": "WS01",
+      "role": "reader",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 2
+    },
+    {
+      "split": "validation",
+      "family": "WS01",
+      "role": "writer",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 2
+    },
+    {
+      "split": "validation",
+      "family": "WS03",
+      "role": "reader",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 2
+    },
+    {
+      "split": "validation",
+      "family": "WS03",
+      "role": "writer",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 2
+    },
+    {
+      "split": "validation",
+      "family": "WS05",
+      "role": "reader",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 2
+    },
+    {
+      "split": "validation",
+      "family": "WS05",
+      "role": "writer",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 2
+    },
+    {
+      "split": "validation",
+      "family": "WS06",
+      "role": "reader",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 1
+    },
+    {
+      "split": "validation",
+      "family": "WS06",
+      "role": "writer",
+      "eligible": false,
+      "reward": 0.0,
+      "count": 1
+    },
+    {
+      "split": "validation",
+      "family": "WS06",
+      "role": "writer",
+      "eligible": true,
+      "reward": 0.0,
+      "count": 1
+    }
+  ],
+  "checkpoint_inventory": [
+    {
+      "path": "global_step_4/actor/extra_state_world_size_1_rank_0.pt",
+      "bytes": 15141
+    },
+    {
+      "path": "global_step_4/actor/fsdp_config.json",
+      "bytes": 46
+    },
+    {
+      "path": "global_step_4/actor/huggingface/chat_template.jinja",
+      "bytes": 4168
+    },
+    {
+      "path": "global_step_4/actor/huggingface/config.json",
+      "bytes": 1625
+    },
+    {
+      "path": "global_step_4/actor/huggingface/generation_config.json",
+      "bytes": 213
+    },
+    {
+      "path": "global_step_4/actor/huggingface/tokenizer.json",
+      "bytes": 11422650
+    },
+    {
+      "path": "global_step_4/actor/huggingface/tokenizer_config.json",
+      "bytes": 664
+    },
+    {
+      "path": "global_step_4/actor/lora_train_meta.json",
+      "bytes": 67
+    },
+    {
+      "path": "global_step_4/actor/model_world_size_1_rank_0.pt",
+      "bytes": 8889735011
+    },
+    {
+      "path": "global_step_4/actor/optim_world_size_1_rank_0.pt",
+      "bytes": 132552363
+    },
+    {
+      "path": "global_step_4/data.pt",
+      "bytes": 1499
+    },
+    {
+      "path": "latest_checkpointed_iteration.txt",
+      "bytes": 1
+    }
+  ],
+  "checkpoint_root": "/workspace/uni-agent-g1/checkpoint/work-state-train-r2",
+  "checkpoint_tensor_audit_performed": false,
+  "step4_gradient_measured": false,
+  "effective_learning_verified": false,
+  "independent_reload_completed": false,
+  "full_eight_steps_completed": false,
+  "consumption_audit_performed": true,
+  "logged_training_rollout_files": [
+    "/root/runs/work-state-train-r2/rollouts/1.jsonl",
+    "/root/runs/work-state-train-r2/rollouts/2.jsonl",
+    "/root/runs/work-state-train-r2/rollouts/3.jsonl"
+  ],
+  "evidence": [
+    {
+      "path": "/root/runs/work-state-train-r2/supervision/supervisor-result.json",
+      "bytes": 167,
+      "sha256": "090af55256db3df0fa13bbd2c3f3a93735ece0a5ddd37f0890762516c06c9f83"
+    },
+    {
+      "path": "/root/runs/work-state-train-r2/supervision/train.log",
+      "bytes": 163545,
+      "sha256": "e33f688e49683aaab24788813b4bc06c85985f6bbc8e4faa378ae10c51ada7b8"
+    },
+    {
+      "path": "/root/runs/work-state-train-r2/run-manifest.json",
+      "bytes": 5867,
+      "sha256": "d3bb4c98587a6c4a33fa4d452962ea74c318216494d6aae885bd3912263ae2c8"
+    },
+    {
+      "path": "/root/runs/work-state-train-r2/memory-launch-plan.json",
+      "bytes": 16394,
+      "sha256": "e59a1067c3ed303aa8b7725099ebceacd35f3d61b1606ccd90de0a7bd9a59b11"
+    },
+    {
+      "path": "/workspace/rebuild/uni-agent-work-state-r2/dsh-work-state/work-state-train-r2.jsonl",
+      "bytes": 10144,
+      "sha256": "0b6b723cd71edfef2062dcf48e38db75164f4127c248319eb4640ae10ff5545a"
+    },
+    {
+      "path": "/root/runs/work-state-train-r2/chains/memory-57baab3f7c5549b4b7ab196eda12fc0d/writer/fixture.json",
+      "bytes": 3545,
+      "sha256": "bb18ab088830b7a50a4ef032c52682368c05068731e98cabc9b471d42e2cd1f3"
+    },
+    {
+      "path": "/root/runs/work-state-train-r2/chains/memory-57baab3f7c5549b4b7ab196eda12fc0d/writer/run/results/99ab9588182b090f8975ae25/verifier-receipt.json",
+      "bytes": 1124,
+      "sha256": "db6891f37f9dd6079b3c1ddd9345bf36eea8a6cf2e6a5394f5e9e5f2298d7775"
+    },
+    {
+      "path": "/root/runs/work-state-train-r2/chains/memory-57baab3f7c5549b4b7ab196eda12fc0d/writer/run/results/99ab9588182b090f8975ae25/agent-result.json",
+      "bytes": 3607,
+      "sha256": "97a1a841720f1d0265d8e220bd5717a7091f97d990982265b9244d9ae57ff190"
+    },
+    {
+      "path": "/root/runs/work-state-train-r2/chains/memory-57baab3f7c5549b4b7ab196eda12fc0d/writer/run/traces/cef6ec025439f8d4ff5344d9/session.jsonl",
+      "bytes": 20869,
+      "sha256": "eb0647353d33472bed8c15bdda50b6c7f2e3ecd49c8c17b26016d871ba983271"
+    },
+    {
+      "path": "/root/runs/work-state-train-r2/generation-boundaries-audit.json",
+      "bytes": 111528,
+      "sha256": "d350604ab668d3abd1ac7dbdc3c76ab7361ca44ef55ae876af7b3a0d1f0ee1d8"
+    }
+  ],
+  "checkpoint_save_lines": [
+    "(TaskRunnerV1 pid=223432) INFO:2026-09-09 04:44:12,964:Saving checkpoint to /workspace/uni-agent-g1/checkpoint/work-state-train-r2/global_step_4"
+  ],
+  "generation_boundary_audit": {
+    "schema": "dsh.memory-generation-boundaries.v1",
+    "passed": false,
+    "model_source": {
+      "model_config_path": "/workspace/models/Qwen3-4B-1cfa9a7/config.json",
+      "model_config_sha256": "sha256:8ba006f74fecfaaeb392872a60f4a480e7ec9860153d2e1b769ec81f9a147f8a",
+      "generation_config_path": "/workspace/models/Qwen3-4B-1cfa9a7/generation_config.json",
+      "generation_config_sha256": "sha256:2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "eos_token_ids": [
+        151643,
+        151645
+      ],
+      "vocab_size": 151936,
+      "checkpoint_binding": "operator-supplied-config-hashes"
+    },
+    "summary": {
+      "consumed_trajectories_checked": 32,
+      "generation_segments": 194,
+      "verified_eos_segments": 194,
+      "uncertain_non_eos_segments": 0,
+      "eos_capacity_ties": 0
+    },
+    "errors": [],
+    "limitations": [
+      "EOS IDs are original-token evidence, not recovered backend finish_reason.",
+      "EOS at capacity is a tie; original termination precedence is unknown.",
+      "No EOS does not prove length; budget is operator-declared, not inferred.",
+      "Fixed VERL still loses length/stop distinctions; this audit does not repair it.",
+      "No optimizer update, model improvement or historical receipt rewriting is certified."
+    ],
+    "consumption": {
+      "schema": "dsh.memory-training-consumption-audit.v1",
+      "passed": false,
+      "consumption_verified": false,
+      "run_completed": false,
+      "run_id": "work-state-train-r2",
+      "run_manifest_sha256": "sha256:d3bb4c98587a6c4a33fa4d452962ea74c318216494d6aae885bd3912263ae2c8",
+      "errors": [],
+      "unknown_or_unadmitted_consumption": [],
+      "duplicate_consumption": [],
+      "overlapping_crosswalk_keys": [],
+      "summary": {
+        "groups": 11,
+        "consumed_groups": 7,
+        "consumed_rows": 32,
+        "unique_consumed_rows": 32
+      },
+      "limitations": [
+        "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+        "Crosswalk and submission records alone never establish trainer consumption."
+      ]
+    },
+    "groups": [
+      {
+        "status": "submitted-unconsumed",
+        "partition": "val",
+        "global_steps": 4,
+        "uid": "68c77eea-42fe-4ec9-a59b-9c13d1593d0d",
+        "consumption_verified": false,
+        "reasons": [
+          "missing_consumed_keys"
+        ]
+      },
+      {
+        "status": "consumed",
+        "partition": "val",
+        "global_steps": 0,
+        "uid": "d29873f4-ce51-4704-9e09-c6efa117672f",
+        "consumption_verified": true,
+        "reasons": []
+      },
+      {
+        "status": "submitted-unconsumed",
+        "partition": "train",
+        "global_steps": 4,
+        "uid": "d8c916bd-941f-484a-9470-4fdef7d569bf",
+        "consumption_verified": false,
+        "reasons": [
+          "missing_consumed_keys"
+        ]
+      },
+      {
+        "status": "consumed",
+        "partition": "train",
+        "global_steps": 3,
+        "uid": "4204511d-5f8b-4cc5-8ffe-fac24343637d",
+        "consumption_verified": true,
+        "reasons": []
+      },
+      {
+        "status": "consumed",
+        "partition": "val",
+        "global_steps": 0,
+        "uid": "a097f71d-8619-4b66-bd16-c092d2163f4e",
+        "consumption_verified": true,
+        "reasons": []
+      },
+      {
+        "status": "submitted-unconsumed",
+        "partition": "val",
+        "global_steps": 4,
+        "uid": "e012d89b-78c3-4b1f-ab26-fd32bbcdfad1",
+        "consumption_verified": false,
+        "reasons": [
+          "missing_consumed_keys"
+        ]
+      },
+      {
+        "status": "consumed",
+        "partition": "val",
+        "global_steps": 0,
+        "uid": "469067ca-e0b1-4c33-a506-f192726ed1b3",
+        "consumption_verified": true,
+        "reasons": []
+      },
+      {
+        "status": "consumed",
+        "partition": "val",
+        "global_steps": 0,
+        "uid": "6360064c-db76-4dcb-b6df-6ae62353c9e7",
+        "consumption_verified": true,
+        "reasons": []
+      },
+      {
+        "status": "consumed",
+        "partition": "train",
+        "global_steps": 2,
+        "uid": "b028da16-bbae-4c9f-acc9-4c4eeba3d6bb",
+        "consumption_verified": true,
+        "reasons": []
+      },
+      {
+        "status": "submitted-unconsumed",
+        "partition": "val",
+        "global_steps": 4,
+        "uid": "6c873271-e1b8-4b30-aaa0-5fb319cf418c",
+        "consumption_verified": false,
+        "reasons": [
+          "missing_consumed_keys"
+        ]
+      },
+      {
+        "status": "consumed",
+        "partition": "train",
+        "global_steps": 1,
+        "uid": "cb20e4cc-50c2-4715-9085-43bd9bb4b4e8",
+        "consumption_verified": true,
+        "reasons": []
+      }
+    ],
+    "failed_writer_in_eos_scope": false
+  }
+}

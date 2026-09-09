@@ -52,6 +52,8 @@
 
 Uni-Agent 89733ec81a69c3cc93ac90479de7ea7f01e51c1f；VERL fefb080262e1c015a0ea05f958822a6a512dc795；DSH b2369692ea530007075ebcd18d39fdba0bbd3982 / 0.1.3a2。每run另固定完整集成commit、模型、任务/verifier/Harness摘要与实际安装清单。保持DSH唯一Agent Loop。
 
+2026-09-09协议修复：后续memory/work-state运行的有效VERL身份为上述官方基线加`preserve-finish-reason-v1`源码补丁（`deployment/versions/verl-runtime-patches.json`）；显式绑定patch与目标文件SHA，拒绝其他修改，复用原依赖环境。原始length不能再被合并为completed，截断/中止不得执行工具。旧裸fef实验保留原回执；新候选必须独立部署并重验，不能靠换版本文字追认通过。
+
 SFT/数据生产由其他会话承担；本仓拥有在线RL消费与验收，不新增teacher调用、GPU或Modal。任务必须有步数/token/wall-clock预算。checkpoint继续/workspace/uni-agent-g1/checkpoint/<run>；私有凭据/root/runs。每通过一环节commit/push前Ruff双检查和相应测试。
 
 ## 现状与下一步

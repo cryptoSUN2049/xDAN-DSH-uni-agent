@@ -11,6 +11,56 @@ def _text(value):
     return json.dumps(value, sort_keys=True, ensure_ascii=False, indent=2) + "\n"
 
 
+def _business_output_contract(family, variant):
+    """Public schema only: no instance values or private solution lookup."""
+    common = (
+        "First read the public task specification and any available memory index before choosing values. "
+        "config.json must contain exactly the business top-level fields below, without a config wrapper "
+        "or tool-call command/path/file_text envelope. plan.json contains business action IDs, "
+        "not editor commands, tool calls or natural-language descriptions. "
+    )
+    if family == "WS01":
+        return common + (
+            "The config fields are capacity (integer) and schema_version (integer): preserve the exact "
+            "configuration_requirement values recovered from the authoritative source, without incrementing "
+            "or changing them. Plan action IDs come from the workflow required/dependencies keys. Exclude "
+            "completed actions, include each remaining required action once, and respect all dependencies; "
+            "already completed actions satisfy their dependencies."
+        )
+    no_workflow = " No workflow actions are required; plan.json must be the empty array []."
+    if family == "WS03":
+        names = "database, cache" if variant == 0 else "encoder, transport, storage"
+        return (
+            common
+            + (
+                f"The config fields are {names}. Each value is a string catalog option ID for that component, "
+                "chosen from its recovered catalog to satisfy the public requirements and compatibility rules. "
+                "Do not substitute an attribute object, generic service name or editor settings."
+            )
+            + no_workflow
+        )
+    if family == "WS05":
+        fields = "region (string), retention (integer)"
+        if variant:
+            fields += ", encryption (boolean)"
+        return (
+            common
+            + (
+                f"The config fields are {fields}, exactly those listed by policy.keys. Preserve source value "
+                "types; recover facts for the requested scope and operational revision, resolving independent "
+                "security authority over advisory suggestions as specified by the policy. A higher revision "
+                "from another scope or a weaker authority does not replace the applicable facts."
+            )
+            + no_workflow
+        )
+    fields = (
+        "capacity (integer), computed as peak + reserve"
+        if variant == 0
+        else "east_capacity (integer) = min(east_load, limit) and west_capacity (integer) = min(west_load, limit)"
+    )
+    return common + f"The config fields/formulas are {fields}, using your public request values." + no_workflow
+
+
 def make_task(family: str, variant: int = 0, seed: int = 0) -> dict:
     if family not in ("WS01", "WS03", "WS05", "WS06") or type(variant) is not int or variant not in (0, 1):
         raise ValueError("Unsupported family/structural variant")
@@ -176,14 +226,22 @@ def make_task(family: str, variant: int = 0, seed: int = 0) -> dict:
             common + "The next session already receives the complete short request; persistence is unnecessary. "
             "You may finish immediately with a short handoff summary without creating or inspecting memory files."
         )
+    writer_goal += (
+        " Your final chat response is not transferred to B. Only bytes actually written through successful "
+        "file tool calls are transferred; saying saved in a reply does not create a file. "
+        "The allowed memory directory is initially empty. A missing optional destination can be created "
+        "with command=create and file_text containing the useful recovery content; it is not an input "
+        "that must already exist. If you choose to persist useful state, make it discoverable from index.md."
+    )
     reader_goal = (
         common + "Recover relevant work state from the memory index if present and your public sources. "
         "Create config.json as a JSON object and plan.json as an ordered JSON array of action names. "
-        "Do not invent missing facts. The controller independently executes/checks these artifacts."
+        "Do not invent missing facts. The controller independently executes/checks these artifacts. "
+        + _business_output_contract(family, variant)
     )
     return dict(
         schema="dsh.work-state-task.v1",
-        protocol_revision=2,
+        protocol_revision=3,
         task_id=task_id,
         family=family,
         variant=variant,

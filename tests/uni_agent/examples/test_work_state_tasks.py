@@ -136,3 +136,69 @@ def test_ws03_every_single_component_constraint_violation_fails(variant):
     for component, name in chosen.items():
         bad = {**chosen, component: "option-b" if name == "option-a" else "option-a"}
         assert score_task(task, {**outputs, "config.json": json.dumps(bad).encode()})["reward"] == 0
+
+
+# Frozen revision-2 source/truth/oracle fingerprints; protocol wording may change.
+REVISION2_BUSINESS_SHA256 = {
+    "WS01:0": "f9c77af68dae78c1a96eba81576a4148eaadde914b1d7c7a068c67585de5c5ac",
+    "WS01:1": "7cec8474c401b1bc14e2bc632ecf76bb01e41341e4cbd60e5853a58d5debfaef",
+    "WS03:0": "198101363613bbbba99c9aa1fcb193d4c011d8c4044053a2cd10337f5aa53f0d",
+    "WS03:1": "7bd74669a2590857ecb5bea2992b318f637031b133200270481500596da12496",
+    "WS05:0": "6f782ad12dbb5c18c5898d5509a125f8d63ed5b6cae72530bfd5979e0a026e1f",
+    "WS05:1": "97dbfcc216abdec5d4374960285a25c151151bf3915fbe15d2bb134a234ee647",
+    "WS06:0": "9003ed16038ad048942c22d856f0147f7d615fc4c22ec33fa5ca696a736c9c6b",
+    "WS06:1": "4da8caab676772cc7a43fdedc4ef656265b85d2e465bfec2c44eab86d4063274",
+}
+
+
+@pytest.mark.parametrize("family", ["WS01", "WS03", "WS05", "WS06"])
+@pytest.mark.parametrize("variant", [0, 1])
+def test_revision3_public_contract_without_answer_or_business_mutation(family, variant):
+    import hashlib
+
+    task = make_task(family, variant, 29)
+    assert task["protocol_revision"] == 3
+    assert task["reader_goal"] == make_task(family, variant, 30)["reader_goal"]
+    assert "top-level" in task["reader_goal"]
+    assert "not editor commands" in task["reader_goal"]
+    assert "final chat response is not transferred" in task["writer_goal"]
+    payload = {k: task[k] for k in ["writer_files", "reader_files", "truth"]}
+    payload["oracle_memory"] = {k: b.hex() for k, b in oracle_memory(task).items()}
+    payload["oracle_outputs"] = {k: b.hex() for k, b in oracle_outputs(task).items()}
+    digest = hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
+    assert digest == REVISION2_BUSINESS_SHA256[f"{family}:{variant}"]
+    assert score_task(task, oracle_outputs(task))["reward"] == 1
+
+
+@pytest.mark.parametrize("variant", [0, 1])
+def test_revision3_ws06_reader_gets_exact_keys_and_can_solve_public_formula(variant):
+    task = make_task("WS06", variant, 71)
+    source = json.loads(task["reader_files"]["sources/request.json"])
+    config = (
+        {"capacity": source["peak"] + source["reserve"]}
+        if variant == 0
+        else {
+            "east_capacity": min(source["east_load"], source["limit"]),
+            "west_capacity": min(source["west_load"], source["limit"]),
+        }
+    )
+    assert all(name in task["reader_goal"] for name in config)
+    assert "integer" in task["reader_goal"]
+    assert "empty array" in task["reader_goal"]
+    assert score_task(task, {"config.json": json.dumps(config).encode(), "plan.json": b"[]"})["reward"] == 1
+    assert oracle_memory(task) == {}
+    assert "without creating" in task["writer_goal"]
+
+
+@pytest.mark.parametrize("variant", [0, 1])
+def test_revision3_business_schema_and_action_identity(variant):
+    ws1 = make_task("WS01", variant)["reader_goal"]
+    assert all(term in ws1 for term in ["capacity", "schema_version", "integer", "completed", "dependencies"])
+    ws3 = make_task("WS03", variant)["reader_goal"]
+    for component in ["database", "cache"] if variant == 0 else ["encoder", "transport", "storage"]:
+        assert component in ws3
+    assert "option ID" in ws3 and "string" in ws3
+    ws5 = make_task("WS05", variant)["reader_goal"]
+    assert all(term in ws5 for term in ["policy.keys", "scope", "revision", "authority", "region", "retention"])
+    if variant:
+        assert "encryption" in ws5 and "boolean" in ws5

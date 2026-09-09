@@ -18,6 +18,16 @@ def bootstrap_fixture(tmp_path, *, numpy="2.3.5", check_exit=0):
     script = repo / "deployment/bootstrap/install-verl.sh"
     script.parent.mkdir(parents=True)
     shutil.copyfile(ROOT / "deployment/bootstrap/install-verl.sh", script)
+    # This suite verifies shell ordering; actual Git/patch behavior has its own
+    # tests against temporary checkouts in test_verl_source_overlay.py.
+    checker = repo / "deployment/checks/verl_source_overlay.py"
+    checker.parent.mkdir(parents=True)
+    checker.write_text(
+        "import json,os,sys\nfrom pathlib import Path\n"
+        "with Path(os.environ['COMMANDS']).open('a') as f: f.write(json.dumps(['source-verify',*sys.argv[1:]])+'\\n')\n"
+        "assert '--apply' not in sys.argv\n"
+        "sys.exit(int(os.environ.get('SOURCE_CHECK_EXIT','0')))\n"
+    )
     lock_dir = repo / "deployment/versions"
     lock_dir.mkdir()
     shutil.copyfile(ROOT / "deployment/versions/native-numpy-overlay.txt", lock_dir / "native-numpy-overlay.txt")
@@ -77,7 +87,8 @@ def test_bootstrap_applies_locked_numpy_then_checks_and_imports(tmp_path):
     calls = [json.loads(line) for line in commands.read_text().splitlines()]
     overlay = next(i for i, args in enumerate(calls) if "--require-hashes" in args)
     check = next(i for i, args in enumerate(calls) if args[:2] == ["pip", "check"])
-    assert calls[0] == ["sync", "--frozen", "--extra", "fsdp", "--extra", "vllm"]
+    assert calls[0][0] == "source-verify"
+    assert calls[1] == ["sync", "--frozen", "--extra", "fsdp", "--extra", "vllm"]
     assert "--no-deps" in calls[overlay]
     assert "--only-binary=:all:" in calls[overlay]
     requirement = Path(calls[overlay][-1]).read_text()
@@ -104,7 +115,7 @@ def test_post_lock_operations_ignore_project_dependency_overrides(tmp_path):
     assert all("--no-config" in args for args in pip_calls)
     # Frozen sync still needs upstream GPU indexes/configuration; isolate only
     # the reviewed post-lock installation and verification operations.
-    assert "--no-config" not in calls[0]
+    assert "--no-config" not in calls[1]
 
 
 @pytest.mark.parametrize("version", ["2.4.6", "", "2.3.5 --extra-index-url untrusted"])
@@ -125,3 +136,12 @@ def test_overlay_is_bound_to_source_and_upstream_lock(tmp_path, field):
     result = subprocess.run(["bash", str(script)], env=env, capture_output=True, text=True)
     assert result.returncode != 0
     assert "--require-hashes" not in commands.read_text()
+
+
+def test_source_verification_fails_before_any_installation(tmp_path):
+    script, env, commands = bootstrap_fixture(tmp_path)
+    env["SOURCE_CHECK_EXIT"] = "23"
+    result = subprocess.run(["bash", str(script)], env=env, capture_output=True, text=True)
+    assert result.returncode == 23
+    calls = [json.loads(line) for line in commands.read_text().splitlines()]
+    assert len(calls) == 1 and calls[0][0] == "source-verify"

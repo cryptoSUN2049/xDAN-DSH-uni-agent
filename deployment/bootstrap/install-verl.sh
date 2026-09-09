@@ -8,10 +8,9 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 expected_verl=fefb080262e1c015a0ea05f958822a6a512dc795
 [[ "$(git -C "$repo_root/verl" rev-parse HEAD)" == "$expected_verl" ]] || exit 2
-if [[ -n "$(git -C "$repo_root/verl" status --porcelain --untracked-files=no)" ]]; then
-  echo 'VERL has modified tracked files; refusing to install a changed lock/source.' >&2
-  exit 2
-fi
+# Apply is explicit and belongs to a new inactive checkout. Installation only
+# verifies the exact authorized overlay; every additional dirty change is rejected.
+python3 "$repo_root/deployment/checks/verl_source_overlay.py" --repo "$repo_root/verl"
 cd "$repo_root/verl"
 UV_PROJECT_ENVIRONMENT="$DSH_TRAIN_VENV" UV_CACHE_DIR="$DSH_UV_CACHE" \
   uv sync --frozen --extra fsdp --extra vllm

@@ -189,7 +189,9 @@ def prepare_writer_stage(operator, context, *, chain_id, gateway_session_id, sam
         task["writer_goal"]
         + "\nRead-only sources: "
         + ", ".join(read_files)
-        + "\nOptional memory files (write only these exact paths): "
+        + "\nThe memory directory is initially empty; these are optional writable destinations, not missing "
+        "required inputs. Use command=create with file_text to create a chosen new file.\n"
+        "Optional memory files (write only these exact paths): "
         + ", ".join(fixture["write_files"])
         + "\nFor tool calls use the exact absolute paths above. Inside published memory, link to "
         "other published files relative to the memory directory (for example, handoff.md). B will "
@@ -318,6 +320,8 @@ def freeze_and_prepare_reader(writer_spec, execution, *, reader_gateway_session_
         + str(unpacked)
         + ".\nWrite final results only to: "
         + ", ".join(reader["write_files"])
+        + "\nThese output files are initially absent. Use command=create and put the business JSON text "
+        "in file_text; the surrounding tool-call arguments are not part of that file content."
     )
     return _prepare(
         writer_spec.operator, writer_spec.context, writer_spec.chain_id, reader_gateway_session_id, root, reader, prompt

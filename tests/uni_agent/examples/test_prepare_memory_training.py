@@ -27,6 +27,9 @@ def inputs(tmp_path, monkeypatch):
     lock["dsh"]["runtime_binary_sha256"] = recipe.digest(runtime)
     monkeypatch.setattr(recipe, "deployment_lock", lambda: lock)
     monkeypatch.setattr(recipe, "runtime_probe", lambda *a: {"sdk": "0.1.3a2", "runtime": "0.1.3a2"})
+    monkeypatch.setattr(
+        recipe, "verl_source_identity", lambda: {"state": "patched", "overlay_id": "cpu-test"}, raising=False
+    )
     return dict(
         output_dir=tmp_path / "data",
         run_root=tmp_path / "run",
@@ -50,6 +53,7 @@ def mother_checkpoint(inputs, tmp_path, family="constraints"):
         mode="train",
         integration_head=recipe.revision(recipe.ROOT),
         verl_head=recipe.revision(recipe.ROOT / "verl"),
+        verl_effective_source=recipe.verl_source_identity(),
         model_revision_declared=inputs["model_revision"],
         runtime=dict(sha256=recipe.digest(inputs["runtime_executable"])),
         environment=dict(RUN_ROOT=str(mother), CKPTS_DIR=str(checkpoint.parent)),
@@ -66,6 +70,7 @@ def mother_checkpoint(inputs, tmp_path, family="constraints"):
                 run_root=str(mother),
                 uni_agent_sha=plan["integration_head"],
                 verl_sha=plan["verl_head"],
+                verl_effective_source=plan["verl_effective_source"],
                 paths=dict(dataset_manifest=str(dataset)),
                 sha256=dict(dataset_manifest=recipe.digest(dataset)),
             )
@@ -306,3 +311,28 @@ def test_launch_creates_actual_private_writer_parent(inputs, monkeypatch, tmp_pa
     path.write_text(json.dumps(manifest))
     monkeypatch.setattr(harbor_training_supervisor, "supervise", supervise)
     assert recipe.launch(path)["exit_code"] == 0
+
+
+def test_preparation_binds_effective_verl_and_checks_drift(inputs, monkeypatch):
+    manifest = recipe.prepare(**inputs, mode="train", family="work-state-v1")
+    assert manifest["verl_effective_source"] == recipe.verl_source_identity()
+    monkeypatch.setattr(recipe, "verl_source_identity", lambda: {"state": "patched", "overlay_id": "unexpected"})
+    with pytest.raises(ValueError, match="VERL effective source changed"):
+        recipe.check(inputs["output_dir"] / "manifest.json")
+
+
+def test_reload_rejects_different_mother_effective_verl(inputs, tmp_path):
+    extra = mother_checkpoint(inputs, tmp_path, "work-state-v1")
+    p = extra["mother_run"] / "memory-launch-plan.json"
+    plan = json.loads(p.read_text())
+    plan["verl_effective_source"] = {"state": "patched", "overlay_id": "other-patch"}
+    p.write_text(json.dumps(plan))
+    dataset = extra["mother_run"] / "dataset-manifest.json"
+    dataset.write_text(json.dumps(plan))
+    run_file = extra["mother_run"] / "run-manifest.json"
+    run = json.loads(run_file.read_text())
+    run["sha256"]["dataset_manifest"] = recipe.digest(dataset)
+    run["verl_effective_source"] = plan["verl_effective_source"]
+    run_file.write_text(json.dumps(run))
+    with pytest.raises(ValueError, match="Mother evidence/config"):
+        recipe.prepare(**inputs, mode="reload", family="work-state-v1", **extra)

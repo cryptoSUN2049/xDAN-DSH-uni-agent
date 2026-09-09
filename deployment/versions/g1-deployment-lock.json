@@ -6,7 +6,17 @@
     "maintenance_branch": "worktree-harbor-modal-integration",
     "code_revision": "2df91d7de31b9ecacefeaad1c54dbea80028eead",
     "upstream_revision": "89733ec81a69c3cc93ac90479de7ea7f01e51c1f",
-    "verl_revision": "fefb080262e1c015a0ea05f958822a6a512dc795"
+    "verl_revision": "fefb080262e1c015a0ea05f958822a6a512dc795",
+    "verl_source_overlay": {
+      "manifest": "deployment/versions/verl-runtime-patches.json",
+      "manifest_sha256": "sha256:15ecee86c9b4a290ff3a6d62de2c7da5cee995037f45c1f68aeab74deaf81fbd",
+      "base_revision": "fefb080262e1c015a0ea05f958822a6a512dc795",
+      "required_for": [
+        "native-memory-resident-v1",
+        "work-state-v1"
+      ],
+      "scope": "New native memory/work-state preparations require exact compound source identity. Historical unpatched runs remain unchanged and are not retrospectively accepted."
+    }
   },
   "dsh": {
     "repository": "cryptoSUN2049/xDAN-DSH-Exp",

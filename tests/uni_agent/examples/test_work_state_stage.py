@@ -228,3 +228,20 @@ def test_legal_a_zero_to_b_zero_does_not_become_admission_error(inputs):
     receipt, _, scored, _ = validate_stage_execution(reader, b)
     assert a.task_result.reward == b.task_result.reward == 0
     assert receipt["eligible"] and scored["eligible"]
+
+
+def test_revision3_actual_stage_prompts_keep_transport_separate_from_business(inputs):
+    from examples.dsh.capabilities.work_state.stage import freeze_and_prepare_reader
+
+    writer = prep(inputs)
+    a_prompt = writer.raw_prompt[0]["content"]
+    assert "initially empty" in a_prompt
+    assert "command=create" in a_prompt and "file_text" in a_prompt
+    assert "final chat response is not transferred" in a_prompt
+    reader = freeze_and_prepare_reader(writer, execute_synthetic_stage(writer), reader_gateway_session_id="GB")
+    b_prompt = reader.raw_prompt[0]["content"]
+    assert "top-level" in b_prompt and "not editor commands" in b_prompt
+    assert "output files are initially absent" in b_prompt
+    assert "command=create" in b_prompt and "file_text" in b_prompt
+    assert "expected_config" not in b_prompt
+    assert "writer-data" not in b_prompt

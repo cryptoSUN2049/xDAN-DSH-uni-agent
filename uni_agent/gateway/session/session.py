@@ -275,6 +275,13 @@ class GatewaySession:
             except Exception as e:
                 raise HTTPException(status_code=500, detail=f"{e.__class__.__name__}: {e}") from e
 
+            # This is the final backend outcome, after any FullyAsync client
+            # internal partial-rollout recovery. Do not turn terminal cancellation
+            # into an assistant success or permit another request on this session.
+            if output.stop_reason in {"aborted", "abort"}:
+                await self.abort()
+                raise HTTPException(status_code=409, detail="Backend generation was aborted; session cannot continue")
+
             response_ids = list(output.token_ids)
             encoded.buffer.generation_versions.append(
                 (

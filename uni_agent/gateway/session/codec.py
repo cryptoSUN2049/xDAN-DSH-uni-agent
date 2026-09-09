@@ -15,6 +15,8 @@ from types import SimpleNamespace
 from typing import Any
 from uuid import uuid4
 
+from fastapi import HTTPException
+
 from verl.utils.tokenizer import normalize_token_ids
 from verl.utils.tokenizer.chat_template import apply_chat_template as _apply_chat_template
 from verl.utils.tokenizer.chat_template import initialize_turn_separator
@@ -29,8 +31,6 @@ _FINISH_REASON_MAP = {
     "eos": "stop",
     "length": "length",
     "max_tokens": "length",
-    "aborted": "stop",
-    "abort": "stop",
 }
 
 _SGLANG_TOOL_PARSER_ALIASES = {
@@ -492,6 +492,15 @@ class MessageCodec:
         stop_reason: str | None = None,
     ) -> tuple[dict[str, Any], str]:
         """Decode model output tokens into an assistant message and finish reason."""
+        # Terminal backend outcomes take precedence over syntactically complete
+        # tool blocks: a truncated/aborted generation must not execute side effects.
+        if stop_reason in {"abort", "aborted"}:
+            raise HTTPException(status_code=409, detail="Backend generation was aborted; session cannot continue")
+        if stop_reason in {"length", "max_tokens"}:
+            return {
+                "role": "assistant",
+                "content": self._tokenizer.decode(response_ids, skip_special_tokens=True),
+            }, "length"
         if self._tool_parser_name and tools:
             content, function_calls = await self._extract_tool_calls(
                 response_ids,

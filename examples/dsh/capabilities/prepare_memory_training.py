@@ -46,6 +46,8 @@ def checkpoint_origin(resume_from, mother_run, *, family, model_revision, runtim
         or not re.fullmatch(r"[0-9a-f]{40}", plan["integration_head"])
         or run.get("verl_sha") != plan["verl_head"]
         or plan["verl_head"] != verl_head
+        or plan.get("verl_effective_source") != verl_source_identity()
+        or run.get("verl_effective_source") != plan.get("verl_effective_source")
         or plan["model_revision_declared"] != model_revision
         or plan["runtime"]["sha256"] != runtime_sha
         or f'++{AF}memory_operator.family="{family}"' not in plan["command"]
@@ -66,6 +68,7 @@ def checkpoint_origin(resume_from, mother_run, *, family, model_revision, runtim
         schema="dsh.memory-checkpoint-origin.v1",
         mother_run=str(mother),
         mother_source_head=plan["integration_head"],
+        verl_effective_source=plan["verl_effective_source"],
         checkpoint_path=str(checkpoint),
         step=int(match[1]),
         evidence={str(p): digest(p) for p in (run_file, plan_file, dataset)},
@@ -81,6 +84,12 @@ def revision(root):
 
 def deployment_lock():
     return json.loads((ROOT / "deployment/versions/g1-deployment-lock.json").read_text())
+
+
+def verl_source_identity():
+    from deployment.checks.verl_source_overlay import verify_verl_source
+
+    return verify_verl_source(ROOT / "verl", require_patched=True)
 
 
 def runtime_probe(python, runtime):
@@ -173,6 +182,7 @@ def prepare(
     head, verl_head = revision(ROOT), revision(ROOT / "verl")
     if verl_head != lock["integration"]["verl_revision"]:
         raise ValueError("VERL pin mismatch")
+    effective_verl = verl_source_identity()
     installed = runtime_probe(python, runtime)
     model_hashes = {str(model / name): digest(model / name) for name in ("config.json", "tokenizer_config.json")}
     origin = None
@@ -363,6 +373,8 @@ def prepare(
         "examples/dsh/memory_closed",
     ):
         sources.update((ROOT / directory).glob("*.py"))
+    sources.update((ROOT / "uni_agent/gateway").rglob("*.py"))
+    sources.update((ROOT / "deployment/patches/verl").glob("*.patch"))
     sources.update(
         ROOT / p
         for p in (
@@ -370,6 +382,9 @@ def prepare(
             "examples/dsh/ops/launch_qwen3_4b_online_rl.sh",
             "deployment/versions/g1-deployment-lock.json",
             "deployment/services/harbor_training_supervisor.py",
+            "deployment/versions/verl-runtime-patches.json",
+            "deployment/checks/verl_source_overlay.py",
+            "examples/dsh/ops/write_run_manifest.py",
         )
     )
     (output / "training.env").write_text("".join(f"export {k}={shlex.quote(v)}\n" for k, v in env.items()))
@@ -386,6 +401,7 @@ def prepare(
         integration_head=head,
         integration_branch=subprocess.check_output(["git", "branch", "--show-current"], cwd=ROOT, text=True).strip(),
         verl_head=verl_head,
+        verl_effective_source=effective_verl,
         model_revision_declared=model_revision,
         model_files=model_hashes,
         checkpoint_origin=origin,
@@ -416,6 +432,8 @@ def check(manifest_path):
         raise ValueError("Wrong manifest/checkout")
     if revision(ROOT) != manifest["integration_head"] or revision(ROOT / "verl") != manifest["verl_head"]:
         raise ValueError("Checkout changed; prepare a new run")
+    if manifest.get("verl_effective_source") != verl_source_identity():
+        raise ValueError("VERL effective source changed; prepare a new run")
     for collection in ("sources", "files", "model_files"):
         for path, expected in manifest[collection].items():
             if digest(path) != expected:

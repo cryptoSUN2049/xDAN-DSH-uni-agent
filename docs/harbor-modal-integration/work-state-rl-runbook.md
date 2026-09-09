@@ -1,6 +1,6 @@
 # 工作状态任务：原生在线 RL 人工复跑指南
 
-本指南对应 `prepare_memory_training --family work-state-v1`。固定 DSH 0.1.3a2、Uni-Agent upstream 89733ec、VERL fefb080；集成源码必须使用实验报告记录的完整 Git SHA。复用已有 Python 环境，不在运行中的 checkout 更新源码。
+本指南对应 `prepare_memory_training --family work-state-v1`。固定 DSH 0.1.3a2、Uni-Agent upstream 89733ec、VERL官方基线fefb080 **加 preserve-finish-reason-v1 源码补丁**；有效版本不是裸fefb080。集成源码必须使用实验报告记录的完整 Git SHA。复用已有 Python 环境，不在运行中的 checkout 更新源码。
 
 ## 1. 本次任务与边界
 
@@ -31,6 +31,9 @@ export PYTHON_BIN=/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python
 export PYTHONPATH="$PWD:$PWD/verl"
 unset PYTHONHOME RAY_ADDRESS PYTORCH_CUDA_ALLOC_CONF
 export CUDA_VISIBLE_DEVICES=''
+# 仅在新建、没有运行中进程的独立checkout显式应用；旧run源码不动。
+"$PYTHON_BIN" -m deployment.checks.verl_source_overlay --repo "$PWD/verl" --apply
+"$PYTHON_BIN" -m deployment.checks.verl_source_overlay --repo "$PWD/verl"
 WORK_STATE_RUNTIME="$("$PYTHON_BIN" -c 'from deepseek_harness_runtime import bundled_runtime_path;print(bundled_runtime_path())')"
 WORK_STATE_LABEL="work-state-$("$PYTHON_BIN" -c 'import uuid;print(uuid.uuid4().hex[:10])')"
 WORK_STATE_VAL="${WORK_STATE_LABEL}-val"
@@ -46,6 +49,15 @@ nvidia-smi
 ```
 
 覆盖8种结构变体，真实SDK工具读写、缺文件返回、拒绝越权、A字节冻结→B读取与实际配置评分。控制器oracle写入仅在此检查存在；这些调用没有学生token，不能冒充训练回执或模型能力。
+
+协议修复另有固定runtime检查；其模型端是本机scripted HTTP，不占GPU：
+
+```bash
+"$PYTHON_BIN" -m deployment.checks.dsh_finish_reason_canary \
+ --runtime "$WORK_STATE_RUNTIME" --output "/root/runs/${WORK_STATE_LABEL}-finish-canary" --include-abort
+```
+
+验证stop、length、截断文本内打印工具块无副作用，以及terminal abort明确失败；检查通过后仍须真实GPU采样/训练。补丁清单在`deployment/versions/verl-runtime-patches.json`，prepare/check与run manifest记录复合身份及真实VERL导入目录，任何未知修改均拒绝。母checkpoint reload要求相同有效VERL身份。
 
 ## 4. 准备并启动GPU学生基线
 

@@ -2,6 +2,11 @@
 
 ## 1. TL;DR
 
+- **work-state-train-r2已失败退出，GPU已释放**：child221585、exit1/1195.029秒，step4 periodic val WS06 A尝试修改只读来源被拒。step1–3记录grad/adv0；step4 CK存在但无该步gradient/消费dump，不能称有效更新。独立audit7组/32行消费、194段EOS、unknown/duplicate0，整体passed=false。报告`work-state-train-r2-result.md/json`。
+- **下一轮候选在制**：protocol3补齐业务输出schema/空目录可create/聊天不转交B（62主线程回归、独立40实例源truth不变）；VERL原fef加显式finish-reason-v1补丁，Gateway length不执行tool/terminal abort失败。复合源码身份接prepare/run/reload、固定Linuxcanary待新commit实际部署。旧r2 step4不可作为已验收母训练checkpoint。
+
+以下为此前检查点，时间与身份保留，不覆盖上述当前状态。
+
 - **12:41:38 UTC+8检查点**：work-state-train-r2真实GPU45%/38928MiB；初始4dev已返回全0，step1/2已生成并被训练器消费（rollouts/1、2），每组n4 terminal B全0、advantages全0、grad_norm=0。因此没有本课程有效学习验收；继续查工具parser/任务理解与实际消费边界。
 - **协议审计纠正**：固定VERL合并length/stop为completed，DSH completed不足以证明自然结束。r1 WS01 A原NPZ到16384且非EOS，撤回“不是token耗尽”。新增只读generation-boundary audit（19项CPU回归）核已消费原token各生成段EOS，不改原回执，不修改运行中的12902fb源码。
 

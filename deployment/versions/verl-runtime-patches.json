@@ -1,0 +1,14 @@
+{
+  "schema": "dsh.verl-source-overlay.v1",
+  "base_revision": "fefb080262e1c015a0ea05f958822a6a512dc795",
+  "overlay_id": "preserve-finish-reason-v1",
+  "patch_path": "deployment/patches/verl/fefb080-preserve-finish-reason.patch",
+  "patch_sha256": "sha256:2cb5eef7dbe70abc553fa002c3d608e6a93954afcdbe3c8e319d5ad1581df436",
+  "files": {
+    "verl/workers/rollout/vllm_rollout/vllm_async_server.py": {
+      "before_sha256": "sha256:a3bc9c92b2182d2d3f0f480535a6cbe14e07fccdd8fbe6d7c68862f17ddb2597",
+      "after_sha256": "sha256:2a4452e0c5123c8f5ed62961d048cef97c3f1f5234a8be573f2837f4e01e1d75"
+    }
+  },
+  "uv_lock_sha256": "sha256:23c77fb2e841965f2f098d378d9d0cbbb0b5824ef7eda1a97ff9b5054f6baa12"
+}
