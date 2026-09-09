@@ -12,3 +12,5 @@
 范围：控制器oracle脚本、真实SDK工具、文件与业务检查；无模型推理，无在线token，不产生学生RL回执，不证明模型能力。GPU学生另用 `801083579318ed5268cc92caf45c3ce04ef6d099` 的独立checkout和run；两提交间相关任务/runtime canary代码未变，仅新增recipe/消费审计/指南。
 
 本地核心回归229项Python+6项Node通过；recipe与新消费audit主线程组合31项通过。旧Ray弃用警告保留，不算业务失败。详见 [人工复跑指南](work-state-rl-runbook.md)。
+
+脱敏回执已归档到`/workspace/reports/work-state-runtime-canary-r1.tar.gz`：2166字节、17成员，SHA256 `f63a3e2ec8e031e7e7f5ddde1147732fac4d0950a36a0bb4270a1c63d711ef8e`。

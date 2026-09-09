@@ -2,6 +2,10 @@
 
 ## 1. TL;DR
 
+- **当前GPU作业：work-state-train-r2**，2026-09-09 12:26:17 UTC+8 launch PID221508；源码`/workspace/rebuild/uni-agent-work-state-r2`固定`12902fb8849d9fdfa118686207669bbedfcfec37`。任务protocol2只澄清A交接角色/停止条件/相对索引，80CPU回归通过；复用旧venv，初始严格val→最多8步RL，日志`/root/runs/work-state-train-r2/supervision/train.log`。尚无本课程更新或checkpoint验收。
+- **work-state-val-r1已失败结束**：主运行12:05:05→12:23:31 UTC+8，exit1/1125.024秒；WS01/03不准入，WS06未完成；WS05真实合法A0→B0仅写TQ，独立audit1group/0消费，无更新/CK。原receipt不改。详见`work-state-val-r1-result.md/json`；旧work-state-train-r1-data未启动，不得沿用。下面“val-r1正在运行”属此前快照。
+
+
 - **最新执行状态（2026-09-09 12:04:27 UTC+8）**：已启动GPU学生`work-state-val-r1`监督PID214082，独立源码`/workspace/rebuild/uni-agent-work-state-r1`固定`801083579318ed5268cc92caf45c3ce04ef6d099`；复用旧venv/模型，4公开dev、val-only。启动不等于模型加载；须继续查`/root/runs/work-state-val-r1/supervision/train.log`与最终消费audit，不按PID报通过。母训练尚未启动。
 - **W1完成**：core6085a13、recipe/audit8010835均已push；229Python+6Node核心回归、31recipe/audit组合通过。Linux真实DSH canary8结构/106请求通过（无模型），报告`work-state-runtime-canary-r1-result.md`；手动全流程`work-state-rl-runbook.md`。W2学生基线进行中，W3—W6未完成。下面旧“在制/未提交/GPU释放”描述为此前检查点。
 

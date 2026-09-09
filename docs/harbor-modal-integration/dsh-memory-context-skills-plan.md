@@ -2,7 +2,11 @@
 
 从保存文件到可靠恢复工作：面向4B模型与长周期Agent任务。
 
-2026-09-09。根据用户最新澄清细化系统方案 v3 的 N3；这是能力课程设计，不是新能力已经训练完成的报告。现有 GPU 工程诊断单独收尾，DSH/Uni-Agent/VERL pin 不因本设计自动更新。SFT、付费教师、Modal 和新增 GPU 不在本轮范围。
+2026-09-09。根据用户最新澄清细化系统方案 v3 的 N3；本文同时记录课程设计与分阶段工程证据，不是新能力已经训练完成的报告。首批文件任务已实现，GPU 学生验证进行中；DSH/Uni-Agent/VERL pin 不因本设计自动更新。SFT、付费教师、Modal 和新增 GPU 不在本轮范围。
+
+**状态快照：2026-09-09 12:13:55（UTC+8；04:13:55 UTC）。** 首批 WS01/03/05/06 的任务、真实多文件冻结、A0→B终态评分与训练接线已实现：核心 `6085a13`、recipe/消费 audit `801083579318ed5268cc92caf45c3ce04ef6d099` 已推送。主线程核心回归229项Python+6项Node、recipe/audit组合31项通过。固定 Linux runtime canary 的8种结构、106次真实工具请求通过，见[原始范围与结果](work-state-runtime-canary-r1-result.md)。
+
+`work-state-val-r1` 于12:04:27 UTC+8（04:04:27 UTC）启动，**GPU基线尚未通过，W2未完成，能力门未通过**。截至12:15:03，WS01首个A原回执为finished=true/eligible=false/reward0：第2个工具动作尝试修改只读来源，75 steps/74 calls后正常completed；不是max-token失败。该阶段无B、无训练更新，整体baseline仍在核验。原失败保留，不通过改写提示追认。后续状态见[本worktree交接](../../tasks/harbor-modal-integration/handoff.md)，不以GPU占用或PID作为成功证据。操作入口：[完整RL复跑手册](work-state-rl-runbook.md) · [参数审计计划](work-state-parameter-audit-plan.md)。
 
 ## 1. 核心目标与个人建议
 
@@ -63,7 +67,8 @@ flowchart TD
 
 ## 5. 对照现有实现：哪些真实可用
 
-- 当前 resident A/B 已通过真实 val：A写→冻结→新B读取、原token/版本/回执、2个key实际消费。见 [r2报告](memory-resident-val-r2-result.md)。它没有自主判断何时写、没有训练索引管理，也没有真实同会话compact。
+- 首批 work-state WS01/03/05/06 已有模板、精确权限、字节bundle、独立verifier、Stage/Framework与recipe/消费audit；固定Linux无模型canary通过。真实学生val运行中，终局任务结果、有效更新与独立reload尚未验收。见[复跑手册](work-state-rl-runbook.md)。
+- 历史 resident A/B 已通过真实 val：A写→冻结→新B读取、原token/版本/回执、2个key实际消费。见 [r2报告](memory-resident-val-r2-result.md)。它没有自主判断何时写、没有训练索引管理，也没有真实同会话compact。
 - 当前 NativeMemory 要求 writer reward=1 才进入 B。这适合先验工程诊断，但会排除“操作合法、记忆有遗漏”的学习样本。新版课程需独立版本化准入与评分；不能改当前评分器追认旧失败。
 - 原生 MemAgent 有 token 分块→生成记忆→新 context→最终问答方法；当前仅复用其共同 Gateway/TQ/VERL 底座，未完成这一策略迁移。它适合作为方法来源，不必把整套 MemAgent loop 套在 DSH 外。见 [源码复用审计](memagent-native-memory-reuse-audit.md)。
 - DSH已有 compaction service、自动compaction和引用spill设施；`/compact` 是要求idle的人工命令，不能直接当作模型工具。固定训练pin尚无ContextPilot实验模块；ABI名字出现在设计或映射里，不证明模型能调用。细节见下方来源。
@@ -123,7 +128,7 @@ flowchart TD
 ## 10. 下一步和当前不应扩大宣称的范围
 
 1. 已保存memory train-r2失败：initial val的A正常且安全结束但写入错误事实，原质量门拒绝；无B、n4、更新或checkpoint。见[真实失败报告](memory-resident-train-r2-result.md)。独立reload仅在后续实际产生可用checkpoint后执行；不能把反复跑这条诊断作为C1推进的硬前置。
-2. C1先实现“交接恢复、索引发现、事实更新、克制保存”的真实文件任务，覆盖模型自主选择与合法低分学习。
+2. C1首批“交接恢复、索引发现、事实更新、克制保存”文件任务已实现并通过真实工具canary；继续验收学生baseline、合法低分样本与同policy完整组消费，再执行有效更新与独立reload。
 3. 核实并接通模型可见的context操作后进入C2；没有实际request改变证据，不标compact能力通过。
 4. C3跨阶段长任务与留出效果；再做受控RSI改善记忆策略。候选只能改变获准策略，不能改用户目标或评分规则。
 
@@ -227,7 +232,7 @@ RSI后续可改进索引策略、保存时机或compact策略，但必须比较�
 
 ### 12.2 首批建议的12个种子规格
 
-这是12个待实现的规格，不是12条已执行数据或12个已验证独立训练任务。全部公开示例属开发设计，不能当封存测试。
+这是12个目标规格，不是12条已执行数据或12个已验证独立训练任务。首批WS01/03/05/06已落地为配置/计划任务，各有2种结构变体；这不等于完成表中全部长场景。其余规格尚待实现。全部公开示例属开发设计，不能当封存测试。
 
 | ID | 场景与扰动 | 主要验收 |
 |---|---|---|
@@ -280,7 +285,7 @@ oracle可以是确定性脚本或人工确定的正确操作，用于证明环�
 ### 14.3 拟变更文件与合同边界
 
 - 任务规格/设计：本MD和同专题HTML；所有公开示例明确development_spec。
-- 数据与任务：拟在`examples/dsh/capabilities/work_state/`集中放模板、fixture生成、准备器、verifier和README；实际实现前确认是否可直接扩现有模块，避免平行工具链。
+- 数据与任务：首批已在`examples/dsh/capabilities/work_state/`实现模板、业务评分、bundle、权限profile、verifier、stage与recipe准备器；后续规格继续复用该链路。准确命令与路径见[复跑手册](work-state-rl-runbook.md)。
 - 测试：对应`tests/uni_agent/examples/`与`tests/uni_agent/tasks/`；覆盖状态隔离、信息边界、合法低质量样本、索引/事实恢复及真实consumer映射。
 - 框架：只扩所需stage/chain合同与版本化任务适配；复用Gateway、Task、TQ、VERL，保留DSH唯一执行loop。
 - DSH本体：模型可见compact/context-edit若需新增，在DSH-Exp单独变更并发布固定runtime；当前训练不自动升级。
@@ -306,7 +311,11 @@ oracle可以是确定性脚本或人工确定的正确操作，用于证明环�
 | resident memory val-r2 | 真实A/B、冻结/版本与2 keys消费通过；无更新 |
 | memory train-r2 | initial val writer正常完成但写错事实；无B、n4、消费或checkpoint |
 | memory独立reload入口 | CPU实现与回归完成，真实GPU待可用母checkpoint |
-| 本文WS01—WS12 | 设计规格，执行器/数据编译与GPU训练尚未完成 |
+| WS01/03/05/06首批文件任务 | 核心6085a13与recipe/audit8010835已push；229 Python+6 Node、31 recipe/audit通过 |
+| 固定Linux runtime canary | 8结构、106实际工具请求通过；oracle控制脚本，无学生或RL更新 |
+| work-state-val-r1 | 801083579318ed5268cc92caf45c3ce04ef6d099；12:04:27 UTC+8启动；WS01首A越权改只读source被拒，无B/更新；整体基线尚未通过 |
+| W2与能力门 | W2未完成；完整组消费、有效更新、checkpoint与独立reload须逐项留证，能力未通过 |
+| 其余WS规格及更长真实场景 | 仍为设计，不以首批配置/计划任务替代全部长场景 |
 | 模型自主compact、索引维护、长期工作恢复提升 | 尚未验收，不能借A/B满分宣称通过 |
 
 每次发布任务记录具体版本、run ID、UTC与面向人的时区、通过节点、失败范围及下一步。失败不覆盖成功历史，历史成功也不覆盖当前失败。工程阻断优先定位真实第一异常；例如train-r2的空TQ keys是A被拒后的二级错误，不能据此误判GPU或CUDA故障。
@@ -332,4 +341,4 @@ oracle可以是确定性脚本或人工确定的正确操作，用于证明环�
 - strict sync validation由本项目adapter等待原Ray任务异常，避免原失败被空TQ keys遮蔽；train继续原异步提交与sync补采行为，VERL pin不变。
 - 可解性canary→真实学生baseline→同policy n4完整消费→有效梯度/参数/optimizer/checkpoint→独立reload/fresh评估。没有有效组时如实报告，不以旧context更新替代本任务学习。
 
-这是实施依据；尚未宣称新工作状态执行器、样本或训练已经完成。
+这是实施依据。首批执行器/调度数据编译/recipe与消费audit已实现并通过CPU回归；固定Linux工具canary通过。GPU学生验证已启动但尚未验收本课程更新、独立reload或能力提升。后续审计按[参数审计计划](work-state-parameter-audit-plan.md)执行，具体操作见[工作状态RL手册](work-state-rl-runbook.md)。
