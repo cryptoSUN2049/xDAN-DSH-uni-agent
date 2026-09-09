@@ -459,7 +459,7 @@ Review：训练进程正常结束与全组通过分开；数据量按独立任�
 
 - [x] context母课程专属optimizer与step12独立reload/4新评估消费验收。
 - [x] 完成人工SSH复跑手册、E0—E5验收标准并推送。
-- [ ] 修正NativeMemory训练step与实际权重版本绑定，回归后commit/push。
-- [ ] 完成独立memory数据/recipe清单和trainer真实消费审计。
+- [x] 修正NativeMemory训练step与实际权重版本绑定，281项组合回归后commit/push。
+- [x] 完成独立memory数据/recipe清单和trainer真实消费审计器，CPU通过并push。
 - [ ] 固定新integration commit、复用既有venv，GPU验证resident A/B及n4路径。
 - [ ] 按实际reward差异报告有效学习信号，不人为制造奖励方差。

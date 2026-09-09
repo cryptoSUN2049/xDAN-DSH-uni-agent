@@ -2,6 +2,8 @@
 
 ## 1. TL;DR
 
+- **最新GPU任务**：memory-resident-val-r1，监督PID185117，plan `/root/runs/memory-resident-val-r1-plan`；运行源码独立 `/workspace/rebuild/uni-agent-memory-resident-r1` 固定4168b628f3a2ff4c301dcffb60f016f8ecb770f2，配对VERL不变，旧已验收venv。准备/check已通过，已提交启动，真实加载/A/B/消费待验收；val-only、单固定constraints族、wall3600。不可修改运行中checkout。日志run/supervision/train.log，入口见native-memory-recipe-runbook.md与memory-resident-val-r1-execution.md。
+
 - 人工SSH复跑入口：`docs/harbor-modal-integration/native-training-human-runbook.md`；逐节点E0—E5标准：`native-engineering-acceptance.md`。工程正确闭环为当前重点，提分/扩量非前置。
 
 - 当前worktree `harbor-modal-integration` / 分支 `worktree-harbor-modal-integration`。Goal active；四能力与结果复现优先，Harbor后置，SFT不属本轮。权威目标active-engineering-goal.md，总方案uni-agent-system-plan-v3.html。
@@ -261,4 +263,4 @@ _hydra允许经过白名单校验的相对路径键；仍拒绝分隔符/插值�
 
 ### NativeMemory 接线复核：训练步数与权重版本
 
-固定VERL sync初始化发布weight0，fit先把训练step增为1后采样；每步更新后发布该step权重，再验证。因此训练prompt step=s对应实际weight=s-1，val step=s对应weight=s。新接线必须分别记录调度step和expected_policy_version，真实generation版本仍需完整且相等，禁止缺失时补写。主线程已发现原接线将二者等同的问题，正在用固定源码时序与CPU反例修正；尚未部署该接线到GPU。
+固定VERL sync初始化发布weight0，fit先把训练step增为1后采样；每步更新后发布该step权重，再验证。因此训练prompt step=s对应实际weight=s-1，val step=s对应weight=s。新接线必须分别记录调度step和expected_policy_version，真实generation版本仍需完整且相等，禁止缺失时补写。主线程已发现并修正原接线将二者等同的问题，固定源码时序/CPU反例和281组合回归通过，d620d62已推送。当前4168b62已包含该修复并部署新GPU checkout，真实版本合同仍待此次val检验。
