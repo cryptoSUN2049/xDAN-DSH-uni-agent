@@ -1,0 +1,449 @@
+{
+  "schema": "dsh.work-state-train-r4-result.v1",
+  "collected_at_utc": "2026-09-09T07:11:13.520620+00:00",
+  "source": "5b4b01b1d0ab656e960d3514d0a3630210913022",
+  "run_id": "work-state-train-r4",
+  "run_root": "/root/runs/work-state-train-r4",
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 1920.038,
+    "pid": 243079,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "consumption": {
+    "schema": "dsh.memory-training-consumption-audit.v1",
+    "passed": true,
+    "consumption_verified": true,
+    "run_completed": true,
+    "run_id": "work-state-train-r4",
+    "run_manifest_sha256": "sha256:63ace12b90bb72906a943029b10a116a038aa54074bf125a292032908fe0b08c",
+    "errors": [],
+    "unknown_or_unadmitted_consumption": [],
+    "duplicate_consumption": [],
+    "overlapping_crosswalk_keys": [],
+    "summary": {
+      "groups": 8,
+      "consumed_groups": 8,
+      "consumed_rows": 64,
+      "unique_consumed_rows": 64
+    },
+    "limitations": [
+      "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+      "Crosswalk and submission records alone never establish trainer consumption."
+    ]
+  },
+  "groups": [
+    {
+      "step": 1,
+      "uid": "a89c1881-f30c-4080-8106-57797eca9408",
+      "task_ids": [
+        "work-state-ws01-v0-s101"
+      ],
+      "terminal_b_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "consumption_verified": true
+    },
+    {
+      "step": 2,
+      "uid": "5f00c42c-7cdd-43b4-aeea-5b742ffb2d94",
+      "task_ids": [
+        "work-state-ws01-v0-s202"
+      ],
+      "terminal_b_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "consumption_verified": true
+    },
+    {
+      "step": 3,
+      "uid": "f0c6efa7-981e-422f-b5d4-aab3eac7748c",
+      "task_ids": [
+        "work-state-ws05-v0-s101"
+      ],
+      "terminal_b_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "consumption_verified": true
+    },
+    {
+      "step": 4,
+      "uid": "055a2a7b-8dc5-4af0-874f-a99d2b959213",
+      "task_ids": [
+        "work-state-ws05-v0-s202"
+      ],
+      "terminal_b_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "consumption_verified": true
+    },
+    {
+      "step": 5,
+      "uid": "1b35434a-902b-4ead-bc4b-5fadc82422a2",
+      "task_ids": [
+        "work-state-ws06-v0-s202"
+      ],
+      "terminal_b_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "consumption_verified": true
+    },
+    {
+      "step": 6,
+      "uid": "aad1a226-be30-48fa-84fd-cf03863b22eb",
+      "task_ids": [
+        "work-state-ws01-v0-s101"
+      ],
+      "terminal_b_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "consumption_verified": true
+    },
+    {
+      "step": 7,
+      "uid": "24025f49-27cf-4d84-be9d-125cfec1e8d5",
+      "task_ids": [
+        "work-state-ws01-v0-s202"
+      ],
+      "terminal_b_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "consumption_verified": true
+    },
+    {
+      "step": 8,
+      "uid": "5333d887-15c5-4a44-9cfb-c75df3bf9423",
+      "task_ids": [
+        "work-state-ws03-v0-s101"
+      ],
+      "terminal_b_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "consumption_verified": true
+    }
+  ],
+  "unique_task_ids": [
+    "work-state-ws01-v0-s101",
+    "work-state-ws01-v0-s202",
+    "work-state-ws03-v0-s101",
+    "work-state-ws05-v0-s101",
+    "work-state-ws05-v0-s202",
+    "work-state-ws06-v0-s202"
+  ],
+  "task_group_counts": {
+    "work-state-ws06-v0-s202": 1,
+    "work-state-ws01-v0-s202": 2,
+    "work-state-ws05-v0-s202": 1,
+    "work-state-ws01-v0-s101": 2,
+    "work-state-ws03-v0-s101": 1,
+    "work-state-ws05-v0-s101": 1
+  },
+  "rejected_stage_receipts": [
+    {
+      "path": "/root/runs/work-state-train-r4/chains/memory-ed59497f525f4222b26da04af95e85c8/writer/run/results/3b727c00aba0c4a6cc564c23/verifier-receipt.json",
+      "task_id": "dsh/work-state/memory-ed59497f525f4222b26da04af95e85c8/writer",
+      "eligible": false,
+      "finished": false
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/chains/memory-dd5e06ddb1e64542b81af50a51a4d00b/writer/run/results/6746dd7b7c791983ecda9cde/verifier-receipt.json",
+      "task_id": "dsh/work-state/memory-dd5e06ddb1e64542b81af50a51a4d00b/writer",
+      "eligible": false,
+      "finished": false
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/chains/memory-11d33f939be546688c3d917378ba517d/writer/run/results/5f152879b83bf91881f60936/verifier-receipt.json",
+      "task_id": "dsh/work-state/memory-11d33f939be546688c3d917378ba517d/writer",
+      "eligible": false,
+      "finished": true
+    }
+  ],
+  "rejected_group_log_count": 3,
+  "step_metrics": [
+    {
+      "step": 1,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "critic/rewards/max": 0.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 2,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "critic/rewards/max": 0.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 3,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "critic/rewards/max": 0.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 4,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "critic/rewards/max": 0.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 5,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "critic/rewards/max": 0.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 6,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "critic/rewards/max": 0.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 7,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "critic/rewards/max": 0.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    },
+    {
+      "step": 8,
+      "metrics": {
+        "actor/pg_loss": 0.0,
+        "actor/loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "critic/rewards/max": 0.0,
+        "critic/rewards/min": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0
+      }
+    }
+  ],
+  "checkpoint_delta": {
+    "schema": "dsh.single-rank-lora-delta.v1",
+    "passed": false,
+    "adapter_count": 504,
+    "adapter_changed": 0,
+    "base_count": 399,
+    "base_changed": 0,
+    "before": {
+      "path": "/workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_4/actor/model_world_size_1_rank_0.pt",
+      "sha256": "0ce64d8d9bc5bf0ad96115c93db6e538729ca8daa2155a0bf884c50caa765659"
+    },
+    "after": {
+      "path": "/workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/model_world_size_1_rank_0.pt",
+      "sha256": "0ce64d8d9bc5bf0ad96115c93db6e538729ca8daa2155a0bf884c50caa765659"
+    }
+  },
+  "all_checkpoint_tensors_finite": true,
+  "optimizer_delta": {
+    "schema": "dsh.native-optimizer-delta.v1",
+    "passed": false,
+    "errors": [
+      "ValueError: All optimizer moments are zero"
+    ],
+    "files": {
+      "before": {
+        "path": "/workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_4/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "a2a543f47f5f9b717cf40f6200ca06192155f588915f6165a252377aa4f1b071"
+      },
+      "after": {
+        "path": "/workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "a39d66d3dd39264356485b486552faab6bf4ef2c6f357d1f08e52d48a55afdcb"
+      }
+    },
+    "input_scope": "Trusted checkpoints produced by this project's own run; weights_only=True, CPU only"
+  },
+  "observed_checkpoint_state": {
+    "schema": "dsh.lora-b-optimizer-observation.v1",
+    "method": "Actual trusted checkpoint CPU weights_only loads, no regenerated initialization or artificial step0.",
+    "lora_b": {
+      "4": {
+        "tensor_count": 252,
+        "nonzero_tensor_count": 0,
+        "all_finite": true,
+        "max_abs": 0.0
+      },
+      "8": {
+        "tensor_count": 252,
+        "nonzero_tensor_count": 0,
+        "all_finite": true,
+        "max_abs": 0.0
+      }
+    },
+    "optimizer": {
+      "4": {
+        "state_count": 541,
+        "step_values": [
+          8.0
+        ],
+        "moment_tensor_count": 1008,
+        "nonzero_moment_tensor_count": 0,
+        "all_moments_finite": true
+      },
+      "8": {
+        "state_count": 541,
+        "step_values": [
+          16.0
+        ],
+        "moment_tensor_count": 1008,
+        "nonzero_moment_tensor_count": 0,
+        "all_moments_finite": true
+      }
+    }
+  },
+  "generation_boundaries": {
+    "passed": true,
+    "model_source": {
+      "model_config_path": "/workspace/models/Qwen3-4B-1cfa9a7/config.json",
+      "model_config_sha256": "sha256:8ba006f74fecfaaeb392872a60f4a480e7ec9860153d2e1b769ec81f9a147f8a",
+      "generation_config_path": "/workspace/models/Qwen3-4B-1cfa9a7/generation_config.json",
+      "generation_config_sha256": "sha256:2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "eos_token_ids": [
+        151643,
+        151645
+      ],
+      "vocab_size": 151936,
+      "checkpoint_binding": "operator-supplied-config-hashes"
+    },
+    "summary": {
+      "consumed_trajectories_checked": 64,
+      "generation_segments": 289,
+      "verified_eos_segments": 289,
+      "uncertain_non_eos_segments": 0,
+      "eos_capacity_ties": 0
+    },
+    "errors": [],
+    "limitations": [
+      "EOS IDs are original-token evidence, not recovered backend finish_reason.",
+      "EOS at capacity is a tie; original termination precedence is unknown.",
+      "No EOS does not prove length; budget is operator-declared, not inferred.",
+      "Fixed VERL still loses length/stop distinctions; this audit does not repair it.",
+      "No optimizer update, model improvement or historical receipt rewriting is certified."
+    ]
+  },
+  "effective_learning_verified": false,
+  "independent_reload": "Separate root-owned run; outside this report.",
+  "evidence": [
+    {
+      "path": "/root/runs/work-state-train-r4/final-audit-r1/memory-consumption-audit.json",
+      "sha256": "sha256:ab309d65ff1898e15cc2d0ce3fe1b0d776d636b74294c669f276e01973258e27",
+      "bytes": 7362
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/final-audit-r1/checkpoint-delta-4-8.json",
+      "sha256": "sha256:96fbb163d1fe4e1a641ff8d92c5ff9ca49faba592ab6a80404e75fc167b469e9",
+      "bytes": 175346
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/final-audit-r1/optimizer-delta-4-8.json",
+      "sha256": "sha256:771ef3ad088f50029965eec2caa5925fd777aa9e42415688d58a2989c137f8de",
+      "bytes": 709
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/final-audit-r1/generation-boundaries-audit.json",
+      "sha256": "sha256:e991a98e9406450c469d8c97d436242fe1dac2a2148bff48ef1d45669973e473",
+      "bytes": 174193
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/final-audit-r1/lora-b-optimizer-observation.json",
+      "sha256": "sha256:0f4d3bd6e43e646d81ab974e3210418509f6f8b5c4330c639a504611fdd0c64e",
+      "bytes": 851
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/final-audit-r1/commands.json",
+      "sha256": "sha256:3e2f75b5672a577be2ea4cc1b0cd5965b8e138c084ef5fe993a1103b99e0d44c",
+      "bytes": 1406
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/run-manifest.json",
+      "sha256": "sha256:63ace12b90bb72906a943029b10a116a038aa54074bf125a292032908fe0b08c",
+      "bytes": 6559
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/memory-launch-plan.json",
+      "sha256": "sha256:15a4fa758413e92c2c165288937e7423014e21cf77df95bcd95f932f5e3ea777",
+      "bytes": 19598
+    },
+    {
+      "path": "/root/runs/work-state-train-r4/supervision/supervisor-result.json",
+      "sha256": "sha256:70d23b565855b4de7bbe0e224542c0ae2462ef12e66a350ba5864d15e705126e",
+      "bytes": 167
+    },
+    {
+      "path": "/workspace/rebuild/uni-agent-work-state-r4/dsh-work-state/work-state-train-r4.jsonl",
+      "sha256": "sha256:bac2bf25282c1a8f55da2622024668a1bc09bd131bdbdfd05a849552ef412168",
+      "bytes": 26540
+    }
+  ],
+  "limitations": [
+    "Successful eight-step execution/consumption and checkpoint saving are engineering evidence, not positive task learning.",
+    "lora_B observations at step4/8 do not constitute an observed step0 snapshot.",
+    "Model files equal between4/8; optimizer step metadata changed while moments remained zero.",
+    "Rejected-group log count and receipts are observed evidence, not a substitute for crosswalk/consumption integrity audit."
+  ]
+}

@@ -2,6 +2,10 @@
 
 ## 1. TL;DR
 
+- **最新验收：E2/E3通过，E4尚待评估结果完整落盘。** r4最终8组/64唯一消费、289原生成段EOS通过，实际6unique任务/3拒组；模型4→8完全相同、base399不变、LoRA B252张量全0，8步grad0，无有效学习。原报告work-state-train-r4-result.md/json。独立reload child258242 exit1/545.014秒，已实际加载step8，第四个val未准入导致最后汇总未写（3crosswalk、0validation dump），GPU已释放。母checkpoint无改动；后续最小任务隔离补验，不重训，不改原VERL或奖励。
+
+- **最新：r4母训练8/8步exit0，独立reload已启动待验收。** child243079/1920.038秒；8步消费文件、CK4/8保存，8步grad/reward全0。最终CPU消费与参数审计进行中。reload launch PID258133，14:56:46 UTC+8，新/root/runs/work-state-train-r4-reload与-data/manifest.json，固定原5b4b01b源码、原venv，母step8绑定/val-only预检通过。不要因exit0宣称有效学习；以下旧进度保留作历史检查点。
+
 - **最新r4已启动，尚未验收**：2026-09-09 14:18:35 UTC+8，launch PID242996，源码5b4b01b1d0ab656e960d3514d0a3630210913022已push；独立/workspace/rebuild/uni-agent-work-state-r4，原venv。预检通过：8steps/n4/save4与8，关闭初始与周期val。日志/root/runs/work-state-train-r4/supervision/train.log；清单/root/runs/work-state-train-r4-data/manifest.json。54项独立recipe+audit回归及Ruff双门通过，详见work-state-train-r4-execution.md。以下r3/r4未启动文字是上轮检查点。
 
 - **当前状态：r3已失败，r4尚未启动。** r3 child232331 exit1/1275.026秒，global_steps4周期val WS06 writer A尝试写只读source被拒，未进入B；原始报告`work-state-train-r3-result.md/json`。step1–3记录reward/adv/grad全0，step4 CK存在未验收有效更新或独立reload。主线程interim audit11groups/7consumed/32rows，无errors；不能据此标整轮passed。

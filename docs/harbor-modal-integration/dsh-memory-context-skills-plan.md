@@ -2,15 +2,22 @@
 
 从保存文件到可靠恢复工作：面向4B模型与长周期Agent任务。
 
-2026-09-09。根据用户最新澄清细化系统方案 v3 的 N3；本文同时记录课程设计与分阶段工程证据，不是新能力已经训练完成的报告。首批文件任务已实现，GPU 学生验证进行中；DSH/Uni-Agent/VERL pin 不因本设计自动更新。SFT、付费教师、Modal 和新增 GPU 不在本轮范围。
+2026-09-09。根据用户最新澄清细化系统方案 v3 的 N3；本文同时记录课程设计与分阶段工程证据，不是新能力已经训练完成的报告。首批文件任务已实现，GPU 学生训练已完成r4的8步执行，消费与reload验收仍在进行；DSH/Uni-Agent/VERL pin 不因本设计自动更新。SFT、付费教师、Modal 和新增 GPU 不在本轮范围。
 
-**当前账本：2026-09-09 13:24:15 UTC+8（05:24:15 UTC）。** 首批WS01/03/05/06已实现；此前核心229 Python+6 Node、recipe/audit31项及Linux8结构/106实际工具请求通过，不等于学生能力通过。
+**当前账本：r4真实8/8步完成，exit0，1920.038秒；尚非完整工作包验收。** step4/8 checkpoint已保存，全部8步奖励与梯度为0。最终完整组消费及参数审计正在独立核验；reload已通过preflight，尚未取得独立reload/fresh评估结果。见[r4执行报告](work-state-train-r4-execution.md)与[首步审计](r4-first-step-audit.md)，首步证据不能代替整轮审计。
 
-[work-state-train-r2](work-state-train-r2-result.md)已失败结束：step4周期评估的WS06 A写只读来源被拒；已记录step1–3奖励/优势/梯度全0，step4 checkpoint存在但未证明有效更新，未完成8步或独立reload。原失败与零学习信号保留。DSH reported completed仅是runtime记录；不能泛称“不是token耗尽”，原始结束原因缺失的边界见[协议审计](work-state-online-protocol-audit.md)。
+工程首阶段沿用[权威goal的E1—E4](../../tasks/harbor-modal-integration/active-engineering-goal.md)，不另设目标：
 
-新`work-state-train-r3`使用源码`17b6e5589abc8d5a77c6238d0971a129135aa9b7`、[protocol revision 3](work-state-protocol-revision3.md)及显式VERL结束原因补丁（apply/verify通过）。13:24:15 UTC+8已启动launch PID232248；**启动不等于GPU已加载或任务通过，W2未完成，能力门未通过**。revision3只修正持久化和业务输出schema说明，不改源事实、oracle或二元评分。[固定DSH finish-reason真实canary](dsh-finish-reason-canary-r1-result.md)的stop/length/打印工具块/HTTP409四case通过，不能替代真实学生更新验收。
+- **E1 固定部署：已核验。** DSH SDK/runtime 0.1.3a2、runtime hash及显式VERL补丁等身份已固定，无需重建旧截图中尚未发布的runtime。
+- **E2 八步与唯一消费：运行已8/8，最终消费审计待核。** 保持原安全/证据门，合法零奖励未主动中止训练。
+- **E3 保存与版本绑定：step4/8已保存，完整性与参数审计待核。** 文件存在不等于有效更新。
+- **E4 独立reload与fresh评估：preflight已通过，实际验收待执行结果。** 核加载身份、逐题覆盖及原失败证据，确认母checkpoint未改。
 
-操作入口：[完整RL复跑手册](work-state-rl-runbook.md) · [参数审计计划](work-state-parameter-audit-plan.md) · [本worktree交接](../../tasks/harbor-modal-integration/handoff.md)。这里记录版本与通过边界，不跟踪实时GPU数值。
+上述仅为执行层。原W4的非零优势、有限非零任务梯度与有效参数/optimizer更新条件仍独立保留；目前不能宣称有效学习、能力提升或整个goal完成。
+
+[r2失败](work-state-train-r2-result.md)与[r3失败](work-state-train-r3-result.md)原证据保留：step4内嵌周期评估的WS06 A写只读来源被拒。r4将训练与严格独立评估分开，未放宽评分或安全规则。[protocol 3](work-state-protocol-revision3.md)只修正持久化/业务schema说明；[固定DSH结束原因canary](dsh-finish-reason-canary-r1-result.md)四项通过，不替代学生更新验收。历史DSH reported completed不能概括为“未耗尽token”，见[协议审计](work-state-online-protocol-audit.md)。
+
+操作入口：[完整RL复跑手册](work-state-rl-runbook.md) · [参数审计计划](work-state-parameter-audit-plan.md) · [本worktree交接](../../tasks/harbor-modal-integration/handoff.md)。完整长期课程设计保留如下；不跟踪实时GPU数值。
 
 ## 1. 核心目标与个人建议
 
@@ -71,7 +78,7 @@ flowchart TD
 
 ## 5. 对照现有实现：哪些真实可用
 
-- 首批 work-state WS01/03/05/06 已有模板、精确权限、字节bundle、独立verifier、Stage/Framework与recipe/消费audit；固定Linux无模型canary通过。r2失败且无已验收有效梯度；r3新版本已启动，终局任务结果、有效更新与独立reload尚未验收。见[复跑手册](work-state-rl-runbook.md)。
+- 首批 work-state WS01/03/05/06 已有模板、精确权限、字节bundle、独立verifier、Stage/Framework与recipe/消费audit；固定Linux无模型canary通过。r2/r3失败保留；r4已8步exit0且梯度全0，最终消费、参数与独立reload尚待验收。见[复跑手册](work-state-rl-runbook.md)。
 - 历史 resident A/B 已通过真实 val：A写→冻结→新B读取、原token/版本/回执、2个key实际消费。见 [r2报告](memory-resident-val-r2-result.md)。它没有自主判断何时写、没有训练索引管理，也没有真实同会话compact。
 - 当前 NativeMemory 要求 writer reward=1 才进入 B。这适合先验工程诊断，但会排除“操作合法、记忆有遗漏”的学习样本。新版课程需独立版本化准入与评分；不能改当前评分器追认旧失败。
 - 原生 MemAgent 有 token 分块→生成记忆→新 context→最终问答方法；当前仅复用其共同 Gateway/TQ/VERL 底座，未完成这一策略迁移。它适合作为方法来源，不必把整套 MemAgent loop 套在 DSH 外。见 [源码复用审计](memagent-native-memory-reuse-audit.md)。

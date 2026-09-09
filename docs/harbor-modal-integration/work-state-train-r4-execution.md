@@ -1,6 +1,8 @@
 # Work-state train r4：工程流程优先
 
-2026-09-09 14:18:35 UTC+8 启动。状态：已启动，未验收通过。
+2026-09-09 14:18:35 UTC+8 启动。最新：母训练8/8步完成，supervisor child243079 exit0/1920.038秒；八步消费文件和step4/8保存物存在。八步奖励/梯度均0，最终消费与参数CPU审计进行中，不宣称有效学习。
+
+独立reload于2026-09-09 14:56:46 UTC+8启动，launch PID258133；新run `/root/runs/work-state-train-r4-reload`，对应清单`/root/runs/work-state-train-r4-reload-data/manifest.json`。预检通过并绑定母step8完整文件SHA，VAL_ONLY=True/resume_path；启动不是加载验收，最终结果待日志与fresh消费证据。
 
 - 集成源码：`5b4b01b1d0ab656e960d3514d0a3630210913022`，已推送GitHub；GPU独立目录`/workspace/rebuild/uni-agent-work-state-r4`。
 - 固定DSH SDK/runtime 0.1.3a2、二进制SHA256 `d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb`；实际发行包名为deepseek-harness-sdk及deepseek-harness-runtime-bin。沿用已验收venv，没有重新安装。
