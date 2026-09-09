@@ -108,6 +108,26 @@ def runtime_probe(python, runtime):
     return installed
 
 
+def _work_state_dataset():
+    from examples.dsh.capabilities.work_state.tasks import make_task
+
+    rows, structures, visible = {}, {"train": set(), "validation": set()}, {"train": set(), "validation": set()}
+    for family in ("WS01", "WS03", "WS05", "WS06"):
+        for variant, seed, split in ((0, 101, "train"), (0, 202, "train"), (1, 303, "validation")):
+            task = make_task(family, variant, seed)
+            rows[task["task_id"]] = dict(family=family, variant=variant, seed=seed, split=split)
+            structures[split].add((family, variant))
+            observed = {name: task[name] for name in ("writer_files", "reader_files")}
+            visible[split].add(hashlib.sha256(json.dumps(observed, sort_keys=True).encode()).hexdigest())
+    return dict(schema="dsh.work-state-dataset.v1", tasks=rows), dict(
+        family_count=4,
+        structures={k: len(v) for k, v in structures.items()},
+        distinct_visible_inputs={k: len(v) for k, v in visible.items()},
+        visibility="public-development-not-sealed",
+        note="Seed or task ID multiplicity is not structural diversity.",
+    )
+
+
 def prepare(
     *,
     output_dir,
@@ -122,7 +142,7 @@ def prepare(
     resume_from=None,
     mother_run=None,
 ):
-    if mode not in ("val", "train", "reload") or family not in ("constraints", "updates"):
+    if mode not in ("val", "train", "reload") or family not in ("constraints", "updates", "work-state-v1"):
         raise ValueError("Only val/train/reload and fixed diagnostic families are supported")
     if (mode == "reload" and (not resume_from or not mother_run)) or (
         mode != "reload" and (resume_from is not None or mother_run is not None)
@@ -172,20 +192,34 @@ def prepare(
     output.mkdir(parents=True, mode=0o700)
     if origin:
         (output / "checkpoint-origin.json").write_text(json.dumps(origin, indent=2) + "\n")
-    # These are scheduling records. Private A/B task prompts/fixtures are created by StageSpec.
+    work_state = family == "work-state-v1"
+    dataset, coverage = _work_state_dataset() if work_state else (None, None)
+    if dataset:
+        (output / "work-state-tasks.json").write_text(json.dumps(dataset, sort_keys=True, indent=2) + "\n")
+    counts = {}
+    # Only trusted task IDs reach actors; truth and task generation remain controller-side.
     for split in ("train", "validation"):
-        row = dict(
-            data_source="dsh/memory-fixed-diagnostic/" + family,
-            uid=run_id + "-" + split,
-            agent_name="task",
-            prompt=[dict(role="user", content="Execute the trusted memory chain.")],
-            extra_info=dict(
-                tools_kwargs=dict(
-                    task=dict(name="dsh_architecture", metadata=dict(family=family, split=split, diagnostic_only=True))
-                )
-            ),
+        records = (
+            {key: value for key, value in dataset["tasks"].items() if value["split"] == split}
+            if dataset
+            else {split: {}}
         )
-        pq.write_table(pa.Table.from_pylist([row]), output / (split + ".parquet"))
+        rows = []
+        for identity in records:
+            metadata = (
+                dict(work_state_task_id=identity) if dataset else dict(family=family, split=split, diagnostic_only=True)
+            )
+            rows.append(
+                dict(
+                    data_source="dsh/work-state/v1" if work_state else "dsh/memory-fixed-diagnostic/" + family,
+                    uid=run_id + "-" + identity,
+                    agent_name="task",
+                    prompt=[dict(role="user", content="Execute the trusted memory chain.")],
+                    extra_info=dict(tools_kwargs=dict(task=dict(name="dsh_architecture", metadata=metadata))),
+                )
+            )
+        counts[split] = len(rows)
+        pq.write_table(pa.Table.from_pylist(rows), output / (split + ".parquet"))
     # Ops requires a task file; actual execution always substitutes a private StageSpec file.
     template = ROOT / "examples/dsh/evolution_task_config_v3_live.yaml"
     (output / "task.yaml").write_text(yaml.safe_dump(yaml.safe_load(template.read_text()), sort_keys=False))
@@ -258,8 +292,23 @@ def prepare(
         checkpoint_identity=origin["identity"] if origin else model_revision,
         family=family,
     )
+    if work_state:
+        operator.update(
+            task_manifest=str(output / "work-state-tasks.json"),
+            task_manifest_sha256=digest(output / "work-state-tasks.json"),
+        )
+        env.update(
+            TRAIN_MAX_SAMPLES="8",
+            VAL_MAX_SAMPLES="4",
+            TOTAL_TRAINING_STEPS="8" if mode == "train" else "1",
+            SAVE_FREQ="4",
+            TEST_FREQ="4" if mode == "train" else "1",
+            PROJECT_NAME="dsh-work-state",
+        )
     overrides = {
-        AF + "framework_class_fqn": "uni_agent.framework.memory_chain.NativeMemoryFramework",
+        AF + "framework_class_fqn": "uni_agent.framework.work_state.NativeWorkStateFramework"
+        if work_state
+        else "uni_agent.framework.memory_chain.NativeMemoryFramework",
         AF + "memory_run_id": run_id,
         AF + "memory_operator": operator,
         AF + "agent_runners.task.trajectory_selection": "all",
@@ -267,6 +316,14 @@ def prepare(
         AF + "trajectory_postprocessor_kwargs": None,
         AF + "trajectory_postprocessor_pass_context": False,
     }
+    if work_state:
+        adapter = "uni_agent.framework.entry.StrictSyncValidationRolloutAdapter"
+        overrides.update(
+            {
+                "actor_rollout_ref.rollout.agent.agent_loop_manager_class": adapter,
+                AF + "strict_validation_timeout_seconds": 3600,
+            }
+        )
     # JSON objects are not Hydra dictionaries (quoted keys are illegal); emit leaves instead.
     tail = []
     for key, value in overrides.items():
@@ -274,7 +331,13 @@ def prepare(
             tail.extend("++" + key + "." + k + "=" + json.dumps(v) for k, v in value.items())
         else:
             tail.append("++" + key + "=" + json.dumps(value))
-    tail.extend(["trainer.total_epochs=1", "trainer.test_freq=1", "trainer.default_local_dir=" + str(checkpoint)])
+    tail.extend(
+        [
+            "trainer.total_epochs=1",
+            "trainer.test_freq=" + env["TEST_FREQ"],
+            "trainer.default_local_dir=" + str(checkpoint),
+        ]
+    )
     if origin:
         tail.extend(
             [
@@ -287,6 +350,12 @@ def prepare(
     command = ["bash", str(ROOT / "examples/dsh/ops/launch_qwen3_4b_online_rl.sh"), "--foreground", *tail]
     sources = set((ROOT / "examples/dsh/capabilities").glob("memory*.py")) | {Path(__file__), template}
     sources.update((ROOT / "examples/dsh").glob("*.py"))
+    if work_state:
+        sources.update(
+            p
+            for p in (ROOT / "examples/dsh/capabilities/work_state").iterdir()
+            if p.suffix in (".py", ".mjs") and not p.name.endswith(".test.mjs")
+        )
     for directory in (
         "uni_agent/framework",
         "uni_agent/tasks/dsh",
@@ -308,8 +377,9 @@ def prepare(
         schema="dsh.memory-resident-preparation.v1",
         status="prepared-not-run",
         mode=mode,
-        dataset_kind="fixed-diagnostic-not-heldout",
-        counts=dict(train=1, validation=1),
+        dataset_kind="public-structural-development" if work_state else "fixed-diagnostic-not-heldout",
+        counts=counts,
+        coverage=coverage,
         training=False,
         learning_signal_verified=False,
         repository_root=str(ROOT),
@@ -326,7 +396,9 @@ def prepare(
         command=command,
         wall_seconds=7200 if mode == "train" else 3600,
         caveats=[
-            "Train/val are the same fixed family, not independently held out.",
+            "Public dev uses variant1; train uses variant0. Neither is a sealed holdout."
+            if work_state
+            else "Train/val are the same fixed family, not independently held out.",
             "All-equal B rewards imply zero GRPO signal; never manufacture failures.",
             "Model revision is declared identity; only listed model files are hashed.",
             "Legacy DSH v2 consumption auditor is not the memory-chain auditor.",
@@ -351,6 +423,17 @@ def check(manifest_path):
     if digest(manifest["runtime"]["path"]) != manifest["runtime"]["sha256"]:
         raise ValueError("Runtime changed")
     env = manifest["environment"]
+    overrides = dict(x.lstrip("+").split("=", 1) for x in manifest["command"][3:] if "=" in x)
+    work_state = overrides.get(AF + "memory_operator.family") == json.dumps("work-state-v1")
+    if work_state:
+        task_path = Path(json.loads(overrides[AF + "memory_operator.task_manifest"]))
+        expected_task_path = Path(env["DATA_ROOT"]) / "work-state-tasks.json"
+        if (
+            task_path != expected_task_path
+            or digest(task_path) != json.loads(overrides[AF + "memory_operator.task_manifest_sha256"])
+            or json.loads(task_path.read_text()) != _work_state_dataset()[0]
+        ):
+            raise ValueError("Work-state task manifest identity changed")
     if manifest["mode"] == "reload" and not manifest.get("checkpoint_origin"):
         raise ValueError("Reload requires checkpoint origin")
     if manifest.get("checkpoint_origin"):
@@ -376,7 +459,6 @@ def check(manifest_path):
             or env["RESUME_FROM_PATH"] != origin["checkpoint_path"]
         ):
             raise ValueError("Invalid reload-only configuration")
-        overrides = dict(x.lstrip("+").split("=", 1) for x in manifest["command"][3:] if "=" in x)
         expected = {
             "trainer.val_only": "True",
             "trainer.val_before_train": "True",
@@ -396,7 +478,8 @@ def check(manifest_path):
             env["PYTHON_BIN"],
             "-c",
             "from uni_agent.framework.memory_chain import NativeMemoryFramework;"
-            "from examples.dsh.capabilities.memory_training_stage import validate_stage_execution",
+            "from examples.dsh.capabilities.memory_training_stage import validate_stage_execution;"
+            + ("from uni_agent.framework.work_state import NativeWorkStateFramework" if work_state else ""),
         ],
         cwd=env["DATA_ROOT"],
         env={**env, "CUDA_VISIBLE_DEVICES": ""},
@@ -450,7 +533,7 @@ def main():
     prep.add_argument("--mode", choices=("val", "train", "reload"), default="val")
     prep.add_argument("--resume-from", type=Path)
     prep.add_argument("--mother-run", type=Path)
-    prep.add_argument("--family", choices=("constraints", "updates"), default="constraints")
+    prep.add_argument("--family", choices=("constraints", "updates", "work-state-v1"), default="constraints")
     for name in ("check", "launch"):
         sub.add_parser(name).add_argument("manifest_path", type=Path)
     args = vars(parser.parse_args())

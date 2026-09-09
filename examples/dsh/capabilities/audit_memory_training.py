@@ -7,12 +7,13 @@ consumer, not a TQ client, optimizer audit, or security sandbox.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 from collections import Counter
 from pathlib import Path
 
-from examples.dsh.capabilities.memory_verifier import read_regular, sha
+from examples.dsh.capabilities.memory_verifier import canonical, read_regular, sha
 from examples.dsh.ops.audit_qwen3_4b_online_rl import _load_dump_trajectory
 from uni_agent.framework.memory_chain import audit_memory_chain_crosswalk
 from uni_agent.tasks.dsh.trajectory_audit import validate_trajectory
@@ -33,8 +34,126 @@ def _json(path):
     return value
 
 
+def _work_state_lineage(record, item, result_root):
+    # Lazy import keeps old runs independent of optional work-state implementation.
+    from examples.dsh.capabilities.work_state import verifier
+    from examples.dsh.capabilities.work_state.bundle import pack_bundle
+    from examples.dsh.capabilities.work_state.tasks import make_task
+
+    receipt_path = Path(item["stage_receipt_path"])
+    receipt = _json(receipt_path)
+    envelope = _json(receipt_path.with_name("agent-result.json"))
+    metadata = envelope["metadata"]
+    fixture_path = result_root.parent.parent / "fixture.json"
+    _require(metadata["fixture_path"] == str(fixture_path), "Work-state fixture location mismatch")
+    raw = read_regular(fixture_path)
+    _require(sha(raw) == metadata["fixture_sha256"], "Work-state fixture hash changed")
+    fixture = _json(fixture_path)
+    role = "writer" if item["role"] == "A" else "reader"
+    _require(
+        fixture["schema"] == "dsh.work-state-stage.v1"
+        and fixture["contract_id"] == metadata["contract_id"] == "work-state-v1"
+        and fixture["role"] == role
+        and fixture["chain_id"] == item["chain_id"],
+        "Work-state fixture contract/role/chain mismatch",
+    )
+    chains = [_json(ref["receipt_path"]) for ref in record["chains"]]
+    chain = next(c for c in chains if c["chain_id"] == item["chain_id"])
+    expected_binding = dict(
+        schema="dsh.memory-training-stage.v1",
+        split="train" if record["partition"] == "train" else "validation",
+        run_id=record["run_id"],
+        group_uid=record["uid"],
+        sibling=chain["sibling"],
+        checkpoint_identity=chain["checkpoint_identity"],
+    )
+    _require(
+        fixture["training_stage"] == metadata["training_stage"] == expected_binding,
+        "Work-state stage training identity mismatch",
+    )
+    _require(
+        metadata["task_id"] == f"dsh/work-state/{item['chain_id']}/{role}"
+        and metadata["task_version"] == "1"
+        and metadata["split"] == expected_binding["split"],
+        "Work-state task identity mismatch",
+    )
+    task = fixture["task"]
+    _require(task == make_task(task["family"], task["variant"], task["seed"]), "Work-state task definition changed")
+    _require(
+        sha(canonical(task)) == fixture["source_version"] == chain["frozen"]["source_version"],
+        "Work-state task source digest mismatch",
+    )
+    _require(
+        metadata["verifier_id"] == receipt["verifier"]["id"] == verifier.VERIFIER_ID
+        and metadata["verifier_version"] == receipt["verifier"]["version"] == verifier.VERIFIER_VERSION
+        and metadata["verifier_code_digest"] == receipt["verifier"]["code_digest"] == verifier.bundle_digest(),
+        "Work-state verifier version/bundle mismatch",
+    )
+    _require(envelope["prompt"] == _read_prompt(fixture_path.with_name("prompt.json")), "Work-state prompt changed")
+    if role == "reader":
+        binding = fixture["writer_binding"]
+        writer_items = [i for i in record["items"] if i["chain_id"] == item["chain_id"] and i["role"] == "A"]
+        writer_receipt = _json(writer_items[0]["stage_receipt_path"])
+        _require(
+            binding
+            == dict(
+                dsh_session_id=writer_receipt["dsh_session_id"],
+                gateway_session_id=writer_items[0]["gateway_session_id"],
+                receipt_id=writer_receipt["receipt_id"],
+                trace_sha256=writer_receipt["trace_sha256"],
+                manifest_sha256=chain["frozen"]["manifest_sha256"],
+                content_sha256=chain["frozen"]["content_sha256"],
+            ),
+            "Work-state reader parent binding mismatch",
+        )
+        _require(
+            str(Path(fixture["frozen_dir"]) / "manifest.json") == chain["frozen_manifest_path"]
+            and str(Path(fixture["frozen_dir"]) / "memory.bin") == chain["frozen_content_path"],
+            "Work-state frozen location mismatch",
+        )
+    else:
+        # Original A files must still equal the actual frozen bytes, including missing entries.
+        _require(
+            pack_bundle(Path(fixture["memory_root"]), task["memory_paths"], fixture["max_bytes"])
+            == read_regular(chain["frozen_content_path"]),
+            "Work-state writer/frozen bytes changed",
+        )
+    trace = result_root.parent / "traces" / hashlib.sha256(item["gateway_session_id"].encode()).hexdigest()[:24]
+    events = [
+        json.loads(line, parse_constant=_constant)
+        for line in read_regular(trace / "session.jsonl", 8_000_000).splitlines()
+        if line
+    ]
+    scored = verifier.score(fixture, events, envelope["response"], envelope["finished"], receipt["dsh_session_id"])
+    _require(
+        all(scored[k] == receipt[k] for k in ("reward", "finished", "eligible", "accuracy"))
+        and scored["eligible"] is True,
+        "Work-state independent score mismatch",
+    )
+    if role == "reader":
+        snapshot = scored["extra_info"]["output_snapshot_sha256"]
+        _require(
+            receipt["evidence"]
+            == [
+                metadata["fixture_sha256"],
+                receipt["trace_sha256"],
+                sha(canonical(expected_binding)),
+                fixture["writer_binding"]["receipt_id"],
+                fixture["writer_binding"]["manifest_sha256"],
+                snapshot,
+            ],
+            "Work-state output snapshot changed or missing",
+        )
+
+
+def _read_prompt(path):
+    return json.loads(read_regular(path), parse_constant=_constant)
+
+
 def _stage_lineage(record):
     """Recheck original trace/result bytes, beyond crosswalk's NPZ/receipt hashes."""
+    contract = record.get("contract_id", "legacy-memory-v1")
+    _require(contract in ("legacy-memory-v1", "work-state-v1"), "Unknown stage contract")
     for item in record["items"]:
         meta = _json(item["stage_json_path"])
         own = [i for i in record["items"] if i["gateway_session_id"] == item["gateway_session_id"]]
@@ -65,6 +184,8 @@ def _stage_lineage(record):
             trace_root=str(result_root.parent / "traces"),
             result_root=str(result_root),
         )
+        if contract == "work-state-v1":
+            _work_state_lineage(record, item, result_root)
 
 
 def _rows(run_root):

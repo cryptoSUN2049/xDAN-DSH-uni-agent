@@ -38,7 +38,7 @@ def inputs(tmp_path, monkeypatch):
     )
 
 
-def mother_checkpoint(inputs, tmp_path):
+def mother_checkpoint(inputs, tmp_path, family="constraints"):
     mother = tmp_path / "mother"
     mother.mkdir()
     checkpoint = tmp_path / "mother-checkpoint" / "global_step_1"
@@ -53,7 +53,7 @@ def mother_checkpoint(inputs, tmp_path):
         model_revision_declared=inputs["model_revision"],
         runtime=dict(sha256=recipe.digest(inputs["runtime_executable"])),
         environment=dict(RUN_ROOT=str(mother), CKPTS_DIR=str(checkpoint.parent)),
-        command=[f'++{recipe.AF}memory_operator.family="constraints"'],
+        command=[f'++{recipe.AF}memory_operator.family="{family}"'],
     )
     dataset = mother / "dataset-manifest.json"
     dataset.write_text(json.dumps(plan))
@@ -75,10 +75,14 @@ def mother_checkpoint(inputs, tmp_path):
 
 
 @pytest.mark.parametrize("mode", ["val", "train", "reload"])
-def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode):
-    extra = mother_checkpoint(inputs, tmp_path) if mode == "reload" else {}
-    manifest = recipe.prepare(**inputs, mode=mode, **extra)
-    assert manifest["dataset_kind"] == "fixed-diagnostic-not-heldout"
+@pytest.mark.parametrize("family", ["constraints", "work-state-v1"])
+def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode, family):
+    extra = mother_checkpoint(inputs, tmp_path, family) if mode == "reload" else {}
+    manifest = recipe.prepare(**inputs, mode=mode, family=family, **extra)
+    work_state = family == "work-state-v1"
+    assert manifest["dataset_kind"] == (
+        "public-structural-development" if work_state else "fixed-diagnostic-not-heldout"
+    )
     assert manifest["environment"]["ROLLOUT_N"] == "4"
     assert manifest["environment"]["VAL_ROLLOUT_N"] == "1"
     rows = [
@@ -111,13 +115,33 @@ def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode):
     with initialize_config_dir(config_dir=str(recipe.ROOT / "verl/verl/trainer/config"), version_base=None):
         config = compose(config_name="ppo_trainer", overrides=json.loads(captured.read_text()))
     af = config.actor_rollout_ref.rollout.custom.agent_framework
-    assert af.framework_class_fqn == "uni_agent.framework.memory_chain.NativeMemoryFramework"
+    framework_class = NativeMemoryFramework
+    if work_state:
+        from uni_agent.framework.work_state import NativeWorkStateFramework
+
+        framework_class = NativeWorkStateFramework
+        assert (
+            config.actor_rollout_ref.rollout.agent.agent_loop_manager_class
+            == "uni_agent.framework.entry.StrictSyncValidationRolloutAdapter"
+        )
+    assert af.framework_class_fqn == framework_class.__module__ + "." + framework_class.__name__
     assert af.trajectory_postprocessor_fqn is None and af.trajectory_postprocessor_kwargs is None
     assert af.trajectory_postprocessor_pass_context is False
     assert config.trainer.val_only == (mode != "train")
-    framework = NativeMemoryFramework.from_config(config=config, gateway_manager=Manager([]))
+    framework = framework_class.from_config(config=config, gateway_manager=Manager([]))
     assert framework._memory_operator.root == inputs["run_root"] / "chains"
-    assert framework._memory_operator.family == "constraints"
+    assert framework._memory_operator.family == family
+    if work_state:
+        from examples.dsh.capabilities.memory_training_stage import GroupContext
+        from examples.dsh.capabilities.work_state.stage import _task
+
+        assert manifest["counts"] == {"train": 8, "validation": 4}
+        for split, partition in [("train", "train"), ("validation", "val")]:
+            for row in pq.read_table(inputs["output_dir"] / f"{split}.parquet").to_pylist():
+                task = _task(
+                    framework._memory_operator, GroupContext("run", partition, "group", 0, 1), row["extra_info"]
+                )
+                assert task["task_id"] == row["extra_info"]["tools_kwargs"]["task"]["metadata"]["work_state_task_id"]
     if mode == "reload":
         assert config.trainer.resume_mode == "resume_path"
         assert config.trainer.resume_from_path == str(extra["resume_from"])
@@ -221,6 +245,27 @@ def test_fixed_verl_val_only_returns_before_training_increment():
         n.lineno for n in ast.walk(fit) if isinstance(n, ast.AugAssign) and ast.unparse(n.target) == "self.global_steps"
     )
     assert val_only.end_lineno < increment
+
+
+def test_work_state_preparation_check_rejects_task_manifest_tampering(inputs):
+    manifest = recipe.prepare(**inputs, family="work-state-v1")
+    path = inputs["output_dir"] / "manifest.json"
+    assert recipe.check(path)["coverage"]["structures"] == {"train": 4, "validation": 4}
+    task_path = inputs["output_dir"] / "work-state-tasks.json"
+    dataset = json.loads(task_path.read_text())
+    assert set(dataset) == {"schema", "tasks"}
+    assert len(dataset["tasks"]) == 12
+    assert {row["variant"] for row in dataset["tasks"].values() if row["split"] == "train"} == {0}
+    key = next(iter(dataset["tasks"]))
+    dataset["tasks"][key]["seed"] += 1
+    task_path.write_text(json.dumps(dataset))
+    with pytest.raises(ValueError, match="changed"):
+        recipe.check(path)
+    # Even changing the ordinary file digest cannot bypass the operator's pinned task contract.
+    manifest["files"][str(task_path)] = recipe.digest(task_path)
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="task manifest identity"):
+        recipe.check(path)
 
 
 def test_launch_creates_actual_private_writer_parent(inputs, monkeypatch, tmp_path):
