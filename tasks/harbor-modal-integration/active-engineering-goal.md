@@ -49,7 +49,7 @@
 旧 WS01/03/05/06 的 r4 结论保持：执行闭环完成，有效更新未通过。为诊断并补齐真实学习信号，新增独立 `work-state-short-fact-v1` / WS07 课程与新母实验；不能用它追认旧 r4 已更新，也不能将单事实恢复等同于四类能力完成。设计见 [短课程设计](../../docs/harbor-modal-integration/work-state-short-course-design.md)。
 
 - [x] S1 任务与因果读取合同：8 个独立训练实例、2 个公开开发实例；A 实际保存，B 新会话读取后完成配置；正反例、旧任务回归通过。核心103、recipe62、audit/canary37、credit7，共209项CPU通过；未据此宣称Linux或GPU通过。
-- [ ] S2 固定源码与课程身份：prepare/check/audit/reload 绑定 course、数据、runtime 与有效 VERL；Ruff 双门后 commit/push，GitHub 固定部署，真实 Linux DSH canary。
+- [x] S2 固定源码与课程身份：prepare/check/audit/reload 绑定 course、数据、runtime 与有效 VERL；Ruff 双门后 commit/push，GitHub 固定部署，真实 Linux DSH canary。b47521d已推送/固定部署，217项CPU与8例Linux canary通过，ws-short-train-r1已启动，尚未验收更新。
 - [ ] S3 新母实验真实 GPU 在线 RL：既定 8 步、每组 n4、无内联评估；核实际消费、奖励分布和有限非零优势/梯度。合法零奖励不停止或人为改分。
 - [ ] S4 更新与保存：新课程 checkpoint/optimizer 与冻结 base 审计，给出实际参数变化；无变化则如实保留并定位，不以运行结束判完成。
 - [ ] S5 新课程独立 reload 与公开开发评估：加载新母 checkpoint，原始失败照实记录，验证新鲜轨迹、消费及母工件不变；不给旧 r4 换课程身份。

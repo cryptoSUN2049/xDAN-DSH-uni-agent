@@ -2,11 +2,11 @@
 
 ## 1. TL;DR
 
-- **位置/源码**：本地worktree-harbor-modal-integration；GPU源码固定9dea127bf7bb69eb916aebcc0ab69ff86f53df08，/workspace/rebuild/uni-agent-work-state-singletons-r1；母r4源码5b4b01b。主目录main未修改。
+- **位置/源码**：本地worktree-harbor-modal-integration；新课程GPU源码固定b47521df1d6cd6b930ab6ac85ef41c670f2405d2，/workspace/rebuild/uni-agent-work-state-short-r1；母r4源码5b4b01b。主目录main未修改。
 - **工程已收尾**：r4八步、8完整n4组/64唯一A/B消费、6独立任务，CK4/8完整；独立固定四题全部终态，WS01/03/05共3组6行消费通过，WS06 A max-tokens未B/未消费；all_attempted=true/all_verified=false，不冒称4/4成功。
 - **学习未通过**：r4奖励/优势/梯度均0、参数未变化；独立评估实际业务奖励也全0。E1—E4与W5结果复跑完成，W4有效更新仍待；不把整个goal或记忆/RSI能力标完成。
 - **入口/证据**：[总操作指南](../../docs/harbor-modal-integration/native-work-state-end-to-end-runbook.md) → [最终报告](../../docs/harbor-modal-integration/work-state-independent-evaluation-r1-result.md) → [归档](../../docs/harbor-modal-integration/work-state-independent-evaluation-r1-archive.md)；HTML/MD已同步并通过1440/390视觉检查。母/旧失败与本suite分别归档/workspace/reports，原回执不改。
-- **下一步**：GPU最近10:44:42UTC为0%/0MiB，未启动下一训练。先看[零奖励根因](../../docs/harbor-modal-integration/work-state-r4-zero-reward-rootcause.md)与[独立短课程设计](../../docs/harbor-modal-integration/work-state-short-course-design.md)，以有价值且可学的跨会话任务补真实非零更新；用户已批准短课程实施，代码与209项CPU回归完成；尚未固定部署或启动新GPU训练。Harbor/异步/从零安装后置。
+- **正在运行**：ws-short-train-r1，2026-09-09T11:33:43UTC启动PID291342；CPU217项及真实Linux DSH canary8例通过，prepare/check通过。8steps/n4、无内联eval，新母checkpoint位于/workspace/uni-agent-g1/checkpoint/ws-short-train-r1。尚未验收有效更新，先监控/root/runs/ws-short-train-r1/supervision/train.log与supervisor-result.json，再实际消费/参数审计及独立reload。Harbor/异步/从零安装后置。
 
 较早运行快照已移至[notes.md](notes.md)，不得按其中旧running/旧命令重启作业。
 

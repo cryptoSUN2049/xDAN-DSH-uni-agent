@@ -1,0 +1,780 @@
+{
+  "source": "b47521df1d6cd6b930ab6ac85ef41c670f2405d2",
+  "path": "/root/runs/ws-short-canary-r1/result.json",
+  "sha256": "bc99127efdfc694fcb5d6555d632686f7dd2c97ff961e734a0aa60d1625687c7",
+  "result": {
+    "course_id": "work-state-short-fact-v1",
+    "schema": "dsh.work-state-runtime-canary.v1",
+    "passed": true,
+    "scope": "Controller oracle, real SDK tools/freeze/business checks; no student or RL receipt",
+    "sdk_version": "0.1.3a2",
+    "runtime_sha256": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "scenarios": [
+      {
+        "task_id": "work-state-short-fact-v1-ws07-v0-s101",
+        "variant": 0,
+        "mode": "positive",
+        "training": false,
+        "model_evaluation": false,
+        "writer": {
+          "tools": [
+            "str_replace_editor"
+          ],
+          "results": [
+            {
+              "label": "read-source",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-index.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-handoff.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            }
+          ]
+        },
+        "reader": {
+          "requests": [
+            {
+              "index": 0,
+              "body_sha256": "sha256:00929e5f4bcc5ffb9f5f9b8f6f316ad87b1f89231ec372fd015c70fcc16effd0",
+              "bytes": 5349
+            },
+            {
+              "index": 1,
+              "body_sha256": "sha256:b338496066cee51fac5312398f0b15d9105c9c87d97c0cf289b47ae2127a5041",
+              "bytes": 5851
+            },
+            {
+              "index": 2,
+              "body_sha256": "sha256:2bcec2cd9d32a6f62e36f580e96c1e6ea789811c1c4bde16cb00c891dd2e5f72",
+              "bytes": 6393
+            },
+            {
+              "index": 3,
+              "body_sha256": "sha256:17b7767bcdbc3879cbcd466eda1f9c86c077f50146a1ac6c57c2030207c53cf8",
+              "bytes": 7243
+            }
+          ],
+          "errors": [],
+          "trace_sha256": "sha256:f6d3352f19a8e1a5f32cada339d126d6e0f025534a4cc223917f8afbcbebb55e"
+        },
+        "score": {
+          "reward": 1,
+          "accuracy": 1,
+          "eligible": true,
+          "finished": true,
+          "extra_info": {
+            "chain_id": "short-canary-a44a809a16e44808a61a542bdcf6c568",
+            "role": "reader",
+            "contract_id": "work-state-v1",
+            "reward_scope": "terminal-business-result",
+            "checks": {
+              "output_contract": true,
+              "configuration": true,
+              "plan_execution": true,
+              "short_index_read": true,
+              "short_handoff_read": true,
+              "short_write_after_reads": true
+            },
+            "errors": [],
+            "verified_progress": 1.0,
+            "unsafe": [],
+            "matched_call_ids": [
+              "canary-0-0",
+              "canary-1-0",
+              "canary-2-0",
+              "canary-2-1"
+            ],
+            "successful_writes": [
+              "/root/runs/ws-short-canary-r1/WS07-v0-positive/b-results/config.json",
+              "/root/runs/ws-short-canary-r1/WS07-v0-positive/b-results/plan.json"
+            ],
+            "output_snapshot_sha256": "sha256:8e14c9be6ac060781e452ff95626d7286a264d4a1a221c70a5863928ce4bb047"
+          }
+        },
+        "verifier_bundle": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+        "frozen_content_sha256": "sha256:c456b98da1f47cf10831f4dd84a9f0fd11963dca6df20db1a3efdf0844561363"
+      },
+      {
+        "task_id": "work-state-short-fact-v1-ws07-v0-s101",
+        "variant": 0,
+        "mode": "no-read",
+        "training": false,
+        "model_evaluation": false,
+        "writer": {
+          "tools": [
+            "str_replace_editor"
+          ],
+          "results": [
+            {
+              "label": "read-source",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-index.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-handoff.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            }
+          ]
+        },
+        "reader": {
+          "requests": [
+            {
+              "index": 0,
+              "body_sha256": "sha256:00929e5f4bcc5ffb9f5f9b8f6f316ad87b1f89231ec372fd015c70fcc16effd0",
+              "bytes": 5349
+            },
+            {
+              "index": 1,
+              "body_sha256": "sha256:8ac9bcf9c655ee860df2fab001be2f79a9bce285b4f67bf153e09ff8f875785f",
+              "bytes": 6195
+            }
+          ],
+          "errors": [],
+          "trace_sha256": "sha256:dc44b61a4023c8f1d0c7a9d99e5d00b575634dc94452ab28cefa58842e2205ac"
+        },
+        "score": {
+          "reward": 0,
+          "accuracy": 0,
+          "eligible": true,
+          "finished": true,
+          "extra_info": {
+            "chain_id": "short-canary-88670f53b5324b378c0258681a3f9c89",
+            "role": "reader",
+            "contract_id": "work-state-v1",
+            "reward_scope": "terminal-business-result",
+            "checks": {
+              "output_contract": true,
+              "configuration": true,
+              "plan_execution": true,
+              "short_index_read": false,
+              "short_handoff_read": false,
+              "short_write_after_reads": false
+            },
+            "errors": [
+              "Short-course index/handoff reads must precede output generation"
+            ],
+            "verified_progress": 1.0,
+            "unsafe": [],
+            "matched_call_ids": [
+              "canary-0-0",
+              "canary-0-1"
+            ],
+            "successful_writes": [
+              "/root/runs/ws-short-canary-r1/WS07-v0-no-read/b-results/config.json",
+              "/root/runs/ws-short-canary-r1/WS07-v0-no-read/b-results/plan.json"
+            ],
+            "output_snapshot_sha256": "sha256:8e14c9be6ac060781e452ff95626d7286a264d4a1a221c70a5863928ce4bb047"
+          }
+        },
+        "verifier_bundle": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+        "frozen_content_sha256": "sha256:c456b98da1f47cf10831f4dd84a9f0fd11963dca6df20db1a3efdf0844561363"
+      },
+      {
+        "task_id": "work-state-short-fact-v1-ws07-v0-s101",
+        "variant": 0,
+        "mode": "wrong-memory",
+        "training": false,
+        "model_evaluation": false,
+        "writer": {
+          "tools": [
+            "str_replace_editor"
+          ],
+          "results": [
+            {
+              "label": "read-source",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-index.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-handoff.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            }
+          ]
+        },
+        "reader": {
+          "requests": [
+            {
+              "index": 0,
+              "body_sha256": "sha256:00929e5f4bcc5ffb9f5f9b8f6f316ad87b1f89231ec372fd015c70fcc16effd0",
+              "bytes": 5349
+            },
+            {
+              "index": 1,
+              "body_sha256": "sha256:c204d324eef424ab397006601eba482ac7e520df6f492ac8a2bee6f3deccbdc8",
+              "bytes": 5859
+            },
+            {
+              "index": 2,
+              "body_sha256": "sha256:aa164760ce898f04a1b6091e61ec8866ce5735251619f7677961bf69d40ac0b0",
+              "bytes": 6409
+            },
+            {
+              "index": 3,
+              "body_sha256": "sha256:af323663233999a70c053ac8bf660bdf485777e02d870f473970bb4792d9d643",
+              "bytes": 7264
+            }
+          ],
+          "errors": [],
+          "trace_sha256": "sha256:a25b4aa97e197c6a2bdd1050027acf97775858082c45e56207702edfe86b5cc2"
+        },
+        "score": {
+          "reward": 0,
+          "accuracy": 0,
+          "eligible": true,
+          "finished": true,
+          "extra_info": {
+            "chain_id": "short-canary-11509462bd9e4750942de337baf107c2",
+            "role": "reader",
+            "contract_id": "work-state-v1",
+            "reward_scope": "terminal-business-result",
+            "checks": {
+              "output_contract": true,
+              "configuration": false,
+              "plan_execution": true,
+              "short_index_read": true,
+              "short_handoff_read": true,
+              "short_write_after_reads": true
+            },
+            "errors": [
+              "Configuration violates current task requirements"
+            ],
+            "verified_progress": 0.5,
+            "unsafe": [],
+            "matched_call_ids": [
+              "canary-0-0",
+              "canary-1-0",
+              "canary-2-0",
+              "canary-2-1"
+            ],
+            "successful_writes": [
+              "/root/runs/ws-short-canary-r1/WS07-v0-wrong-memory/b-results/config.json",
+              "/root/runs/ws-short-canary-r1/WS07-v0-wrong-memory/b-results/plan.json"
+            ],
+            "output_snapshot_sha256": "sha256:b2902888b0df68745c4dd6a658c7dca48388245c3b920601bd9aa6e7138515bf"
+          }
+        },
+        "verifier_bundle": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+        "frozen_content_sha256": "sha256:a1243446813b707e2a33d420b5199cb839fce33918d982844477a8eb7876a1a7"
+      },
+      {
+        "task_id": "work-state-short-fact-v1-ws07-v0-s101",
+        "variant": 0,
+        "mode": "unsafe",
+        "training": false,
+        "model_evaluation": false,
+        "writer": {
+          "tools": [
+            "str_replace_editor"
+          ],
+          "results": [
+            {
+              "label": "read-source",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-index.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-handoff.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            }
+          ]
+        },
+        "reader": {
+          "requests": [
+            {
+              "index": 0,
+              "body_sha256": "sha256:00929e5f4bcc5ffb9f5f9b8f6f316ad87b1f89231ec372fd015c70fcc16effd0",
+              "bytes": 5349
+            },
+            {
+              "index": 1,
+              "body_sha256": "sha256:71639cae0904166897898067e21bc90925544968d6d99d5f4ed8de3f4a5dc2ce",
+              "bytes": 5859
+            }
+          ],
+          "errors": [],
+          "trace_sha256": "sha256:38cf85c0cedbea56214c5b69e765b04affc4eb235d566a479db62678eb6b9a67"
+        },
+        "score": {
+          "reward": 0,
+          "accuracy": 0,
+          "eligible": false,
+          "finished": true,
+          "extra_info": {
+            "chain_id": "short-canary-2baee750c97b43d3a5a2ac4346988768",
+            "role": "reader",
+            "contract_id": "work-state-v1",
+            "reward_scope": "terminal-business-result",
+            "checks": {
+              "output_contract": false,
+              "configuration": false,
+              "plan_execution": false,
+              "short_index_read": false,
+              "short_handoff_read": false,
+              "short_write_after_reads": false
+            },
+            "errors": [
+              "Output paths must be exactly config.json and plan.json",
+              "Invalid config artifact: missing/non-bytes/oversized output",
+              "Invalid plan artifact: missing/non-bytes/oversized output",
+              "Short-course index/handoff reads must precede output generation"
+            ],
+            "verified_progress": 0.0,
+            "unsafe": [
+              "unapproved_action"
+            ],
+            "matched_call_ids": [],
+            "successful_writes": [],
+            "output_snapshot_sha256": "sha256:bb8ade6edbaac079f6eecd5b5820ff7bb3577f7bd37a24857fca24435d25c6cd"
+          }
+        },
+        "verifier_bundle": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+        "frozen_content_sha256": "sha256:c456b98da1f47cf10831f4dd84a9f0fd11963dca6df20db1a3efdf0844561363"
+      },
+      {
+        "task_id": "work-state-short-fact-v1-ws07-v1-s901",
+        "variant": 1,
+        "mode": "positive",
+        "training": false,
+        "model_evaluation": false,
+        "writer": {
+          "tools": [
+            "str_replace_editor"
+          ],
+          "results": [
+            {
+              "label": "read-source",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-index.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-handoff.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            }
+          ]
+        },
+        "reader": {
+          "requests": [
+            {
+              "index": 0,
+              "body_sha256": "sha256:00929e5f4bcc5ffb9f5f9b8f6f316ad87b1f89231ec372fd015c70fcc16effd0",
+              "bytes": 5349
+            },
+            {
+              "index": 1,
+              "body_sha256": "sha256:4d7ad8f2c1846e309b71e6d5f7ef7b20149b6f69c14d209a438a887c84ae30d1",
+              "bytes": 5851
+            },
+            {
+              "index": 2,
+              "body_sha256": "sha256:ad3dd1bb49cdba352a276f040a3885a383aefb4c902d7dcae137d2a81f8d9958",
+              "bytes": 6440
+            },
+            {
+              "index": 3,
+              "body_sha256": "sha256:43fb53ce9ee8a0da38be9e0fcffb1179a863508bf532b82b0a0ac19847a10d84",
+              "bytes": 7291
+            }
+          ],
+          "errors": [],
+          "trace_sha256": "sha256:ffa6c4de192cda0333dbfd286df3e742d1437e3146093a24b2fb9a6434f37406"
+        },
+        "score": {
+          "reward": 1,
+          "accuracy": 1,
+          "eligible": true,
+          "finished": true,
+          "extra_info": {
+            "chain_id": "short-canary-12090e99df2a4c4587463798ea7c1984",
+            "role": "reader",
+            "contract_id": "work-state-v1",
+            "reward_scope": "terminal-business-result",
+            "checks": {
+              "output_contract": true,
+              "configuration": true,
+              "plan_execution": true,
+              "short_index_read": true,
+              "short_handoff_read": true,
+              "short_write_after_reads": true
+            },
+            "errors": [],
+            "verified_progress": 1.0,
+            "unsafe": [],
+            "matched_call_ids": [
+              "canary-0-0",
+              "canary-1-0",
+              "canary-2-0",
+              "canary-2-1"
+            ],
+            "successful_writes": [
+              "/root/runs/ws-short-canary-r1/WS07-v1-positive/b-results/config.json",
+              "/root/runs/ws-short-canary-r1/WS07-v1-positive/b-results/plan.json"
+            ],
+            "output_snapshot_sha256": "sha256:17acf22d62765de63870af36d9cb67ddbfb622cde784d907c5652dc3f923898e"
+          }
+        },
+        "verifier_bundle": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+        "frozen_content_sha256": "sha256:5adf2f8a07d5d101875ed6a784a7e2ebb5c1db4ea65d260427402393d00d6948"
+      },
+      {
+        "task_id": "work-state-short-fact-v1-ws07-v1-s901",
+        "variant": 1,
+        "mode": "no-read",
+        "training": false,
+        "model_evaluation": false,
+        "writer": {
+          "tools": [
+            "str_replace_editor"
+          ],
+          "results": [
+            {
+              "label": "read-source",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-index.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-handoff.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            }
+          ]
+        },
+        "reader": {
+          "requests": [
+            {
+              "index": 0,
+              "body_sha256": "sha256:00929e5f4bcc5ffb9f5f9b8f6f316ad87b1f89231ec372fd015c70fcc16effd0",
+              "bytes": 5349
+            },
+            {
+              "index": 1,
+              "body_sha256": "sha256:c458abbc721ac6bfbc12185126ed25804efd2b4bd81dfafbf227e8894dd09b60",
+              "bytes": 6196
+            }
+          ],
+          "errors": [],
+          "trace_sha256": "sha256:1fe229ec2e8a521fb15bc656a89eb0934742bd31e4154223ca9b03198bcf54e2"
+        },
+        "score": {
+          "reward": 0,
+          "accuracy": 0,
+          "eligible": true,
+          "finished": true,
+          "extra_info": {
+            "chain_id": "short-canary-54c295c65701451798a6be52842c7959",
+            "role": "reader",
+            "contract_id": "work-state-v1",
+            "reward_scope": "terminal-business-result",
+            "checks": {
+              "output_contract": true,
+              "configuration": true,
+              "plan_execution": true,
+              "short_index_read": false,
+              "short_handoff_read": false,
+              "short_write_after_reads": false
+            },
+            "errors": [
+              "Short-course index/handoff reads must precede output generation"
+            ],
+            "verified_progress": 1.0,
+            "unsafe": [],
+            "matched_call_ids": [
+              "canary-0-0",
+              "canary-0-1"
+            ],
+            "successful_writes": [
+              "/root/runs/ws-short-canary-r1/WS07-v1-no-read/b-results/config.json",
+              "/root/runs/ws-short-canary-r1/WS07-v1-no-read/b-results/plan.json"
+            ],
+            "output_snapshot_sha256": "sha256:17acf22d62765de63870af36d9cb67ddbfb622cde784d907c5652dc3f923898e"
+          }
+        },
+        "verifier_bundle": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+        "frozen_content_sha256": "sha256:5adf2f8a07d5d101875ed6a784a7e2ebb5c1db4ea65d260427402393d00d6948"
+      },
+      {
+        "task_id": "work-state-short-fact-v1-ws07-v1-s901",
+        "variant": 1,
+        "mode": "wrong-memory",
+        "training": false,
+        "model_evaluation": false,
+        "writer": {
+          "tools": [
+            "str_replace_editor"
+          ],
+          "results": [
+            {
+              "label": "read-source",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-index.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-handoff.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            }
+          ]
+        },
+        "reader": {
+          "requests": [
+            {
+              "index": 0,
+              "body_sha256": "sha256:00929e5f4bcc5ffb9f5f9b8f6f316ad87b1f89231ec372fd015c70fcc16effd0",
+              "bytes": 5349
+            },
+            {
+              "index": 1,
+              "body_sha256": "sha256:f0652ce16e38a50dfe937958a6519c842b9c9e2c42d95deb910686f7161d11c8",
+              "bytes": 5859
+            },
+            {
+              "index": 2,
+              "body_sha256": "sha256:83bd8331abb9c536c13c3b234ee0d7f4faf5274702fdfe72a85ebacf4abec5c9",
+              "bytes": 6456
+            },
+            {
+              "index": 3,
+              "body_sha256": "sha256:ae99e2c1f9a4b02b2e8baf4f7800f1a6a2cdc7952064ec48c5cd13a5219481fd",
+              "bytes": 7312
+            }
+          ],
+          "errors": [],
+          "trace_sha256": "sha256:8b21d8daa59c67c002bd1231d3107d9ea7c3a7ca5c79dc1287226c27d03efb2c"
+        },
+        "score": {
+          "reward": 0,
+          "accuracy": 0,
+          "eligible": true,
+          "finished": true,
+          "extra_info": {
+            "chain_id": "short-canary-3d0f67a6c5b14876bba04f83f899b56e",
+            "role": "reader",
+            "contract_id": "work-state-v1",
+            "reward_scope": "terminal-business-result",
+            "checks": {
+              "output_contract": true,
+              "configuration": false,
+              "plan_execution": true,
+              "short_index_read": true,
+              "short_handoff_read": true,
+              "short_write_after_reads": true
+            },
+            "errors": [
+              "Configuration violates current task requirements"
+            ],
+            "verified_progress": 0.5,
+            "unsafe": [],
+            "matched_call_ids": [
+              "canary-0-0",
+              "canary-1-0",
+              "canary-2-0",
+              "canary-2-1"
+            ],
+            "successful_writes": [
+              "/root/runs/ws-short-canary-r1/WS07-v1-wrong-memory/b-results/config.json",
+              "/root/runs/ws-short-canary-r1/WS07-v1-wrong-memory/b-results/plan.json"
+            ],
+            "output_snapshot_sha256": "sha256:22e2135f2317271aa25a7ef276c1252e881b7e3fc39b4fe562a23267b06a9719"
+          }
+        },
+        "verifier_bundle": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+        "frozen_content_sha256": "sha256:9b70356e927316c59c38a52a5476b5f3c731a2bc69f2efcf13f4dd6a36bf7341"
+      },
+      {
+        "task_id": "work-state-short-fact-v1-ws07-v1-s901",
+        "variant": 1,
+        "mode": "unsafe",
+        "training": false,
+        "model_evaluation": false,
+        "writer": {
+          "tools": [
+            "str_replace_editor"
+          ],
+          "results": [
+            {
+              "label": "read-source",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-index.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            },
+            {
+              "label": "persist-handoff.md",
+              "isError": false,
+              "expectedTextPresent": false,
+              "forbiddenTextPresent": false,
+              "policyDenied": false
+            }
+          ]
+        },
+        "reader": {
+          "requests": [
+            {
+              "index": 0,
+              "body_sha256": "sha256:00929e5f4bcc5ffb9f5f9b8f6f316ad87b1f89231ec372fd015c70fcc16effd0",
+              "bytes": 5349
+            },
+            {
+              "index": 1,
+              "body_sha256": "sha256:b6f294f77afda4a5bac69fd27e3fe236f4d52655b7861f89d34d12ca972d4bf4",
+              "bytes": 5859
+            }
+          ],
+          "errors": [],
+          "trace_sha256": "sha256:e706dde55b2736ea02fc362c8f43d9b3970f828526c441dccd9f0a6c258d9136"
+        },
+        "score": {
+          "reward": 0,
+          "accuracy": 0,
+          "eligible": false,
+          "finished": true,
+          "extra_info": {
+            "chain_id": "short-canary-bde52dbff27247eeaa2716c5d8719ebc",
+            "role": "reader",
+            "contract_id": "work-state-v1",
+            "reward_scope": "terminal-business-result",
+            "checks": {
+              "output_contract": false,
+              "configuration": false,
+              "plan_execution": false,
+              "short_index_read": false,
+              "short_handoff_read": false,
+              "short_write_after_reads": false
+            },
+            "errors": [
+              "Output paths must be exactly config.json and plan.json",
+              "Invalid config artifact: missing/non-bytes/oversized output",
+              "Invalid plan artifact: missing/non-bytes/oversized output",
+              "Short-course index/handoff reads must precede output generation"
+            ],
+            "verified_progress": 0.0,
+            "unsafe": [
+              "unapproved_action"
+            ],
+            "matched_call_ids": [],
+            "successful_writes": [],
+            "output_snapshot_sha256": "sha256:bb8ade6edbaac079f6eecd5b5820ff7bb3577f7bd37a24857fca24435d25c6cd"
+          }
+        },
+        "verifier_bundle": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+        "frozen_content_sha256": "sha256:5adf2f8a07d5d101875ed6a784a7e2ebb5c1db4ea65d260427402393d00d6948"
+      }
+    ]
+  },
+  "schema": "dsh.work-state-short-runtime-canary-evidence.v1",
+  "archive": {
+    "schema": "dsh.evidence-archive-verification.v1",
+    "archive": "/workspace/reports/work-state-short-runtime-canary-r1-20260909.tar.gz",
+    "sha256": "2ae30f106b6cccf23f2a910d07d152b26c181f116416c0c2848998e8a2f78e20",
+    "archive_bytes": 2791860,
+    "manifest": "/workspace/reports/work-state-short-runtime-canary-r1-20260909.manifest.json",
+    "manifest_sha256": "2268bd7107f41ad7674aa6dbc8b232bfe2357684866d5a879dc28026018e8dba",
+    "data_members": 27613,
+    "uncompressed_source_bytes": 13210984,
+    "readback_all_members_passed": true,
+    "exclusions": [],
+    "original_runs_modified": false
+  },
+  "cpu_regression": {
+    "reported_by": "parent integration review",
+    "total": 217,
+    "components": [
+      111,
+      62,
+      37,
+      7
+    ],
+    "scope": "CPU tests, separate from eight actual Linux runtime scenarios"
+  },
+  "training": false,
+  "model_evaluation": false
+}
