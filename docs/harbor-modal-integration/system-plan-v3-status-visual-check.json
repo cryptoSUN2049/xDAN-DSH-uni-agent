@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-10",
+  "scope": "Updated status section and existing responsive page layout; not training E2E evidence",
+  "local_links_and_anchors": 27,
+  "checks": "desktop viewport and responsive full-page screenshots inspected; mobile tables horizontally scroll within wrappers",
+  "screenshots": [
+    {
+      "file": "system-plan-v3-status-mobile.png",
+      "sha256": "4a5083fde628864a51f6708876826224b92b3946ee1401fd498feb796c1bcf94",
+      "bytes": 152685
+    },
+    {
+      "file": "system-plan-v3-status-tablet.png",
+      "sha256": "fa59d51a7407979817ec1a4bd824d896f147ad99f315fba058b8b3ab090bec3f",
+      "bytes": 324466
+    },
+    {
+      "file": "system-plan-v3-status-desktop.png",
+      "sha256": "81ec3a42e30cae7358e2197c74f37af9a7a29c83090ca9a9b2fc7c51a562eff5",
+      "bytes": 431363
+    }
+  ]
+}

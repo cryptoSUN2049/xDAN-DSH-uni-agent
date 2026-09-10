@@ -284,3 +284,5 @@ WS06正式消费审计已补齐：passed=false、run_completed=false、0组0条�
 预算r2已终态740.018秒exit1：实际生成8192、mask0 6014、prompt1495，NPZ hash/有限logprob通过，materialization_reason=max_generated_tokens。真实精确触顶修复验证通过，writer未完成/B未执行，原拒绝保留。证据/workspace/reports/core-budget-val-r2及core-budget-val-r2-result.md/json。下一条normal-r1已启动外层83576，root仍5e6b326，WS01公开题val，原清单/root/runs/core-budget-normal-r1-data/manifest.json；先实查，不重复启动。
 
 预算r2正式after_run版本/输入校验通过，报告SHA04258117d4f4a3e8f21b2de88ebef2decca646d090b337c7b45b5fc6db429018。独立只读审查已澄清reader诊断为提示修订包，16A最多128B（每题1A、每提示4B），任务聚类、可信失败保留、固定分母与中性分支路径；仍待用户批准，未实现/启动。
+
+系统总方案uni-agent-system-plan-v3.html首屏已同步P1→P2→P3与真实零梯度/reload/预算结果，并链接证据。27个本地链接/锚点检查通过，三尺寸截图已保存system-plan-v3-status-*.png与visual-check.json；这是文档视觉验证，不是训练E2E完成。normal-r1 PID83576最近实查6:50存活，vLLM worker初始化中。
