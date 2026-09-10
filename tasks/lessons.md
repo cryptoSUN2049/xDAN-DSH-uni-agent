@@ -227,3 +227,8 @@
 
 - core r4四个Reader输出裸tool JSON，但实际prompt_ids已包含完整工具schema与原生<tool_call>示例。不能从输出失败推断输入缺少示例；先反解真实token并核模板/source身份，再设计单变量实验。
 - 成功旧课程也包含“index may be missing”，不能把共享措辞称作新增回归。区分相关现象、可测试假设与受控对照证明的因果；不通过自动执行裸JSON或放宽评分掩盖协议失败。
+
+### 2026-09-10：监控DSH运行时原件，不盯结束后导出文件
+
+- `uni_agent/agents/dsh/runner.py`在harness.run返回后才写`traces/*/session.jsonl`。该文件不更新可能只是上一条已结束stage，不能判定当前长生成停滞。
+- 活跃监控使用`chains/memory-*/*/run/homes/*/sessions/*/*/session.v2.jsonl`，结合runtime PID/父进程与当前input路径；导出trace用于终态审计。Session v2原件与训练导出消费格式是两个层次。

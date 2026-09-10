@@ -13,6 +13,10 @@ cat /root/runs/core-train-r4/run-manifest.json
 
 开始正式成功收尾前要求监督器exit_code=0、run-manifest status=completed、metrics最后step=16、最终checkpoint16存在。若正常任务失败或预算导致非零退出，先保留终态原因并分类，不能修写状态文件。r4 PID快照21105/21295仅供定位，重连必须核真实进程与命令。
 
+### 活跃监控文件位置
+
+`uni_agent/agents/dsh/runner.py`在harness.run返回后才导出`traces/*/session.jsonl`（原511的第98/102行）。运行时原件是`chains/memory-*/*/run/homes/*/sessions/*/*/session.v2.jsonl`。观察最新原件增长时必须绑定runtime进程、stage input与task身份；单次生成期间也可能暂时不追加持久事件。导出文件长时间不变不能单独判卡死，TQ pending1/running0也不代表没有DSH执行。
+
 ## 2. 原版本准入与消费审计
 
 ```bash

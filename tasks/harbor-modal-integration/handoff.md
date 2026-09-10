@@ -31,6 +31,8 @@
 
 15:06 SGT训练已14/16，step14耗830.516秒、evicted2；原预算wall_seconds=7200，尚未终态。新只读诊断已写core-r4-early-failure-analysis.md：4个已消费B实际prompt含完整工具schema与tool_call示例，故撤回“缺示例”的修复假设；旧成功短课也有maymissing句式，不能称新回归。下一公开单变量候选为B保存/恢复角色歧义与真实index存在信息，不改本轮提示或奖励。
 
+15:16 SGT监控修正：活跃Session v2位于`chains/memory-*/*/run/homes/*/sessions/*/*/session.v2.jsonl`；`traces/*/session.jsonl`是harness.run结束后才导出，不能单独拿其mtime判定卡死。已核e05bcfb writer原件50次模型回复/49次工具调用，最终未完成；框架继续后续采样。当前仍14/16，监督器未终态，7200秒预算约余14分钟。
+
 ### 紧接着做
 
 - [x] r4首次真实A→冻结→B与完整组消费已核；首步原始跨表证据见core-train-r4-step1-evidence.md。继续监督后续完整运行，不因普通观察超时重启。
