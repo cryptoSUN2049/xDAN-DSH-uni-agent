@@ -1,19 +1,24 @@
 <!-- 当前恢复目标以active-engineering-goal.md顶部P1→P2→P3为准；立即执行仍为P1的G0—G6。用户已恢复P1→P2→P3 goal，继续推进。 -->
 # Harbor / Modal 工程交接
 
-## 当前推进：修复core-train-r2的CPU资源等待
+## 当前推进：core-train-r3 已加载训练与采样模型（2026-09-10 13:21 SGT）
 
-r1未进入训练：MIG权限误判已由5030662修复。r2真实进入Ray并通过MIG门，但TQ要求8个CPU1 placement槽，新Pod Ray total6/available5，永久pending；没有模型加载、首步或checkpoint。2026-09-10只停止owned PG11802后监督exit-15，elapsed1120.028s，PID11555/11937/13481/13631与专属Ray残留均已消失。证据/workspace/reports/core-train-r2-cpu-admission，含operator-stop，不将generic training-exited当成功。
+- 当前运行源码 `b4d04d8`，已 push；远程 `/workspace/rebuild/uni-agent-core-b4d04d8`，固定 VERL/DSH/model 版本未变。94项准备器回归与 Ruff 双门通过。
+- SSH `root@216.243.220.120 -p 13918 -i ~/.ssh/id_ed25519`；GPU 为48GB MIG，不是96GB整卡。旧云盘venv已恢复Python3.12.3，CUDA前后向通过；恢复方法见 `docs/harbor-modal-integration/pod-recovery-design.md`。
+- 520训练/160公开开发任务资产已提交；真实Linux DSH canary 8项通过。当前16步仅工程诊断，不代表全部520题已消费。
+- r3外层PID15850、监督启动15980、训练16011；模型actor17897完成398/398权重加载，vLLM Worker19054完成3/3分片加载，正在flashinfer autotuning。尚无首步/有效更新/checkpoint证据。观察到SM12.x能力探测warning但之后仍推进，不能据warning直接判定CUDA故障。
+- 正式日志 `/root/runs/core-train-r3/supervision/train.log`，准备清单 `/root/runs/core-train-r3-data/manifest.json`；checkpoint目标 `/workspace/uni-agent-g1/checkpoint/core-train-r3`。这些PID仅为观察快照，接续时必须检查实际存活。
+- r1因MIG权限查询误判未进入训练，5030662已修复。r2因8个CPU1 TQ placement槽超过Ray total6/available5等待；已仅停止owned PG11802，监督exit -15，非成功。证据 `/workspace/reports/core-train-r2-cpu-admission`。
+- b4d04d8将新core课程TQ存储单元固定2；r3实际已创建两个SimpleStorageUnit，placement pending归零，之前CPU阻塞已解除。
 
-正在给新core课程固定SimpleStorage.num_data_storage_units=2并TDD；修复发布后新core-train-r3，禁止复用r2。模型/DSH/VERL/任务奖励与16步预算不变。SSH216.243.220.120:13918，48GB MIG，venv已恢复。真实DSH canary8场景passed。当前没有训练作业在运行。
+### 紧接着做
 
-## 新Pod恢复状态（2026-09-10）
+- [ ] 监督同一r3进程，确认真实A→冻结→B采样及第一步；不要仅因观察超时重启。
+- [ ] 完成16步后审计完整组唯一消费、独立任务数、奖励、梯度、参数与optimizer；零更新如实记录。
+- [ ] step16每族首条公开dev独立reload并保留正常失败，校验母checkpoint文件不变。
+- [ ] 原始证据归档/workspace，补结果报告、复跑说明并commit/push；随后按goal推进P2→P3。
 
-SSH `root@216.243.220.120 -p 13918 -i ~/.ssh/id_ed25519`。原workspace模型、代码、venv、checkpoint与归档都在。新Ubuntu22.04系统Python3.11.10，旧venv指向缺失/usr/local/bin/python（原3.12.3）；正恢复固定解释器至/workspace/tools/uv-python，不能盲目用3.11替代。GPU是MIG 2g.48gb（48512MiB），不是原96GB整卡，需CUDA实际分配/前后向检查及显存预算重验，不改宿主MIG。
-
-新版core生成器/路由/canary已完成；680任务资产已保存examples/dsh/data/work-state-memory-core-v1，520train/160公开dev正文无重复，仍四族结构。统一857项CPU通过，Ruff双门通过；真实新Pod canary/GPU尚未运行。初始16步仅诊断，checkpoint保存8/16，原奖励/严格同课程reload不变。先完成环境恢复和固定发布后启动，异步与Harbor后置。
-
-恢复指南gpu-reconnect-runbook.md，下一步pod-recovery-design.md（进行中）。训练目标以active-engineering-goal.md顶部P1→P2→P3为准，不引用旧r1更新代替新课。
+以下为历史实验记录，旧课程通过不能替代新版core课程验收。
 
 ## 1. TL;DR
 
