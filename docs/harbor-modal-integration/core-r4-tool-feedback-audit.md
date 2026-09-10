@@ -47,3 +47,14 @@ Session 日志有 64 条 assistant/message、63 条 tool/result；其中 56 条 
 5. 主线程真实观测：日志时间 **05:49:07** 首组被拒并清理 TQ，随后第 5、6 条 chain 自动创建并进入下一组，作业仍存活。这与上述源码一致，不是仅凭 raise 文本推断。
 
 边界：失败组不会计入有效训练消费；持续拒绝可能耗尽 wall-time，或触发其他独立错误。当前证据只证明组拒绝后继续补采样，不能据此宣称已有梯度、参数变化或能力提升。
+
+## completed 但不可准入的第二例
+
+chain `memory-bd787d87fce34dd8b495ba2df2364e46` writer，结果目录 `writer/run/results/9d545e6169902fd628219794`：原 receipt 为 finished=true、eligible=false。在固定执行 checkout 中，读取原 fixture、agent-result 和 trace 调用现有 verifier.score，只读重评分复现同一结果。
+
+- seq 9 / `call_bba47a02`：**工具名 `view`**，参数 path 指向本 chain 的 `writer-data/sources/decisions.json`。
+- seq 14 / `call_5d8077cb`：**工具名 `view`**，参数 path 指向本 chain 的 `writer-data/memory` 目录。
+- 两次实际工具回执均为 `WORK_STATE_POLICY_DENIED`。这是非法工具名，不是正确的 `str_replace_editor` 加 `command=view` 被拒；后一调用还是目录而非授权的精确文件路径。
+- 原 verifier 重评分：`finished=true, eligible=false, reward=0`；`unsafe=["unapproved_tool","unapproved_tool"]`，`matched_call_ids=[]`，`successful_writes=[]`。不可变输入 decisions.json 的实际 SHA 与 fixture 仍相同，没有 source 被修改的证据。
+
+`finished` 表示 DSH turn 正常 completed，`eligible` 还要求动作满足本轮固定工具/路径合同。因此正常结束与可进入训练是两个独立判断；本次没有放宽准入或修改运行。
