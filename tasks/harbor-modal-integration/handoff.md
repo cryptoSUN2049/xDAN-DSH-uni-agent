@@ -254,3 +254,7 @@ WS03下一题已启动：`core-r4-reload-ws03-r1`、外层PID61243，日志`/roo
 3. 读总操作指南与独立短课程设计；后续新run必须新身份、固定新提交、保留母谱系。
 4. 启动新GPU任务前只读核占用和版本；使用现prepare/check/launch及原audit，不能伪造TQ或放宽原分数。
 5. 完成每节点后更新goal/handoff、Ruff check/format、commit/push。历史只按需看notes.md及handoff-history-20260908.md。
+
+## 2026-09-10 reload与论文研究检查点
+
+WS03正式after_run及消费审计通过，1组2条A/B，业务reward0；见core-r4-reload-ws03-result.md/json。WS05已exit0/505.013s，正式审计原件位于其final-audit，尚待本地汇总。WS06外层PID69492最后实查仍存活，日志/root/runs/core-r4-reload-ws06-r1-launch.log，不得重复启动；实查时vLLM在推理。记忆RL研究与下一实验候选见docs/harbor-modal-integration/memory-rl-evidence-and-next-experiment.md；未改旧r4或实施新奖励合同。下一步收尾WS06、归档reload/参数原件，再验新预算canary。

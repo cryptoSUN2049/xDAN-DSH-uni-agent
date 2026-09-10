@@ -1,0 +1,403 @@
+{
+  "schema": "dsh.core-r4-independent-reload-result.v1",
+  "recorded_utc": "2026-09-10T07:55:01.388442+00:00",
+  "run_id": "core-r4-reload-ws03-r1",
+  "task_id": "work-state-memory-core-v1-ws03-v1-s2001",
+  "chain_id": "memory-fe6496c47acd4487803bc54c3b0e8826",
+  "scope": "WS03 singleton public dev reload; no ability-improvement claim",
+  "sources": {
+    "after-run-check.json": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/final-audit/after-run-check.json",
+      "sha256": "sha256:6e8f94f9584083f549b4dc23abdc5e65a229e7cf3c5d3088ea256bc36aba3e4b",
+      "bytes": 3583,
+      "content": {
+        "schema": "dsh.reload-after-run-check.v1",
+        "checked_utc": "2026-09-10T07:54:41.588797+00:00",
+        "passed": true,
+        "manifest_path": "/root/runs/core-r4-reload-ws03-r1-data/manifest.json",
+        "manifest_sha256": "sha256:ef57e9e58addc650d230a8579c86365cf0ff14a4eaceabd676917bb3e54ef7e6",
+        "checkpoint_origin": {
+          "schema": "dsh.memory-checkpoint-origin.v1",
+          "course_id": "work-state-memory-core-v1",
+          "mother_run": "/root/runs/core-train-r4",
+          "mother_source_head": "511bd71792c7a26af83cb0fe6362cd0f7d5aba96",
+          "verl_effective_source": {
+            "schema": "dsh.verl-source-overlay.v1",
+            "base_revision": "fefb080262e1c015a0ea05f958822a6a512dc795",
+            "overlay_id": "preserve-finish-reason-v1",
+            "state": "patched",
+            "patch_sha256": "sha256:2cb5eef7dbe70abc553fa002c3d608e6a93954afcdbe3c8e319d5ad1581df436",
+            "manifest_sha256": "sha256:15ecee86c9b4a290ff3a6d62de2c7da5cee995037f45c1f68aeab74deaf81fbd",
+            "files": {
+              "verl/workers/rollout/vllm_rollout/vllm_async_server.py": "sha256:2a4452e0c5123c8f5ed62961d048cef97c3f1f5234a8be573f2837f4e01e1d75"
+            }
+          },
+          "checkpoint_path": "/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_16",
+          "step": 16,
+          "evidence": {
+            "/root/runs/core-train-r4/run-manifest.json": "sha256:1d301a84283fa428dc3d62bf1e693414d00255aaa580e484dd59e40c8d27e0f5",
+            "/root/runs/core-train-r4/memory-launch-plan.json": "sha256:edca5f7234ac330c5c12d73c12b340de2f2832d95e4f793f8fda838d576bd8d3",
+            "/root/runs/core-train-r4-data/manifest.json": "sha256:edca5f7234ac330c5c12d73c12b340de2f2832d95e4f793f8fda838d576bd8d3"
+          },
+          "files": {
+            "actor/extra_state_world_size_1_rank_0.pt": {
+              "sha256": "sha256:e15c817d96e1ecbbd48cd6c9048dbb9e2ce91f1c95cc3eefe1a85cd057f57cd9",
+              "size": 15141
+            },
+            "actor/fsdp_config.json": {
+              "sha256": "sha256:7315a2057e6b04e0b2e7d6ee8ad070eafd481f3e1029fb9c75c97723b6f98f36",
+              "size": 46
+            },
+            "actor/huggingface/chat_template.jinja": {
+              "sha256": "sha256:a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+              "size": 4168
+            },
+            "actor/huggingface/config.json": {
+              "sha256": "sha256:17608177d0d110e93b4bca08684cc56c1219b317e24cdaa2b83e216721fc18b5",
+              "size": 1625
+            },
+            "actor/huggingface/generation_config.json": {
+              "sha256": "sha256:6b08ea8d092c7dd1a9de07d899271ba71ab2fe74375900c7a6400356e88752b2",
+              "size": 213
+            },
+            "actor/huggingface/tokenizer.json": {
+              "sha256": "sha256:be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+              "size": 11422650
+            },
+            "actor/huggingface/tokenizer_config.json": {
+              "sha256": "sha256:d9bf1d78a80bad5eb65b83c2608910e3be00a9d3250c8153a5a393ad1257e1d6",
+              "size": 664
+            },
+            "actor/lora_train_meta.json": {
+              "sha256": "sha256:79e829adbcada25b80ae32ba7ab26a07ece2cb6ae168855fab519585a123e6e8",
+              "size": 67
+            },
+            "actor/model_world_size_1_rank_0.pt": {
+              "sha256": "sha256:20d8bcd59b631cd1de0e5179f978eef9eae97d23175811eb343c4eecdd074f19",
+              "size": 8889735011
+            },
+            "actor/optim_world_size_1_rank_0.pt": {
+              "sha256": "sha256:d34aebaa558ab06bd9de989c6a75a4be4a5ff6ad207b900d739307f8e3591c81",
+              "size": 132552363
+            },
+            "data.pt": {
+              "sha256": "sha256:e95e6b0d6a05fb6996c19425e75ae772d8093a79589775b249ea8db53b4bd017",
+              "size": 1499
+            }
+          },
+          "identity": "sha256:59e06b5d333cecb528e8171f44ccb074ef376b362f5c4ecc7fee877c55b0529b"
+        }
+      }
+    },
+    "consumption.json": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/final-audit/consumption.json",
+      "sha256": "sha256:23403539a4b5f0ca6fa5bea10ccf1f3fc800f2daeb4511b01f0bd774117a91f5",
+      "bytes": 1637,
+      "content": {
+        "schema": "dsh.memory-training-consumption-audit.v1",
+        "passed": true,
+        "consumption_verified": true,
+        "run_completed": true,
+        "run_id": "core-r4-reload-ws03-r1",
+        "run_manifest_sha256": "sha256:1eb2a262ea300a3de3217605c3d2799e71fb6bf586d70461f70fc138ea8a35ae",
+        "inputs": [
+          {
+            "path": "/root/runs/core-r4-reload-ws03-r1/validation/16.jsonl",
+            "sha256": "sha256:4ddb9c5abdd8fe6020ac75d7033e24076edc115bf7a05fbc54d71c46eb93364e"
+          }
+        ],
+        "groups": [
+          {
+            "path": "/root/runs/core-r4-reload-ws03-r1/chains/groups/67f3e69b77364b35afdcbf8add7a0354/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 16,
+            "partition": "val",
+            "global_steps": 16,
+            "uid": "e53f9739-da44-4cb2-a1c0-44a5c76009a1",
+            "crosswalk_sha256": "sha256:800712db423bc597099c360bab608fb0cd0a33de20276ce078ea3c431154ce26",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "session-final",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          }
+        ],
+        "errors": [],
+        "unknown_or_unadmitted_consumption": [],
+        "duplicate_consumption": [],
+        "overlapping_crosswalk_keys": [],
+        "summary": {
+          "groups": 1,
+          "consumed_groups": 1,
+          "consumed_rows": 2,
+          "unique_consumed_rows": 2
+        },
+        "limitations": [
+          "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+          "Crosswalk and submission records alone never establish trainer consumption."
+        ]
+      }
+    },
+    "prepare_manifest": {
+      "path": "/root/runs/core-r4-reload-ws03-r1-data/manifest.json",
+      "sha256": "sha256:ef57e9e58addc650d230a8579c86365cf0ff14a4eaceabd676917bb3e54ef7e6",
+      "bytes": 24607
+    },
+    "checkpoint_origin": {
+      "path": "/root/runs/core-r4-reload-ws03-r1-data/checkpoint-origin.json",
+      "sha256": "sha256:5379213a01c75f83d0efad633b7f78d199dcda9e7e6b064ff30f6aa5aa076589",
+      "bytes": 3129
+    },
+    "run_manifest": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/run-manifest.json",
+      "sha256": "sha256:1eb2a262ea300a3de3217605c3d2799e71fb6bf586d70461f70fc138ea8a35ae",
+      "bytes": 6932
+    },
+    "supervisor": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/supervision/supervisor-result.json",
+      "sha256": "sha256:28444cb3d7cfcc518b56cd72a25b1bcab368283da3259c30f779ec5a442048df",
+      "bytes": 165,
+      "content": {
+        "exit_code": 0,
+        "reason": "training-exited",
+        "elapsed_seconds": 490.014,
+        "pid": 61338,
+        "transient_health_failures": 0,
+        "recovered_health_windows": 0
+      }
+    },
+    "train_log": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/supervision/train.log",
+      "sha256": "sha256:643a4073eeeda354833a0411c88d6e33f9a97e1b494dd6a1f4fcdc5ce7a3c596",
+      "bytes": 126483
+    },
+    "validation_dump": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/validation/16.jsonl",
+      "sha256": "sha256:4ddb9c5abdd8fe6020ac75d7033e24076edc115bf7a05fbc54d71c46eb93364e",
+      "bytes": 23974
+    },
+    "frozen_bundle": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/chains/memory-fe6496c47acd4487803bc54c3b0e8826/frozen/memory.bin",
+      "sha256": "sha256:7a0ec75158ae51cf7d353574ddaf7e4935995ce12e8ff6a7a889ab1a2b5b672c",
+      "bytes": 2106
+    },
+    "frozen_manifest": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/chains/memory-fe6496c47acd4487803bc54c3b0e8826/frozen/manifest.json",
+      "sha256": "sha256:3162ef26722c20ab18d20ff82c7d382508b0beee19339a7aab0f9be5d12a5af1",
+      "bytes": 391
+    },
+    "writer_trace": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/chains/memory-fe6496c47acd4487803bc54c3b0e8826/writer/run/traces/1ad540ef9344c64f271a29d7/session.jsonl",
+      "sha256": "sha256:0994cb976220105e1d7bd1b6c028a8ab6580e1fcac51f7a7762131316f519999",
+      "bytes": 45633
+    },
+    "writer_fixture": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/chains/memory-fe6496c47acd4487803bc54c3b0e8826/writer/fixture.json",
+      "sha256": "sha256:1ca69fc162c8c4ca541dc40f1af35a07185e3d9f75f269572f628059b97de321",
+      "bytes": 7634
+    },
+    "reader_trace": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/chains/memory-fe6496c47acd4487803bc54c3b0e8826/reader/run/traces/b7961322d148cb1afc8d54fe/session.jsonl",
+      "sha256": "sha256:f117764b9e2f5c4e6e852f8ddddb1c40719240ec931a0a54f803c11978cd8f45",
+      "bytes": 18911
+    },
+    "reader_fixture": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/chains/memory-fe6496c47acd4487803bc54c3b0e8826/reader/fixture.json",
+      "sha256": "sha256:a42b669240a7dedda109188bd0bbd4d2c69c4cad2936dfb254e8d98ac36c86d1",
+      "bytes": 8554
+    },
+    "crosswalk": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/chains/groups/67f3e69b77364b35afdcbf8add7a0354/crosswalk.json",
+      "sha256": "sha256:800712db423bc597099c360bab608fb0cd0a33de20276ce078ea3c431154ce26",
+      "bytes": 3021,
+      "content": {
+        "chains": [
+          {
+            "receipt_path": "/root/runs/core-r4-reload-ws03-r1/chains/groups/67f3e69b77364b35afdcbf8add7a0354/chain-0.json",
+            "receipt_sha256": "sha256:ddfd52211226b17ea66408980dc44f620fd47f82fdf2ce06b98b4d1b843ca35a"
+          }
+        ],
+        "contract_id": "work-state-v1",
+        "expected_policy_version": 16,
+        "global_steps": 16,
+        "items": [
+          {
+            "chain_id": "memory-fe6496c47acd4487803bc54c3b0e8826",
+            "gateway_session_id": "memory-A-aac5fc06ec114c2ba400baaac94fab63",
+            "role": "A",
+            "stage_index": 0,
+            "stage_json_path": "/root/runs/core-r4-reload-ws03-r1/agent-logs/step_16/memory-A-aac5fc06ec114c2ba400baaac94fab63/trajectory.json",
+            "stage_json_sha256": "sha256:e8a666e0c889f681803fb7ee96462fc7a6903fd0d52f3168696f78f1421bc859",
+            "stage_npz_path": "/root/runs/core-r4-reload-ws03-r1/agent-logs/step_16/memory-A-aac5fc06ec114c2ba400baaac94fab63/trajectory.npz",
+            "stage_npz_sha256": "sha256:276ceb1865bae541b6fde564403950152aa939588e9b36955fe90d35e264700a",
+            "stage_receipt_file_sha256": "sha256:b43e3b312edb43455d973cf00d71a254bfc7506b18b3db62252e40f388fb35c3",
+            "stage_receipt_id": "sha256:7d0deea6bb9f60de3516266baff261476d35c9b57fcef47a4df1e22455b7651a",
+            "stage_receipt_path": "/root/runs/core-r4-reload-ws03-r1/chains/memory-fe6496c47acd4487803bc54c3b0e8826/writer/run/results/9b5a15ddca4a2f87c6cea67f/verifier-receipt.json",
+            "stage_reward": 0.0,
+            "token_sha256": "sha256:0a819d8a151bdb98afbc7d5bca879a513e1f805a9bce4b309f91d97b016f5ca3",
+            "tq_key": "e53f9739-da44-4cb2-a1c0-44a5c76009a1_0_0",
+            "version_evidence": {
+              "generation_count": 11,
+              "max_global_steps": 16,
+              "min_global_steps": 16,
+              "version_evidence_complete": true,
+              "versioned_generation_count": 11
+            }
+          },
+          {
+            "chain_id": "memory-fe6496c47acd4487803bc54c3b0e8826",
+            "gateway_session_id": "memory-B-d096b2d3caac48718720c9dfdac9c492",
+            "role": "B",
+            "stage_index": 0,
+            "stage_json_path": "/root/runs/core-r4-reload-ws03-r1/agent-logs/step_16/memory-B-d096b2d3caac48718720c9dfdac9c492/trajectory.json",
+            "stage_json_sha256": "sha256:c12d3217c9da8591ff1a5b1923a084ddb8b9f3dee06c9819039c9a2518bc2b3c",
+            "stage_npz_path": "/root/runs/core-r4-reload-ws03-r1/agent-logs/step_16/memory-B-d096b2d3caac48718720c9dfdac9c492/trajectory.npz",
+            "stage_npz_sha256": "sha256:c5a1496702c8cc195cdadbe66143cc334a48c8c725ca1f0ef7780aa38f6c9d12",
+            "stage_receipt_file_sha256": "sha256:924d37b1e2d4199a082bc9319daf24ffcd7f4c8808d63e443eb30e2c79626655",
+            "stage_receipt_id": "sha256:215a22dc512cb687fdbf3d689833c7b7dd775b10b002ab01fd37a6ca2c0ff76b",
+            "stage_receipt_path": "/root/runs/core-r4-reload-ws03-r1/chains/memory-fe6496c47acd4487803bc54c3b0e8826/reader/run/results/f5d65142f2ca531d26c908fa/verifier-receipt.json",
+            "stage_reward": 0.0,
+            "token_sha256": "sha256:b4437d4ed5c08f292fb8eaba601ee9f44641ba94e6dc507f302706d8c8e15dd3",
+            "tq_key": "e53f9739-da44-4cb2-a1c0-44a5c76009a1_0_1",
+            "version_evidence": {
+              "generation_count": 3,
+              "max_global_steps": 16,
+              "min_global_steps": 16,
+              "version_evidence_complete": true,
+              "versioned_generation_count": 3
+            }
+          }
+        ],
+        "partition": "val",
+        "run_id": "core-r4-reload-ws03-r1",
+        "schema": "uni-agent.memory-chain-crosswalk.v1",
+        "status": "prepared-not-consumed",
+        "uid": "e53f9739-da44-4cb2-a1c0-44a5c76009a1"
+      }
+    }
+  },
+  "receipts": {
+    "writer": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/chains/memory-fe6496c47acd4487803bc54c3b0e8826/writer/run/results/9b5a15ddca4a2f87c6cea67f/verifier-receipt.json",
+      "sha256": "sha256:b43e3b312edb43455d973cf00d71a254bfc7506b18b3db62252e40f388fb35c3",
+      "bytes": 1123,
+      "content": {
+        "accuracy": 0.0,
+        "artifact_sha256": "sha256:f6b2b1e7e59636dd4d63e213a42b8bd1c4ed5a2227b6cab299b20ba7aeafee30",
+        "dsh_session_id": "dsh-memory-A-aac5fc06ec114c2ba400baaac94fab63",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:1ca69fc162c8c4ca541dc40f1af35a07185e3d9f75f269572f628059b97de321",
+          "sha256:0994cb976220105e1d7bd1b6c028a8ab6580e1fcac51f7a7762131316f519999",
+          "sha256:24bd712b0c60e824d9fa8dbebf9a290333af175117f5dffb77955217f42ea2d9"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-10T07:43:58.592934+00:00",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:7d0deea6bb9f60de3516266baff261476d35c9b57fcef47a4df1e22455b7651a",
+        "reward": 0.0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/work-state/memory-fe6496c47acd4487803bc54c3b0e8826/writer",
+        "task_version": "1",
+        "trace_sha256": "sha256:0994cb976220105e1d7bd1b6c028a8ab6580e1fcac51f7a7762131316f519999",
+        "verifier": {
+          "code_digest": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+          "id": "dsh-work-state-training-stage",
+          "version": "1"
+        }
+      }
+    },
+    "reader": {
+      "path": "/root/runs/core-r4-reload-ws03-r1/chains/memory-fe6496c47acd4487803bc54c3b0e8826/reader/run/results/f5d65142f2ca531d26c908fa/verifier-receipt.json",
+      "sha256": "sha256:924d37b1e2d4199a082bc9319daf24ffcd7f4c8808d63e443eb30e2c79626655",
+      "bytes": 1345,
+      "content": {
+        "accuracy": 0.0,
+        "artifact_sha256": "sha256:9634325e63c6fb52f53192dc5f204edffcf17c658c0e3e171496af9c95c7385d",
+        "dsh_session_id": "dsh-memory-B-d096b2d3caac48718720c9dfdac9c492",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:a42b669240a7dedda109188bd0bbd4d2c69c4cad2936dfb254e8d98ac36c86d1",
+          "sha256:f117764b9e2f5c4e6e852f8ddddb1c40719240ec931a0a54f803c11978cd8f45",
+          "sha256:24bd712b0c60e824d9fa8dbebf9a290333af175117f5dffb77955217f42ea2d9",
+          "sha256:7d0deea6bb9f60de3516266baff261476d35c9b57fcef47a4df1e22455b7651a",
+          "sha256:3162ef26722c20ab18d20ff82c7d382508b0beee19339a7aab0f9be5d12a5af1",
+          "sha256:1275e05604588d243a4ee0f33dd75b881d68bbb14940b0c03437a3bfc429f3c4"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-10T07:44:10.262888+00:00",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:215a22dc512cb687fdbf3d689833c7b7dd775b10b002ab01fd37a6ca2c0ff76b",
+        "reward": 0.0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/work-state/memory-fe6496c47acd4487803bc54c3b0e8826/reader",
+        "task_version": "1",
+        "trace_sha256": "sha256:f117764b9e2f5c4e6e852f8ddddb1c40719240ec931a0a54f803c11978cd8f45",
+        "verifier": {
+          "code_digest": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+          "id": "dsh-work-state-training-stage",
+          "version": "1"
+        }
+      }
+    }
+  },
+  "load_evidence": [
+    {
+      "line": 1114,
+      "text": "(TaskRunnerV1 pid=62815) INFO:2026-09-10 07:41:50,106:Resuming from /workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_16, setting global step to 16"
+    },
+    {
+      "line": 1119,
+      "text": "(WorkerDict pid=63271) INFO:2026-09-10 07:41:53,706:[Rank 0] Loaded model from /workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_16/actor/model_world_size_1_rank_0.pt"
+    },
+    {
+      "line": 1120,
+      "text": "(WorkerDict pid=63271) INFO:2026-09-10 07:41:53,785:[Rank 0] Loaded optimizer from /workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_16/actor/optim_world_size_1_rank_0.pt"
+    },
+    {
+      "line": 1123,
+      "text": "(WorkerDict pid=63271) INFO:2026-09-10 07:41:53,809:[Rank 0] Loaded rng from /workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_16/actor/extra_state_world_size_1_rank_0.pt"
+    },
+    {
+      "line": 1124,
+      "text": "(WorkerDict pid=63271) INFO:2026-09-10 07:41:53,809:[Rank 0] Loaded lr_scheduler from /workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_16/actor/extra_state_world_size_1_rank_0.pt"
+    }
+  ],
+  "validation_rows": [
+    {
+      "uid": "e53f9739-da44-4cb2-a1c0-44a5c76009a1_0_0",
+      "step": 16,
+      "dump_score": 0.0
+    },
+    {
+      "uid": "e53f9739-da44-4cb2-a1c0-44a5c76009a1_0_1",
+      "step": 16,
+      "dump_score": 0.0
+    }
+  ],
+  "outputs": {
+    "config.json": "{\"encoder\": \"catalog_option_1\", \"transport\": \"catalog_option_2\", \"storage\": \"catalog_option_3\"}",
+    "plan.json": "[]"
+  },
+  "expected_config": {
+    "encoder": "option-c",
+    "storage": "option-d",
+    "transport": "option-b"
+  },
+  "oracle_plan": [],
+  "persistent_report_root": "/workspace/reports/core-r4-reload-results/ws03"
+}
