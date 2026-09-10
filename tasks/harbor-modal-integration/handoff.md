@@ -39,6 +39,10 @@ WS01独立reload已prepare成功并发起：run `core-r4-reload-ws01-r1`，外�
 
 15:30 SGT参数审计已收尾（core-r4-parameter-audit.md/json）：8→16 model同SHA20d8bcd59b631cd1de0e5179f978eef9eae97d23175811eb343c4eecdd074f19，504adapter/399base变化0；最终252B全零，optimizer内部16→32但1008moments全零。原两工具exit1/passedfalse保留，有效更新未通过。原件/workspace/reports/core-train-r4-parameters。WS01 reload PID57046仍存活，已进入VERL/FSDP初始化，尚未证明step16加载/任务终态。母证据归档另进行中，不能提前标归档完成。
 
+15:33 SGT WS01 reload实证加载：07:32:21 WorkerDict59055依次Loaded step16 model/optimizer/rng+lr_scheduler；vLLM59778/60024已起，首链memory-841086...创建，尚待任务终态/消费。WS03/05/06的`/root/runs/core-r4-reload-<ws>-r1-data/manifest.json`均prepare完成未launch；四题CUDA_VISIBLE_DEVICES均固定0，CPU准备没有污染GPU配置。
+
+母证据归档完成：`/workspace/reports/core-train-r4-engineering-evidence-20260910.tar.gz`，49,014,953 bytes，SHA256 0a0f6826ae28fe2bd40a448e89055ae921f601b2f6c2c39d5cb5d142cffff54c；338,901成员逐项回读和原件hash复核通过。范围/清单见core-r4-archive.md；不含checkpoint（另存/workspace）、参数报告和活跃reload，不能声称这些已随tar备份。实际volume权限0666如实记录。
+
 ### 紧接着做
 
 - [x] r4首次真实A→冻结→B与完整组消费已核；首步原始跨表证据见core-train-r4-step1-evidence.md。继续监督后续完整运行，不因普通观察超时重启。
