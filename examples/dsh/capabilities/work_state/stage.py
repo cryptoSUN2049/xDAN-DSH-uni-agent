@@ -39,12 +39,22 @@ def _task(operator, context, sample_fields):
         raise ValueError("Sample may select only a pinned task identity")
     identity = metadata["work_state_task_id"]
     row = data["tasks"].get(identity)
-    if not isinstance(row, dict) or set(row) != {"family", "variant", "seed", "split"}:
+    if not isinstance(row, dict) or set(row) not in (
+        {"family", "variant", "seed", "split"},
+        {"family", "variant", "seed", "split", "generation"},
+    ):
         raise ValueError("Unknown or malformed task manifest entry")
     split = "train" if context.partition == "train" else "validation"
     if row["split"] != split:
         raise ValueError("Task split mismatch")
-    task = make_task(row["family"], row["variant"], row["seed"])
+    if "generation" in row:
+        if row["generation"] != "work-state-memory-core-v1":
+            raise ValueError("Unknown task generation")
+        from examples.dsh.capabilities.work_state.core_tasks import make_core_task
+
+        task = make_core_task(row["family"], row["variant"], row["seed"])
+    else:
+        task = make_task(row["family"], row["variant"], row["seed"])
     if task["task_id"] != identity:
         raise ValueError("Task identity does not match manifest recipe")
     return task

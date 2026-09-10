@@ -1,0 +1,4765 @@
+{
+  "schema": "dsh.work-state-dataset.v1",
+  "tasks": {
+    "work-state-memory-core-v1-ws01-v0-s1001": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1001,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1001": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1001,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1001": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1001,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1001": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1001,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1002": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1002,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1002": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1002,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1002": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1002,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1002": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1002,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1003": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1003,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1003": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1003,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1003": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1003,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1003": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1003,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1004": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1004,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1004": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1004,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1004": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1004,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1004": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1004,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1005": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1005,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1005": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1005,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1005": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1005,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1005": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1005,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1006": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1006,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1006": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1006,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1006": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1006,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1006": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1006,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1007": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1007,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1007": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1007,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1007": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1007,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1007": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1007,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1008": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1008,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1008": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1008,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1008": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1008,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1008": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1008,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1009": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1009,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1009": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1009,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1009": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1009,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1009": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1009,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1010": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1010,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1010": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1010,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1010": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1010,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1010": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1010,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1011": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1011,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1011": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1011,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1011": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1011,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1011": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1011,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1012": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1012,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1012": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1012,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1012": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1012,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1012": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1012,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1013": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1013,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1013": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1013,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1013": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1013,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1013": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1013,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1014": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1014,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1014": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1014,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1014": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1014,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1014": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1014,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1015": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1015,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1015": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1015,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1015": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1015,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1015": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1015,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1016": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1016,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1016": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1016,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1016": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1016,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1016": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1016,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1017": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1017,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1017": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1017,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1017": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1017,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1017": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1017,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1018": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1018,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1018": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1018,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1018": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1018,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1018": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1018,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1019": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1019,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1019": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1019,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1019": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1019,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1019": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1019,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1020": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1020,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1020": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1020,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1020": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1020,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1020": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1020,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1021": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1021,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1021": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1021,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1021": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1021,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1021": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1021,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1022": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1022,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1022": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1022,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1022": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1022,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1022": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1022,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1023": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1023,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1023": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1023,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1023": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1023,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1023": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1023,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1024": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1024,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1024": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1024,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1024": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1024,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1024": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1024,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1025": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1025,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1025": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1025,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1025": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1025,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1025": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1025,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1026": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1026,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1026": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1026,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1026": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1026,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1026": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1026,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1027": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1027,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1027": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1027,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1027": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1027,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1027": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1027,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1028": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1028,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1028": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1028,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1028": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1028,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1028": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1028,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1029": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1029,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1029": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1029,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1029": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1029,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1029": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1029,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1030": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1030,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1030": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1030,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1030": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1030,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1030": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1030,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1031": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1031,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1031": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1031,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1031": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1031,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1031": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1031,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1032": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1032,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1032": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1032,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1032": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1032,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1032": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1032,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1033": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1033,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1033": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1033,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1033": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1033,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1033": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1033,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1034": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1034,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1034": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1034,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1034": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1034,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1034": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1034,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1035": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1035,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1035": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1035,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1035": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1035,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1035": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1035,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1036": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1036,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1036": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1036,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1036": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1036,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1036": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1036,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1037": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1037,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1037": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1037,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1037": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1037,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1037": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1037,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1038": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1038,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1038": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1038,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1038": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1038,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1038": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1038,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1039": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1039,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1039": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1039,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1039": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1039,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1039": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1039,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1040": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1040,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1040": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1040,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1040": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1040,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v0-s1040": {
+      "family": "WS06",
+      "variant": 0,
+      "seed": 1040,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1041": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1041,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1041": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1041,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1041": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1041,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1042": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1042,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1042": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1042,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1042": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1042,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1043": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1043,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1043": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1043,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1043": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1043,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1044": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1044,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1044": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1044,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1044": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1044,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1045": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1045,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1045": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1045,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1045": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1045,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1046": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1046,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1046": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1046,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1046": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1046,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1047": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1047,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1047": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1047,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1047": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1047,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1048": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1048,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1048": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1048,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1048": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1048,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1049": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1049,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1049": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1049,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1049": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1049,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1050": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1050,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1050": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1050,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1050": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1050,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1051": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1051,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1051": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1051,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1051": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1051,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1052": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1052,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1052": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1052,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1052": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1052,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1053": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1053,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1053": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1053,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1053": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1053,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1054": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1054,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1054": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1054,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1054": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1054,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1055": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1055,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1055": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1055,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1055": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1055,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1056": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1056,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1056": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1056,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1056": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1056,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1057": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1057,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1057": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1057,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1057": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1057,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1058": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1058,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1058": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1058,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1058": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1058,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1059": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1059,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1059": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1059,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1059": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1059,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1060": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1060,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1060": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1060,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1060": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1060,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1061": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1061,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1061": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1061,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1061": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1061,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1062": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1062,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1062": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1062,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1062": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1062,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1063": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1063,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1063": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1063,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1063": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1063,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1064": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1064,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1064": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1064,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1064": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1064,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1065": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1065,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1065": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1065,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1065": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1065,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1066": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1066,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1066": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1066,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1066": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1066,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1067": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1067,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1067": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1067,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1067": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1067,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1068": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1068,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1068": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1068,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1068": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1068,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1069": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1069,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1069": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1069,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1069": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1069,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1070": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1070,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1070": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1070,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1070": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1070,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1071": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1071,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1071": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1071,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1071": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1071,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1072": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1072,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1072": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1072,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1072": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1072,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1073": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1073,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1073": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1073,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1073": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1073,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1074": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1074,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1074": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1074,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1074": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1074,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1075": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1075,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1075": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1075,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1075": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1075,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1076": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1076,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1076": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1076,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1076": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1076,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1077": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1077,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1077": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1077,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1077": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1077,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1078": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1078,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1078": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1078,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1078": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1078,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1079": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1079,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1079": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1079,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1079": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1079,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1080": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1080,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1080": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1080,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1080": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1080,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1081": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1081,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1081": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1081,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1081": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1081,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1082": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1082,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1082": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1082,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1082": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1082,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1083": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1083,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1083": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1083,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1083": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1083,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1084": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1084,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1084": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1084,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1084": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1084,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1085": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1085,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1085": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1085,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1085": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1085,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1086": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1086,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1086": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1086,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1086": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1086,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1087": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1087,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1087": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1087,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1087": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1087,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1088": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1088,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1088": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1088,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1088": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1088,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1089": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1089,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1089": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1089,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1089": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1089,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1090": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1090,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1090": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1090,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1090": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1090,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1091": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1091,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1091": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1091,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1091": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1091,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1092": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1092,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1092": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1092,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1092": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1092,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1093": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1093,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1093": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1093,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1093": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1093,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1094": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1094,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1094": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1094,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1094": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1094,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1095": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1095,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1095": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1095,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1095": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1095,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1096": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1096,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1096": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1096,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1096": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1096,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1097": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1097,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1097": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1097,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1097": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1097,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1098": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1098,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1098": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1098,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1098": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1098,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1099": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1099,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1099": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1099,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1099": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1099,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1100": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1100,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1100": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1100,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1100": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1100,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1101": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1101,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1101": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1101,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1101": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1101,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1102": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1102,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1102": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1102,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1102": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1102,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1103": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1103,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1103": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1103,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1103": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1103,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1104": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1104,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1104": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1104,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1104": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1104,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1105": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1105,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1105": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1105,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1105": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1105,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1106": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1106,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1106": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1106,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1106": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1106,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1107": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1107,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1107": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1107,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1107": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1107,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1108": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1108,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1108": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1108,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1108": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1108,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1109": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1109,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1109": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1109,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1109": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1109,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1110": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1110,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1110": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1110,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1110": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1110,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1111": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1111,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1111": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1111,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1111": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1111,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1112": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1112,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1112": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1112,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1112": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1112,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1113": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1113,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1113": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1113,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1113": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1113,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1114": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1114,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1114": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1114,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1114": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1114,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1115": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1115,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1115": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1115,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1115": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1115,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1116": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1116,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1116": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1116,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1116": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1116,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1117": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1117,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1117": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1117,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1117": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1117,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1118": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1118,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1118": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1118,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1118": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1118,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1119": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1119,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1119": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1119,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1119": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1119,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1120": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1120,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1120": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1120,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1120": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1120,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1121": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1121,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1121": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1121,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1121": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1121,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1122": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1122,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1122": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1122,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1122": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1122,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1123": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1123,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1123": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1123,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1123": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1123,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1124": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1124,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1124": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1124,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1124": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1124,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1125": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1125,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1125": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1125,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1125": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1125,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1126": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1126,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1126": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1126,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1126": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1126,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1127": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1127,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1127": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1127,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1127": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1127,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1128": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1128,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1128": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1128,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1128": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1128,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1129": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1129,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1129": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1129,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1129": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1129,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1130": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1130,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1130": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1130,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1130": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1130,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1131": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1131,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1131": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1131,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1131": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1131,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1132": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1132,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1132": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1132,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1132": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1132,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1133": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1133,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1133": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1133,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1133": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1133,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1134": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1134,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1134": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1134,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1134": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1134,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1135": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1135,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1135": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1135,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1135": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1135,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1136": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1136,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1136": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1136,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1136": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1136,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1137": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1137,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1137": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1137,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1137": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1137,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1138": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1138,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1138": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1138,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1138": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1138,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1139": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1139,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1139": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1139,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1139": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1139,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1140": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1140,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1140": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1140,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1140": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1140,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1141": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1141,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1141": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1141,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1141": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1141,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1142": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1142,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1142": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1142,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1142": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1142,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1143": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1143,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1143": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1143,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1143": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1143,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1144": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1144,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1144": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1144,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1144": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1144,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1145": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1145,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1145": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1145,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1145": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1145,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1146": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1146,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1146": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1146,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1146": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1146,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1147": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1147,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1147": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1147,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1147": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1147,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1148": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1148,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1148": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1148,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1148": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1148,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1149": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1149,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1149": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1149,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1149": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1149,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1150": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1150,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1150": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1150,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1150": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1150,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1151": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1151,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1151": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1151,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1151": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1151,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1152": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1152,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1152": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1152,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1152": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1152,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1153": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1153,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1153": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1153,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1153": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1153,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1154": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1154,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1154": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1154,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1154": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1154,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1155": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1155,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1155": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1155,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1155": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1155,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1156": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1156,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1156": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1156,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1156": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1156,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1157": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1157,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1157": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1157,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1157": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1157,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1158": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1158,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1158": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1158,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1158": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1158,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1159": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1159,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1159": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1159,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1159": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1159,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v0-s1160": {
+      "family": "WS01",
+      "variant": 0,
+      "seed": 1160,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v0-s1160": {
+      "family": "WS03",
+      "variant": 0,
+      "seed": 1160,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v0-s1160": {
+      "family": "WS05",
+      "variant": 0,
+      "seed": 1160,
+      "split": "train",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2001": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2001,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2001": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2001,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2001": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2001,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2001": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2001,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2002": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2002,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2002": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2002,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2002": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2002,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2002": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2002,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2003": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2003,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2003": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2003,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2003": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2003,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2003": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2003,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2004": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2004,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2004": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2004,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2004": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2004,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2004": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2004,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2005": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2005,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2005": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2005,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2005": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2005,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2005": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2005,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2006": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2006,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2006": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2006,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2006": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2006,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2006": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2006,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2007": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2007,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2007": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2007,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2007": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2007,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2007": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2007,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2008": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2008,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2008": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2008,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2008": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2008,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2008": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2008,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2009": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2009,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2009": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2009,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2009": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2009,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2009": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2009,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2010": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2010,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2010": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2010,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2010": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2010,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2010": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2010,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2011": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2011,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2011": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2011,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2011": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2011,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2011": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2011,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2012": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2012,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2012": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2012,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2012": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2012,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2012": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2012,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2013": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2013,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2013": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2013,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2013": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2013,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2013": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2013,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2014": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2014,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2014": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2014,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2014": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2014,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2014": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2014,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2015": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2015,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2015": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2015,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2015": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2015,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2015": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2015,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2016": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2016,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2016": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2016,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2016": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2016,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2016": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2016,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2017": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2017,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2017": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2017,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2017": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2017,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2017": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2017,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2018": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2018,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2018": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2018,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2018": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2018,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2018": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2018,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2019": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2019,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2019": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2019,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2019": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2019,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2019": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2019,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2020": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2020,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2020": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2020,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2020": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2020,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2020": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2020,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2021": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2021,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2021": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2021,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2021": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2021,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2021": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2021,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2022": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2022,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2022": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2022,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2022": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2022,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2022": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2022,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2023": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2023,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2023": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2023,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2023": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2023,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2023": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2023,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2024": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2024,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2024": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2024,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2024": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2024,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2024": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2024,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2025": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2025,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2025": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2025,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2025": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2025,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2025": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2025,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2026": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2026,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2026": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2026,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2026": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2026,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2026": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2026,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2027": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2027,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2027": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2027,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2027": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2027,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2027": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2027,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2028": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2028,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2028": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2028,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2028": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2028,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2028": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2028,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2029": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2029,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2029": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2029,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2029": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2029,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2029": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2029,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2030": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2030,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2030": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2030,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2030": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2030,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2030": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2030,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2031": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2031,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2031": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2031,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2031": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2031,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2031": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2031,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2032": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2032,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2032": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2032,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2032": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2032,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2032": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2032,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2033": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2033,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2033": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2033,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2033": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2033,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2033": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2033,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2034": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2034,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2034": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2034,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2034": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2034,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2034": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2034,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2035": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2035,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2035": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2035,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2035": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2035,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2035": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2035,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2036": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2036,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2036": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2036,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2036": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2036,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2036": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2036,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2037": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2037,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2037": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2037,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2037": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2037,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2037": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2037,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2038": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2038,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2038": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2038,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2038": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2038,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2038": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2038,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2039": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2039,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2039": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2039,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2039": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2039,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2039": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2039,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws01-v1-s2040": {
+      "family": "WS01",
+      "variant": 1,
+      "seed": 2040,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws03-v1-s2040": {
+      "family": "WS03",
+      "variant": 1,
+      "seed": 2040,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws05-v1-s2040": {
+      "family": "WS05",
+      "variant": 1,
+      "seed": 2040,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    },
+    "work-state-memory-core-v1-ws06-v1-s2040": {
+      "family": "WS06",
+      "variant": 1,
+      "seed": 2040,
+      "split": "validation",
+      "generation": "work-state-memory-core-v1"
+    }
+  }
+}

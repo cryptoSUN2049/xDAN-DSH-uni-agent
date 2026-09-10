@@ -247,3 +247,17 @@ def test_revision3_actual_stage_prompts_keep_transport_separate_from_business(in
     assert "command=create" in b_prompt and "file_text" in b_prompt
     assert "expected_config" not in b_prompt
     assert "writer-data" not in b_prompt
+
+
+@pytest.mark.parametrize("generation", ["unknown", None])
+def test_stage_rejects_unknown_generation(inputs, generation):
+    from examples.dsh.capabilities.work_state.stage import _task
+
+    operator, context, sample = inputs
+    data = loads(operator.task_manifest.read_bytes())
+    row = next(iter(data["tasks"].values()))
+    row["generation"] = generation
+    operator.task_manifest.write_bytes(canonical(data))
+    operator = replace(operator, task_manifest_sha256=sha(operator.task_manifest.read_bytes()))
+    with pytest.raises(ValueError, match="generation"):
+        _task(operator, context, sample)

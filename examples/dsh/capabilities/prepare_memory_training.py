@@ -121,7 +121,7 @@ def runtime_probe(python, runtime):
     return installed
 
 
-COURSES = ("work-state-v1", "work-state-short-fact-v1")
+COURSES = ("work-state-v1", "work-state-short-fact-v1", "work-state-memory-core-v1")
 
 
 def _resolve_course(family, course_id):
@@ -135,9 +135,28 @@ def _resolve_course(family, course_id):
     return None
 
 
-def _course_coverage(dataset, course_id, evaluation_ids=None):
+def _task_from_row(row):
     from examples.dsh.capabilities.work_state.tasks import make_task
 
+    if "generation" not in row:
+        return make_task(row["family"], row["variant"], row["seed"])
+    if row["generation"] != "work-state-memory-core-v1":
+        raise ValueError("Unknown task generation")
+    from examples.dsh.capabilities.work_state.core_tasks import make_core_task
+
+    return make_core_task(row["family"], row["variant"], row["seed"])
+
+
+def _core_artifacts(dataset):
+    full = {key: _task_from_row(row) for key, row in dataset["tasks"].items()}
+    visible = {
+        key: {field: task[field] for field in ("writer_files", "reader_files", "writer_goal", "reader_goal")}
+        for key, task in full.items()
+    }
+    return {"controller-tasks.json": full, "model-visible-inputs.json": visible}
+
+
+def _course_coverage(dataset, course_id, evaluation_ids=None):
     structures = {"train": set(), "validation": set()}
     visible = {"train": set(), "validation": set()}
     values = {"train": set(), "validation": set()}
@@ -145,7 +164,7 @@ def _course_coverage(dataset, course_id, evaluation_ids=None):
         split = row["split"]
         if split == "validation" and evaluation_ids is not None and task_id not in evaluation_ids:
             continue
-        task = make_task(row["family"], row["variant"], row["seed"])
+        task = _task_from_row(row)
         structures[split].add((row["family"], row["variant"]))
         observed = {name: task[name] for name in ("writer_files", "reader_files")}
         visible[split].add(hashlib.sha256(json.dumps(observed, sort_keys=True).encode()).hexdigest())
@@ -164,8 +183,6 @@ def _course_coverage(dataset, course_id, evaluation_ids=None):
 
 
 def _dataset_for_course(course_id):
-    from examples.dsh.capabilities.work_state.tasks import make_task
-
     if course_id == "work-state-v1":
         schedule = [
             (family, variant, seed, split)
@@ -176,12 +193,25 @@ def _dataset_for_course(course_id):
         schedule = [("WS07", 0, seed, "train") for seed in range(101, 109)] + [
             ("WS07", 1, seed, "validation") for seed in (901, 902)
         ]
+    elif course_id == "work-state-memory-core-v1":
+        # Seed-major ordering keeps the bounded diagnostic prefix interleaved.
+        schedule = [
+            (family, 0, seed, "train")
+            for seed in range(1001, 1161)
+            for family in ("WS01", "WS03", "WS05", "WS06")
+            if family != "WS06" or seed <= 1040
+        ] + [
+            (family, 1, seed, "validation") for seed in range(2001, 2041) for family in ("WS01", "WS03", "WS05", "WS06")
+        ]
     else:
         raise ValueError("Unknown dataset course")
     rows = {}
     for family, variant, seed, split in schedule:
-        task = make_task(family, variant, seed)
-        rows[task["task_id"]] = dict(family=family, variant=variant, seed=seed, split=split)
+        row = dict(family=family, variant=variant, seed=seed, split=split)
+        if course_id == "work-state-memory-core-v1":
+            row["generation"] = course_id
+        task = _task_from_row(row)
+        rows[task["task_id"]] = row
     dataset = dict(schema="dsh.work-state-dataset.v1", tasks=rows)
     return dataset, _course_coverage(dataset, course_id)
 
@@ -311,6 +341,9 @@ def prepare(
         (output / "checkpoint-origin.json").write_text(json.dumps(origin, indent=2) + "\n")
     if dataset:
         (output / "work-state-tasks.json").write_text(json.dumps(dataset, sort_keys=True, indent=2) + "\n")
+    if course_id == "work-state-memory-core-v1":
+        for name, value in _core_artifacts(dataset).items():
+            (output / name).write_text(json.dumps(value, sort_keys=True, indent=2) + "\n")
     selection_ref = None
     if work_state and mode in ("val", "reload"):
         selection_path = output / "eval-selection.json"
@@ -414,10 +447,12 @@ def prepare(
             task_manifest_sha256=digest(output / "work-state-tasks.json"),
         )
         env.update(
-            TRAIN_MAX_SAMPLES="8",
+            TRAIN_MAX_SAMPLES="520" if course_id == "work-state-memory-core-v1" else "8",
             VAL_MAX_SAMPLES=str(counts["validation"]),
-            TOTAL_TRAINING_STEPS="8" if mode == "train" else "1",
-            SAVE_FREQ="4",
+            TOTAL_TRAINING_STEPS=("16" if course_id == "work-state-memory-core-v1" else "8")
+            if mode == "train"
+            else "1",
+            SAVE_FREQ="8" if course_id == "work-state-memory-core-v1" else "4",
             TEST_FREQ="0" if mode == "train" else "1",
             PROJECT_NAME="dsh-work-state",
         )
@@ -566,6 +601,10 @@ def check(manifest_path, *, after_run=False):
         ):
             raise ValueError("Work-state task manifest identity changed")
         dataset = _dataset_for_course(course_id)[0]
+        if course_id == "work-state-memory-core-v1":
+            for name, expected in _core_artifacts(dataset).items():
+                if json.loads((Path(env["DATA_ROOT"]) / name).read_text()) != expected:
+                    raise ValueError("Core controller/model-visible artifact changed")
         run_id = env["EXP_NAME"]
         requested = None
         if manifest["mode"] in ("val", "reload"):
@@ -597,6 +636,27 @@ def check(manifest_path, *, after_run=False):
                 raise ValueError("Work-state parquet rows/order/identity changed")
         if manifest["counts"] != expected_counts or env["VAL_MAX_SAMPLES"] != str(len(selected)):
             raise ValueError("Work-state evaluation counts/limit changed")
+    if course_id == "work-state-memory-core-v1":
+        expected_budget = {
+            "TRAIN_MAX_SAMPLES": "520",
+            "TOTAL_TRAINING_STEPS": "16" if manifest["mode"] == "train" else "1",
+            "SAVE_FREQ": "8",
+            "TRAINER_MODE": "sync",
+            "ROLLOUT_N": "4",
+        }
+        if any(env.get(key) != value for key, value in expected_budget.items()):
+            raise ValueError("Core course diagnostic budget changed")
+        budget_overrides = {
+            "data.train_max_samples": "TRAIN_MAX_SAMPLES",
+            "trainer.total_training_steps": "TOTAL_TRAINING_STEPS",
+            "trainer.save_freq": "SAVE_FREQ",
+            "trainer.v1.trainer_mode": "TRAINER_MODE",
+            "actor_rollout_ref.rollout.n": "ROLLOUT_N",
+        }
+        if any(
+            key in overrides and overrides[key] != expected_budget[env_key] for key, env_key in budget_overrides.items()
+        ):
+            raise ValueError("Core course command budget changed")
     if work_state and manifest["mode"] == "train":
         if (
             env["TEST_FREQ"] != "0"

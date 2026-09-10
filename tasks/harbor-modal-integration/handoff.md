@@ -1,10 +1,13 @@
+<!-- 当前恢复目标以active-engineering-goal.md顶部P1→P2→P3为准；立即执行仍为P1的G0—G6。用户已恢复P1→P2→P3 goal，继续推进。 -->
 # Harbor / Modal 工程交接
 
-## GPU即将关闭：冷启动优先入口
+## 新Pod恢复状态（2026-09-10）
 
-最新主线：核心记忆/context，异步暂停。当前不启动新GPU作业。恢复指南：[gpu-reconnect-runbook.md](../../docs/harbor-modal-integration/gpu-reconnect-runbook.md)。挂载原network volume，先检查既有venv/模型/DSH发布物，不盲目重装。旧/root/runs可能丢失，关键短课证据tar在/workspace/reports，checkpoint独立在/workspace/uni-agent-g1/checkpoint。
+SSH `root@216.243.220.120 -p 13918 -i ~/.ssh/id_ed25519`。原workspace模型、代码、venv、checkpoint与归档都在。新Ubuntu22.04系统Python3.11.10，旧venv指向缺失/usr/local/bin/python（原3.12.3）；正恢复固定解释器至/workspace/tools/uv-python，不能盲目用3.11替代。GPU是MIG 2g.48gb（48512MiB），不是原96GB整卡，需CUDA实际分配/前后向检查及显存预算重验，不改宿主MIG。
 
-32条事实诊断完成：23条必要事实已保存但B未读取；4条A缺失；1条读index后未完成；WS06单列。见core-memory-fact-flow-audit.md/json。下一core课程52train/16dev只是设计，尚未实现或生成，不宣称已训练。原r1有效更新、r2零更新结论保持。
+新版core生成器/路由/canary已完成；680任务资产已保存examples/dsh/data/work-state-memory-core-v1，520train/160公开dev正文无重复，仍四族结构。统一857项CPU通过，Ruff双门通过；真实新Pod canary/GPU尚未运行。初始16步仅诊断，checkpoint保存8/16，原奖励/严格同课程reload不变。先完成环境恢复和固定发布后启动，异步与Harbor后置。
+
+恢复指南gpu-reconnect-runbook.md，下一步pod-recovery-design.md（进行中）。训练目标以active-engineering-goal.md顶部P1→P2→P3为准，不引用旧r1更新代替新课。
 
 ## 1. TL;DR
 
@@ -188,7 +191,7 @@
 ## 6. 分支/部署状态
 
 - 本地分支worktree-harbor-modal-integration；文档提交看git HEAD/origin。当前RSI源码b1c568b，短课程历史运行b47521d与离线审计d4401d3分别保留，不原地更新。远端CI本轮未查询。
-- SSH root@216.243.220.178 -p 14465 -i ~/.ssh/id_ed25519；RTX PRO6000。当前待核作业rsi-student-h1-r1/H1，监督PID325008；P的PID320743/320866已终止。H0两进程已终止、supervisor exit0、raw-token审计passed。旧ws-r4-isolated-eval-r1已退出。
+- SSH root@216.243.220.178 -p 14465 -i ~/.ssh/id_ed25519；RTX PRO6000。历史作业rsi-student-h1-r1/H1已结束；P的PID320743/320866已终止。H0两进程已终止、supervisor exit0、raw-token审计passed。旧ws-r4-isolated-eval-r1已退出。
 - venv /workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4B-1cfa9a7；DSH0.1.3a2、VERL fefb080+显式补丁。
 - 母checkpoint /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8；四次reload均核11文件不变，无再训练。
 - 新证据归档/workspace/reports/work-state-independent-evaluation-r1-20260909.tar.gz，SHA c584f240d2276eb7e9b81bb0dd9553284ec735b150669ece194bbc8fd3a4ce01，12247源成员逐一回读通过。
@@ -197,7 +200,7 @@
 ## 7. 冷启动 checklist
 
 1. 读本页 → active-engineering-goal.md → 四题最终报告与零奖励根因，区分旧r4未更新与新短课程有效更新/独立reload已通过。
-2. 核本地git status/branch/HEAD/origin；先核RSI的b1c568b固定checkout及H1的PID325008及其子进程终态；短课程运行b47521d与离线审计d4401d3保留。复用现venv，不因SSH观察超时重启任务。
+2. 核本地git status/branch/HEAD/origin；不要复活旧RSI PID；先核新版core课程的部署/作业状态；短课程运行b47521d与离线审计d4401d3保留。复用现venv，不因SSH观察超时重启任务。
 3. 读总操作指南与独立短课程设计；后续新run必须新身份、固定新提交、保留母谱系。
 4. 启动新GPU任务前只读核占用和版本；使用现prepare/check/launch及原audit，不能伪造TQ或放宽原分数。
 5. 完成每节点后更新goal/handoff、Ruff check/format、commit/push。历史只按需看notes.md及handoff-history-20260908.md。

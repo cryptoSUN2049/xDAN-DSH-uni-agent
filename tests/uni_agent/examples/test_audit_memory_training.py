@@ -405,3 +405,29 @@ def test_pinned_validation_dump_broadcasts_final_sample_per_session():
     exec(compile(ast.Module(body=[block], type_ignores=[]), str(source), "exec"), scope)
     assert captured["reward_extra_infos_dict"]["uid"] == ["group_0_0", "group_0_1", "other_0_0", "other_0_1"]
     assert captured["scores"] == [1.0, 1.0, 0.0, 0.0]
+
+
+@pytest.mark.parametrize("generation", ["unknown", None])
+def test_audit_rejects_unknown_generation(tmp_path, generation):
+    from examples.dsh.capabilities.audit_memory_training import _validate_task_course
+
+    with pytest.raises(ValueError, match="generation"):
+        _validate_task_course({"family": "WS01", "task_generation": generation}, tmp_path)
+
+
+def test_core_generation_requires_matching_plan_and_full_binding(tmp_path):
+    from examples.dsh.capabilities.audit_memory_training import _validate_task_course, sha
+
+    task = {"family": "WS01", "task_generation": "work-state-memory-core-v1"}
+    plan = tmp_path / "memory-launch-plan.json"
+    plan.write_text(json.dumps({"course_id": "work-state-v1"}))
+    with pytest.raises(ValueError, match="course"):
+        _validate_task_course(task, tmp_path)
+    plan.write_text(json.dumps({"course_id": "work-state-memory-core-v1"}))
+    (tmp_path / "run-manifest.json").write_text(
+        json.dumps({"paths": {"dataset_manifest": str(plan)}, "sha256": {"dataset_manifest": sha(plan.read_bytes())}})
+    )
+    _validate_task_course(task, tmp_path)
+    plan.write_text(plan.read_text() + " ")
+    with pytest.raises(ValueError, match="binding"):
+        _validate_task_course(task, tmp_path)

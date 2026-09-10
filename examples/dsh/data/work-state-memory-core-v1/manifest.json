@@ -1,0 +1,28 @@
+{
+  "course_id": "work-state-memory-core-v1",
+  "counts": {
+    "train": 520,
+    "validation": 160
+  },
+  "coverage": {
+    "family_count": 4,
+    "structures": {
+      "train": 4,
+      "validation": 4
+    },
+    "distinct_visible_inputs": {
+      "train": 520,
+      "validation": 160
+    },
+    "visibility": "public-development-not-sealed",
+    "note": "Seed or task ID multiplicity is not structural diversity."
+  },
+  "generator_sha256": "b3420f7b38727fead916314e2ec871abecfec7bdcdbfe410d3a7464578f3fdd4",
+  "files": {
+    "task-index.json": "91545f6d4c3e260f5de7168d087601f1791490ed528927d14a57a44f42d0e6d8",
+    "controller-tasks.jsonl": "04180103e613c92da7b9de449f3f0ca5111490a103cdcf3df2d24d7dd8a2a59c",
+    "model-visible-inputs.jsonl": "714b806dbf555d7dbaaeee0d2ca71d95c71e4f8d9a8cbbf519895ae3a720caf2"
+  },
+  "scope": "Controller dataset assets; NEVER send controller-tasks or combined A/B records directly to a model. Actual stage runner enforces visibility.",
+  "gpu_training_started": false
+}

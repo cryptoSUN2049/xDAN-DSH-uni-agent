@@ -30,7 +30,7 @@ def validate_probe(report, expected):
             raise ValueError("Real tool contract mismatch: " + item["label"])
 
 
-def probe(root, role, chain, reads, writes, missing, calls, exe, hidden, session_id=None):
+def probe(root, role, chain, reads, writes, missing, calls, exe, hidden, session_id=None, *, source_version=None):
     from deepseek_harness import DeepSeekHarness, DeepSeekHarnessConfig
 
     directory = root / (role + "-runtime")
@@ -41,7 +41,11 @@ def probe(root, role, chain, reads, writes, missing, calls, exe, hidden, session
         role=role,
         chain_id=chain,
         session_id=session,
-        source_version=digest((ROOT / "examples/dsh/capabilities/work_state/tasks.py").read_bytes()),
+        source_version=(
+            source_version
+            if source_version is not None
+            else digest((ROOT / "examples/dsh/capabilities/work_state/tasks.py").read_bytes())
+        ),
         read_files=reads,
         write_files=writes,
         read_missing=missing,
@@ -92,8 +96,21 @@ def action(label, command, path, *, error=False, denied=False, **kwargs):
     return dict(label=label, error=error, denied=denied, call=call(label, command, path, expected=DENIED, **kwargs))
 
 
-def scenario(root, exe, family, variant):
-    task = make_task(family, variant, seed=7)
+def scenario(root, exe, family, variant, *, course="work-state-v1"):
+    if course not in ("work-state-v1", "work-state-memory-core-v1"):
+        raise ValueError("Unknown scenario course")
+    generator = None
+    if course == "work-state-memory-core-v1":
+        from examples.dsh.capabilities.work_state import core_tasks
+
+        task = core_tasks.make_core_task(family, variant, seed=7)
+        generator_path = Path(core_tasks.__file__).resolve()
+        if generator_path != ROOT / "examples/dsh/capabilities/work_state/core_tasks.py":
+            raise ValueError("Core generator imported outside canary checkout")
+        generator = dict(path=str(generator_path), sha256=digest(generator_path.read_bytes()))
+    else:
+        task = make_task(family, variant, seed=7)
+    probe_source = {"source_version": generator["sha256"]} if generator else {}
     root.mkdir(mode=0o700)
     memory = root / "a-memory"
     memory.mkdir(mode=0o700)
@@ -111,11 +128,12 @@ def scenario(root, exe, family, variant):
         action("deny-source-write", "create", source, error=True, denied=True, file_text="bad"),
         action("deny-hidden-read", "view", hidden, error=True, denied=True),
     ]
-    writer_id, a = probe(root, "writer", chain, [source, *writes], writes, [], calls, exe, secret)
+    writer_id, a = probe(root, "writer", chain, [source, *writes], writes, [], calls, exe, secret, **probe_source)
     raw = pack_bundle(memory, task["memory_paths"])
     packed = root / "bundle.json"
     packed.write_bytes(raw)
-    source_version = digest(json.dumps(task, sort_keys=True).encode())
+    artifact_source = {"task": task, "generator_sha256": generator["sha256"]} if generator else task
+    source_version = digest(json.dumps(artifact_source, sort_keys=True).encode())
     receipt = freeze_memory_artifact(
         source_root=root,
         relative_path="bundle.json",
@@ -164,7 +182,9 @@ def scenario(root, exe, family, variant):
         action("deny-A-read", "view", source, error=True, denied=True),
         action("deny-index-write", "create", unpacked / "index.md", error=True, denied=True, file_text="bad"),
     ]
-    _, b = probe(root, "reader", chain, reads, writes, missing, calls, exe, secret, session_id=reader_id)
+    _, b = probe(
+        root, "reader", chain, reads, writes, missing, calls, exe, secret, session_id=reader_id, **probe_source
+    )
     if pack_bundle(unpacked, task["memory_paths"]) != frozen_raw:
         raise ValueError("Reader changed frozen state")
     scored = score_task(task, {name: (result / name).read_bytes() for name in task["result_paths"]})
@@ -178,6 +198,7 @@ def scenario(root, exe, family, variant):
         reader=b,
         frozen_sha256=receipt.content_sha256,
         score=scored,
+        **({"course_id": course, "generator": generator, "source_version": source_version} if generator else {}),
     )
 
 
@@ -430,7 +451,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--runtime", type=Path, required=True)
-    parser.add_argument("--course", choices=("work-state-v1", "work-state-short-fact-v1"), default="work-state-v1")
+    parser.add_argument(
+        "--course",
+        choices=("work-state-v1", "work-state-short-fact-v1", "work-state-memory-core-v1"),
+        default="work-state-v1",
+    )
     args = parser.parse_args()
     output, exe = args.output.absolute(), args.runtime.resolve()
     lock = json.loads((ROOT / "deployment/versions/g1-deployment-lock.json").read_text())
@@ -440,8 +465,10 @@ def main():
         raise ValueError("Use canonical output parent")
     output.mkdir(mode=0o700)
     results = [
-        scenario(output / f"{family}-v{variant}", exe, family, variant)
-        for family in (("WS01", "WS03", "WS05", "WS06") if args.course == "work-state-v1" else ())
+        scenario(output / f"{family}-v{variant}", exe, family, variant, course=args.course)
+        for family in (
+            ("WS01", "WS03", "WS05", "WS06") if args.course in ("work-state-v1", "work-state-memory-core-v1") else ()
+        )
         for variant in (0, 1)
     ]
     if args.course == "work-state-short-fact-v1":

@@ -17,3 +17,7 @@ prepare_memory_training.py仅新增课程白名单、确定性schedule和课程�
 ## 执行与验收
 
 CPU回归与Ruff→commit/push→新固定GPU checkout复用venv→真实runtime canary→四题base基线→新run16步训练→实际完整组、梯度、参数/optimizer→固定四题独立reload对照→归档。每run独立目录与监督上限，checkpoint在/workspace/uni-agent-g1/checkpoint/<run>。基线/训练/评估分别记录身份，不将失败任务吞掉或修改原回执。
+
+## 用户要求10倍及生成检查
+
+目标调整为520train/160公开dev：前三族各160train、WS06 40train，每族40dev。实际已生成680候选ID并完成680正例/680空配置负例评分检查，但仅256train/148dev可见内容不同，WS03 train只有4种。不得宣称680独立任务，不直接作为多样性扩充验收。下一步需版本化增强真实业务变量/候选组合，而非仅换种子或重命名。旧任务生成器不能静默修改。原16步仅诊断预算，不代表消费全部520题。

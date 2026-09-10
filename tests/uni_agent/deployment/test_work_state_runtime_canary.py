@@ -81,3 +81,179 @@ def test_short_negative_scripts_keep_quality_and_safety_distinct():
     assert unsafe == [[{"command": "view", "path": "/case/a-source.json"}]]
     wrong = short_reader_steps("/case/b-memory", "/case/b-results", outputs, mode="wrong-memory")
     assert [s[0]["command"] for s in wrong] == ["view", "view", "create"]
+
+
+def test_core_cli_runs_all_four_families_and_two_variants(tmp_path, monkeypatch, capsys):
+    """CPU dispatch fixture; does not claim SDK runtime execution."""
+    import json
+    import sys
+
+    from deployment.checks import work_state_runtime_canary as canary
+
+    runtime = tmp_path / "runtime"
+    runtime.write_bytes(b"synthetic CPU runtime")
+    lock = tmp_path / "deployment/versions/g1-deployment-lock.json"
+    lock.parent.mkdir(parents=True)
+    lock.write_text(json.dumps({"dsh": {"runtime_binary_sha256": canary.digest(runtime.read_bytes())}}))
+    monkeypatch.setattr(canary, "ROOT", tmp_path)
+    monkeypatch.setattr(canary, "sdk_version", lambda: "synthetic-cpu-sdk")
+    seen = []
+
+    def scenario(root, exe, family, variant, *, course="work-state-v1"):
+        seen.append((family, variant, course))
+        return {"task_id": f"{family}-{variant}"}
+
+    monkeypatch.setattr(canary, "scenario", scenario)
+    output = tmp_path / "output"
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["canary", "--output", str(output), "--runtime", str(runtime), "--course", "work-state-memory-core-v1"],
+    )
+    canary.main()
+    assert seen == [
+        (family, variant, "work-state-memory-core-v1")
+        for family in ("WS01", "WS03", "WS05", "WS06")
+        for variant in (0, 1)
+    ]
+    report = json.loads((output / "result.json").read_text())
+    assert report["course_id"] == "work-state-memory-core-v1" and len(report["scenarios"]) == 8
+    assert json.loads(capsys.readouterr().out)["passed"] is True
+
+
+def test_scenario_rejects_unknown_course_before_creating_files(tmp_path):
+    from deployment.checks.work_state_runtime_canary import scenario
+
+    output = tmp_path / "unused"
+    with pytest.raises(ValueError, match="course"):
+        scenario(output, tmp_path / "runtime", "WS01", 0, course="unknown")
+    assert not output.exists()
+
+
+@pytest.mark.parametrize("course", ["work-state-v1", "work-state-memory-core-v1"])
+@pytest.mark.parametrize("family", ["WS01", "WS03", "WS05", "WS06"])
+@pytest.mark.parametrize("variant", [0, 1])
+def test_scenario_uses_real_generator_bundle_freeze_and_scoring(tmp_path, monkeypatch, course, family, variant):
+    """Only SDK tools are replaced by local writes; this is synthetic CPU evidence."""
+    import json
+    from pathlib import Path
+
+    from deployment.checks import work_state_runtime_canary as canary
+
+    observed = []
+
+    def cpu_probe(root, role, chain, reads, writes, missing, calls, exe, hidden, session_id=None, **kwargs):
+        observed.append((role, kwargs))
+        for item in calls:
+            args = item["call"]["arguments"]
+            if args["command"] == "create" and not item["error"]:
+                target = Path(args["path"])
+                assert target in writes
+                target.parent.mkdir(exist_ok=True)
+                target.write_text(args["file_text"])
+        return session_id or "synthetic-writer", {"synthetic_cpu_fixture": True}
+
+    monkeypatch.setattr(canary, "probe", cpu_probe)
+    root = tmp_path / "scenario"
+    report = canary.scenario(root, tmp_path / "runtime", family, variant, course=course)
+    assert report["score"]["reward"] == 1
+    assert [role for role, _ in observed] == ["writer", "reader"]
+    assert (root / "bundle.json").read_bytes() == canary.pack_bundle(
+        root / "b-memory", canary.make_task(family, variant, seed=7)["memory_paths"]
+    )
+    if course == "work-state-memory-core-v1":
+        from examples.dsh.capabilities.work_state.core_tasks import make_core_task
+
+        task = make_core_task(family, variant, seed=7)
+        generator_path = canary.ROOT / "examples/dsh/capabilities/work_state/core_tasks.py"
+        generator_sha = canary.digest(generator_path.read_bytes())
+        assert report["task_id"] == task["task_id"]
+        assert report["generator"] == {"path": str(generator_path), "sha256": generator_sha}
+        assert all(kwargs == {"source_version": generator_sha} for _, kwargs in observed)
+        assert report["source_version"] == canary.digest(
+            json.dumps({"task": task, "generator_sha256": generator_sha}, sort_keys=True).encode()
+        )
+        assert generator_sha != canary.digest(
+            (canary.ROOT / "examples/dsh/capabilities/work_state/tasks.py").read_bytes()
+        )
+    else:
+        assert report["task_id"] == canary.make_task(family, variant, seed=7)["task_id"]
+        assert all(kwargs == {} for _, kwargs in observed)
+        assert "generator" not in report and "source_version" not in report
+
+
+def test_scenario_does_not_return_success_for_bad_oracle_artifacts(tmp_path, monkeypatch):
+    """A failed business score stays failed despite successful tool persistence."""
+    from pathlib import Path
+
+    from deployment.checks import work_state_runtime_canary as canary
+
+    def cpu_probe(root, role, chain, reads, writes, missing, calls, exe, hidden, session_id=None, **kwargs):
+        for item in calls:
+            args = item["call"]["arguments"]
+            if args["command"] == "create" and not item["error"]:
+                Path(args["path"]).write_text(args["file_text"] if role == "writer" else "{}")
+        return session_id or "synthetic-writer", {"synthetic_cpu_fixture": True}
+
+    monkeypatch.setattr(canary, "probe", cpu_probe)
+    with pytest.raises(ValueError, match="did not solve"):
+        canary.scenario(tmp_path / "case", tmp_path / "runtime", "WS01", 0, course="work-state-memory-core-v1")
+
+
+@pytest.mark.parametrize("explicit_source", [None, "sha256:" + "7" * 64])
+def test_probe_binds_explicit_generator_source_without_changing_legacy_default(tmp_path, monkeypatch, explicit_source):
+    """Real policy builder; a minimal synthetic SDK boundary emits the probe report."""
+    import json
+    import sys
+    from pathlib import Path
+    from types import SimpleNamespace
+
+    from deployment.checks import work_state_runtime_canary as canary
+
+    captured = []
+
+    class CpuHarness:
+        def __init__(self, config):
+            self.config = config
+
+        def __enter__(self):
+            patch = json.loads(Path(self.config.patches[0]).read_text())
+            captured.append(patch[2]["insert"][0]["config"]["sourceVersion"])
+            report_path = patch[-1]["insert"][0]["config"]["report"]
+            Path(report_path).write_text(json.dumps({"tools": ["str_replace_editor"], "results": []}))
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+    monkeypatch.setitem(
+        sys.modules,
+        "deepseek_harness",
+        SimpleNamespace(DeepSeekHarness=CpuHarness, DeepSeekHarnessConfig=SimpleNamespace),
+    )
+    kwargs = {"source_version": explicit_source} if explicit_source is not None else {}
+    canary.probe(
+        tmp_path, "writer", "synthetic-chain", [], [], [], [], tmp_path / "runtime", "synthetic-secret", **kwargs
+    )
+    expected = explicit_source or canary.digest(
+        (canary.ROOT / "examples/dsh/capabilities/work_state/tasks.py").read_bytes()
+    )
+    assert captured == [expected]
+
+
+def test_core_generator_from_other_checkout_cannot_claim_current_source(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+
+    from deployment.checks import work_state_runtime_canary as canary
+    from examples.dsh.capabilities import work_state
+
+    monkeypatch.setattr(
+        work_state,
+        "core_tasks",
+        SimpleNamespace(__file__=str(tmp_path / "other/core_tasks.py"), make_core_task=canary.make_task),
+        raising=False,
+    )
+    output = tmp_path / "case"
+    with pytest.raises(ValueError, match="outside canary checkout"):
+        canary.scenario(output, tmp_path / "runtime", "WS01", 0, course="work-state-memory-core-v1")
+    assert not output.exists()

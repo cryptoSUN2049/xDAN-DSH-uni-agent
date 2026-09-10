@@ -83,7 +83,13 @@ def mother_checkpoint(inputs, tmp_path, family="constraints", course_id=None):
 
 @pytest.mark.parametrize("mode", ["val", "train", "reload"])
 @pytest.mark.parametrize(
-    "family,course_id", [("constraints", None), ("work-state-v1", None), ("work-state-v1", "work-state-short-fact-v1")]
+    "family,course_id",
+    [
+        ("constraints", None),
+        ("work-state-v1", None),
+        ("work-state-v1", "work-state-short-fact-v1"),
+        ("work-state-v1", "work-state-memory-core-v1"),
+    ],
 )
 def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode, family, course_id):
     extra = mother_checkpoint(inputs, tmp_path, family, course_id) if mode == "reload" else {}
@@ -141,7 +147,8 @@ def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode, famil
         assert config.trainer.val_before_train == (mode != "train")
         assert config.trainer.test_freq == (0 if mode == "train" else 1)
         if mode == "train":
-            assert config.trainer.save_freq == 4
+            assert config.trainer.save_freq == (8 if course_id == "work-state-memory-core-v1" else 4)
+            assert config.trainer.total_training_steps == (16 if course_id == "work-state-memory-core-v1" else 8)
     framework = framework_class.from_config(config=config, gateway_manager=Manager([]))
     assert framework._memory_operator.root == inputs["run_root"] / "chains"
     assert framework._memory_operator.family == family
@@ -149,7 +156,11 @@ def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode, famil
         from examples.dsh.capabilities.memory_training_stage import GroupContext
         from examples.dsh.capabilities.work_state.stage import _task
 
-        assert manifest["counts"] == {"train": 8, "validation": 2 if course_id else 4}
+        assert manifest["counts"] == (
+            {"train": 520, "validation": 160}
+            if course_id == "work-state-memory-core-v1"
+            else {"train": 8, "validation": 2 if course_id else 4}
+        )
         for split, partition in [("train", "train"), ("validation", "val")]:
             for row in pq.read_table(inputs["output_dir"] / f"{split}.parquet").to_pylist():
                 task = _task(
@@ -539,4 +550,120 @@ def test_short_course_rehashed_drift_rejected(inputs, mutation):
     path = inputs["output_dir"] / "manifest.json"
     path.write_text(json.dumps(manifest))
     with pytest.raises(ValueError, match="course|manifest|coverage|evaluation"):
+        recipe.check(path)
+
+
+def test_core_course_schedule_is_deterministic_interleaved_and_disjoint():
+    from collections import Counter
+
+    dataset, coverage = recipe._dataset_for_course("work-state-memory-core-v1")
+    assert (dataset, coverage) == recipe._dataset_for_course("work-state-memory-core-v1")
+    rows = dataset["tasks"]
+    train = {key: row for key, row in rows.items() if row["split"] == "train"}
+    dev = {key: row for key, row in rows.items() if row["split"] == "validation"}
+    assert len(train) == 520 and len(dev) == 160 and not train.keys() & dev.keys()
+    assert Counter(row["family"] for row in train.values()) == {"WS01": 160, "WS03": 160, "WS05": 160, "WS06": 40}
+    assert Counter(row["family"] for row in dev.values()) == {family: 40 for family in ("WS01", "WS03", "WS05", "WS06")}
+    assert [row["family"] for row in list(train.values())[:8]] == ["WS01", "WS03", "WS05", "WS06"] * 2
+    assert all(
+        row["variant"] == 0 and 1001 <= row["seed"] <= (1040 if row["family"] == "WS06" else 1160)
+        for row in train.values()
+    )
+    assert all(row["variant"] == 1 and 2001 <= row["seed"] <= 2040 for row in dev.values())
+    assert coverage["structures"] == {"train": 4, "validation": 4}
+    assert coverage["visibility"] == "public-development-not-sealed"
+
+
+def test_core_course_training_budget_is_diagnostic_not_full_coverage(inputs):
+    manifest = recipe.prepare(**inputs, family="work-state-v1", course_id="work-state-memory-core-v1", mode="train")
+    assert manifest["counts"] == {"train": 520, "validation": 160}
+    env = manifest["environment"]
+    assert env["TRAIN_MAX_SAMPLES"] == "520" and env["VAL_MAX_SAMPLES"] == "160"
+    assert env["TOTAL_TRAINING_STEPS"] == "16" and env["SAVE_FREQ"] == "8"
+    assert env["ROLLOUT_N"] == "4" and env["TRAINER_MODE"] == "sync"
+    assert env["TEST_FREQ"] == "0" and "trainer.val_before_train=False" in manifest["command"]
+    rows = pq.read_table(inputs["output_dir"] / "train.parquet").to_pylist()
+    assert len(rows) == 520
+    assert all(set(row["extra_info"]["tools_kwargs"]["task"]["metadata"]) == {"work_state_task_id"} for row in rows)
+
+
+@pytest.mark.parametrize("mother_course", [None, "work-state-short-fact-v1"])
+def test_core_course_rejects_other_mother(inputs, tmp_path, mother_course):
+    extra = mother_checkpoint(inputs, tmp_path, "work-state-v1", mother_course)
+    with pytest.raises(ValueError, match="course"):
+        recipe.prepare(**inputs, family="work-state-v1", course_id="work-state-memory-core-v1", mode="reload", **extra)
+
+
+@pytest.mark.parametrize(
+    "key,value",
+    [
+        ("TRAIN_MAX_SAMPLES", "52"),
+        ("TOTAL_TRAINING_STEPS", "520"),
+        ("SAVE_FREQ", "16"),
+        ("TRAINER_MODE", "colocate_async"),
+    ],
+)
+def test_core_course_budget_drift_rejected(inputs, key, value):
+    manifest = recipe.prepare(**inputs, family="work-state-v1", course_id="work-state-memory-core-v1", mode="train")
+    manifest["environment"][key] = value
+    path = inputs["output_dir"] / "manifest.json"
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="budget"):
+        recipe.check(path)
+
+
+def test_core_course_same_course_reload_remains_bound(inputs, tmp_path):
+    extra = mother_checkpoint(inputs, tmp_path, "work-state-v1", "work-state-memory-core-v1")
+    selected = ["work-state-memory-core-v1-ws01-v1-s2001"]
+    manifest = recipe.prepare(
+        **inputs,
+        family="work-state-v1",
+        course_id="work-state-memory-core-v1",
+        mode="reload",
+        evaluation_task_ids=selected,
+        **extra,
+    )
+    assert manifest["counts"] == {"train": 520, "validation": 1}
+    assert manifest["checkpoint_origin"]["course_id"] == "work-state-memory-core-v1"
+    assert manifest["environment"]["TOTAL_TRAINING_STEPS"] == "1"
+    assert manifest["environment"]["TRAINER_MODE"] == "sync"
+    assert recipe.check(inputs["output_dir"] / "manifest.json")["checkpoint_origin"] == manifest["checkpoint_origin"]
+
+
+def test_core_generation_explicit_and_controller_artifacts(inputs):
+    manifest = recipe.prepare(**inputs, family="work-state-v1", course_id="work-state-memory-core-v1")
+    dataset = json.loads((inputs["output_dir"] / "work-state-tasks.json").read_text())
+    assert all(row["generation"] == "work-state-memory-core-v1" for row in dataset["tasks"].values())
+    assert all(key.startswith("work-state-memory-core-v1-") for key in dataset["tasks"])
+    full = json.loads((inputs["output_dir"] / "controller-tasks.json").read_text())
+    visible = json.loads((inputs["output_dir"] / "model-visible-inputs.json").read_text())
+    assert set(full) == set(visible) == set(dataset["tasks"])
+    assert all("truth" in task for task in full.values())
+    assert all(set(task) == {"writer_files", "reader_files", "writer_goal", "reader_goal"} for task in visible.values())
+    assert any(path.endswith("core_tasks.py") for path in manifest["sources"])
+
+
+@pytest.mark.parametrize("name", ["controller-tasks.json", "model-visible-inputs.json"])
+def test_core_artifacts_rehashed_change_rejected(inputs, name):
+    manifest = recipe.prepare(**inputs, family="work-state-v1", course_id="work-state-memory-core-v1")
+    artifact = inputs["output_dir"] / name
+    artifact.write_text("{}")
+    manifest["files"][str(artifact)] = recipe.digest(artifact)
+    path = inputs["output_dir"] / "manifest.json"
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="artifact"):
+        recipe.check(path)
+
+
+def test_task_generation_unknown_is_not_legacy_fallback():
+    with pytest.raises(ValueError, match="generation"):
+        recipe._task_from_row(dict(family="WS01", variant=0, seed=1001, split="train", generation="unknown"))
+
+
+def test_core_command_cannot_override_bound_step_budget(inputs):
+    manifest = recipe.prepare(**inputs, family="work-state-v1", course_id="work-state-memory-core-v1", mode="train")
+    manifest["command"].append("trainer.total_training_steps=520")
+    path = inputs["output_dir"] / "manifest.json"
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="budget"):
         recipe.check(path)
