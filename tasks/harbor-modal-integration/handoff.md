@@ -6,12 +6,12 @@
 - 执行源码 `511bd71` 已push；远程 `/workspace/rebuild/uni-agent-core-511bd71`，固定DSH0.1.3a2、配对VERL fefb080+既定overlay、Qwen3-4B revision不变。95项准备器测试、Ruff双门通过。
 - SSH `root@216.243.220.120 -p 13918 -i ~/.ssh/id_ed25519`；48GB MIG，恢复后的持久venv `/workspace/venvs/uni-agent-rebuild-cf2d3f5`。恢复见pod-recovery-design.md。
 - 新r4外层PID21105，13:31 SGT实际存活，正式监督器日志已创建。日志 `/root/runs/core-train-r4/supervision/train.log`，准备清单 `/root/runs/core-train-r4-data/manifest.json`。PID只是快照，接续先核实时存活，禁止重复启动。
-- 数据520train/160公开dev资产已落盘，真实DSH canary8通过。r4同步16步、n4、step8/16保存，checkpoint `/workspace/uni-agent-g1/checkpoint/core-train-r4`。13:44 SGT已越过CPU阻塞：runner23087→Python24987→DSH runtime24990真实运行（runtime进程名MainThread，不可只grep deepseek）。已出现一条完整A/B fresh/finished/eligible且业务reward0；首writer未完成被拒。尚无完整n4消费/首步/更新/保存证据。
+- 数据520train/160公开dev资产已落盘，真实DSH canary8通过。r4同步16步、n4、step8/16保存，checkpoint `/workspace/uni-agent-g1/checkpoint/core-train-r4`。13:44 SGT已越过CPU阻塞：runner23087→Python24987→DSH runtime24990真实运行（runtime进程名MainThread，不可只grep deepseek）。已出现一条完整A/B fresh/finished/eligible且业务reward0；首writer未完成被拒。05:51 UTC已完成step1，首失败组被evict/refill后有效组进入训练；grad/adv/reward均0，gen799.397s、update16.364s、step832.856s。尚无有效更新或checkpoint证据。
 - r4资源预算：Controller1+Storage1+actorPG3+外部串行runner1=Ray CPU6。DSH内部local子进程不再申请Ray task。须真实核DSH执行/完整消费，不能仅以模型加载宣布资源问题解决。
 - r1在MIG权限检查误拒绝；r2 TQ8无法放入CPU6；r3 TQ2+Controller1+actorPG3耗尽CPU6，模型已加载但DSH外部任务无CPU、0步。r3仅停止owned PG15980，exit-15/700.018s，所有相关进程清退、GPU128MiB无进程。原证据/workspace/reports/core-train-r3-cpu-admission，supervisor SHA256 129b028f29bbd37265b1e5e14df721218b0d30449e34719ea3f914d07b8741de。
 - r2原证据/workspace/reports/core-train-r2-cpu-admission（含operator-stop和supervisor），均不能算完成训练。
 
-运行快照 `/workspace/reports/core-train-r4-startup/`，首writer Session v2快照141406bytes、SHA256 096768be5c4fe395523ed28471a65e027422388c6d69a9f3d6044d1317b686b1；仅运行证据，不是完整组。模型有重复create已存在文件和工具JSON格式错误，正只读审计历史是否回传；未改提示、奖励或模型输出。
+运行快照 `/workspace/reports/core-train-r4-startup/`，首writer Session v2快照141406bytes、SHA256 096768be5c4fe395523ed28471a65e027422388c6d69a9f3d6044d1317b686b1；仅运行证据，不是完整组。模型有重复create已存在文件和工具JSON格式错误，已核实际token mask确认工具错误回传（core-r4-tool-feedback-audit.md）；首组2/4失败后自动evict/refill继续，未改提示、奖励或模型输出。
 
 ### 紧接着做
 
