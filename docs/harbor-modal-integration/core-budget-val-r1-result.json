@@ -1,0 +1,93 @@
+{
+  "run_id": "core-budget-val-r1",
+  "source_head": "4232df3fb47a67cb68c517811b972ddc9bfa2086",
+  "generated_tokens": 8192,
+  "tool_context_tokens": 6069,
+  "prompt_tokens": 1502,
+  "total_sequence_tokens": 15763,
+  "finite_generated_logprobs": true,
+  "npz_hash_matches": true,
+  "finish_reason": "max-tokens",
+  "materialization_reason": null,
+  "budget_cap_observed": true,
+  "full_budget_acceptance": false,
+  "open_items": [
+    "materialization_reason is null, inspect exact-cap path",
+    "normal short completion on new code not yet verified"
+  ],
+  "receipt": {
+    "accuracy": 0,
+    "artifact_sha256": "sha256:770d18bf43c8f5fd476ddd15f11108f1b4006e86f20196707fbe9a697e60e9fc",
+    "dsh_session_id": "dsh-memory-A-d826f1b5c34644f2bd8c2851f8cd2fba",
+    "eligible": false,
+    "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "evidence": [
+      "sha256:ff0ed56bb0fda19b89d7331cfdcb1e286205ae82b310c1c7b70bcd0d448e1bf6",
+      "sha256:0ca0521e46642b32d1fd1a8692121d6ee717c4016c272f4bef49291c018509d5",
+      "sha256:e5d8869250d4943be0c55f301bdc1dff96df00237a49ca41bc1089a022887504"
+    ],
+    "finished": false,
+    "fresh": true,
+    "issued_at": "2026-09-10T08:42:34.596315+00:00",
+    "issuer": {
+      "id": "uni-agent-dsh",
+      "kind": "trusted-verifier"
+    },
+    "receipt_id": "sha256:91f2434f2da34c5973c10018d022ad0f70f97e28695325140288afff6792d1f4",
+    "reward": 0,
+    "schema": "dsh.verifier-receipt.v1",
+    "task_id": "dsh/work-state/memory-b0c370caf1284b13a26c92001e3a9fc5/writer",
+    "task_version": "1",
+    "trace_sha256": "sha256:0ca0521e46642b32d1fd1a8692121d6ee717c4016c272f4bef49291c018509d5",
+    "verifier": {
+      "code_digest": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+      "id": "dsh-work-state-training-stage",
+      "version": "1"
+    }
+  },
+  "supervisor": {
+    "exit_code": 1,
+    "reason": "training-exited",
+    "elapsed_seconds": 760.022,
+    "pid": 74194,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "evidence": [
+    {
+      "source": "/root/runs/core-budget-val-r1/agent-logs/step_0/memory-A-d826f1b5c34644f2bd8c2851f8cd2fba/trajectory.npz",
+      "saved": "/workspace/reports/core-budget-val-r1/0-trajectory.npz",
+      "sha256": "1a7664b03e4113a7f7831e2a79eec134264a94b0360b8457e79b440cf5ef327d"
+    },
+    {
+      "source": "/root/runs/core-budget-val-r1/agent-logs/step_0/memory-A-d826f1b5c34644f2bd8c2851f8cd2fba/trajectory.json",
+      "saved": "/workspace/reports/core-budget-val-r1/1-trajectory.json",
+      "sha256": "da9ab625670d6ed8d515f773d9eac942479ccbf9f7b0d643a2282b3faad77575"
+    },
+    {
+      "source": "/root/runs/core-budget-val-r1/chains/memory-b0c370caf1284b13a26c92001e3a9fc5/writer/run/results/4576a2e25dc9e43782cc8363/verifier-receipt.json",
+      "saved": "/workspace/reports/core-budget-val-r1/2-verifier-receipt.json",
+      "sha256": "dc2bf8c48a3ffd43a9bf4aa1cf3eb3f3f14c1e44ff9a22518bf4c2fddd048cf6"
+    },
+    {
+      "source": "/root/runs/core-budget-val-r1/chains/memory-b0c370caf1284b13a26c92001e3a9fc5/writer/run/results/4576a2e25dc9e43782cc8363/agent-result.json",
+      "saved": "/workspace/reports/core-budget-val-r1/3-agent-result.json",
+      "sha256": "770d18bf43c8f5fd476ddd15f11108f1b4006e86f20196707fbe9a697e60e9fc"
+    },
+    {
+      "source": "/root/runs/core-budget-val-r1/chains/memory-b0c370caf1284b13a26c92001e3a9fc5/writer/run/homes/46d54593c15ef238a3f5e719/sessions/--root-runs-core-budget-val-r1-chains-memory-b0c370caf1284b13a26c92001e3a9fc5--/dsh-memory-A-d826f1b5c34644f2bd8c2851f8cd2fba/session.v2.jsonl",
+      "saved": "/workspace/reports/core-budget-val-r1/4-session.v2.jsonl",
+      "sha256": "0b6163e490ebc222eb1166c7bc0ae936b6bb07ba9c8a160fe209ce1341d8c6a2"
+    },
+    {
+      "source": "/root/runs/core-budget-val-r1/supervision/train.log",
+      "saved": "/workspace/reports/core-budget-val-r1/5-train.log",
+      "sha256": "4e7c87946e91e8399f0f897997e5907cd97cb893df16af005b92a1c0bb27e1bf"
+    },
+    {
+      "source": "/root/runs/core-budget-val-r1-launch.log",
+      "saved": "/workspace/reports/core-budget-val-r1/6-core-budget-val-r1-launch.log",
+      "sha256": "f2ab28dc4629d635e870bc32dbef8d3814a7e86661f75470f776e377ea786f96"
+    }
+  ]
+}

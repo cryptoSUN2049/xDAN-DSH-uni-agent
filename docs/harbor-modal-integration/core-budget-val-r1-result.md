@@ -1,0 +1,11 @@
+# 新累计生成预算真实GPU验证
+
+core-budget-val-r1，固定4232df3，WS06公开开发题，基础Qwen3-4B，val而非训练。监督器exit1/760.022秒；writer max-tokens，原准入拒绝，未生成B。GPU作业已终态，不可按旧PID重启。
+
+原NPZ sha匹配dump；response_mask求和8192，与max_generated_tokens和session_generated_tokens_at_materialization均一致。生成token的logprob全部finite；工具/上下文mask0共6069，prompt1502，总序列15763，未达到旧16384序列限制。因而本次确实观察到累计生成8192上限生效，不是误把工具上下文计入预算。
+
+原DSH Session turn/end与agent-result均max-tokens，receipt fresh=true/finished=false/eligible=false。原始文件与审计位于/workspace/reports/core-budget-val-r1，逐文件复制回读一致，hash清单见同名JSON。不是有效学习或任务成功。
+
+未完成项：materialization_reason为null；源码显示该原因目前仅在下一次请求进入零剩余分支时由_close_length_exhausted_chain写入。此次最后backend请求已恰好达到预算并返回length，DSH直接结束，没有额外请求，finalize走普通materialize路径。这是精确触顶路径的诊断字段缺口；不能据此否定已实测上限，也不能说所有预算验收已通过。后续修复需覆盖精确触顶length、同token数正常stop、单次max_tokens先触顶与旧无预算路径，不可将恰好计数相等的正常stop强制改为失败。
+
+尚需正常短任务在新版真实完成，以及相应记录修复的回归与新run验证。现有run原件不回写。
