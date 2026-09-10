@@ -58,3 +58,5 @@ venv/workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4
 本轮关键新增文件行数：docs/harbor-modal-integration/core-budget-normal-r1-result.md 11行；docs/harbor-modal-integration/core-budget-normal-r1-result.json 90行；docs/harbor-modal-integration/gpu-shutdown-checkpoint-20260910.md 23行。
 
 关机附加保护：三份证据tar已本机备份至outputs/gpu-shutdown-20260910，逐SHA核验通过，共51,176,549 bytes；Git忽略，hash清单在docs/harbor-modal-integration/gpu-shutdown-local-backup-20260910.json。checkpoint仍仅云盘，不误称模型已本地备份。
+
+关机后本机离线分析：core-budget-normal-r1-failure-analysis.md/json证明该WS01的A index与权威workflow逐字段相同；B只view notice后create两文件，0次memory读取，输出100/1与[config.json]，真实目标2869/8。单题支持优先诊断检索，不证明提示因果或学习收益。未调用GPU。

@@ -1,0 +1,67 @@
+{
+  "run_id": "core-budget-normal-r1",
+  "scope": "One public WS01 task, base model, val; offline analysis only",
+  "archive_sha256": "b3eb67fe4d57f1a0f0bc7e1233aeab88238f55b9848702d7effd38b5c33ac3bb",
+  "writer_index_equals_authoritative_workflow": true,
+  "expected_config": {
+    "capacity": 2869,
+    "schema_version": 8
+  },
+  "actual_config": {
+    "capacity": 100,
+    "schema_version": 1
+  },
+  "actual_plan": [
+    "config.json"
+  ],
+  "reader_tool_calls": [
+    {
+      "arguments": "{\"command\": \"view\", \"path\": \"/root/runs/core-budget-normal-r1/chains/memory-36b6239d17a548db9532b6d78a8152c5/reader-data/sources/notice.json\"}",
+      "callId": "call_40c22ea4",
+      "name": "str_replace_editor",
+      "step": 1,
+      "turn": 1
+    },
+    {
+      "arguments": "{\"command\": \"create\", \"path\": \"/root/runs/core-budget-normal-r1/chains/memory-36b6239d17a548db9532b6d78a8152c5/reader-data/outputs/config.json\", \"file_text\": \"{\\\"capacity\\\": 100, \\\"schema_version\\\": 1}\"}",
+      "callId": "call_20f67004",
+      "name": "str_replace_editor",
+      "step": 2,
+      "turn": 1
+    },
+    {
+      "arguments": "{\"command\": \"create\", \"path\": \"/root/runs/core-budget-normal-r1/chains/memory-36b6239d17a548db9532b6d78a8152c5/reader-data/outputs/plan.json\", \"file_text\": \"[\\\"config.json\\\"]\"}",
+      "callId": "call_f2de60c8",
+      "name": "str_replace_editor",
+      "step": 3,
+      "turn": 1
+    }
+  ],
+  "reader_memory_read_count": 0,
+  "evidence": [
+    {
+      "member": "root/runs/core-budget-normal-r1/chains/memory-36b6239d17a548db9532b6d78a8152c5/writer/fixture.json",
+      "sha256": "83195478e4b5a4213c68a1aad43168925c1cf0fed6847684a176b74519364c99"
+    },
+    {
+      "member": "root/runs/core-budget-normal-r1/chains/memory-36b6239d17a548db9532b6d78a8152c5/reader-data/memory/index.md",
+      "sha256": "4989311aaded7db51ef6021fa72a8c3e516311754e785139ec20ba971e8918c6"
+    },
+    {
+      "member": "root/runs/core-budget-normal-r1/chains/memory-36b6239d17a548db9532b6d78a8152c5/reader/run/traces/e1211f286a6a65000ee0bd1a/session.jsonl",
+      "sha256": "f6a12b502c3cd46d969eface808cefc27f7e7f0b036cdd23639cb8490d9253bb"
+    },
+    {
+      "member": "root/runs/core-budget-normal-r1/chains/memory-36b6239d17a548db9532b6d78a8152c5/reader-data/outputs/config.json",
+      "sha256": "99809ecc09d792f7a531f6c58bc0d04c4f89a57b606042071a227da302f155dd"
+    },
+    {
+      "member": "root/runs/core-budget-normal-r1/chains/memory-36b6239d17a548db9532b6d78a8152c5/reader-data/outputs/plan.json",
+      "sha256": "a8d90e6bc43e38358e403e8758f830491316f453b0c9d8b7bb2630c434d3d069"
+    }
+  ],
+  "limitations": [
+    "Archive hashes verified; original receipt/consumption audit reused, verifier not reissued.",
+    "One task is not a course-wide causal test or learning evidence."
+  ]
+}
