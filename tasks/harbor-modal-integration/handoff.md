@@ -274,3 +274,7 @@ WS06原511 after_run来源/母checkpoint复核现已通过，报告SHA5298387c65
 预算val-r1已终态exit1/760.022s，writer达到真实生成8192上限，mask0=6069/prompt1502/total15763，NPZ hash/logprob核验通过。未执行B，旧准入拒绝符合原合同。materialization_reason空值根因是backend恰好length返回后直接finalize，未进入下次零剩余分支；需补精确触顶记录测试/修复（不改正常stop）。证据/workspace/reports/core-budget-val-r1，结果文档core-budget-val-r1-result.md/json。GPU本项目该任务已退出；新诊断设计仍待确认。
 
 精确触顶原因漏记已本地修复，Gateway链上只在decoded length且累计恰好达cap时标记，正常stop不变。组合118测试通过，最后预算22通过；待push后新固定checkout/Linux回归及真实验证，不覆盖4232旧run。
+
+## 预算修复Linux部署与GPU复验r2
+
+固定5e6b326已Git部署/workspace/rebuild/uni-agent-core-5e6b326，独立配对VERL fefb080+preserve-finish-reason-v1哈希验证。复用原venv，Linux预算22项通过（35.30秒，CUDA禁用）。新core-budget-val-r2准备/root/runs/core-budget-val-r2-data/manifest.json，日志/root/runs/core-budget-val-r2-launch.log；外层PID79055已发起，继续先查存活。相同WS06公开任务、基础模型、val模式；尚待GPU精确触顶reason和正常短路径验收。原4232-r1证据不改写。新reader诊断待明确确认。
