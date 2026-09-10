@@ -41,7 +41,7 @@ P1通过不等待P2/P3；P2实验结束但无收益不等于效果目标达成�
 - [x] G3 新课程16步诊断运行：core-train-r4 exit0/6665.148秒；原511正式消费审计通过，16完整组/64链/128唯一A-B，16独立task（WS01/03/05/06=4/7/4/1），10拒绝组不消费。520是可用数，不是已消费数。
 - [x] G4 同run审计完成：16步adv/grad全0；8→16的504adapter/399base变化0，最终252 LoRA B全0，optimizer内部step16→32但1008moments全0。有效更新门未通过，原passed=false保留，P1有效学习要求仍未完成；见core-r4-parameter-audit.md。
 - [x] G5 checkpoint8/16保存，母step16四族首条公开dev独立reload及逐题母文件核验完成：WS01/03/05执行与消费审计通过但reward0；WS06预算耗尽，B未执行，正式消费审计false/0条。此节点记录真实结果，不代表四题成功或有效学习；见四份core-r4-reload结果及WS06消费原件。
-- [ ] G6 证据归档到/workspace、恢复指南/结果报告/goal/handoff更新，commit/push。
+- [x] G6 现有诊断运行证据归档、恢复指南/结果报告/goal/handoff及commit/push已完成；三份云盘证据tar另有本机SHA匹配备份，见gpu-shutdown-checkpoint-20260910.md。此项是现有失败/成功结果的可复核交付，不豁免P1有效更新失败，也不代表P2/P3完成。
 
 退出标准分开报告：执行闭环、有效学习闭环、任务效果。首次诊断无有效更新时不篡改奖励、不盲目追加相同数据，按真实失败/奖励分布明确后续动作。GPU失联时保留已完成资产与新SSH恢复步骤，不标记未运行步骤通过。
 
