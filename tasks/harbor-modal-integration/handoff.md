@@ -1,6 +1,12 @@
 <!-- 当前恢复目标以active-engineering-goal.md顶部P1→P2→P3为准；立即执行仍为P1的G0—G6。用户已恢复P1→P2→P3 goal，继续推进。 -->
 # Harbor / Modal 工程交接
 
+## 当前运行：core-train-r1
+
+新Pod216.243.220.120:13918环境已恢复，旧venv复用成功，CUDA实际前后向finite。固定执行源码242dcf0（checkout/workspace/rebuild/uni-agent-core-242dcf0），配对VERL overlay通过。真实core canary 8场景passed，原结果/root/runs/core-canary-newpod-r1/result.json。
+
+core-train-r1 prepare/check已通过，后台launch PID3017，日志/root/runs/core-train-r1-launch.log，manifest/root/runs/core-train-r1-data/manifest.json。当前仅确认发起，未宣称模型加载/训练完成；48GB MIG首步待核。520train/160dev、16步n4、save8/16，CK/workspace/uni-agent-g1/checkpoint/core-train-r1。下一步只读核原PID和supervision，不因观察超时重启。详见pod-recovery-design.md的恢复命令。
+
 ## 新Pod恢复状态（2026-09-10）
 
 SSH `root@216.243.220.120 -p 13918 -i ~/.ssh/id_ed25519`。原workspace模型、代码、venv、checkpoint与归档都在。新Ubuntu22.04系统Python3.11.10，旧venv指向缺失/usr/local/bin/python（原3.12.3）；正恢复固定解释器至/workspace/tools/uv-python，不能盲目用3.11替代。GPU是MIG 2g.48gb（48512MiB），不是原96GB整卡，需CUDA实际分配/前后向检查及显存预算重验，不改宿主MIG。

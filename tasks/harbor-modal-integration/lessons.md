@@ -38,3 +38,7 @@
 ## 记忆目标不能收窄为文件操作
 
 用户澄清：目标包括跨任务场景的专家级记忆/context管理决策，而非仅写handoff/index。方案必须覆盖何时保存、保存什么、证据与假设分离、选择性检索、冲突更新、真实offload/compact、克制与停止。当前小配置课只是起点，未实现机制不追认。A延迟奖励0不是A记忆质量0。
+
+## 换Pod恢复：解释器与MIG（2026-09-10）
+
+新Pod220.120:13918保留workspace，但旧venv/bin/python指向容器/usr/local/bin/python已缺失；系统Python3.11不能替代旧3.12.3。固定uv0.9.0与CPython3.12.3装到持久盘，仅补symlink仍因pyvenv.cfg home旧路径找不到encodings；保留原cfg备份后修home到持久解释器bin才成功。实际torch2.11cu130前后向finite、DSH0.1.3a2通过。nvidia-smi整卡统计N/A不代表CUDA坏；本次是MIG2g48gb、CUDA实测50868518912bytes。新/root/runs不存在，创建父目录，不提前创建正式run目录。新Git fetch认证仍可用。以上实际恢复不等于训练完成。
