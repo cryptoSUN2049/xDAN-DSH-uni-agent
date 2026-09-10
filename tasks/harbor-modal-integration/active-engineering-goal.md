@@ -38,7 +38,7 @@ P1通过不等待P2/P3；P2实验结束但无收益不等于效果目标达成�
 - [x] G0 新生成器与680任务资产落盘：520/160不同可见输入，分阶段可见性、controller truth隔离和文件hash。
 - [x] G1 统一回归、自review、Ruff双门、commit/push固定部署SHA。
 - [x] G2 新GPU checkout、固定DSH/VERL与原venv核验、真实Linux canary；检查GPU占用后启动。
-- [ ] G3 新课程16步诊断运行：真实A→冻结→B、n4完整组唯一消费，记录拒绝与合法低分。520是可用数，不是已消费数。
+- [x] G3 新课程16步诊断运行：core-train-r4 exit0/6665.148秒；原511正式消费审计通过，16完整组/64链/128唯一A-B，16独立task（WS01/03/05/06=4/7/4/1），10拒绝组不消费。520是可用数，不是已消费数。
 - [ ] G4 同run有效梯度/参数与optimizer审计；零更新如实保留，执行层通过不冒称学习层通过。
 - [ ] G5 checkpoint8/16保存，预定每族首条公开dev独立reload，逐题保留结果与母文件核验，不要求全满分。
 - [ ] G6 证据归档到/workspace、恢复指南/结果报告/goal/handoff更新，commit/push。

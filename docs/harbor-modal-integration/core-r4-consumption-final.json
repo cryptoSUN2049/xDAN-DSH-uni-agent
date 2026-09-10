@@ -1,0 +1,605 @@
+{
+  "schema": "dsh.core-r4-consumption-final.v1",
+  "scope": "Original 511 audit of completed core-train-r4; downloaded existing reports without rerunning audit.",
+  "sources": {
+    "consumption.json": {
+      "path": "/workspace/reports/core-train-r4-final/consumption.json",
+      "sha256": "sha256:9d27bf4f4b65ed4facdef708c8e6d1472dc0e9e80dd4ece7e0a860348e9a14bb",
+      "bytes": 14564,
+      "content": {
+        "schema": "dsh.memory-training-consumption-audit.v1",
+        "passed": true,
+        "consumption_verified": true,
+        "run_completed": true,
+        "run_id": "core-train-r4",
+        "run_manifest_sha256": "sha256:1d301a84283fa428dc3d62bf1e693414d00255aaa580e484dd59e40c8d27e0f5",
+        "inputs": [
+          {
+            "path": "/root/runs/core-train-r4/rollouts/1.jsonl",
+            "sha256": "sha256:204558a3b735564bedb4829e7ab9e36efc5547a2f1885537cd5c11403d30dd31"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/10.jsonl",
+            "sha256": "sha256:61a7876b2d1d1e34fd52f9961c8b9f8a27475b20ba714c215cdddc8c30c506b8"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/11.jsonl",
+            "sha256": "sha256:c4690d8e1a1efc31e59a073b0715e2699772bde0ceb64d7abcba1c59aad9dc36"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/12.jsonl",
+            "sha256": "sha256:7cbec7e8d9d3fd07ed98f0eda7c3f7fb8f3b70224205d8babba40760b0423b9c"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/13.jsonl",
+            "sha256": "sha256:16edbc5dbbbb6cbdce1734d3c31a3d1919138569b130531f468ec0697510ce3e"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/14.jsonl",
+            "sha256": "sha256:369635ad47af1541b3df3eced7f260d8ebfe2f5c70bbd87a5ace0469781c52a8"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/15.jsonl",
+            "sha256": "sha256:9ca481a223816c4e179ab0d0dcdbb677bb6f8bdfa2ffbcd6943e354dd4525aa4"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/16.jsonl",
+            "sha256": "sha256:a30611d86221f42dbc5a59addbf8c2788a73173d75c0964fd72f38b43beba1ff"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/2.jsonl",
+            "sha256": "sha256:df9c22b21c299c3e17b09475f3a8c1a8e69f26bbbb38f1068428fdedd4890b0e"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/3.jsonl",
+            "sha256": "sha256:216f3e39a2606a735077a1391851f76115558c4391222cf389dcf3acace02e1a"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/4.jsonl",
+            "sha256": "sha256:149d90ac8d7fe06096a68ddfac03dba41b944388ee383ed08fdb43878aa030e5"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/5.jsonl",
+            "sha256": "sha256:74d49abfd78f8c9d3040fbf312727136e22711b7af72c001c38dfc01074125eb"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/6.jsonl",
+            "sha256": "sha256:b6fe0748768e58f2d1c3002d59d047574fca18de30f39e3da8c89caef7edcdcd"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/7.jsonl",
+            "sha256": "sha256:8df90c60767d5cf3e1b16aa03b6b3cb7946cbcc04c0367a619764472356a8f08"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/8.jsonl",
+            "sha256": "sha256:58203c72da0866fa7d399219067cc95f540290fe8c3acbf826391fa138d4b8ef"
+          },
+          {
+            "path": "/root/runs/core-train-r4/rollouts/9.jsonl",
+            "sha256": "sha256:a1044b3f8aec7d33e33f2db22aae4022a42c0bcaf10b510dc0536de6379ccc67"
+          }
+        ],
+        "groups": [
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/08c92b7a0b8340a1b30e3634d8b1862a/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 1,
+            "partition": "train",
+            "global_steps": 2,
+            "uid": "4e7def1d-18f7-4f5a-80bc-6f3a286a17b0",
+            "crosswalk_sha256": "sha256:4e3097f9d5f1b0c5b7ae2cde166b0be3bcb26179b5d0e2a2d276cfc90f46007a",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/0a6e90c54160495cb77cb9cf758c6531/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 3,
+            "partition": "train",
+            "global_steps": 4,
+            "uid": "5d8fc6ab-ab56-463a-92c0-b767c670310e",
+            "crosswalk_sha256": "sha256:8568e6fc7bef0c87591ec98708ff816c2e9e36e687b93897f0da81eabc91cbd7",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/1c2f7e0faa414043b9a62ade9de3774b/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 0,
+            "partition": "train",
+            "global_steps": 1,
+            "uid": "1469d0c4-8d8b-4435-9901-bc5da6ba8309",
+            "crosswalk_sha256": "sha256:66751c4968d62e9ed675b821854de1d8c5d77e4af1e86f821802178559f2c850",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/1db9b06c82c841fbb74ddfd3399f30ea/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 4,
+            "partition": "train",
+            "global_steps": 5,
+            "uid": "dbace927-f111-4b51-8f58-fd74fc83a49d",
+            "crosswalk_sha256": "sha256:af8a75890c96f29cdab17a3932f165d5bef5cf6a712e551a2b04cdede2e5305d",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/243df0c2aaf74881b1a65624c853e02f/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 7,
+            "partition": "train",
+            "global_steps": 8,
+            "uid": "c6d27af7-52b6-401b-8692-5e336a47f0d3",
+            "crosswalk_sha256": "sha256:0557af157eb6947712c0702f4d67a33644e3b504b83326e3d1593003d4a3d03d",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/317e4cc47704421a8ded3a02eab3d9bf/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 11,
+            "partition": "train",
+            "global_steps": 12,
+            "uid": "e26e0ce5-8f24-4d40-8a38-c53db3fc393d",
+            "crosswalk_sha256": "sha256:4a7b423d0451b6e27c172f63e14fd41455ca146714f25372841d1fbbde24a6c4",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/3dd63d12d00c4a0ba1f598eef2620b8f/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 2,
+            "partition": "train",
+            "global_steps": 3,
+            "uid": "1fcb6053-a86d-42c0-86d8-0cffe3b9e838",
+            "crosswalk_sha256": "sha256:9cd2f2ce40b2269df3c3e134fd6e7daf4422e6d28d29c8765afd06851ced95e4",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/45337051f42a464d9f0fdb0a70d929e1/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 5,
+            "partition": "train",
+            "global_steps": 6,
+            "uid": "5b659c39-fcf2-4354-9bff-110d0b04f378",
+            "crosswalk_sha256": "sha256:2f2199db37ede70c45ae91cde1efc2492bc61754db8ed6024b5271902f6d865f",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/4b7acb1662bf47fe82487174f7d653b8/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 15,
+            "partition": "train",
+            "global_steps": 16,
+            "uid": "5128872e-2301-4cb9-83d8-61557f822a62",
+            "crosswalk_sha256": "sha256:09b074b82c191f1d2f653c90c65f6013a062b6c8cef5d417ed19f7a4b9680893",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/53248775b7ce4840aa0e6b8ca22be4c7/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 9,
+            "partition": "train",
+            "global_steps": 10,
+            "uid": "83fb61a7-a505-4738-a5e9-47641962ab00",
+            "crosswalk_sha256": "sha256:ab6c0d128b37f9b62258fa0b536b05ef242aef186aafde1fcb2f7b21c36b7114",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/5d7bd55ebd184cae9afaf67087b59342/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 10,
+            "partition": "train",
+            "global_steps": 11,
+            "uid": "b8295e7b-5b46-4da0-a4e3-f1f52645399d",
+            "crosswalk_sha256": "sha256:cd46a08b6ffc7972662e262316487e555bdc6f34df356f26e68dad1a40ff0d17",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/618d32dca9d046a48638c93d203a4737/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 14,
+            "partition": "train",
+            "global_steps": 15,
+            "uid": "4589ed9c-1bff-4d9e-82ce-dd0ef30a125b",
+            "crosswalk_sha256": "sha256:0d77c0bcd00757739a6c49b0cdb109965cdc4bd536c71b5a089e0d1fd08a76ba",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/c51e475be16443409248baf4929108ee/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 8,
+            "partition": "train",
+            "global_steps": 9,
+            "uid": "11e81431-559a-4372-be30-060c39f25700",
+            "crosswalk_sha256": "sha256:983e216925058f094e7449a9c4b8c6c7d2da25c5402a6d53139732cd4f9a7e92",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/c723e0e1c7be447d9d7498047387b5a5/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 6,
+            "partition": "train",
+            "global_steps": 7,
+            "uid": "41ffa531-39e0-44bf-9aa4-723cef9b75f9",
+            "crosswalk_sha256": "sha256:85d9bc24382d2a84bdf60e77bd9bc5ad523177269c6dabd45a1d69818b0ed93f",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/cae9350791bd48fb9e2a043c1f45dd00/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 13,
+            "partition": "train",
+            "global_steps": 14,
+            "uid": "b0220c5b-e691-431e-9d13-3b9aefb2ce60",
+            "crosswalk_sha256": "sha256:31718dfabfa8dc3d2454f33a531fe9dc891cdbc259aac29b6f9da77125a43b8e",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          },
+          {
+            "path": "/root/runs/core-train-r4/chains/groups/d89ab5c24e8e43f68a06ad0a087da484/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 12,
+            "partition": "train",
+            "global_steps": 13,
+            "uid": "6e873e86-cd76-4fa1-bf1b-a86d42e7ad74",
+            "crosswalk_sha256": "sha256:1bcaa574629bcf3ff7bf5afa58661494b8b129214ddae817582ca354205be854",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "original-stage",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          }
+        ],
+        "errors": [],
+        "unknown_or_unadmitted_consumption": [],
+        "duplicate_consumption": [],
+        "overlapping_crosswalk_keys": [],
+        "summary": {
+          "groups": 16,
+          "consumed_groups": 16,
+          "consumed_rows": 128,
+          "unique_consumed_rows": 128
+        },
+        "limitations": [
+          "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+          "Crosswalk and submission records alone never establish trainer consumption."
+        ]
+      }
+    },
+    "coverage.json": {
+      "path": "/workspace/reports/core-train-r4-final/coverage.json",
+      "sha256": "sha256:7ca17116793eb762f519ccd4a36ad6a04902690dcf023062bb5dc71ef7a6733a",
+      "bytes": 8350,
+      "content": {
+        "snapshot_utc": "2026-09-10T07:24:15.135402+00:00",
+        "consumption_audit_sha256": "sha256:9d27bf4f4b65ed4facdef708c8e6d1472dc0e9e80dd4ece7e0a860348e9a14bb",
+        "consumed_groups": [
+          {
+            "step": 1,
+            "task_id": "work-state-memory-core-v1-ws03-v0-s1001",
+            "group_uid": "1469d0c4-8d8b-4435-9901-bc5da6ba8309",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/1c2f7e0faa414043b9a62ade9de3774b/crosswalk.json",
+            "crosswalk_sha256": "sha256:66751c4968d62e9ed675b821854de1d8c5d77e4af1e86f821802178559f2c850"
+          },
+          {
+            "step": 2,
+            "task_id": "work-state-memory-core-v1-ws01-v0-s1002",
+            "group_uid": "4e7def1d-18f7-4f5a-80bc-6f3a286a17b0",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/08c92b7a0b8340a1b30e3634d8b1862a/crosswalk.json",
+            "crosswalk_sha256": "sha256:4e3097f9d5f1b0c5b7ae2cde166b0be3bcb26179b5d0e2a2d276cfc90f46007a"
+          },
+          {
+            "step": 3,
+            "task_id": "work-state-memory-core-v1-ws03-v0-s1002",
+            "group_uid": "1fcb6053-a86d-42c0-86d8-0cffe3b9e838",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/3dd63d12d00c4a0ba1f598eef2620b8f/crosswalk.json",
+            "crosswalk_sha256": "sha256:9cd2f2ce40b2269df3c3e134fd6e7daf4422e6d28d29c8765afd06851ced95e4"
+          },
+          {
+            "step": 4,
+            "task_id": "work-state-memory-core-v1-ws05-v0-s1002",
+            "group_uid": "5d8fc6ab-ab56-463a-92c0-b767c670310e",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/0a6e90c54160495cb77cb9cf758c6531/crosswalk.json",
+            "crosswalk_sha256": "sha256:8568e6fc7bef0c87591ec98708ff816c2e9e36e687b93897f0da81eabc91cbd7"
+          },
+          {
+            "step": 5,
+            "task_id": "work-state-memory-core-v1-ws01-v0-s1003",
+            "group_uid": "dbace927-f111-4b51-8f58-fd74fc83a49d",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/1db9b06c82c841fbb74ddfd3399f30ea/crosswalk.json",
+            "crosswalk_sha256": "sha256:af8a75890c96f29cdab17a3932f165d5bef5cf6a712e551a2b04cdede2e5305d"
+          },
+          {
+            "step": 6,
+            "task_id": "work-state-memory-core-v1-ws03-v0-s1003",
+            "group_uid": "5b659c39-fcf2-4354-9bff-110d0b04f378",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/45337051f42a464d9f0fdb0a70d929e1/crosswalk.json",
+            "crosswalk_sha256": "sha256:2f2199db37ede70c45ae91cde1efc2492bc61754db8ed6024b5271902f6d865f"
+          },
+          {
+            "step": 7,
+            "task_id": "work-state-memory-core-v1-ws05-v0-s1003",
+            "group_uid": "41ffa531-39e0-44bf-9aa4-723cef9b75f9",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/c723e0e1c7be447d9d7498047387b5a5/crosswalk.json",
+            "crosswalk_sha256": "sha256:85d9bc24382d2a84bdf60e77bd9bc5ad523177269c6dabd45a1d69818b0ed93f"
+          },
+          {
+            "step": 8,
+            "task_id": "work-state-memory-core-v1-ws03-v0-s1004",
+            "group_uid": "c6d27af7-52b6-401b-8692-5e336a47f0d3",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/243df0c2aaf74881b1a65624c853e02f/crosswalk.json",
+            "crosswalk_sha256": "sha256:0557af157eb6947712c0702f4d67a33644e3b504b83326e3d1593003d4a3d03d"
+          },
+          {
+            "step": 9,
+            "task_id": "work-state-memory-core-v1-ws05-v0-s1004",
+            "group_uid": "11e81431-559a-4372-be30-060c39f25700",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/c51e475be16443409248baf4929108ee/crosswalk.json",
+            "crosswalk_sha256": "sha256:983e216925058f094e7449a9c4b8c6c7d2da25c5402a6d53139732cd4f9a7e92"
+          },
+          {
+            "step": 10,
+            "task_id": "work-state-memory-core-v1-ws06-v0-s1004",
+            "group_uid": "83fb61a7-a505-4738-a5e9-47641962ab00",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/53248775b7ce4840aa0e6b8ca22be4c7/crosswalk.json",
+            "crosswalk_sha256": "sha256:ab6c0d128b37f9b62258fa0b536b05ef242aef186aafde1fcb2f7b21c36b7114"
+          },
+          {
+            "step": 11,
+            "task_id": "work-state-memory-core-v1-ws01-v0-s1005",
+            "group_uid": "b8295e7b-5b46-4da0-a4e3-f1f52645399d",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/5d7bd55ebd184cae9afaf67087b59342/crosswalk.json",
+            "crosswalk_sha256": "sha256:cd46a08b6ffc7972662e262316487e555bdc6f34df356f26e68dad1a40ff0d17"
+          },
+          {
+            "step": 12,
+            "task_id": "work-state-memory-core-v1-ws03-v0-s1005",
+            "group_uid": "e26e0ce5-8f24-4d40-8a38-c53db3fc393d",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/317e4cc47704421a8ded3a02eab3d9bf/crosswalk.json",
+            "crosswalk_sha256": "sha256:4a7b423d0451b6e27c172f63e14fd41455ca146714f25372841d1fbbde24a6c4"
+          },
+          {
+            "step": 13,
+            "task_id": "work-state-memory-core-v1-ws05-v0-s1005",
+            "group_uid": "6e873e86-cd76-4fa1-bf1b-a86d42e7ad74",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/d89ab5c24e8e43f68a06ad0a087da484/crosswalk.json",
+            "crosswalk_sha256": "sha256:1bcaa574629bcf3ff7bf5afa58661494b8b129214ddae817582ca354205be854"
+          },
+          {
+            "step": 14,
+            "task_id": "work-state-memory-core-v1-ws03-v0-s1006",
+            "group_uid": "b0220c5b-e691-431e-9d13-3b9aefb2ce60",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/cae9350791bd48fb9e2a043c1f45dd00/crosswalk.json",
+            "crosswalk_sha256": "sha256:31718dfabfa8dc3d2454f33a531fe9dc891cdbc259aac29b6f9da77125a43b8e"
+          },
+          {
+            "step": 15,
+            "task_id": "work-state-memory-core-v1-ws01-v0-s1007",
+            "group_uid": "4589ed9c-1bff-4d9e-82ce-dd0ef30a125b",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/618d32dca9d046a48638c93d203a4737/crosswalk.json",
+            "crosswalk_sha256": "sha256:0d77c0bcd00757739a6c49b0cdb109965cdc4bd536c71b5a089e0d1fd08a76ba"
+          },
+          {
+            "step": 16,
+            "task_id": "work-state-memory-core-v1-ws03-v0-s1007",
+            "group_uid": "5128872e-2301-4cb9-83d8-61557f822a62",
+            "crosswalk_path": "/root/runs/core-train-r4/chains/groups/4b7acb1662bf47fe82487174f7d653b8/crosswalk.json",
+            "crosswalk_sha256": "sha256:09b074b82c191f1d2f653c90c65f6013a062b6c8cef5d417ed19f7a4b9680893"
+          }
+        ],
+        "family_consumed_groups": {
+          "ws03": 7,
+          "ws01": 4,
+          "ws05": 4,
+          "ws06": 1
+        },
+        "unique_consumed_tasks": 16,
+        "attempted_groups": 26,
+        "attempted_chains": 104,
+        "rejected_groups": [
+          {
+            "group_uid": "0cf3c2e8-777f-49bf-9f2a-5264c72d2287",
+            "failed_siblings": 2,
+            "task_ids": [
+              "work-state-memory-core-v1-ws01-v0-s1001"
+            ],
+            "train_log_line": 1221
+          },
+          {
+            "group_uid": "f5ce3d38-3356-4f50-86aa-d1980502a8a8",
+            "failed_siblings": 1,
+            "task_ids": [
+              "work-state-memory-core-v1-ws05-v0-s1001"
+            ],
+            "train_log_line": 1276
+          },
+          {
+            "group_uid": "7cd1e3ec-44dd-4e88-a7bb-b31edfd72503",
+            "failed_siblings": 1,
+            "task_ids": [
+              "work-state-memory-core-v1-ws06-v0-s1001"
+            ],
+            "train_log_line": 1292
+          },
+          {
+            "group_uid": "5c2ba7d1-707c-454e-b670-206e78adebdf",
+            "failed_siblings": 1,
+            "task_ids": [
+              "work-state-memory-core-v1-ws06-v0-s1002"
+            ],
+            "train_log_line": 1347
+          },
+          {
+            "group_uid": "143e3d33-a203-471e-a5af-84123df69387",
+            "failed_siblings": 3,
+            "task_ids": [
+              "work-state-memory-core-v1-ws06-v0-s1003"
+            ],
+            "train_log_line": 1407
+          },
+          {
+            "group_uid": "35d5ab5f-3caa-4638-84fc-de0af2b937ef",
+            "failed_siblings": 1,
+            "task_ids": [
+              "work-state-memory-core-v1-ws01-v0-s1004"
+            ],
+            "train_log_line": 1475
+          },
+          {
+            "group_uid": "eefb65de-b44a-4b27-8c2c-62bdefd73ecf",
+            "failed_siblings": 1,
+            "task_ids": [
+              "work-state-memory-core-v1-ws06-v0-s1005"
+            ],
+            "train_log_line": 1617
+          },
+          {
+            "group_uid": "50793ed2-3a45-4b97-a28a-8637400c1666",
+            "failed_siblings": 1,
+            "task_ids": [
+              "work-state-memory-core-v1-ws01-v0-s1006"
+            ],
+            "train_log_line": 1657
+          },
+          {
+            "group_uid": "566c6e15-643f-4915-a410-cb26c0d0481b",
+            "failed_siblings": 1,
+            "task_ids": [
+              "work-state-memory-core-v1-ws05-v0-s1006"
+            ],
+            "train_log_line": 1691
+          },
+          {
+            "group_uid": "f0be8835-bdda-40c7-a0d9-944d319c7b89",
+            "failed_siblings": 2,
+            "task_ids": [
+              "work-state-memory-core-v1-ws06-v0-s1006"
+            ],
+            "train_log_line": 1727
+          }
+        ],
+        "rejected_group_count": 10,
+        "direct_failed_siblings": 14
+      }
+    }
+  }
+}

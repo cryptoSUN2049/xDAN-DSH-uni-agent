@@ -33,6 +33,10 @@
 
 15:16 SGT监控修正：活跃Session v2位于`chains/memory-*/*/run/homes/*/sessions/*/*/session.v2.jsonl`；`traces/*/session.jsonl`是harness.run结束后才导出，不能单独拿其mtime判定卡死。已核e05bcfb writer原件50次模型回复/49次工具调用，最终未完成；框架继续后续采样。当前仍14/16，监督器未终态，7200秒预算约余14分钟。
 
+15:22 SGT母r4正常终态：16/16、exit0、elapsed6665.148s，训练进程清退，step16落盘；原511 after_run检查通过。正式消费审计passed：16组/64链/128唯一A-B，16独立task四族4/7/4/1，26尝试组中10拒绝组不消费；远程/workspace/reports/core-train-r4-final/consumption.json SHA256 9d27bf4f4b65ed4facdef708c8e6d1472dc0e9e80dd4ece7e0a860348e9a14bb。全部16步reward/adv/grad仍0，参数CPU审计由eval_audit_fix进行，不能标有效学习。
+
+WS01独立reload已prepare成功并发起：run `core-r4-reload-ws01-r1`，外层PID57046，日志`/root/runs/core-r4-reload-ws01-r1-launch.log`，清单`/root/runs/core-r4-reload-ws01-r1-data/manifest.json`。原511源码、母step16、公开task ws01-v1-s2001；尚待实际加载/回执/终态审计。下一题WS03→WS05→WS06串行，各新run；不能重复启动已有PID。参数审计输出/workspace/reports/core-train-r4-parameters，与GPU推理解耦且禁CUDA。
+
 ### 紧接着做
 
 - [x] r4首次真实A→冻结→B与完整组消费已核；首步原始跨表证据见core-train-r4-step1-evidence.md。继续监督后续完整运行，不因普通观察超时重启。
