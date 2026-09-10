@@ -1,0 +1,90 @@
+{
+  "run_id": "core-budget-normal-r1",
+  "source_head": "5e6b326",
+  "normal_token_path_verified": true,
+  "stages": [
+    {
+      "session_id": "memory-A-cb7338ad97914c1ca57ae3328f36d723",
+      "generated_tokens": 1037,
+      "materialization_reason": null,
+      "finished": true,
+      "reward": 0.0,
+      "eligible": true,
+      "max_generated_tokens": 8192,
+      "recorded_generated": 1037
+    },
+    {
+      "session_id": "memory-B-9ac79dc6d63240ea8411fc754034adfb",
+      "generated_tokens": 302,
+      "materialization_reason": null,
+      "finished": true,
+      "reward": 0.0,
+      "eligible": true,
+      "max_generated_tokens": 8192,
+      "recorded_generated": 302
+    }
+  ],
+  "supervisor": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 570.016,
+    "pid": 83614,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "evidence": [
+    {
+      "source": "/root/runs/core-budget-normal-r1/agent-logs/step_0/memory-A-cb7338ad97914c1ca57ae3328f36d723/trajectory.json",
+      "saved": "/workspace/reports/core-budget-normal-r1/0-trajectory.json",
+      "sha256": "4289aa5d0c3bd915a78b831195ccb9255e79846303cc134adad12db44cc505e3"
+    },
+    {
+      "source": "/root/runs/core-budget-normal-r1/agent-logs/step_0/memory-A-cb7338ad97914c1ca57ae3328f36d723/trajectory.npz",
+      "saved": "/workspace/reports/core-budget-normal-r1/1-trajectory.npz",
+      "sha256": "4c8b2a2a41df486e8cfc7d4235d472fd374eb2720ddccaec08f768d372cf523c"
+    },
+    {
+      "source": "/root/runs/core-budget-normal-r1/agent-logs/step_0/memory-B-9ac79dc6d63240ea8411fc754034adfb/trajectory.json",
+      "saved": "/workspace/reports/core-budget-normal-r1/2-trajectory.json",
+      "sha256": "916cd117d4cc95ded70dd591ae9858ff991a78acf7646b917ad99ba03c32605e"
+    },
+    {
+      "source": "/root/runs/core-budget-normal-r1/agent-logs/step_0/memory-B-9ac79dc6d63240ea8411fc754034adfb/trajectory.npz",
+      "saved": "/workspace/reports/core-budget-normal-r1/3-trajectory.npz",
+      "sha256": "98cbfc64f1728c06127b285aff7b01b7a10630fd105d9db2e5548a6e28e4b165"
+    },
+    {
+      "source": "/root/runs/core-budget-normal-r1/chains/memory-36b6239d17a548db9532b6d78a8152c5/writer/run/results/0f2d99f22faf438d3bc46274/verifier-receipt.json",
+      "saved": "/workspace/reports/core-budget-normal-r1/4-verifier-receipt.json",
+      "sha256": "a7e7a217aae147d8a238cfaed9895fe5bdcebd75efc5b60a41fb76436c419a4d"
+    },
+    {
+      "source": "/root/runs/core-budget-normal-r1/chains/memory-36b6239d17a548db9532b6d78a8152c5/reader/run/results/09229be02e5cd91b5173b75c/verifier-receipt.json",
+      "saved": "/workspace/reports/core-budget-normal-r1/5-verifier-receipt.json",
+      "sha256": "ac9afe3e6a2c8656dbcfb589c029cb87cfb540ebb7066070f06e8b71ab568d57"
+    },
+    {
+      "source": "/root/runs/core-budget-normal-r1/run-manifest.json",
+      "saved": "/workspace/reports/core-budget-normal-r1/6-run-manifest.json",
+      "sha256": "6fb8eb645b402e37d7c19b7bacd11c3da6cf67ed612339ee450fed8bb5357aae"
+    },
+    {
+      "source": "/root/runs/core-budget-normal-r1/supervision/train.log",
+      "saved": "/workspace/reports/core-budget-normal-r1/7-train.log",
+      "sha256": "556501a2414b7a9d81d4e293629ee83a70b234ac6c3c48742dde3815b313da84"
+    },
+    {
+      "source": "/root/runs/core-budget-normal-r1-launch.log",
+      "saved": "/workspace/reports/core-budget-normal-r1/8-core-budget-normal-r1-launch.log",
+      "sha256": "721c1353725097943e7a46df7e79ec6d43c9ba2f93f3b87f0303bd3f6451ac23"
+    }
+  ],
+  "training": false,
+  "learning_verified": false,
+  "after_run_verified": true,
+  "after_run_sha256": "85bcf7373968932210db1a2a5579c47be71d967484ebdf57f5a93d0816aa06a6",
+  "consumption_verified": true,
+  "consumed_groups": 1,
+  "consumed_rows": 2,
+  "consumption_report_sha256": "e6af1eb71246e9d0f27267e3aa6dae9ea3fc80ea972b665aea00a3de19e25560"
+}

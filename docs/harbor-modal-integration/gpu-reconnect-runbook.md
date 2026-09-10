@@ -1,12 +1,12 @@
 # GPU关闭后的快速恢复入口
 
-2026-09-10。当前不启动新的训练作业，优先保存交接。最新业务主线：核心记忆/context课程扩量；异步实施暂停。
+2026-09-10。最新关机节点优先阅读 [GPU关机检查点](gpu-shutdown-checkpoint-20260910.md)。下文旧短课程是历史资料；当前主线为核心记忆课程有效学习，异步暂停。
 
 ## 不要重复已完成的实验
 
 - ws-short-train-r1：8步中2步非零梯度，真实参数变化，901/902独立reload通过。
 - ws-short-train-r2：工程重复与两题reload通过；32终态B全满分，8步零梯度、参数未更新。不能作为已提升的模型。
-- 下一课程work-state-memory-core-v1目前只有设计：52train/16公开dev、16步预算，尚未生成或GPU训练。不要把设计当可执行参数。
+- core-v1现有520train/160公开dev；core-train-r4已完成16步/16独立任务，全部任务梯度0。四族reload及预算修复已验，详细以最新关机检查点为准，不能宣称能力提升。
 - 32链事实诊断已完成：23条A已保存但B未读记忆，是下一课程主要目标。方案expert-memory-context-training-plan.md与core-memory-expanded-course-design.md。
 
 ## 恢复所需资产

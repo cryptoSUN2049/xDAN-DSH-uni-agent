@@ -1,0 +1,288 @@
+<!-- 当前恢复目标以active-engineering-goal.md顶部P1→P2→P3为准；立即执行仍为P1的G0—G6。用户已恢复P1→P2→P3 goal，继续推进。 -->
+# Harbor / Modal 工程交接
+
+## 当前推进：core-train-r4已发起（2026-09-10）
+
+- 执行源码 `511bd71` 已push；远程 `/workspace/rebuild/uni-agent-core-511bd71`，固定DSH0.1.3a2、配对VERL fefb080+既定overlay、Qwen3-4B revision不变。95项准备器测试、Ruff双门通过。
+- SSH `root@216.243.220.120 -p 13918 -i ~/.ssh/id_ed25519`；48GB MIG，恢复后的持久venv `/workspace/venvs/uni-agent-rebuild-cf2d3f5`。恢复见pod-recovery-design.md。
+- 新r4外层PID21105，13:31 SGT实际存活，正式监督器日志已创建。日志 `/root/runs/core-train-r4/supervision/train.log`，准备清单 `/root/runs/core-train-r4-data/manifest.json`。PID只是快照，接续先核实时存活，禁止重复启动。
+- 数据520train/160公开dev资产已落盘，真实DSH canary8通过。r4同步16步、n4、step8/16保存，checkpoint `/workspace/uni-agent-g1/checkpoint/core-train-r4`。13:44 SGT已越过CPU阻塞：runner23087→Python24987→DSH runtime24990真实运行（runtime进程名MainThread，不可只grep deepseek）。已出现一条完整A/B fresh/finished/eligible且业务reward0；首writer未完成被拒。05:51 UTC已完成step1，首失败组被evict/refill后有效组进入训练；grad/adv/reward均0，gen799.397s、update16.364s、step832.856s。06:04 UTC已到step3，已到step5（06:15 UTC），前五步reward/adv/grad全0，step3耗199.490s、step4耗179.001s、step5耗511.094s；尚无有效更新或checkpoint证据。
+- r4资源预算：Controller1+Storage1+actorPG3+外部串行runner1=Ray CPU6。DSH内部local子进程不再申请Ray task。须真实核DSH执行/完整消费，不能仅以模型加载宣布资源问题解决。
+- r1在MIG权限检查误拒绝；r2 TQ8无法放入CPU6；r3 TQ2+Controller1+actorPG3耗尽CPU6，模型已加载但DSH外部任务无CPU、0步。r3仅停止owned PG15980，exit-15/700.018s，所有相关进程清退、GPU128MiB无进程。原证据/workspace/reports/core-train-r3-cpu-admission，supervisor SHA256 129b028f29bbd37265b1e5e14df721218b0d30449e34719ea3f914d07b8741de。
+- r2原证据/workspace/reports/core-train-r2-cpu-admission（含operator-stop和supervisor），均不能算完成训练。
+
+运行快照 `/workspace/reports/core-train-r4-startup/`，首writer Session v2快照141406bytes、SHA256 096768be5c4fe395523ed28471a65e027422388c6d69a9f3d6044d1317b686b1；仅运行证据，不是完整组。模型有重复create已存在文件和工具JSON格式错误，已核实际token mask确认工具错误回传（core-r4-tool-feedback-audit.md）；首组2/4失败后自动evict/refill继续，未改提示、奖励或模型输出。
+
+前两步8链失败分析：core-r4-early-failure-analysis.md；A5完整/3空，B8均无memory读取，仅2独立任务。后续协议诊断候选已记录，未改r4。
+
+预算审计core-token-budget-audit.md：当前真正生效为每请求4096和每session总序列16384（含工具上下文），配置累计生成8192未接通。P2设计已纠正文案；Gateway可信累计计数已本地实现并回归，尚未部署；未改r4。
+
+### 2026-09-10 14:40 SGT检查点
+
+- r4在06:39 UTC实查外层21105/trainer21295/vLLM24216存活，metrics已8/16；前8步reward/adv/grad均0。step8补采两组后完成，gen1043.730s、update18.765s、save10.645s。仍无有效学习证据。
+- 第8步checkpoint已实查：`/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_8/actor` 中model约8.3G、optimizer127M，以及extra_state、LoRA metadata、HF配置存在；仅落盘核实，未做参数比较/独立reload。运行源码仍511bd71。
+- 新累计预算修复：Gateway真实backend token计数、同session串行、rollback不退款、异常后禁止重试；可信operator给A/B分别8192，轨迹持久化预算快照。255项组合回归、后续113项受影响回归及17项最终边界通过；最终提交前另跑全库Ruff双门。真实GPU预算验收尚待独立新run，不能覆盖r4源码。
+
+14:44 SGT消费覆盖快照见core-r4-consumption-progress.md：已完成步骤1–9，9个独立task、36条AB、72唯一TQ行；WS01两题、WS03四题、WS05三题，WS06尚未进入本范围消费。全部dump score0；并非520条均已训练。终态操作单core-r4-terminal-audit-runbook.md已按既有工具接口整理，尚未执行。
+
+14:48 SGT补充消费快照：step10已首次消费WS06、step11为WS01，四族覆盖；前3个WS06组因A超限/越权整组拒绝，其中一个合法B原reward1随组未消费，不能追认有效学习。详情及原件hash见core-r4-consumption-progress.md。14:50训练已12/16，前12步梯度仍0。
+
+14:50 SGT新预算修复已隔离部署 `/workspace/rebuild/uni-agent-core-4232df3`，配独立同pin VERL+overlay，旧venv复用；Linux禁CUDA预算17测试通过（28.96秒），仅CPU协议验证。r4仍原511，旧Gateway hash核验未变。待r4训练/reload收尾后再启动新预算GPU canary。部署详细身份见core-token-budget-audit.md末节。
+
+15:06 SGT训练已14/16，step14耗830.516秒、evicted2；原预算wall_seconds=7200，尚未终态。新只读诊断已写core-r4-early-failure-analysis.md：4个已消费B实际prompt含完整工具schema与tool_call示例，故撤回“缺示例”的修复假设；旧成功短课也有maymissing句式，不能称新回归。下一公开单变量候选为B保存/恢复角色歧义与真实index存在信息，不改本轮提示或奖励。
+
+15:16 SGT监控修正：活跃Session v2位于`chains/memory-*/*/run/homes/*/sessions/*/*/session.v2.jsonl`；`traces/*/session.jsonl`是harness.run结束后才导出，不能单独拿其mtime判定卡死。已核e05bcfb writer原件50次模型回复/49次工具调用，最终未完成；框架继续后续采样。当前仍14/16，监督器未终态，7200秒预算约余14分钟。
+
+15:22 SGT母r4正常终态：16/16、exit0、elapsed6665.148s，训练进程清退，step16落盘；原511 after_run检查通过。正式消费审计passed：16组/64链/128唯一A-B，16独立task四族4/7/4/1，26尝试组中10拒绝组不消费；远程/workspace/reports/core-train-r4-final/consumption.json SHA256 9d27bf4f4b65ed4facdef708c8e6d1472dc0e9e80dd4ece7e0a860348e9a14bb。全部16步reward/adv/grad仍0，参数CPU审计由eval_audit_fix进行，不能标有效学习。
+
+WS01独立reload已prepare成功并发起：run `core-r4-reload-ws01-r1`，外层PID57046，日志`/root/runs/core-r4-reload-ws01-r1-launch.log`，清单`/root/runs/core-r4-reload-ws01-r1-data/manifest.json`。原511源码、母step16、公开task ws01-v1-s2001；尚待实际加载/回执/终态审计。下一题WS03→WS05→WS06串行，各新run；不能重复启动已有PID。参数审计输出/workspace/reports/core-train-r4-parameters，与GPU推理解耦且禁CUDA。
+
+15:30 SGT参数审计已收尾（core-r4-parameter-audit.md/json）：8→16 model同SHA20d8bcd59b631cd1de0e5179f978eef9eae97d23175811eb343c4eecdd074f19，504adapter/399base变化0；最终252B全零，optimizer内部16→32但1008moments全零。原两工具exit1/passedfalse保留，有效更新未通过。原件/workspace/reports/core-train-r4-parameters。WS01 reload PID57046仍存活，已进入VERL/FSDP初始化，尚未证明step16加载/任务终态。母证据归档另进行中，不能提前标归档完成。
+
+15:33 SGT WS01 reload实证加载：07:32:21 WorkerDict59055依次Loaded step16 model/optimizer/rng+lr_scheduler；vLLM59778/60024已起，首链memory-841086...创建，尚待任务终态/消费。WS03/05/06的`/root/runs/core-r4-reload-<ws>-r1-data/manifest.json`均prepare完成未launch；四题CUDA_VISIBLE_DEVICES均固定0，CPU准备没有污染GPU配置。
+
+母证据归档完成：`/workspace/reports/core-train-r4-engineering-evidence-20260910.tar.gz`，49,014,953 bytes，SHA256 0a0f6826ae28fe2bd40a448e89055ae921f601b2f6c2c39d5cb5d142cffff54c；338,901成员逐项回读和原件hash复核通过。范围/清单见core-r4-archive.md；不含checkpoint（另存/workspace）、参数报告和活跃reload，不能声称这些已随tar备份。实际volume权限0666如实记录。
+
+15:34 SGT WS01独立reload终态exit0/535.015s，step16 validation dump已写、A/B均fresh/finished/eligible且reward0；next_capability审计母checkpoint未改/正式消费中，不提前标审计passed。
+
+WS03下一题已启动：`core-r4-reload-ws03-r1`、外层PID61243，日志`/root/runs/core-r4-reload-ws03-r1-launch.log`，清单`/root/runs/core-r4-reload-ws03-r1-data/manifest.json`；15:36 GPU准入文件与正式日志已创建，原511/sourcestep16。WS05/06仅prepare未launch。继续串行，不能复用已存在run目录或再启动WS01。
+
+15:38 SGT WS01正式审计passed（core-r4-reload-ws01-result.md/json）：原511 after_run母checkpoint摘要未变、step16实际加载、1val组/2唯一A-B消费；原reward0业务错误保留。摘要持久于/workspace/reports/core-r4-reload-results/ws01，完整reload原轨迹尚未归档。WS03 PID61243在初始化，WS05/06未启动。
+
+### 紧接着做
+
+- [x] r4首次真实A→冻结→B与完整组消费已核；首步原始跨表证据见core-train-r4-step1-evidence.md。继续监督后续完整运行，不因普通观察超时重启。
+- [ ] 完成16步后按docs/harbor-modal-integration/core-r4-terminal-audit-runbook.md审计独立任务数、奖励分布、梯度、参数与optimizer；区分执行成功与有效学习。
+- [ ] 母run成功终态后，每族首条公开dev串行独立reload step16；协议core-memory-reload-protocol.md。旧批量评估helper不适用core。
+- [ ] 原始证据归档/workspace、结果/复跑指南、commit/push。
+- [ ] P2设计已在core-memory-p2-evaluation-design.md落盘并review；新增入口尚未实现，需按Human Gate取得实施确认。当前继续已授权P1，不等待该确认。P3仍未完成，公开dev不能改称封存测试。
+
+以下为历史实验记录，旧课程通过不能替代新版core课程验收。
+
+## 1. TL;DR
+
+- **位置**：worktree-harbor-modal-integration；主目录main未动。运行源码b47521d，独立审计d4401d3，文档提交以git HEAD为准。
+- **新短课程已闭环**：ws-short-train-r1完成8步，8完整组/64唯一A/B、6独立任务。step2/4非零梯度；504 LoRA张量4→8变化，399base不变；零初始化B保存后非零。后四步零梯度，不称新增学习。
+- **独立评估通过**：901/902各新进程加载step8，原B奖励1，各1组2唯一消费；母11文件摘要均不变。d4401d3修正validation广播分数审计，原901失败报告保留。
+- **尚未完成**：短课程证据归档/HTML与交接收尾完成；四能力、提分对照、结果重复实验、空白环境复建、异步及Harbor仍后续。旧四族r4零更新不追认。
+- **GPU**：短课程两评估已exit0；RSI父基线H0已exit0并审计通过；学生提议P已exit0并登记未晋升候选；H1已exit0，2题独立原始审计通过（inspect1/file0），GPU已释放；等待组合比较后再晋升。入口：[短课程指南](../../docs/harbor-modal-integration/work-state-short-course-runbook.md) → [最终reload报告](../../docs/harbor-modal-integration/work-state-short-reload-final-result.md) → active-engineering-goal.md。
+
+当前短课程母checkpoint：`/workspace/uni-agent-g1/checkpoint/ws-short-train-r1/global_step_8`。运行checkout：`/workspace/rebuild/uni-agent-work-state-short-r1`；只读审计checkout：`/workspace/rebuild/uni-agent-short-audit-d4401d3`。二者不可互换源码身份。
+
+云盘归档：`/workspace/reports/ws-short-r1-engineering-evidence-20260909.tar.gz`，SHA256 `d7764c1422ce5a9f89df862a927059224ca5ede201fd2756a40468ef505d8823`；18,197,593字节，173,735成员逐项回读通过。checkpoint单独保留，归档不含凭据。
+
+## 当前优先：短课程独立重复实验 r2
+
+用户明确恢复训练主线；聊天面板需求为误发，不实施。r2已结束：工程复现通过，有效更新未复现（32终态B全部满分、8步零梯度）；两题reload均通过。完整证据见ws-short-repeat-r2-result.md/json。最新优先核心记忆/context能力：WS01交接、WS03索引、WS05事实更新及WS06负例。异步审计已保存但实施暂停，尚未启动异步GPU；准备器无代码修改。先分析已有四族真实失败，复用原base基线入口，再定向补任务与训练。四能力数据方向保存在four-capability-data-plan.md，144条为预算而非已有数据。
+
+- 新实验 `ws-short-train-r2`，执行源码 `f419bbb3d72fd49abc0b37cea94fde699d1c03ac`，远程 checkout `/workspace/rebuild/uni-agent-rsi-compare-f419bbb`；固定 VERL overlay 与 DSH 0.1.3a2、现有 venv。
+- prepare/check 已通过；后台 launch PID `328842`，日志 `/root/runs/ws-short-train-r2-launch.log`。这只是已发起，尚未宣称训练完成。
+- 数据8训练/2公开开发、8步、n4、同步模式；checkpoint `/workspace/uni-agent-g1/checkpoint/ws-short-train-r2`。首次实验保留。
+- [ ] 核实 GPU 模型加载与实际任务消费。
+- [ ] 训练终态后核消费组、独立任务数、梯度、参数与 optimizer 变化。
+- [ ] 使用 r2 step8 串行独立 reload 901/902，核母文件不变与实际评分。
+- [ ] 对照 r1 汇总，归档、commit/push；奖励不必逐项一致，无有效更新不得算复现通过。
+
+## 当前接续：RSI 基线与跨课程初始化审计
+
+短课程收尾之后，继续四能力目标。RSI worker/proposer 原入口仍要求 VERL 完全 clean，与已批准的 finish-reason overlay 冲突；本轮复用严格 overlay 校验并绑定有效来源，不退回未修补版本。准备器/worker/proposal 共用同一来源合同；旧 RSI manifest 必须重建。
+
+下一真实运行是父 H0 的 runtime 能力发现及文件约束取证两个开发任务；入口 `docs/harbor-modal-integration/rsi-parent-baseline-runbook.md`。这是固定权重评估，不是 RSI RL 或候选晋升。207项CPU与Ruff通过，b1c568b已推送；远端 `/workspace/rebuild/uni-agent-rsi-b1c568b` 已固定部署。`/root/runs/rsi-student-h0-r1/prepared/preparation-manifest.json` SHA256=f37d7cb1430c872ea339e3a8b4be76eb488c1337b5af2e0a376939930b113b68；21:38:04(SGT)启动PID316633，operator-launch.json/log在该root。H0已exit0（314.622秒），2题完整唯一消费、原始审计passed，均reward0；结果rsi-student-h0-r1-result.md/json。H0归档42文件逐项通过，见rsi-student-h0-r1-archive.md。P清单 `/root/runs/rsi-student-p-r1-data/preparation-manifest.json` SHA256=8c510da59bcb681cded5cb91e884b65f7d020fcef8c00457610b0f37fb5ee4da；21:48:36启动PID320743，子进程320866。日志 `/root/runs/rsi-student-p-r1-launch.log`，正式run `/root/runs/rsi-student-p-r1`。P已exit0（265.645秒），42真实token、1条TQ消费、原始审计通过；生成增加inspect_list的合法候选，格式reward1。已由原注册器登记候选438ad348…，未晋升，结果rsi-student-p-r1-result.md/json。H1准备 `/root/runs/rsi-student-h1-r1-data/preparation-manifest.json` SHA256=ad62faa9c4c14d7a76da069a0d737fef1f71833d81188bf91712d3d7ed02bb3f；21:59:36发起PID325008，日志 `/root/runs/rsi-student-h1-r1-launch.log`，正式run `/root/runs/rsi-student-h1-r1/H1`，H1已exit0、266.021秒，独立原始审计passed，结果rsi-student-h1-r1-result.md/json；尚未组合比较/晋升。
+
+跨课程审计 `docs/harbor-modal-integration/work-state-curriculum-warm-start-audit.md`：当前 train 禁止 resume，不能用短课程母 checkpoint 冒充旧课程。远程 step8 有 r16/alpha16 的 LoRA metadata，但无现成 PEFT adapter 目录。后续应明确初始化来源、导出等同性、新 optimizer 和 step，而不是放宽 reload 同课程门。
+
+## 2. 本轮交付物
+
+| 路径 | 行数 | 说明 |
+| --- | ---: | --- |
+| `examples/dsh/capabilities/evaluate_work_state_tasks.py` | 263 | 逐题独立reload、失败隔离、最终汇总 |
+| `examples/dsh/capabilities/prepare_memory_training.py` | 663 | after_run只读重验母状态 |
+| `tests/uni_agent/examples/test_evaluate_work_state_tasks.py` | 381 | 19项控制器含真实SIGTERM |
+| `tests/uni_agent/examples/test_prepare_memory_training.py` | 482 | Linux追加3项after_run |
+| `docs/harbor-modal-integration/native-work-state-end-to-end-runbook.md` | 139 | 部署到训练/reload总入口 |
+| `docs/harbor-modal-integration/work-state-rl-runbook.md` | 143 | 具体任务命令 |
+| `docs/harbor-modal-integration/work-state-independent-evaluation-r1-result.md` | 28 | 四题最终真实结果 |
+| `docs/harbor-modal-integration/work-state-independent-evaluation-r1-result.json` | 896 | 原日志/回执/消费证据 |
+| `docs/harbor-modal-integration/work-state-independent-evaluation-r1-archive.md` | 20 | 持久化与SHA回读 |
+| `docs/harbor-modal-integration/dsh-memory-context-skills-plan.html` | 1 | 专题状态页 |
+| `docs/harbor-modal-integration/dsh-memory-context-skills-plan.md` | 360 | 训练任务与验收规格 |
+| `docs/harbor-modal-integration/dsh-memory-context-skills-visual-check.md` | 28 | 1440/390真实视觉验收 |
+
+### 较早交付物（历史）
+
+最新第二族记忆及课程交付：`docs/harbor-modal-integration/native-memory-updates-r1-result.md` / `.json`（真实新事实优先A/B、CPU重评分、冻结与云盘归档）；`context-v2-curriculum-r1-execution.md` / `context-v2-curriculum-r1-preparation.json`（12train/4dev、参数透传、清单/源码/跨cwd验证及监督入口）。updates归档 `/workspace/reports/dsh-memory-updates-r1-20260909.tar.gz`，42335字节/51成员，SHA256 d4867f927c416699c885b9da8810b2f6c06fd1fed416001ae30e623441ffcfd4。
+
+最新CPU增量（已推送，当前GPU精确提交以TL;DR为准）：清单驱动推理启动/跨cwd预检/实际VERL pin校验，候选未晋升隔离评估。root联合58项（RSI46+launcher12）通过；context另83项回归通过，Ruff双门通过。RSI默认生产路径及policy源码不变；helper复用已有监督器。
+
+最新memory交付：`docs/harbor-modal-integration/native-memory-writer-r3-result.md`（40行）与 `.json`（540行），真实A/B各两调用/回执、CPU独立重评分、冻结身份与B输入隔离、finalize通过；无训练。归档 `/workspace/reports/dsh-memory-constraints-r3-20260909.tar.gz`（43147字节/51成员，SHA182ba035360c6c7f56fb73763e87fb88ac1ae06fd60a3320c1825ef408256240）。Reader Ray MetricsHead 因 AF_UNIX 路径超过107字节失败，但主线程确认推理仍进入CUDA graph capture；下一新run缩短独占RAY_TMPDIR，不终止当前作业。
+
+最新context独立reload交付（文档与原始证据，无代码改动）：
+
+| 路径（docs/harbor-modal-integration/） | 行数 | 说明 |
+| --- | ---: | --- |
+| `context-v2-train-r1-reload-report.md` | 43 | 实际加载、无更新、四题fresh消费与效果边界 |
+| `context-v2-train-r1-reload-result.json` | 292 | 清单/回执/日志/metrics/源题等同性及摘要 |
+| `context-v2-train-r1-reload-archive.json` | 8 | 云盘归档243041字节、523成员、gzip校验通过及SHA256 |
+
+| 本轮文件 | 行数 |
+| --- | --- |
+| `examples/dsh/capabilities/launch_context_inference.py` | 288 |
+| `tests/uni_agent/examples/test_launch_context_inference.py` | 175 |
+| `docs/harbor-modal-integration/context-inference-launch-design.md` | 20 |
+| `uni_agent/tasks/dsh/rsi_candidates.py` | 386 |
+| `examples/dsh/rsi_closed/profile.py` | 117 |
+| `tests/uni_agent/tasks/test_dsh_rsi_candidates.py` | 326 |
+| `tests/uni_agent/deployment/test_dsh_rsi_policy_canary.py` | 217 |
+| `docs/harbor-modal-integration/native-rsi-student-next-stage-design.md` | 172 |
+
+
+下面为本检查点代码/文档清单（行数用于冷启动定位；历史产物见末尾归档）。
+
+| 路径 | 行数 | 说明 |
+| --- | ---: | --- |
+| `deployment/checks/harbor_evolution_scripted_smoke.py` | 270 | 实现/部署入口 |
+| `deployment/services/harbor_training_supervisor.py` | 209 | 实现/部署入口 |
+| `deployment/services/harbor_tunnel.py` | 112 | 实现/部署入口 |
+| `docs/harbor-modal-integration/evolution-harbor-wiring-plan.md` | 83 | 设计/证据/手册 |
+| `docs/harbor-modal-integration/evolution-lifecycle-harbor-increment-design.md` | 68 | 设计/证据/手册 |
+| `docs/harbor-modal-integration/evolution-training-preparation-design.md` | 9 | 设计/证据/手册 |
+| `docs/harbor-modal-integration/evolution-v2-policy-failure-admission-design.md` | 73 | 设计/证据/手册 |
+| `docs/harbor-modal-integration/harbor-transport-jitter-tolerance.md` | 11 | 设计/证据/手册 |
+| `docs/harbor-modal-integration/redact-m1-r1-launch-manifest.json` | 58 | 设计/证据/手册 |
+| `docs/harbor-modal-integration/redact-m1-r1-result.json` | 63 | 设计/证据/手册 |
+| `docs/harbor-modal-integration/redact-m1-r1-trajectory-audit.json` | 366 | 设计/证据/手册 |
+| `docs/harbor-modal-integration/redact-m1-runbook.md` | 119 | 设计/证据/手册 |
+| `docs/harbor-modal-integration/ssh-load-probe-20260908.md` | 11 | 设计/证据/手册 |
+| `examples/dsh/evolution_verifier_v2.py` | 111 | 实现/部署入口 |
+| `examples/dsh/prepare_redact_curriculum_v2.py` | 132 | 实现/部署入口 |
+| `examples/harbor/evolution_verifier.py` | 119 | 实现/部署入口 |
+| `examples/harbor/prepare_evolution_task.py` | 238 | 实现/部署入口 |
+| `examples/harbor/prepare_m2_training.py` | 269 | 实现/部署入口 |
+| `tests/uni_agent/deployment/test_harbor_training_supervisor.py` | 244 | 测试 |
+| `tests/uni_agent/deployment/test_harbor_tunnel.py` | 109 | 测试 |
+| `tests/uni_agent/examples/test_harbor_evolution_scripted_smoke.py` | 109 | 测试 |
+| `tests/uni_agent/examples/test_harbor_evolution_verifier.py` | 119 | 测试 |
+| `tests/uni_agent/examples/test_harbor_m2_training_entry.py` | 475 | 测试 |
+| `tests/uni_agent/examples/test_prepare_evolution_harbor_task.py` | 141 | 测试 |
+| `tests/uni_agent/examples/test_prepare_redact_curriculum_v2.py` | 65 | 测试 |
+| `tests/uni_agent/tasks/test_dsh_evolution_verifier_v2.py` | 199 | 测试 |
+| `tests/uni_agent/tasks/test_harbor_dsh_executor.py` | 465 | 测试 |
+| `tests/uni_agent/tasks/test_harbor_dsh_isolated_trial.py` | 541 | 测试 |
+| `tests/uni_agent/tasks/test_harbor_dsh_trace_artifacts.py` | 195 | 测试 |
+| `tests/uni_agent/tasks/test_harbor_evolution_admission.py` | 131 | 测试 |
+| `tests/uni_agent/tasks/test_harbor_evolution_scoring.py` | 157 | 测试 |
+| `uni_agent/tasks/harbor_dsh/evolution_scoring.py` | 227 | 实现/部署入口 |
+| `uni_agent/tasks/harbor_dsh/executor.py` | 371 | 实现/部署入口 |
+| `uni_agent/tasks/harbor_dsh/isolated_trial.py` | 358 | 实现/部署入口 |
+| `uni_agent/tasks/harbor_dsh/registration.py` | 283 | 实现/部署入口 |
+| `uni_agent/tasks/harbor_dsh/task.py` | 490 | 实现/部署入口 |
+| `uni_agent/tasks/harbor_dsh/trace_artifacts.py` | 189 | 实现/部署入口 |
+| `uni_agent/tasks/harbor_dsh/trajectory_audit.py` | 230 | 实现/部署入口 |
+| `tasks/harbor-modal-integration/active-engineering-goal.md` | 160 | 目标/交接/流程记录 |
+| `tasks/harbor-modal-integration/handoff-history-20260908.md` | 473 | 目标/交接/流程记录 |
+| `tasks/todo.md` | 361 | 目标/交接/流程记录 |
+| `tasks/lessons.md` | 122 | 目标/交接/流程记录 |
+
+本检查点组合回归：635 passed，0 skipped；一个已有Ray弃用警告。Ruff check/format通过。Harbor evolution v1真实Docker四mode已通过，见harbor-evolution-v1-docker-r1-results.json；新v2薄adapter仅CPU通过，尚待worker/packer接线和真实Docker。
+
+## 3. 设计约束
+
+- DSH拥有唯一Agent Loop；Harbor拥有环境生命周期。不得在DSH外再包一层MemAgent执行循环。
+- 固定Uni-Agent upstream `89733ec81a69c3cc93ac90479de7ea7f01e51c1f`，VERL `fefb080262e1c015a0ea05f958822a6a512dc795`。
+- DSH `b2369692ea530007075ebcd18d39fdba0bbd3982` / 0.1.3a2，runtime SHA `d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb`。完整锁见deployment/versions/g1-deployment-lock.json。
+- 镜像摘要、runtime二进制摘要、patch字节摘要、有序patch路径摘要分别绑定，不混为同一身份。
+- 旧v1评分与旧产物不修改。v2只修复可信已完成失败的准入：分数仍0，不将失败改为成功；其他hard-veto仍拒绝。
+- Harbor当前只支持一个TaskRef；重复train/heldout行是同题工程复验，不是4/2不同任务或隐藏集泛化。
+- Harbor已有独立v2薄adapter及Task/audit CPU验证；worker/packer实际链路仍为v1。先验证两者明确版本，不能宣称完全相同准入。
+- 不新增付费GPU/Modal/教师API；全异步与规模性能后置。现有GPU作业必须有步数与wall-clock上限。
+- 远端源码从GitHub拉取精确commit，不scp源码；运行中不切换checkout。
+
+## 4. 已踩坑与已验证行为
+
+### 当前M1真实结论
+
+`/root/runs/dsh-redact-m1-r1`，supervisor53590已退出，child53591；1065.022秒自然结束exit0。数据4train/2public holdout，从固定Qwen3-4B基座新建LoRA16/16，2global steps，n4，8192/1024预算。
+
+- baseline、step1、step2两条留出均得1；不证明训练提升。
+- 两step消费reward均全1，grad_norm/advantages/pg_loss均0；分别evict1和4组。
+- checkpoint1/2 SHA均`584f7911bbd4933e328feb122699d041cda67febeab28d4aba42cd1b87b52cac`；504adapter和399base全部未变，delta passed=false。
+- trajectory audit：15组，10 eligible-and-consumed，5 rejected，0 unmatched consumption，0 variance groups；总eligible=false，不能报整轮通过。
+- 根因样本已inspect但没有define，正常completed且reward0；旧scorer把它记missing_pre_define_inspection→eligiblefalse，整组被淘汰。另有拼错cordis_undefined仍拒绝，v2不放开这一类。
+- 没有独立reload：未通过数值门，不浪费GPU去复验未学习checkpoint。
+- 证据docs/redact-m1-r1-result.json、redact-m1-r1-trajectory-audit.json；完整路径相对docs/harbor-modal-integration。
+- 云盘归档`/workspace/reports/dsh-redact-m1-r1-evidence.tar.gz`，SHA`22088026fd717e232ad9d9b2cc4c59ee76ed42aaa85bb5873de943e8b34659d6`。
+
+### v2修复边界
+
+`evolution_verifier_v2.py`固定两个父源码SHA，自身+父源码组成bundle。新prepare_redact_curriculum_v2.py从原4/2可信manifest发布新task/verifier version2、原prompt保持，生成新task-config.yaml。CPU真实CLI→生产fresh receipt→原trajectory audit已测试；v2-r4正在GPU验证，第一步已有0/1奖励并成功保存；数值及reload待验收。
+
+### Harbor与网络
+
+- 旧T2真实Docker脚本策略4mode均通过，显式双镜像与私有Release回下载hash通过；见t2-harbor-scripted-r2-result.json和t2-image-release-download-verification.json。
+- 学生Harbor r1 `/root/runs/t2-harbor-student-r1`在任务开始前SSH超时，supervisor exit -6 /controller-health-failed；无有效评分/更新。控制器已结束。
+- 600秒只读SSH探针在592秒复现255退出：末收包至退出约29.793秒，随后新短SSH恢复。不能断言GPU节点持续宕机，也不能把短探针成功等同长连接稳定。
+- 当前补丁SSH15秒×6；仅运行期明确传输异常容忍连续90秒，成功清零。认证/身份/格式/healthy=false立即失败；预检失败不启动、无自动重连、不复用旧run。15×6配置600秒探针通过，但该窗口未出现故障，不能证明恢复机制已实测。
+- 新Harbor evolution：固定fixture/metadata/原scorer hash与TaskRef；第四个controller-owned binding文件送独立verifier；训练Task与audit重算同小数reward。v1真实容器四mode通过，不代表v2或学生RL已通过。
+- 原T2独立verifier是纯stdlib；新evolution复用固定b016父镜像内Pydantic2.12.5（离线实际探针已验证），单独network none，不联网安装。
+
+### 已有SFT证据与边界
+
+原生SFT累计56步，以及4条注册决策补课64步均有LoRA真实更新、冻结base和独立导出加载证据。但两次完整日志工具学生eval均0/2；不宣称SFT已学会完整任务。详见t2-sft-warm-checkpoint-audit.json、t2-sft-registration-state-audit.json、t2-registration-student-eval-r1-result.json。
+
+## 5. 下一里程碑清单
+
+- [x] 固定部署、真实训练消费与checkpoint、独立四题结果收尾、云盘归档。
+- [x] 总指南/专题HTML/goal与冷启动记录同步；控制器19项和Linux追加3项通过。
+- [ ] W4：补本课程可归因的非零优势、有限非零梯度和参数/optimizer变化；不能引用别的课程更新抵扣。
+- [x] 短课程独立实现、217项CPU、8项Linux canary及8步真实训练完成；有效更新已审计，旧r4不追改。
+- [x] 完成短课程两题独立reload的新离线审计、证据归档与HTML更新。
+- [ ] 后续效果对照、四能力、单卡异步与Harbor另阶段推进，不新增工程前置。
+
+## 6. 分支/部署状态
+
+- 本地分支worktree-harbor-modal-integration；文档提交看git HEAD/origin。当前RSI源码b1c568b，短课程历史运行b47521d与离线审计d4401d3分别保留，不原地更新。远端CI本轮未查询。
+- SSH root@216.243.220.178 -p 14465 -i ~/.ssh/id_ed25519；RTX PRO6000。历史作业rsi-student-h1-r1/H1已结束；P的PID320743/320866已终止。H0两进程已终止、supervisor exit0、raw-token审计passed。旧ws-r4-isolated-eval-r1已退出。
+- venv /workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4B-1cfa9a7；DSH0.1.3a2、VERL fefb080+显式补丁。
+- 母checkpoint /workspace/uni-agent-g1/checkpoint/work-state-train-r4/global_step_8；四次reload均核11文件不变，无再训练。
+- 新证据归档/workspace/reports/work-state-independent-evaluation-r1-20260909.tar.gz，SHA c584f240d2276eb7e9b81bb0dd9553284ec735b150669ece194bbc8fd3a4ce01，12247源成员逐一回读通过。
+- 私有运行/root/runs，checkpoint与脱敏证据/workspace；不全局ray stop/pkill，不覆写旧run，不把df集群容量当个人配额。每push前Ruff双门必须通过。
+
+## 7. 冷启动 checklist
+
+1. 读本页 → active-engineering-goal.md → 四题最终报告与零奖励根因，区分旧r4未更新与新短课程有效更新/独立reload已通过。
+2. 核本地git status/branch/HEAD/origin；不要复活旧RSI PID；先核新版core课程的部署/作业状态；短课程运行b47521d与离线审计d4401d3保留。复用现venv，不因SSH观察超时重启任务。
+3. 读总操作指南与独立短课程设计；后续新run必须新身份、固定新提交、保留母谱系。
+4. 启动新GPU任务前只读核占用和版本；使用现prepare/check/launch及原audit，不能伪造TQ或放宽原分数。
+5. 完成每节点后更新goal/handoff、Ruff check/format、commit/push。历史只按需看notes.md及handoff-history-20260908.md。
+
+## 2026-09-10 reload与论文研究检查点
+
+WS03正式after_run及消费审计通过，1组2条A/B，业务reward0；见core-r4-reload-ws03-result.md/json。WS05已exit0/505.013s，正式审计原件位于其final-audit，尚待本地汇总。WS06外层PID69492最后实查仍存活，日志/root/runs/core-r4-reload-ws06-r1-launch.log，不得重复启动；实查时vLLM在推理。记忆RL研究与下一实验候选见docs/harbor-modal-integration/memory-rl-evidence-and-next-experiment.md；未改旧r4或实施新奖励合同。下一步收尾WS06、归档reload/参数原件，再验新预算canary。
+
+WS06终态补充：2026-09-10 08:24后核outer69492消失，监督器exit1/820.021s/PG69539，health failures0。原日志val组1/1被拒，TrajectoryAuditError:trajectory 0: reward_info must declare finished=true；不是已完成四族成功验收。需继续核原receipt终止原因与原始链，不能仅凭此断定预算超限。正式原件/root/runs/core-r4-reload-ws06-r1，不覆盖或重启旧run。
+
+WS06原件确认：writer agent-result与Session v2最后turn/end均max-tokens，452行，最后step89，B未执行。关键原件6项已保存/workspace/reports/core-r4-reload-results/ws06并回读SHA；见core-r4-reload-ws06-result.md/json。尚非完整目录归档或母hash复核。
+
+## 新预算真实学生验证已发起
+
+core-budget-val-r1，源码4232df3，checkout /workspace/rebuild/uni-agent-core-4232df3，原venv复用；准备清单/root/runs/core-budget-val-r1-data/manifest.json，日志/root/runs/core-budget-val-r1-launch.log。外层PID74137启动后12秒实查存活，尚待加载/实际token/终态；不得重复启动。mode=val，基础Qwen3-4B，WS06-v1-s2001，未加载旧母checkpoint，不是新训练更新。检查A/B各session累计8192与真实token计数、触顶时finish_reason及receipt；若提前完成则不能声称触顶验收通过。WS05原after_run passed及consumption passed/verified已主线程复核，1val组、无errors，原件在其final-audit，尚待本地完整汇总和归档。
+
+四个终态reload和参数审计已归档，12,228文件逐成员/源hash核验，834,802bytes，SHA318c95e9f50fbc2b689534896dabb5c6141dbfc04f6023727ac3cd0cc84e0b68；范围/恢复说明见core-r4-reloads-archive.md。预算run74137在启动3分26秒实查存活，TaskRunner75650已输出resolved配置，尚待实际GPU生成。
+
+WS06原511 after_run来源/母checkpoint复核现已通过，报告SHA5298387c65361f6c8cce3c5392cccce21702b678fd2dec15355be3e28be90e88，见WS06结果文档增量。预算run74137在08:37 UTC仍活跃，vLLM worker77183权重加载完成，尚未观测DSH任务终态。reader新设计待用户明确确认，不将自动goal续行当作批准。
+
+预算val-r1已终态exit1/760.022s，writer达到真实生成8192上限，mask0=6069/prompt1502/total15763，NPZ hash/logprob核验通过。未执行B，旧准入拒绝符合原合同。materialization_reason空值根因是backend恰好length返回后直接finalize，未进入下次零剩余分支；需补精确触顶记录测试/修复（不改正常stop）。证据/workspace/reports/core-budget-val-r1，结果文档core-budget-val-r1-result.md/json。GPU本项目该任务已退出；新诊断设计仍待确认。
+
+精确触顶原因漏记已本地修复，Gateway链上只在decoded length且累计恰好达cap时标记，正常stop不变。组合118测试通过，最后预算22通过；待push后新固定checkout/Linux回归及真实验证，不覆盖4232旧run。
+
+## 预算修复Linux部署与GPU复验r2
+
+固定5e6b326已Git部署/workspace/rebuild/uni-agent-core-5e6b326，独立配对VERL fefb080+preserve-finish-reason-v1哈希验证。复用原venv，Linux预算22项通过（35.30秒，CUDA禁用）。新core-budget-val-r2准备/root/runs/core-budget-val-r2-data/manifest.json，日志/root/runs/core-budget-val-r2-launch.log；外层PID79055已发起，继续先查存活。相同WS06公开任务、基础模型、val模式；尚待GPU精确触顶reason和正常短路径验收。原4232-r1证据不改写。新reader诊断待明确确认。
+
+WS06正式消费审计已补齐：passed=false、run_completed=false、0组0条，SHA256 16a68fdf0f65e2e15558050097fd00bcce95036102a41c76b0eedf7d6f427d6c，本地core-r4-reload-ws06-consumption.json。G5仅按逐题reload结果和母身份核验要求完成，P1有效更新仍失败。预算r2 PID79055实查06:57存活，模型已加载；正常路径core-budget-normal-r1-data/manifest.json已准备，尚未启动，不与r2重叠。
+
+预算r2已终态740.018秒exit1：实际生成8192、mask0 6014、prompt1495，NPZ hash/有限logprob通过，materialization_reason=max_generated_tokens。真实精确触顶修复验证通过，writer未完成/B未执行，原拒绝保留。证据/workspace/reports/core-budget-val-r2及core-budget-val-r2-result.md/json。下一条normal-r1已启动外层83576，root仍5e6b326，WS01公开题val，原清单/root/runs/core-budget-normal-r1-data/manifest.json；先实查，不重复启动。
+
+预算r2正式after_run版本/输入校验通过，报告SHA04258117d4f4a3e8f21b2de88ebef2decca646d090b337c7b45b5fc6db429018。独立只读审查已澄清reader诊断为提示修订包，16A最多128B（每题1A、每提示4B），任务聚类、可信失败保留、固定分母与中性分支路径；仍待用户批准，未实现/启动。
+
+系统总方案uni-agent-system-plan-v3.html首屏已同步P1→P2→P3与真实零梯度/reload/预算结果，并链接证据。27个本地链接/锚点检查通过，三尺寸截图已保存system-plan-v3-status-*.png与visual-check.json；这是文档视觉验证，不是训练E2E完成。normal-r1 PID83576最近实查6:50存活，vLLM worker初始化中。
