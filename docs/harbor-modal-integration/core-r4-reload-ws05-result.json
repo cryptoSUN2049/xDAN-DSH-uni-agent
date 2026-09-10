@@ -1,0 +1,216 @@
+{
+  "run_id": "core-r4-reload-ws05-r1",
+  "exit_code": 0,
+  "elapsed_seconds": 505.013,
+  "evidence": [
+    {
+      "path": "/root/runs/core-r4-reload-ws05-r1/final-audit/after-run-check.json",
+      "persistent_path": "/workspace/reports/core-r4-reload-results/ws05/0-after-run-check.json",
+      "sha256": "76eea863e3ce32dea01d56877bb37649c647f76d0c48a6ee622b9f0ef196da15",
+      "content": {
+        "schema": "dsh.reload-after-run-check.v1",
+        "checked_utc": "2026-09-10T08:09:38.574384+00:00",
+        "passed": true,
+        "manifest_path": "/root/runs/core-r4-reload-ws05-r1-data/manifest.json",
+        "manifest_sha256": "sha256:7dac66730cf708e1cb23eb3c343c09684f04ffeac019f3db93d8fb3d20d15f2d",
+        "checkpoint_origin": {
+          "schema": "dsh.memory-checkpoint-origin.v1",
+          "course_id": "work-state-memory-core-v1",
+          "mother_run": "/root/runs/core-train-r4",
+          "mother_source_head": "511bd71792c7a26af83cb0fe6362cd0f7d5aba96",
+          "verl_effective_source": {
+            "schema": "dsh.verl-source-overlay.v1",
+            "base_revision": "fefb080262e1c015a0ea05f958822a6a512dc795",
+            "overlay_id": "preserve-finish-reason-v1",
+            "state": "patched",
+            "patch_sha256": "sha256:2cb5eef7dbe70abc553fa002c3d608e6a93954afcdbe3c8e319d5ad1581df436",
+            "manifest_sha256": "sha256:15ecee86c9b4a290ff3a6d62de2c7da5cee995037f45c1f68aeab74deaf81fbd",
+            "files": {
+              "verl/workers/rollout/vllm_rollout/vllm_async_server.py": "sha256:2a4452e0c5123c8f5ed62961d048cef97c3f1f5234a8be573f2837f4e01e1d75"
+            }
+          },
+          "checkpoint_path": "/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_16",
+          "step": 16,
+          "evidence": {
+            "/root/runs/core-train-r4/run-manifest.json": "sha256:1d301a84283fa428dc3d62bf1e693414d00255aaa580e484dd59e40c8d27e0f5",
+            "/root/runs/core-train-r4/memory-launch-plan.json": "sha256:edca5f7234ac330c5c12d73c12b340de2f2832d95e4f793f8fda838d576bd8d3",
+            "/root/runs/core-train-r4-data/manifest.json": "sha256:edca5f7234ac330c5c12d73c12b340de2f2832d95e4f793f8fda838d576bd8d3"
+          },
+          "files": {
+            "actor/extra_state_world_size_1_rank_0.pt": {
+              "sha256": "sha256:e15c817d96e1ecbbd48cd6c9048dbb9e2ce91f1c95cc3eefe1a85cd057f57cd9",
+              "size": 15141
+            },
+            "actor/fsdp_config.json": {
+              "sha256": "sha256:7315a2057e6b04e0b2e7d6ee8ad070eafd481f3e1029fb9c75c97723b6f98f36",
+              "size": 46
+            },
+            "actor/huggingface/chat_template.jinja": {
+              "sha256": "sha256:a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+              "size": 4168
+            },
+            "actor/huggingface/config.json": {
+              "sha256": "sha256:17608177d0d110e93b4bca08684cc56c1219b317e24cdaa2b83e216721fc18b5",
+              "size": 1625
+            },
+            "actor/huggingface/generation_config.json": {
+              "sha256": "sha256:6b08ea8d092c7dd1a9de07d899271ba71ab2fe74375900c7a6400356e88752b2",
+              "size": 213
+            },
+            "actor/huggingface/tokenizer.json": {
+              "sha256": "sha256:be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+              "size": 11422650
+            },
+            "actor/huggingface/tokenizer_config.json": {
+              "sha256": "sha256:d9bf1d78a80bad5eb65b83c2608910e3be00a9d3250c8153a5a393ad1257e1d6",
+              "size": 664
+            },
+            "actor/lora_train_meta.json": {
+              "sha256": "sha256:79e829adbcada25b80ae32ba7ab26a07ece2cb6ae168855fab519585a123e6e8",
+              "size": 67
+            },
+            "actor/model_world_size_1_rank_0.pt": {
+              "sha256": "sha256:20d8bcd59b631cd1de0e5179f978eef9eae97d23175811eb343c4eecdd074f19",
+              "size": 8889735011
+            },
+            "actor/optim_world_size_1_rank_0.pt": {
+              "sha256": "sha256:d34aebaa558ab06bd9de989c6a75a4be4a5ff6ad207b900d739307f8e3591c81",
+              "size": 132552363
+            },
+            "data.pt": {
+              "sha256": "sha256:e95e6b0d6a05fb6996c19425e75ae772d8093a79589775b249ea8db53b4bd017",
+              "size": 1499
+            }
+          },
+          "identity": "sha256:59e06b5d333cecb528e8171f44ccb074ef376b362f5c4ecc7fee877c55b0529b"
+        }
+      }
+    },
+    {
+      "path": "/root/runs/core-r4-reload-ws05-r1/final-audit/consumption.json",
+      "persistent_path": "/workspace/reports/core-r4-reload-results/ws05/1-consumption.json",
+      "sha256": "2a1a9e9117c32ba0aa54dd8e2524bacfb9db67914969e62887e02e84e1348eba",
+      "content": {
+        "schema": "dsh.memory-training-consumption-audit.v1",
+        "passed": true,
+        "consumption_verified": true,
+        "run_completed": true,
+        "run_id": "core-r4-reload-ws05-r1",
+        "run_manifest_sha256": "sha256:4775e3e124d8258cbd6429fa6d1868fe137076d023b41b5591d46e33f13ed4af",
+        "inputs": [
+          {
+            "path": "/root/runs/core-r4-reload-ws05-r1/validation/16.jsonl",
+            "sha256": "sha256:c8c1975868e6bcfb48f4f8c3a1fdfe73869287835f2ed8faf600ad963f0c0536"
+          }
+        ],
+        "groups": [
+          {
+            "path": "/root/runs/core-r4-reload-ws05-r1/chains/groups/81d9ef5e10a94ee49acbb22ac6ab10c5/crosswalk.json",
+            "status": "consumed",
+            "crosswalk_consumption_verified": false,
+            "submission_verified": true,
+            "consumption_verified": true,
+            "reasons": [],
+            "missing_keys": [],
+            "expected_policy_version": 16,
+            "partition": "val",
+            "global_steps": 16,
+            "uid": "96aede8f-05ae-494d-87b1-614906bdade5",
+            "crosswalk_sha256": "sha256:495c2e486b7ebd3077b19c1b8f8a58c3f444a8aaa8eff34c363dd8d89a1ce36f",
+            "stage_evidence_verified": true,
+            "dump_score_semantics": "session-final",
+            "duplicate_keys": [],
+            "score_mismatch_keys": []
+          }
+        ],
+        "errors": [],
+        "unknown_or_unadmitted_consumption": [],
+        "duplicate_consumption": [],
+        "overlapping_crosswalk_keys": [],
+        "summary": {
+          "groups": 1,
+          "consumed_groups": 1,
+          "consumed_rows": 2,
+          "unique_consumed_rows": 2
+        },
+        "limitations": [
+          "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+          "Crosswalk and submission records alone never establish trainer consumption."
+        ]
+      }
+    },
+    {
+      "path": "/root/runs/core-r4-reload-ws05-r1/chains/memory-53cb3f0bf0714c15b68a6f89b129924a/writer/run/results/0d4a6b99300286e79036837a/verifier-receipt.json",
+      "persistent_path": "/workspace/reports/core-r4-reload-results/ws05/2-verifier-receipt.json",
+      "sha256": "a4b99a460a2606a0ce2d4ea1c290a7f138679296cccdddf46d7abddb6430b504",
+      "content": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:09cf2d13373d3a8bcb9ace272dd340bb54f0a85413fe6e7ad979904e5a77e734",
+        "dsh_session_id": "dsh-memory-A-f4d226f45c684e4982de1a62c8ffbe18",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:486e62b4c964626908121ee047808bc3c41cdc4ac7c7d096827eb110d6ffce34",
+          "sha256:bc781fe0ce4140cb5b8d3ad5fb256b4fecae453f56c32fabded8a87e3d630245",
+          "sha256:9470cd359f05f712ebdc07daafdb87a346ebd18e2e3b03419e8854b4e0b6c449"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-10T08:02:39.903981+00:00",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:c90cfdd7a0086096c164f27c30cb383fb78e136c9bf01efd34f82fe2864a6442",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/work-state/memory-53cb3f0bf0714c15b68a6f89b129924a/writer",
+        "task_version": "1",
+        "trace_sha256": "sha256:bc781fe0ce4140cb5b8d3ad5fb256b4fecae453f56c32fabded8a87e3d630245",
+        "verifier": {
+          "code_digest": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+          "id": "dsh-work-state-training-stage",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "path": "/root/runs/core-r4-reload-ws05-r1/chains/memory-53cb3f0bf0714c15b68a6f89b129924a/reader/run/results/d99994393c2cbaece4ace0f5/verifier-receipt.json",
+      "persistent_path": "/workspace/reports/core-r4-reload-results/ws05/3-verifier-receipt.json",
+      "sha256": "535b042d6c44c65fa29a87874db32e4b85a2de6faef67e7a6c47cf528743bdf9",
+      "content": {
+        "accuracy": 0,
+        "artifact_sha256": "sha256:12facb9e3d25db08f95c0e7140629332cd93cbbc9c01ac54f6d71ebb3c1e2052",
+        "dsh_session_id": "dsh-memory-B-346b6014ed054853988e1db81806a54e",
+        "eligible": true,
+        "environment_digest": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+        "evidence": [
+          "sha256:67a56437cac4cd024d296e55ffeb1563bbb6221897d09e1d2b3d0a06485ce38d",
+          "sha256:4cc26fa606715b8b097fa2aa146735b935097053f79f6b0bf637b542f244f6a7",
+          "sha256:9470cd359f05f712ebdc07daafdb87a346ebd18e2e3b03419e8854b4e0b6c449",
+          "sha256:c90cfdd7a0086096c164f27c30cb383fb78e136c9bf01efd34f82fe2864a6442",
+          "sha256:6836c7b350bc09c2c1de18769b28ac055b57d80cfae75f186513a99adb0948e1",
+          "sha256:bb8ade6edbaac079f6eecd5b5820ff7bb3577f7bd37a24857fca24435d25c6cd"
+        ],
+        "finished": true,
+        "fresh": true,
+        "issued_at": "2026-09-10T08:02:44.609218+00:00",
+        "issuer": {
+          "id": "uni-agent-dsh",
+          "kind": "trusted-verifier"
+        },
+        "receipt_id": "sha256:9a11b3a2d945b36446bcadb6f0122bca8fdfc200671a9ef4b51efba3d056b919",
+        "reward": 0,
+        "schema": "dsh.verifier-receipt.v1",
+        "task_id": "dsh/work-state/memory-53cb3f0bf0714c15b68a6f89b129924a/reader",
+        "task_version": "1",
+        "trace_sha256": "sha256:4cc26fa606715b8b097fa2aa146735b935097053f79f6b0bf637b542f244f6a7",
+        "verifier": {
+          "code_digest": "sha256:6c793d93cfb61648529fe87ab6f13097ac1dbfe1b0d240868ad44c1bf1873b8c",
+          "id": "dsh-work-state-training-stage",
+          "version": "1"
+        }
+      }
+    }
+  ]
+}
