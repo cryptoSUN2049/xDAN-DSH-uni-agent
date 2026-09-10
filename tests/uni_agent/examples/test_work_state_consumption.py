@@ -16,7 +16,7 @@ wired = native_wired
 async def prepare(wired, tmp_path, monkeypatch, partition="val"):
     # Existing CPU integration drives real Task/verifier/StageSpec/freeze/TQ;
     # only the model transport and subsequent trainer JSONL are simulated.
-    await build_zero_chain(wired, tmp_path, monkeypatch, partition)
+    await build_zero_chain(wired, tmp_path, monkeypatch, partition, budget=8192)
     memory_root = wired[0]._memory_operator.root
     crosswalk = next(memory_root.glob("groups/*/crosswalk.json"))
     run_root, _, _ = consumed(tmp_path, crosswalk)

@@ -261,3 +261,94 @@ def test_stage_rejects_unknown_generation(inputs, generation):
     operator = replace(operator, task_manifest_sha256=sha(operator.task_manifest.read_bytes()))
     with pytest.raises(ValueError, match="generation"):
         _task(operator, context, sample)
+
+
+@pytest.mark.parametrize("empty", [False, True])
+def test_reader_branches_same_memory_isolated_permissions_and_revised_prompt(inputs, empty):
+    from examples.dsh.capabilities.work_state.stage import freeze_writer_memory, prepare_reader_branch
+
+    writer = prep(inputs)
+    frozen = freeze_writer_memory(writer, execute_synthetic_stage(writer, bad_memory=empty))
+    branches = [
+        prepare_reader_branch(writer, frozen, reader_gateway_session_id=f"GB{i}", branch_id=f"b{i}", prompt_variant=v)
+        for i, v in enumerate(("original", "revised"))
+    ]
+    fixtures = [loads(b.fixture_path.read_bytes()) for b in branches]
+    assert branches[0].root != branches[1].root != writer.root
+    assert fixtures[0]["writer_binding"] == fixtures[1]["writer_binding"]
+    for b, f in zip(branches, fixtures, strict=True):
+        assert f["diagnostic_branch"]["branch_id"] == b.root.name
+        assert not set(f["write_files"]) & set(f["read_files"])
+        assert all(Path(p).is_relative_to(b.root) for p in f["write_files"] + list(f["read_files"]))
+        assert "writer-data" not in str(b.raw_prompt)
+        assert "expected_config" not in str(b.raw_prompt)
+        patch = loads((b.task_config_path.parent / "closed.patch.json").read_bytes())
+        policy = patch[2]["insert"][0]["config"]
+        assert set(policy["writeFiles"]) == set(f["write_files"])
+        assert all(Path(p).is_relative_to(b.root) for p in policy["readFiles"])
+        assert not any("frozen" in p or "fixture.json" in p for p in policy["readFiles"])
+        from examples.dsh.capabilities.work_state.stage import validate_stage_execution
+
+        assert validate_stage_execution(b, execute_synthetic_stage(b))[2]["reward"] == 1
+    original, revised = [b.raw_prompt[0]["content"] for b in branches]
+    assert "may be missing" in original
+    assert "organize only useful recovery state" in original
+    assert "organize only useful recovery state" not in revised
+    assert "recovery executor" in revised
+    assert ("index.md exists" in revised) is (not empty)
+    assert ("index.md is absent" in revised) is empty
+    for p in Path(fixtures[0]["memory_root"]).rglob("*"):
+        if p.is_file():
+            other = Path(fixtures[1]["memory_root"]) / p.relative_to(fixtures[0]["memory_root"])
+            assert p.read_bytes() == other.read_bytes()
+    with pytest.raises((ValueError, FileExistsError)):
+        prepare_reader_branch(writer, frozen, reader_gateway_session_id="GC", branch_id="b0")
+    with pytest.raises(ValueError):
+        prepare_reader_branch(writer, frozen, reader_gateway_session_id="GB0", branch_id="b2")
+
+
+@pytest.mark.parametrize("kind", ["memory", "packed", "frozen", "receipt", "execution", "traversal", "variant"])
+def test_reader_branch_revalidates_writer_and_freeze_before_creation(inputs, kind):
+    from examples.dsh.capabilities.work_state.stage import freeze_writer_memory, prepare_reader_branch
+
+    writer = prep(inputs)
+    execution = execute_synthetic_stage(writer)
+    frozen = freeze_writer_memory(writer, execution)
+    args = dict(reader_gateway_session_id="GB", branch_id="b0")
+    if kind == "memory":
+        (writer.root / "writer-data/memory/index.md").write_text("changed")
+    elif kind == "packed":
+        (writer.root / "packed-memory.bin").write_bytes(b"changed")
+    elif kind == "frozen":
+        (writer.root / "frozen/memory.bin").write_bytes(b"changed")
+    elif kind == "receipt":
+        next(writer.result_root.rglob("verifier-receipt.json")).write_text("{}")
+    elif kind == "execution":
+        execution.context["gateway_session_id"] = "fake"
+    elif kind == "traversal":
+        args["branch_id"] = "../outside"
+    elif kind == "variant":
+        args["prompt_variant"] = "truth"
+    with pytest.raises((ValueError, KeyError)):
+        prepare_reader_branch(writer, frozen, **args)
+    assert not (writer.root / "reader-branches/b0").exists()
+
+
+def test_original_branch_prompt_matches_legacy_after_path_substitution(inputs):
+    from examples.dsh.capabilities.work_state.stage import (
+        freeze_and_prepare_reader,
+        freeze_writer_memory,
+        prepare_reader_branch,
+    )
+
+    writer = prep(inputs)
+    frozen = freeze_writer_memory(writer, execute_synthetic_stage(writer))
+    branch = prepare_reader_branch(writer, frozen, reader_gateway_session_id="GB", branch_id="b000")
+    operator, context, sample = inputs
+    baseline = prepare_writer_stage(
+        operator, context, chain_id="baseline", gateway_session_id="GA2", sample_fields=sample
+    )
+    legacy = freeze_and_prepare_reader(baseline, execute_synthetic_stage(baseline), reader_gateway_session_id="GB2")
+    assert branch.raw_prompt[0]["content"].replace(str(branch.root), "ROOT") == legacy.raw_prompt[0]["content"].replace(
+        str(legacy.root), "ROOT"
+    )

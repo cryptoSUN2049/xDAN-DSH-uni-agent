@@ -1,6 +1,7 @@
 """Pinned work-state A/B preparation. DSH remains the only model execution loop."""
 
 import hashlib
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -15,7 +16,7 @@ from examples.dsh.capabilities.work_state.profile import build_work_state_patch
 from examples.dsh.capabilities.work_state.tasks import make_task
 from examples.dsh.capabilities.work_state.verifier import score
 from uni_agent.tasks.base import build_reward_info
-from uni_agent.tasks.dsh.memory_artifacts import freeze_memory_artifact
+from uni_agent.tasks.dsh.memory_artifacts import FrozenMemoryArtifact, freeze_memory_artifact, load_memory_artifact
 from uni_agent.tasks.dsh.trajectory_audit import validate_trajectories
 
 
@@ -292,11 +293,19 @@ def validate_stage_execution(spec, execution):
     return receipt, envelope, scored, fixture
 
 
-def freeze_and_prepare_reader(writer_spec, execution, *, reader_gateway_session_id):
+@dataclass(frozen=True)
+class FrozenWriterMemory:
+    """Controller evidence pinned to one validated writer and one byte snapshot."""
+
+    execution: object
+    artifact: FrozenMemoryArtifact
+    evidence_sha256: str
+
+
+def freeze_writer_memory(writer_spec, execution) -> FrozenWriterMemory:
     receipt, envelope, _, fixture = validate_stage_execution(writer_spec, execution)
-    _name(reader_gateway_session_id)
-    if writer_spec.role != "writer" or reader_gateway_session_id == writer_spec.gateway_session_id:
-        raise ValueError("Reader must use a new independent session")
+    if writer_spec.role != "writer":
+        raise ValueError("Only a validated writer can publish memory")
     task = fixture["task"]
     root = writer_spec.root
     packed = pack_bundle(Path(fixture["memory_root"]), task["memory_paths"], fixture["max_bytes"])
@@ -312,6 +321,103 @@ def freeze_and_prepare_reader(writer_spec, execution, *, reader_gateway_session_
         max_bytes=fixture["max_bytes"] * 2 + 65536,
         output_dir=root / "frozen",
     )
+    return FrozenWriterMemory(execution, frozen, sha(canonical([receipt, envelope, fixture])))
+
+
+def _validated_frozen(writer_spec, frozen, reader_gateway_session_id):
+    _name(reader_gateway_session_id)
+    if writer_spec.role != "writer" or reader_gateway_session_id == writer_spec.gateway_session_id:
+        raise ValueError("Reader must use a new independent session")
+    if not isinstance(frozen, FrozenWriterMemory):
+        raise ValueError("Requires validated frozen writer evidence")
+    receipt, envelope, _, fixture = validate_stage_execution(writer_spec, frozen.execution)
+    if sha(canonical([receipt, envelope, fixture])) != frozen.evidence_sha256:
+        raise ValueError("Frozen writer evidence changed")
+    loaded = load_memory_artifact(
+        directory=writer_spec.root / "frozen",
+        expected_manifest_sha256=frozen.artifact.manifest_sha256,
+        chain_id=writer_spec.chain_id,
+        writer_session_id=receipt["dsh_session_id"],
+        source_version=fixture["source_version"],
+        reader_session_id="dsh-" + reader_gateway_session_id,
+        max_bytes=fixture["max_bytes"] * 2 + 65536,
+    )
+    current = pack_bundle(Path(fixture["memory_root"]), fixture["task"]["memory_paths"], fixture["max_bytes"])
+    if (
+        current != loaded.content
+        or read_regular(writer_spec.root / "packed-memory.bin") != loaded.content
+        or loaded.content_sha256 != frozen.artifact.content_sha256
+        or len(loaded.content) != frozen.artifact.size_bytes
+    ):
+        raise ValueError("Writer or frozen memory changed")
+    return receipt, envelope, fixture, loaded.content
+
+
+def freeze_and_prepare_reader(writer_spec, execution, *, reader_gateway_session_id):
+    # Preserve the training API's preflight, default paths and original prompt.
+    _name(reader_gateway_session_id)
+    if writer_spec.role != "writer" or reader_gateway_session_id == writer_spec.gateway_session_id:
+        raise ValueError("Reader must use a new independent session")
+    frozen = freeze_writer_memory(writer_spec, execution)
+    receipt, envelope, fixture, packed = _validated_frozen(writer_spec, frozen, reader_gateway_session_id)
+    return _prepare_reader(
+        writer_spec,
+        frozen.artifact,
+        receipt,
+        envelope,
+        fixture,
+        packed,
+        reader_gateway_session_id=reader_gateway_session_id,
+        root=writer_spec.root,
+    )
+
+
+def prepare_reader_branch(
+    writer_spec, frozen, *, reader_gateway_session_id, branch_id, prompt_variant="original"
+) -> StageSpec:
+    """Prepare an independent diagnostic reader, never a replacement training B."""
+    if not isinstance(branch_id, str) or re.fullmatch(r"b[0-9]{1,16}", branch_id) is None:
+        raise ValueError("Branch identity must be neutral: b followed by digits")
+    if prompt_variant not in ("original", "revised"):
+        raise ValueError("Unknown reader prompt variant")
+    receipt, envelope, fixture, packed = _validated_frozen(writer_spec, frozen, reader_gateway_session_id)
+    parent = writer_spec.root / "reader-branches"
+    if not parent.exists():
+        new_dir(parent)
+    if parent.is_symlink() or not parent.is_dir():
+        raise ValueError("Invalid reader branch directory")
+    # A private exclusive reservation also forbids fresh branches reusing a session.
+    session = writer_spec.root / ("reader-session-" + hashlib.sha256(reader_gateway_session_id.encode()).hexdigest())
+    if (parent / branch_id).exists() or session.exists():
+        raise ValueError("Reader branch or session already exists")
+    write_new(session, canonical(dict(branch_id=branch_id, gateway_session_id=reader_gateway_session_id)))
+    root = new_dir(parent / branch_id)
+    return _prepare_reader(
+        writer_spec,
+        frozen.artifact,
+        receipt,
+        envelope,
+        fixture,
+        packed,
+        reader_gateway_session_id=reader_gateway_session_id,
+        root=root,
+        diagnostic_branch=dict(branch_id=branch_id, prompt_variant=prompt_variant),
+    )
+
+
+def _prepare_reader(
+    writer_spec,
+    frozen,
+    receipt,
+    envelope,
+    fixture,
+    packed,
+    *,
+    reader_gateway_session_id,
+    root,
+    diagnostic_branch=None,
+):
+    task = fixture["task"]
     data = new_dir(root / "reader-data")
     unpacked = data / "memory"
     inventory = unpack_bundle(packed, unpacked, task["memory_paths"], max_bytes=fixture["max_bytes"])
@@ -333,7 +439,7 @@ def freeze_and_prepare_reader(writer_spec, execution, *, reader_gateway_session_
         max_bytes=fixture["max_bytes"],
         bundle_paths=task["memory_paths"],
         unpacked_root=str(unpacked),
-        frozen_dir=str(root / "frozen"),
+        frozen_dir=str(writer_spec.root / "frozen"),
         writer_binding=dict(
             dsh_session_id=receipt["dsh_session_id"],
             gateway_session_id=envelope["dsh"]["gateway_session_id"],
@@ -343,6 +449,8 @@ def freeze_and_prepare_reader(writer_spec, execution, *, reader_gateway_session_
             content_sha256=frozen.content_sha256,
         ),
     )
+    if diagnostic_branch is not None:
+        reader["diagnostic_branch"] = diagnostic_branch
     sources = [str(data / p) for p in task["reader_files"]]
     prompt = (
         task["reader_goal"]
@@ -358,6 +466,23 @@ def freeze_and_prepare_reader(writer_spec, execution, *, reader_gateway_session_
         + "\nThese output files are initially absent. Use command=create and put the business JSON text "
         "in file_text; the surrounding tool-call arguments are not part of that file content."
     )
+    if diagnostic_branch is not None and diagnostic_branch["prompt_variant"] == "revised":
+        old = "Memory artifacts are optional; organize only useful recovery state. "
+        if prompt.count(old) != 1:
+            raise ValueError("Reader role revision requires the pinned common prompt")
+        prompt = prompt.replace(
+            old,
+            "You are the recovery executor in session B. Execute the requested business task; "
+            "do not create, organize, or modify memory. ",
+            1,
+        )
+        status = (
+            "index.md exists and is readable. Read this index first, then read its referenced memory "
+            "files as needed for the task; use public sources alongside that evidence."
+            if "index.md" in inventory["files"]
+            else "index.md is absent. Use available public sources; do not invent missing memory contents."
+        )
+        prompt = prompt.replace(" (may be missing; do not invent contents).", " (" + status + ")", 1)
     return _prepare(
         writer_spec.operator, writer_spec.context, writer_spec.chain_id, reader_gateway_session_id, root, reader, prompt
     )

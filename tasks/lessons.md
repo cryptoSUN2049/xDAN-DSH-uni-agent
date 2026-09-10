@@ -232,3 +232,9 @@
 
 - `uni_agent/agents/dsh/runner.py`在harness.run返回后才写`traces/*/session.jsonl`。该文件不更新可能只是上一条已结束stage，不能判定当前长生成停滞。
 - 活跃监控使用`chains/memory-*/*/run/homes/*/sessions/*/*/session.v2.jsonl`，结合runtime PID/父进程与当前input路径；导出trace用于终态审计。Session v2原件与训练导出消费格式是两个层次。
+
+### 2026-09-10 诊断执行边界
+
+- 调整共享测试助手参数（如budget）后，搜索所有直接调用并执行消费审计回归；不能只验证定义所在文件。
+- runtime声明哈希必须与实际SDK resolve结果绑定；inline父环境才会进入DSH子进程，给vLLM设置变量并不能控制DSH。PYTHONPATH必须是绝对路径，避免branch cwd改变导入位置。
+- view调用次数是尝试，不是成功取回或使用事实。报告字段必须准确命名，避免把失败读取算作记忆能力证据。

@@ -6,7 +6,7 @@
 - P1→P2→P3保持：核心记忆原生RL有效更新→独立能力收益→真实上下文/跨场景。P1未完成：core-train-r4 16步真实消费，但任务优势/梯度全零、LoRA B全零。
 - 四族母step16 reload逐题审计已完成：三族执行成功reward0，WS06失败无B/消费；不称四族业务成功。
 - 预算修复5e6b326真实触顶与正常路径均已验：触顶8192原因正确；正常A1037/B302，1组2条消费、exit0，reward0。
-- 新reader配对诊断设计待批准，未实施。下一会话不要再重复旧全零训练。先看关机恢复说明与goal。
+- 新reader配对诊断已获明确批准；CLI、隔离分支和CPU测试已实现，GPU未部署/未执行。下一会话不要再重复旧全零训练。先看关机恢复说明与goal。
 
 ## 2. 本轮交付物
 
@@ -14,7 +14,7 @@
 - docs/harbor-modal-integration/core-budget-val-r2-result.md/json：真实触顶修复验收。
 - docs/harbor-modal-integration/gpu-shutdown-checkpoint-20260910.md：归档哈希、版本与逐步恢复入口。
 - docs/harbor-modal-integration/uni-agent-system-plan-v3.html：当前P1→P2→P3与证据状态；27链接/锚点及三尺寸视觉检查通过。
-- docs/harbor-modal-integration/core-reader-role-diagnostic-design.md：待批准的提示包配对诊断，最多16A/128B，不是训练n4。
+- docs/harbor-modal-integration/core-reader-role-diagnostic-design.md：已批准的提示包配对诊断，最多16A/128B，不是训练n4。
 - 原逐时记录保留handoff-history-20260910-pre-shutdown.md。文件行数见本轮Git diff；不将历史状态作为实时进度。
 
 ## 3. 设计约束
@@ -35,7 +35,8 @@ DSH唯一Agent Loop；Gateway真实token/mask/logprob；A/B独立session与可�
 - [x] 固定预算修复两侧真实GPU验证、正常链消费与after-run校验。
 - [x] 三预算run/准备/报告共7025文件归档至云盘并逐hash验证。
 - [ ] 新GPU接回同一云盘，检查宿主与旧venv/解释器，重新记录GPU资源身份。
-- [ ] 获明确批准后实施reader配对诊断；当前设计非自动批准。
+- [x] 明确批准后实施reader配对诊断、CLI、CPU测试及操作指南。
+- [ ] GPU恢复后先1题canary，再固定16题配对诊断；不将CPU模拟证据当真实学生。
 - [ ] 定位工具/写入/读取瓶颈，获得有区分度的真实任务信号后再RL。
 - [ ] 新版核心课程有效更新、同harness前后对照、记忆消融与泛化。Goal未完成。
 
@@ -53,10 +54,33 @@ venv/workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4
 2. 核git status/branch/HEAD，避免主目录或其他会话文件改动；不要复活历史PID。
 3. 用户提供新SSH后检查/workspace卷及归档hash、模型、venv、checkpoint；新GPU/MIG资源重新发现。
 4. 按gpu-reconnect-runbook与pod-recovery-design恢复宿主，复用持久环境。新实验Git固定代码、新prepare/check/launch，凭据不进Git。
-5. 下一步依据reader待批准设计和memory-rl-evidence-and-next-experiment.md推进，先产生可归因信号，不盲目扩训练步数。
+5. 下一步依据reader已批准设计与core-reader-role-diagnostic-runbook.md和memory-rl-evidence-and-next-experiment.md推进，先产生可归因信号，不盲目扩训练步数。
 
 本轮关键新增文件行数：docs/harbor-modal-integration/core-budget-normal-r1-result.md 11行；docs/harbor-modal-integration/core-budget-normal-r1-result.json 90行；docs/harbor-modal-integration/gpu-shutdown-checkpoint-20260910.md 23行。
 
 关机附加保护：三份证据tar已本机备份至outputs/gpu-shutdown-20260910，逐SHA核验通过，共51,176,549 bytes；Git忽略，hash清单在docs/harbor-modal-integration/gpu-shutdown-local-backup-20260910.json。checkpoint仍仅云盘，不误称模型已本地备份。
 
 关机后本机离线分析：core-budget-normal-r1-failure-analysis.md/json证明该WS01的A index与权威workflow逐字段相同；B只view notice后create两文件，0次memory读取，输出100/1与[config.json]，真实目标2869/8。单题支持优先诊断检索，不证明提示因果或学习收益。未调用GPU。
+
+本次代码节点：新增diagnose_core_reader.py（prepare/check/run）、reader_diagnostic_evidence.py（可信负结果）、reader_diagnostic_runtime.py（自有vLLM/Gateway）；stage.py增加冻结一次/独立B分支，原训练入口保留。新增4个诊断测试文件，旧stage及consumption回归同步更新。启动门验证实际runtime/import、绝对PYTHONPATH、模型清单与manifest不漂移。reader运行仅诊断，不消费TQ。新代码尚未部署GPU；Git提交以本页所在提交为准。
+
+本节点CPU验收：898 passed；诊断三个模块与stage.py合计行覆盖率90%。结果清单：docs/harbor-modal-integration/core-reader-role-diagnostic-cpu-result.json。旧consumption测试漏传新增budget参数已修复。CLI启动控制使用mock backend测试，CPU真实verifier工件使用合成模型trace；没有新的真实GPU证据。
+
+本节点主要文件行数（含新增/修改）：
+- examples/dsh/capabilities/diagnose_core_reader.py：419行。
+- examples/dsh/capabilities/reader_diagnostic_evidence.py：237行。
+- examples/dsh/capabilities/reader_diagnostic_runtime.py：201行。
+- examples/dsh/capabilities/work_state/stage.py：488行。
+- tests/uni_agent/examples/test_diagnose_core_reader.py：280行。
+- tests/uni_agent/examples/test_reader_diagnostic_evidence.py：179行。
+- tests/uni_agent/examples/test_reader_diagnostic_runtime.py：226行。
+- tests/uni_agent/examples/test_reader_diagnostic_launch.py：184行。
+- tests/uni_agent/examples/test_work_state_stage.py：354行。
+- tests/uni_agent/examples/test_work_state_consumption.py：68行。
+- docs/harbor-modal-integration/core-reader-role-diagnostic-runbook.md：80行。
+- docs/harbor-modal-integration/core-reader-role-diagnostic-design.md：51行。
+- docs/harbor-modal-integration/core-reader-role-diagnostic-cpu-result.json：40行。
+- docs/harbor-modal-integration/uni-agent-system-plan-v3.html：4行。
+- tasks/harbor-modal-integration/active-engineering-goal.md：179行。
+- tasks/lessons.md：240行。
+- tasks/todo.md：590行。

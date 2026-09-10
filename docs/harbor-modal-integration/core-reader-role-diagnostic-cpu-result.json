@@ -1,0 +1,40 @@
+{
+  "date": "2026-09-10",
+  "scope": "CPU diagnostic implementation; no GPU model execution",
+  "pytest_passed": 898,
+  "pytest_failed": 0,
+  "coverage": {
+    "kind": "line",
+    "combined_percent": 90,
+    "diagnose_core_reader": 90,
+    "reader_diagnostic_evidence": 90,
+    "reader_diagnostic_runtime": 87,
+    "work_state_stage": 90
+  },
+  "gpu_canary_executed": false,
+  "training_consumed": false,
+  "learning_verified": false,
+  "review_fixes": [
+    "actual SDK/runtime and absolute import paths checked before launch",
+    "prepared manifest and model inventory drift rejected",
+    "view counters explicitly attempts, including failures",
+    "legacy consumption helper now passes budget=8192"
+  ],
+  "test_paths": [
+    "tests/uni_agent/examples/test_diagnose_core_reader.py",
+    "tests/uni_agent/examples/test_reader_diagnostic_evidence.py",
+    "tests/uni_agent/examples/test_reader_diagnostic_runtime.py",
+    "tests/uni_agent/examples/test_reader_diagnostic_launch.py",
+    "tests/uni_agent/examples/test_work_state_stage.py",
+    "tests/uni_agent/examples/test_work_state_bundle.py",
+    "tests/uni_agent/examples/test_work_state_verifier.py",
+    "tests/uni_agent/examples/test_core_work_state_tasks.py",
+    "tests/uni_agent/examples/test_work_state_consumption.py",
+    "tests/uni_agent/tasks/test_dsh_trajectory_audit.py",
+    "tests/uni_agent/framework/test_gateway_stage_execution.py",
+    "tests/uni_agent/framework/test_work_state_framework.py",
+    "tests/uni_agent/framework/test_work_state_verl_credit.py",
+    "tests/uni_agent/gateway/test_session_generation_budget.py"
+  ],
+  "warning": "One upstream Ray deprecated import warning; no test failure."
+}

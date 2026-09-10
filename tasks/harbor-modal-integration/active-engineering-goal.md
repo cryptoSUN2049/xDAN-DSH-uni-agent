@@ -10,7 +10,7 @@
 
 ### P1：当前必须先完成——新版课程原生RL闭环
 
-沿用G0—G6。520训练/160公开开发资产已落盘。固定511源码的core-train-r4已完成16步，16组/64条A-B链/128唯一轨迹实际消费审计通过；全程优势与梯度为0，最终LoRA B全0，有效更新门未通过。母step16独立reload：WS01/03/05正式审计通过、业务reward0；WS06 writer达到max-tokens，B未执行、该val退出1，失败证据已保存。预算r1已证实真实生成上限8192，发现精确触顶原因漏记；修复5e6b326已通过Linux22测试。core-budget-val-r2真实触顶8192及原因字段校验通过，原未完成拒绝保留；正常路径core-budget-normal-r1已exit0，A1037/B302 token、1组2条消费及after_run通过，业务reward0。关机归档7025文件已验证；不启动新GPU任务，reader诊断待批准。初始16步是诊断，不代表全课程已消费或充分训练。下一步验证预算并按公开分层诊断定位工具/写入/检索瓶颈；不盲目追加全零训练，不追认有效学习。
+沿用G0—G6。520训练/160公开开发资产已落盘。固定511源码的core-train-r4已完成16步，16组/64条A-B链/128唯一轨迹实际消费审计通过；全程优势与梯度为0，最终LoRA B全0，有效更新门未通过。母step16独立reload：WS01/03/05正式审计通过、业务reward0；WS06 writer达到max-tokens，B未执行、该val退出1，失败证据已保存。预算r1已证实真实生成上限8192，发现精确触顶原因漏记；修复5e6b326已通过Linux22测试。core-budget-val-r2真实触顶8192及原因字段校验通过，原未完成拒绝保留；正常路径core-budget-normal-r1已exit0，A1037/B302 token、1组2条消费及after_run通过，业务reward0。关机归档7025文件已验证；不启动新GPU任务，reader诊断已获用户明确批准，CLI/CPU实现完成，GPU canary待恢复后执行。初始16步是诊断，不代表全课程已消费或充分训练。下一步按reader操作指南执行公开配对诊断，定位工具/写入/检索瓶颈；不盲目追加全零训练，不追认有效学习。
 
 ### P2：工程通过后——已有能力的独立效果验证
 
@@ -173,3 +173,7 @@ RSI H1 r1：同模型/任务/预算真实执行，2条独立原始审计通过�
 ## 最新能力目标澄清
 
 优先工程续作场景中的专家级记忆/context管理：选择、保存、检索、冲突更新、卸载/压缩及克制停止；参考expert-memory-context-training-plan.md。从已有r4真实事实矩阵定位瓶颈，再定向课程训练，不把配置小题或文件数量当终局。异步实施暂停。当前只读诊断不占GPU，不标记训练增益完成。
+
+## 2026-09-10 已批准 reader 诊断执行节点
+
+用户明确批准后已实施同一真实A产物的原/新reader提示包比较。执行入口 `examples/dsh/capabilities/diagnose_core_reader.py`，操作指南 `docs/harbor-modal-integration/core-reader-role-diagnostic-runbook.md`。该节点不改变P1/P2/P3目标，不提交TQ、不声称参数学习。当前完成CPU工程包；新GPU未接入，本诊断真实执行仍待验收。
