@@ -13,3 +13,7 @@ writer的agent-result和Session v2最后turn/end均明确`max-tokens`。回执fr
 ## 失败后的独立母文件复核
 
 原511 checkout使用既有prepare_memory_training.check(..., after_run=True)在CPU执行，已通过源码/runtime/config与母checkpoint逐文件身份校验。新报告/workspace/reports/core-r4-reload-results/ws06/after-run-source-and-checkpoint-check.json，SHA256 5298387c65361f6c8cce3c5392cccce21702b678fd2dec15355be3e28be90e88。此项补齐失败后母checkpoint未改写证据，不改变writer未完成、无B、无消费的结果。该新增报告不在此前reload tar内，单独保留在云盘。
+
+## 正式消费审计补齐
+
+原审计已生成，原件见 `core-r4-reload-ws06-consumption.json`，SHA256 `16a68fdf0f65e2e15558050097fd00bcce95036102a41c76b0eedf7d6f427d6c`。passed=false、consumption_verified=false、run_completed=false，0组/0条消费；errors为空仅说明未检出消费记录错误，不表示任务完成。与writer未完成、B未执行的原始证据一致。报告单独保存在云盘，未追加入此前归档。

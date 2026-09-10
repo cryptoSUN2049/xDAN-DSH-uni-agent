@@ -1,0 +1,24 @@
+{
+  "schema": "dsh.memory-training-consumption-audit.v1",
+  "passed": false,
+  "consumption_verified": false,
+  "run_completed": false,
+  "run_id": "core-r4-reload-ws06-r1",
+  "run_manifest_sha256": "sha256:ef1afa18ce5d0829a1e937c468d88a3a3f09f13700f0061443857dfffd8dd494",
+  "inputs": [],
+  "groups": [],
+  "errors": [],
+  "unknown_or_unadmitted_consumption": [],
+  "duplicate_consumption": [],
+  "overlapping_crosswalk_keys": [],
+  "summary": {
+    "groups": 0,
+    "consumed_groups": 0,
+    "consumed_rows": 0,
+    "unique_consumed_rows": 0
+  },
+  "limitations": [
+    "Trainer JSONL proves observed TQ batch consumption, not optimizer update or ability gains.",
+    "Crosswalk and submission records alone never establish trainer consumption."
+  ]
+}
