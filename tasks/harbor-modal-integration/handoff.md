@@ -1,26 +1,23 @@
 <!-- 当前恢复目标以active-engineering-goal.md顶部P1→P2→P3为准；立即执行仍为P1的G0—G6。用户已恢复P1→P2→P3 goal，继续推进。 -->
 # Harbor / Modal 工程交接
 
-## 当前推进：core-train-r3 第二层CPU预算修复（2026-09-10）
+## 当前推进：core-train-r4已发起（2026-09-10）
 
-- 当前运行源码 `b4d04d8`，已 push；远程 `/workspace/rebuild/uni-agent-core-b4d04d8`，固定 VERL/DSH/model 版本未变。94项准备器回归与 Ruff 双门通过。
-- SSH `root@216.243.220.120 -p 13918 -i ~/.ssh/id_ed25519`；GPU 为48GB MIG，不是96GB整卡。旧云盘venv已恢复Python3.12.3，CUDA前后向通过；恢复方法见 `docs/harbor-modal-integration/pod-recovery-design.md`。
-- 520训练/160公开开发任务资产已提交；真实Linux DSH canary 8项通过。当前16步仅工程诊断，不代表全部520题已消费。
-- r3外层PID15850、监督启动15980、训练16011；模型actor17897完成398/398权重加载，vLLM Worker19054完成3/3分片加载，正在flashinfer autotuning。尚无首步/有效更新/checkpoint证据。观察到SM12.x能力探测warning但之后仍推进，不能据warning直接判定CUDA故障。
-- 正式日志 `/root/runs/core-train-r3/supervision/train.log`，准备清单 `/root/runs/core-train-r3-data/manifest.json`；checkpoint目标 `/workspace/uni-agent-g1/checkpoint/core-train-r3`。这些PID仅为观察快照，接续时必须检查实际存活。
-- r1因MIG权限查询误判未进入训练，5030662已修复。r2因8个CPU1 TQ placement槽超过Ray total6/available5等待；已仅停止owned PG11802，监督exit -15，非成功。证据 `/workspace/reports/core-train-r2-cpu-admission`。
-- b4d04d8将新core课程TQ存储单元固定2；r3实际已创建两个SimpleStorageUnit，placement pending归零，之前CPU阻塞已解除。
-
-r3已确认首任务CPU等待：Controller1+Storage2+actorPG3占满6CPU，外部runner默认需1CPU。主线程已归档 `/workspace/reports/core-train-r3-cpu-admission` 并向owned PG15980发送SIGTERM；监督已exit -15/700.018s，相关进程清退、GPU128MiB无进程；终态文件已逐字归档，未执行首步。正在修复core storage=1，完整预算留1CPU给串行DSH；将以新r4运行，不复用r3。下列加载快照保留为历史证据。
-
-逐族reload执行协议：`docs/harbor-modal-integration/core-memory-reload-protocol.md`，旧批量评估helper不适用core。
+- 执行源码 `511bd71` 已push；远程 `/workspace/rebuild/uni-agent-core-511bd71`，固定DSH0.1.3a2、配对VERL fefb080+既定overlay、Qwen3-4B revision不变。95项准备器测试、Ruff双门通过。
+- SSH `root@216.243.220.120 -p 13918 -i ~/.ssh/id_ed25519`；48GB MIG，恢复后的持久venv `/workspace/venvs/uni-agent-rebuild-cf2d3f5`。恢复见pod-recovery-design.md。
+- 新r4外层PID21105，13:31 SGT实际存活，正式监督器日志已创建。日志 `/root/runs/core-train-r4/supervision/train.log`，准备清单 `/root/runs/core-train-r4-data/manifest.json`。PID只是快照，接续先核实时存活，禁止重复启动。
+- 数据520train/160公开dev资产已落盘，真实DSH canary8通过。r4同步16步、n4、step8/16保存，checkpoint `/workspace/uni-agent-g1/checkpoint/core-train-r4`。尚无本轮首步/更新/保存证据。
+- r4资源预算：Controller1+Storage1+actorPG3+外部串行runner1=Ray CPU6。DSH内部local子进程不再申请Ray task。须真实核DSH执行/完整消费，不能仅以模型加载宣布资源问题解决。
+- r1在MIG权限检查误拒绝；r2 TQ8无法放入CPU6；r3 TQ2+Controller1+actorPG3耗尽CPU6，模型已加载但DSH外部任务无CPU、0步。r3仅停止owned PG15980，exit-15/700.018s，所有相关进程清退、GPU128MiB无进程。原证据/workspace/reports/core-train-r3-cpu-admission，supervisor SHA256 129b028f29bbd37265b1e5e14df721218b0d30449e34719ea3f914d07b8741de。
+- r2原证据/workspace/reports/core-train-r2-cpu-admission（含operator-stop和supervisor），均不能算完成训练。
 
 ### 紧接着做
 
-- [ ] 完成storage=1回归、commit/push、固定新r4部署；确认真实A→冻结→B采样及第一步。
-- [ ] 完成16步后审计完整组唯一消费、独立任务数、奖励、梯度、参数与optimizer；零更新如实记录。
-- [ ] step16每族首条公开dev独立reload并保留正常失败，校验母checkpoint文件不变。
-- [ ] 原始证据归档/workspace，补结果报告、复跑说明并commit/push；随后按goal推进P2→P3。
+- [ ] 监督r4首次真实A→冻结→B与完整组消费；检查资源等待、合法失败与异常，不因普通观察超时重启。
+- [ ] 完成16步后审计独立任务数、奖励分布、梯度、参数与optimizer；区分执行成功与有效学习。
+- [ ] 母run成功终态后，每族首条公开dev串行独立reload step16；协议core-memory-reload-protocol.md。旧批量评估helper不适用core。
+- [ ] 原始证据归档/workspace、结果/复跑指南、commit/push。
+- [ ] P2设计已在core-memory-p2-evaluation-design.md落盘并review；新增入口尚未实现，需按Human Gate取得实施确认。当前继续已授权P1，不等待该确认。P3仍未完成，公开dev不能改称封存测试。
 
 以下为历史实验记录，旧课程通过不能替代新版core课程验收。
 
