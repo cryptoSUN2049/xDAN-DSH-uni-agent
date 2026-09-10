@@ -26,7 +26,7 @@ Gateway `session/session.py:197` 的容量是 prompt_length + response_length；
 
 只读检查远端实际安装的 `/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/deepseek_harness/api.py`：`DeepSeekHarnessConfig` 仅公开 `max_tokens`，没有 max_total_tokens/completion_budget 字段。当前集成 runner 也只使用这一入口。本地 DSH 源码对应 Python client 的 initialize 映射为 `maxTokens`；SDK protocol/server 将其传入每次模型请求配置，未见该公开链路中的累计输出计数器。不能把 API 未暴露推断成整个 DSH 所有插件绝无相关能力；即便另有插件，也不是 r4 已接通能力。
 
-## 最小修复建议（仅设计，尚未实施）
+## 最小修复设计（现已本地实现，尚未部署 r4）
 
 最接近真实 token 的控制点是 **Uni-Agent Gateway session**，而不是用 adapter 返回后的文字重分词或离线 verifier 事后截断。
 
@@ -37,6 +37,25 @@ Gateway `session/session.py:197` 的容量是 prompt_length + response_length；
 5. 不改变策略版本、权重同步、A/B session 身份、TQ 完整组规则；新代码与配置固定后使用新 run。r4 原始证据按原预算解释，不能事后重标为违反已执行的 8192 上限。
 
 文件预估：Gateway session 配置/管理与计数、framework/operator 的可信配置传递、准备器绑定与测试；DSH runtime 本体无需因此先升级。不能仅改 agent.py 的 max_tokens 赋值冒充累计限制实现。
+
+### 已授权最小实现 API
+
+- `GatewaySession(..., max_generated_tokens: int | None=None)`：独立正整数预算与累计backend输出计数；新增锁仅序列化启用预算的session。backend返回token_ids计数，rollback不退款；backend失败使计量未知时该预算session后续fail closed，不能继续重试取回预算。未配置旧路径不加锁/不变更行为。
+- `_GatewayActor.create_session(..., max_generated_tokens=None)` 显式控制面参数传递；模型HTTP请求不能改变此参数。
+- `GatewayAgentFramework._execute_gateway_stage(..., max_generated_tokens=None)` 只由框架调用参数传给真正的manager.create_session；不从sample_fields或request抽取预算。
+- `NativeMemoryFramework._stage_generation_budget(spec)` 默认None；`NativeWorkStateFramework` 覆写，读取可信operator可选字段。A/B各自创建独立有预算session。
+- `WorkStateOperator.max_generated_tokens=None` 校验正整数；prepare仅core写8192，check拒缺失/覆盖。已有源码closure含gateway/framework/work_state全路径，新增行为随源码hash与新manifest固定。
+- 测试文件：新增Gateway预算测试；扩stage接线、workstate、prepare实际Hydra测试。覆盖耗尽正常length、工具不计、rollback、重试/异常、并发不超领、旧默认、控制面到真session和manifest篡改。远端r4仍用511bd71，不部署本修复。
+
+### 本地实现与验证
+
+新增 `test_session_generation_budget.py`。首轮10项测试先因缺少API失败，后通过；prepare两项删除/覆盖预算与真实stage创建Gateway session测试也先观察RED，再贯通。完整组合回归255项通过（69.50秒），覆盖准备器、原生memory/work-state、Gateway stage与旧多chain行为。
+
+随后补实际 `trajectory.json` 的 `max_generated_tokens` 与 `session_generated_tokens_at_materialization` 字段；未配置预算不新增字段。累计耗尽的 materialization_reason 为 `max_generated_tokens`，序列容量耗尽仍为 `max_trajectory_length`，两者同时到限优先记录累计生成耗尽，协议finish_reason仍length。该批受影响113项通过；最后17项预算测试全部通过（含双限制同时到限），Ruff检查通过。
+
+明确保守策略：配置预算的session发生任何请求异常（包括backend前本地校验异常）后都poison，必须新建session；这是故意fail-closed，不声称所有异常都已消耗生成token。已返回backend token_ids在后处理前累计，后续logprob/decode错误不退款；未知取消/错误不能以剩余预算重试。未配置预算保持旧并发与错误语义。
+
+计数证据是session累计、截至trajectory materialization的快照，不是该trajectory独占增量，不能把多个trajectory快照相加。真实A/B分别由stage控制面创建session，测试覆盖真正actor.create_session并确认sample字段不能覆盖8192。旧版本/评分/receipt/TQ合同没有放宽，仍需新run完成以下GPU验收。
 
 ## 新 run 验证项
 

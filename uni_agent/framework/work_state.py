@@ -16,3 +16,6 @@ class NativeWorkStateFramework(NativeMemoryFramework):
 
     def _validate_stage(self, spec, execution):
         return stage.validate_stage_execution(spec, execution)
+
+    def _stage_generation_budget(self, spec):
+        return spec.operator.max_generated_tokens

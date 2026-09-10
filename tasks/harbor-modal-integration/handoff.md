@@ -15,11 +15,17 @@
 
 前两步8链失败分析：core-r4-early-failure-analysis.md；A5完整/3空，B8均无memory读取，仅2独立任务。后续协议诊断候选已记录，未改r4。
 
-预算审计core-token-budget-audit.md：当前真正生效为每请求4096和每session总序列16384（含工具上下文），配置累计生成8192未接通。P2设计已纠正文案；Gateway可信累计计数修复仅设计，未改r4。
+预算审计core-token-budget-audit.md：当前真正生效为每请求4096和每session总序列16384（含工具上下文），配置累计生成8192未接通。P2设计已纠正文案；Gateway可信累计计数已本地实现并回归，尚未部署；未改r4。
+
+### 2026-09-10 14:40 SGT检查点
+
+- r4在06:39 UTC实查外层21105/trainer21295/vLLM24216存活，metrics已8/16；前8步reward/adv/grad均0。step8补采两组后完成，gen1043.730s、update18.765s、save10.645s。仍无有效学习证据。
+- 第8步checkpoint已实查：`/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_8/actor` 中model约8.3G、optimizer127M，以及extra_state、LoRA metadata、HF配置存在；仅落盘核实，未做参数比较/独立reload。运行源码仍511bd71。
+- 新累计预算修复：Gateway真实backend token计数、同session串行、rollback不退款、异常后禁止重试；可信operator给A/B分别8192，轨迹持久化预算快照。255项组合回归、后续113项受影响回归及17项最终边界通过；最终提交前另跑全库Ruff双门。真实GPU预算验收尚待独立新run，不能覆盖r4源码。
 
 ### 紧接着做
 
-- [ ] 监督r4首次真实A→冻结→B与完整组消费；检查资源等待、合法失败与异常，不因普通观察超时重启。
+- [x] r4首次真实A→冻结→B与完整组消费已核；首步原始跨表证据见core-train-r4-step1-evidence.md。继续监督后续完整运行，不因普通观察超时重启。
 - [ ] 完成16步后审计独立任务数、奖励分布、梯度、参数与optimizer；区分执行成功与有效学习。
 - [ ] 母run成功终态后，每族首条公开dev串行独立reload step16；协议core-memory-reload-protocol.md。旧批量评估helper不适用core。
 - [ ] 原始证据归档/workspace、结果/复跑指南、commit/push。

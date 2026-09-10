@@ -55,7 +55,8 @@ async def test_record_cannot_choose_wider_contract_than_chain(wired, contract):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("partition", ["train", "val"])
-async def test_real_workstate_zero_quality_chain_reuses_original_tq(wired, tmp_path, monkeypatch, partition):
+@pytest.mark.parametrize("budget", [None, 8192])
+async def test_real_workstate_zero_quality_chain_reuses_original_tq(wired, tmp_path, monkeypatch, partition, budget):
     import asyncio
     from types import SimpleNamespace
 
@@ -89,6 +90,7 @@ async def test_real_workstate_zero_quality_chain_reuses_original_tq(wired, tmp_p
         **{**vars(op), "family": "work-state-v1"},
         task_manifest=manifest,
         task_manifest_sha256=sha(manifest.read_bytes()),
+        max_generated_tokens=budget,
     )
     config = original_framework.test_full_config
     config.actor_rollout_ref.rollout.custom.agent_framework.memory_operator = {
@@ -133,6 +135,7 @@ async def test_real_workstate_zero_quality_chain_reuses_original_tq(wired, tmp_p
     assert audit_memory_chain_crosswalk(crosswalk)["terminal_rewards"] == [0.0] * count
     assert [i["role"] for i in record["items"]] == ["A", "B"] * count
     assert len(manager.created) == len(manager.finalized) == 2 * count
+    assert all(kwargs.get("max_generated_tokens") == budget for _, kwargs in manager.created)
     assert not manager.aborted
     # Original strict memory admission remains immutable, independent of a sample claim.
     assert NativeMemoryFramework.contract_id == "legacy-memory-v1"

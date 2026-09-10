@@ -228,6 +228,7 @@ class _GatewayActor:
         session_id: str,
         metadata: dict[str, Any] | None = None,
         sampling_params: dict[str, Any] | None = None,
+        max_generated_tokens: int | None = None,
     ) -> SessionHandle:
         """Create an actor-owned session and return its provider-compatible handle."""
         self._require_started()
@@ -246,6 +247,7 @@ class _GatewayActor:
             sampling_params=sampling_params,
             enable_last_assistant_rollback=self._enable_last_assistant_rollback,
             metadata=metadata,
+            max_generated_tokens=max_generated_tokens,
         )
         return handle
 

@@ -222,6 +222,9 @@ class NativeMemoryFramework(GatewayAgentFramework):
     def _validate_stage(self, spec, execution):
         return validate_stage_execution(spec, execution)
 
+    def _stage_generation_budget(self, spec):
+        return None
+
     def __init__(self, *args, memory_operator=None, memory_run_id=None, **kwargs):
         for flag in (
             "fail_on_rollout_error",
@@ -360,6 +363,7 @@ class NativeMemoryFramework(GatewayAgentFramework):
             sampling_params=sampling_params,
             stage_session_id=spec.gateway_session_id,
             dump_consumption_crosswalk=False,
+            max_generated_tokens=self._stage_generation_budget(spec),
         )
 
     def _outcome(self, spec, execution):

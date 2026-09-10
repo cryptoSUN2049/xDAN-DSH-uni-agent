@@ -183,12 +183,19 @@ class GatewaySession:
         sampling_params: dict[str, Any] | None = None,
         enable_last_assistant_rollback: bool = True,
         metadata: dict[str, Any] | None = None,
+        max_generated_tokens: int | None = None,
     ):
         """Create an active session bound to a handle and model codec."""
         if prompt_length is not None and prompt_length <= 0:
             raise ValueError(f"prompt_length must be positive when set, got {prompt_length}")
         if response_length is not None and response_length <= 0:
             raise ValueError(f"response_length must be positive when set, got {response_length}")
+        if max_generated_tokens is not None and (type(max_generated_tokens) is not int or max_generated_tokens <= 0):
+            raise ValueError("max_generated_tokens must be a positive integer or None")
+        self._max_generated_tokens = max_generated_tokens
+        self._generated_tokens = 0
+        self._generation_budget_lock = asyncio.Lock()
+        self._generation_budget_failed = False
 
         self.handle = handle
         self._codec = codec
@@ -219,6 +226,20 @@ class GatewaySession:
         return dict(self._sampling_params)
 
     async def run_generation(self, request: InternalGenerationRequest, backend) -> GenerationOutcome:
+        if self._max_generated_tokens is None:
+            return await self._run_generation(request, backend)
+        # Only budgeted sessions serialize requests. Buffer rollback never refunds
+        # backend work, and ambiguous failures cannot be retried against a fresh cap.
+        async with self._generation_budget_lock:
+            if self._generation_budget_failed:
+                raise HTTPException(status_code=409, detail="Session generation budget cannot continue after failure")
+            try:
+                return await self._run_generation(request, backend)
+            except BaseException:
+                self._generation_budget_failed = True
+                raise
+
+    async def _run_generation(self, request: InternalGenerationRequest, backend) -> GenerationOutcome:
         """Run one provider-normalized generation request and return its business outcome.
 
         The backend is passed in for this call only; the session does not own the
@@ -243,10 +264,20 @@ class GatewaySession:
                 # Prepare can touch codec and multimodal extractor state, so only
                 # backend generation runs outside the session lock.
                 encoded = await self._prepare_generation_inputs(request)
+                exhaustion_reason = "max_trajectory_length"
+                if self._max_generated_tokens is not None:
+                    remaining = self._max_generated_tokens - self._generated_tokens
+                    if remaining <= 0:
+                        encoded.capacity_exhausted = True
+                        exhaustion_reason = "max_generated_tokens"
+                    else:
+                        encoded.sampling_params["max_tokens"] = min(
+                            encoded.sampling_params.get("max_tokens", remaining), remaining
+                        )
                 if encoded.capacity_exhausted:
                     empty_msg = {"role": "assistant", "content": ""}
                     if encoded.chain_id is not None:
-                        self._close_length_exhausted_chain(encoded)
+                        self._close_length_exhausted_chain(encoded, reason=exhaustion_reason)
                     self._touch()
                     generation_span.capacity_exhausted(
                         prompt_tokens=len(encoded.context_ids),
@@ -262,11 +293,14 @@ class GatewaySession:
                     self.reserved_chain_ids.add(encoded.chain_id)
                     reserved_chain_id = encoded.chain_id
 
+            requested_cap = encoded.sampling_params.get("max_tokens")
             try:
                 output = await backend.generate(
                     request_id=self.handle.session_id,
                     prompt_ids=encoded.context_ids,
-                    sampling_params=encoded.sampling_params,
+                    sampling_params=dict(encoded.sampling_params)
+                    if self._max_generated_tokens is not None
+                    else encoded.sampling_params,
                     image_data=encoded.image_data,
                     video_data=encoded.video_data,
                 )
@@ -274,6 +308,11 @@ class GatewaySession:
                 raise HTTPException(status_code=400, detail=str(e)) from e
             except Exception as e:
                 raise HTTPException(status_code=500, detail=f"{e.__class__.__name__}: {e}") from e
+
+            if self._max_generated_tokens is not None:
+                self._generated_tokens += len(output.token_ids)
+                if len(output.token_ids) > requested_cap:
+                    raise HTTPException(status_code=500, detail="Backend exceeded the session generation budget cap")
 
             # This is the final backend outcome, after any FullyAsync client
             # internal partial-rollout recovery. Do not turn terminal cancellation
@@ -754,7 +793,7 @@ class GatewaySession:
         )
         return previous_chain.chain_id
 
-    def _close_length_exhausted_chain(self, encoded: EncodedData) -> None:
+    def _close_length_exhausted_chain(self, encoded: EncodedData, *, reason: str = "max_trajectory_length") -> None:
         if encoded.chain_id is None:
             raise RuntimeError("length-exhausted chain id is missing")
         chain_index, chain = self._find_active_chain(encoded.chain_id)
@@ -779,7 +818,7 @@ class GatewaySession:
             MaterializedChain(
                 trajectory=self._build_materialized_trajectory(
                     chain=chain_to_materialize,
-                    extra_fields={"materialization_reason": "max_trajectory_length"},
+                    extra_fields={"materialization_reason": reason},
                 ),
                 order_seq=order_seq,
             )
@@ -848,6 +887,11 @@ class GatewaySession:
             versioned_generation_count=len(marks),
             version_evidence_complete=generation_count > 0 and len(marks) == generation_count,
         )
+        if self._max_generated_tokens is not None:
+            trajectory_extra_fields.update(
+                max_generated_tokens=self._max_generated_tokens,
+                session_generated_tokens_at_materialization=self._generated_tokens,
+            )
         return Trajectory(
             prompt_ids=list(chain.buffer.prompt_ids),
             response_ids=list(chain.buffer.response_ids),

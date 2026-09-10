@@ -23,6 +23,13 @@ from uni_agent.tasks.dsh.trajectory_audit import validate_trajectories
 class WorkStateOperator(OperatorSpec):
     task_manifest: Path
     task_manifest_sha256: str
+    max_generated_tokens: int | None = None
+
+    def __post_init__(self):
+        if self.max_generated_tokens is not None and (
+            type(self.max_generated_tokens) is not int or self.max_generated_tokens <= 0
+        ):
+            raise ValueError("max_generated_tokens must be a positive integer or None")
 
 
 def _task(operator, context, sample_fields):

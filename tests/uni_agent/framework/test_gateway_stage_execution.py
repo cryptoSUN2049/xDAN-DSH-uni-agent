@@ -177,3 +177,27 @@ async def test_crosswalk_flag_must_be_bool(tmp_path, flag):
     with pytest.raises(ValueError, match="dump_consumption_crosswalk"):
         await framework._execute_gateway_stage(**args, dump_consumption_crosswalk=flag)
     assert manager.created == []
+
+
+@pytest.mark.asyncio
+async def test_trusted_stage_budget_reaches_real_gateway_session(tmp_path):
+    from tests.uni_agent.gateway.test_session_generation_budget import Backend
+    from tests.uni_agent.support import FakeTokenizer
+    from uni_agent.gateway.config import GatewayActorConfig
+    from uni_agent.gateway.gateway import _GatewayActor
+
+    framework, manager, args = build(tmp_path)
+    actor = _GatewayActor(GatewayActorConfig(tokenizer=FakeTokenizer()), Backend())
+    actor._server_base_url = "http://resident"
+    framework.gateway_manager = actor
+    args["sample_fields"]["max_generated_tokens"] = 999
+    seen = []
+
+    async def runner(**kwargs):
+        seen.append(actor._sessions[kwargs["session"].session_id]._max_generated_tokens)
+        return TaskResult()
+
+    framework._inline_runners["runner"] = runner
+    for stage in ("A", "B"):
+        await framework._execute_gateway_stage(**args, stage_session_id=stage, max_generated_tokens=8192)
+    assert seen == [8192, 8192]

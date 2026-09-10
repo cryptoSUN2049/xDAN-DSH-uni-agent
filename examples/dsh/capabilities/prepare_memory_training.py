@@ -467,6 +467,8 @@ def prepare(
         AF + "trajectory_postprocessor_kwargs": None,
         AF + "trajectory_postprocessor_pass_context": False,
     }
+    if course_id == "work-state-memory-core-v1":
+        operator["max_generated_tokens"] = 8192
     if work_state:
         adapter = "uni_agent.framework.entry.StrictSyncValidationRolloutAdapter"
         overrides.update(
@@ -641,6 +643,8 @@ def check(manifest_path, *, after_run=False):
     if course_id == "work-state-memory-core-v1":
         if overrides.get("transfer_queue.backend.SimpleStorage.num_data_storage_units") != "1":
             raise ValueError("Core course storage CPU budget changed")
+        if overrides.get(AF + "memory_operator.max_generated_tokens") != "8192":
+            raise ValueError("Core course generation budget changed")
         expected_budget = {
             "TRAIN_MAX_SAMPLES": "520",
             "TOTAL_TRAINING_STEPS": "16" if manifest["mode"] == "train" else "1",

@@ -153,6 +153,10 @@ def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode, famil
             assert config.trainer.save_freq == (8 if course_id == "work-state-memory-core-v1" else 4)
             assert config.trainer.total_training_steps == (16 if course_id == "work-state-memory-core-v1" else 8)
     framework = framework_class.from_config(config=config, gateway_manager=Manager([]))
+    if work_state:
+        assert framework._memory_operator.max_generated_tokens == (
+            8192 if course_id == "work-state-memory-core-v1" else None
+        )
     assert framework._memory_operator.root == inputs["run_root"] / "chains"
     assert framework._memory_operator.family == family
     if work_state:
@@ -687,6 +691,20 @@ def test_core_storage_cpu_budget_cannot_drift(inputs, change):
     path = inputs["output_dir"] / "manifest.json"
     path.write_text(json.dumps(manifest))
     with pytest.raises(ValueError, match="storage CPU budget"):
+        recipe.check(path)
+
+
+@pytest.mark.parametrize("change", ["remove", "override"])
+def test_core_generation_budget_cannot_drift(inputs, change):
+    manifest = recipe.prepare(**inputs, family="work-state-v1", course_id="work-state-memory-core-v1", mode="train")
+    key = recipe.AF + "memory_operator.max_generated_tokens"
+    if change == "remove":
+        manifest["command"] = [a for a in manifest["command"] if not a.lstrip("+").startswith(key + "=")]
+    else:
+        manifest["command"].append("++" + key + "=16384")
+    path = inputs["output_dir"] / "manifest.json"
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="generation budget"):
         recipe.check(path)
 
 

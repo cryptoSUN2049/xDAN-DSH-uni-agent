@@ -572,3 +572,12 @@ Review：不将144条预算当已生成数据，不把固定权重评估计作RL
 - [ ] P3按独立设计扩真实compact和调试/研究场景。
 
 Review：平台goal仍paused；文档更新不代表平台已激活，不标记长期目标complete。
+
+## 2026-09-10 累计生成预算修复检查点
+
+- [x] 对照真实r4 token证据定位累计8192未接通，最小设计与实施授权已记录。
+- [x] Gateway可信控制面累计预算、异常/取消/并发/rollback及持久化证据完成CPU回归。
+- [x] 最终独立review无阻断；root预算17项通过，全库Ruff双门通过（366文件）；纳入本次commit/push节点。
+- [ ] 保持r4原源码完成16步，再审计与独立reload；新预算另开固定源码run验收。
+
+Review：r4现8/16，checkpoint8已落盘，梯度仍0；预算修复不能替代有效学习。平台goal已恢复active，前文paused为历史记录。

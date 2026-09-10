@@ -944,6 +944,7 @@ class GatewayAgentFramework(AgentFramework):
         sampling_params: dict[str, object],
         stage_session_id: str | None = None,
         dump_consumption_crosswalk: bool = True,
+        max_generated_tokens: int | None = None,
     ) -> GatewayStageExecution:
         """Execute one stage through the existing manager, runner and reward path.
 
@@ -999,6 +1000,7 @@ class GatewayAgentFramework(AgentFramework):
                 session_id,
                 metadata={"_trace_identity": trace_identity},
                 sampling_params=dict(sampling_params),
+                **({"max_generated_tokens": max_generated_tokens} if max_generated_tokens is not None else {}),
             )
             logger.info(
                 "session %s start: runner=%s sample_index=%s session_index=%s global_steps=%s",
@@ -1346,6 +1348,14 @@ class GatewayAgentFramework(AgentFramework):
             # Retain a read-compatible DSH evidence projection in schema 2 dumps.
             **({"reward_info": deepcopy(extra["dsh_reward_info"])} if "dsh_reward_info" in extra else {}),
             "materialization_reason": extra.get("materialization_reason"),
+            **(
+                {
+                    "max_generated_tokens": extra["max_generated_tokens"],
+                    "session_generated_tokens_at_materialization": extra["session_generated_tokens_at_materialization"],
+                }
+                if "max_generated_tokens" in extra
+                else {}
+            ),
             "prompt_len": len(traj.prompt_ids),
             "response_len": len(traj.response_ids),
             "model_token_count": sum(traj.response_mask) if traj.response_mask else 0,
