@@ -25,6 +25,10 @@
 
 14:44 SGT消费覆盖快照见core-r4-consumption-progress.md：已完成步骤1–9，9个独立task、36条AB、72唯一TQ行；WS01两题、WS03四题、WS05三题，WS06尚未进入本范围消费。全部dump score0；并非520条均已训练。终态操作单core-r4-terminal-audit-runbook.md已按既有工具接口整理，尚未执行。
 
+14:48 SGT补充消费快照：step10已首次消费WS06、step11为WS01，四族覆盖；前3个WS06组因A超限/越权整组拒绝，其中一个合法B原reward1随组未消费，不能追认有效学习。详情及原件hash见core-r4-consumption-progress.md。14:50训练已12/16，前12步梯度仍0。
+
+14:50 SGT新预算修复已隔离部署 `/workspace/rebuild/uni-agent-core-4232df3`，配独立同pin VERL+overlay，旧venv复用；Linux禁CUDA预算17测试通过（28.96秒），仅CPU协议验证。r4仍原511，旧Gateway hash核验未变。待r4训练/reload收尾后再启动新预算GPU canary。部署详细身份见core-token-budget-audit.md末节。
+
 ### 紧接着做
 
 - [x] r4首次真实A→冻结→B与完整组消费已核；首步原始跨表证据见core-train-r4-step1-evidence.md。继续监督后续完整运行，不因普通观察超时重启。

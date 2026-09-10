@@ -63,3 +63,11 @@ Gateway `session/session.py:197` 的容量是 prompt_length + response_length；
 - 合同：拒绝样本/请求覆盖预算，manifest 防篡改；记录 per-request、生成累计、sequence 三种独立指标，匹配实际 tokens。
 - 真实 GPU 新 session：指定可重复长任务触发累计上限，trace/result/receipt 完整，finish_reason 正确；正常短任务继续完成。验证拒绝组补采样不退出整作业。
 - 再检查完整组消费、非零有效梯度、参数变化、checkpoint 与独立 reload；预算修复通过不自动等于能力提升或整个训练验收通过。
+
+## 2026-09-10 14:50 SGT：隔离Linux部署与CPU复核
+
+- 新目录 `/workspace/rebuild/uni-agent-core-4232df3` 固定 `4232df3fb47a67cb68c517811b972ddc9bfa2086`；经GitHub fetch取得，未使用scp覆盖代码。
+- 独立VERL checkout固定 `fefb080262e1c015a0ea05f958822a6a512dc795`，既有 `preserve-finish-reason-v1` overlay显式应用并hash验证通过；根git仅预期` m verl`，无其他改动。
+- 复用 `/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python`，没有重新安装Python/GPU依赖。新目录以 `CUDA_VISIBLE_DEVICES=`、`OMP_NUM_THREADS=1`、`MKL_NUM_THREADS=1`、`PYTHONPATH=.:verl` 执行 `python -m pytest tests/uni_agent/gateway/test_session_generation_budget.py -q -p no:cacheprovider`：17 passed，28.96秒。此为CPU fake-backend协议回归，不是模型GPU预算canary。
+- 同时实查r4 PID21105/21295/24216仍存活，执行HEAD仍 `511bd71792c7a26af83cb0fe6362cd0f7d5aba96`，原Gateway session.py SHA256仍 `82f40a83aef76940e907b87caa84d1d3978e03ee2242cacbcf45ee6f17a9ed51`。
+- 后续必须在当前训练及既定reload完成后，使用新目录/新run身份执行真实预算验收；当前不启动第二个GPU任务，不把新预算用于旧母run的reload。
