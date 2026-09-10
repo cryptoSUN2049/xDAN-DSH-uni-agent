@@ -46,3 +46,7 @@
 ## TQ初始化停滞不是GPU问题
 
 2026-09-10新Pod仅Ray CPU6/可用5，固定VERL的SimpleStorage默认8个CPU1 placement槽。TQ无超时等待pg.ready，Controller已就绪却没有storage/model worker。普通raylet待任务数0不能排除GCS pending placement group；必须核两种队列。原r2无首步，保存GCS/日志后仅SIGTERM owned PG11802，监督exit-15/1120.028s，所有相关进程退出。generic reason=training-exited不是自然训练成功，结合operator-stop解释。新core显式2存储单元，保留其他训练合同。
+
+## CPU预算必须覆盖任务执行，不只服务启动
+
+2026-09-10 core-r3将TQ从8降2只解决storage placement；实际CPU6被Controller1+Storage2+actor PG3耗尽。模型PG内部空闲2CPU不能供组外runner使用；裸ray.remote任务默认1CPU，首writer输入已生成也不代表DSH执行。应预算Controller1+Storage1+actorPG3+串行runner1=6，并核下游local子进程无额外Ray任务需求。根保存debug_state/GCS/train日志后仅SIGTERM owned PG15980；无首步/梯度/checkpoint，不能把模型加载计为任务链路通过。后续在首个DSH子进程和完成组出现之前，不宣布CPU问题整体解决。
