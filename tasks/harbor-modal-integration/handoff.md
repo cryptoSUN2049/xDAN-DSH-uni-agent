@@ -282,3 +282,5 @@ WS06原511 after_run来源/母checkpoint复核现已通过，报告SHA5298387c65
 WS06正式消费审计已补齐：passed=false、run_completed=false、0组0条，SHA256 16a68fdf0f65e2e15558050097fd00bcce95036102a41c76b0eedf7d6f427d6c，本地core-r4-reload-ws06-consumption.json。G5仅按逐题reload结果和母身份核验要求完成，P1有效更新仍失败。预算r2 PID79055实查06:57存活，模型已加载；正常路径core-budget-normal-r1-data/manifest.json已准备，尚未启动，不与r2重叠。
 
 预算r2已终态740.018秒exit1：实际生成8192、mask0 6014、prompt1495，NPZ hash/有限logprob通过，materialization_reason=max_generated_tokens。真实精确触顶修复验证通过，writer未完成/B未执行，原拒绝保留。证据/workspace/reports/core-budget-val-r2及core-budget-val-r2-result.md/json。下一条normal-r1已启动外层83576，root仍5e6b326，WS01公开题val，原清单/root/runs/core-budget-normal-r1-data/manifest.json；先实查，不重复启动。
+
+预算r2正式after_run版本/输入校验通过，报告SHA04258117d4f4a3e8f21b2de88ebef2decca646d090b337c7b45b5fc6db429018。独立只读审查已澄清reader诊断为提示修订包，16A最多128B（每题1A、每提示4B），任务聚类、可信失败保留、固定分母与中性分支路径；仍待用户批准，未实现/启动。

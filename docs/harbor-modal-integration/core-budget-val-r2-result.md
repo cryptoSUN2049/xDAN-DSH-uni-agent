@@ -9,3 +9,7 @@ writer仍finished=false、eligible=false、fresh=true，B未执行，原准入�
 七项原件复制到/workspace/reports/core-budget-val-r2并逐文件回读SHA，审计见同名JSON。旧4232-r1结果不覆盖。
 
 下一条core-budget-normal-r1已通过现有launch入口发起，外层PID83576；固定相同5e6b326，WS01-v1-s2001，val。准备清单/root/runs/core-budget-normal-r1-data/manifest.json，日志/root/runs/core-budget-normal-r1-launch.log。继续检查活进程，不能把已发起当完成。
+
+## After-run 版本复核
+
+原5e6b326入口check(manifest, after_run=True)在CPU完成并通过，确认源码、runtime、输入和配置身份。报告/workspace/reports/core-budget-val-r2/after-run-source-check.json，SHA256 04258117d4f4a3e8f21b2de88ebef2decca646d090b337c7b45b5fc6db429018。它证明版本/工件完整性，不改变未完成任务的评分。
