@@ -2,6 +2,8 @@
 
 ## 1. TL;DR
 
+**下次从这里开始：** [冷启动检查点](checkpoint-20260910-reader-ready.md) → [阶段总结](../../docs/harbor-modal-integration/stage-summary-20260910.md)。备份索引：[stage-backup-20260910.json](../../docs/harbor-modal-integration/stage-backup-20260910.json)。
+
 - 当前worktree：harbor-modal-integration；分支worktree-harbor-modal-integration。用户要求关机前保存，未启动新GPU任务。
 - P1→P2→P3保持：核心记忆原生RL有效更新→独立能力收益→真实上下文/跨场景。P1未完成：core-train-r4 16步真实消费，但任务优势/梯度全零、LoRA B全零。
 - 四族母step16 reload逐题审计已完成：三族执行成功reward0，WS06失败无B/消费；不称四族业务成功。
@@ -84,3 +86,10 @@ venv/workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4
 - tasks/harbor-modal-integration/active-engineering-goal.md：179行。
 - tasks/lessons.md：240行。
 - tasks/todo.md：590行。
+
+2026-09-10 阶段保存：用户报告GPU关闭；本轮无远程操作。三份本机证据SHA再次通过；新增2f3ea86源码离线tar并逐Git blob核验。最新代码2f3ea86，后续本次提交仅文档；GPU runtime仍未部署新reader。新增阶段总结、冷启动检查点和备份索引，文件行数见各文件及Git diff。
+
+阶段保存新增文件：
+- docs/harbor-modal-integration/stage-summary-20260910.md：65行。
+- docs/harbor-modal-integration/stage-backup-20260910.json：35行。
+- tasks/harbor-modal-integration/checkpoint-20260910-reader-ready.md：43行。

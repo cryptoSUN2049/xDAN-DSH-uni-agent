@@ -1,0 +1,35 @@
+{
+  "schema": "dsh.local-stage-backup.v1",
+  "verified_at_utc": "2026-09-10T15:56:44.429356+00:00",
+  "branch": "worktree-harbor-modal-integration",
+  "code_revision": "2f3ea8688fc384ef437a3f8d0749edfedc58b9b7",
+  "source_archive": {
+    "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/outputs/stage-checkpoint-20260910-2f3ea86/uni-agent-source-2f3ea86.tar.gz",
+    "bytes": 5922999,
+    "sha256": "55aa467936ac27a4818bc487eb917e96e8a4b8b7d1f0e0ce1269027407183d32",
+    "git_blob_entries_verified": 967,
+    "scope": "Tracked integration checkout snapshot; excludes submodule contents, installed environments, models and ignored outputs"
+  },
+  "evidence_archives_reverified": [
+    {
+      "file": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/outputs/gpu-shutdown-20260910/core-budget-evidence-20260910.tar.gz",
+      "sha256": "b3eb67fe4d57f1a0f0bc7e1233aeab88238f55b9848702d7effd38b5c33ac3bb",
+      "bytes": 1326794
+    },
+    {
+      "file": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/outputs/gpu-shutdown-20260910/core-r4-reloads-and-parameters-20260910.tar.gz",
+      "sha256": "318c95e9f50fbc2b689534896dabb5c6141dbfc04f6023727ac3cd0cc84e0b68",
+      "bytes": 834802
+    },
+    {
+      "file": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/outputs/gpu-shutdown-20260910/core-train-r4-engineering-evidence-20260910.tar.gz",
+      "sha256": "0a0f6826ae28fe2bd40a448e89055ae921f601b2f6c2c39d5cb5d142cffff54c",
+      "bytes": 49014953
+    }
+  ],
+  "evidence_total_bytes": 51176549,
+  "gpu_contacted": false,
+  "gpu_status": "User reports shut down; not independently probed this turn",
+  "checkpoint_backup": "Cloud volume only, not downloaded; availability must be checked on reconnect",
+  "backup_directory": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/outputs/stage-checkpoint-20260910-2f3ea86"
+}

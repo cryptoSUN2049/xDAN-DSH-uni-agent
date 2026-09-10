@@ -18,7 +18,7 @@
 4. 核新GPU/MIG/CPU配额和进程所有权，按gpu-reconnect-runbook.md、pod-recovery-design.md恢复宿主依赖；旧MIG UUID不能照抄到新卡。
 5. Git获取本分支文档；需要复跑原预算实验时固定5e6b326与配对VERL overlay。归档用于取证，恢复解包到新的审计目录，不覆盖已有/root/runs。
 6. 新训练/评估必须重新prepare新run身份及环境文件，再check/launch；不能直接重用包含旧绝对路径、MIG配置或旧目录的manifest。环境变量/密钥重新注入，不从Git恢复凭据。
-7. 下一业务工作是零奖励分层诊断，reader配对设计尚待明确批准。不要盲目重复16步全零训练，也不启动Harbor/异步支线。
+7. 下一业务工作是零奖励分层诊断，reader配对设计已获明确批准，2f3ea86 CPU工程包已交付，真实GPU诊断待执行。不要盲目重复16步全零训练，也不启动Harbor/异步支线。
 
 当前GPU上的/root/runs可随容器消失；上述云盘归档是恢复证据入口。GitHub保存代码/文档而非模型权重。预算修复通过不等于P1有效学习已完成。
 

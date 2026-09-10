@@ -591,3 +591,12 @@ Review：r4现8/16，checkpoint8已落盘，梯度仍0；预算修复不能替�
 - [ ] GPU恢复后真实canary与16题诊断；本轮不启动GPU。
 
 Review：三项独立审查问题（实际runtime/env、manifest路径漂移、读取指标误称）均修复，补相应CPU回归。GPU未启动，P1有效学习仍未通过；下一步按runbook执行真实canary。
+
+## 2026-09-10 阶段总结与离线备份
+
+- [x] 核验3份既有证据tar SHA256，51,176,549 bytes。
+- [x] 新建2f3ea86源码快照，967个Git blob逐项核验。
+- [x] 保存阶段总结、冷启动检查点、备份清单并更新handoff。
+- [x] 校验文档、Ruff双门与commit/push，复制最终交接到本机备份目录（以本节点Git核对为准）。
+
+Review：本轮只保存/校验资料，无GPU操作或新训练结果；checkpoint仅云盘，重连后再确认。
