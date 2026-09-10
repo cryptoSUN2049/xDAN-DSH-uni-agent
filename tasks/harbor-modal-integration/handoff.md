@@ -260,3 +260,5 @@ WS03下一题已启动：`core-r4-reload-ws03-r1`、外层PID61243，日志`/roo
 WS03正式after_run及消费审计通过，1组2条A/B，业务reward0；见core-r4-reload-ws03-result.md/json。WS05已exit0/505.013s，正式审计原件位于其final-audit，尚待本地汇总。WS06外层PID69492最后实查仍存活，日志/root/runs/core-r4-reload-ws06-r1-launch.log，不得重复启动；实查时vLLM在推理。记忆RL研究与下一实验候选见docs/harbor-modal-integration/memory-rl-evidence-and-next-experiment.md；未改旧r4或实施新奖励合同。下一步收尾WS06、归档reload/参数原件，再验新预算canary。
 
 WS06终态补充：2026-09-10 08:24后核outer69492消失，监督器exit1/820.021s/PG69539，health failures0。原日志val组1/1被拒，TrajectoryAuditError:trajectory 0: reward_info must declare finished=true；不是已完成四族成功验收。需继续核原receipt终止原因与原始链，不能仅凭此断定预算超限。正式原件/root/runs/core-r4-reload-ws06-r1，不覆盖或重启旧run。
+
+WS06原件确认：writer agent-result与Session v2最后turn/end均max-tokens，452行，最后step89，B未执行。关键原件6项已保存/workspace/reports/core-r4-reload-results/ws06并回读SHA；见core-r4-reload-ws06-result.md/json。尚非完整目录归档或母hash复核。

@@ -1,0 +1,49 @@
+{
+  "run_id": "core-r4-reload-ws06-r1",
+  "source_head": "511bd71792c7a26af83cb0fe6362cd0f7d5aba96",
+  "exit_code": 1,
+  "elapsed_seconds": 820.021,
+  "writer_finish_reason": "max-tokens",
+  "writer_finished": false,
+  "writer_eligible": false,
+  "reader_executed": false,
+  "consumption_verified": false,
+  "evidence": [
+    {
+      "source": "/root/runs/core-r4-reload-ws06-r1/chains/memory-0f090ebeb5cb43049e37132eb663c74a/writer/run/results/276fd742ee52fcae8ec118c7/agent-result.json",
+      "saved": "/workspace/reports/core-r4-reload-results/ws06/0-agent-result.json",
+      "sha256": "6f573aa178f09613272894230382a524edc1e670282b890b96adf73d83e64826",
+      "bytes": 4184
+    },
+    {
+      "source": "/root/runs/core-r4-reload-ws06-r1/chains/memory-0f090ebeb5cb43049e37132eb663c74a/writer/run/results/276fd742ee52fcae8ec118c7/verifier-receipt.json",
+      "saved": "/workspace/reports/core-r4-reload-results/ws06/1-verifier-receipt.json",
+      "sha256": "df0dae679158b7d1a3f5312dac3ffc8c82b2c120d8fa6406aecbbaa0b87e0e99",
+      "bytes": 1125
+    },
+    {
+      "source": "/root/runs/core-r4-reload-ws06-r1/chains/memory-0f090ebeb5cb43049e37132eb663c74a/writer/run/homes/9ad4885026b7f6db2e5dbe05/sessions/--root-runs-core-r4-reload-ws06-r1-chains-memory-0f090ebeb5cb43049e37132eb663c74a--/dsh-memory-A-ad3526a8596843f78ab1b03b41ae68a7/session.v2.jsonl",
+      "saved": "/workspace/reports/core-r4-reload-results/ws06/2-session.v2.jsonl",
+      "sha256": "06eeac36c3ac0297a9bcf09ccd9fb56c9d6345bd5b1b16737dc21148aa0b3c56",
+      "bytes": 261562
+    },
+    {
+      "source": "/root/runs/core-r4-reload-ws06-r1/supervision/train.log",
+      "saved": "/workspace/reports/core-r4-reload-results/ws06/3-train.log",
+      "sha256": "32cbe95a5547e5ae6e4aa190e294c50d2d1234e53f2d01cda354635b7944a6a3",
+      "bytes": 138908
+    },
+    {
+      "source": "/root/runs/core-r4-reload-ws06-r1/run-manifest.json",
+      "saved": "/workspace/reports/core-r4-reload-results/ws06/4-run-manifest.json",
+      "sha256": "ef1afa18ce5d0829a1e937c468d88a3a3f09f13700f0061443857dfffd8dd494",
+      "bytes": 6929
+    },
+    {
+      "source": "/root/runs/core-r4-reload-ws06-r1-launch.log",
+      "saved": "/workspace/reports/core-r4-reload-results/ws06/5-core-r4-reload-ws06-r1-launch.log",
+      "sha256": "49a179afc262907f99b9178b34f15b99f7b30ecf9f8b359d5de54367367bafbb",
+      "bytes": 165
+    }
+  ]
+}
