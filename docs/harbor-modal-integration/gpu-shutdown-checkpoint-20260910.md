@@ -2,7 +2,7 @@
 
 ## 已保存
 
-- 新预算修复执行源码5e6b326；当前文档分支worktree-harbor-modal-integration，GitHub cryptoSUN2049/xDAN-DSH-uni-agent。运行checkout不随文档commit升级。
+- 新预算修复执行源码`5e6b326885fa7d881f7aab987fa205e9f0ed7552`；当前文档分支worktree-harbor-modal-integration，GitHub cryptoSUN2049/xDAN-DSH-uni-agent。运行checkout不随文档commit升级。
 - 三条预算val作业均终态，无新作业发起。normal-r1 exit0，A/B正常完成且1组2条消费；业务reward0，无参数更新。
 - 云盘归档 `/workspace/reports/core-budget-evidence-20260910.tar.gz`：1,326,794 bytes，7,025源文件逐成员哈希核验且源未变化。SHA256 `b3eb67fe4d57f1a0f0bc7e1233aeab88238f55b9848702d7effd38b5c33ac3bb`。含三个run、准备资产及审计报告；排除3个training.env。不包含checkpoint，这三条均val。
 - 归档内`archive-manifest.json`含逐文件hash；旁证`/workspace/reports/core-budget-evidence-20260910-verification.json`。
@@ -21,3 +21,7 @@
 7. 下一业务工作是零奖励分层诊断，reader配对设计尚待明确批准。不要盲目重复16步全零训练，也不启动Harbor/异步支线。
 
 当前GPU上的/root/runs可随容器消失；上述云盘归档是恢复证据入口。GitHub保存代码/文档而非模型权重。预算修复通过不等于P1有效学习已完成。
+
+## 已完成本机第二份证据备份
+
+三份tar均已下载到本worktree的`outputs/gpu-shutdown-20260910/`，每份SHA256与上述云盘归档一致，总计51,176,549 bytes。`outputs`被Git忽略，原始轨迹不推送GitHub；本地路径/hash清单见gpu-shutdown-local-backup-20260910.json。即使容器已关闭仍可离线取证；checkpoint未下载，仍需保留网络云盘。不要误删此worktree的outputs，除非已迁移该备份。

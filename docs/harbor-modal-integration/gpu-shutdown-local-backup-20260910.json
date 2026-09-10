@@ -1,0 +1,21 @@
+{
+  "verified": true,
+  "scope": "Evidence archives only; no checkpoint or credentials environment files",
+  "files": [
+    {
+      "file": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/outputs/gpu-shutdown-20260910/core-budget-evidence-20260910.tar.gz",
+      "sha256": "b3eb67fe4d57f1a0f0bc7e1233aeab88238f55b9848702d7effd38b5c33ac3bb",
+      "bytes": 1326794
+    },
+    {
+      "file": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/outputs/gpu-shutdown-20260910/core-r4-reloads-and-parameters-20260910.tar.gz",
+      "sha256": "318c95e9f50fbc2b689534896dabb5c6141dbfc04f6023727ac3cd0cc84e0b68",
+      "bytes": 834802
+    },
+    {
+      "file": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/harbor-modal-integration/outputs/gpu-shutdown-20260910/core-train-r4-engineering-evidence-20260910.tar.gz",
+      "sha256": "0a0f6826ae28fe2bd40a448e89055ae921f601b2f6c2c39d5cb5d142cffff54c",
+      "bytes": 49014953
+    }
+  ]
+}

@@ -56,3 +56,5 @@ venv/workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4
 5. 下一步依据reader待批准设计和memory-rl-evidence-and-next-experiment.md推进，先产生可归因信号，不盲目扩训练步数。
 
 本轮关键新增文件行数：docs/harbor-modal-integration/core-budget-normal-r1-result.md 11行；docs/harbor-modal-integration/core-budget-normal-r1-result.json 90行；docs/harbor-modal-integration/gpu-shutdown-checkpoint-20260910.md 23行。
+
+关机附加保护：三份证据tar已本机备份至outputs/gpu-shutdown-20260910，逐SHA核验通过，共51,176,549 bytes；Git忽略，hash清单在docs/harbor-modal-integration/gpu-shutdown-local-backup-20260910.json。checkpoint仍仅云盘，不误称模型已本地备份。
