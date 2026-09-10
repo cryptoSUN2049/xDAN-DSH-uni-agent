@@ -331,6 +331,10 @@ def test_launch_creates_actual_private_writer_parent(inputs, monkeypatch, tmp_pa
     path.write_text(json.dumps(manifest))
     monkeypatch.setattr(harbor_training_supervisor, "supervise", supervise)
     assert recipe.launch(path)["exit_code"] == 0
+    assert json.loads((Path(manifest["environment"]["RUN_ROOT"]) / "gpu-admission.json").read_text()) == {
+        "available": True,
+        "method": "nvidia-smi-empty-compute-query",
+    }
 
 
 def test_preparation_binds_effective_verl_and_checks_drift(inputs, monkeypatch):
@@ -667,3 +671,63 @@ def test_core_command_cannot_override_bound_step_budget(inputs):
     path.write_text(json.dumps(manifest))
     with pytest.raises(ValueError, match="budget"):
         recipe.check(path)
+
+
+@pytest.mark.parametrize(
+    "output,allowed",
+    [("", True), ("12345\n", False), ("unexpected", False), ("[Insufficient Permissions]\n12345", False)],
+)
+def test_gpu_available_normal_query(monkeypatch, output, allowed):
+    monkeypatch.setattr(recipe.subprocess, "check_output", lambda *a, **kw: output)
+    if allowed:
+        assert recipe.check_gpu_available()["available"] is True
+    else:
+        with pytest.raises(ValueError):
+            recipe.check_gpu_available()
+
+
+@pytest.mark.parametrize("fault", [None, "compute", "graphics", "uuid", "nvml", "memory", "multiple", "none"])
+def test_gpu_available_mig_permission_fallback(monkeypatch, fault):
+    from types import SimpleNamespace
+
+    uuid = "MIG-94de028d-24db-545a-bab5-badf811650ce"
+    listing = "GPU 0: GPU\n  MIG 2g.48gb Device 0: (UUID: " + uuid + ")\n"
+    if fault == "multiple":
+        listing += "  MIG 2g.48gb Device 1: (UUID: MIG-11111111-1111-1111-1111-111111111111)\n"
+    if fault == "none":
+        listing = "GPU 0: GPU\n"
+    monkeypatch.setattr(
+        recipe.subprocess, "check_output", lambda cmd, **kw: listing if "-L" in cmd else "[Insufficient Permissions]\n"
+    )
+
+    def handle(value):
+        assert value == uuid
+        if fault == "nvml":
+            raise RuntimeError("NVML denied")
+        return "handle"
+
+    nvml = SimpleNamespace(
+        nvmlInit=lambda: None,
+        nvmlShutdown=lambda: None,
+        nvmlDeviceGetHandleByUUID=handle,
+        nvmlDeviceGetUUID=lambda h: "wrong" if fault == "uuid" else uuid,
+        nvmlDeviceGetComputeRunningProcesses=lambda h: [object()] if fault == "compute" else [],
+        nvmlDeviceGetGraphicsRunningProcesses=lambda h: [object()] if fault == "graphics" else [],
+        nvmlDeviceGetMemoryInfo=lambda h: SimpleNamespace(total=0 if fault == "memory" else 100, used=2, free=98),
+    )
+    monkeypatch.setitem(sys.modules, "pynvml", nvml)
+    if fault:
+        with pytest.raises(ValueError):
+            recipe.check_gpu_available()
+    else:
+        result = recipe.check_gpu_available()
+        assert result["available"] and result["mig_uuid"] == uuid and result["memory"]["total"] == 100
+
+
+def test_gpu_available_query_error_fails_closed(monkeypatch):
+    def fail(*args, **kwargs):
+        raise recipe.subprocess.TimeoutExpired("nvidia-smi", 15)
+
+    monkeypatch.setattr(recipe.subprocess, "check_output", fail)
+    with pytest.raises(ValueError, match="GPU admission failed"):
+        recipe.check_gpu_available()

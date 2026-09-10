@@ -720,15 +720,65 @@ def check(manifest_path, *, after_run=False):
     return manifest
 
 
+def check_gpu_available():
+    """Fail closed on busy/unknown GPUs; resolve permission-hidden MIG via NVML."""
+    try:
+        output = subprocess.check_output(
+            ["nvidia-smi", "--query-compute-apps=pid", "--format=csv,noheader"], text=True, timeout=15
+        ).strip()
+        if not output:
+            return {"available": True, "method": "nvidia-smi-empty-compute-query"}
+        if any(line.strip() != "[Insufficient Permissions]" for line in output.splitlines()):
+            raise ValueError("GPU is in use or process visibility is unknown; identify its owner first")
+        listing = subprocess.check_output(["nvidia-smi", "-L"], text=True, timeout=15)
+        uuids = re.findall(r"\(UUID: (MIG-[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12})\)", listing)
+        if len(uuids) != 1 or listing.count("MIG ") != 1:
+            raise ValueError("Permission-hidden GPU requires exactly one visible MIG instance")
+        import pynvml
+
+        pynvml.nvmlInit()
+        try:
+            handle = pynvml.nvmlDeviceGetHandleByUUID(uuids[0])
+            actual_uuid = pynvml.nvmlDeviceGetUUID(handle)
+            if isinstance(actual_uuid, bytes):
+                actual_uuid = actual_uuid.decode("ascii")
+            if actual_uuid != uuids[0]:
+                raise ValueError("NVML MIG UUID does not match the visible instance")
+            compute = pynvml.nvmlDeviceGetComputeRunningProcesses(handle)
+            graphics = pynvml.nvmlDeviceGetGraphicsRunningProcesses(handle)
+            if compute != [] or graphics != []:
+                raise ValueError("MIG has active or unknown compute/graphics processes")
+            info = pynvml.nvmlDeviceGetMemoryInfo(handle)
+            memory = {key: getattr(info, key) for key in ("total", "used", "free")}
+            if (
+                any(type(value) is not int or value < 0 for value in memory.values())
+                or memory["total"] <= 0
+                or memory["used"] + memory["free"] > memory["total"]
+            ):
+                raise ValueError("MIG memory visibility is invalid")
+            return {
+                "available": True,
+                "method": "nvml-unique-mig",
+                "mig_uuid": actual_uuid,
+                "compute_process_count": 0,
+                "graphics_process_count": 0,
+                "memory": memory,
+            }
+        finally:
+            pynvml.nvmlShutdown()
+    except Exception as exc:
+        raise ValueError("GPU admission failed; no training process was launched") from exc
+
+
 def launch(manifest_path):
     from deployment.services.harbor_training_supervisor import supervise
 
     manifest = check(manifest_path)
-    if subprocess.check_output(["nvidia-smi", "--query-compute-apps=pid", "--format=csv,noheader"], text=True).strip():
-        raise ValueError("GPU is in use; identify its owner first")
+    gpu_admission = check_gpu_available()
     env = manifest["environment"]
     run = Path(env["RUN_ROOT"])
     run.mkdir(mode=0o700)
+    (run / "gpu-admission.json").write_text(json.dumps(gpu_admission, indent=2) + "\n")
     (run / "chains").mkdir(mode=0o700)
     Path(env["RAY_TMPDIR"]).mkdir(mode=0o700)
     (run / "memory-launch-plan.json").write_text(json.dumps(manifest, indent=2) + "\n")
