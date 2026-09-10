@@ -43,6 +43,12 @@ WS01独立reload已prepare成功并发起：run `core-r4-reload-ws01-r1`，外�
 
 母证据归档完成：`/workspace/reports/core-train-r4-engineering-evidence-20260910.tar.gz`，49,014,953 bytes，SHA256 0a0f6826ae28fe2bd40a448e89055ae921f601b2f6c2c39d5cb5d142cffff54c；338,901成员逐项回读和原件hash复核通过。范围/清单见core-r4-archive.md；不含checkpoint（另存/workspace）、参数报告和活跃reload，不能声称这些已随tar备份。实际volume权限0666如实记录。
 
+15:34 SGT WS01独立reload终态exit0/535.015s，step16 validation dump已写、A/B均fresh/finished/eligible且reward0；next_capability审计母checkpoint未改/正式消费中，不提前标审计passed。
+
+WS03下一题已启动：`core-r4-reload-ws03-r1`、外层PID61243，日志`/root/runs/core-r4-reload-ws03-r1-launch.log`，清单`/root/runs/core-r4-reload-ws03-r1-data/manifest.json`；15:36 GPU准入文件与正式日志已创建，原511/sourcestep16。WS05/06仅prepare未launch。继续串行，不能复用已存在run目录或再启动WS01。
+
+15:38 SGT WS01正式审计passed（core-r4-reload-ws01-result.md/json）：原511 after_run母checkpoint摘要未变、step16实际加载、1val组/2唯一A-B消费；原reward0业务错误保留。摘要持久于/workspace/reports/core-r4-reload-results/ws01，完整reload原轨迹尚未归档。WS03 PID61243在初始化，WS05/06未启动。
+
 ### 紧接着做
 
 - [x] r4首次真实A→冻结→B与完整组消费已核；首步原始跨表证据见core-train-r4-step1-evidence.md。继续监督后续完整运行，不因普通观察超时重启。
