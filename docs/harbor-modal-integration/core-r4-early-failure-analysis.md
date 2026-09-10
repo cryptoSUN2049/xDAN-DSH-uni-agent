@@ -46,8 +46,49 @@ WS01的4个index均保留 capacity=3616、schema_version=3，completed=[initiali
 
 ## 下一学习实验的最小候选
 
-先保留本次16步诊断及其原始结果，不在运行中改协议或奖励。下一候选优先是**工具调用/完成协议的单变量公开诊断**，不是缩减业务任务：在同一模型、真实源、memory隔离与原score_task下，只增加不含本题答案的DSH合法tool-call封装示例；核真实tool/call及结果回传，而非接受聊天中裸JSON作为已执行动作。不能把自动执行任意最终JSON当作“容错修复”，它会改变动作边界。
+先保留本次16步诊断及其原始结果，不在运行中改协议或奖励。此前曾优先建议增加DSH合法tool-call示例，但下文对实际prompt_ids的审计已否定“缺少封装说明/示例”的假设，因此撤回其优先级。现有输入已含工具schema和XML封装示例；新few-shot只能视作具体化/强调位置的另一个实验变量，不能称补齐缺失，更不能无证据优先。也不能自动执行任意最终JSON，它会改变动作边界。
 
-若公开诊断确认封装已可靠、但仍跳过memory，再单独比较“控制器如实列明已存在的memory入口”与当前“入口可能不存在”的恢复提示。只暴露真实文件存在/路径，不暴露配置值、oracle plan、候选答案；仍要求学生自行读取、筛选事实、求解依赖并创建产物。两种改动不要一次合并，否则无法知道哪项起作用。
+保留的最小公开诊断是下文B角色歧义候选：对同题只调整B继承的保存可选措辞及其明确的恢复指令，控制器仅如实说明index存在性，不增加tool few-shot。只暴露真实文件存在/路径，不暴露配置值、oracle plan、候选答案；仍要求学生自行读取、筛选事实、求解依赖并创建产物。该候选尚未证明有效，也不能假设会同时修复裸JSON问题。
 
 候选先各用一个公开WS03和WS01同预算n4观察：真实调用、成功memory读取、必要事实保存、业务奖励方差；不挑成功轨迹、不给格式动作替代业务奖励。确认出现原任务奖励差异后，才考虑新身份的最小RL重复实验；若仍全零，先保留失败诊断，不盲目追加步数。改协议须版本化，不能与r4旧结果混算，不能把该探索性诊断称P2封存效果。
+
+## 短课程与core的B提示对比：只读补证
+
+比较成功短课r1执行commit `b47521df1d6cd6b930ab6ac85ef41c670f2405d2` 与core r4执行commit `511bd71` 的任务/reader构造。旧commit的 `work_state/short_tasks.py` 与当前文件逐字节SHA256相同：`1b422c0f41ff758d665c4539d4dadf2dc58a36197b324c684d94f40ee94a6345`。这只是提示来源核对，不重采样，不改当前提示。
+
+| 方面 | 短课WS07 | core四族 | 解释边界 |
+|---|---|---|---|
+| B检索顺序 | `Read the index, then the handoff it references, before producing results.` | `Recover ... from the memory index if present and your public sources.`；另有 `First read the public task specification and any available memory index before choosing values.` | core也要求先读，但带存在条件；不等于完全未说明检索 |
+| 公共输入 | `reader_files={}`，有用信息只在memory | B有notice/request/policy等公共文件 | 8链中3个B只读notice；不能据此断言公共源存在必然干扰 |
+| 保存/恢复角色措辞 | B明确 `Do not ... change memory.` | A/B共用 `Memory artifacts are optional; organize only useful recovery state.` | 保存可选的A规则带到B，可能与读取已有必要事实混淆；实际B权限仍禁止改memory |
+| 完成条件 | `Only successful file writes count as outputs. Finish after writing the two result files.` | B明确要求create两文件，但没有相同的“实际成功写入后才结束”句式 | 文字承诺后结束仍不符合原任务，不是应判成功的例外 |
+| 文件内容/工具协议 | stage共同说明 `Use command=create ... business JSON text in file_text`，tool-call外壳不是文件正文 | 同样stage说明，且core额外列exact字段、禁止wrapper与虚构动作 | 3个错误产物不是缺失JSON/字段说明；不能靠再次重复schema自动解释为修复 |
+
+**`Memory discovery entry ... (may be missing; do not invent contents).` 在成功短课旧commit的stage.py已存在，core沿用同句。它不是core新增回归。** 短课也有这句但成功，不能把新任务失败单独归因于该句。短课更简单的业务、两文件强制路线和无公共竞争输入同时变化；没有同题受控比较便不能推断任何单句的因果效果。
+
+最直接的实际B证据：step2 `memory-10c8074196704738a3049e7b8a16889f` 的冻结index真实存在且事实完整，但其B最终文字称 `Since the memory discovery entry may be missing, I will focus on the public task specification.`，随后仅承诺创建文件；trace没有工具调用、输出目录为空。来源为已绑定的 `rollouts/2.jsonl` 中uid `4e7def1d-18f7-4f5a-80bc-6f3a286a17b0_1_1`，以及该chain的reader trace/冻结memory；上文dump/crosswalk哈希保持不变。这支持“存在条件被误用”的可测试假设，不证明改句后一定恢复成功。
+
+下一最小诊断候选因此是：在公开WS01/WS03、保持真实A保存/复杂业务/原评分/模型预算不变时，仅替换B继承的保存可选措辞，使用控制器可验证的index存在信息与读取要求；不给配置值、选择答案或oracle plan。先比较实际memory读取与成功文件产物，不把业务降为抄答案。工具裸JSON的4个B是另一协议遵循失败，下面已确认其输入并不缺少封装示例；不同时新增few-shot造成混杂。本轮没有实施这些候选，r4原证据和提示保持不变。
+
+## 实际模型输入已有工具schema与封装示例
+
+只读核验固定模型 `/workspace/models/Qwen3-4B-1cfa9a7/tokenizer_config.json` 的chat_template，并用该目录tokenizer.json反解**已消费step1四条B**的实际NPZ prompt_ids/response_ids。仅CPU、单线程，CUDA_VISIBLE_DEVICES为空，未加载模型权重或重跑生成。
+
+chat_template字符串UTF-8 SHA256为 `a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8`。四个实际prompt均有完整 `str_replace_editor` function schema（含command/path参数），以及明确要求工具调用用XML标签包裹的如下模板示例：
+
+```text
+<tool_call>
+{"name": <function-name>, "arguments": <args-json-object>}
+</tool_call>
+```
+
+这不是只查模板源码后推测生效：四个实际prompt_ids反解均匹配该示例。NPZ位于 `/root/runs/core-train-r4/agent-logs/step_1/<Gateway session>/trajectory.npz`：
+
+| chain | B Gateway session | prompt token数 | NPZ SHA256 |
+|---|---|---:|---|
+| memory-f4003c2f784f47c7ac4ac37a3846ad24 | memory-B-562e03fce6c941988547388891c87902 | 1405 | `71c5c9ff94a1fcc8edb644a566cbbe60a03c9826f78f65f0dffbb97715a4150b` |
+| memory-a9f0c723d1e7400caa2f2bcc86090d86 | memory-B-874b43ccaf6b4c4cab7fd09c4806afa1 | 1400 | `2eaee9de2a3ccafa7d632837085e15d02d031d1a8da3c34a8d045bd55cf6683b` |
+| memory-ee6e21c6a35942cf86367df5366ede27 | memory-B-3b38d3d33b7b49fcb7ecc318e4db89d3 | 1400 | `5a19e8b942f7cfc745910d4681c4fb955372fa965b93e016b6c6e08abe12776e` |
+| memory-07768ef866674faf8dd45db8cb567cce | memory-B-6ed9b2ce89fb41d6ab8012d98c45fc7b | 1385 | `ca055df9e7f516166c16d20c2ad7efe5ba0cf2ec531bb9590e41ab29e02b63be` |
+
+四条实际response_ids均输出 `{"name":"str_replace_editor","arguments":{"command":"view","path":".../reader-data/sources/request.json"}}`（空白格式各异），随后im_end；没有tool_call标签，原始trace工具调用数均0。工具名和command意图正确，但模型没有遵循已提供的调用封装，因此不能把问题归因为缺少schema、Gateway丢掉示例或工具调用已执行。该审计不证明模板最优，也不证明重复示例无效；它只排除“已有输入缺失示例”作为本次优先修复理由。

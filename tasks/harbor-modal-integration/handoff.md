@@ -29,6 +29,8 @@
 
 14:50 SGT新预算修复已隔离部署 `/workspace/rebuild/uni-agent-core-4232df3`，配独立同pin VERL+overlay，旧venv复用；Linux禁CUDA预算17测试通过（28.96秒），仅CPU协议验证。r4仍原511，旧Gateway hash核验未变。待r4训练/reload收尾后再启动新预算GPU canary。部署详细身份见core-token-budget-audit.md末节。
 
+15:06 SGT训练已14/16，step14耗830.516秒、evicted2；原预算wall_seconds=7200，尚未终态。新只读诊断已写core-r4-early-failure-analysis.md：4个已消费B实际prompt含完整工具schema与tool_call示例，故撤回“缺示例”的修复假设；旧成功短课也有maymissing句式，不能称新回归。下一公开单变量候选为B保存/恢复角色歧义与真实index存在信息，不改本轮提示或奖励。
+
 ### 紧接着做
 
 - [x] r4首次真实A→冻结→B与完整组消费已核；首步原始跨表证据见core-train-r4-step1-evidence.md。继续监督后续完整运行，不因普通观察超时重启。
