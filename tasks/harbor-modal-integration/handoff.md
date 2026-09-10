@@ -268,3 +268,5 @@ WS06原件确认：writer agent-result与Session v2最后turn/end均max-tokens�
 core-budget-val-r1，源码4232df3，checkout /workspace/rebuild/uni-agent-core-4232df3，原venv复用；准备清单/root/runs/core-budget-val-r1-data/manifest.json，日志/root/runs/core-budget-val-r1-launch.log。外层PID74137启动后12秒实查存活，尚待加载/实际token/终态；不得重复启动。mode=val，基础Qwen3-4B，WS06-v1-s2001，未加载旧母checkpoint，不是新训练更新。检查A/B各session累计8192与真实token计数、触顶时finish_reason及receipt；若提前完成则不能声称触顶验收通过。WS05原after_run passed及consumption passed/verified已主线程复核，1val组、无errors，原件在其final-audit，尚待本地完整汇总和归档。
 
 四个终态reload和参数审计已归档，12,228文件逐成员/源hash核验，834,802bytes，SHA318c95e9f50fbc2b689534896dabb5c6141dbfc04f6023727ac3cd0cc84e0b68；范围/恢复说明见core-r4-reloads-archive.md。预算run74137在启动3分26秒实查存活，TaskRunner75650已输出resolved配置，尚待实际GPU生成。
+
+WS06原511 after_run来源/母checkpoint复核现已通过，报告SHA5298387c65361f6c8cce3c5392cccce21702b678fd2dec15355be3e28be90e88，见WS06结果文档增量。预算run74137在08:37 UTC仍活跃，vLLM worker77183权重加载完成，尚未观测DSH任务终态。reader新设计待用户明确确认，不将自动goal续行当作批准。
