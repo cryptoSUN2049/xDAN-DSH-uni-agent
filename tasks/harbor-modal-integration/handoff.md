@@ -23,10 +23,12 @@
 - 第8步checkpoint已实查：`/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_8/actor` 中model约8.3G、optimizer127M，以及extra_state、LoRA metadata、HF配置存在；仅落盘核实，未做参数比较/独立reload。运行源码仍511bd71。
 - 新累计预算修复：Gateway真实backend token计数、同session串行、rollback不退款、异常后禁止重试；可信operator给A/B分别8192，轨迹持久化预算快照。255项组合回归、后续113项受影响回归及17项最终边界通过；最终提交前另跑全库Ruff双门。真实GPU预算验收尚待独立新run，不能覆盖r4源码。
 
+14:44 SGT消费覆盖快照见core-r4-consumption-progress.md：已完成步骤1–9，9个独立task、36条AB、72唯一TQ行；WS01两题、WS03四题、WS05三题，WS06尚未进入本范围消费。全部dump score0；并非520条均已训练。终态操作单core-r4-terminal-audit-runbook.md已按既有工具接口整理，尚未执行。
+
 ### 紧接着做
 
 - [x] r4首次真实A→冻结→B与完整组消费已核；首步原始跨表证据见core-train-r4-step1-evidence.md。继续监督后续完整运行，不因普通观察超时重启。
-- [ ] 完成16步后审计独立任务数、奖励分布、梯度、参数与optimizer；区分执行成功与有效学习。
+- [ ] 完成16步后按docs/harbor-modal-integration/core-r4-terminal-audit-runbook.md审计独立任务数、奖励分布、梯度、参数与optimizer；区分执行成功与有效学习。
 - [ ] 母run成功终态后，每族首条公开dev串行独立reload step16；协议core-memory-reload-protocol.md。旧批量评估helper不适用core。
 - [ ] 原始证据归档/workspace、结果/复跑指南、commit/push。
 - [ ] P2设计已在core-memory-p2-evaluation-design.md落盘并review；新增入口尚未实现，需按Human Gate取得实施确认。当前继续已授权P1，不等待该确认。P3仍未完成，公开dev不能改称封存测试。
