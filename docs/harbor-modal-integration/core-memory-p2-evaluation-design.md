@@ -51,7 +51,7 @@ flowchart TD
 
 - 唯一预定后训练策略：该母实验 `global_step_16`。step8 只作为另列的工程/学习曲线检查，不能看封存结果后替换主 checkpoint。step16 不存在或来源不合法，主比较阻断；不得自动回退。
 - base 使用同一固定 revision/权重文件和相同 LoRA 架构的初始状态，禁止加载 short checkpoint。现 `prepare --mode val` 可提供 base；`--mode reload` 提供 step16，母实验必须 completed/exit0。
-- 正常完整链的 A/B 各保持当前 stage 8192 total tokens、4096 per turn、1800秒 runtime、60秒 verifier；模型上下文/response预算、temperature/top-p/top-k、工具与采样并发完整绑定**有效配置**，不能只记录 shell 默认值。单条件 n1，单题 supervisor 3600秒。
+- 正常完整链的 A/B 各保持当前实际预算：每次请求最多4096生成token；Gateway每条trajectory总序列容量16384（8192 prompt配置 + 8192 response配置，包含初始输入、生成和工具上下文），1800秒runtime、60秒verifier。task.yaml虽写max_total_tokens=8192，但当前DSH adapter未执行累计生成上限，不能将其视为已生效硬限制；见[预算审计](core-token-budget-audit.md)。模型预算、temperature/top-p/top-k、工具与采样并发完整绑定**有效配置**，不能只记录shell默认值。单条件n1，单题supervisor 3600秒；未来修预算须固定新版本另建run，不修改r4。
 - normal 与 removed 比较的是 **B 的效果/成本**：A 是共享已发生的前置成本，不重复计入 removed，也不虚报消融省去了 A。两边 B 使用相同预算、模型身份、公共源、工具及提示；仅 memory 字节集合不同。normal 已发生的 B 可以作为该配对的一侧，无需再次生成 normal A。
 - 每题记录 task_id、policy_id、condition、replicate=0。解码随机种子若当前引擎有可验证入口则预注册并绑定；如果没有逐 B RNG 重置合同，不能声称 common-random-number 配对，只能称**按任务配对**。不得为同种子承诺临时改动训练引擎。
 - base 与 step16 的 A 内容允许不同，这是完整记忆能力改善的一部分；消融仅在各自策略内部共享其真实 A。不把 base A 交给 step16 的混合条件偷偷加入主比较。
