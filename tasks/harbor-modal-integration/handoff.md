@@ -280,3 +280,5 @@ WS06原511 after_run来源/母checkpoint复核现已通过，报告SHA5298387c65
 固定5e6b326已Git部署/workspace/rebuild/uni-agent-core-5e6b326，独立配对VERL fefb080+preserve-finish-reason-v1哈希验证。复用原venv，Linux预算22项通过（35.30秒，CUDA禁用）。新core-budget-val-r2准备/root/runs/core-budget-val-r2-data/manifest.json，日志/root/runs/core-budget-val-r2-launch.log；外层PID79055已发起，继续先查存活。相同WS06公开任务、基础模型、val模式；尚待GPU精确触顶reason和正常短路径验收。原4232-r1证据不改写。新reader诊断待明确确认。
 
 WS06正式消费审计已补齐：passed=false、run_completed=false、0组0条，SHA256 16a68fdf0f65e2e15558050097fd00bcce95036102a41c76b0eedf7d6f427d6c，本地core-r4-reload-ws06-consumption.json。G5仅按逐题reload结果和母身份核验要求完成，P1有效更新仍失败。预算r2 PID79055实查06:57存活，模型已加载；正常路径core-budget-normal-r1-data/manifest.json已准备，尚未启动，不与r2重叠。
+
+预算r2已终态740.018秒exit1：实际生成8192、mask0 6014、prompt1495，NPZ hash/有限logprob通过，materialization_reason=max_generated_tokens。真实精确触顶修复验证通过，writer未完成/B未执行，原拒绝保留。证据/workspace/reports/core-budget-val-r2及core-budget-val-r2-result.md/json。下一条normal-r1已启动外层83576，root仍5e6b326，WS01公开题val，原清单/root/runs/core-budget-normal-r1-data/manifest.json；先实查，不重复启动。
