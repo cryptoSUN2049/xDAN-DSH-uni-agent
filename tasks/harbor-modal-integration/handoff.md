@@ -1,11 +1,11 @@
 <!-- 当前恢复目标以active-engineering-goal.md顶部P1→P2→P3为准；立即执行仍为P1的G0—G6。用户已恢复P1→P2→P3 goal，继续推进。 -->
 # Harbor / Modal 工程交接
 
-## 当前运行：core-train-r1
+## 当前推进：修复core-train-r2的CPU资源等待
 
-新Pod216.243.220.120:13918环境已恢复，旧venv复用成功，CUDA实际前后向finite。固定执行源码242dcf0（checkout/workspace/rebuild/uni-agent-core-242dcf0），配对VERL overlay通过。真实core canary 8场景passed，原结果/root/runs/core-canary-newpod-r1/result.json。
+r1未进入训练：MIG权限误判已由5030662修复。r2真实进入Ray并通过MIG门，但TQ要求8个CPU1 placement槽，新Pod Ray total6/available5，永久pending；没有模型加载、首步或checkpoint。2026-09-10只停止owned PG11802后监督exit-15，elapsed1120.028s，PID11555/11937/13481/13631与专属Ray残留均已消失。证据/workspace/reports/core-train-r2-cpu-admission，含operator-stop，不将generic training-exited当成功。
 
-core-train-r1 prepare/check已通过，后台launch PID3017，日志/root/runs/core-train-r1-launch.log，manifest/root/runs/core-train-r1-data/manifest.json。当前仅确认发起，未宣称模型加载/训练完成；48GB MIG首步待核。520train/160dev、16步n4、save8/16，CK/workspace/uni-agent-g1/checkpoint/core-train-r1。下一步只读核原PID和supervision，不因观察超时重启。详见pod-recovery-design.md的恢复命令。
+正在给新core课程固定SimpleStorage.num_data_storage_units=2并TDD；修复发布后新core-train-r3，禁止复用r2。模型/DSH/VERL/任务奖励与16步预算不变。SSH216.243.220.120:13918，48GB MIG，venv已恢复。真实DSH canary8场景passed。当前没有训练作业在运行。
 
 ## 新Pod恢复状态（2026-09-10）
 

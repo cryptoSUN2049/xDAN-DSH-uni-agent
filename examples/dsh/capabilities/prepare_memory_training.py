@@ -491,6 +491,8 @@ def prepare(
     )
     if work_state and mode == "train":
         tail.append("trainer.val_before_train=False")
+    if course_id == "work-state-memory-core-v1":
+        tail.append("transfer_queue.backend.SimpleStorage.num_data_storage_units=2")
     if origin:
         tail.extend(
             [
@@ -637,6 +639,8 @@ def check(manifest_path, *, after_run=False):
         if manifest["counts"] != expected_counts or env["VAL_MAX_SAMPLES"] != str(len(selected)):
             raise ValueError("Work-state evaluation counts/limit changed")
     if course_id == "work-state-memory-core-v1":
+        if overrides.get("transfer_queue.backend.SimpleStorage.num_data_storage_units") != "2":
+            raise ValueError("Core course storage CPU budget changed")
         expected_budget = {
             "TRAIN_MAX_SAMPLES": "520",
             "TOTAL_TRAINING_STEPS": "16" if manifest["mode"] == "train" else "1",

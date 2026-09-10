@@ -130,6 +130,9 @@ def test_actual_shell_hydra_and_native_from_config(inputs, tmp_path, mode, famil
     with initialize_config_dir(config_dir=str(recipe.ROOT / "verl/verl/trainer/config"), version_base=None):
         config = compose(config_name="ppo_trainer", overrides=json.loads(captured.read_text()))
     af = config.actor_rollout_ref.rollout.custom.agent_framework
+    assert config.transfer_queue.backend.SimpleStorage.num_data_storage_units == (
+        2 if course_id == "work-state-memory-core-v1" else 8
+    )
     framework_class = NativeMemoryFramework
     if work_state:
         from uni_agent.framework.work_state import NativeWorkStateFramework
@@ -670,6 +673,20 @@ def test_core_command_cannot_override_bound_step_budget(inputs):
     path = inputs["output_dir"] / "manifest.json"
     path.write_text(json.dumps(manifest))
     with pytest.raises(ValueError, match="budget"):
+        recipe.check(path)
+
+
+@pytest.mark.parametrize("change", ["remove", "override"])
+def test_core_storage_cpu_budget_cannot_drift(inputs, change):
+    manifest = recipe.prepare(**inputs, family="work-state-v1", course_id="work-state-memory-core-v1", mode="train")
+    key = "transfer_queue.backend.SimpleStorage.num_data_storage_units"
+    if change == "remove":
+        manifest["command"] = [arg for arg in manifest["command"] if not arg.startswith(key + "=")]
+    else:
+        manifest["command"].append(key + "=8")
+    path = inputs["output_dir"] / "manifest.json"
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="storage CPU budget"):
         recipe.check(path)
 
 

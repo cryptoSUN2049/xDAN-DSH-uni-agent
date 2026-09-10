@@ -42,3 +42,7 @@
 ## 换Pod恢复：解释器与MIG（2026-09-10）
 
 新Pod220.120:13918保留workspace，但旧venv/bin/python指向容器/usr/local/bin/python已缺失；系统Python3.11不能替代旧3.12.3。固定uv0.9.0与CPython3.12.3装到持久盘，仅补symlink仍因pyvenv.cfg home旧路径找不到encodings；保留原cfg备份后修home到持久解释器bin才成功。实际torch2.11cu130前后向finite、DSH0.1.3a2通过。nvidia-smi整卡统计N/A不代表CUDA坏；本次是MIG2g48gb、CUDA实测50868518912bytes。新/root/runs不存在，创建父目录，不提前创建正式run目录。新Git fetch认证仍可用。以上实际恢复不等于训练完成。
+
+## TQ初始化停滞不是GPU问题
+
+2026-09-10新Pod仅Ray CPU6/可用5，固定VERL的SimpleStorage默认8个CPU1 placement槽。TQ无超时等待pg.ready，Controller已就绪却没有storage/model worker。普通raylet待任务数0不能排除GCS pending placement group；必须核两种队列。原r2无首步，保存GCS/日志后仅SIGTERM owned PG11802，监督exit-15/1120.028s，所有相关进程退出。generic reason=training-exited不是自然训练成功，结合operator-stop解释。新core显式2存储单元，保留其他训练合同。
