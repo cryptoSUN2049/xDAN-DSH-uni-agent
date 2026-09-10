@@ -272,3 +272,5 @@ core-budget-val-r1，源码4232df3，checkout /workspace/rebuild/uni-agent-core-
 WS06原511 after_run来源/母checkpoint复核现已通过，报告SHA5298387c65361f6c8cce3c5392cccce21702b678fd2dec15355be3e28be90e88，见WS06结果文档增量。预算run74137在08:37 UTC仍活跃，vLLM worker77183权重加载完成，尚未观测DSH任务终态。reader新设计待用户明确确认，不将自动goal续行当作批准。
 
 预算val-r1已终态exit1/760.022s，writer达到真实生成8192上限，mask0=6069/prompt1502/total15763，NPZ hash/logprob核验通过。未执行B，旧准入拒绝符合原合同。materialization_reason空值根因是backend恰好length返回后直接finalize，未进入下次零剩余分支；需补精确触顶记录测试/修复（不改正常stop）。证据/workspace/reports/core-budget-val-r1，结果文档core-budget-val-r1-result.md/json。GPU本项目该任务已退出；新诊断设计仍待确认。
+
+精确触顶原因漏记已本地修复，Gateway链上只在decoded length且累计恰好达cap时标记，正常stop不变。组合118测试通过，最后预算22通过；待push后新固定checkout/Linux回归及真实验证，不覆盖4232旧run。

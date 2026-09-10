@@ -9,3 +9,7 @@ core-budget-val-r1，固定4232df3，WS06公开开发题，基础Qwen3-4B，val�
 未完成项：materialization_reason为null；源码显示该原因目前仅在下一次请求进入零剩余分支时由_close_length_exhausted_chain写入。此次最后backend请求已恰好达到预算并返回length，DSH直接结束，没有额外请求，finalize走普通materialize路径。这是精确触顶路径的诊断字段缺口；不能据此否定已实测上限，也不能说所有预算验收已通过。后续修复需覆盖精确触顶length、同token数正常stop、单次max_tokens先触顶与旧无预算路径，不可将恰好计数相等的正常stop强制改为失败。
 
 尚需正常短任务在新版真实完成，以及相应记录修复的回归与新run验证。现有run原件不回写。
+
+## 精确触顶原因修复（后续源码，未回写本run）
+
+新增用例先出现1失败/20通过，复现backend length恰好触顶后直接finalize时原因缺失。修复在commit后的对应ChainState记录generation_exhaustion_reason，materialize时导出；不改变finish_reason、token、奖励或准入。四个边界覆盖精确length、精确正常stop、每请求先触顶、未配置预算；另验证独立chain不会被连带标记。组合Gateway/多chain/框架导出118通过，最后预算22通过。尚未将此新修复部署或宣称真实GPU复验完成。

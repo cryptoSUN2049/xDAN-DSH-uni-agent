@@ -87,6 +87,7 @@ class ChainState:
     video_data: list[Any] | None
     last_assistant_start: LastAssistantStart
     updated_seq: int
+    generation_exhaustion_reason: str | None = None
 
 
 @dataclass
@@ -365,6 +366,15 @@ class GatewaySession:
                     stop_reason=output.stop_reason,
                 )
                 chain_id = self._commit_generation_to_chain(encoded, assistant_msg)
+                if (
+                    finish_reason == "length"
+                    and self._max_generated_tokens is not None
+                    and self._generated_tokens == self._max_generated_tokens
+                ):
+                    # The runtime may finalize immediately after backend length;
+                    # no subsequent request is required to persist exhaustion.
+                    _, exhausted_chain = self._find_active_chain(chain_id)
+                    exhausted_chain.generation_exhaustion_reason = "max_generated_tokens"
                 if reserved_chain_id is not None:
                     self.reserved_chain_ids.discard(reserved_chain_id)
                     reserved_chain_id = None
@@ -875,6 +885,8 @@ class GatewaySession:
             if type(mark[0]) is int and type(mark[1]) is int and 0 <= mark[0] <= mark[1]
         ]
         trajectory_extra_fields: dict[str, Any] = {}
+        if chain.generation_exhaustion_reason is not None:
+            trajectory_extra_fields["materialization_reason"] = chain.generation_exhaustion_reason
         if marks:
             trajectory_extra_fields["min_global_steps"] = min(mark[0] for mark in marks)
             trajectory_extra_fields["max_global_steps"] = max(mark[1] for mark in marks)
