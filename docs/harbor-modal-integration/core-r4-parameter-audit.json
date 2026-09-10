@@ -1,0 +1,182 @@
+{
+  "run_id": "core-train-r4",
+  "execution_checkout": "/workspace/rebuild/uni-agent-core-511bd71",
+  "execution_head": "511bd71792c7a26af83cb0fe6362cd0f7d5aba96",
+  "remote_report_directory": "/workspace/reports/core-train-r4-parameters",
+  "reports": {
+    "checkpoint-8-to-16.json": {
+      "path": "/workspace/reports/core-train-r4-parameters/checkpoint-8-to-16.json",
+      "sha256": "ad63e8fd3d2fb16076a014b36113c5215507943ae6c96c4dfe504fc26c228466",
+      "summary": {
+        "schema": "dsh.single-rank-lora-delta.v1",
+        "passed": false,
+        "adapter_count": 504,
+        "adapter_changed": 0,
+        "base_count": 399,
+        "base_changed": 0,
+        "before": {
+          "path": "/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_8/actor/model_world_size_1_rank_0.pt",
+          "sha256": "20d8bcd59b631cd1de0e5179f978eef9eae97d23175811eb343c4eecdd074f19"
+        },
+        "after": {
+          "path": "/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_16/actor/model_world_size_1_rank_0.pt",
+          "sha256": "20d8bcd59b631cd1de0e5179f978eef9eae97d23175811eb343c4eecdd074f19"
+        }
+      }
+    },
+    "optimizer-8-to-16.json": {
+      "path": "/workspace/reports/core-train-r4-parameters/optimizer-8-to-16.json",
+      "sha256": "0d7b0be569c7d31fc22370c69397b6a55d77bfad31fc28f448a61e69126fd294",
+      "summary": {
+        "schema": "dsh.native-optimizer-delta.v1",
+        "passed": false,
+        "errors": [
+          "ValueError: All optimizer moments are zero"
+        ],
+        "files": {
+          "before": {
+            "path": "/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_8/actor/optim_world_size_1_rank_0.pt",
+            "sha256": "a39d66d3dd39264356485b486552faab6bf4ef2c6f357d1f08e52d48a55afdcb"
+          },
+          "after": {
+            "path": "/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_16/actor/optim_world_size_1_rank_0.pt",
+            "sha256": "d34aebaa558ab06bd9de989c6a75a4be4a5ff6ad207b900d739307f8e3591c81"
+          }
+        },
+        "input_scope": "Trusted checkpoints produced by this project's own run; weights_only=True, CPU only"
+      }
+    },
+    "invocations.json": {
+      "path": "/workspace/reports/core-train-r4-parameters/invocations.json",
+      "sha256": "6e1b3342b67e49752038e6d76dd6b8fd91c44218e092aa78f4c1574e12e56edf",
+      "summary": [
+        {
+          "tool": "checkpoint_delta",
+          "exit_code": 1,
+          "wall_seconds": 99.645,
+          "command": [
+            "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+            "-m",
+            "deployment.checks.checkpoint_delta",
+            "/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_8/actor/model_world_size_1_rank_0.pt",
+            "/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_16/actor/model_world_size_1_rank_0.pt",
+            "--output",
+            "/workspace/reports/core-train-r4-parameters/checkpoint-8-to-16.json"
+          ]
+        },
+        {
+          "tool": "optimizer_delta",
+          "exit_code": 1,
+          "wall_seconds": 5.578,
+          "command": [
+            "/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python",
+            "-m",
+            "deployment.checks.optimizer_delta",
+            "/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_8/actor/optim_world_size_1_rank_0.pt",
+            "/workspace/uni-agent-g1/checkpoint/core-train-r4/global_step_16/actor/optim_world_size_1_rank_0.pt",
+            "--output",
+            "/workspace/reports/core-train-r4-parameters/optimizer-8-to-16.json"
+          ]
+        }
+      ]
+    },
+    "supplemental-state.json": {
+      "path": "/workspace/reports/core-train-r4-parameters/supplemental-state.json",
+      "sha256": "c398023359dddc9bb26edc81841818c9a4136f795feb9a6469fc6b443a423354",
+      "summary": {
+        "scope": "own run core-train-r4; CPU weights_only; no initial checkpoint comparison",
+        "torch_threads": 1,
+        "cuda_visible_devices": "",
+        "optimizer": {
+          "8": {
+            "active_states": 504,
+            "empty_states": 37,
+            "steps": [
+              16
+            ],
+            "moment_tensors": 1008,
+            "all_finite": true,
+            "nonzero_moment_tensors": 0,
+            "steps_all_finite": true
+          },
+          "16": {
+            "active_states": 504,
+            "empty_states": 37,
+            "steps": [
+              32
+            ],
+            "moment_tensors": 1008,
+            "all_finite": true,
+            "nonzero_moment_tensors": 0,
+            "steps_all_finite": true
+          }
+        },
+        "final_model": {
+          "lora_A": {
+            "tensors": 252,
+            "all_finite": true,
+            "nonzero_tensors": 252,
+            "elements": 15335424
+          },
+          "lora_B": {
+            "tensors": 252,
+            "all_finite": true,
+            "nonzero_tensors": 0,
+            "elements": 17694720
+          },
+          "base": {
+            "tensors": 399,
+            "all_finite": true,
+            "nonzero_tensors": 399,
+            "elements": 4411424256
+          }
+        },
+        "model_stat_unchanged": true,
+        "peft_config.py": {
+          "path": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/peft/tuners/lora/config.py",
+          "sha256": "a9f95e1a143b8320cf2e0a3139f29c807d937876591f5fc1ce24fc4fd7833b59",
+          "evidence": []
+        },
+        "peft_layer.py": {
+          "path": "/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/peft/tuners/lora/layer.py",
+          "sha256": "444bba0e5dbc5c55ed51a288a8366c18aa7ebe533d081312a19347eb48b215b6",
+          "evidence": [
+            {
+              "line": 235,
+              "text": "        elif init_lora_weights == \"eva\":\n            nn.init.zeros_(self.lora_B[adapter_name].weight)\n        elif init_lora_weights == \"orthogonal\":\n            with gather_params_ctx(self.get_base_layer().weight):\n                self.orthogonal_init(adapter_name)"
+            },
+            {
+              "line": 274,
+              "text": "                    raise ValueError(f\"Unknown initialization {init_lora_weights=}\")\n                nn.init.zeros_(self.lora_B[adapter_name].weight)\n                if self.lora_bias[adapter_name]:\n                    nn.init.zeros_(self.lora_B[adapter_name].bias)\n            if adapter_name in self.lora_embedding_A.keys():"
+            },
+            {
+              "line": 276,
+              "text": "                if self.lora_bias[adapter_name]:\n                    nn.init.zeros_(self.lora_B[adapter_name].bias)\n            if adapter_name in self.lora_embedding_A.keys():\n                # Initialize A to zeros and B the same way as the default for nn.Embedding, see:\n                # https://github.com/microsoft/LoRA/blob/4c0333854cb905966f8cc4e9a74068c1e507c7b7/loralib/layers.py#L59-L60"
+            },
+            {
+              "line": 2248,
+              "text": "        elif init_lora_weights == \"eva\":\n            nn.init.zeros_(self.lora_B[adapter_name].weight)\n        elif init_lora_weights == \"orthogonal\":\n            with gather_params_ctx(self.get_base_layer().weight):\n                self.orthogonal_init(adapter_name)"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "init_config_evidence": {
+    "line": 513,
+    "text": "    init_lora_weights: (\n        bool\n        | Literal[\"gaussian\", \"eva\", \"olora\", \"pissa\", \"pissa_niter_[number of iters]\", \"corda\", \"loftq\", \"orthogonal\"]\n    ) = field(\n        default=True,\n        metadata={\n            \"help\": (\n                \"How to initialize the weights of the LoRA layers. \"\n                \"Passing True (default) results in the default initialization from the reference implementation from \"\n                \"Microsoft, with the LoRA B weight being set to 0. This means that without further training, the LoRA \"\n                \"adapter will be a no-op. \"\n                \"Setting the initialization to False leads to random initialization of LoRA A and B, meaning that LoRA \"\n                \"is not a no-op before training; this setting is intended for debugging purposes. \"\n                \"Passing `'gaussian'` results in Gaussian initialization scaled by the LoRA rank for linear and layers. \"\n                \"Passing `'eva'` results in a data-driven initialization of Explained Variance Adaptation. \"\n                \"Passing `'olora'` results in OLoRA initialization. \"\n                \"Passing `'pissa'` results in PiSSA initialization. \""
+  },
+  "conclusion": {
+    "effective_update_verified": false,
+    "comparison_scope": "checkpoint 8 to 16 only; no initial checkpoint loaded",
+    "adapter_delta_zero": true,
+    "base_delta_zero": true,
+    "final_lora_b_zero": true,
+    "optimizer_steps_advanced_but_moments_zero": true,
+    "limitations": [
+      "Do not infer initial-to-final parameter equality from checkpoint 8-to-16 equality alone.",
+      "Final LoRA B zero implies zero LoRA B*A contribution for these adapters; initial/base comparison and full-run gradient evidence remain separate.",
+      "Optimizer step advancement and changed file hashes do not prove nonzero updates."
+    ]
+  }
+}

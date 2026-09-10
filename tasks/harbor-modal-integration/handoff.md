@@ -37,6 +37,8 @@
 
 WS01独立reload已prepare成功并发起：run `core-r4-reload-ws01-r1`，外层PID57046，日志`/root/runs/core-r4-reload-ws01-r1-launch.log`，清单`/root/runs/core-r4-reload-ws01-r1-data/manifest.json`。原511源码、母step16、公开task ws01-v1-s2001；尚待实际加载/回执/终态审计。下一题WS03→WS05→WS06串行，各新run；不能重复启动已有PID。参数审计输出/workspace/reports/core-train-r4-parameters，与GPU推理解耦且禁CUDA。
 
+15:30 SGT参数审计已收尾（core-r4-parameter-audit.md/json）：8→16 model同SHA20d8bcd59b631cd1de0e5179f978eef9eae97d23175811eb343c4eecdd074f19，504adapter/399base变化0；最终252B全零，optimizer内部16→32但1008moments全零。原两工具exit1/passedfalse保留，有效更新未通过。原件/workspace/reports/core-train-r4-parameters。WS01 reload PID57046仍存活，已进入VERL/FSDP初始化，尚未证明step16加载/任务终态。母证据归档另进行中，不能提前标归档完成。
+
 ### 紧接着做
 
 - [x] r4首次真实A→冻结→B与完整组消费已核；首步原始跨表证据见core-train-r4-step1-evidence.md。继续监督后续完整运行，不因普通观察超时重启。
