@@ -262,3 +262,7 @@ WS03正式after_run及消费审计通过，1组2条A/B，业务reward0；见core
 WS06终态补充：2026-09-10 08:24后核outer69492消失，监督器exit1/820.021s/PG69539，health failures0。原日志val组1/1被拒，TrajectoryAuditError:trajectory 0: reward_info must declare finished=true；不是已完成四族成功验收。需继续核原receipt终止原因与原始链，不能仅凭此断定预算超限。正式原件/root/runs/core-r4-reload-ws06-r1，不覆盖或重启旧run。
 
 WS06原件确认：writer agent-result与Session v2最后turn/end均max-tokens，452行，最后step89，B未执行。关键原件6项已保存/workspace/reports/core-r4-reload-results/ws06并回读SHA；见core-r4-reload-ws06-result.md/json。尚非完整目录归档或母hash复核。
+
+## 新预算真实学生验证已发起
+
+core-budget-val-r1，源码4232df3，checkout /workspace/rebuild/uni-agent-core-4232df3，原venv复用；准备清单/root/runs/core-budget-val-r1-data/manifest.json，日志/root/runs/core-budget-val-r1-launch.log。外层PID74137启动后12秒实查存活，尚待加载/实际token/终态；不得重复启动。mode=val，基础Qwen3-4B，WS06-v1-s2001，未加载旧母checkpoint，不是新训练更新。检查A/B各session累计8192与真实token计数、触顶时finish_reason及receipt；若提前完成则不能声称触顶验收通过。WS05原after_run passed及consumption passed/verified已主线程复核，1val组、无errors，原件在其final-audit，尚待本地完整汇总和归档。
