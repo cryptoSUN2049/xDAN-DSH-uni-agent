@@ -605,3 +605,5 @@ Review：本轮只保存/校验资料，无GPU操作或新训练结果；checkpo
 - [x] 2026-09-13 离线审计全部 bootstrap/diagnostics shell 语法，结果通过；等待新 GPU 做实际环境验证。
 
 - [x] 修复 reader-diagnostic.sh 冷启动 help 路径并完成 shell smoke。
+
+- [x] 修复私有 GitHub checkout 的 token 注入与清理路径，并通过 bash -n。

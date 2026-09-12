@@ -99,3 +99,5 @@ venv/workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4
 2026-09-13 离线部署审计：`bash -n deployment/bootstrap/*.sh deployment/diagnostics/*.sh` 全部通过。固定 checkout、VERL frozen sync、DSH 构建与 reader 入口未发现 shell 语法问题；这不替代 Linux/GPU 安装和 CUDA 验证。
 
 2026-09-13：统一诊断脚本修正 `--help/-h` 可在未设置运行环境时正常显示用法；bash -n、help smoke 与 Ruff 双门通过。
+
+2026-09-13：checkout.sh 增加私有 GitHub 的临时 GIT_ASKPASS 支持；仅继承 GH_TOKEN/GITHUB_TOKEN，token 不写入仓库或 git 参数，退出自动删除临时文件。bash -n 通过。
