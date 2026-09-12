@@ -68,6 +68,8 @@ venv/workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4
 
 本节点CPU验收：898 passed；诊断三个模块与stage.py合计行覆盖率90%。结果清单：docs/harbor-modal-integration/core-reader-role-diagnostic-cpu-result.json。旧consumption测试漏传新增budget参数已修复。CLI启动控制使用mock backend测试，CPU真实verifier工件使用合成模型trace；没有新的真实GPU证据。
 
+新增 `deployment/diagnostics/reader-diagnostic.sh` 作为固定参数统一入口；runbook已补充其用法。
+
 本节点主要文件行数（含新增/修改）：
 - examples/dsh/capabilities/diagnose_core_reader.py：419行。
 - examples/dsh/capabilities/reader_diagnostic_evidence.py：237行。

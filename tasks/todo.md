@@ -589,6 +589,7 @@ Review：r4现8/16，checkpoint8已落盘，梯度仍0；预算修复不能替�
 - [x] CPU测试、旧行为回归、CLI/runbook：898 passed；覆盖率90%；Ruff双门通过。
 - [x] 提交并推送本节点（以所在提交及Git远端核对为准）。
 - [ ] GPU恢复后真实canary与16题诊断；本轮不启动GPU。
+- [x] 增加 deployment/diagnostics/reader-diagnostic.sh 固定参数入口，bash -n 与 Ruff 双门通过。
 
 Review：三项独立审查问题（实际runtime/env、manifest路径漂移、读取指标误称）均修复，补相应CPU回归。GPU未启动，P1有效学习仍未通过；下一步按runbook执行真实canary。
 

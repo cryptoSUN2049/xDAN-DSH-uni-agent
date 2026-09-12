@@ -47,6 +47,23 @@ RUN_ROOT=/workspace/uni-agent-g1/diagnostics/reader-canary-$(date -u +%Y%m%dT%H%
 
 父进程必须使用上述绝对 PYTHONPATH 和 `DSH_RUNTIME_MODE=exe`：真实 DSH 子进程在各 branch 目录运行，相对 `.:verl` 在那里失效。启动前还会 probe 该 Python 实际解析的 SDK/runtime 版本、runtime 路径以及 Uni-Agent/VERL import 路径，拒绝声明版本与实际运行版本不同。
 
+## 4. 统一入口脚本
+
+为避免换机时漏传固定参数，可使用 `deployment/diagnostics/reader-diagnostic.sh`。在固定 checkout 根目录设置 `PY`、`MODEL`、`RUNTIME`、`DEVICE`、`RUN_ROOT`，脚本会强制绝对 `PYTHONPATH` 与 `DSH_RUNTIME_MODE=exe`：
+
+```bash
+export PY=/workspace/venvs/uni-agent-rebuild-cf2d3f5/bin/python
+export MODEL=/workspace/models/Qwen3-4B-1cfa9a7
+export RUNTIME=/workspace/venvs/uni-agent-rebuild-cf2d3f5/lib/python3.12/site-packages/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-linux-x64
+export DEVICE=0
+export RUN_ROOT=/workspace/uni-agent-g1/diagnostics/reader-$(date -u +%Y%m%dT%H%M%SZ)
+CANARY=1 deployment/diagnostics/reader-diagnostic.sh prepare
+deployment/diagnostics/reader-diagnostic.sh check
+deployment/diagnostics/reader-diagnostic.sh run
+```
+
+`prepare`、`check`、`run` 必须按顺序执行；每次使用新 `RUN_ROOT`。脚本不安装依赖、不拉取模型、不启动训练。
+
 ## 4. 启动与观察
 
 ```bash
