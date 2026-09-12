@@ -601,3 +601,5 @@ Review：三项独立审查问题（实际runtime/env、manifest路径漂移、�
 - [x] 校验文档、Ruff双门与commit/push，复制最终交接到本机备份目录（以本节点Git核对为准）。
 
 Review：本轮只保存/校验资料，无GPU操作或新训练结果；checkpoint仅云盘，重连后再确认。
+
+- [x] 2026-09-13 离线审计全部 bootstrap/diagnostics shell 语法，结果通过；等待新 GPU 做实际环境验证。

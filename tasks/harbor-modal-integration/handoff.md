@@ -95,3 +95,5 @@ venv/workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4
 - docs/harbor-modal-integration/stage-summary-20260910.md：65行。
 - docs/harbor-modal-integration/stage-backup-20260910.json：35行。
 - tasks/harbor-modal-integration/checkpoint-20260910-reader-ready.md：43行。
+
+2026-09-13 离线部署审计：`bash -n deployment/bootstrap/*.sh deployment/diagnostics/*.sh` 全部通过。固定 checkout、VERL frozen sync、DSH 构建与 reader 入口未发现 shell 语法问题；这不替代 Linux/GPU 安装和 CUDA 验证。
