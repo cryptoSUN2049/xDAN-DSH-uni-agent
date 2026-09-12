@@ -2,6 +2,9 @@
 # Fixed-version reader diagnostic entry. Does not install packages or run VERL training.
 set -euo pipefail
 
+usage() { echo "usage: CANARY=1 $0 prepare | $0 check | $0 run"; }
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then usage; exit 0; fi
+
 : "${PY:?Set PY to the pinned Uni-Agent Python interpreter}"
 : "${MODEL:?Set MODEL to the local pinned model directory}"
 : "${RUNTIME:?Set RUNTIME to the pinned DSH runtime executable}"
@@ -28,7 +31,7 @@ case "${1:-}" in
     exec "$PY" -m examples.dsh.capabilities.diagnose_core_reader run --manifest "$RUN_ROOT/manifest.json"
     ;;
   *)
-    echo "usage: CANARY=1 $0 prepare | $0 check | $0 run" >&2
+    usage >&2
     exit 2
     ;;
 esac
