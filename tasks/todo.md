@@ -607,3 +607,5 @@ Review：本轮只保存/校验资料，无GPU操作或新训练结果；checkpo
 - [x] 修复 reader-diagnostic.sh 冷启动 help 路径并完成 shell smoke。
 
 - [x] 修复私有 GitHub checkout 的 token 注入与清理路径，并通过 bash -n。
+
+- [x] 审计当前 DSH/VERL/model/Harbor pin 与 source lock 一致性并记录。
