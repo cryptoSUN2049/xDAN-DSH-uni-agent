@@ -105,3 +105,7 @@ venv/workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4
 2026-09-13：固定版本一致性离线审计通过，见 `docs/harbor-modal-integration/pin-consistency-audit-20260913.md`；以部署 lock/source lock 为准，历史旧版字符串不作为新运行依据。
 
 2026-09-13：复核发现历史临时CPU路径 `/private/tmp/uni-agent-cpu-20260907` 已失效，bin/python指向系统Python，当前不可导入训练依赖。898项/90%仍为已保存历史证据；重连后应先检查/workspace venv或按uv.lock重建，不得用系统Python重跑并误报。详情见 `docs/harbor-modal-integration/cpu-test-environment-status-20260913.md`。
+
+## 2026-09-14 阶段备份
+
+阶段备份已写入 `docs/harbor-modal-integration/stage-backup-20260914.md`。当前代码与远端均为 `9797c4e`，工作区干净；旧 GPU 已关机，暂无新鲜 GPU 运行证据。恢复时先读该备份，再按固定部署脚本检查 `/workspace` 持久卷和环境，执行 reader canary；不要把历史 898 CPU 测试或 core-train-r4 零梯度结果当作有效学习。
