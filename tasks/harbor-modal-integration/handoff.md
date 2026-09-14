@@ -109,3 +109,46 @@ venv/workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4
 ## 2026-09-14 阶段备份
 
 阶段备份已写入 `docs/harbor-modal-integration/stage-backup-20260914.md`。当前代码与远端均为 `e695158`，工作区干净；旧 GPU 已关机，暂无新鲜 GPU 运行证据。恢复时先读该备份，再按固定部署脚本检查 `/workspace` 持久卷和环境，执行 reader canary；不要把历史 898 CPU 测试或 core-train-r4 零梯度结果当作有效学习。
+# 2026-09-14 GPU canary checkpoint
+
+## TL;DR
+
+- Worktree: `worktree-harbor-modal-integration`。
+- DSH 固定为 `0.1.3-alpha.2 / c389f96bf3`；Uni-Agent `ff4a4ca`；VERL `fefb080`。
+- RunPod `/workspace` 持久盘和 RTX PRO 6000 MIG 设备可见；PyTorch CUDA 与独立 Ray GPU smoke 已通过。
+- r2 曾因 Ray CUDA 环境传递问题卡住；r3 已带 `CUDA_VISIBLE_DEVICES=0` 启动，但尚未产生 trajectory/reward。
+
+## 本轮交付物
+
+- `examples/dsh/ops/launch_qwen3_4b_online_rl.sh`：启动入口默认并显式向 supervisor command 传递 `CUDA_VISIBLE_DEVICES`。
+- Git commits: `a75b10b`, `ea898f2`，均已推送到 GitHub 分支。
+- 服务器运行证据：`/workspace/xDAN-DSH-Uni-agent-harbor/runs/g1-c389-canary-20260914-r1..r3/`。
+
+## 已验证事实
+
+- PyTorch `2.11.0+cu130`，CUDA available，1 个 MIG GPU。
+- Ray 独立 worker 可返回 CUDA=True 和 RTX PRO 6000 MIG 设备。
+- r3 最终 `command.txt` 已包含 `CUDA_VISIBLE_DEVICES=0`。
+- r2/r3 均未生成 rollout、trace、reward 或 checkpoint，不能宣称 RL 闭环完成。
+
+## 当前运行状态
+
+- r2 (`g1-c389-canary-20260914-r2`) 是旧失败实验，遗留 supervisor/main PID `27344/27357`，应在确认后只停止该实验。
+- r3 (`g1-c389-canary-20260914-r3`) 是当前修复实验，仍处于 worker 初始化，PID 记录在其 run root。
+- 服务器可能被其他会话共享；禁止按名称批量 kill 未确认进程。
+
+## 下一步 checklist
+
+- [ ] 安全停止并归档 r2，保留 manifest/log。
+- [ ] 确认只有 r3 使用本项目 Ray session，检查无 `PlatformCUDA not available`。
+- [ ] 观察 vLLM/CUDA 模型加载和首个 DSH trajectory/reward。
+- [ ] 通过完整 group、非零梯度、参数变化、checkpoint/reload。
+- [ ] 运行 train-before/after holdout；再扩大数据或启用 colocate_async。
+
+## 冷启动 checklist
+
+1. 阅读本文件和 `tasks/harbor-modal-integration/active-engineering-goal.md`。
+2. 检查 Git 分支、远程 HEAD 与工作区状态。
+3. SSH 到 RunPod，先读 r3 manifest/log，不启动第二个作业。
+4. 验证 `CUDA_VISIBLE_DEVICES=0`、PyTorch CUDA、Ray GPU resource。
+5. 只在出现真实 trajectory/reward 后继续训练验收。
