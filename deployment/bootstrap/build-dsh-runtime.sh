@@ -4,9 +4,9 @@
 set -euo pipefail
 : "${DSH_SOURCE_ROOT:?Absolute DSH checkout required}"
 : "${DSH_TOOLS_ROOT:?Absolute build tools directory required}"
-DSH_BUILD_REVISION="${DSH_BUILD_REVISION-b2369692ea530007075ebcd18d39fdba0bbd3982}"
+DSH_BUILD_REVISION="${DSH_BUILD_REVISION-c389f96bf3a9b6807cb71ed6bdad5849be0df6d8}"
 case "$DSH_BUILD_REVISION" in
-  7840bced35ee07ebefbdce0106b56dbc00bdc3ef|b2369692ea530007075ebcd18d39fdba0bbd3982) ;;
+  7840bced35ee07ebefbdce0106b56dbc00bdc3ef|b2369692ea530007075ebcd18d39fdba0bbd3982|c389f96bf3a9b6807cb71ed6bdad5849be0df6d8) ;;
   *) printf 'Unsupported DSH_BUILD_REVISION\n' >&2; exit 2 ;;
 esac
 [[ "$DSH_SOURCE_ROOT" = /* && "$DSH_TOOLS_ROOT" = /* ]] || exit 2
