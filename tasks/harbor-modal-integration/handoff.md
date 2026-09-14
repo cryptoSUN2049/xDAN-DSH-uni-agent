@@ -108,4 +108,4 @@ venv/workspace/venvs/uni-agent-rebuild-cf2d3f5；模型/workspace/models/Qwen3-4
 
 ## 2026-09-14 阶段备份
 
-阶段备份已写入 `docs/harbor-modal-integration/stage-backup-20260914.md`。当前代码与远端均为 `9797c4e`，工作区干净；旧 GPU 已关机，暂无新鲜 GPU 运行证据。恢复时先读该备份，再按固定部署脚本检查 `/workspace` 持久卷和环境，执行 reader canary；不要把历史 898 CPU 测试或 core-train-r4 零梯度结果当作有效学习。
+阶段备份已写入 `docs/harbor-modal-integration/stage-backup-20260914.md`。当前代码与远端均为 `e695158`，工作区干净；旧 GPU 已关机，暂无新鲜 GPU 运行证据。恢复时先读该备份，再按固定部署脚本检查 `/workspace` 持久卷和环境，执行 reader canary；不要把历史 898 CPU 测试或 core-train-r4 零梯度结果当作有效学习。
