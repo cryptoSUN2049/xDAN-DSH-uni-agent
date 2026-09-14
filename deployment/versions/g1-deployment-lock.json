@@ -1,6 +1,6 @@
 {
   "schema": "dsh.g1-deployment-lock.v1",
-  "status": "pinned-candidate-training-acceptance-incomplete",
+  "status": "pinned-c389-runtime-built-canary-pending",
   "integration": {
     "repository": "https://github.com/cryptoSUN2049/xDAN-DSH-uni-agent",
     "maintenance_branch": "worktree-harbor-modal-integration",
@@ -20,12 +20,12 @@
   },
   "dsh": {
     "repository": "cryptoSUN2049/xDAN-DSH-Exp",
-    "source_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+    "source_revision": "c389f96bf3a9b6807cb71ed6bdad5849be0df6d8",
     "version": "0.1.3a2",
-    "runtime_binary_sha256": "sha256:d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "runtime_binary_sha256": "sha256:eb9ffd72e4de66b1e91762792a9ef3462180b29ec4c25cea658bc598a53cd791",
     "sdk_wheel_sha256": "sha256:6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
-    "runtime_wheel_sha256": "sha256:59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
-    "private_release_url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/tag/dsh-sdk-0.1.3a2-b236969-linux-x64"
+    "runtime_wheel_sha256": "sha256:30c6824d57ea2f26290e27d5b2361fb8bf226e4219f307d78ec7e35ad315feec",
+    "private_release_url": ""
   },
   "harbor": {
     "version": "0.16.1",
@@ -106,10 +106,9 @@
     "verifier_base_image": "ubuntu@sha256:561618e2c15bf2397621dd04f96926663a3b5616c189cf7e38db7e82f5c538ea"
   },
   "pending_acceptance": [
-    "M2 corrected single-card run with real Gateway token, verifier reward and numerical parameter update",
-    "M2 independent checkpoint reload and same-task reevaluation",
-    "New DSH M1 real updates and independent holdout reload evaluation",
-    "GPU-side clean deployment/rebuild and evidence archive after connection recovery"
+    "SDK wheel digest/source package audit",
+    "DSH c389 canary",
+    "Uni-Agent RL fresh run"
   ],
   "historical_evidence_rule": "Old M1 success and local deployment checks are not evidence that the new full training combination passed.",
   "harbor_t2": {
