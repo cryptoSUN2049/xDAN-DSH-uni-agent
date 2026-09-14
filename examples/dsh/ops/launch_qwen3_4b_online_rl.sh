@@ -5,6 +5,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/lib.sh"
 dsh_select_python
 
+# Ray inherits this variable when it discovers accelerator resources.  An
+# empty value makes CUDA invisible to Ray even though PyTorch can use it.
+export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
+
 MODEL_ID="${MODEL_ID:-Qwen/Qwen3-4B}"
 MODEL_PATH="${MODEL_PATH:-${HOME}/models/Qwen3-4B}"
 DATA_ROOT="${DATA_ROOT:-${HOME}/data/dsh-evolution-v2}"
