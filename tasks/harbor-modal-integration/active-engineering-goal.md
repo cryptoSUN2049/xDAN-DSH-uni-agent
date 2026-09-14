@@ -177,3 +177,17 @@ RSI H1 r1：同模型/任务/预算真实执行，2条独立原始审计通过�
 ## 2026-09-10 已批准 reader 诊断执行节点
 
 用户明确批准后已实施同一真实A产物的原/新reader提示包比较。执行入口 `examples/dsh/capabilities/diagnose_core_reader.py`，操作指南 `docs/harbor-modal-integration/core-reader-role-diagnostic-runbook.md`。该节点不改变P1/P2/P3目标，不提交TQ、不声称参数学习。当前完成CPU工程包；新GPU未接入，本诊断真实执行仍待验收。
+
+## 2026-09-14 新 GPU / c389 恢复目标
+
+外部条件已恢复：RTX PRO 6000 可连接，GitHub DSH/Uni-Agent Deploy Key 已配置。正式基线切换为 DSH `0.1.3-alpha.2` / `c389f96bf3a9b6807cb71ed6bdad5849be0df6d8`；对应 Linux runtime binary SHA256 为 `eb9ffd72e4de66b1e91762792a9ef3462180b29ec4c25cea658bc598a53cd791`，runtime wheel SHA256 为 `30c6824d57ea2f26290e27d5b2361fb8bf226e4219f307d78ec7e35ad315feec`。版本锁已在 `1a20d06` 更新并推送。
+
+- [x] GitHub 服务器直连与双 Deploy Key 验证。
+- [x] c389 源码 checkout、Linux runtime 构建、wheel/hash 核验、Python/CLI smoke。
+- [x] c389 数据 manifest 重新生成并绑定 runtime digest。
+- [x] 旧 b236 run 因版本不一致中止并保留 manifest。
+- [ ] c389 DSH 真实 canary 产生 Session、trajectory、receipt 和 verifier reward。
+- [ ] c389 Uni-Agent→VERL RL 完整组消费、非零梯度、参数变化、checkpoint/reload。
+- [ ] 训练前后 holdout 评估与官方 MemAgent 原生脚本对照。
+
+单卡 canary 暂时显式关闭 `torch_compile`，用于缩短首次初始化和提高可诊断性；性能阶段再单独评估 compile/async。任何 reward、exit 0 或 GPU 功耗都不能替代有效学习证据。
