@@ -101,3 +101,8 @@ CPU命令解释器 `/private/tmp/uni-agent-opd-upgrade-cpu/bin/python`；PYTHONP
 - 两进程已终止，GPU compute-app列表为空。实际checkpoint保留在远端runs/fsdp-lora-save-r3-checkpoint。
 - 新/改文件：deployment/checks/fsdp_lora_merged_export.py；docs同目录fsdp-lora-save-r3.json、fsdp-lora-resume-r4.json、async-lora-validation.md；tasks/lessons、todo及本handoff。
 - 不再重复原生入口实现。下一步用户双卡/域名资源就绪后，先真实preflight，再separate_async训练、权重发布、TQ恢复和独立serving验证。
+
+## 启动条件核查
+- 见docs/verl-uni-agent-harbor-opd-rl/acceptance-status.md完整矩阵。
+- 本地未找到可复用launch/data；本轮远端2次SSH banner超时，文件/占用未知，不能误判远端不存在或停机。
+- 用户已被询问双卡SSH和专用Gateway域名；等待回复。下次先恢复观测，再完成真实preflight和正式训练。当前阻塞审计首次，goal保持active。
