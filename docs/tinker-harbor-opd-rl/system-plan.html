@@ -29,16 +29,17 @@
 <div class="topline"><span class="eyebrow">SYSTEM DESIGN / EXPERIMENT ROADMAP / V1.0</span><button class="button print-button" id="print">打印 / 保存 PDF</button></div>
 <h1>用 Tinker 打通训练闭环，<br>让 9B 学会更强的终端任务。</h1>
 <p class="lead">以 <strong>Qwen3.5-9B</strong> 为 Student，<strong>Qwen3.8-27B</strong> 为 Teacher；复用 Tinker 的训练与采样服务、Cookbook 的 OPD 代码，接入 Harbor 任务与 Modal 沙箱。先证明每个环节正确，再验证能力提升，最后检验能否超过同口径的 Opus 4.6。</p>
-<div class="tagline"><span class="tag">Tinker · 训练 / 采样 / Teacher 评分</span><span class="tag">Harbor · 任务 / 工具 / 评测</span><span class="tag">Modal · 执行沙箱 / 计划中的控制端</span></div>
+<div class="tagline"><span class="tag">Tinker · 训练 / 采样 / Teacher 评分</span><span class="tag">Harbor · 任务 / 工具 / 评测</span><span class="tag">Modal · 沙箱 / 已部署控制端</span></div>
 <div class="statusbar"><span class="status-dot"></span><strong>目前是可验收的系统原型，尚未跑完真实云端训练。</strong></div>
-<div class="note green"><p><strong>充值后实测 · HTTP 200：</strong>账户模型列表已返回，包含 Qwen3.5-9B 和 Qwen3.8-27B，之前的计费阻塞已解除。用户报告充值 10 美元；最小采样/固定评分探针已完成：31 个 prompt token、111 个 action token 获得有效评分。Student 采样与重评分最大差值约 0.273，需核查数值一致性；尚未验收多轮对齐，未启动训练或 Modal sandbox。<a href="scoring-probe-status.json">当前诊断记录</a> · <a href="scoring-probe-billing-history.json">历史计费阻塞</a></p></div>
+<div class="note green"><p><strong>2026-09-15 · 真实任务与评分已验收：</strong>4 个原创任务的 8 次 oracle/nop 检查全部通过，沙箱均已清理。Student 与 Teacher 在 2 个验证任务上均为 2/2；Student 的 6 次交互、1,602 个动作 token 通过实际训练评分路径，4,482 个 prompt／环境位置的 advantage 保持为零。云端控制器已部署且沙箱审计通过；首次训练在日志初始化缺 git 处失败，未发生更新。按用户要求暂停重试，先补齐系统集成与验收。<a href="p0-live-status.json">最新验证摘要</a>。本页是方案快照，尚未连接实时控制服务。</p></div>
+<div class="note blue"><p><strong>系统集成复核：</strong><a href="system-integration-review.md">阅读完整复核与验收方案</a>：官方日志/轨迹/capture、session生命周期、任务资源契约、initial/final参数对比、独立恢复和正式Terminal-Bench兼容。research与debug skills已用于本轮复核；117项整合测试通过，云端更新尚未验收。</p></div>
 <div class="cards four">
 <div class="card"><span class="stat-label">当前训练入口</span><strong>已组合</strong><small>官方 OPD trainer + Harbor reward</small></div>
-<div class="card"><span class="stat-label">历史本地验证</span><strong>42 项</strong><small>测试通过记录；本轮文档不重跑训练测试</small></div>
+<div class="card"><span class="stat-label">真实沙箱审计</span><strong>8 / 8</strong><small>正负对照通过，资源清理已确认</small></div>
 <div class="card"><span class="stat-label">真实训练 / reload</span><strong>待验收</strong><small>尚无实际更新或独立恢复证据</small></div>
 <div class="card"><span class="stat-label">Terminal-Bench 提升</span><strong>未测量</strong><small>超越 Opus 4.6 是研究目标</small></div>
 </div>
-<p class="caption">本地实现 commit <code>f96cc38</code>；上游 Cookbook 基线 <code>485726f</code>；已安装 Tinker SDK <code>0.29.0</code>、Modal SDK <code>1.5.5</code>。账户模型列表已在线确认；单文本采样/评分已完成；数值一致性与多轮对齐仍待验收。本页面是方案与证据快照，不是实时监控面板。</p>
+<p class="caption">轨迹评分实现 commit <code>9d886e6</code>；首版控制器 <code>ee2fd5f</code>；上游 Cookbook 基线 <code>485726f</code>；已安装 Tinker SDK <code>0.29.0</code>、Modal SDK <code>1.5.5</code>。账户模型列表与真实多轮评分已在线确认；更广泛的数值容差验收仍待补齐。本页面是方案与证据快照，不是实时监控面板。</p>
 </header>
 
 <section id="goals">
@@ -267,16 +268,16 @@ tests/test.sh
 <div class="section-head"><span>10</span><h2>当前交付与缺口，一张表看清</h2></div>
 <div class="table-wrap"><table><thead><tr><th>工作项</th><th>已有证据</th><th>下一项验收</th></tr></thead><tbody>
 <tr><td>组合 recipe</td><td><span class="badge done">本地实现</span> <code>harbor_opd_rl.py</code> 三模式、任务分割、官方 trainer。</td><td>真实账户与真实任务运行。</td></tr>
-<tr><td>固定评分探针</td><td><span class="badge done">本地实现</span> capabilities、词表、单序列 sampling/rescoring。</td><td>充值后 capabilities 与单文本评分通过（111 个动作 token）；sample/rescore 最大差值 0.273，数值一致性及多轮对齐仍待验收。</td></tr>
-<tr><td>奖励与 mask</td><td><span class="badge done">本地测试记录</span> 42 项相关测试；strict grader 拒绝旧/缺失/非有限结果。</td><td>oracle/nop、真实边界；同 sandbox 后台进程防篡改仍非完整隔离。</td></tr>
+<tr><td>固定评分探针</td><td><span class="badge done">本地实现</span> capabilities、词表、单序列 sampling/rescoring。</td><td>两个短文本的重复与前缀评分一致；6 次真实交互的 Teacher 评分/mask 通过。采样与重评分仍有有限精度差异，尚无通用容差结论。</td></tr>
+<tr><td>奖励与 mask</td><td><span class="badge done">本地测试记录</span> 95 项相关回归通过；严格评分拒绝缺失/非有限动作分数；8 次真实 oracle/nop 通过。</td><td>扩展任务覆盖；同 sandbox 后台进程防篡改仍非完整隔离。</td></tr>
 <tr><td>训练更新与 checkpoint</td><td><span class="badge done">官方组件已接入</span> LoRA、更新、保存、刷新 sampler。</td><td>实际非零更新、checkpoint URI、新进程 reload 与训练后评估。</td></tr>
-<tr><td>真实训练任务</td><td><span class="badge pending">未准备完成</span> manifest 目前是使用方式，示例目录是占位。</td><td>授权数据、任务族划分、镜像可构建、正负对照。</td></tr>
-<tr><td>纯云端控制器</td><td><span class="badge proposed">本页设计</span> Modal CPU Job +持久化记录。</td><td>代码、部署、恢复测试、费用控制。</td></tr>
+<tr><td>真实训练任务</td><td><span class="badge done">原创冒烟任务已验证</span> 2 train + 2 validation，manifest 与镜像均已运行。</td><td>授权数据、任务族划分、镜像可构建、正负对照。</td></tr>
+<tr><td>纯云端控制器</td><td><span class="badge done">已部署并审计</span> CPU Controller、Secret、Volume及云端子沙箱已实测。</td><td>代码、部署、恢复测试、费用控制。</td></tr>
 <tr><td>能力提升与 Opus 对照</td><td><span class="badge pending">无实验分数</span></td><td>基线 → 消融 → 独立最终评测。</td></tr>
 </tbody></table></div>
 <h3>建议下一批实现清单</h3>
 <ol><li><strong>真实验收包：</strong>多轮 token 对齐、每批 action 评分与非空 mask 校验、task oracle/nop、checkpoint 独立恢复，沿用现有 SDK/Harbor 组件。</li><li><strong>实验执行包：</strong>任务 manifest 审计、baseline 与三模式对照配置、逐任务结果和固定版本的报告。</li><li><strong>云运行包：</strong>Modal CPU 控制包装、Secret/持久存储、批次状态、预算与异常回收。</li></ol>
-<p class="small">以上是待实现范围，不是已存在的新文件或服务。当前仓库状态足以开始 P0；全系统仍须逐项验收。页面不要求先构建一个通用训练平台才能进行最小实验。</p>
+<p class="small">部分组件已完成，实际验收以页首最新验证摘要为准；下方阶段描述保留完整目标，全系统仍须逐项验收。页面不要求先构建一个通用训练平台才能进行最小实验。</p>
 </section>
 
 <section id="sources">

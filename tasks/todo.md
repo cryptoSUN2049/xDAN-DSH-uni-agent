@@ -172,3 +172,13 @@ Review：入口 tasks/tinker-harbor-opd-rl/handoff.md。未取得性能结果。
 - [x] 最小SDK探针完成：31 prompt /111 action tokens，有效Teacher评分。
 - [x] 更新HTML/脱敏JSON/记忆，按用户要求用默认浏览器打开。
 - [ ] 复核sample/rescore最大差0.273；多轮对齐、update/reload仍未完成。
+
+## 2026-09-15 系统集成复核
+- [x] research + debug官方skills阅读和应用，源码逐项审计。
+- [x] 云端Controller部署，容器内nop/oracle审计通过。
+- [x] Student/Teacher两个验证任务均2/2，真实token评分通过。
+- [x] 首次训练缺git失败归档；本地修复，未重新部署。
+- [x] 117项相关整合回归通过。
+- [x] 保存docs/tinker-harbor-opd-rl/system-integration-review.md，修正HTML最新状态。
+- [ ] 按修订方案A-D补齐支撑能力后再重新提交训练；当前依用户要求暂停。
+- [ ] 参数变化、独立reload、官方TB单任务重复、optimizer恢复和控制台。

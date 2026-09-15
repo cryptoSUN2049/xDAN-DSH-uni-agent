@@ -1,58 +1,56 @@
-# Tinker 项目交接
+# Tinker项目交接
 
 ## TL;DR
-系统方案 HTML 已完成，入口 docs/tinker-harbor-opd-rl/system-plan.html。
-主线：Tinker Teacher Qwen3.8-27B / Student Qwen3.5-9B 指令版，Harbor任务与Modal沙箱。
-本地组合代码与历史42测试存在；真实更新/reload/benchmark尚未验收。
-充值后capabilities HTTP200，9B/27B均可见；单文本评分探针已完成，31 prompt /111 action tokens。
-下一步：核查Student sample/rescore差异0.273，完成多轮token对齐；准备独立Harbor任务。
+主线不变：Tinker 9B Student / 27B Teacher，Harbor + Modal + OPD/RL。
+真实任务、Teacher评分、云端Controller与cloud audit通过；117相关测试通过。
+首个云训练在记录代码来源时缺git失败，未参数更新；本地修复尚未重部署。
+用户要求先全面检查集成与验收、不要过度精简；新训练暂停，修订方案已落盘。
+下一步按system-integration-review.md的A-D补齐，再进行一次参数更新与独立恢复验收。
 
 ## 本轮交付物
-- `docs/tinker-harbor-opd-rl/system-plan.html` — 313 行；完整离线HTML：架构、流程、目标、模式、SDK、步骤、云运行与缺口。
-- `docs/tinker-harbor-opd-rl/system-plan-spec.md` — 22 行；HTML设计规格。
-- `docs/tinker-harbor-opd-rl/system-plan-verification.md` — 36 行；浏览器/链接/JS验证及API诊断记录。
-- `docs/tinker-harbor-opd-rl/scoring-probe-status.json` — 27 行；脱敏HTTP402实测状态。
-- `tasks/tinker-harbor-opd-rl/memory.md` — 25 行；项目记忆与最新阻塞。
-- `tasks/lessons.md` — 45 行；SDK签名与billing等待经验。
-- `tasks/todo.md` — 168 行；执行与review记录。
+- `docs/tinker-harbor-opd-rl/system-plan.html` — 314 行。
+- `docs/tinker-harbor-opd-rl/system-integration-review.md` — 166 行。
+- `docs/tinker-harbor-opd-rl/p0-live-status.json` — 72 行。
+- `tasks/todo.md` — 184 行。
+- `tasks/lessons.md` — 52 行。
+- `tasks/tinker-harbor-opd-rl/memory.md` — 15 行。
 - `tasks/tinker-harbor-opd-rl/handoff.md` — 本文件，冷启动入口。
+- 实际实现与原始证据在sibling `../tinker-cookbook-opd-rl`，先读其对应handoff。
 
 ## 设计约束
-复用官方 research skill、Harbor/Modal/OPD trainer，不再扩建2.4T scoring主线。
-Student精确原始token序列供Teacher评分，action mask与target shift对齐。
-区分实现、单测、在线评分、更新、reload、能力提升；禁止相互替代。
-最终Terminal-Bench测试不用于训练；Opus4.6超越目标尚无证据。
-key仅由环境/Secret注入，未持久化本轮凭据；不要从对话复制进项目文件。
+复用官方research/debug、trainer/Store/logtree/capture/evaluator/checkpoint；业务层补控制与验收。
+Student原始token供Teacher评分，动作包含tool-call，环境返回mask0。当前是采样reverse-KL，不声称全词表KL。
+参数变化、独立推理reload、optimizer恢复、任务能力提升是不同证据；不能用controller complete包办。
+所有代码在专用worktree；原始key不入仓库，Tinker Secret已授权创建；用户10美元不是硬预算。
 
-## 已踩坑 / 已发现的真实行为
-SDK0.29.0 compute_logprobs_async直接返回logprob列表；部分Context7旧自动文档错误写为SampleResponse。
-forward_backward_async/optim_step_async返回APIFuture，需再result_async；官方train_step移除辅助mask字段。
-每批Teacher None/非有限分数、全零mask完整拒绝仍待补；HTML契约明确为目标。
-HTTP402时SDK暂停等待billing恢复，可表现为长时间无输出。本轮SDK日志及只读路由均证实402。
-403/1010是urllib诊断中网关响应，标准curl与SDK最终一致为402；不能误读成模型不存在。
-充值前未返回模型列表；充值后单文本采样评分已完成，无训练checkpoint或benchmark得分。
-已查HTML桌面/手机、链接、3模式切换、阶段展开、打印展开、Node语法；无浏览器错误。
+## 已踩坑 / 真实行为
+- 4原创任务8次nop/oracle全部通过且清理；Student/Teacher各2/2，不是正式TB分数。
+- Student 6次交互1602动作token、4482屏蔽位置，通过真实KL路径；均值.16305654。
+- 两短文本重复/前缀评分一致，但sample/rescore仍有最大.0898/.2061差异，通用容差未定。
+- 云端audit验证容器内动态镜像与子sandbox；首次训练日志bootstrap缺git，失败记录已存Volume并下载。
+- Cookbook OPD入口未完整接入RL的轨迹HTML/JSON与eval导出；capture不自动捕获compute_logprobs。
+- preflight/trainer缺统一close；Harbor清理会吞错误；task.toml资源未完整落实。
+- 非零参数比较须保存同一client的initial/final；不能新建随机LoRA作为initial。
+- 基础timing已有；full trace默认关闭、CLI未透传；Plotly可选，缺依赖可能跳过图表。
+- 旧handoff/HTML中的“无key/无资源”过期；最新状态以p0-live-status.json和本文件为准。
 
 ## 下一里程碑任务清单
-- [x] 用户报告充值10美元，复测HTTP200；未查询实际余额。
-- [x] 安全注入key重跑单文本preflight；已完成，凭据未持久保存。
-- [ ] 数值一致性复核：sample/rescore最大差0.273，尚无容差拒绝。
-- [ ] 独立2 train +2 validation任务，Modal oracle/nop与cleanup。
-- [ ] 多轮golden trace、每批评分/有效mask拒绝与故障测试。
-- [ ] 首次hybrid更新、非零更新证据、新sampler与独立reload/后评估。
-- [ ] baseline / OPD / RL / hybrid消融，再决定规模。
-- [ ] Modal CPU控制器、持久化账本、预算与恢复控制；当前为设计。
-- [ ] 同口径最终Terminal-Bench与Opus对照。
+- [ ] 最终Linux无付费bootstrap、来源与依赖清单。
+- [ ] session/logger生命周期、sandbox清理记录。
+- [ ] 官方logtree/rollout/eval/capture与Teacher原始评分审计。
+- [ ] 同client initial checkpoint、adapter比较器与独立reload。
+- [ ] OPD/RL分项与零奖励方差检测，避免无RL信号却宣称已验收。
+- [ ] 门槛通过后新run_id单批更新；官方TB单任务重复验证。
+- [ ] optimizer恢复、任务分层/评估对照、最小Control Panel。
 
-## 分支 / 部署状态
-项目worktree分支worktree-tinker-harbor-opd-rl；本轮仅文档修改，本地提交、无推送/PR/部署。
-实际Cookbook实现sibling ../tinker-cookbook-opd-rl，feat-harbor-opd-rl，commit f96cc38。
-上游基线485726f；参考clone sibling tinker-cookbook-harbor-opd-rl不是Uni-Agent linked worktree。
-本轮充值后评分探针已正常完成，无新训练或Modal资源。HTML检查不等于CI或云训练通过。
+## 分支/部署状态
+项目文档分支worktree-tinker-harbor-opd-rl；Cookbook分支feat-harbor-opd-rl。
+远端部署代码71176ee；本地运行修复76d8ac4；无push/PR。App已部署但无活跃训练。
+训练run hybrid-p0-20260915-01失败；无checkpoint。不要删除App或Volume中的证据。
 
 ## 冷启动 checklist
-1. 读本文件、memory.md与HTML，再读Cookbook runbook和handoff。
-2. git status核对两个worktree。主仓库历史未跟踪文件不要覆盖。
-3. billing已通过真实复测；从scoring-probe-status.json读取最新数值及验收边界。
-4. 从P0继续，不重建工作树或复制训练器。任务路径示例仍需替换为真实数据。
-5. 按实际产物更新验收记录；key与账户身份不写入报告。
+1. 读本文件、memory.md、system-integration-review.md及Cookbook handoff。
+2. git status核对两worktree；不要新建重复目录或触碰主目录用户改动。
+3. 查最新JSON及outputs原始实测；保留失败记录。
+4. 先落实A-D，不能只因为git修好就立刻再跑；用户强调系统完整性和测试验收。
+5. 任何进展写回阶段状态；能力提升与超越Opus仍没有证据。

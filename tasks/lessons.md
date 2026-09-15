@@ -43,3 +43,10 @@
 ## 2026-09-15：Tinker API 验证证据
 - Context7自动生成片段可能与安装SDK签名冲突；compute_logprobs_async返回list，训练async返回APIFuture，分别核对官方API与本地代码。
 - Tinker SDK0.29.0在HTTP402计费问题时暂停并重试；长期等待不能直接归因为代理，也不能把402误读成模型缺失。用无密钥泄露的只读诊断确认服务原始detail。
+
+## 2026-09-15 — 用户要求完整集成与逐项验证
+- 不把系统缩成“能跑trainer”的脚本。先审计官方记录/轨迹/capture、评估、checkpoint、session关闭、任务资源契约与持久化是否实际接入。
+- 在付费模型预检之前，用最终云镜像执行真实日志bootstrap；仅import、dry_run、沙箱oracle都不能发现所有训练支撑依赖（本次git缺失）。
+- 参数非零更新应比较同一client的initial/final adapter；gradnorm、路径存在或采样文本变化不能单独替代。
+- 明确原创smoke与官方Terminal-Bench的不同验收边界；SDK字段存在不等于模型服务能力实测。
+- 用户要求“等等、先考虑完整集成”时暂停新训练提交，保留已完成与失败证据，再提交具体修订方案。

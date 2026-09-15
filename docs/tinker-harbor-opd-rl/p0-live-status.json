@@ -1,0 +1,72 @@
+{
+  "student": {
+    "passed": true,
+    "model": "Qwen/Qwen3.5-9B",
+    "renderer": "qwen3_5",
+    "session_closed": true,
+    "tasks": [
+      {
+        "task": "tree-sha256-manifest",
+        "score": 1.0,
+        "passed": true,
+        "action_tokens": 963
+      },
+      {
+        "task": "repair-service-config",
+        "score": 1.0,
+        "passed": true,
+        "action_tokens": 639
+      }
+    ]
+  },
+  "teacher": {
+    "passed": true,
+    "model": "Qwen/Qwen3.8-27B",
+    "renderer": "qwen3_8_xhigh_reasoning",
+    "session_closed": true,
+    "tasks": [
+      {
+        "task": "tree-sha256-manifest",
+        "score": 1.0,
+        "passed": true,
+        "action_tokens": 1017
+      },
+      {
+        "task": "repair-service-config",
+        "score": 1.0,
+        "passed": true,
+        "action_tokens": 1063
+      }
+    ]
+  },
+  "scoring": {
+    "status": "recorded_trajectory_scoring_passed",
+    "source": "outputs/p0-student-baseline/report.json",
+    "counts": {
+      "datums": 6,
+      "action_tokens": 1602.0,
+      "masked_tokens": 4482.0,
+      "transitions": 6
+    },
+    "metrics": {
+      "teacher_kl": 0.16305653750896454,
+      "teacher_kl/dataset_0": 0.16305654057849212
+    },
+    "nonzero_action_kl_advantages": 1572,
+    "environment_kl_advantage_zero": true,
+    "training_started": false,
+    "limitations": "Actual recorded actions and masks passed the scoring path. No gradient update; finite precision discrepancy and broad semantic coverage are not resolved by this check."
+  },
+  "checked_date": "2026-09-15",
+  "cloud_controller": "deployed_cloud_sandbox_audit_passed",
+  "training_update_verified": false,
+  "checkpoint_reload_verified": false,
+  "web_control_panel": "not_implemented",
+  "training_job": "failed_before_update",
+  "failure_stage": "ml_log.code_state missing git executable",
+  "local_fix_commit": "76d8ac4",
+  "deployed_code_commit": "71176ee",
+  "local_fix_cloud_verified": false,
+  "new_training_submissions": "paused_for_integration_review_at_user_request",
+  "local_regression_tests": 117
+}
