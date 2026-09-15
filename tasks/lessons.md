@@ -268,3 +268,8 @@
 - 用户明确要求合理节点 commit、push、handoff、tasks、goal 更新。完成一批可独立验收的代码后即保存与推送，不让后续实验阻塞已有交付物持久化。
 - 每次 push 前执行全库 Ruff check 与 format --check；handoff 记录实际提交、测试、远端环境和下一步，区分CPU、GPU组件、训练闭环证据。
 - goal 工具仅在真实完成/持续阻塞达到规则时改变状态；进行中的里程碑细节更新到 tasks，不能为“更新进度”误标 complete。
+
+## 2026-09-15：跨会话交付合并后由唯一产品会话执行
+
+- 用户交接PR #3并明确verify-native-training-closure停止重复实施；后续合并、GPU训练和恢复由verl-uni-agent-harbor-opd-rl统一执行。先读recipient-handoff、核最新HEAD/checks，再合并，不再复制另一套训练入口。
+- 合并时保留本会话未提交的独立组件验证增量，不把它与已交付启动器修复重复实现；以当前代码/进程结果纠正handoff中的旧状态。

@@ -1,7 +1,8 @@
 """Single-GPU native VERL FSDP LoRA merged-export component probe.
 
 Uses a real local model and real gradient update. Does not start Ray, rollout
-servers, Harbor jobs, or prove asynchronous publication/checkpoint reload.
+servers, Harbor jobs, or prove asynchronous publication. Optional fresh-process checkpoint recovery
+is verified independently from serving-policy publication.
 """
 
 import argparse
@@ -27,6 +28,8 @@ def main():
     parser.add_argument("--steps", type=int, default=2)
     parser.add_argument("--learning-rate", type=float, default=0.01)
     parser.add_argument("--seed", type=int, default=41)
+    parser.add_argument("--checkpoint-dir", type=Path, help="New native checkpoint directory to save")
+    parser.add_argument("--resume-evidence", type=Path, help="Successful prior probe JSON binding checkpoint files")
     args = parser.parse_args()
     if not 1 <= args.steps <= 10 or not 0 < args.learning_rate <= 0.1:
         parser.error("steps must be 1..10 and learning-rate in (0, 0.1]")
@@ -34,6 +37,8 @@ def main():
         parser.error("model-path must be a local fixed HF snapshot with config.json")
     if args.output.exists():
         parser.error("output already exists; evidence must not be overwritten")
+    if args.checkpoint_dir is not None and args.checkpoint_dir.exists():
+        parser.error("checkpoint-dir must be new")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     report = {
         "schema": "uni-agent.fsdp-lora-merged-export.v1",
@@ -121,11 +126,52 @@ def main():
 
             def tensor_hash(tensor):
                 value = tensor.detach().cpu().contiguous()
-                return hashlib.sha256(value.view(torch.uint8).numpy().tobytes()).hexdigest()
+                return hashlib.sha256(value.reshape(-1).view(torch.uint8).numpy().tobytes()).hexdigest()
 
             def snapshot():
                 with FSDP.summon_full_params(engine.module, writeback=False):
                     return {name: tensor_hash(value) for name, value in engine.module.named_parameters()}
+
+            def optimizer_hash():
+                digest = hashlib.sha256()
+
+                def visit(value):
+                    if isinstance(value, torch.Tensor):
+                        digest.update(str((value.dtype, tuple(value.shape))).encode())
+                        digest.update(tensor_hash(value).encode())
+                    elif isinstance(value, dict):
+                        for key in sorted(value, key=str):
+                            digest.update(repr(key).encode())
+                            visit(value[key])
+                    elif isinstance(value, (tuple, list)):
+                        for item in value:
+                            visit(item)
+                    else:
+                        digest.update(repr(value).encode())
+
+                visit(engine.optimizer.state_dict())
+                return digest.hexdigest()
+
+            if args.resume_evidence is not None:
+                prior = json.loads(args.resume_evidence.read_text())
+                if not prior.get("passed") or prior.get("model_files") != report["model_files"]:
+                    raise RuntimeError("Resume evidence must be successful and bind the same model")
+                checkpoint = Path(prior["checkpoint_path"])
+                observed = {
+                    path.relative_to(checkpoint).as_posix(): digest_file(path)
+                    for path in checkpoint.rglob("*")
+                    if path.is_file()
+                }
+                if not observed or observed != prior["checkpoint_files"]:
+                    raise RuntimeError("Checkpoint files differ from the source evidence")
+                engine.load_checkpoint(str(checkpoint), del_local_after_load=False)
+                if snapshot() != prior["trainer_parameter_hashes"]:
+                    raise RuntimeError("Independent checkpoint load changed trainer parameters")
+                if optimizer_hash() != prior["optimizer_state_sha256"]:
+                    raise RuntimeError("Independent checkpoint load changed optimizer state")
+                report["checkpoint_reload_verified"] = True
+                report["resume_evidence_sha256"] = digest_file(args.resume_evidence)
+                report["restored_optimizer_state_sha256"] = optimizer_hash()
 
             before = snapshot()
             # Match the recipe's native FSDP1 default. Inspect original names
@@ -195,6 +241,18 @@ def main():
             restored = snapshot()
             if updated != restored:
                 raise RuntimeError("Native export permanently changed trainer base or adapter tensors")
+            report["trainer_parameter_hashes"] = restored
+            report["optimizer_state_sha256"] = optimizer_hash()
+            if args.checkpoint_dir is not None:
+                engine.save_checkpoint(str(args.checkpoint_dir.resolve()), global_step=args.steps)
+                report["checkpoint_path"] = str(args.checkpoint_dir.resolve())
+                report["checkpoint_files"] = {
+                    path.relative_to(args.checkpoint_dir).as_posix(): digest_file(path)
+                    for path in args.checkpoint_dir.rglob("*")
+                    if path.is_file()
+                }
+                if not report["checkpoint_files"]:
+                    raise RuntimeError("Native checkpoint produced no files")
             report.update(
                 passed=True,
                 losses=losses,

@@ -115,3 +115,35 @@ compatibility of the failed alternate option.
 This is a real LM update/export component check, not Harbor reward learning,
 NCCL cross-device publication, rollout logprob comparison, or checkpoint reload.
 Those remain separately pending; both flags in the JSON are explicitly false.
+
+## Independent native checkpoint recovery slice
+
+Extend the same component probe with optional `--checkpoint-dir` to save the native
+model/optimizer/extra checkpoint and `--resume-evidence` to start a fresh process,
+load that checkpoint with deletion disabled, and compare all trainer parameter
+hashes and optimizer state with the prior report before another real update.
+The source report binds checkpoint path and every checkpoint file hash. Reject
+changed files before loading. Keep original export-only CLI behavior unchanged.
+Tests: CLI bounds/static checks, then two independent single-GPU invocations; verify
+restored state, additional optimizer step, native merged export and process cleanup.
+This proves native checkpoint recovery as a component, not asynchronous rollout.
+
+### Native save/reload evidence
+
+`fsdp-lora-save-r3.json` passed and binds ten native checkpoint files by SHA256.
+A separate process (`fsdp-lora-resume-r4.json`) verified every checkpoint file,
+loaded via native `engine.load_checkpoint(del_local_after_load=False)`, and matched
+all original trainer parameter hashes and optimizer state hash before updating.
+Native logs also show RNG and scheduler state loads; exact RNG/scheduler equality
+is not separately asserted by this probe.
+
+After recovery, two further real LM updates had finite gradient norms 30.25 and
+27.0, changed all 144 adapter parameters and zero frozen base parameters, and
+changed optimizer state. Native merged export and post-export trainer restoration
+passed again. Losses 3.86408 and 4.94481 are diagnostic outcomes, not an improvement
+claim. Process and CUDA allocation were absent after completion.
+
+This is single-rank native model/optimizer checkpoint recovery, not complete
+trainer dataloader/TQ recovery or serving-policy publication. The checkpoint files
+remain under `/workspace/verl-uni-agent-harbor-opd-rl/runs/fsdp-lora-save-r3-checkpoint`;
+only hash/evidence JSON files are committed, not model weights.

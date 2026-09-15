@@ -87,3 +87,17 @@ CPU命令解释器 `/private/tmp/uni-agent-opd-upgrade-cpu/bin/python`；PYTHONP
 - fsdp-lora-export-r2.json：144 adapter参数更新、base_changed=0、399导出tensor，选定层base+delta精确相等、trainer完整恢复；真实进程exit0。
 - r1额外启用use_orig_params=True导致FSDP前向断言；脚本改回recipe默认False后r2通过。原失败JSON保留。
 - r2完成后核GPU进程释放；尚无双卡发布/独立reload结果。用户的双卡SSH/专用域名回复仍待提供。
+
+## PR #3 已接收
+- 核f43948b四项GitHub检查SUCCESS、MERGEABLE/CLEAN；已合并为2b3eff3，当前产品worktree安全fast-forward。
+- 本地checkpoint save/resume探针未提交增量完整保留。verify-native-training-closure不再实施，由本会话统一执行。
+- 新入口有效dataset预检/绝对step/最终checkpoint规则已纳入；这不代表GPU恢复通过。
+- 单卡save-r3组件已启动，900秒界限；输出runs/fsdp-lora-save-r3.{json,log}及独立checkpoint目录，完成前不得重复启动。
+
+## PR接管后的恢复验收
+- PR #3已MERGED（2b3eff3），产品分支定向49项测试通过；485文件Ruff双门通过。
+- save-r3保存10个native checkpoint文件并逐一hash；resume-r4新进程加载前验证fileshash，加载后全部trainer参数和optimizer哈希精确匹配。
+- resume-r4继续2步非零梯度更新，144 adapter变、base不变，merged导出/恢复再次通过。RNG/scheduler加载有日志，但未逐项断言；trainer/TQ/rollout恢复未验收。
+- 两进程已终止，GPU compute-app列表为空。实际checkpoint保留在远端runs/fsdp-lora-save-r3-checkpoint。
+- 新/改文件：deployment/checks/fsdp_lora_merged_export.py；docs同目录fsdp-lora-save-r3.json、fsdp-lora-resume-r4.json、async-lora-validation.md；tasks/lessons、todo及本handoff。
+- 不再重复原生入口实现。下一步用户双卡/域名资源就绪后，先真实preflight，再separate_async训练、权重发布、TQ恢复和独立serving验证。

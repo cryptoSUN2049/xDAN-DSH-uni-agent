@@ -71,3 +71,5 @@ Modal已接入Worker/executor/isolated Trial可选后端和独立资源清理；
 2026-09-15后续节点：b0b3967接通Modal controller ingress和registry task preparation，217项CPU通过。独立GPU环境完成安装并实际BF16/NCCL/vLLM通过，Framework/Gateway566+3通过。真实Modal生命周期组件两sandbox已确认终止，证据docs同目录modal-provider-smoke-r2.json。没有真实DSH Modal任务/异步GPU训练闭环证据。已通过异步问题向用户请求双卡SSH和本项目专用Gateway域名，等待文本回复期间继续单卡验证。
 
 真实4B LoRA导出r2已通过：144 adapter变、base不变、399tensor导出、选定层base+delta精确相等、trainer哈希精确恢复。r1验证脚本use_orig_params=True与recipe不一致，FSDP前向失败；脚本对齐False后通过，未改VERL产品实现。仍未验证双卡rollout publication/reload，不能宣称完整闭环。
+
+用户明确PR #3交接由当前产品会话统一执行：已核f43948b四项checks并合并为2b3eff3，本地快进且49项定向测试通过。新save-r3/resume-r4真实单卡native checkpoint恢复通过：模型全参数与optimizer精确恢复后继续更新；不等于trainer/TQ或rollout恢复。对方verify-native-training-closure不再推进重复实现。

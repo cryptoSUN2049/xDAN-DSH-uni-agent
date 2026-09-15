@@ -673,3 +673,9 @@ Review：本轮只保存/校验资料，无GPU操作或新训练结果；checkpo
 Review：CPU证据和历史Tinker证据不能代替本分支GPU闭环。当前单卡用于构建/组件验证；用户需要时提供双卡。公网入口和镜像未准备前不能声明Modal可生产运行。
 
 持久化节点：283e3a5（原生loss）、cec4a07（Modal）、3140271（LoRA同步配置）、89ebca9（handoff/tasks）已推送同名分支。Ruff双门479文件通过。总goal保持active，GPU与公网部署验收未完成。
+
+## PR #3 接管（当前产品会话）
+- [x] 读取recipient-handoff，核最新四项检查，通过GitHub合并并本地快进2b3eff3
+- [x] 合并后的启动器定向回归49项通过，Ruff双门485文件通过
+- [x] 单卡原生checkpoint保存与新进程model/optimizer精确恢复（save-r3/resume-r4，通过并继续两步更新）
+- [ ] 双卡真实训练/新权重rollout及OPD角色资源验证（等待用户资源信息）

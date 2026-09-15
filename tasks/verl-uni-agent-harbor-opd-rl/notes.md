@@ -14,3 +14,9 @@
 - r2 PID33362 exited 0. Evidence copied into docs/worktree/fsdp-lora-export-r2.json.
 - 144 changed adapters, zero changed base, 399 exported tensors; selected merged layer and trainer restoration exact.
 - r1 retained; no running export probe remains. Next operation is two-GPU publication/reload, pending user SSH details.
+
+## PR3 / reload terminal checkpoint
+- PR3 merged2b3eff3;49 focused tests passed.
+- save-r3 and resume-r4 both passed; no GPU process left. r4 exact trainer and optimizer restoration + two additional updates.
+- SSH interrupted save observation; direct process/result checks proved it continued and completed, no duplicate job started.
+- Native checkpoint path retained in evidence, no model weights added to repository.
