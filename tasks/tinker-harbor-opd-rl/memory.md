@@ -11,7 +11,11 @@ service-config重写时漏需保留timeout和path字段。小样本无配对seed
 286相关测试通过；10核心综合90.67%/分支83.23%，不是全仓覆盖。训练4+reload2+audit2沙箱cleanup，sessionsclosed。
 原始capture/Store/logtree/eval/trace/checkpoints保留Volume和实现worktree outputs；历史01缺git失败证据不覆盖。
 
-接下来补评估actual SamplingParams、grader原文/末次工具观察/耗时截断；区分度开发集与非零RL；官方TB单任务重复；optimizer恢复；最小Control Panel。
+评估actual SamplingParams、grader原文/末次工具观察/耗时截断已本地补齐，465项相关回归，8实现模块综合86.34%；尚未云复验。先读eval-evidence-validation.md。下一步区分度开发集与非零RL；官方TB单任务重复；optimizer恢复；最小Control Panel。
 当前HTML仍为方案快照，不是实际网页控制台；正式Terminal-Bench与超越Opus4.6均未验证。
 App=tinker-harbor-opd-controller，Volume=tinker-harbor-runs；都保留，不为清理证据而stop/delete。
 实现sibling tinker-cookbook-opd-rl/feat-harbor-opd-rl，所有代码在worktree。用户10美元不是余额/硬预算；不自动扩大付费实验。
+
+此前候选现作为Shell基础补充：OpenThoughts-Agent-v1-RL@39ab71434e90d8f87d2cd69c13b6d8a0cb2c238f；728任务、616original_nl家族，parquet SHA35decc7d...59092c。已静态审查全部归档，未执行。接入先适配/workspace与/output、按家族划分、防task_manifest答案进入sandbox；详见openthoughts-rl-integration.md。
+
+用户现确认公开Harbor训练、Terminal-Bench2.1独立评测（Hub89题/rev6，正式运行需锁版本）。TaskTrove三源5830题已下载；首批6候选兼容状态见public-dataset-status.json，未云运行。joint-opd-rl-reference.md可给另一个会话：131回归+4本地payload通过，真实P0复算RL0、OPD1138；不能报告双非零云学习或能力提升。

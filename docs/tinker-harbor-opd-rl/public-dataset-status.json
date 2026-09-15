@@ -1,0 +1,424 @@
+{
+  "schema_version": 1,
+  "dataset_id": "open-thoughts/TaskTrove",
+  "revision": "96567362fa3c41208e0954317c53767023b420eb",
+  "source_files": [
+    {
+      "source": "DCAgent__exp_rpt_curriculum-medium-v2",
+      "url": "https://huggingface.co/datasets/open-thoughts/TaskTrove/resolve/96567362fa3c41208e0954317c53767023b420eb/DCAgent__exp_rpt_curriculum-medium-v2/tasks.parquet",
+      "bytes": 1921667,
+      "sha256": "e8e02f13ab7fedfdb17d0f00828e8d3910544125dde65b989522e31118558df0",
+      "task_count": 489
+    },
+    {
+      "source": "DCAgent__exp_rpt_stack-pytest-v2",
+      "url": "https://huggingface.co/datasets/open-thoughts/TaskTrove/resolve/96567362fa3c41208e0954317c53767023b420eb/DCAgent__exp_rpt_stack-pytest-v2/tasks.parquet",
+      "bytes": 1775502,
+      "sha256": "5ac0015d8f7711e80d7536afd316d02a3905edc9df6f6491fa632d5b2de16a47",
+      "task_count": 499
+    },
+    {
+      "source": "DCAgent__exp_rpt_multifile-v3",
+      "url": "https://huggingface.co/datasets/open-thoughts/TaskTrove/resolve/96567362fa3c41208e0954317c53767023b420eb/DCAgent__exp_rpt_multifile-v3/tasks.parquet",
+      "bytes": 24973833,
+      "sha256": "d5b6fa4b4cf99956fce991ab8eb634a1706e39a777aef93d60a7a77bee69ac55",
+      "task_count": 4842
+    }
+  ],
+  "downloaded_tasks": 5830,
+  "downloaded_bytes": 28671002,
+  "extracted_candidate_tasks": 6,
+  "candidate_expanded_bytes": 71381,
+  "candidate_manifest": "outputs/datasets/tasktrove/96567362fa3c41208e0954317c53767023b420eb/candidates-v1/candidate-manifest.json",
+  "load_manifest_passed": true,
+  "split_status": "provisional_candidates",
+  "model_calls": 0,
+  "sandbox_runs": 0,
+  "training_ready": false,
+  "tasks": [
+    {
+      "source": "DCAgent__exp_rpt_curriculum-medium-v2",
+      "task": "curriculum-medium-0002",
+      "original_task_path": "curriculum-medium-0002",
+      "local_path": "outputs/datasets/tasktrove/96567362fa3c41208e0954317c53767023b420eb/candidates-v1/DCAgent__exp_rpt_curriculum-medium-v2/curriculum-medium-0002",
+      "archive_sha256": "114707b0921539fde0dc14be49c0bb79116473ddc876b2b79b6198d68cb17433",
+      "files_sha256": {
+        "environment/Dockerfile": "abb2a3d5bd07e9db9da3142830e74f8ae3465fd730a5368e1d1e6d9333535b11",
+        "instruction.md": "a4bd9ecc05523016f538145dcdc5f9763a6248526ce5ee13215fb98115c78862",
+        "metadata.json": "c84e5c0cb17731839a556bc10a22d2fc27aad5bcbe51818ddbd144d2fcc81d21",
+        "setup_files/test_curriculum.py": "a59385f2a55678d3cc6bc7107db8e255edf43d2082b2cb0672f450d36ffbf1c9",
+        "task.toml": "183f5629d8cbf3319abde8168585ade8b85a0b7d4cb9c7523b1a3ca62cfe63f1",
+        "tests/test.sh": "3f9bf7818fecdcad30117a4753e7c1bfa34946bb20d4836a2118dc6b69c6a5c1",
+        "tests/test_curriculum.py": "a59385f2a55678d3cc6bc7107db8e255edf43d2082b2cb0672f450d36ffbf1c9"
+      },
+      "expanded_bytes": 18945,
+      "metadata_source": "stack-pytest-0002",
+      "oracle_present": false,
+      "public_setup_files_present": true,
+      "shell_syntax_passed": [
+        "tests/test.sh"
+      ],
+      "python_syntax_passed": true,
+      "compatibility": {
+        "resource_fields_accepted": true,
+        "contract": {
+          "modal_options": {
+            "cpu": 1,
+            "memory": 512,
+            "block_network": false
+          },
+          "sandbox_timeout_seconds": 600,
+          "requested_storage_mb": null,
+          "storage_policy": "backend_managed_no_task_quota",
+          "declared_agent_timeout": 900.0,
+          "declared_verifier_timeout": 720.0,
+          "timeout_policy": "explicit_recipe_overrides_task_timeouts",
+          "tool_workdir": "/",
+          "grader_workdir": "/root",
+          "shell_policy": "fresh_bash_lc_per_command"
+        }
+      },
+      "runtime_status": "not_run",
+      "training_ready": false,
+      "source_families": [
+        "stack-pytest-0002"
+      ],
+      "source_family_status": "metadata_based_not_semantic_deduplication",
+      "workdir_required": "/app",
+      "tool_workdir_current": "/",
+      "public_test_contract": [
+        "setup_files/test_curriculum.py"
+      ],
+      "public_setup_mount_supported_currently": false,
+      "known_runtime_gaps": [
+        "tool_workdir",
+        "trusted_reference_solution",
+        "cloud_environment_verification",
+        "declared_public_setup_files_mount"
+      ]
+    },
+    {
+      "source": "DCAgent__exp_rpt_curriculum-medium-v2",
+      "task": "curriculum-medium-0004",
+      "original_task_path": "curriculum-medium-0004",
+      "local_path": "outputs/datasets/tasktrove/96567362fa3c41208e0954317c53767023b420eb/candidates-v1/DCAgent__exp_rpt_curriculum-medium-v2/curriculum-medium-0004",
+      "archive_sha256": "3ab55f017468b8a6bc5972e66aceda3a4aca233336c4eb349c39b8c223fe341e",
+      "files_sha256": {
+        "environment/Dockerfile": "abb2a3d5bd07e9db9da3142830e74f8ae3465fd730a5368e1d1e6d9333535b11",
+        "instruction.md": "917ce5e93bcd249176889a553b31f7057c7d6a00c07fc82adac1174d11783607",
+        "metadata.json": "98d48543790b2c20aa9d5c711be82b23c1ae2aace02675445b0d4e45b95e28eb",
+        "setup_files/test_curriculum.py": "762016d9708c14b52500347842b60b97e4263fd00f342b690f0f904fd1f0825f",
+        "task.toml": "183f5629d8cbf3319abde8168585ade8b85a0b7d4cb9c7523b1a3ca62cfe63f1",
+        "tests/test.sh": "3f9bf7818fecdcad30117a4753e7c1bfa34946bb20d4836a2118dc6b69c6a5c1",
+        "tests/test_curriculum.py": "762016d9708c14b52500347842b60b97e4263fd00f342b690f0f904fd1f0825f"
+      },
+      "expanded_bytes": 8504,
+      "metadata_source": "stack-pytest-0004",
+      "oracle_present": false,
+      "public_setup_files_present": true,
+      "shell_syntax_passed": [
+        "tests/test.sh"
+      ],
+      "python_syntax_passed": true,
+      "compatibility": {
+        "resource_fields_accepted": true,
+        "contract": {
+          "modal_options": {
+            "cpu": 1,
+            "memory": 512,
+            "block_network": false
+          },
+          "sandbox_timeout_seconds": 600,
+          "requested_storage_mb": null,
+          "storage_policy": "backend_managed_no_task_quota",
+          "declared_agent_timeout": 900.0,
+          "declared_verifier_timeout": 720.0,
+          "timeout_policy": "explicit_recipe_overrides_task_timeouts",
+          "tool_workdir": "/",
+          "grader_workdir": "/root",
+          "shell_policy": "fresh_bash_lc_per_command"
+        }
+      },
+      "runtime_status": "not_run",
+      "training_ready": false,
+      "source_families": [
+        "stack-pytest-0004"
+      ],
+      "source_family_status": "metadata_based_not_semantic_deduplication",
+      "workdir_required": "/app",
+      "tool_workdir_current": "/",
+      "public_test_contract": [
+        "setup_files/test_curriculum.py"
+      ],
+      "public_setup_mount_supported_currently": false,
+      "known_runtime_gaps": [
+        "tool_workdir",
+        "trusted_reference_solution",
+        "cloud_environment_verification",
+        "declared_public_setup_files_mount"
+      ]
+    },
+    {
+      "source": "DCAgent__exp_rpt_stack-pytest-v2",
+      "task": "stack-pytest-0000",
+      "original_task_path": "stack-pytest-0000",
+      "local_path": "outputs/datasets/tasktrove/96567362fa3c41208e0954317c53767023b420eb/candidates-v1/DCAgent__exp_rpt_stack-pytest-v2/stack-pytest-0000",
+      "archive_sha256": "f7de0fb7ab5187f009fb502007946c6ce4cc069390d45698b08ffa77f81ad4cf",
+      "files_sha256": {
+        "instruction.md": "7825d8749751eac78e3d517c3d836154a4b6db439d6b44a8bbc8a069f5b7a0ca",
+        "metadata.json": "8d1d32659f774bb963af1a0a6bda45d5a72fbea1932f9a2abc915ae4080aab41",
+        "task.toml": "ad2bea636003cf2d305253881e0ab69feabfbf64028ec94557e0b47fcc8ac5db",
+        "environment/Dockerfile": "3646217e6b42de96d4eafa200a32805ec02af7121690dcba5957f152e6c8fb96",
+        "tests/test.sh": "bb4f89517c830c649b972cfd85034a0bb4ebfe7f840c9da4ac0faf7db0255ca3",
+        "tests/test_solution.py": "59ffb5bb8e596e3366e50f23805df42efd2d58ca64bb681e693b2f4b9fe43f86"
+      },
+      "expanded_bytes": 10809,
+      "metadata_source": null,
+      "oracle_present": false,
+      "public_setup_files_present": false,
+      "shell_syntax_passed": [
+        "tests/test.sh"
+      ],
+      "python_syntax_passed": true,
+      "compatibility": {
+        "resource_fields_accepted": true,
+        "contract": {
+          "modal_options": {
+            "cpu": 1,
+            "memory": 512,
+            "block_network": false
+          },
+          "sandbox_timeout_seconds": 600,
+          "requested_storage_mb": null,
+          "storage_policy": "backend_managed_no_task_quota",
+          "declared_agent_timeout": 900.0,
+          "declared_verifier_timeout": 720.0,
+          "timeout_policy": "explicit_recipe_overrides_task_timeouts",
+          "tool_workdir": "/",
+          "grader_workdir": "/root",
+          "shell_policy": "fresh_bash_lc_per_command"
+        }
+      },
+      "runtime_status": "not_run",
+      "training_ready": false,
+      "source_families": [
+        "stack-pytest-0000"
+      ],
+      "source_family_status": "metadata_based_not_semantic_deduplication",
+      "workdir_required": "/app",
+      "tool_workdir_current": "/",
+      "public_test_contract": [],
+      "public_setup_mount_supported_currently": null,
+      "known_runtime_gaps": [
+        "tool_workdir",
+        "trusted_reference_solution",
+        "cloud_environment_verification",
+        "verifier_dependency_failure_classification"
+      ]
+    },
+    {
+      "source": "DCAgent__exp_rpt_stack-pytest-v2",
+      "task": "stack-pytest-0008",
+      "original_task_path": "stack-pytest-0008",
+      "local_path": "outputs/datasets/tasktrove/96567362fa3c41208e0954317c53767023b420eb/candidates-v1/DCAgent__exp_rpt_stack-pytest-v2/stack-pytest-0008",
+      "archive_sha256": "04db47f22cba4f3cf099162833acc0190363aadab2e9eb50ef006e615734f614",
+      "files_sha256": {
+        "instruction.md": "707db7071a818c3975ee2be14e76b16990407ad938834251194790ed50ca0450",
+        "metadata.json": "ebbe03d4e2b0e6ad3fdc9d87fcc85136be3b365a836e2edecc66c5e70657bbae",
+        "task.toml": "ad2bea636003cf2d305253881e0ab69feabfbf64028ec94557e0b47fcc8ac5db",
+        "environment/Dockerfile": "3646217e6b42de96d4eafa200a32805ec02af7121690dcba5957f152e6c8fb96",
+        "tests/test.sh": "bb4f89517c830c649b972cfd85034a0bb4ebfe7f840c9da4ac0faf7db0255ca3",
+        "tests/test_solution.py": "90e624ec576163947f9ddc12923ba86767de5ab9f02b4bcac1f29c7754ce27fd"
+      },
+      "expanded_bytes": 5051,
+      "metadata_source": null,
+      "oracle_present": false,
+      "public_setup_files_present": false,
+      "shell_syntax_passed": [
+        "tests/test.sh"
+      ],
+      "python_syntax_passed": true,
+      "compatibility": {
+        "resource_fields_accepted": true,
+        "contract": {
+          "modal_options": {
+            "cpu": 1,
+            "memory": 512,
+            "block_network": false
+          },
+          "sandbox_timeout_seconds": 600,
+          "requested_storage_mb": null,
+          "storage_policy": "backend_managed_no_task_quota",
+          "declared_agent_timeout": 900.0,
+          "declared_verifier_timeout": 720.0,
+          "timeout_policy": "explicit_recipe_overrides_task_timeouts",
+          "tool_workdir": "/",
+          "grader_workdir": "/root",
+          "shell_policy": "fresh_bash_lc_per_command"
+        }
+      },
+      "runtime_status": "not_run",
+      "training_ready": false,
+      "source_families": [
+        "stack-pytest-0008"
+      ],
+      "source_family_status": "metadata_based_not_semantic_deduplication",
+      "workdir_required": "/app",
+      "tool_workdir_current": "/",
+      "public_test_contract": [],
+      "public_setup_mount_supported_currently": null,
+      "known_runtime_gaps": [
+        "tool_workdir",
+        "trusted_reference_solution",
+        "cloud_environment_verification",
+        "verifier_dependency_failure_classification"
+      ]
+    },
+    {
+      "source": "DCAgent__exp_rpt_multifile-v3",
+      "task": "multifile-0003",
+      "original_task_path": "multifile-0003",
+      "local_path": "outputs/datasets/tasktrove/96567362fa3c41208e0954317c53767023b420eb/candidates-v1/DCAgent__exp_rpt_multifile-v3/multifile-0003",
+      "archive_sha256": "bab28ddb782070b794e4d3ab9548a84f39ca9cbc859c6014298368b97bab0218",
+      "files_sha256": {
+        "environment/Dockerfile": "abb2a3d5bd07e9db9da3142830e74f8ae3465fd730a5368e1d1e6d9333535b11",
+        "instruction.md": "fd2158e6abba9411b773d27754b93c16b959cbe90dd2cc31b6928ea53e7b1ef8",
+        "metadata.json": "d7343dd1ff001a0ade5ed026b1158fb0fe16ba40fb1b0999c19ecccab27ffce3",
+        "setup_files/test_multifile.py": "907485300fb26140491f13cc96c6901f14f7ec9df5110bc496ec786cf7dd0225",
+        "task.toml": "25bc325338ebc4d7de7d51c7f30fd00c0876e34f00afac2cafe8109997c8db62",
+        "tests/test.sh": "2a1614d36b43c146bb65ef1de2e5060e9b855d92c231bb3bba098beead75482d",
+        "tests/test_multifile.py": "907485300fb26140491f13cc96c6901f14f7ec9df5110bc496ec786cf7dd0225"
+      },
+      "expanded_bytes": 15984,
+      "metadata_source": null,
+      "oracle_present": false,
+      "public_setup_files_present": true,
+      "shell_syntax_passed": [
+        "tests/test.sh"
+      ],
+      "python_syntax_passed": true,
+      "compatibility": {
+        "resource_fields_accepted": true,
+        "contract": {
+          "modal_options": {
+            "cpu": 1,
+            "memory": 512,
+            "block_network": false
+          },
+          "sandbox_timeout_seconds": 600,
+          "requested_storage_mb": 4096,
+          "storage_policy": "backend_managed_no_task_quota",
+          "declared_agent_timeout": 900.0,
+          "declared_verifier_timeout": 720.0,
+          "timeout_policy": "explicit_recipe_overrides_task_timeouts",
+          "tool_workdir": "/",
+          "grader_workdir": "/root",
+          "shell_policy": "fresh_bash_lc_per_command"
+        }
+      },
+      "runtime_status": "not_run",
+      "training_ready": false,
+      "source_families": [
+        "selfinstruct-naive-00009",
+        "selfinstruct-naive-00010",
+        "selfinstruct-naive-00011"
+      ],
+      "source_family_status": "metadata_based_not_semantic_deduplication",
+      "workdir_required": "/app",
+      "tool_workdir_current": "/",
+      "public_test_contract": [
+        "setup_files/test_multifile.py"
+      ],
+      "public_setup_mount_supported_currently": false,
+      "known_runtime_gaps": [
+        "tool_workdir",
+        "trusted_reference_solution",
+        "cloud_environment_verification",
+        "declared_public_setup_files_mount"
+      ]
+    },
+    {
+      "source": "DCAgent__exp_rpt_multifile-v3",
+      "task": "multifile-0008",
+      "original_task_path": "multifile-0008",
+      "local_path": "outputs/datasets/tasktrove/96567362fa3c41208e0954317c53767023b420eb/candidates-v1/DCAgent__exp_rpt_multifile-v3/multifile-0008",
+      "archive_sha256": "5738e088c8526ed283d6143fea510eacbe055a59dbacd64fe4923149e73e209e",
+      "files_sha256": {
+        "environment/Dockerfile": "abb2a3d5bd07e9db9da3142830e74f8ae3465fd730a5368e1d1e6d9333535b11",
+        "instruction.md": "a907d273032ee947017f1b4764b48550a32ed4efae34ab209550d73453a0d511",
+        "metadata.json": "dd41eb53c3a6d2b404eff4247e0840a39b68ec6b3ce0aeca67e3dd7669bde829",
+        "setup_files/test_multifile.py": "ae4a2e41ad0d32ac945ac9f847df79818309a7ceeb55c233fa123fa2e8b54158",
+        "task.toml": "25bc325338ebc4d7de7d51c7f30fd00c0876e34f00afac2cafe8109997c8db62",
+        "tests/test.sh": "2a1614d36b43c146bb65ef1de2e5060e9b855d92c231bb3bba098beead75482d",
+        "tests/test_multifile.py": "ae4a2e41ad0d32ac945ac9f847df79818309a7ceeb55c233fa123fa2e8b54158"
+      },
+      "expanded_bytes": 12088,
+      "metadata_source": null,
+      "oracle_present": false,
+      "public_setup_files_present": true,
+      "shell_syntax_passed": [
+        "tests/test.sh"
+      ],
+      "python_syntax_passed": true,
+      "compatibility": {
+        "resource_fields_accepted": true,
+        "contract": {
+          "modal_options": {
+            "cpu": 1,
+            "memory": 512,
+            "block_network": false
+          },
+          "sandbox_timeout_seconds": 600,
+          "requested_storage_mb": 4096,
+          "storage_policy": "backend_managed_no_task_quota",
+          "declared_agent_timeout": 900.0,
+          "declared_verifier_timeout": 720.0,
+          "timeout_policy": "explicit_recipe_overrides_task_timeouts",
+          "tool_workdir": "/",
+          "grader_workdir": "/root",
+          "shell_policy": "fresh_bash_lc_per_command"
+        }
+      },
+      "runtime_status": "not_run",
+      "training_ready": false,
+      "source_families": [
+        "selfinstruct-naive-00024",
+        "selfinstruct-naive-00025",
+        "selfinstruct-naive-00026"
+      ],
+      "source_family_status": "metadata_based_not_semantic_deduplication",
+      "workdir_required": "/app",
+      "tool_workdir_current": "/",
+      "public_test_contract": [
+        "setup_files/test_multifile.py"
+      ],
+      "public_setup_mount_supported_currently": false,
+      "known_runtime_gaps": [
+        "tool_workdir",
+        "trusted_reference_solution",
+        "cloud_environment_verification",
+        "declared_public_setup_files_mount"
+      ]
+    }
+  ],
+  "phase": "public_data_imported_runtime_not_validated",
+  "official_terminal_bench_use": "Terminal-Bench 2.1 reserved for independent evaluation per user",
+  "rejected_candidates": [
+    {
+      "source": "DCAgent__exp_rpt_stack-pytest-v2",
+      "task": "stack-pytest-0007",
+      "review_notes": [
+        "Instruction says ptz=False for all users; test_users asserts usera.ptz is true. Exclude pending an explicit upstream repair."
+      ]
+    },
+    {
+      "source": "DCAgent__exp_rpt_multifile-v3",
+      "task": "multifile-0001",
+      "review_notes": [
+        "Specification forbids read-only keys in from_external, but round-trip test supplies those keys and expects success. Do not repair it silently or use it as a correctness gate."
+      ]
+    }
+  ],
+  "provisional_family_overlap": [],
+  "verified_runtime_tasks": 0
+}

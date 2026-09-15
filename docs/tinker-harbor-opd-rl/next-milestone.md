@@ -1,6 +1,6 @@
 # P0之后：评估证据与有效学习信号
 
-2026-09-15。前置证据见[p0-cloud-closed-loop.md](p0-cloud-closed-loop.md)。本文件细化既有F/G里程碑；目前仅方案，尚未执行新训练或新评估。
+2026-09-15。前置证据见[p0-cloud-closed-loop.md](p0-cloud-closed-loop.md)。本文件细化既有F/G里程碑；评估证据本地实现已验收，详见[本轮报告](eval-evidence-validation.md)。尚未执行新云训练或新云评估。
 
 ## 目标
 
@@ -32,6 +32,13 @@ flowchart TD
 保持现有训练入口、Tinker SDK futures、官方日志与云职责；优先可选回调/已有capture，不重写训练器。修改实现前对照实际SDK和Cookbook源码；部署仍需新wheel/hash与最终Linux bootstrap，不能把本次b06728a证据追认给新代码。
 
 ## 评估产物接口（拟定）
+
+2026-09-15 用户确认继续，进入评估记录实现。环境通过可选同步 `event_observer` 发送带
+`sandbox_id` 的 tool/grader/reward 事件，主进程按任务隔离保存原文、哈希及截断信息。
+新增 `harbor_eval_evidence.py` 复用官方 capture 输出核对每次实际请求与 trajectory 的
+原始 token；不建立第二套 sampler。`harbor_smoke` 的独立评估启用该证据目录，训练
+侧通过现有 observability scope 归档同类事件。证据写入失败会阻止本轮验收，不能把
+缺失记录写成通过。采样 seed 当前仍为 SDK 实际默认值，不承诺配对或确定性。
 
 ```json
 {

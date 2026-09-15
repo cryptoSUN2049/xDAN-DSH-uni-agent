@@ -164,7 +164,7 @@ Review：只读本地DSH与Harbor代码，未查询远端Release、构建运行�
 - [x] 官方下载同源initial/final adapters，53,520,850个LoRA元素改变。
 - [x] 新容器新进程reload；2任务有效运行，实际成功1题；2沙箱清理。
 - [x] 独立审查失败轨迹、参数对比与训练证据；保存报告与项目快照。
-- [ ] 评估记录补齐实际采样参数、终态工具输出、grader原文与截断/耗时语义。
+- [x] 评估记录补齐的本地实现与465项回归；新代码云验收仍待执行。
 - [ ] 更有区分度开发集、Teacher优势检验、非零RL信号真实验收。
 - [ ] 官方Terminal-Bench锁定单任务重复、state+optimizer恢复。
 - [ ] 最小Control Panel、预算/恢复协议与baseline/OPD/RL/hybrid消融。
@@ -179,4 +179,32 @@ Review：只读本地DSH与Harbor代码，未查询远端Release、构建运行�
 - [x] 保存docs/tinker-harbor-opd-rl/topk-opd-review.md，承认原比较遗漏。
 - [ ] 27B真实top-k能力探针；9B多目标训练微分验收；Harbor上下文/mask适配。
 - [ ] 当前baseline与top-k CE/reverse + RL同口径比较，不能提前称最优。
-本轮未修改评估代码、未提交新模型调用。
+本轮已完成评估记录代码与本地回归；未提交新模型调用。
+
+## 评估记录关卡最新进展
+本地实现与465项回归通过，详见docs/tinker-harbor-opd-rl/eval-evidence-validation.md。新wheel/云验收分开记录；非零RL与能力提升仍未通过。
+
+## OpenThoughts Shell基础候选（保留此前审查）
+- [x] 固定39ab7143公开下载与728归档静态检查：616原始问题家族、workspace/output差异、资源与答案隔离已记录。
+- [x] 保存docs/tinker-harbor-opd-rl/openthoughts-rl-integration.md设计与证据位置。
+- [ ] 有界导入、家族隔离划分、执行profile适配；通过nop/oracle后才做Student/Teacher筛查与新鲜OPD+RL。
+
+## 联合更新复核与真实公开数据（用户明确继续）
+- [x] 原始P0逐token独立重算；RL0与OPD1138非零位置确认，131项相关回归通过。
+- [x] 4类本地payload边界验证；联合更新参考文档已写，区分模拟与真实云证据。
+- [x] 跨领域公开任务策略与有界导入设计：TaskTrove优先审查，NVIDIA后续技能扩展，NL2Bash为基础补充。
+- [x] 三源5,830题下载核验；6候选原样落盘、来源/文件哈希和既有loader/资源字段通过；运行兼容仍有明确缺口。
+- [ ] 显式执行profile与controller适配、云环境验收，随后真实非零RL+OPD新鲜更新。
+
+本轮Review：131项联合相关回归、4类本地payload检查通过；真实P0原始数组RL0再确认。新模型/沙箱调用0。公开6候选71,381字节已导入，training_ready=false；公开setup_files、workdir、参考解、依赖失败分类待实现/云验收。
+
+## 2026-09-15 里程碑 review
+
+- [x] 联合路径原始证据重算与本地 payload 验证；真实 RL=0 的限制已记录。
+- [x] 三份公开 TaskTrove 数据核验（5830 题），六题安全静态导入；训练就绪状态保持 false。
+- [x] 更新参考文档、数据策略、handoff 与 lessons；独立提交全仓 Ruff 基线修复。
+- [ ] 六题运行时契约与 verifier 验收。
+- [ ] 小批真实联合更新同时产生非零 RL / OPD 信号，并完成独立评估。
+- [ ] Terminal-Bench 2.1 固定版本与同口径 Opus 4.6 对照。
+
+Review：当前是数据与证据里程碑；最终模型能力目标未完成。提交与远端同步记录以本分支 Git 历史及 upstream 状态为准。

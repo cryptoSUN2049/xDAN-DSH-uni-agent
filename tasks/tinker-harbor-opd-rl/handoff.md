@@ -1,14 +1,27 @@
 # Handoff: tinker-harbor-opd-rl
 
 ## TL;DR
-最新关注：用户要求比较top-k+scores。官方top-k/[N,K]/custom loss能力已核对，27B服务top-k仍未实测；先读docs/tinker-harbor-opd-rl/topk-opd-review.md。本轮没有新模型调用或评估代码改动。
-P0真实云端工程闭环已完成：1batch更新、同源LoRA差异、独立新进程reload，部署代码b06728a。
-训练run hybrid-p0-20260915-02；训练和验证均已结束。不要重复提交同一run或自动扩大训练。
-能力未提升验收：训练前2/2，后1/2；RL advantage为0。真实失败是遗漏需保留的配置字段。
-先读docs/tinker-harbor-opd-rl/p0-cloud-closed-loop.md、next-milestone.md，再读系统复核；下一步补评估证据与有效学习信号。
-286相关测试通过；10核心综合90.67%、分支83.23%；不是整个Cookbook全套测试通过。
+用户确认以Terminal-Bench独立成功率为目标：公开Harbor任务训练，Terminal-Bench2.1独立评测；OPD指导与reward RL联合更新。
+代码2ef293b的评估证据补强465项回归通过；本轮联合路径131项回归和4类本地payload检查通过，新代码未部署。
+历史真实P0部署b06728a：参数更新/reload已验收，前2/2后1/2；独立原始数组重算RL0、OPD1138非零动作。没有证明能力提高或双非零云更新。
+先读docs/tinker-harbor-opd-rl/joint-opd-rl-reference.md给其他会话交接；再读terminal-training-data-strategy.md。TaskTrove三源5830任务已下载，6候选已原样导入、loader通过，仍需/app、公开/setup_files、参考解和依赖失败分类；详见public-dataset-status.json。
+4原创题仍为已云验收集合；公开候选的下载/格式与实际运行分别记账。所有云新运行、非零RL和正式TB仍须逐关验收。
 
 ## 本轮交付物
+- `docs/tinker-harbor-opd-rl/joint-opd-rl-reference.md` — 178行；联合公式、代码、131项验证及真实RL0边界。
+- `docs/tinker-harbor-opd-rl/terminal-training-data-strategy.md` — 100行；公开任务策略、接入契约和TB2.1评测分工。
+- `docs/tinker-harbor-opd-rl/public-dataset-status.json` — 机器可读数据来源与候选状态，以实际文件为准。
+- `docs/tinker-harbor-opd-rl/openthoughts-rl-integration.md` — 86行；固定版本核验、兼容差异、家族划分与接入设计。
+
+当前评估记录关卡文件清单：
+- `docs/tinker-harbor-opd-rl/eval-evidence-validation.md` — 60行；本轮新增/修改。
+- `docs/tinker-harbor-opd-rl/system-plan.html` — 316 行；本轮新增/修改。
+- `tasks/lessons.md` — 75 行；本轮新增/修改。
+- `tasks/tinker-harbor-opd-rl/memory.md` — 17 行；本轮新增/修改。
+- `tasks/todo.md` — 185 行；本轮新增/修改。
+
+以下为历史P0文件快照（行数属于历史交接）：
+- `docs/tinker-harbor-opd-rl/eval-evidence-validation.md` — 本轮实现、测试范围、已知边界与有效RL下一步。
 - `docs/tinker-harbor-opd-rl/topk-opd-review.md` — 84 行；官方top-k能力、当前Harbor路线对照、修订候选和验收设计。
 本节列出当前工作分支产物，行数为本次交接快照；原始大文件/权重在ignored outputs和Volume，不提交仓库。
 - `docs/tinker-harbor-opd-rl/design.md` — 43 行；系统设计、证据或交接记录。
@@ -52,7 +65,7 @@ P0真实云端工程闭环已完成：1batch更新、同源LoRA差异、独立�
 ## 下一里程碑任务清单
 - [x] A–E工程关卡：bootstrap/记录/资源/token/loss/optimizer/checkpoint/参数/reload。
 - [x] 独立失败分析、原始证据摘要、HTML与交接同步。
-- [ ] 补评估实际SamplingParams、末次工具输出、grader原文、耗时/截断语义。
+- [x] 评估记录本地实现/回归；新云版本复验单独待做。
 - [ ] 统一口径有界initial/final评估；区分度开发集和Teacher优势检查。
 - [ ] 实际非零RL组内信号验收；不以噪声奖励制造差异。
 - [ ] 官方TB固定单任务重复与任务资源准入；该题不能再作最终盲测。
@@ -60,7 +73,7 @@ P0真实云端工程闭环已完成：1batch更新、同源LoRA差异、独立�
 - [ ] baseline/OPD/RL/hybrid消融，最终同口径Terminal-Bench与Opus4.6对照。
 
 ## 分支/部署状态
-本worktree分支 `worktree-tinker-harbor-opd-rl`。实现分支feat-harbor-opd-rl，部署代码b06728a；后续文档commit以git log为准，不表示重部署。未push/PR。
+本worktree分支 `worktree-tinker-harbor-opd-rl`。实现分支feat-harbor-opd-rl，部署代码b06728a；后续文档commit以git log为准，不表示重部署。提交备份远端：实现 `training/feat-harbor-opd-rl`（私有仓库 cryptoSUN2049/tinker-cookbook-opd-rl），文档 `origin/worktree-tinker-harbor-opd-rl`（xDAN-DSH-uni-agent）。本节点提交后推送，同步状态以 `git status -sb` / `git ls-remote` 为准；未创建 PR。
 Modal App=tinker-harbor-opd-controller；Volume=tinker-harbor-runs；min_containers0，CPU控制，无本项目自部署Teacher GPU。
 image=im-3GvBhwyn7mJ2AuXtElFPPV；wheelSHA=18513048b76f5ef9e2481e38eabb18d5409c7465dce9c3a89515efa2c08281e0。
 train call=fc-01M2J1EEA3QRHT0YPFACQYWP7H；verify call=fc-01M2J1ZVVKBT9PATF66CPVFEFB；均已结束。
@@ -76,3 +89,11 @@ CI未推送触发；已执行本地相关回归与真实云验证，正式benchm
 4. 读tasks/lessons.md及官方research/debug；对照实际SDK，不把示例签名或API字段当模型服务实测。
 5. 按新验收缺口先本地实现测试，再独立云关卡；每个新run另存来源和状态，保持有界费用。
 6. 更新相关todo/记忆/HTML/交接；工程通过与1/2成绩、RL0必须同时保留。
+
+## 2026-09-15 提交节点与下一验收门槛
+
+- 本轮：联合更新参考文档、公开训练数据策略、六题静态导入清单、任务与经验记录；没有新增云训练费用。
+- 验证：联合路径 131 项回归、4 类本地 payload 对照、math_env 37 项；两仓全量 Ruff 检查通过。既有 465 项回归见评估证据报告，非本轮重新全跑。
+- 目标仍进行中：6 题仅静态导入，training_ready=false；历史真实 RL=0，尚无非零 RL 与 OPD 同时生效、独立能力提升证据。
+- 下一步：适配 `/app` 工作目录和公开 `/setup_files`，核验参考解与 verifier/依赖错误分类；再开展受限的小批云验证，记录 reward 方差、两路信号与独立 reload 评估。
+- 5830 题原始归档与轨迹在 ignored outputs / Modal Volume；Git 只保存方案、固定版本、校验和与清单，不含密钥或原始训练输出。

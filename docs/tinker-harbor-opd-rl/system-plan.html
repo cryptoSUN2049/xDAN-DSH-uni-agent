@@ -55,6 +55,7 @@
 <div class="note green"><p><strong>建议的最短路线：</strong>以指令版 9B 开始，优先利用已有工具能力。先走 Tinker 27B Teacher 闭环；只有实验证明 Teacher 是主要瓶颈，再讨论更大模型、自部署评分或额外 SFT。</p></div>
 </section>
 
+<div class="note"><p><strong>2026-09-15 评估记录进展：</strong>实际采样、末次工具输出、grader原文与终止统计已完成本地补强，465项相关回归通过。新版本云复验与非零RL仍待完成。<a href="eval-evidence-validation.md">查看本轮报告与下一步</a>。</p></div>
 <section id="architecture">
 <div class="section-head"><span>02</span><h2>系统架构：谁负责什么</h2></div>
 <p>训练系统由“控制流程、执行任务、模型计算、保存证据”四部分组成。Tinker 承担模型计算；我们负责数据、奖励、实验规则和运行管理。</p>
@@ -171,6 +172,7 @@ opt_result = await opt.result_async()
 </section>
 
 <section id="data">
+<div class="note"><p><strong>公开训练任务与独立评测：</strong>用户确认公开Harbor任务训练、Terminal-Bench 2.1独立评测。TaskTrove三源5,830题已下载；候选逐题验收后再训练。NL2Bash作为Shell基础补充。<a href="terminal-training-data-strategy.md">任务策略</a> · <a href="public-dataset-status.json">接入状态</a> · <a href="joint-opd-rl-reference.md">联合更新参考与实测边界</a>。</p></div>
 <div class="section-head"><span>06</span><h2>数据决定提升空间，评测决定结论可信度</h2></div>
 <div class="cards">
 <article class="card"><h3>训练课程：从能学会的任务开始</h3><ul><li>文件与文本：查找、过滤、编码、格式转换。</li><li>脚本与调试：修复小程序、解析报错、补齐依赖。</li><li>仓库任务：构建、运行测试、定位失败、生成产物。</li><li>系统与长程任务：状态跟踪、多工具组合、错误恢复。</li></ul><p class="small">使用授权且独立的 Harbor 格式任务。按任务族划分 train/validation/final-test，保留来源与许可。任务规模按阶段扩增，不把具体数量当作性能保证。</p></article>
