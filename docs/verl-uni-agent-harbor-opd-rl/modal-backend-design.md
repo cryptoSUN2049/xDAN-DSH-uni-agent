@@ -111,3 +111,23 @@ independent 100-second total bound. Real cloud reachability remains unverified.
 Final integrated CPU run: **191 passed in 3.56s**, including actual Harbor 0.16.1
 Trial construction, mocked Modal SDK lifecycle, executor, Worker and HTTP regressions.
 Log: `/private/tmp/uni-agent-modal-integrated-tests-r3.log`. No provider calls were made.
+
+## Real provider lifecycle probe
+
+Before the full DSH registry image is available, `deployment/checks/harbor_modal_cleanup_smoke.py`
+can validate the actual tracked Harbor environment against Modal. It creates two
+sequential no-network CPU sandboxes from the existing pinned verifier Python image,
+runs a constant marker command, stops both through Harbor, and independently checks
+scope termination evidence. Each sandbox has a 60-second provider lifetime, 1
+CPU and 256 MiB memory; no GPU, model, dataset or task reward is involved.
+The dedicated app name is `uni-agent-verl-opd-validation`. JSON records actual SDK
+versions, marker outputs, resource IDs and terminal status; errors remain failures.
+This is provider/environment component evidence, not DSH Trial or training evidence.
+
+Real provider execution **passed** on 2026-09-15. Harbor 0.16.1 / Modal 1.5.5
+created two tracked no-network sandboxes; both constant commands returned 0 and
+both independent polls confirmed terminal code 137 after stop. Exact evidence:
+`modal-provider-smoke-r2.json`. The first attempt stopped before allocation because
+Harbor task CPU count accepts integers; corrected probe requests 1 CPU. Its failed
+record remains at `/private/tmp/uni-agent-modal-provider-smoke-20260915-r1/result.json`.
+Neither attempt invoked a Student, DSH task verifier, optimizer or production tunnel.

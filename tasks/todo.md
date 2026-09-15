@@ -643,8 +643,12 @@ Review：本轮只保存/校验资料，无GPU操作或新训练结果；checkpo
 - [x] Modal Worker/executor/Trial后端与资源scope；失败清理确认透传
 - [x] Modal最终191项CPU回归与文档；cec4a07已提交，随89ebca9推送origin
 - [x] 核查并修复 separate_async LoRA 权重同步配置（3140271，18项CPU配置测试）
-- [ ] GPU测试lane安装完成，实际CUDA/vLLM/集成验证
-- [ ] Controller持有公网Gateway入口；冻结可拉取registry镜像与任务
+- [x] GPU测试lane安装完成；真实CUDA/BF16反向/NCCL与vLLM工具解析14项通过
+- [x] 远端Framework/Gateway 566项通过；缺Git历史的3项补齐元数据后通过
+- [ ] 真实单卡LoRA导出组件验证
+- [x] Controller管理公网Gateway入口与Modal任务冻结代码；217项CPU集成回归
+- [x] 真实Modal tracked环境：2次标记命令成功，2个sandbox独立终止确认
+- [ ] 专用Tunnel/DNS、DSH registry真实发布与完整Modal任务执行验证
 - [ ] 双卡 separate_async LoRA RL：真实rollout/update/权重同步/独立reload
 - [ ] OPD与hybrid多卡验收、optimizer恢复、吞吐/陈旧度测量
 

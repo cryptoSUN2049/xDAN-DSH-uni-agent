@@ -76,3 +76,20 @@ For independent restart, repeat the same launcher composition in a **new trainer
 ## Remaining incremental-sync work
 
 A true adapter-only non-naive path would need a versioned PEFT metadata transport, correct initial base synchronization, receiver adapter installation and rollback semantics, and cache/version handling after confirmed installation. It also needs tests showing repeated adapters are replaced rather than accumulated. That feature is outside this minimum correction; the current merged full-weight path is chosen for correctness.
+
+## Single-GPU native FSDP merged-export component probe
+
+Planned executable: `deployment/checks/fsdp_lora_merged_export.py`. It initializes a single-process NCCL group and the real pinned `FSDPEngineWithLMHead` with a fixed local model snapshot, ordinary LoRA and SDPA/no-padding disabled. No Ray trainer or rollout server is needed. It performs a short real language-model gradient update using the engine-owned optimizer, verifies that only adapter tensors change, streams the engine's actual `get_per_tensor_param` merged export, and compares one adapted linear layer to independently computed base + PEFT delta. Hashes before/after export must show the trainer weights restored bit-for-bit; adapter parameters must also remain intact. A JSON result records model artifact identity, dependency/commit versions, gradient/update evidence and export restoration assertions.
+
+This is a **single-GPU export component check**, not NCCL actor-to-rollout transport, Harbor RL/OPD improvement, two-GPU serving publication, or checkpoint reload. It deliberately tests numerical correctness with a short supervised diagnostic update, not a claim of task learning. GPU execution belongs to the GPU-owning agent/operator; this implementation session only checks syntax and CLI help.
+
+Operator command from the worktree root, with exactly one assigned device visible:
+
+```bash
+CUDA_VISIBLE_DEVICES=<assigned-device> PYTHONPATH="$PWD:$PWD/verl" \
+python deployment/checks/fsdp_lora_merged_export.py \
+  --model-path /workspace/models/fixed-student-4b-snapshot \
+  --output /workspace/private/run/fsdp-merged-export.json
+```
+
+The result must contain `passed: true`, nonzero adapter update count and merged delta, exact base-plus-delta equality, and exact trainer-state restoration. It records native source hashes as well as the VERL commit so a local overlay cannot be mistaken for pristine upstream. Any assertion failure exits nonzero and saves failure evidence. Existing evidence is never overwritten. The script has only passed local Ruff checks and CPU CLI parsing; GPU execution and its numerical assertions remain pending.

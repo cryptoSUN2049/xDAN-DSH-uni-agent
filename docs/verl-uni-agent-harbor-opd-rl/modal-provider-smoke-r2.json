@@ -1,0 +1,38 @@
+{
+  "schema": "uni-agent.modal-environment-smoke.v1",
+  "scope": "real provider lifecycle only; no DSH trial, reward or training",
+  "image": "python@sha256:78387bc3881b8273120a12ebe6c1ab22b018ccc2c9adf565ae1ac9b536e184ea",
+  "versions": {
+    "harbor": "0.16.1",
+    "modal": "1.5.5"
+  },
+  "provider_timeout_seconds": 60,
+  "commands": [
+    {
+      "role": "agent",
+      "session_id": "ua-opd-agent-29184168acae4620bce4ca6987bda42c",
+      "return_code": 0,
+      "stdout": "uni-agent-modal-probe"
+    },
+    {
+      "role": "verifier",
+      "session_id": "ua-opd-verifier-7c83be697aad42fa93d99816c11af8fc",
+      "return_code": 0,
+      "stdout": "uni-agent-modal-probe"
+    }
+  ],
+  "passed": true,
+  "cleanup_confirmed": true,
+  "resources": [
+    {
+      "sandbox_id": "sb-aRypXgrjSlR3TSji5E4Jyb",
+      "session_id": "ua-opd-agent-29184168acae4620bce4ca6987bda42c",
+      "returncode": 137
+    },
+    {
+      "sandbox_id": "sb-NFE3fJxi5bhsh1UAsAz3QL",
+      "session_id": "ua-opd-verifier-7c83be697aad42fa93d99816c11af8fc",
+      "returncode": 137
+    }
+  ]
+}

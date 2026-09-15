@@ -2,8 +2,9 @@
 - 当前 worktree/分支：`verl-uni-agent-harbor-opd-rl`；用户已授权实施、GPU验证和按节点 commit/push。
 - Uni-Agent `91618ea` / VERL `a9f2985` 已配对升级；Teacher→TQ→原生loss接线完成。
 - `283e3a5` 原生loss 8项CPU验证；`cec4a07` Modal后端191项CPU验证。均非GPU训练证据。
-- 当前推进：LoRA合并同步配置已修复（3140271，18项测试），完成单卡依赖安装；随后实际GPU验证。
-- 平台 goal 为 active。双卡由用户需要时启动；完整训练闭环尚未验收。
+- 当前推进：单卡依赖安装/GPU算子和vLLM回归已通过；正在真实LoRA merged导出组件验证。
+- b0b3967接通Controller公网入口与任务准备，217项CPU通过；真实Modal环境双sandbox清理通过。
+- 平台 goal 为 active。已向用户请求双卡SSH和专用Gateway域名；完整训练闭环尚未验收。
 
 # 本轮交付物
 代码与设计主要文件（行数为此节点快照；详见各提交diff）：
@@ -33,7 +34,7 @@ Teacher概率不是任务成功判定。Teacher整组失败不得提交部分tra
 - 原生Teacher返回全序列[S,K]且已left-shift；首response用prompt_len-1行，末dummy不能再shift。
 - Teacher TQ用ragged_idx=1；缺列不得被shared_keys静默丢弃。
 - 上游postprocessor增加task_result；resident工厂需转发Teacher但保留自身同步限制。
-- Harbor锁0.16.1。Modal Trial可选路径已接通；Controller公网入口、registry release仍待实施。
+- Harbor锁0.16.1。Modal Trial/Controller公网入口/任务准备代码已接通；专用域名配置、DSH registry发布与真实任务仍待完成。
 - Harbor清空sandbox句柄不证明终止；独立scope保留资源ID并terminate/poll确认，成功需agent与verifier，失败只核实际创建资源。
 - native separate_async训练和推理分卡；colocate_async会暂停推理更新。Teacher必须独立池：纯separate RL至少2GPU角色，separate+OPD至少3；不是显存容量保证。
 - **发现异步LoRA同步缺口**：非naive checkpoint path未传adapter metadata，未merge时可能只导出base；recipe已显式merge=true（3140271），18项测试通过。不能声称当前为高性能增量adapter同步。
@@ -44,8 +45,11 @@ Teacher概率不是任务成功判定。Teacher整组失败不得提交部分tra
 # 下一里程碑任务清单
 - [x] LoRA merged同步最小修复、18项CPU配置回归、独立commit 3140271。
 - [x] 全库Ruff双门通过（479文件），里程碑push至origin；89ebca9已推送。
-- [ ] GPU环境安装结束后固定TQ与源码，实际CUDA/vLLM测试。
-- [ ] Controller拥有公网HTTPS Gateway映射；冻结可拉取registry镜像/任务/policy。
+- [x] GPU环境安装/TQ固定、CUDA BF16反向/NCCL、vLLM14项和Framework/Gateway569项通过。
+- [ ] 单GPU真实LoRA update→merged导出→trainer恢复组件验证。
+- [x] Controller公网HTTPS映射代码及Modal任务/训练准备冻结合同，217项CPU回归。
+- [x] 真实Modal两个环境命令与独立终止确认；只是组件，不是DSH任务。
+- [ ] 配置用户专用域名/Tunnel；冻结并验证可拉取DSH registry镜像/task/policy。
 - [ ] 通知用户需要双卡后验证separate_async LoRA：真实rollout→update→新权重rollout。
 - [ ] OPD/hybrid多卡验证、独立reload、optimizer恢复和吞吐/陈旧度指标。
 
@@ -53,8 +57,8 @@ Teacher概率不是任务成功判定。Teacher整组失败不得提交部分tra
 分支已有升级、Teacher、recipe、版本准入及上述2个新提交。已推送至origin同名分支并设置tracking（里程碑HEAD 89ebca9）；未创建PR。后续文档提交用git核验实际HEAD。
 远端 `root@157.157.221.177:12524`，SSH key `~/.ssh/id_ed25519`，独立known_hosts `/private/tmp/uni-agent-opd-known-hosts`。
 实际GPU单张RTX PRO6000 Blackwell96GB。独立根 `/workspace/verl-uni-agent-harbor-opd-rl`；源码 `src/uni-agent`，新提交尚需增量同步。
-当前环境 `/tmp/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023`；安装日志 `/workspace/verl-uni-agent-harbor-opd-rl/runs/environment-install-localssd.log`，本轮仍在解压/下载，无训练启动。
-CPU最近证据：Framework/Gateway547通过；原生loss8通过；Modal191通过。日志分别 `/private/tmp/uni-agent-opd-latest-cpu-regression.log`、`/private/tmp/uni-agent-native-opd-hybrid-loss-confirmed.log`、`/private/tmp/uni-agent-modal-integrated-tests-r3.log`。
+当前环境 `/tmp/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023`；安装日志 `/workspace/verl-uni-agent-harbor-opd-rl/runs/environment-install-localssd.log`，已安装完成：Torch2.11.0/vLLM0.23.0/Transformers5.8.0/Ray2.54.1/TQ434f8c4，pip check245包兼容；没有训练闭环结果。
+CPU最近证据：Framework/Gateway547通过；原生loss8通过；Modal191通过；入口/准备/执行器组合217通过。GPU组件与回归摘要见docs同目录gpu-preflight.json。日志分别 `/private/tmp/uni-agent-opd-latest-cpu-regression.log`、`/private/tmp/uni-agent-native-opd-hybrid-loss-confirmed.log`、`/private/tmp/uni-agent-modal-integrated-tests-r3.log`。
 CPU命令解释器 `/private/tmp/uni-agent-opd-upgrade-cpu/bin/python`；PYTHONPATH工作树+verl，Harbor测试另加已核验缓存 `/Users/gumpm5/.cache/uv/archive-v0/GhbgF7AXg2sb3NAv`。
 
 # 冷启动 checklist
@@ -63,3 +67,11 @@ CPU命令解释器 `/private/tmp/uni-agent-opd-upgrade-cpu/bin/python`；PYTHONP
 - [ ] 查本分支远端HEAD与未提交改动，不以文档代替实际状态。
 - [ ] 看tasks/todo.md当前节；用户已经实施授权，勿重复询问。
 - [ ] 真实GPU前核依赖版本、源码manifest、显存；CPU/Tinker旧证据不得追认为新闭环。
+
+## 2026-09-15 GPU/Modal新节点
+- 新交付：deployment/services/harbor_modal_ingress.py、Controller/worker改动、prepare_t2_task/prepare_m2_training扩展；b0b3967。
+- 两个新验证脚本：deployment/checks/harbor_modal_cleanup_smoke.py（真实provider已过）与fsdp_lora_merged_export.py（正在GPU验证）。
+- docs同目录新增gpu-preflight.json、modal-provider-smoke-r2.json、modal-ingress-design.md、incremental-lora-sync-design.md。
+- 原始GPU regression566pass/3error是远端rsync无.git造成历史fixture失败；只补git历史再跑3pass，未改测试或源码；历史失败日志保留。
+- SSH偶发banner timeout；恢复后必须查原进程，不重复启动或把观测失败认作进程终止。
+- 本机Modal配置已验证有shootime007工作区；Docker Desktop daemon未运行。未复用其他项目Cloudflare Tunnel。
