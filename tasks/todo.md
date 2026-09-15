@@ -641,7 +641,7 @@ Review：本轮只保存/校验资料，无GPU操作或新训练结果；checkpo
 - [x] 原生RL/OPD/hybrid recipes与CPU配置验证
 - [x] 固定VERL原生loss的8项非零梯度/混合目标/工具mask验证
 - [x] Modal Worker/executor/Trial后端与资源scope；失败清理确认透传
-- [x] Modal最终191项CPU回归与文档；独立提交/推送按本节点Git记录
+- [x] Modal最终191项CPU回归与文档；cec4a07已提交，随89ebca9推送origin
 - [x] 核查并修复 separate_async LoRA 权重同步配置（3140271，18项CPU配置测试）
 - [ ] GPU测试lane安装完成，实际CUDA/vLLM/集成验证
 - [ ] Controller持有公网Gateway入口；冻结可拉取registry镜像与任务
@@ -649,3 +649,5 @@ Review：本轮只保存/校验资料，无GPU操作或新训练结果；checkpo
 - [ ] OPD与hybrid多卡验收、optimizer恢复、吞吐/陈旧度测量
 
 Review：CPU证据和历史Tinker证据不能代替本分支GPU闭环。当前单卡用于构建/组件验证；用户需要时提供双卡。公网入口和镜像未准备前不能声明Modal可生产运行。
+
+持久化节点：283e3a5（原生loss）、cec4a07（Modal）、3140271（LoRA同步配置）、89ebca9（handoff/tasks）已推送同名分支。Ruff双门479文件通过。总goal保持active，GPU与公网部署验收未完成。

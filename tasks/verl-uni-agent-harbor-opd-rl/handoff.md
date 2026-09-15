@@ -43,14 +43,14 @@ Teacher概率不是任务成功判定。Teacher整组失败不得提交部分tra
 
 # 下一里程碑任务清单
 - [x] LoRA merged同步最小修复、18项CPU配置回归、独立commit 3140271。
-- [ ] 全库Ruff双门，push当前分支；核远端HEAD。
+- [x] 全库Ruff双门通过（479文件），里程碑push至origin；89ebca9已推送。
 - [ ] GPU环境安装结束后固定TQ与源码，实际CUDA/vLLM测试。
 - [ ] Controller拥有公网HTTPS Gateway映射；冻结可拉取registry镜像/任务/policy。
 - [ ] 通知用户需要双卡后验证separate_async LoRA：真实rollout→update→新权重rollout。
 - [ ] OPD/hybrid多卡验证、独立reload、optimizer恢复和吞吐/陈旧度指标。
 
 # 分支/部署状态
-分支已有升级、Teacher、recipe、版本准入及上述2个新提交。用户刚授权push，本节点准备推送；未创建PR。实际远端HEAD须用git核验。
+分支已有升级、Teacher、recipe、版本准入及上述2个新提交。已推送至origin同名分支并设置tracking（里程碑HEAD 89ebca9）；未创建PR。后续文档提交用git核验实际HEAD。
 远端 `root@157.157.221.177:12524`，SSH key `~/.ssh/id_ed25519`，独立known_hosts `/private/tmp/uni-agent-opd-known-hosts`。
 实际GPU单张RTX PRO6000 Blackwell96GB。独立根 `/workspace/verl-uni-agent-harbor-opd-rl`；源码 `src/uni-agent`，新提交尚需增量同步。
 当前环境 `/tmp/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023`；安装日志 `/workspace/verl-uni-agent-harbor-opd-rl/runs/environment-install-localssd.log`，本轮仍在解压/下载，无训练启动。
