@@ -173,3 +173,10 @@ Review：只读本地DSH与Harbor代码，未查询远端Release、构建运行�
 工程闭环通过，能力提升未验证。训练两条轨迹同题奖励全1，所以实际RL信号为0。
 验证前2/2、后1/2；失败是配置字段遗漏，不能用小样本和非配对seed断言训练导致退化。
 原始产物保留ignored outputs与Modal Volume；权威摘要见docs/tinker-harbor-opd-rl/p0-cloud-closed-loop.md。
+
+## Top-k方案复核（用户新增关注）
+- [x] 核对官方SDFT、[N,K]训练和custom loss支持，明确当前Harbor路线及不同KL目标。
+- [x] 保存docs/tinker-harbor-opd-rl/topk-opd-review.md，承认原比较遗漏。
+- [ ] 27B真实top-k能力探针；9B多目标训练微分验收；Harbor上下文/mask适配。
+- [ ] 当前baseline与top-k CE/reverse + RL同口径比较，不能提前称最优。
+本轮未修改评估代码、未提交新模型调用。

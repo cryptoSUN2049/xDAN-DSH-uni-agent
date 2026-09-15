@@ -1,6 +1,7 @@
 # Handoff: tinker-harbor-opd-rl
 
 ## TL;DR
+最新关注：用户要求比较top-k+scores。官方top-k/[N,K]/custom loss能力已核对，27B服务top-k仍未实测；先读docs/tinker-harbor-opd-rl/topk-opd-review.md。本轮没有新模型调用或评估代码改动。
 P0真实云端工程闭环已完成：1batch更新、同源LoRA差异、独立新进程reload，部署代码b06728a。
 训练run hybrid-p0-20260915-02；训练和验证均已结束。不要重复提交同一run或自动扩大训练。
 能力未提升验收：训练前2/2，后1/2；RL advantage为0。真实失败是遗漏需保留的配置字段。
@@ -8,6 +9,7 @@ P0真实云端工程闭环已完成：1batch更新、同源LoRA差异、独立�
 286相关测试通过；10核心综合90.67%、分支83.23%；不是整个Cookbook全套测试通过。
 
 ## 本轮交付物
+- `docs/tinker-harbor-opd-rl/topk-opd-review.md` — 84 行；官方top-k能力、当前Harbor路线对照、修订候选和验收设计。
 本节列出当前工作分支产物，行数为本次交接快照；原始大文件/权重在ignored outputs和Volume，不提交仓库。
 - `docs/tinker-harbor-opd-rl/design.md` — 43 行；系统设计、证据或交接记录。
 - `docs/tinker-harbor-opd-rl/next-milestone.md` — 63 行；系统设计、证据或交接记录。

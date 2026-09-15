@@ -61,3 +61,8 @@
 - Modal SDK1.5.5 CLI下载目录前先创建目标目录；否则目录映射可能因目标is_dir判断产生IsADirectoryError。第一次失败需保留并查明路径，不能盲目覆盖证据。
 - SDK0.29.0的create_rest_client经_get_rest_holder(_skip_session=True)走无session REST路径；不要仅凭构造ServiceClient就判断泄漏远端训练session。训练/采样session仍须实际close回执。
 - 完成新关卡后同步当前状态和handoff，保留旧文件为历史证据；不能靠不断追加“覆盖前文”留下相互矛盾的冷启动说明。
+
+## 2026-09-15：用户纠正算法选型不能只检查单一recipe
+- 用户追问top-k后发现官方sdft.py已有[N,K]软目标和custom reverse KL；先前只检查Harbor OPD入口导致比较不完整。今后声明SDK训练能力或选择最终方法前，检索所有相关recipes和实际SDK形状支持。
+- 工程baseline、官方推荐的某个配方、特定任务最优是三种不同结论。SDFT内deprecated不等于官方所有sampled OPD弃用；top-k条件KL也不是原始全词表KL。
+- 更密集监督是候选优势，必须对照Teacher覆盖质量、Student可微targets、工具mask和任务收益；没有模型实测不能写top-k链路已通过。
