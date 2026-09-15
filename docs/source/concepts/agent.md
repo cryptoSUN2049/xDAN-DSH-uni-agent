@@ -37,8 +37,7 @@ async def run(
     sandbox: Sandbox,
     messages: list[dict],
     workdir: str | None = None,
-) -> AgentResult:
-    ...
+) -> AgentResult: ...
 ```
 
 The Task has already started the Sandbox. The Agent must not stop it. `workdir` optionally selects the Agent's working directory inside the Sandbox.

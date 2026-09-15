@@ -107,11 +107,9 @@ from uni_agent.sandbox.registry import register_sandbox
 
 @register_sandbox("my_backend")
 class MySandbox(Sandbox):
-    async def start(self) -> None:
-        ...
+    async def start(self) -> None: ...
 
-    async def stop(self) -> None:
-        ...
+    async def stop(self) -> None: ...
 
     async def _exec(
         self,
@@ -120,8 +118,7 @@ class MySandbox(Sandbox):
         timeout: float | None = None,
         workdir: str | None = None,
         env: dict[str, str] | None = None,
-    ) -> ExecResult:
-        ...
+    ) -> ExecResult: ...
 ```
 
 If the backend needs custom configuration mapping, override `from_config()`:

@@ -127,8 +127,7 @@ async def compute_reward(
     metadata: dict,
     sandbox,
     eval_timeout: float = 300,
-) -> dict:
-    ...
+) -> dict: ...
 ```
 
 The built-in SWE-Bench tasks:
@@ -204,8 +203,7 @@ Register the class and lazy module:
 
 ```python
 @register_task("my_task")
-class MyTask(Task):
-    ...
+class MyTask(Task): ...
 ```
 
 ```python
