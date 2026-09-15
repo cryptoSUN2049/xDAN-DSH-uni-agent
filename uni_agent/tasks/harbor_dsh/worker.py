@@ -8,8 +8,8 @@ import json
 import os
 import time
 from pathlib import Path
-from urllib.parse import urlparse
 
+from .environment_backend import validate_gateway_origin
 from .execution_outcome import CleanExecutionRejected
 from .ledger import JobLedger
 from .protocol import Artifact, JobRequest, RequestPolicy, validate_artifact, validate_manifest
@@ -38,21 +38,12 @@ class HarborWorker:
         task_dir: Path,
         root: Path,
         gateway_base_url: str,
+        environment_backend: str = "docker",
         executor=None,
         clock=time.time,
     ):
-        route = urlparse(gateway_base_url)
-        if (
-            route.scheme != "http"
-            or route.hostname != "host.docker.internal"
-            or not route.port
-            or route.path not in ("", "/")
-            or route.query
-            or route.fragment
-            or route.username
-            or route.password
-        ):
-            raise ValueError("Expected operator-owned Docker-to-host HTTP tunnel origin")
+        gateway_base_url = validate_gateway_origin(gateway_base_url, backend=environment_backend)
+        self.environment_backend = environment_backend
         if executor is None:
             from .executor import execute_job
 
@@ -89,6 +80,9 @@ class HarborWorker:
             async def verifying():
                 self.ledger.verifying(request.job_id)
 
+            backend_kwargs = (
+                {"environment_backend": self.environment_backend} if self.environment_backend != "docker" else {}
+            )
             execution = asyncio.create_task(
                 self.executor(
                     request,
@@ -96,17 +90,26 @@ class HarborWorker:
                     trials_root=directory / "trials",
                     gateway_base_url=self.gateway_base_url + request.model_route.session_path,
                     on_verifying=verifying,
+                    **backend_kwargs,
                 )
             )
             self.executions[request.job_id] = execution
             try:
-                result = await asyncio.wait_for(
-                    asyncio.shield(execution),
-                    timeout=min(request.budgets.wall_time_seconds, request.budgets.deadline_unix - self.clock()),
-                )
+                try:
+                    result = await asyncio.wait_for(
+                        asyncio.shield(execution),
+                        timeout=min(request.budgets.wall_time_seconds, request.budgets.deadline_unix - self.clock()),
+                    )
+                finally:
+                    # Keep the executor's independent cleanup acknowledgement,
+                    # including when it arrives while a timeout is unwinding.
+                    self._cancel_execution(request.job_id)
+                    outcomes = await asyncio.shield(asyncio.gather(execution, return_exceptions=True))
+                    if isinstance(outcomes[0], CleanExecutionRejected):
+                        raise outcomes[0]
             except CleanExecutionRejected as error:
-                # This signal can only be emitted after independent Docker
-                # inventory confirms stop. Publish no reward or rollout.
+                # This signal can only be emitted after independent resource
+                # evidence confirms stop. Publish no reward or rollout.
                 manifest = {
                     "schema": "dsh.harbor-job-manifest.v1",
                     "job_id": request.job_id,
@@ -124,11 +127,6 @@ class HarborWorker:
                 _persist(directory / "manifest.json", validated.model_dump_json(by_alias=True).encode())
                 self.ledger.seal(request.job_id, manifest, worker_id=self.worker_id)
                 return
-            finally:
-                # Timeout, cancellation and HTTP retries share one cancellation
-                # owner. Never interrupt an executor already unwinding cleanup.
-                self._cancel_execution(request.job_id)
-                await asyncio.shield(asyncio.gather(execution, return_exceptions=True))
             if result.cleanup_confirmed is not True:
                 raise RuntimeError("Executor cleanup is unconfirmed")
             entries = []

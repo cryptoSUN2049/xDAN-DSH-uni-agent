@@ -12,6 +12,7 @@ bound evidence admission after Harbor collection, not upstream download traffic.
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import hashlib
 import json
 import math
@@ -35,6 +36,7 @@ from uni_agent.agents.dsh.harbor_release import (
     release_patch_paths,
     release_patch_paths_digest,
 )
+from uni_agent.tasks.harbor_dsh.environment_backend import TRACKED_MODAL_IMPORT, validate_modal_task
 from uni_agent.tasks.harbor_dsh.evolution_scoring import EvolutionBinding, load_evolution_binding
 from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import (
     EVOLUTION_V2_KIND,
@@ -136,6 +138,31 @@ async def _confirm_cleanup(trial) -> None:
         for resource in ("container", "network", "volume"):
             if (await _docker_inventory(project, resource)).strip():
                 raise RuntimeError("Harbor cleanup left resources behind")
+
+
+_CLEANUP_CONFIRM_TIMEOUT_SECONDS = 100.0
+
+
+async def _confirm_failure_cleanup(trial) -> None:
+    """Finish bounded inventory despite repeated cancellation of the job owner."""
+
+    async def confirm():
+        # Six sequential inventories each have a 15s subprocess timeout. Keep
+        # an independent total deadline; caller cancellation must not reset it.
+        async with asyncio.timeout(_CLEANUP_CONFIRM_TIMEOUT_SECONDS):
+            await _confirm_cleanup(trial)
+
+    cleanup = asyncio.create_task(confirm())
+    while True:
+        try:
+            await asyncio.shield(cleanup)
+            return
+        except asyncio.CancelledError:
+            if cleanup.done():
+                # Internal cancellation is not proof of cleanup. Also retrieve
+                # failures racing with a second cancellation of the job owner.
+                cleanup.result()
+                return
 
 
 def _collect_evidence(trial, result, request: JobRequest, private_root: Path) -> dict[str, bytes]:
@@ -285,6 +312,25 @@ def _evolution_verifier_binding(task_dir: Path, request: JobRequest) -> bytes | 
     return json.dumps(mapped, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
 
 
+def _persist_modal_cleanup(private_root: Path, trial, scope) -> None:
+    cleanup_record = {
+        "schema": "dsh.harbor-modal-cleanup.v1",
+        "trial_id": str(trial.id),
+        "resources": scope.evidence,
+    }
+    with (private_root / "modal-cleanup.json").open("x") as output:
+        json.dump(cleanup_record, output, sort_keys=True)
+        output.flush()
+        os.fsync(output.fileno())
+
+
+def _modal_execution_scope(**kwargs):
+    # Keep optional provider SDKs out of the existing Docker import path.
+    from uni_agent.tasks.harbor_dsh.modal_environment import ModalExecutionScope
+
+    return ModalExecutionScope(**kwargs)
+
+
 async def execute_job(
     request: JobRequest,
     *,
@@ -292,6 +338,7 @@ async def execute_job(
     trials_root: Path,
     gateway_base_url: str,
     on_verifying: Callable[[], Awaitable[None]],
+    environment_backend: str = "docker",
 ) -> ExecutionResult:
     """Execute an already admitted single-file task; failures never imply cleanup."""
     request = JobRequest.model_validate(request.model_dump(mode="json", by_alias=True))
@@ -306,13 +353,24 @@ async def execute_job(
         or url.path != request.model_route.session_path
     ):
         raise ValueError("Mapped Gateway URL must preserve the exact session path without credentials")
+    if environment_backend not in {"docker", "modal"}:
+        raise ValueError("Unsupported environment backend")
     patch_paths = release_patch_paths(request.dsh_release)
     if not request.budgets.cpus.is_integer():
         raise ValueError("Harbor Docker requires an integer CPU budget")
     if _task_digest(task_dir) != request.task_ref.sha256:
         raise ValueError("Frozen task content hash mismatch")
     task = tomllib.loads(_read_regular(task_dir, task_dir / "task.toml", 1024 * 1024).decode())
-    if task.get("environment", {}).get("docker_image") != request.dsh_release.image_digest:
+    if environment_backend == "modal":
+        if not patch_paths:
+            raise ValueError("Modal requires the approved host trace artifact strategy")
+        validate_modal_task(
+            task_dir,
+            task,
+            gateway_origin=f"{url.scheme}://{url.netloc}",
+            release_digest=request.dsh_release.image_digest,
+        )
+    elif task.get("environment", {}).get("docker_image") != request.dsh_release.image_digest:
         raise ValueError("Task image does not match the approved DSH release")
     if patch_paths:
         patch = _read_regular(task_dir, task_dir / "environment" / "evolution.patch.yml", 65536)
@@ -345,7 +403,12 @@ async def execute_job(
                 },
             },
             "environment": {
-                "type": "docker",
+                "type": environment_backend,
+                **(
+                    {"import_path": TRACKED_MODAL_IMPORT, "kwargs": {"sandbox_timeout_secs": math.ceil(remaining)}}
+                    if environment_backend == "modal"
+                    else {}
+                ),
                 "delete": True,
                 "override_cpus": int(request.budgets.cpus),
                 "override_memory_mb": request.budgets.memory_mb,
@@ -361,21 +424,42 @@ async def execute_job(
         )
     if evolution_binding is not None:
         trial_kwargs.update(strategy=_json(evolution_binding)["kind"], evolution_binding=evolution_binding)
-    trial = create_isolated_trial(config, allowed_task_dir=task_dir.resolve(), **trial_kwargs)
-    verifying = False
+    scope = _modal_execution_scope() if environment_backend == "modal" else contextlib.nullcontext()
+    trial = None
+    try:
+        async with scope:
+            trial = create_isolated_trial(config, allowed_task_dir=task_dir.resolve(), **trial_kwargs)
+            verifying = False
 
-    async def verification_started(_event):
-        nonlocal verifying
-        if verifying:
-            raise RuntimeError("Native verifier started more than once")
-        verifying = True
-        await on_verifying()
+            async def verification_started(_event):
+                nonlocal verifying
+                if verifying:
+                    raise RuntimeError("Native verifier started more than once")
+                verifying = True
+                await on_verifying()
 
-    trial.add_hook(TrialEvent.VERIFICATION_START, verification_started)
-    async with asyncio.timeout(min(remaining, request.budgets.deadline_unix - time.time())):
-        result = await trial.run()
-    await _confirm_cleanup(trial)
-    # The trial has returned and both Docker environments are independently
+            trial.add_hook(TrialEvent.VERIFICATION_START, verification_started)
+            async with asyncio.timeout(min(remaining, request.budgets.deadline_unix - time.time())):
+                result = await trial.run()
+    except (Exception, asyncio.CancelledError) as error:
+        if trial is None:
+            raise
+        if environment_backend == "modal":
+            if not scope.cleanup_confirmed:
+                raise
+            _persist_modal_cleanup(private_root, trial, scope)
+        else:
+            await _confirm_failure_cleanup(trial)
+        raise CleanExecutionRejected(trial_id=str(trial.id)) from error
+    if environment_backend == "modal":
+        expected_sessions = {trial.agent_environment.session_id, trial._separate_verifier_session_id("trial")}
+        observed_sessions = {item["session_id"] for item in scope.evidence}
+        if not scope.cleanup_confirmed or not expected_sessions.issubset(observed_sessions):
+            raise RuntimeError("Modal agent and independent verifier cleanup evidence is incomplete")
+        _persist_modal_cleanup(private_root, trial, scope)
+    else:
+        await _confirm_cleanup(trial)
+    # The trial has returned and both environments are independently
     # absent. Preserve that fact if evidence admission subsequently fails.
     try:
         if not verifying:
