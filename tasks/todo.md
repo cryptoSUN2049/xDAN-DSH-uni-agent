@@ -208,3 +208,8 @@ Review：只读本地DSH与Harbor代码，未查询远端Release、构建运行�
 - [ ] Terminal-Bench 2.1 固定版本与同口径 Opus 4.6 对照。
 
 Review：当前是数据与证据里程碑；最终模型能力目标未完成。提交与远端同步记录以本分支 Git 历史及 upstream 状态为准。
+
+## 公开任务运行更新
+- [x] 运行配置适配与134项回归。
+- [x] 单题真实Modal nop/oracle环境验收，两个沙箱已清理。
+- [ ] verifier故障分类及真实Student/Teacher筛查，尚未新增训练更新。

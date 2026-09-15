@@ -97,3 +97,13 @@ CI未推送触发；已执行本地相关回归与真实云验证，正式benchm
 - 目标仍进行中：6 题仅静态导入，training_ready=false；历史真实 RL=0，尚无非零 RL 与 OPD 同时生效、独立能力提升证据。
 - 下一步：适配 `/app` 工作目录和公开 `/setup_files`，核验参考解与 verifier/依赖错误分类；再开展受限的小批云验证，记录 reward 方差、两路信号与独立 reload 评估。
 - 5830 题原始归档与轨迹在 ignored outputs / Modal Volume；Git 只保存方案、固定版本、校验和与清单，不含密钥或原始训练输出。
+
+## 2026-09-15 公开任务运行进展
+
+- 显式 `/app` 与公开 `setup_files` 已接入训练 builder、工具、环境验收和资源日志；旧任务默认不变。134 项相关回归及全仓 Ruff 通过，独立代码审查通过。
+- `curriculum-medium-0002` 真实 Modal 云验收：nop reward0，参考解 reward1，原始8项测试通过；两个 CPU 沙箱清理回执齐全。无 Tinker 模型调用。
+- nop 原始报错为缺少任务要求创建的 `cite_seq_count`，不是 pytest/依赖缺失。原始 grader stdout/exit/reward 保存在 outputs/public-runtime-gate-20260915/audit.json。
+- 证据摘要：docs/tinker-harbor-opd-rl/public-runtime-evidence.json；实现说明：public-runtime-gate.md；参考解：examples/harbor-public-runtime/（仅供 controller 验收）。
+- 6题派生运行配置在原候选旁的 runtime-v1，未覆盖原始任务；仅上述1题已跑云端，training_ready仍false。
+- 下一步：云端可导入错误解验收和 verifier 故障分类，再筛查 Student/Teacher。扩大前排除 stack 来源；当前manifest第二题仍是stack，不能直接把max_tasks改2。
+- 本轮未更新 Student 权重，历史真实 RL=0 的结论不变。

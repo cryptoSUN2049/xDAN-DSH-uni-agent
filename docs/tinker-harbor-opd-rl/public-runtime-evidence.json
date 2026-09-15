@@ -1,0 +1,33 @@
+{
+  "stage": "single_public_task_runtime_acceptance",
+  "task": "curriculum-medium-0002",
+  "dataset_revision": "96567362fa3c41208e0954317c53767023b420eb",
+  "model_calls": 0,
+  "sandbox_runs": 2,
+  "report_sha256": "a6a6050b21e28e50c9c7a8355bb5e6ec1c95edc3825d86820ee04d15c7621f3d",
+  "results": [
+    {
+      "mode": "nop",
+      "reward": 0.0,
+      "passed": true,
+      "cleanup_confirmed": true,
+      "tool_workdir": "/app"
+    },
+    {
+      "mode": "oracle",
+      "reward": 1.0,
+      "passed": true,
+      "cleanup_confirmed": true,
+      "tool_workdir": "/app"
+    }
+  ],
+  "nop_failure_source": "missing required Student package cite_seq_count; pytest exit2",
+  "oracle_tests_passed": 8,
+  "training_ready": false,
+  "remaining": [
+    "cloud importable incorrect solution",
+    "verifier fault classification",
+    "Student/Teacher screening",
+    "nonzero real joint update"
+  ]
+}
