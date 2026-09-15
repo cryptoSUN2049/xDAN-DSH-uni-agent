@@ -106,3 +106,9 @@ CPU命令解释器 `/private/tmp/uni-agent-opd-upgrade-cpu/bin/python`；PYTHONP
 - 见docs/verl-uni-agent-harbor-opd-rl/acceptance-status.md完整矩阵。
 - 本地未找到可复用launch/data；本轮远端2次SSH banner超时，文件/占用未知，不能误判远端不存在或停机。
 - 用户已被询问双卡SSH和专用Gateway域名；等待回复。下次先恢复观测，再完成真实preflight和正式训练。当前阻塞审计首次，goal保持active。
+
+## 持续阻塞：2026-09-15
+
+连续三轮核查仍缺双卡SSH与项目专用Gateway域名/Tunnel，现有服务器SSH均在banner阶段超时。最后一次exit255；未据此认定服务器/作业停止。没有启动重复作业。总目标未完成，平台goal转blocked，等待外部资源信息后恢复。
+
+恢复入口：提供可连接双卡SSH、GPU型号/显存、专用Gateway域名与Tunnel配置位置；先读acceptance-status.md并核远端进程与源版本，再准备真实launch/data、preflight、双卡训练/发布/TQ恢复。已有4B单卡更新/导出/模型与optimizer恢复和Modal生命周期证据保留，不重做作为替代。

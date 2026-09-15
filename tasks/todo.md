@@ -679,3 +679,9 @@ Review：CPU证据和历史Tinker证据不能代替本分支GPU闭环。当前�
 - [x] 合并后的启动器定向回归49项通过，Ruff双门485文件通过
 - [x] 单卡原生checkpoint保存与新进程model/optimizer精确恢复（save-r3/resume-r4，通过并继续两步更新）
 - [ ] 双卡真实训练/新权重rollout及OPD角色资源验证（等待用户资源信息）
+
+## 持续阻塞：2026-09-15
+
+连续三轮核查仍缺双卡SSH与项目专用Gateway域名/Tunnel，现有服务器SSH均在banner阶段超时。最后一次exit255；未据此认定服务器/作业停止。没有启动重复作业。总目标未完成，平台goal转blocked，等待外部资源信息后恢复。
+
+恢复入口：提供可连接双卡SSH、GPU型号/显存、专用Gateway域名与Tunnel配置位置；先读acceptance-status.md并核远端进程与源版本，再准备真实launch/data、preflight、双卡训练/发布/TQ恢复。已有4B单卡更新/导出/模型与optimizer恢复和Modal生命周期证据保留，不重做作为替代。
