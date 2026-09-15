@@ -37,6 +37,10 @@ actor_rollout_ref:
   model:
     lora_rank: 16
     lora_alpha: 32
+    # Native NCCL transfers named tensors without adapter metadata.
+    # Optimize LoRA, but export merged full weights for every async sync.
+    lora:
+      merge: true
     target_modules: all-linear
   actor:
     strategy: fsdp
