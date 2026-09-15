@@ -27,3 +27,11 @@ The current tests demonstrate Teacher-to-TQ and native sampled-loss alignment. A
 ## Remediation verified after review
 
 All three findings are fixed: resident factories forward Teacher clients while retaining their synchronous constraints; the registered postprocessor accepts and forwards TaskResult; Teacher requests have a finite configurable 300-second default deadline. The timeout test observes strict UID running→failure with zero trajectory publication. Final Teacher/Memory/recipe contracts: 66 passed; related registration/Memory/Work-state regression: 131 passed. External whole-rollout cancellation status remains a separate pre-existing issue and is not claimed fixed.
+
+## Native combined-loss CPU evidence
+
+`tests/uni_agent/framework/test_teacher_loss_on_cpu.py` adds eight passing tests against the actual pinned `distillation_ppo_loss`, `ppo_loss`, and `compute_grpo_outcome_advantage`, using Uni-Agent's real trajectory→TQ tensor conversion. The two Harbor-style terminal rewards are 1/0 within one task group, yielding nonzero opposing GRPO advantages. No implementation of the loss is copied into the test.
+
+With k1 and `use_policy_gradient=True`, Teacher minus Student logprob +0.2 yields negative action-logprob gradients (gradient descent increases those actions); -0.2 reverses the direction. `use_task_rewards=False` ignores reward reversal. Hybrid `use_task_rewards=True` with coefficient 0.3 matches both scalar loss and gradients of native RL plus 0.3 times pure OPD. Moving masked tool-position Teacher scores from +0.2 delta to -30 delta changes neither loss nor gradients. Prompt, tool, and final dummy rows retain zero gradient.
+
+The actual FSDP `compute_forward_kl_topk` was additionally run with manager-style int32 IDs through both normal and chunked gather paths: finite nonzero gradients on Torch 2.14.0. This establishes no gather dtype defect in the current CPU environment; Torch 2.11 / production CUDA verification remains pending. Independent clean rerun: `/private/tmp/uni-agent-native-opd-hybrid-loss-confirmed.log` (8 passed, 1 Ray deprecation warning, 14.44 seconds). Earlier overlapping diagnostic logs are not used as acceptance evidence.

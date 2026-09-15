@@ -144,3 +144,14 @@ def test_native_teacher_dataclass_accepts_topology_and_context(mode):
         assert teacher.inference.max_model_len >= cfg.data.max_prompt_length + cfg.data.max_response_length + 1
         assert distillation.distillation_loss.loss_settings.use_estimator
         assert not distillation.distillation_loss.loss_settings.use_topk
+
+
+@pytest.mark.parametrize("mode", ["rl", "opd", "hybrid"])
+def test_async_lora_exports_merged_weights_for_native_checkpoint_engine(mode):
+    cfg = configured(mode)
+    # NCCL named-tensor transport does not carry adapter metadata. The native
+    # merged export is required even when actor and rollout are colocated.
+    assert cfg.actor_rollout_ref.rollout.checkpoint_engine.backend == "nccl"
+    assert cfg.actor_rollout_ref.model.lora.merge is True
+    assert cfg.actor_rollout_ref.model.lora_rank == 16
+    assert cfg.actor_rollout_ref.model.lora_alpha == 32

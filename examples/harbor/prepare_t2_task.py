@@ -11,10 +11,12 @@ import re
 import stat
 import subprocess
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from examples.dsh.capability_tasks.log_tool.task_bundle import CODE_PATHS, build_rows
 from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH, T2_PATCH_SHA256
 from uni_agent.agents.dsh.runner import _patches_digest
+from uni_agent.tasks.harbor_dsh.environment_backend import registry_image_digest, validate_gateway_origin
 
 PARENT_IMAGE = "sha256:846b46c90ebd71b3ababbd4a1cb50459a99d6fde97d42f6503e84a78ce60fc97"
 PARENT_TAG = "uni-agent-dsh:0.1.3a2-1263ff5-amd64"
@@ -53,7 +55,17 @@ def _git(root, *args):
     ).stdout.strip()
 
 
-def prepare(*, root, output, agent_image_digest, verifier_image_digest=None):
+def prepare(
+    *,
+    root,
+    output,
+    agent_image_digest,
+    verifier_image_digest=None,
+    modal_origin=None,
+    agent_image_ref=None,
+    parent_image_ref=None,
+    verifier_image_ref=None,
+):
     root, output = Path(root).resolve(), Path(output).absolute()
     if not isinstance(agent_image_digest, str) or re.fullmatch(r"sha256:[0-9a-f]{64}", agent_image_digest) is None:
         raise ValueError("agent_image_digest must be a fixed sha256 digest")
@@ -62,6 +74,18 @@ def prepare(*, root, output, agent_image_digest, verifier_image_digest=None):
         or re.fullmatch(r"sha256:[0-9a-f]{64}", verifier_image_digest) is None
     ):
         raise ValueError("verifier_image_digest must be a fixed sha256 digest")
+    modal = modal_origin is not None
+    if modal:
+        modal_origin = validate_gateway_origin(modal_origin, backend="modal")
+        if registry_image_digest(agent_image_ref) != agent_image_digest:
+            raise ValueError("Modal agent registry digest differs from the release")
+        registry_image_digest(parent_image_ref)
+        if verifier_image_digest is not None:
+            raise ValueError("Modal verifier requires a registry reference, not a local image digest")
+        if verifier_image_ref is not None:
+            registry_image_digest(verifier_image_ref)
+    elif any(ref is not None for ref in (agent_image_ref, parent_image_ref, verifier_image_ref)):
+        raise ValueError("Registry references require an explicit Modal origin")
     if output.exists() or output.is_symlink():
         raise ValueError("Harbor T2 output must be new")
     patch = _read(root, PATCH)
@@ -74,6 +98,8 @@ def prepare(*, root, output, agent_image_digest, verifier_image_digest=None):
         | set(VERIFIER_SOURCES)
         | {PATCH, FIXTURE, IMAGE_MANIFEST, Path("examples/harbor/prepare_t2_task.py")}
     )
+    if modal:
+        paths.add(Path("uni_agent/tasks/harbor_dsh/environment_backend.py"))
     sources = {p: _read(root, p) for p in sorted(paths)}
     image = json.loads(sources[IMAGE_MANIFEST])
     if image["image_id"] != PARENT_IMAGE or image["python_distribution_version"] != "0.1.3a2":
@@ -116,13 +142,26 @@ def prepare(*, root, output, agent_image_digest, verifier_image_digest=None):
             b"--input-dir /audit-input --output-dir /logs/verifier\n"
         ),
     }
-    verifier_pin = f'docker_image = "{verifier_image_digest}"\n' if verifier_image_digest is not None else ""
+    if modal:
+        files.pop("environment/docker-compose.yaml")
+        files.pop("tests/docker-compose.yaml")
+        files["environment/Dockerfile"] = (
+            f"FROM --platform=linux/amd64 {parent_image_ref}\nCOPY evolution.patch.yml {T2_PATCH_PATH}\n"
+        ).encode()
+    verifier_identity = verifier_image_ref if modal else verifier_image_digest
+    verifier_pin = f'docker_image = "{verifier_identity}"\n' if verifier_identity is not None else ""
+    agent_identity = agent_image_ref if modal else agent_image_digest
+    agent_network = (
+        'network_mode = "allowlist"\nallowed_hosts = ["' + urlsplit(modal_origin).hostname + '"]\n' if modal else ""
+    )
+    verifier_network = 'network_mode = "no-network"\n' if modal else ""
     files["task.toml"] = (
         'schema_version = "1.3"\nartifacts = []\n\n[agent]\ntimeout_sec = 600.0\n\n'
-        f'[environment]\ndocker_image = "{agent_image_digest}"\nbuild_timeout_sec = 120.0\n'
+        f'[environment]\ndocker_image = "{agent_identity}"\n{agent_network}build_timeout_sec = 120.0\n'
         'cpus = 1\nmemory_mb = 2048\nstorage_mb = 2048\nworkdir = "/app"\n\n'
         '[verifier]\nenvironment_mode = "separate"\ntimeout_sec = 30.0\n\n'
-        f"[verifier.environment]\n{verifier_pin}build_timeout_sec = 120.0\ncpus = 1\nmemory_mb = 512\n"
+        f"[verifier.environment]\n{verifier_pin}{verifier_network}build_timeout_sec = 120.0\n"
+        "cpus = 1\nmemory_mb = 512\n"
         'storage_mb = 1024\nworkdir = "/app"\n'
     ).encode()
     for path in VERIFIER_SOURCES:
@@ -167,6 +206,17 @@ def prepare(*, root, output, agent_image_digest, verifier_image_digest=None):
         files={"task/" + name: _sha(raw) for name, raw in files.items()},
         manifest_excludes_self=True,
     )
+    if modal:
+        manifest.update(
+            environment_backend="modal",
+            gateway_origin=modal_origin,
+            agent_image_ref=agent_image_ref,
+            agent_parent_registry_ref=parent_image_ref,
+            verifier_image_ref=verifier_image_ref,
+            registry_pull_verified=False,
+        )
+        # The historical local image is provenance, not proof of the supplied registry parent.
+        manifest["agent_parent_registry_verified"] = False
     output.mkdir(mode=0o700, parents=True, exist_ok=False)
     for name, raw in files.items():
         path = output / "task" / name
@@ -185,12 +235,20 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--agent-image-digest", required=True)
     parser.add_argument("--verifier-image-digest", help="Optional prebuilt verifier sha256 image identity")
+    parser.add_argument("--modal-origin", help="Frozen public HTTPS Gateway origin; selects Modal Direct mode")
+    parser.add_argument("--agent-image-ref", help="Published task image repository@sha256:digest")
+    parser.add_argument("--parent-image-ref", help="Reproducible DSH base repository@sha256:digest")
+    parser.add_argument("--verifier-image-ref", help="Optional prebuilt verifier repository@sha256:digest")
     args = parser.parse_args()
     manifest = prepare(
         root=args.root,
         output=args.output,
         agent_image_digest=args.agent_image_digest,
         verifier_image_digest=args.verifier_image_digest,
+        modal_origin=args.modal_origin,
+        agent_image_ref=args.agent_image_ref,
+        parent_image_ref=args.parent_image_ref,
+        verifier_image_ref=args.verifier_image_ref,
     )
     print(json.dumps({"task_dir": manifest["task_dir"], "task_ref": manifest["task_ref"]}))
 

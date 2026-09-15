@@ -203,3 +203,69 @@ def test_default_verifier_remains_build_context(tmp_path):
     config = tomllib.loads((output / "task/task.toml").read_text())
     assert "docker_image" not in config["verifier"]["environment"]
     assert manifest["verifier_image_digest"] is None
+
+
+def modal_options():
+    return {
+        "modal_origin": "https://gateway.example.com",
+        "agent_image_ref": "ghcr.io/example/dsh-t2@" + IMAGE,
+        "parent_image_ref": "ghcr.io/example/dsh-base@sha256:" + "b" * 64,
+    }
+
+
+def test_modal_package_is_direct_registry_pinned_and_bound_to_gateway(tmp_path):
+    from examples.harbor.prepare_t2_task import prepare
+    from uni_agent.tasks.harbor_dsh.environment_backend import validate_modal_task
+
+    output = tmp_path / "modal"
+    manifest = prepare(root=ROOT, output=output, agent_image_digest=IMAGE, **modal_options())
+    task = output / "task"
+    config = tomllib.loads((task / "task.toml").read_text())
+    validate_modal_task(task, config, gateway_origin=modal_options()["modal_origin"], release_digest=IMAGE)
+    assert not list(task.rglob("*compose*"))
+    assert config["environment"]["docker_image"] == modal_options()["agent_image_ref"]
+    assert config["environment"]["network_mode"] == "allowlist"
+    assert config["environment"]["allowed_hosts"] == ["gateway.example.com"]
+    assert config["verifier"]["environment"]["network_mode"] == "no-network"
+    assert modal_options()["parent_image_ref"] in (task / "environment/Dockerfile").read_text()
+    assert "local tag" not in (task / "environment/Dockerfile").read_text()
+    assert manifest["environment_backend"] == "modal"
+    assert manifest["registry_pull_verified"] is False
+    assert manifest["agent_image_ref"] == modal_options()["agent_image_ref"]
+    # Actual task bytes, including network policy, remain part of TaskRef.
+    hashes = {
+        p.relative_to(task).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+        for p in task.rglob("*")
+        if p.is_file()
+    }
+    assert manifest["task_ref"]["sha256"] == sha(json.dumps(hashes, sort_keys=True, separators=(",", ":")).encode())
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"agent_image_ref": "ghcr.io/example/dsh:latest"},
+        {"agent_image_ref": "ghcr.io/example/dsh@sha256:" + "c" * 64},
+        {"parent_image_ref": None},
+        {"modal_origin": "http://host.docker.internal:9000"},
+        {"modal_origin": None},
+        {"verifier_image_digest": "sha256:" + "d" * 64},
+    ],
+)
+def test_modal_invalid_package_inputs_rejected_before_output(tmp_path, change):
+    from examples.harbor.prepare_t2_task import prepare
+
+    output = tmp_path / "invalid"
+    with pytest.raises(ValueError):
+        prepare(root=ROOT, output=output, agent_image_digest=IMAGE, **{**modal_options(), **change})
+    assert not output.exists()
+
+
+def test_modal_prebuilt_verifier_uses_registry_reference(tmp_path):
+    from examples.harbor.prepare_t2_task import prepare
+
+    ref = "ghcr.io/example/t2-verifier@sha256:" + "d" * 64
+    output = tmp_path / "prebuilt"
+    prepare(root=ROOT, output=output, agent_image_digest=IMAGE, verifier_image_ref=ref, **modal_options())
+    config = tomllib.loads((output / "task/task.toml").read_text())
+    assert config["verifier"]["environment"]["docker_image"] == ref

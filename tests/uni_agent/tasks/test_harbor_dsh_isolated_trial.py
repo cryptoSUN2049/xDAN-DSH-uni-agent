@@ -553,3 +553,75 @@ def test_evolution_strategy_cannot_swap_binding_kind(task_dir, v2):
             strategy="evolution-v2-lifecycle-v1" if v2 else "evolution-v2-lifecycle-admission-v2",
             evolution_binding=evolution_binding(v2=v2),
         )
+
+
+def test_tracked_modal_runtime_is_allowed_only_for_trace_contract(task_dir):
+    from uni_agent.tasks.harbor_dsh.environment_backend import TRACKED_MODAL_IMPORT
+
+    cfg = config(task_dir, environment={"type": "modal", "import_path": TRACKED_MODAL_IMPORT, "delete": True})
+    assert isolated_trial._validate_runtime(cfg, task_dir) == task_dir.resolve()
+    with pytest.raises(ValueError, match="trace"):
+        create_isolated_trial(cfg, allowed_task_dir=task_dir)
+
+
+@pytest.mark.parametrize(
+    "override",
+    [
+        {"extra_allowed_hosts": ["escape.example.com"]},
+        {"force_build": True},
+        {"override_gpus": 1},
+        {"kwargs": {"secrets": ["private"]}},
+    ],
+)
+def test_tracked_modal_rejects_runtime_policy_overrides(task_dir, override):
+    from uni_agent.tasks.harbor_dsh.environment_backend import TRACKED_MODAL_IMPORT
+
+    cfg = config(
+        task_dir, environment={"type": "modal", "import_path": TRACKED_MODAL_IMPORT, "delete": True, **override}
+    )
+    with pytest.raises(ValueError):
+        isolated_trial._validate_runtime(cfg, task_dir)
+
+
+@pytest.mark.asyncio
+async def test_real_modal_factory_keeps_dsh_trace_handler_and_provider(tmp_path):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH
+    from uni_agent.tasks.harbor_dsh.environment_backend import TRACKED_MODAL_IMPORT
+    from uni_agent.tasks.harbor_dsh.modal_environment import ModalExecutionScope, TrackedModalEnvironment
+    from uni_agent.tasks.harbor_dsh.trace_artifacts import TraceArtifacts
+
+    task = tmp_path / "modal-task"
+    for name in ("environment", "tests"):
+        (task / name).mkdir(parents=True)
+    (task / "instruction.md").write_text("Use the task tool and report its result")
+    (task / "tests/test.sh").write_text("#!/bin/sh\nexit 0\n")
+    (task / "tests/Dockerfile").write_text("FROM python:3.12-slim\nCOPY test.sh /tests/test.sh\n")
+    (task / "task.toml").write_text(
+        'schema_version = "1.3"\nartifacts = []\n[environment]\n'
+        'docker_image = "registry.example.com/dsh@sha256:' + "a" * 64 + '"\n'
+        'network_mode = "allowlist"\nallowed_hosts = ["gateway.example.com"]\n'
+        '[verifier]\nenvironment_mode = "separate"\n[verifier.environment]\nnetwork_mode = "no-network"\n'
+    )
+    cfg = config(
+        task,
+        environment={"type": "modal", "import_path": TRACKED_MODAL_IMPORT, "delete": True},
+        agent={
+            "import_path": "uni_agent.agents.dsh.harbor_agent:DshHarborAgent",
+            "model_name": "student",
+            "kwargs": {
+                "gateway_base_url": "https://gateway.example.com/sessions/session/v1",
+                "patches": [T2_PATCH_PATH],
+            },
+        },
+    )
+    async with ModalExecutionScope() as scope:
+        trial = create_isolated_trial(
+            cfg, allowed_task_dir=task, strategy="t2-log-tool", gateway_session_id="session", max_trace_bytes=10000
+        )
+        try:
+            assert isinstance(trial.agent_environment, TrackedModalEnvironment)
+            assert isinstance(trial._artifact_handler, TraceArtifacts)
+            assert trial._agent_env_mounts == []
+        finally:
+            close(trial)
+    assert not scope.cleanup_confirmed and scope.evidence == ()

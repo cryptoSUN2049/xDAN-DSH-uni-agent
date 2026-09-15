@@ -220,3 +220,69 @@ async def test_unconfirmed_slot_rejects_new_submit_without_queue_growth(tmp_path
                 worker.submit(second(data))
         assert ledger.db.execute("SELECT count(*) FROM jobs").fetchone()[0] == 1
         assert not (tmp_path / "worker/job-1-2").exists()
+
+
+@pytest.mark.asyncio
+async def test_modal_worker_forwards_operator_backend_and_exact_session_route(tmp_path):
+    calls = []
+
+    async def execute(request, **kwargs):
+        calls.append(kwargs)
+        await kwargs["on_verifying"]()
+        return SimpleNamespace(
+            trial_id="modal-trial-1",
+            cleanup_confirmed=True,
+            artifacts={
+                kind: b"proof" for kind in ("dsh_trace", "dsh_result", "harbor_result", "verifier_log", "reward")
+            },
+        )
+
+    data = payload()
+    with JobLedger(tmp_path / "ledger.sqlite") as ledger:
+        worker = HarborWorker(
+            ledger=ledger,
+            policy=policy(data),
+            worker_id="worker-1",
+            task_dir=tmp_path,
+            root=tmp_path / "worker",
+            gateway_base_url="https://gateway.example.com",
+            environment_backend="modal",
+            executor=execute,
+            clock=lambda: 1000.0,
+        )
+        worker.submit(data)
+        await worker.wait(data["job_id"])
+        assert worker.status(data["job_id"])["status"] == "succeeded"
+        assert calls[0]["environment_backend"] == "modal"
+        assert calls[0]["gateway_base_url"] == "https://gateway.example.com" + data["model_route"]["session_path"]
+
+
+@pytest.mark.asyncio
+async def test_timeout_preserves_clean_rejection_from_executor_unwind(tmp_path):
+    from uni_agent.tasks.harbor_dsh.execution_outcome import CleanExecutionRejected
+
+    async def execute(*args, **kwargs):
+        try:
+            await asyncio.Event().wait()
+        except asyncio.CancelledError as error:
+            await asyncio.sleep(0)
+            raise CleanExecutionRejected(trial_id="stopped-trial") from error
+
+    data = payload()
+    with JobLedger(tmp_path / "ledger.sqlite") as ledger:
+        worker = HarborWorker(
+            ledger=ledger,
+            policy=policy(data),
+            worker_id="worker-1",
+            task_dir=tmp_path,
+            root=tmp_path / "worker",
+            gateway_base_url="http://host.docker.internal:45678",
+            executor=execute,
+            clock=lambda: data["budgets"]["deadline_unix"] - 0.01,
+        )
+        worker.submit(data)
+        await worker.wait("job-1")
+        status = worker.status("job-1")
+        assert status["status"] == "cancelled"
+        assert status["manifest"]["artifacts"] == []
+        assert "unconfirmed" not in status

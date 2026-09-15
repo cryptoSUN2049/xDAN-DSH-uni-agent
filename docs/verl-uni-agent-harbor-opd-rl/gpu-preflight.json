@@ -1,0 +1,47 @@
+{
+  "versions": {
+    "torch": "2.11.0",
+    "vllm": "0.23.0",
+    "transformers": "5.8.0",
+    "peft": "0.18.1",
+    "ray": "2.54.1",
+    "tensordict": "0.10.0",
+    "datasets": "5.0.1"
+  },
+  "torch_cuda": "13.0",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "capability": [
+    12,
+    0
+  ],
+  "bf16_backward_loss": 515.8742065429688,
+  "bf16_grad_norm": 9.028441429138184,
+  "single_rank_nccl": "pass",
+  "vllm_import": "0.23.0",
+  "uni_agent_commit": "89ebca9213ce543eee3a2990cca6dafbcffd478d",
+  "verl_commit": "a9f2985159536a607211dcac730d3f5d55028950",
+  "transferqueue_commit": "434f8c476b4be24bc087e6e95070e64efcc739f9",
+  "environment_path": "/tmp/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023",
+  "source_manifest_sha256": "d6a1225d7e75e5cfa7b6b92d14ad9aaceedfd958a55d0279caa6e998b21ae4f8",
+  "source_manifest_file_count": 2333,
+  "environment_freeze_sha256": "06d747c7d902a576068be4a6abf158f123992a5a536b23fc93ebed2af6bfd339",
+  "dependency_check": "245 installed packages compatible",
+  "vllm_codec_test": {
+    "path": "tests/uni_agent/gateway/test_message_codec_tool_dispatch.py",
+    "passed": 14,
+    "warnings": 1,
+    "seconds": 11.06
+  },
+  "scope": "GPU arithmetic/NCCL and codec component proof; not end-to-end OPD training",
+  "gateway_framework_tests": {
+    "initial_passed": 566,
+    "initial_errors": 3,
+    "initial_seconds": 132.39,
+    "error_cause": "History fixture needed git show fefb080; rsync source had no .git",
+    "history_rerun_passed": 3,
+    "history_rerun_seconds": 16.19,
+    "unique_tests_passed": 569,
+    "source_files_rechecked": 2333,
+    "source_files_changed": 0
+  }
+}

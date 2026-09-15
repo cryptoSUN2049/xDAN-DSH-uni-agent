@@ -337,8 +337,10 @@ def test_unknown_or_incomplete_cleanup_cannot_return_success(task_dir, harness, 
 
 def test_deadline_cancels_native_trial_without_fabricating_result(task_dir, harness):
     harness.edit = lambda trial: setattr(trial, "block", True)
-    with pytest.raises(TimeoutError):
+    with pytest.raises(executor.CleanExecutionRejected) as raised:
         run(request_for(task_dir, budgets={"deadline_unix": time.time() + 0.03}), task_dir)
+    assert isinstance(raised.value.__cause__, TimeoutError)
+    assert harness.inventory.await_count == 6
     assert harness.trial.cancelled is True
 
 
@@ -537,3 +539,178 @@ def test_failed_trial_only_acknowledges_independently_confirmed_cleanup(task_dir
         run(request_for(task_dir), task_dir)
     assert isinstance(caught.value, CleanExecutionRejected) is not cleanup_unknown
     assert harness.inventory.await_count == (1 if cleanup_unknown else 6)
+
+
+@pytest.mark.parametrize(
+    "cleanup", ["complete", "missing-verifier", "unconfirmed", "failed-clean", "failed-unknown", "cancelled-clean"]
+)
+def test_modal_executor_uses_tracked_scope_and_preserves_evidence(task_dir, harness, monkeypatch, cleanup):
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_SHA256
+    from uni_agent.tasks.harbor_dsh.environment_backend import TRACKED_MODAL_IMPORT
+
+    patch = task_dir / "environment/evolution.patch.yml"
+    patch.parent.mkdir()
+    patch.write_bytes((Path(__file__).resolve().parents[3] / "examples/dsh/evolution.patch.yml").read_bytes())
+    (task_dir / "task.toml").write_text(
+        '[environment]\ndocker_image = "registry.example.com/dsh@' + HASH + '"\n'
+        'network_mode = "allowlist"\nallowed_hosts = ["gateway.example.com"]\n'
+        '[verifier]\nenvironment_mode = "separate"\n[verifier.environment]\nnetwork_mode = "no-network"\n'
+    )
+    scopes = []
+    if cleanup in {"failed-clean", "failed-unknown", "cancelled-clean"}:
+
+        async def fail():
+            if cleanup == "cancelled-clean":
+                raise asyncio.CancelledError()
+            raise RuntimeError("trial failed before verifier")
+
+        harness.edit = lambda trial: setattr(trial, "run", fail)
+
+    class Scope:
+        def __init__(self, **kwargs):
+            self.cleanup_confirmed = False
+            scopes.append(self)
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *args):
+            self.cleanup_confirmed = cleanup not in {"unconfirmed", "failed-unknown"}
+            name = harness.trial.config.trial_name
+            self.evidence = (
+                {"session_id": name + "__env", "sandbox_id": "sb-agent", "returncode": 137},
+                {"session_id": name + "__verifier__trial", "sandbox_id": "sb-verifier", "returncode": 137},
+            )
+            if cleanup in {"missing-verifier", "failed-clean", "failed-unknown", "cancelled-clean"}:
+                self.evidence = self.evidence[:1]
+
+    monkeypatch.setattr(executor, "_modal_execution_scope", lambda **kwargs: Scope(**kwargs))
+    request = request_for(task_dir, dsh_release={"patch_sha256s": [T2_PATCH_SHA256]})
+    execution = executor.execute_job(
+        request,
+        task_dir=task_dir,
+        trials_root=task_dir.parent / "trials",
+        gateway_base_url="https://gateway.example.com" + request.model_route.session_path,
+        on_verifying=AsyncMock(),
+        environment_backend="modal",
+    )
+    if cleanup in {"failed-clean", "cancelled-clean"}:
+        with pytest.raises(executor.CleanExecutionRejected):
+            asyncio.run(execution)
+        records = list((task_dir.parent / "trials").rglob("modal-cleanup.json"))
+        assert len(records) == 1
+        assert len(json.loads(records[0].read_text())["resources"]) == 1
+        harness.inventory.assert_not_called()
+        return
+    if cleanup == "failed-unknown":
+        with pytest.raises(RuntimeError) as raised:
+            asyncio.run(execution)
+        assert not isinstance(raised.value, executor.CleanExecutionRejected)
+        assert not list((task_dir.parent / "trials").rglob("modal-cleanup.json"))
+        return
+    if cleanup != "complete":
+        with pytest.raises(RuntimeError, match="cleanup evidence"):
+            asyncio.run(execution)
+        harness.inventory.assert_not_called()
+        return
+    result = asyncio.run(execution)
+    assert result.cleanup_confirmed and scopes[0].cleanup_confirmed
+    assert harness.trial.config.environment.import_path == TRACKED_MODAL_IMPORT
+    assert harness.trial.config.environment.type.value == "modal"
+    assert set(result.artifacts) == {"dsh_trace", "dsh_result", "harbor_result", "verifier_log", "reward"}
+    harness.inventory.assert_not_called()
+
+
+@pytest.mark.parametrize("error_type", [RuntimeError, asyncio.CancelledError])
+@pytest.mark.parametrize("cleanup_unknown", [False, True])
+def test_raised_trial_failure_checks_cleanup_before_rejection(task_dir, harness, error_type, cleanup_unknown):
+    from uni_agent.tasks.harbor_dsh.execution_outcome import CleanExecutionRejected
+
+    failure = error_type("trial failed")
+
+    def edit(trial):
+        trial.run = AsyncMock(side_effect=failure)
+
+    harness.edit = edit
+    if cleanup_unknown:
+        harness.inventory.return_value = b"remaining-volume\n"
+    with pytest.raises(RuntimeError) as caught:
+        run(request_for(task_dir), task_dir)
+    assert isinstance(caught.value, CleanExecutionRejected) is not cleanup_unknown
+    if not cleanup_unknown:
+        assert caught.value.__cause__ is failure
+    assert harness.inventory.await_count == (1 if cleanup_unknown else 6)
+
+
+@pytest.mark.asyncio
+async def test_repeated_cancel_cannot_interrupt_failure_cleanup(task_dir, harness):
+    from uni_agent.tasks.harbor_dsh.execution_outcome import CleanExecutionRejected
+
+    running, checking, release = (asyncio.Event() for _ in range(3))
+
+    async def trial_run():
+        running.set()
+        await asyncio.Event().wait()
+
+    async def inventory(*args):
+        assert harness.trial.run.call_count == 1
+        checking.set()
+        await release.wait()
+        return b""
+
+    harness.edit = lambda trial: setattr(trial, "run", AsyncMock(side_effect=trial_run))
+    harness.inventory.side_effect = inventory
+    task = asyncio.create_task(
+        executor.execute_job(
+            request_for(task_dir),
+            task_dir=task_dir,
+            trials_root=task_dir.parent / "trials",
+            gateway_base_url=GATEWAY,
+            on_verifying=AsyncMock(),
+        )
+    )
+    await running.wait()
+    task.cancel()
+    try:
+        await asyncio.wait_for(checking.wait(), 0.2)
+        task.cancel()
+        await asyncio.sleep(0)
+        task.cancel()
+        await asyncio.sleep(0)
+        assert not task.done()
+    finally:
+        release.set()
+        outcome = (await asyncio.gather(task, return_exceptions=True))[0]
+    assert isinstance(outcome, CleanExecutionRejected)
+    assert isinstance(outcome.__cause__, asyncio.CancelledError)
+    assert harness.inventory.await_count == 6
+
+
+@pytest.mark.asyncio
+async def test_failure_cleanup_has_a_total_deadline(task_dir, harness, monkeypatch):
+    from uni_agent.tasks.harbor_dsh.execution_outcome import CleanExecutionRejected
+
+    monkeypatch.setattr(executor, "_CLEANUP_CONFIRM_TIMEOUT_SECONDS", 0.02, raising=False)
+    harness.edit = lambda trial: setattr(trial, "run", AsyncMock(side_effect=RuntimeError("trial failed")))
+    stopped = asyncio.Event()
+
+    async def inventory(*args):
+        try:
+            await asyncio.Event().wait()
+        finally:
+            stopped.set()
+
+    harness.inventory.side_effect = inventory
+    with pytest.raises(TimeoutError) as caught:
+        await asyncio.wait_for(
+            executor.execute_job(
+                request_for(task_dir),
+                task_dir=task_dir,
+                trials_root=task_dir.parent / "trials",
+                gateway_base_url=GATEWAY,
+                on_verifying=AsyncMock(),
+            ),
+            0.5,
+        )
+    assert not isinstance(caught.value, CleanExecutionRejected)
+    assert stopped.is_set()

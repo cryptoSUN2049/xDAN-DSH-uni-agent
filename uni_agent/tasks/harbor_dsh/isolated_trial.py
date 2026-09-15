@@ -14,6 +14,7 @@ import io
 import re
 import tarfile
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from harbor.models.environment_type import EnvironmentType
 from harbor.models.task.task import Task
@@ -24,6 +25,7 @@ from harbor.trial.artifact_handler import ArtifactHandler
 from harbor.trial.single_step import SingleStepTrial
 
 from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH, T2_STRATEGY
+from uni_agent.tasks.harbor_dsh.environment_backend import TRACKED_MODAL_IMPORT, validate_modal_task
 from uni_agent.tasks.harbor_dsh.evolution_scoring import EVOLUTION_KIND
 from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import EVOLUTION_V2_KIND
 from uni_agent.tasks.harbor_dsh.trace_artifacts import TraceArtifacts, validate_evolution_binding
@@ -198,16 +200,29 @@ def _validate_runtime(config: TrialConfig, allowed_task_dir: Path) -> Path:
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,127}", config.trial_name):
         raise ValueError("Unsafe trial name")
     env, agent, verifier = config.environment, config.agent, config.verifier
+    modal = env.type == EnvironmentType.MODAL and env.import_path == TRACKED_MODAL_IMPORT
     if (
-        env.type != EnvironmentType.DOCKER
-        or env.import_path
+        not (modal or (env.type == EnvironmentType.DOCKER and not env.import_path))
         or not env.delete
         or env.mounts
         or env.extra_docker_compose
         or env.env
-        or env.kwargs
+        or (env.kwargs and not modal)
     ):
-        raise ValueError("Docker requires cleanup and no runtime mounts/compose/env/kwargs")
+        raise ValueError("Environment requires tracked cleanup and no runtime mounts/compose/env/kwargs")
+    if modal:
+        timeout = env.kwargs.get("sandbox_timeout_secs", 300)
+        if (
+            set(env.kwargs) - {"sandbox_timeout_secs"}
+            or type(timeout) is not int
+            or not 1 <= timeout <= 86400
+            or env.force_build
+            or env.override_gpus
+            or env.override_tpu
+            or env.extra_allowed_hosts
+            or agent.extra_allowed_hosts
+        ):
+            raise ValueError("Modal runtime cannot override the frozen task policy")
     if (
         agent.skills
         or agent.mcp_servers
@@ -271,6 +286,16 @@ class IsolatedDshTrial(SingleStepTrial):
         elif evolution_binding is not None:
             raise ValueError("Binding requires explicit evolution strategy")
         self._evolution_binding = evolution_binding
+        if snapshot.environment.type == EnvironmentType.MODAL:
+            if strategy not in {T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND}:
+                raise ValueError("Modal supports only the host trace artifact strategy")
+            route = urlsplit(snapshot.agent.kwargs.get("gateway_base_url", ""))
+            validate_modal_task(
+                task_dir,
+                task.config.model_dump(mode="json"),
+                gateway_origin=f"{route.scheme}://{route.netloc}",
+                release_digest=(task.config.environment.docker_image or "").rsplit("@", 1)[-1],
+            )
         _validate_task(task, strategy=strategy)
         if strategy in {T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND}:
             if (
