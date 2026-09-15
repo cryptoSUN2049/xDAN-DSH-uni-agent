@@ -1,0 +1,10 @@
+# Two distinct GPUs: actor and standalone rollout. No teacher allocation.
+trainer:
+  v1:
+    trainer_mode: separate_async
+actor_rollout_ref:
+  rollout:
+    nnodes: 1
+distillation:
+  enabled: false
+  nnodes: 0

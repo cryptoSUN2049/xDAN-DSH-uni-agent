@@ -100,3 +100,7 @@ Teacher字段为TQ顶层nested [batch,jagged_sequence,K]，显式ragged_idx=1；
 当前实际服务器单卡96GB，只能分段验证。原生colocate_async+OPD至少actor/rollout池1卡+teacher池1卡；separate_async+OPD至少actor、rollout、teacher各1卡（角色调度下限，不保证目标9B/27B显存足够）。不伪造Ray GPU数，不将分段结果写为完整异步通过。
 
 参考核对：[Tinker官方OPD](https://thinkingmachines.ai/blog/on-policy-distillation/)描述Student采样与Teacher逐token reverse-KL信号；[VERL V1官方文档](https://github.com/verl-project/verl/blob/main/docs/advance/v1_async_trainer.md)解释separate_async与非naive权重同步后端。实现以本worktree固定源码为准，不将浮动main文档当pin。
+
+三种原生训练入口已落盘，使用说明见[训练recipes](training-recipes.md)。配置组合/原生Teacher dataclass共15例通过；无真实多卡更新验收。
+
+Teacher评分增加每条轨迹可配置deadline（agent_framework.teacher_timeout_seconds，默认300秒）；超时取消评分协程、整组失败且不写trajectory。它独立于runner的session timeout，避免Teacher服务挂起让异步TQ永久停留running。Memory/Work-state只补Teacher转发，原有同步、完整组和verifier约束保留，不宣称该专用路线已全异步化。

@@ -1,0 +1,22 @@
+# Three distinct GPUs: actor, standalone rollout, and frozen teacher.
+trainer:
+  v1:
+    trainer_mode: separate_async
+actor_rollout_ref:
+  rollout:
+    nnodes: 1
+distillation:
+  enabled: true
+  nnodes: 1
+  distillation_loss:
+    use_task_rewards: true
+  teacher_models:
+    teacher_model:
+      num_replicas: 1
+      inference:
+        tensor_model_parallel_size: 1
+        # Native prompt_logprobs scoring generates one additional token.
+        max_model_len: 8193
+        gpu_memory_utilization: 0.85
+        max_num_batched_tokens: 8192
+        max_num_seqs: 8
