@@ -1,0 +1,30 @@
+{
+  "schema": "uni-agent.fsdp-lora-merged-export.v1",
+  "scope": "single_gpu_native_export_component",
+  "passed": false,
+  "rollout_publication_verified": false,
+  "checkpoint_reload_verified": false,
+  "model_path": "/workspace/models/Qwen3-4B-1cfa9a7",
+  "versions": {
+    "torch": "2.11.0",
+    "transformers": "5.8.0",
+    "peft": "0.18.1",
+    "ray": "2.54.1"
+  },
+  "verl_commit": "a9f2985159536a607211dcac730d3f5d55028950",
+  "native_source_sha256": {
+    "verl/workers/engine/fsdp/transformer_impl.py": "fb8ea0cb0eab38bb746fd386bdc6866b389cf7b5deee6ebf267d71b9cca51c04",
+    "verl/utils/fsdp_utils.py": "7cb46c36f46269ae89fd8be861ab37fdb05eaa3742fd96df74145989dfe9cd78"
+  },
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "model_files": {
+    "config.json": "8ba006f74fecfaaeb392872a60f4a480e7ec9860153d2e1b769ec81f9a147f8a",
+    "model-00001-of-00003.safetensors": "328a91d3122359d5547f9d79521205bc0a46e1f79a792dfe650e99fc2d651223",
+    "model-00002-of-00003.safetensors": "6cd087b316306a68c562436b5492edbcf6e16c6dba3a1308279caa5a58e21ca5",
+    "model-00003-of-00003.safetensors": "e4bf436957184f4eeb86a80e9db394503f1f56446b2e6b7edeac5b81470f4ca1"
+  },
+  "error": {
+    "type": "AssertionError",
+    "message": "as_params=True type(prim_param)=<class 'torch.Tensor'>"
+  }
+}

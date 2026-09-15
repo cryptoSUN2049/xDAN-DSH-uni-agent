@@ -2,7 +2,7 @@
 - 当前 worktree/分支：`verl-uni-agent-harbor-opd-rl`；用户已授权实施、GPU验证和按节点 commit/push。
 - Uni-Agent `91618ea` / VERL `a9f2985` 已配对升级；Teacher→TQ→原生loss接线完成。
 - `283e3a5` 原生loss 8项CPU验证；`cec4a07` Modal后端191项CPU验证。均非GPU训练证据。
-- 当前推进：单卡依赖安装/GPU算子和vLLM回归已通过；正在真实LoRA merged导出组件验证。
+- 当前推进：单卡依赖安装/GPU算子和vLLM回归已通过；真实LoRA merged导出组件已通过（r2）。
 - b0b3967接通Controller公网入口与任务准备，217项CPU通过；真实Modal环境双sandbox清理通过。
 - 平台 goal 为 active。已向用户请求双卡SSH和专用Gateway域名；完整训练闭环尚未验收。
 
@@ -46,7 +46,7 @@ Teacher概率不是任务成功判定。Teacher整组失败不得提交部分tra
 - [x] LoRA merged同步最小修复、18项CPU配置回归、独立commit 3140271。
 - [x] 全库Ruff双门通过（479文件），里程碑push至origin；89ebca9已推送。
 - [x] GPU环境安装/TQ固定、CUDA BF16反向/NCCL、vLLM14项和Framework/Gateway569项通过。
-- [ ] 单GPU真实LoRA update→merged导出→trainer恢复组件验证。
+- [x] 单GPU真实LoRA update→merged导出→trainer恢复组件验证（r2通过，r1失败保留）。
 - [x] Controller公网HTTPS映射代码及Modal任务/训练准备冻结合同，217项CPU回归。
 - [x] 真实Modal两个环境命令与独立终止确认；只是组件，不是DSH任务。
 - [ ] 配置用户专用域名/Tunnel；冻结并验证可拉取DSH registry镜像/task/policy。
@@ -70,8 +70,14 @@ CPU命令解释器 `/private/tmp/uni-agent-opd-upgrade-cpu/bin/python`；PYTHONP
 
 ## 2026-09-15 GPU/Modal新节点
 - 新交付：deployment/services/harbor_modal_ingress.py、Controller/worker改动、prepare_t2_task/prepare_m2_training扩展；b0b3967。
-- 两个新验证脚本：deployment/checks/harbor_modal_cleanup_smoke.py（真实provider已过）与fsdp_lora_merged_export.py（正在GPU验证）。
+- 两个新验证脚本：deployment/checks/harbor_modal_cleanup_smoke.py（真实provider已过）与fsdp_lora_merged_export.py（r2实际GPU通过）。
 - docs同目录新增gpu-preflight.json、modal-provider-smoke-r2.json、modal-ingress-design.md、incremental-lora-sync-design.md。
 - 原始GPU regression566pass/3error是远端rsync无.git造成历史fixture失败；只补git历史再跑3pass，未改测试或源码；历史失败日志保留。
 - SSH偶发banner timeout；恢复后必须查原进程，不重复启动或把观测失败认作进程终止。
 - 本机Modal配置已验证有shootime007工作区；Docker Desktop daemon未运行。未复用其他项目Cloudflare Tunnel。
+
+## 最新导出节点
+- a7f8344已push且远端SHA复核一致；包含b0b3967入口实现及真实GPU/Modal组件证据。
+- fsdp-lora-export-r2.json：144 adapter参数更新、base_changed=0、399导出tensor，选定层base+delta精确相等、trainer完整恢复；真实进程exit0。
+- r1额外启用use_orig_params=True导致FSDP前向断言；脚本改回recipe默认False后r2通过。原失败JSON保留。
+- r2完成后核GPU进程释放；尚无双卡发布/独立reload结果。用户的双卡SSH/专用域名回复仍待提供。

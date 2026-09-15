@@ -69,3 +69,5 @@ Modal已接入Worker/executor/isolated Trial可选后端和独立资源清理；
 `3140271`修复NCCL异步LoRA同步：显式merge=true，18项recipe测试通过。当前为LoRA优化+完整merged权重同步，不是高性能增量adapter同步。用户新增明确授权按验证节点push并维护handoff/tasks/goal，平台goal已创建active；所有push必须Ruff双门。
 
 2026-09-15后续节点：b0b3967接通Modal controller ingress和registry task preparation，217项CPU通过。独立GPU环境完成安装并实际BF16/NCCL/vLLM通过，Framework/Gateway566+3通过。真实Modal生命周期组件两sandbox已确认终止，证据docs同目录modal-provider-smoke-r2.json。没有真实DSH Modal任务/异步GPU训练闭环证据。已通过异步问题向用户请求双卡SSH和本项目专用Gateway域名，等待文本回复期间继续单卡验证。
+
+真实4B LoRA导出r2已通过：144 adapter变、base不变、399tensor导出、选定层base+delta精确相等、trainer哈希精确恢复。r1验证脚本use_orig_params=True与recipe不一致，FSDP前向失败；脚本对齐False后通过，未改VERL产品实现。仍未验证双卡rollout publication/reload，不能宣称完整闭环。

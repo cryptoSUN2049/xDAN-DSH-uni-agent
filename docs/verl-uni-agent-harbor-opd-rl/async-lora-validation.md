@@ -93,3 +93,25 @@ python deployment/checks/fsdp_lora_merged_export.py \
 ```
 
 The result must contain `passed: true`, nonzero adapter update count and merged delta, exact base-plus-delta equality, and exact trainer-state restoration. It records native source hashes as well as the VERL commit so a local overlay cannot be mistaken for pristine upstream. Any assertion failure exits nonzero and saves failure evidence. Existing evidence is never overwritten. The script has only passed local Ruff checks and CPU CLI parsing; GPU execution and its numerical assertions remain pending.
+
+## Real single-GPU result (2026-09-15)
+
+`fsdp-lora-export-r2.json` records a successful real Qwen3-4B run on the RTX PRO
+6000 Blackwell with Torch 2.11 and paired VERL a9f2985. Two LM optimizer steps
+produced finite nonzero gradient norms 2.1875 / 6.46875; loss changed from
+5.7440815 to 2.4727979. All 144 adapter parameters changed and zero frozen base
+parameters changed. Native export emitted 399 tensors; the selected q_proj tensor
+exactly equals base + adapter delta, with max absolute difference from base
+0.006622314453125. After exhausting the generator, every trainer parameter hash
+exactly matches its post-update/pre-export value. Process exit code was 0.
+
+The failed first run (`fsdp-lora-export-r1.json`) used the probe's extra
+`use_orig_params=True` and failed on FSDP forward parameter-view restoration.
+The probe now follows the recipe/default `False` and inspects original trainable
+names inside `summon_full_params`. No product/VERL code or success assertion was
+changed to make this pass. This establishes the configured component path, not
+compatibility of the failed alternate option.
+
+This is a real LM update/export component check, not Harbor reward learning,
+NCCL cross-device publication, rollout logprob comparison, or checkpoint reload.
+Those remain separately pending; both flags in the JSON are explicitly false.

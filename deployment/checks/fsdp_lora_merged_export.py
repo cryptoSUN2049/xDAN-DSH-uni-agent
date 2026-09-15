@@ -109,7 +109,7 @@ def main():
                 engine_config=FSDPEngineConfig(
                     strategy="fsdp",
                     model_dtype="bf16",
-                    use_orig_params=True,
+                    use_orig_params=False,
                     use_torch_compile=False,
                     param_offload=False,
                     optimizer_offload=False,
@@ -128,7 +128,10 @@ def main():
                     return {name: tensor_hash(value) for name, value in engine.module.named_parameters()}
 
             before = snapshot()
-            trainable = [name for name, parameter in engine.module.named_parameters() if parameter.requires_grad]
+            # Match the recipe's native FSDP1 default. Inspect original names
+            # only while summoned; outside this context FSDP exposes flat params.
+            with FSDP.summon_full_params(engine.module, writeback=False):
+                trainable = [name for name, parameter in engine.module.named_parameters() if parameter.requires_grad]
             if not trainable or any("lora_" not in name for name in trainable):
                 raise RuntimeError("Expected only real LoRA parameters to be trainable")
             tokens = model_config.tokenizer("The command prints a line. Explain: echo hello", return_tensors="pt").to(
