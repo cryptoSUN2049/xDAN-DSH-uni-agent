@@ -1,3 +1,25 @@
+# 当前执行：verl-uni-agent-harbor-opd-rl（2026-09-15）
+
+本节及tasks/verl-uni-agent-harbor-opd-rl/handoff.md优先于下方继承历史。
+
+- [x] 隔离worktree、复用审计、项目记忆与设计；用户明确授权实施。
+- [x] Uni-Agent 91618ea与VERL a9f2985成对升级，本地提交0c61d01。
+- [x] Framework升级回归256通过、Gateway CPU 227通过（5例需vLLM）。
+- [x] Teacher Adapter→worker→framework→全chain评分→TQ原生接线。
+- [x] Teacher合同红测26失败→绿测26通过；调用链/strict failure/因果位置另8通过。
+- [x] 新增评分后Framework整目录282通过；Ruff check/format全仓通过。
+- [x] 用户授权GPU服务器，独立源码已同步；确认单卡96GB。
+- [ ] GPU隔离uv测试lane安装及真实GPU算子/依赖回归。
+- [ ] 原生全异步LoRA RL、OPD、hybrid recipe及配置测试。
+- [ ] Harbor Modal执行器、生命周期/可信verifier与Gateway可达性。
+- [ ] 多卡真实参数更新、LoRA同步、reload/resume与完整闭环。
+- [ ] 性能验收：有效token吞吐、staleness、同步耗时、GPU等待、任务成功率。
+
+Review：CPU结果不能替代GPU；当前单卡不能调度原生独立teacher完整拓扑。
+用户可在需要时提供双卡，先完成代码与单卡验证再通知启动；双卡可先跑separate_async RL。
+
+---
+
 # Uni-Agent 项目状态回顾与本地交接
 
 最新权威目标：[原生四能力 Goal](harbor-modal-integration/active-engineering-goal.md)。Harbor 后置，以下旧路线仅作历史记录。

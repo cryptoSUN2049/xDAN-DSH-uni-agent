@@ -72,6 +72,7 @@ def build_agent_framework(
     config,
     gateway_manager,
     reward_loop_worker_handles=None,
+    teacher_client=None,
 ) -> AgentFramework:
     """Wire the configured framework subclass over an injected gateway manager."""
     # TODO(phase-b): switch this to actor_rollout_ref.rollout.agent_framework.*
@@ -79,11 +80,13 @@ def build_agent_framework(
     model_config: HFModelConfig = omega_conf_to_dataclass(config.actor_rollout_ref.model)
 
     framework_cls = load_class_from_fqn(str(af_cfg.get("framework_class_fqn", _DEFAULT_FRAMEWORK_CLASS)))
+    teacher_kwargs = {"teacher_client": teacher_client} if teacher_client is not None else {}
     return framework_cls.from_config(
         config=config,
         gateway_manager=gateway_manager,
         processor=model_config.processor,
         reward_loop_worker_handles=reward_loop_worker_handles,
+        **teacher_kwargs,
     )
 
 
@@ -95,10 +98,11 @@ class AgentFrameworkWorker:
     is created driver-side and injected so its actors are not owned by this worker.
     """
 
-    def __init__(self, *, config, gateway_manager, reward_loop_worker_handles=None) -> None:
+    def __init__(self, *, config, gateway_manager, reward_loop_worker_handles=None, teacher_client=None) -> None:
         tq.init()
         init_rollout_trace_config(config)
         self.framework = build_agent_framework(
+            teacher_client=teacher_client,
             config=config,
             gateway_manager=gateway_manager,
             reward_loop_worker_handles=reward_loop_worker_handles,
@@ -132,14 +136,15 @@ class AgentFrameworkRolloutAdapter:
         reward_loop_worker_handles=None,
         **_,
     ) -> AgentFrameworkRolloutAdapter:
-        if teacher_client is not None:
-            raise ValueError(
-                "AgentFrameworkRolloutAdapter does not support teacher_client yet; "
-                "disable teacher policy/distillation or use an AgentLoopManager that supports it."
-            )
+        distillation_enabled = OmegaConf.select(config, "distillation.enabled", default=False)
+        if distillation_enabled and not teacher_client:
+            raise ValueError("Enabled distillation requires teacher clients")
+        if teacher_client is not None and not distillation_enabled:
+            raise ValueError("Teacher clients require distillation.enabled=true")
 
         gateway_manager = build_gateway_manager(config=config, llm_client=llm_client)
         framework_worker = AgentFrameworkWorker.remote(
+            teacher_client=teacher_client,
             config=config,
             gateway_manager=gateway_manager,
             reward_loop_worker_handles=reward_loop_worker_handles,

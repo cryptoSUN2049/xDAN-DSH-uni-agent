@@ -233,6 +233,10 @@ def _list_of_tq_fields_to_tensordict(fields: list[dict[str, object]]) -> TensorD
     # Optional per-sample fields (e.g. routed_experts) can be missing on degenerate
     # trajectories; drop any column not present on every sample so the stacker never
     # KeyErrors on a partially-present key (list_of_dict_to_tensordict keys off row 0).
+    teacher_fields = {"teacher_ids", "teacher_logprobs"}
+    if any(teacher_fields.intersection(field) for field in fields):
+        if not all(teacher_fields.issubset(field) for field in fields):
+            raise ValueError("Teacher supervision must include both fields for every trajectory")
     if fields:
         shared_keys = set(fields[0]).intersection(*(set(f) for f in fields[1:]))
         for f in fields:
@@ -246,7 +250,7 @@ def _list_of_tq_fields_to_tensordict(fields: list[dict[str, object]]) -> TensorD
         values = [field[key] for field in fields]
         if not all(isinstance(value, torch.Tensor) for value in values):
             continue
-        if key == "routed_experts":
+        if key in {"routed_experts", "teacher_ids", "teacher_logprobs"}:
             ragged_idx = 1  # [seq, layers, topk]: ragged on the sequence dim
         elif key == "position_ids" and values[0].dim() == 2:
             ragged_idx = 2
@@ -329,6 +333,7 @@ class GatewayAgentFramework(AgentFramework):
         gateway_manager,  # GatewayManager: framework calls create_session/finalize_session/abort_session
         *,
         runner_registry: dict[str, _RunnerConfig],
+        teacher_server_manager=None,
         reward_loop_worker_handles=None,
         custom_reward_function_configured: bool = False,
         processor=None,
@@ -345,6 +350,7 @@ class GatewayAgentFramework(AgentFramework):
     ):
         self.gateway_manager = gateway_manager
         self.runner_registry = runner_registry
+        self.teacher_server_manager = teacher_server_manager
         # Materialize inline runners at construction since they run in-process and may maintain state;
         # Ray-dispatched runners are materialized per-run since they run remotely.
         self._inline_runners = {
@@ -378,6 +384,7 @@ class GatewayAgentFramework(AgentFramework):
         gateway_manager,
         processor=None,
         reward_loop_worker_handles=None,
+        teacher_client=None,
     ) -> GatewayAgentFramework:
         # TODO(phase-b): switch this to actor_rollout_ref.rollout.agent_framework.*
         af_cfg = OmegaConf.select(config, "actor_rollout_ref.rollout.custom.agent_framework", default={}) or {}
@@ -473,7 +480,16 @@ class GatewayAgentFramework(AgentFramework):
         if postprocessor_pass_context and "context" in trajectory_postprocessor_kwargs:
             raise ValueError("trajectory_postprocessor_kwargs.context is reserved for runtime context")
 
+        teacher_server_manager = None
+        if OmegaConf.select(config, "distillation.enabled", default=False):
+            from verl.experimental.teacher_loop.teacher_manager import AsyncTeacherLLMServerManager
+
+            if not teacher_client:
+                raise ValueError("Enabled distillation requires teacher clients")
+            teacher_server_manager = AsyncTeacherLLMServerManager(config=config, teacher_client=teacher_client)
+
         return cls(
+            teacher_server_manager=teacher_server_manager,
             gateway_manager=gateway_manager,
             runner_registry=runner_registry,
             reward_loop_worker_handles=reward_loop_worker_handles,
@@ -1169,6 +1185,9 @@ class GatewayAgentFramework(AgentFramework):
                     for traj, (score, extra) in zip(session_trajectories, annotations, strict=True)
                 ]
 
+            result_trajectories = await self._compute_teacher_logprobs(
+                result_trajectories, sample_fields, validate=partition_id == "val"
+            )
             self._log_trajectory_summary(session_id, result_trajectories)
             if run_dir is not None:
                 await asyncio.to_thread(
@@ -1194,6 +1213,51 @@ class GatewayAgentFramework(AgentFramework):
             return GatewayStageExecution(
                 session_id, runner_context, task_result, result_trajectories, sample_fields, run_dir
             )
+
+    async def _compute_teacher_logprobs(
+        self, trajectories: list[Trajectory], sample_fields: dict[str, object], *, validate: bool
+    ) -> list[Trajectory]:
+        """Score every admitted chain using VERL's already shifted full-sequence contract."""
+        manager = self.teacher_server_manager
+        if manager is None or validate:
+            return trajectories
+        routing_key = sample_fields.get(manager.teacher_key)
+        if routing_key is not None and hasattr(routing_key, "item"):
+            routing_key = routing_key.item()
+        scored = []
+        for trajectory in trajectories:
+            sequence_ids = trajectory.prompt_ids + trajectory.response_ids
+            teacher_ids, teacher_logprobs = await manager.compute_teacher_logprobs_single(
+                sequence_ids=sequence_ids,
+                multi_modal_data=trajectory.multi_modal_data,
+                mm_processor_kwargs=trajectory.extra_fields.get("mm_processor_kwargs"),
+                routing_key=routing_key,
+            )
+            if (
+                not isinstance(teacher_ids, torch.Tensor)
+                or not isinstance(teacher_logprobs, torch.Tensor)
+                or teacher_ids.ndim != 2
+                or teacher_ids.shape != teacher_logprobs.shape
+                or teacher_ids.shape[0] != len(sequence_ids)
+                or teacher_ids.shape[1] == 0
+                or teacher_ids.dtype not in (torch.int32, torch.int64)
+                or not teacher_logprobs.is_floating_point()
+                or not torch.isfinite(teacher_logprobs).all()
+            ):
+                raise ValueError("Teacher outputs must be finite aligned [sequence_length, K] tensors with integer IDs")
+            # VERL already shifts next-token scores and appends a dummy tail row.
+            # Keep all prefix/tool positions; the original action mask selects loss tokens.
+            scored.append(
+                replace(
+                    trajectory,
+                    extra_fields={
+                        **trajectory.extra_fields,
+                        "teacher_ids": teacher_ids,
+                        "teacher_logprobs": teacher_logprobs,
+                    },
+                )
+            )
+        return scored
 
     async def _cancel_runner_task(self, object_ref, session_id: str) -> None:
         """Cancel a dispatched runner Ray task after its session timed out.
@@ -1575,6 +1639,9 @@ class GatewayAgentFramework(AgentFramework):
             **trajectory.extra_fields,
             "reward_extra_info": dict(trajectory.reward_metrics),
         }
+        for key in ("teacher_ids", "teacher_logprobs"):
+            if key in field["extra_fields"]:
+                field[key] = field["extra_fields"].pop(key)
         # Framework-owned masks must win over same-named Gateway extra fields.
         field["response_mask"] = response_mask
         field["loss_mask"] = response_mask

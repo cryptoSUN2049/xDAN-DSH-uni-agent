@@ -78,3 +78,25 @@ Harbor隔离执行器isolated_trial.py仍有docker compose、docker cp依赖；�
 metarsi-m0相对当前基线的uni_agent差异以缺少新memory_chain等内容为主；不整体合并旧框架。dsh-capability-curriculum在该目录比较没有差异，但课程文件应单独审核。Tinker的harbor_opd_rl.py已有三模式和评分实现，仅迁移合同测试、信号审计思路；不替换DSH或TQ。
 
 下一阶段代码前设计必须明确Teacher字段形状、序列分段、原始prefix评分、模型版本及完整组提交的原子性；明确配对VERL现有distillation loss可直接复用的范围后再决定是否新增loss。
+
+## Teacher桥接实施合同（2026-09-15）
+
+复用固定VERL的AsyncTeacherLLMServerManager与原生distillation loss。Adapter按distillation.enabled核对teacher_client，传入worker/from_config；仅配置开启时实例化Teacher manager。普通RL自定义framework不强制接收新参数。
+
+评分在postprocessor准入和reward之后、trajectory dump与TQ提交之前发生，对每条存活chain评分；验证分区不评分。输入严格使用prompt_ids+response_ids，不decode/reencode；传递多模态数据与样本teacher_key。返回[S,K]整数IDs和有限logprobs，检查shape和序列长度。VERL已将next-token分布左移并尾补dummy，Uni-Agent不得再次shift；第一个response使用prompt_length-1行。
+
+Teacher字段为TQ顶层nested [batch,jagged_sequence,K]，显式ragged_idx=1；不得作为普通metadata传输。完整batch的Teacher列必须成对齐全，否则fail-closed，禁止shared_keys自动丢弃。保留response_mask/action mask、版本证据和Harbor reward。Teacher异常走现有strict整组拒绝路径。先验收原生sampled/top-k loss合同，再单独设置use_task_rewards/use_policy_gradient等目标开关，不自行叠加另一份OPD advantage。
+
+测试包括：原始tokens/路由透传、多chain与工具mask、validation跳过、错shape/非有限值拒绝、不等长TQ序列、首个response因果位置、strict group评分失败零提交。GPU阶段复跑固定依赖，验证真实Teacher评分、有效token、梯度、参数变化与同步/reload/resume。
+
+## 全异步与OPD：独立的执行与学习合同
+
+用户明确要求Student在真实Harbor/Modal交互中自主生成命令、犯错与修复，然后Teacher在这些原始上下文上评分。工具输出是上下文，不作为Student动作训练；verifier reward独立保留，不能被Teacher likelihood覆盖。纯OPD、纯RL、组合目标分别报告信号。
+
+固定VERL V1支持colocate_async（当前Uni-Agent quickstart默认）与separate_async。前者共置actor/rollout，在更新时pause/abort generation再同步恢复，支持partial rollout；不能称为训练与推理GPU同时并行。后者分离资源，才实现持续rollout与优化并行。两者都用Gateway/TQ，不需要换Agent loop。
+
+全异步与OPD可组合，但Student采样版本可能滞后：必须保留rollout_log_probs、min/max_global_steps、版本跨度与staleness，沿用ReplayBuffer阈值/drop或wait策略，并核验原生loss的策略修正。Teacher对旧Student轨迹评分不会消除off-policy偏差。先低滞后正确性验收，再测吞吐；不为了异步启动而复用错误版本轨迹。
+
+当前实际服务器单卡96GB，只能分段验证。原生colocate_async+OPD至少actor/rollout池1卡+teacher池1卡；separate_async+OPD至少actor、rollout、teacher各1卡（角色调度下限，不保证目标9B/27B显存足够）。不伪造Ray GPU数，不将分段结果写为完整异步通过。
+
+参考核对：[Tinker官方OPD](https://thinkingmachines.ai/blog/on-policy-distillation/)描述Student采样与Teacher逐token reverse-KL信号；[VERL V1官方文档](https://github.com/verl-project/verl/blob/main/docs/advance/v1_async_trainer.md)解释separate_async与非naive权重同步后端。实现以本worktree固定源码为准，不将浮动main文档当pin。
