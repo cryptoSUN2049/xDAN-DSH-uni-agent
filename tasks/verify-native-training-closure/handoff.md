@@ -1,5 +1,18 @@
 # 原生训练闭环独立验证交接
 
+## M1最新交付（优先于下方M0历史）
+
+- M0 064e8c5已push并回读；M1本节点提交修复，目标仍active，GPU/效果未完成。
+- launch.py（202行）：原生tokenizer/processor/过滤预检、有效batch拒绝、epoch推导与显式步数/恢复参数。
+- test_harbor_launch_preflight.py（171行）：实际本地tokenizer/过滤与CLI；test_harbor_training_preflight.py（107行）：实际配对fit控制流，模型/队列/日志stub。
+- docs/verify-native-training-closure/checkpoint-fix.md、training-recipes.md、cpu-validation.json：修复、运行参数、123 passed/99%覆盖及源码SHA证据。
+- tasks/todo.md与goal.md同步。原实施会话的Modal/LoRA同步在另一worktree继续，不覆盖其未提交文件。
+- 验证：123 passed，144.74秒，11条依赖提示；入口136/137行覆盖。编译和Ruff双门通过，独立review无剩余阻断。
+- 下一步：集成最新已提交产品增量并交叉验证；GPU可达后真实更新、同步、独立reload与optimizer恢复。两次SSH banner超时不是服务已停止的证明。
+- 运行测试用PYTHONPATH=.:verl:/private/tmp/uni-agent-closure-test-tools，解释器/private/tmp/uni-agent-opd-upgrade-cpu/bin/python。覆盖插件临时独立安装，未改共享环境。
+- 原生最终目标step会保存；显式恢复目标是绝对step，不是新增step。数据过滤后的有效行数决定epoch，不能只靠原始parquet行数。
+- 冷启动先读本节→goal.md→checkpoint-fix.md→training-recipes.md，再核Git与远端状态。
+
 ## 1. TL;DR
 - worktree/branch：verify-native-training-closure，来源3eebf20。
 - Teacher/轨迹/loss 51项、recipe/入口/监督器92项通过。

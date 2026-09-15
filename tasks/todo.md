@@ -5,9 +5,13 @@
 - [x] 只读核查既有GPU与安装状态，未启动或停止作业。
 - [x] 复现默认无checkpoint和单行除零，记录入口恢复缺口。
 - [x] 隔离保存验收报告、修复设计与handoff。
-- [ ] 唯一实施会话修复后复验，再推进GPU更新/reload/恢复。
+- [x] M0已提交并推送064e8c5，远端回读一致。
+- [x] M1修复原生过滤后数据不足、epoch提前结束与显式恢复入口；123项通过，入口覆盖率99%。
+- [x] 编译与Ruff双门通过，独立review无阻断；保存cpu-validation.json并按本节点commit/push。
+- [ ] 集成另一会话已提交的Modal/LoRA增量，复跑交叉回归。
+- [ ] 可达GPU就绪后验证真实更新/reload/optimizer恢复，继而同预算效果对照。
 
-Review：143项CPU测试通过不等于训练产物合同通过。原实施分支的未提交变更保留；本分支仅文档交付。详见docs/verify-native-training-closure/verification.md。
+Review：M0为143项现状审计；M1为123项针对性回归，不能相加冒充去重全仓数量。原实施分支未提交变更保留。两次SSH banner超时，GPU验收未完成。详见docs/verify-native-training-closure/checkpoint-fix.md。
 
 # 历史执行：verl-uni-agent-harbor-opd-rl（2026-09-15）
 

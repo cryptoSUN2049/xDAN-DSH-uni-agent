@@ -1,0 +1,32 @@
+{
+  "schema": "uni-agent.training-closure-cpu.v1",
+  "date": "2026-09-15",
+  "baseline": "3eebf20",
+  "paired_verl": "a9f2985159536a607211dcac730d3f5d55028950",
+  "tests": {
+    "passed": 123,
+    "warnings": 11,
+    "seconds": 144.74
+  },
+  "coverage_scope": "examples.harbor_opd_rl.launch",
+  "coverage": {
+    "covered_lines": 136,
+    "num_statements": 137,
+    "percent_covered": 99.27007299270073,
+    "percent_covered_display": "99",
+    "missing_lines": 1,
+    "excluded_lines": 0,
+    "percent_statements_covered": 99.27007299270073,
+    "percent_statements_covered_display": "99"
+  },
+  "sources": {
+    "examples/harbor_opd_rl/launch.py": "cec8c1983519c7460600b4d5f743e104287c6fc0d8ea14dccc8c5c4d16c83cd4",
+    "tests/uni_agent/examples/test_harbor_launch_preflight.py": "114a8af4ec15a2e9c077c6d44207ec3990329327297ee230d3850c64e87d641b",
+    "tests/uni_agent/examples/test_harbor_training_preflight.py": "69ade26e82e6f3f2494748feeb096609ad3c1a300cd518d9f56dd8fa5252b751"
+  },
+  "native_loop_scope": "Real pinned PPOTrainer.fit control flow; model, queue and log operations stubbed",
+  "dataset_scope": "Real local tokenizer/config and paired VERL filtered dataset; no model weights",
+  "gpu_training_verified": false,
+  "optimizer_restore_verified": false,
+  "capability_improvement_verified": false
+}
