@@ -1,3 +1,7 @@
+# 最新纠正：Modal 尚未被证实为训练卡点
+
+2026-09-15 用户要求复核：下文历史记录中“等待专用域名/Tunnel”的阻塞归因已撤回。该配置是自建 ingress 的方案约束；真实 Modal lifecycle smoke 已通过，尚无完整 Trial 在 Gateway 连接阶段失败的证据。SSH banner timeout 只证明本次无法观测服务器。下一步先恢复观测、检查真实启动输入及可达路由，不以专用域名作为唯一恢复条件。详见 docs/verl-uni-agent-harbor-opd-rl/modal-blocker-audit.md。
+
 # TL;DR
 
 ## 训练入口修复合入说明
