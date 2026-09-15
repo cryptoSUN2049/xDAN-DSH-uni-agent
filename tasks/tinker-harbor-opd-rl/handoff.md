@@ -1,6 +1,7 @@
 # Handoff: tinker-harbor-opd-rl
 
 ## TL;DR
+最新主线：用户授权TB2.1全部89题训练，报告已见任务成绩；此前TB独立评测定位被替代。先读terminal-bench-2.1-training.md。
 用户确认以Terminal-Bench独立成功率为目标：公开Harbor任务训练，Terminal-Bench2.1独立评测；OPD指导与reward RL联合更新。
 代码2ef293b的评估证据补强465项回归通过；本轮联合路径131项回归和4类本地payload检查通过，新代码未部署。
 历史真实P0部署b06728a：参数更新/reload已验收，前2/2后1/2；独立原始数组重算RL0、OPD1138非零动作。没有证明能力提高或双非零云更新。
@@ -107,3 +108,5 @@ CI未推送触发；已执行本地相关回归与真实云验证，正式benchm
 - 6题派生运行配置在原候选旁的 runtime-v1，未覆盖原始任务；仅上述1题已跑云端，training_ready仍false。
 - 下一步：云端可导入错误解验收和 verifier 故障分类，再筛查 Student/Teacher。扩大前排除 stack 来源；当前manifest第二题仍是stack，不能直接把max_tasks改2。
 - 本轮未更新 Student 权重，历史真实 RL=0 的结论不变。
+
+2026-09-15更新：Harbor CLI已由uv升级0.1.45→0.23.0；固定Hub rev6全部89题下载成功，名称集合精确一致；逐文件SHA已记录。89题核心文件齐全，声明gpus均0，最大4CPU/8192MiB。尚未针对这89题启动训练。下一步以派生runtime配置兼容新版task.toml，再做单题环境验收和小批OPD+RL。
