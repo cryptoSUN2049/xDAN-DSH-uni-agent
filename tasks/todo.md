@@ -149,3 +149,9 @@ Review：参考MD共222行，已核对所有本地Markdown链接；独立源码�
 - [x] 在参考MD补充9.1节，明确source/wheel/image/run边界和升级交付链；更新lessons。
 
 Review：只读本地DSH与Harbor代码，未查询远端Release、构建运行时或变更运行环境；远端发布状态明确引用用户回执。
+
+## Tinker Harbor OPD/RL（2026-09-15）
+- [x] 项目记忆/设计/交接与独立Cookbook实现
+- [x] 42本地测试
+- [ ] API key/真实任务/更新/reload/benchmark
+Review：入口 tasks/tinker-harbor-opd-rl/handoff.md。未取得性能结果。

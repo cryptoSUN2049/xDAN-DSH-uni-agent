@@ -33,3 +33,9 @@
 
 - 用户补充DSH发布状态后，分别核查source SHA、可下载SDK/runtime及hash、Harbor镜像pin和实际运行版本；“已推送”不能表达全部完成。
 - 新提交若主要为格式整理，先对比AST及少量语义变化，避免把大行数diff误判为架构升级；旧verification状态不能覆盖后续回执。
+
+## 2026-09-15：Tinker路线
+- 用户指定优先Tinker资源；先复用官方Harbor与OPD训练器，不再扩建2.4T scoring。
+- clone与git worktree不同；本轮实际代码worktree是tinker-cookbook-opd-rl。
+- 默认指令版9B不能默默改成Base；group reward与sampled KL分别验收。
+- 细节纠正见 tasks/tinker-harbor-opd-rl/memory.md。
