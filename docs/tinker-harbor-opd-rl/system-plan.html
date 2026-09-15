@@ -22,24 +22,25 @@
 <span class="brand"><i></i>TINKER / LAB</span><div class="sub">大模型后训练 · 系统实施方案</div>
 <nav>
 <a href="#overview">00 / 方案与当前状态</a><a href="#goals">01 / 四个核心目标</a><a href="#architecture">02 / 系统架构</a><a href="#loop">03 / 一次训练如何发生</a><a href="#algorithm">04 / OPD + RL 算法</a><a href="#contracts">05 / Token 与 SDK 契约</a><a href="#data">06 / 数据与评测</a><a href="#roadmap">07 / 阶段与验收</a><a href="#launch">08 / 如何开启训练</a><a href="#operations">09 / 云端运行与费用</a><a href="#gaps">10 / 还差什么</a><a href="#sources">11 / 来源与项目入口</a>
-</nav><div class="bottom">方案快照 · 2026.09.15<br>本地代码已组合<br>真实云端闭环待验收<br><br>离线可打开 · 支持打印<br>无外部字体、脚本或 CDN</div>
+</nav><div class="bottom">方案快照 · 2026.09.15<br>P0 云端工程闭环已验收<br>能力提升尚未成立<br><br>离线可打开 · 支持打印<br>无外部字体、脚本或 CDN</div>
 </aside>
 <main class="main" id="main">
 <header class="hero" id="overview">
-<div class="topline"><span class="eyebrow">SYSTEM DESIGN / EXPERIMENT ROADMAP / V1.0</span><button class="button print-button" id="print">打印 / 保存 PDF</button></div>
+<div class="topline"><span class="eyebrow">SYSTEM DESIGN / EXPERIMENT ROADMAP / V1.1</span><button class="button print-button" id="print">打印 / 保存 PDF</button></div>
 <h1>用 Tinker 打通训练闭环，<br>让 9B 学会更强的终端任务。</h1>
 <p class="lead">以 <strong>Qwen3.5-9B</strong> 为 Student，<strong>Qwen3.8-27B</strong> 为 Teacher；复用 Tinker 的训练与采样服务、Cookbook 的 OPD 代码，接入 Harbor 任务与 Modal 沙箱。先证明每个环节正确，再验证能力提升，最后检验能否超过同口径的 Opus 4.6。</p>
 <div class="tagline"><span class="tag">Tinker · 训练 / 采样 / Teacher 评分</span><span class="tag">Harbor · 任务 / 工具 / 评测</span><span class="tag">Modal · 沙箱 / 已部署控制端</span></div>
-<div class="statusbar"><span class="status-dot"></span><strong>目前是可验收的系统原型，尚未跑完真实云端训练。</strong></div>
-<div class="note green"><p><strong>2026-09-15 · 真实任务与评分已验收：</strong>4 个原创任务的 8 次 oracle/nop 检查全部通过，沙箱均已清理。Student 与 Teacher 在 2 个验证任务上均为 2/2；Student 的 6 次交互、1,602 个动作 token 通过实际训练评分路径，4,482 个 prompt／环境位置的 advantage 保持为零。云端控制器已部署且沙箱审计通过；首次训练在日志初始化缺 git 处失败，未发生更新。用户已批准继续；A–D本地集成286项测试通过，待最终Linux镜像和cloud audit后有界重试一次。<a href="p0-live-status.json">最新验证摘要</a>。本页是方案快照，尚未连接实时控制服务。</p></div>
-<div class="note blue"><p><strong>系统集成复核：</strong><a href="system-integration-review.md">阅读完整复核与验收方案</a>：官方日志/轨迹/capture、session生命周期、任务资源契约、initial/final参数对比、独立恢复和正式Terminal-Bench兼容。research与debug skills已用于本轮复核；286项相关测试通过，新增核心模块覆盖率91%；云端更新尚未验收。</p></div>
+<div class="statusbar"><span class="status-dot"></span><strong>P0 真实更新与独立 reload 已通过；能力提升尚未成立。</strong></div>
+<div class="note green"><p><strong>2026-09-15 · P0 云端工程闭环完成：</strong><code>hybrid-p0-20260915-02</code> 完成一个真实 batch；1,179 个动作 token、3,595 个屏蔽位置通过原始序列审计，loss = 181.8892。官方下载同一训练链 initial/final adapter，53,520,850 个 LoRA 元素发生非零变化；新云容器、新进程独立加载 final 成功。训练 4 个、reload 2 个、前置 audit 2 个沙箱均确认回收，模型 session 已关闭。<a href="p0-cloud-closed-loop.md">完整验收报告</a> · <a href="p0-live-status.json">验证摘要</a> · <a href="next-milestone.md">下一里程碑</a>。</p></div>
+<div class="note"><p><strong>研究结论必须单列：</strong>同组两次训练奖励均为 1，RL advantage = 0；本批有效更新来自 OPD。相同两个原创验证任务，训练前为 2/2，独立 reload 后为 <strong>1/2</strong>（scores = [1, 0]）。这次没有观察到提升，小样本单次结果也不足以归因退化。报告的 <code>passed=true</code> 只表示工程执行有效，不表示两题都成功；正式 Terminal-Bench 与 Opus 4.6 对照尚未开始。</p></div>
+<div class="note blue"><p><strong>系统集成复核：</strong><a href="system-integration-review.md">完整复核与验收方案</a>覆盖官方日志/轨迹/capture、session 生命周期、任务资源、参数比较与独立恢复。research/debug skills 已参与；286 项相关测试通过，10 个新增核心模块综合覆盖率 90.67%（约 91%），分支覆盖率 83.23%（均非全仓覆盖）。A–E 的 P0 工程门槛完成；有效 RL 学习、optimizer 续训、正式 Terminal-Bench 兼容及最小 Control Panel 仍待验收。本页是离线方案与证据快照。</p></div>
 <div class="cards four">
-<div class="card"><span class="stat-label">当前训练入口</span><strong>已组合</strong><small>官方 OPD trainer + Harbor reward</small></div>
+<div class="card"><span class="stat-label">当前训练入口</span><strong>已运行</strong><small>官方 OPD trainer + Harbor reward</small></div>
 <div class="card"><span class="stat-label">真实沙箱审计</span><strong>8 / 8</strong><small>正负对照通过，资源清理已确认</small></div>
-<div class="card"><span class="stat-label">真实训练 / reload</span><strong>待验收</strong><small>尚无实际更新或独立恢复证据</small></div>
+<div class="card"><span class="stat-label">真实训练 / reload</span><strong>已通过</strong><small>非零 LoRA 变化 + 新进程加载</small></div>
 <div class="card"><span class="stat-label">Terminal-Bench 提升</span><strong>未测量</strong><small>超越 Opus 4.6 是研究目标</small></div>
 </div>
-<p class="caption">轨迹评分实现 commit <code>9d886e6</code>；首版控制器 <code>ee2fd5f</code>；上游 Cookbook 基线 <code>485726f</code>；已安装 Tinker SDK <code>0.29.0</code>、Modal SDK <code>1.5.5</code>。账户模型列表与真实多轮评分已在线确认；更广泛的数值容差验收仍待补齐。本页面是方案与证据快照，不是实时监控面板。</p>
+<p class="caption">本次部署与训练源码 <code>b06728a</code>；镜像 <code>im-3GvBhwyn7mJ2AuXtElFPPV</code>；上游 Cookbook 基线 <code>485726f</code>；已安装 Tinker SDK <code>0.29.0</code>、Modal SDK <code>1.5.5</code>。账户模型列表与真实多轮评分已在线确认；更广泛的数值容差验收仍待补齐。本页面是方案与证据快照，不是实时监控面板。</p>
 </header>
 
 <section id="goals">
@@ -59,10 +60,10 @@
 <p>训练系统由“控制流程、执行任务、模型计算、保存证据”四部分组成。Tinker 承担模型计算；我们负责数据、奖励、实验规则和运行管理。</p>
 <div class="diagram">
 <svg viewBox="0 0 1060 570" role="img" aria-labelledby="arch-title arch-desc" xmlns="http://www.w3.org/2000/svg">
-<title id="arch-title">Tinker、Harbor 与 Modal 训练架构图</title><desc id="arch-desc">控制器读取任务，Student在Modal沙箱执行Harbor任务。Teacher对Student序列评分，Tinker更新LoRA，保存checkpoint并刷新Student。轨迹和独立评测报告写入持久存储。云端控制器已部署；扩展的统一产物管理与独立验收流程待新镜像验证。</desc>
+<title id="arch-title">Tinker、Harbor 与 Modal 训练架构图</title><desc id="arch-desc">控制器读取任务，Student在Modal沙箱执行Harbor任务。Teacher对Student序列评分，Tinker更新LoRA，保存checkpoint并刷新Student。轨迹和独立评测报告写入持久存储。云端控制器及P0独立验收已验证；预算硬上限、续训与实时控制台仍待实现。</desc>
 <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#708c81"/></marker></defs>
 <rect x="8" y="8" width="1044" height="132" rx="14" fill="#f1f4ef"/>
-<text x="30" y="35" font-size="12" font-family="sans-serif" fill="#526464">控制层 · Modal CPU Job + Secret + Volume；独立验收进程已实现待云验收</text>
+<text x="30" y="35" font-size="12" font-family="sans-serif" fill="#526464">控制层 · Modal CPU Job + Secret + Volume；P0独立更新与reload已验收</text>
 <rect x="30" y="53" width="265" height="65" rx="9" fill="white" stroke="#cbd8ce"/><text x="49" y="80" font-size="16" font-family="sans-serif" fill="#182b2b">任务 manifest / 实验配置</text><text x="49" y="101" font-size="12" font-family="sans-serif" fill="#526464">train / validation / 预算 / 版本</text>
 <path d="M295 85H345" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="350" y="53" width="357" height="65" rx="9" fill="#00695c"/><text x="371" y="80" font-size="17" font-family="sans-serif" fill="white">Cookbook Controller</text><text x="371" y="101" font-size="12" font-family="sans-serif" fill="#d7ecdf">harbor_opd_rl → 官方 train_on_policy</text>
@@ -79,17 +80,17 @@
 <rect x="30" y="394" width="997" height="66" rx="11" fill="#183e36"/><text x="50" y="421" font-size="17" font-family="sans-serif" fill="white">Controller 合成 advantage → Tinker forward_backward → optim_step</text><text x="50" y="443" font-size="12" font-family="sans-serif" fill="#d0e4d9">A = 组内 reward advantage − β × sampled reverse-KL；仅 Student action tokens 参与</text>
 <path d="M350 460V489M821 460V489" fill="none" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="30" y="496" width="610" height="56" rx="10" fill="#e9f4ed" stroke="#a9c9b8"/><text x="49" y="520" font-size="16" font-family="sans-serif" fill="#182b2b">Tinker checkpoint → 刷新 Student → 下一批</text><text x="49" y="540" font-size="12" font-family="sans-serif" fill="#526464">state / sampler 分开保存；独立进程 reload 后评测</text>
-<rect x="663" y="496" width="364" height="56" rx="10" fill="#edf2fd" stroke="#b8c9e3"/><text x="681" y="520" font-size="16" font-family="sans-serif" fill="#182b2b">轨迹、指标、任务版本、评测报告</text><text x="681" y="540" font-size="12" font-family="sans-serif" fill="#526464">当前部分本地日志；统一云端归档待实现</text>
+<rect x="663" y="496" width="364" height="56" rx="10" fill="#edf2fd" stroke="#b8c9e3"/><text x="681" y="520" font-size="16" font-family="sans-serif" fill="#182b2b">轨迹、指标、任务版本、评测报告</text><text x="681" y="540" font-size="12" font-family="sans-serif" fill="#526464">P0 云端 Volume 归档与独立检查已通过</text>
 </svg>
 </div>
-<p class="caption">实线表示已复用或已写入本地 recipe 的逻辑，不代表云端运行已验证；虚线为待实现的管理模块。整体按 API 与 Python 组件连接，P0 不需要 Kubernetes、分布式消息队列或自建 Teacher GPU 服务。</p>
+<p class="caption">实线为本次 P0 已运行的训练与证据链；虚线管理模块尚未完成。独立推理已验收，optimizer 续训与能力提升另行检查。整体按 API 与 Python 组件连接，P0 不需要 Kubernetes、分布式消息队列或自建 Teacher GPU 服务。</p>
 <div class="table-wrap"><table><thead><tr><th>组成</th><th>职责</th><th>实施方式 / 状态</th></tr></thead><tbody>
 <tr><td>Tinker skill</td><td>指导研究设计、模型与 renderer 选择、评测、监控和复现。</td><td>使用官方 <code>skills/research/SKILL.md</code>；它是开发工作流，不是训练运行时服务。</td></tr>
 <tr><td>Tinker SDK</td><td>模型能力查询、LoRA 客户端、采样、固定评分、梯度和优化器、权重保存。</td><td>已安装；正式在线能力由账户与服务实测决定。</td></tr>
 <tr><td>Tinker Cookbook</td><td>训练循环、rollout、advantage、token mask、checkpoint、evaluator。</td><td>复用官方 <code>train_on_policy</code> 与 Harbor recipe；新增薄的组合入口。</td></tr>
 <tr><td>Harbor</td><td>任务目录、指令、工具接口、运行结果与 verifier。</td><td>使用 Cookbook Harbor 组件；训练入口不是简单执行一次 <code>harbor run</code>。</td></tr>
 <tr><td>Modal</td><td>隔离执行模型生成的命令，构建任务镜像并回收 sandbox。</td><td>现有官方适配；目标也托管 CPU 控制进程。无须在 Modal 再部署 27B Teacher。</td></tr>
-<tr><td>我们补齐的系统层</td><td>任务治理、实验配置、阶段验收、预算、恢复与报告。</td><td>拆分 manifest / strict grader 已实现；云端调度、评测矩阵和统一账本待补齐。</td></tr>
+<tr><td>我们补齐的系统层</td><td>任务治理、实验配置、阶段验收、预算、恢复与报告。</td><td>manifest、strict grader、云端 P0 提交与阶段验收已实测；多实验调度、预算和消融矩阵待补齐。</td></tr>
 </tbody></table></div>
 </section>
 
@@ -132,7 +133,7 @@
 <h3>先保留原始 token，再讨论损失函数</h3>
 <div class="tokens" aria-label="多轮轨迹中的训练 mask 示例"><div class="token"><b>system + user</b>上下文 · mask 0</div><div class="token action"><b>Student thinking</b>模型生成 · mask 1</div><div class="token action"><b>Student tool call</b>模型生成 · mask 1</div><div class="token"><b>tool observation</b>环境返回 · mask 0</div><div class="token action"><b>Student action / answer</b>模型生成 · mask 1</div></div>
 <p class="small">示意按 token 来源划分；具体 role delimiter、EOS/stop 和追加标记需按 renderer 与真实采样边界核对。对已经生成的序列不要 decode 后再 encode，也不要只保留用户看到的 final content。</p>
-<div class="table-wrap"><table><thead><tr><th>边界</th><th>目标契约 / 需要保存的字段</th><th>目标失败处理（逐项待验收）</th></tr></thead><tbody>
+<div class="table-wrap"><table><thead><tr><th>边界</th><th>目标契约 / 需要保存的字段</th><th>失败处理与后续覆盖</th></tr></thead><tbody>
 <tr><td>任务 → rollout</td><td>任务 ID、revision/hash、split、镜像信息；Student checkpoint、renderer、采样参数。</td><td>任务缺文件、split 重叠先拒绝；训练前执行 oracle/nop。</td></tr>
 <tr><td>rollout → 评分</td><td>精确 <code>input_ids</code>、生成边界、每轮 observation、Student logprobs、action mask。</td><td>缺失/错位直接阻断该批；不能将 Teacher 输出替代 Student action。</td></tr>
 <tr><td>Teacher → advantage</td><td>长为 N 的序列得到 N 个位置评分；首 token 通常无前文可评分。动作位置必须非空、有限且有效。</td><td>Teacher/Student 词表 ID 与分词行为检查；不能仅凭长度相等放行。</td></tr>
@@ -141,7 +142,7 @@
 <tr><td>保存 → 下一批</td><td>区分 state_path 和 sampler_path；创建绑定新权重的 SamplingClient。</td><td>不让旧 sampler 混入新批。独立 reload 另行验收。</td></tr>
 </tbody></table></div>
 <div class="note"><p><strong>Renderer 风险：</strong>本地模型映射中，9B 推荐 <code>qwen3_5</code>，27B 本轮解析为 <code>qwen3_8_xhigh_reasoning</code>。目前 Teacher 评分使用 Student 的原始上下文，避免位置改变；词表一致仍不能证明模板语义、normalizer 或工具状态完全兼容。必须用真实多轮轨迹验证 Teacher 在这一上下文下能提供有效信号。</p></div>
-<p class="small"><strong>实际覆盖边界：</strong>当前严格校验覆盖 Harbor reward 与单序列 preflight；官方训练循环尚未在每批显式拒绝所有 Teacher action 分数的 None/非有限值或全零 mask。上表是系统目标契约，仍需补实现和故障注入测试。</p>
+<p class="small"><strong>实际覆盖边界：</strong>已对 P0 真实批次核对原始输入、目标 shift、Teacher 评分、action mask 和 advantage 公式；缺失/非有限动作分数及全零有效 mask 的拒绝路径有本地测试。本次覆盖 6 个 Datum、1,179 个动作位置；长序列、更多模板及通用 sample/rescore 数值容差仍待补充。</p>
 <h3>SDK 调用关系，而非另一份训练器</h3>
 <p>以下是已安装 SDK 的接口示意，变量 <code>batch</code>、<code>full_sequence</code> 由 Cookbook 构造；不是独立可运行脚本。生产训练继续从现有 recipe 启动。</p>
 <pre><code>service = tinker.ServiceClient()
@@ -189,18 +190,18 @@ opt_result = await opt.result_async()
 <section id="roadmap">
 <div class="topline"><div class="section-head"><span>07</span><h2>实施顺序：每阶段都留下可检查产物</h2></div><button class="button expand-button" id="expand" aria-expanded="false">展开全部步骤</button></div>
 <p>时间取决于账户权限、任务准备和真实吞吐，现阶段不承诺几天达标。按下面的退出标准推进，每次只扩大已经验证的部分。</p>
-<details class="phase" open><summary><span class="phase-no">P0</span><span class="phase-label">锁定代码、配置与账户可用性</span><span class="badge pending">最小探针通过</span></summary><div class="phase-body"><ul><li>记录 Cookbook/SDK/renderers 版本、依赖环境、Student/Teacher ID、默认采样参数和实际预算。</li><li>充值后已确认模型列表 HTTP 200；通过环境变量或云 Secret 注入 Tinker key；Modal 账户认证与控制器分开检查。</li><li>执行现有 <code>harbor_opd_preflight</code>：capabilities → Student 采样 → 两模型固定评分。</li><li>保留词表 hash、token 数、sample/rescore 差异。模型不可用时先解决权限或重新选择，不静默换模型。</li></ul><div class="splitline"><div><b>通过标准</b><p>两模型在账户内可用；评分动作位置完整有效。数值差异经重复探针判断，之后增加明确容差验收。</p></div><div><b>证据边界</b><p>现有探针只打印 rescore 最大差值，没有阈值拒绝；128-token 采样只测通信/评分，可能没有完整最终答案。</p></div></div><div class="artifact">建议归档：capabilities.json、resolved-config.json、scoring-probe.json、依赖与代码版本。统一归档格式待补齐。</div></div></details>
-<details class="phase"><summary><span class="phase-no">P1</span><span class="phase-label">让任务、沙箱与奖励可信</span><span class="badge pending">原创smoke已验收</span></summary><div class="phase-body"><ul><li>准备真实 2 train + 2 validation，包含 instruction.md、task.toml、environment/Dockerfile、tests/test.sh；准备 oracle solution。</li><li>执行 oracle：已知正确解通过；执行 nop：空操作失败。用同一 task/sandbox/grader 路径核对。</li><li>验证测试文件不可由旧执行结果“蒙混过关”；模拟缺 reward、NaN、grader 超时并确认故障分类。</li><li>完成创建、执行、退出、异常回收闭环；记录 sandbox ID、TTL、镜像标识与费用。</li></ul><div class="artifact">通过标准：正负对照正确、奖励文件有效、cleanup 有证据。产物：task-audit、oracle/nop 结果、sandbox 生命周期记录。</div></div></details>
-<details class="phase"><summary><span class="phase-no">P2</span><span class="phase-label">多轮 token 对齐与模型基线</span><span class="badge pending">六轮评分已验收</span></summary><div class="phase-body"><ul><li>用真实 Student rollout 覆盖 thinking、bash 调用、工具输出、失败重试和结束标记。</li><li>逐 token 核对输入、target、logprobs、mask、Teacher 评分；添加扰动 token 或错误偏移的负例，确保检测会拒绝。</li><li>对评分序列构造相同 prefix、改变后缀：验证早先动作分数不受后缀影响，并检查已知 token 位置。</li><li>按同一 harness 测 Student 与 Teacher 初始能力，记录逐任务表现；确定训练任务的难度区间。</li></ul><div class="artifact">通过标准：golden trace 对齐通过；基线完整。短序列 preflight 不能代替本阶段。产物：token-alignment-report、baseline-student、baseline-teacher。</div></div></details>
-<details class="phase"><summary><span class="phase-no">P3</span><span class="phase-label">一次真实 hybrid 更新与独立恢复</span><span class="badge pending">本地完成 · 待云验收</span></summary><div class="phase-body"><ul><li>按下方 P0 参数启动一批，核对任务 reward、sampled KL、有效 action token 数和有限 loss。</li><li>确认 optimizer 更新回执；在固定诊断输入上检查更新前后分数变化，若可导出 adapter 则核对权重差异。</li><li>保存 state 和 sampler 权重；在新进程通过 URI 加载并重新采样/评分。</li><li>单独运行更新后验证；测试从 state + optimizer 恢复，以及只载入权重开启新实验的差别。</li></ul><div class="artifact">通过标准：有更新、保存、新 sampler、独立 reload 与后评估证据。API 成功不等于直接审计了 base 冻结或 LoRA 数值；不可观测项单独标明。</div></div></details>
+<details class="phase" open><summary><span class="phase-no">P0</span><span class="phase-label">锁定代码、配置与账户可用性</span><span class="badge done">云bootstrap通过</span></summary><div class="phase-body"><ul><li>记录 Cookbook/SDK/renderers 版本、依赖环境、Student/Teacher ID、默认采样参数和实际预算。</li><li>充值后已确认模型列表 HTTP 200；通过环境变量或云 Secret 注入 Tinker key；Modal 账户认证与控制器分开检查。</li><li>执行现有 <code>harbor_opd_preflight</code>：capabilities → Student 采样 → 两模型固定评分。</li><li>保留词表 hash、token 数、sample/rescore 差异。模型不可用时先解决权限或重新选择，不静默换模型。</li></ul><div class="splitline"><div><b>通过标准</b><p>两模型在账户内可用；评分动作位置完整有效。数值差异经重复探针判断，之后增加明确容差验收。</p></div><div><b>证据边界</b><p>现有探针只打印 rescore 最大差值，没有阈值拒绝；128-token 采样只测通信/评分，可能没有完整最终答案。</p></div></div><div class="artifact">建议归档：capabilities.json、resolved-config.json、scoring-probe.json、依赖与代码版本。本次已有 bootstrap、config、capture、metrics 与检查报告；详见验收报告。</div></div></details>
+<details class="phase"><summary><span class="phase-no">P1</span><span class="phase-label">让任务、沙箱与奖励可信</span><span class="badge done">原创smoke已验收</span></summary><div class="phase-body"><ul><li>准备真实 2 train + 2 validation，包含 instruction.md、task.toml、environment/Dockerfile、tests/test.sh；准备 oracle solution。</li><li>执行 oracle：已知正确解通过；执行 nop：空操作失败。用同一 task/sandbox/grader 路径核对。</li><li>验证测试文件不可由旧执行结果“蒙混过关”；模拟缺 reward、NaN、grader 超时并确认故障分类。</li><li>完成创建、执行、退出、异常回收闭环；记录 sandbox ID、TTL、镜像标识与费用。</li></ul><div class="artifact">通过标准：正负对照正确、奖励文件有效、cleanup 有证据。产物：task-audit、oracle/nop 结果、sandbox 生命周期记录。</div></div></details>
+<details class="phase"><summary><span class="phase-no">P2</span><span class="phase-label">多轮 token 对齐与模型基线</span><span class="badge done">真实批次已审计</span></summary><div class="phase-body"><ul><li>用真实 Student rollout 覆盖 thinking、bash 调用、工具输出、失败重试和结束标记。</li><li>逐 token 核对输入、target、logprobs、mask、Teacher 评分；添加扰动 token 或错误偏移的负例，确保检测会拒绝。</li><li>对评分序列构造相同 prefix、改变后缀：验证早先动作分数不受后缀影响，并检查已知 token 位置。</li><li>按同一 harness 测 Student 与 Teacher 初始能力，记录逐任务表现；确定训练任务的难度区间。</li></ul><div class="artifact">通过标准：golden trace 对齐通过；基线完整。短序列 preflight 不能代替本阶段。产物：token-alignment-report、baseline-student、baseline-teacher。</div></div></details>
+<details class="phase"><summary><span class="phase-no">P3</span><span class="phase-label">一次真实 hybrid 更新与独立恢复</span><span class="badge done">工程验收通过</span></summary><div class="phase-body"><ul><li>按下方 P0 参数启动一批，核对任务 reward、sampled KL、有效 action token 数和有限 loss。</li><li>已确认真实 forward_backward / optim_step 回执和有限 loss；官方导出的同训练链 adapter 有 249/498 个张量、53,520,850 个 LoRA 元素变化。</li><li>保存 state 和 sampler 权重；在新进程通过 URI 加载并重新采样/评分。</li><li>独立更新后验证为 1/2，训练前为 2/2；如实保留失败轨迹。state + optimizer 恢复属于下一阶段，不能由推理 reload 代替。</li></ul><div class="artifact">通过标准：有更新、保存、新 sampler、独立 reload 与后评估证据。本次已直接审计 LoRA 数值，未下载 base 权重核验冻结。RL 分项为零，尚未证明非零 RL 学习。</div></div></details>
 <details class="phase"><summary><span class="phase-no">P4</span><span class="phase-label">用消融实验选出有效训练方式</span><span class="badge proposed">研究阶段</span></summary><div class="phase-body"><ul><li>固定初始权重、任务、采样设置、训练 token 预算，分别运行 OPD、RL、hybrid；保留未训练基线。</li><li>先小规模比较；再对胜出候选做多种随机种子。β、学习率、group_size 逐项调整，避免所有参数一起变。</li><li>跟踪成功率、group reward 方差、格式错误、token 消耗、工具失败与费用。依据验证集选择 checkpoint。</li><li>若效果无提升，按数据/奖励/teacher/优化四类定位。系统跑通但目标不达标应记录为研究结果。</li></ul><div class="artifact">通过标准：在预先约定的验证指标和成本范围内稳定超过基线。产物：experiment-matrix、逐任务结果、消融报告。</div></div></details>
 <details class="phase"><summary><span class="phase-no">P5</span><span class="phase-label">扩展任务与纯云端持续运行</span><span class="badge proposed">CPU控制器已部署</span></summary><div class="phase-body"><ul><li>将控制脚本封装为 Modal CPU Job，配置 Tinker/Modal 所需 Secret；代码、依赖、任务镜像和任务 manifest 固定版本。</li><li>按有界批次运行；将配置、状态、metrics、轨迹、checkpoint 索引同步持久存储。控制器重启后能查明最后完成的更新。</li><li>补齐预算预留、限流、实验锁、失败恢复与资源回收；再扩大任务数、上下文与组大小。</li><li>自动生成阶段报告，人工检查异常轨迹与 reward hacking。可选引入 SFT 热身和课程调度，必须有实验依据。</li></ul><div class="artifact">通过标准：本机关机后云任务继续；重启/失败可恢复；费用与资源可追踪。CPU控制器、Volume与有界提交已实现；统一硬预算与optimizer恢复尚待实现。</div></div></details>
 <details class="phase"><summary><span class="phase-no">P6</span><span class="phase-label">锁定配置，进行 Terminal-Bench 最终对照</span><span class="badge proposed">远期目标</span></summary><div class="phase-body"><ul><li>冻结模型 checkpoint、Agent harness、benchmark revision、推理预算、重试规则与主指标。</li><li>在不参与训练/选择的最终任务上运行 9B 初始、最佳训练 9B、Teacher 与 Opus 4.6 对照。</li><li>报告成功率差异及置信区间，披露系统差异、训练数据来源、费用和失败案例。</li><li>保存复现材料；若未超过 Opus，则准确报告与自身基线的进步及剩余差距。</li></ul><div class="artifact">通过标准：结论可复核；“超过”需要同口径数据支持。不能以目标、参数量或单个任务案例宣布成功。</div></div></details>
 </section>
 
 <section id="launch">
-<div class="section-head"><span>08</span><h2>如何开启第一轮训练</h2></div>
-<p>这些命令针对现有 Cookbook 实现 worktree。先执行评分探针、准备真实任务并通过 P1/P2，再运行有费用的训练命令。此 HTML 不自动调用任何云 API。</p>
+<div class="section-head"><span>08</span><h2>训练入口与复现边界</h2></div>
+<p>当前已完成 run hybrid-p0-20260915-02，不需要重复提交。以下保留配置与入口示意；精确本次配置和恢复入口以验收报告、已保存 config 及 manifest 为准。新实验须使用新 run_id，并先明确研究问题与验收门槛。此 HTML 不自动调用云 API。</p>
 <pre><code>cd /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-cookbook-opd-rl
 
 # TINKER_API_KEY 已由 shell 或 Secret 注入；不要写进仓库。
@@ -219,22 +220,22 @@ instruction.md
 task.toml
 environment/Dockerfile
 tests/test.sh
-# oracle 验证另需可执行的已知正确解。</code></pre><p>这些是路径占位示例，当前不代表任务已存在。训练入口目前只有 train/validation；最终测试清单在独立评测侧管理，不添加到训练 manifest。</p></div></details>
+# oracle 验证另需可执行的已知正确解。</code></pre><p>以上 task-a 等是路径占位；已运行的四个原创任务与真实 manifest 见闭环报告。训练入口目前只有 train/validation；最终测试清单在独立评测侧管理，不添加到训练 manifest。</p></div></details>
 <pre><code># 前置验收通过后：一个有界 batch 的功能实验，会产生 Tinker / Modal 费用。
 .venv/bin/python -m tinker_cookbook.recipes.distillation.harbor_opd_rl \
   manifest_path=manifest.json mode=hybrid \
   model_name=Qwen/Qwen3.5-9B teacher_model=Qwen/Qwen3.8-27B \
   group_size=2 groups_per_batch=1 max_steps=1 \
-  max_turns=4 max_tokens=4096 max_trajectory_tokens=32768 \
+  max_turns=3 max_tokens=4096 max_trajectory_tokens=16384 \
   learning_rate=1e-4 lora_rank=32 kl_penalty_coef=1.0 \
   temperature=1.0 num_substeps=1 kl_discount_factor=0.0 \
   eval_every=1 save_every=1 log_path=outputs/harbor-hybrid-p0</code></pre>
 <div class="table-wrap"><table><thead><tr><th>P0 参数</th><th>意义</th><th>为什么这样设</th></tr></thead><tbody>
-<tr><td>group_size=2</td><td>同题两次独立尝试</td><td>最小能产生组内 reward 差异的设置；两次都失败时 RL 信号仍为 0。</td></tr>
+<tr><td>group_size=2</td><td>同题两次独立尝试</td><td>最小能产生组内 reward 差异的设置；两次同分时 RL 信号为 0；本次两次均成功，已经实际出现该情况。</td></tr>
 <tr><td>groups_per_batch=1</td><td>每批一题</td><td>训练 sandbox 并发约为 2；验证沙箱另外计算。</td></tr>
 <tr><td>max_steps=1</td><td>仅一批训练</td><td>验证链路，不用于判断能力提升。现有 trainer 遍历一次任务，不自动增加 epoch。</td></tr>
 <tr><td>temperature=1.0</td><td>减少采样分布变换</td><td>降低评分解释复杂度；仍需验证 logprobs 与实际策略定义一致。</td></tr>
-<tr><td>4 turns / 4096 tokens</td><td>限制交互轮数和单次生成</td><td>功能验证预算；复杂终端任务可能被截断。最终评测另设公平预算。</td></tr>
+<tr><td>3 turns / 4096 tokens</td><td>限制交互轮数和单次生成</td><td>功能验证预算；复杂终端任务可能被截断。最终评测另设公平预算。</td></tr>
 <tr><td>LR 1e-4 / rank 32 / β 1</td><td>沿用试跑级初值</td><td>只作初始配置，不是适用于本任务的最优超参结论。</td></tr>
 </tbody></table></div>
 <div class="note"><p><strong>容易误判的一点：</strong><code>eval_every=1</code> 当前是在每批更新前评估。跑完一个 batch 后仍需单独进行新 checkpoint 的评估与独立 reload，不能把更新前结果当作训练后成绩。</p></div>
@@ -243,16 +244,16 @@ tests/test.sh
 <section id="operations">
 <div class="section-head"><span>09</span><h2>从训练脚本到纯云端系统，还要加什么</h2></div>
 <div class="cards">
-<article class="card"><span class="badge done">当前代码形态</span><h3>本地 Controller，远端 GPU 与沙箱</h3><p>本机 Python 调用 Tinker 完成模型计算、调用 Modal 执行任务。控制脚本仍依赖当前进程存活；已有日志和 checkpoint helpers，但尚无完整云端实验管理。</p></article>
-<article class="card"><span class="badge proposed">目标部署形态</span><h3>Modal CPU Job 托管 Controller</h3><p>控制器、任务清单和持久日志运行在云端；Tinker 承担 Student/Teacher 模型服务；Modal sandbox 执行任务。本机只负责提交、查看与下载报告。</p><p class="small">需实际验证云 Job 的认证、最长运行时间、子 sandbox 创建、持久存储提交语义与故障恢复；不能仅凭架构图算部署完成。</p></article>
+<article class="card"><span class="badge done">已部署并验收</span><h3>Modal 云端 Controller，Tinker 模型服务</h3><p>CPU Controller 负责 audit、单批训练和独立验收；Tinker 承担 Student/Teacher 计算，Modal 子沙箱执行任务。配置、日志、轨迹和 checkpoint 索引写入 Volume，本机只提交并读取证据。</p></article>
+<article class="card"><span class="badge proposed">下一阶段</span><h3>恢复、预算和最小 Control Panel</h3><p>P0 云 Job 认证、子沙箱、持久化和独立推理已实测；更长运行、故障续训、预算预留和跨实验调度仍需单独验收。</p><p class="small">当前 HTML 是离线方案。Control Panel 将读取已有权威产物，提供实验列表、阶段检查、指标/轨迹与 checkpoint 对比，不重新发明训练器。</p></article>
 </div>
 <div class="table-wrap"><table><thead><tr><th>系统能力</th><th>具体设计</th><th>状态</th></tr></thead><tbody>
-<tr><td>配置与实验版本</td><td>run ID + code SHA +依赖版本 + manifest hash +模型/renderer/sampling配置；每个实验独立 log_path。</td><td>部分已有；统一 run record 待补。</td></tr>
-<tr><td>批次状态</td><td>planned → rollout_done → scored → update_submitted → update_confirmed → checkpointed → evaluated。</td><td>建议增加；不能假设现有脚本具备 exactly-once 恢复。</td></tr>
+<tr><td>配置与实验版本</td><td>run ID + code SHA +依赖版本 + manifest hash +模型/renderer/sampling配置；每个实验独立 log_path。</td><td>P0 来源与任务指纹已归档；跨实验统一索引待补。</td></tr>
+<tr><td>批次状态</td><td>planned → rollout_done → scored → update_submitted → update_confirmed → checkpointed → evaluated。</td><td>P0 分阶段状态与独立验收已落盘；不具备 exactly-once 故障恢复。</td></tr>
 <tr><td>故障恢复</td><td>使用 state+optimizer 与已完成 batch 恢复。提交更新后失联须查回执/状态，避免重复应用梯度；环境失败单独记录。</td><td>官方恢复 helpers 已有；中断注入验收与应用级状态待补。</td></tr>
-<tr><td>运行监控</td><td>监控 reward、KL、有效 token、梯度/更新、采样与评分耗时、错误率、checkpoint、sandbox 数量；异常轨迹抽查。</td><td>官方部分 metrics/logtree 已有；统一报表、告警待补。</td></tr>
+<tr><td>运行监控</td><td>监控 reward、KL、有效 token、梯度/更新、采样与评分耗时、错误率、checkpoint、sandbox 数量；异常轨迹抽查。</td><td>官方 metrics/logtree/Store/capture 与Teacher审计已验收；实时告警待补。</td></tr>
 <tr><td>费用控制</td><td>每批提交前预留成本；限定训练+验证总并发、最大 token、时间、实验总预算；到限不发新工作并回收资源。</td><td>现有仅局部参数限制；美元硬上限尚未实现。</td></tr>
-<tr><td>资产与权限</td><td>密钥用 Secret；Student 不接触控制器凭据。保存任务来源、模型版本、checkpoint 保留期限与访问范围。</td><td>方案约束；云配置待实现。</td></tr>
+<tr><td>资产与权限</td><td>密钥用 Secret；Student 不接触控制器凭据。保存任务来源、模型版本、checkpoint 保留期限与访问范围。</td><td>云 Secret/Volume 已使用；扩展权限与保留策略待补。</td></tr>
 </tbody></table></div>
 <h3>费用怎么算，才能决定是否继续</h3>
 <pre><code>总费用 ≈ Student 输入/采样费用
@@ -267,17 +268,17 @@ tests/test.sh
 <section id="gaps">
 <div class="section-head"><span>10</span><h2>当前交付与缺口，一张表看清</h2></div>
 <div class="table-wrap"><table><thead><tr><th>工作项</th><th>已有证据</th><th>下一项验收</th></tr></thead><tbody>
-<tr><td>组合 recipe</td><td><span class="badge done">本地实现</span> <code>harbor_opd_rl.py</code> 三模式、任务分割、官方 trainer。</td><td>真实账户与真实任务运行。</td></tr>
-<tr><td>固定评分探针</td><td><span class="badge done">本地实现</span> capabilities、词表、单序列 sampling/rescoring。</td><td>两个短文本的重复与前缀评分一致；6 次真实交互的 Teacher 评分/mask 通过。采样与重评分仍有有限精度差异，尚无通用容差结论。</td></tr>
-<tr><td>奖励与 mask</td><td><span class="badge done">本地测试记录</span> 95 项相关回归通过；严格评分拒绝缺失/非有限动作分数；8 次真实 oracle/nop 通过。</td><td>扩展任务覆盖；同 sandbox 后台进程防篡改仍非完整隔离。</td></tr>
-<tr><td>训练更新与 checkpoint</td><td><span class="badge done">官方组件已接入</span> LoRA、更新、保存、刷新 sampler。</td><td>实际非零更新、checkpoint URI、新进程 reload 与训练后评估。</td></tr>
-<tr><td>真实训练任务</td><td><span class="badge done">原创冒烟任务已验证</span> 2 train + 2 validation，manifest 与镜像均已运行。</td><td>授权数据、任务族划分、镜像可构建、正负对照。</td></tr>
-<tr><td>纯云端控制器</td><td><span class="badge done">已部署并审计</span> CPU Controller、Secret、Volume及云端子沙箱已实测。</td><td>代码、部署、恢复测试、费用控制。</td></tr>
-<tr><td>能力提升与 Opus 对照</td><td><span class="badge pending">无实验分数</span></td><td>基线 → 消融 → 独立最终评测。</td></tr>
+<tr><td>组合 recipe</td><td><span class="badge done">真实运行</span> 三模式配置已实现，hybrid 单批已完成。</td><td>有区分度任务上的非零 RL 信号与模式消融。</td></tr>
+<tr><td>固定评分与 mask</td><td><span class="badge done">原始证据通过</span> 6 个 Datum、1,179 个动作位置与 3,595 个屏蔽位置；1138 个非零 OPD advantage。</td><td>长上下文/模板扩展；分析本次短探针 sample/rescore 最大差 0.1206014，建立有依据的数值门槛。</td></tr>
+<tr><td>奖励与资源</td><td><span class="badge done">审计通过</span> 原创正负对照及本次 8 个云沙箱清理；286 项相关测试通过。</td><td>正式 Terminal-Bench 单任务重复运行；更多资源需求与隔离覆盖。</td></tr>
+<tr><td>参数更新与 reload</td><td><span class="badge done">独立验收</span> 53,520,850 个 LoRA 元素变化；新进程加载成功。</td><td>state + optimizer 断点续训；独立推理可用不能替代它。</td></tr>
+<tr><td>真实任务结果</td><td><span class="badge pending">未观察到提升</span> 同两题训练前 2/2，更新后 1/2；单次小样本。</td><td>复核失败轨迹，建立难度合适的开发集与重复对照。</td></tr>
+<tr><td>纯云端系统</td><td><span class="badge done">P0已运行</span> CPU Controller、Secret、Volume、bootstrap、capture和独立验收。</td><td>硬预算、故障恢复、实验锁、最小 Control Panel。</td></tr>
+<tr><td>Terminal-Bench / Opus</td><td><span class="badge pending">尚未测量</span> 当前都是原创 smoke 任务。</td><td>兼容验证 → 消融 → 预先锁定的同口径最终对照。</td></tr>
 </tbody></table></div>
-<h3>建议下一批实现清单</h3>
-<ol><li><strong>真实验收包：</strong>多轮 token 对齐、每批 action 评分与非空 mask 校验、task oracle/nop、checkpoint 独立恢复，沿用现有 SDK/Harbor 组件。</li><li><strong>实验执行包：</strong>任务 manifest 审计、baseline 与三模式对照配置、逐任务结果和固定版本的报告。</li><li><strong>云运行包：</strong>Modal CPU 控制包装、Secret/持久存储、批次状态、预算与异常回收。</li></ol>
-<p class="small">部分组件已完成，实际验收以页首最新验证摘要为准；下方阶段描述保留完整目标，全系统仍须逐项验收。页面不要求先构建一个通用训练平台才能进行最小实验。</p>
+<h3>下一批推进顺序</h3>
+<ol><li><strong>先补评估证据：</strong>现有轨迹显示 repair-service-config 重写遗漏 timeout 与 logging.path，第三轮查看文件后达到轮数上限；未保存 grader 原始 stdout/stderr。补完整评估参数与结果留档，不能把前后并发 2/1、无 seed 的两题结果因果归为更新退化。</li><li><strong>建立有效学习信号：</strong>补有难度区分的开发任务，寻找同题不同奖励并记录非零 RL advantage；保留固定基线与独立验证。</li><li><strong>补齐系统边界：</strong>正式 Terminal-Bench 单任务重复运行、state + optimizer 恢复、长序列数值验证；随后接入最小 Control Panel。</li></ol>
+<p class="small">工程验收完成只允许进入下一阶段，不自动授权扩大训练预算。现阶段无需先建设通用训练平台。</p>
 </section>
 
 <section id="sources">
@@ -292,10 +293,10 @@ tests/test.sh
 </ol>
 <div class="cards">
 <article class="card"><h3>项目记忆 worktree</h3><p class="path">.Codex/worktrees/tinker-harbor-opd-rl</p><ul class="sources"><li><a href="../../tasks/tinker-harbor-opd-rl/memory.md">项目记忆</a></li><li><a href="../../tasks/tinker-harbor-opd-rl/handoff.md">冷启动交接</a></li><li><a href="design.md">原实施设计</a> · <a href="system-plan-spec.md">本 HTML 设计规格</a></li></ul></article>
-<article class="card"><h3>实际代码 worktree</h3><p class="path">.Codex/worktrees/tinker-cookbook-opd-rl<br>分支 feat-harbor-opd-rl · 本地 commit f96cc38</p><ul class="sources"><li><a href="../../../tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/runbook.md">运行说明与历史测试记录</a></li><li><a href="../../../tinker-cookbook-opd-rl/tinker_cookbook/recipes/distillation/harbor_opd_rl.py">训练组合入口</a> · <a href="../../../tinker-cookbook-opd-rl/tinker_cookbook/recipes/distillation/harbor_opd_preflight.py">评分探针</a></li><li><a href="../../../tinker-cookbook-opd-rl/skills/research/SKILL.md">本地官方 Tinker skill</a></li></ul></article>
+<article class="card"><h3>实际代码 worktree</h3><p class="path">.Codex/worktrees/tinker-cookbook-opd-rl<br>分支 feat-harbor-opd-rl · 本次部署 commit b06728a</p><ul class="sources"><li><a href="../../../tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/runbook.md">运行说明与历史测试记录</a></li><li><a href="../../../tinker-cookbook-opd-rl/tinker_cookbook/recipes/distillation/harbor_opd_rl.py">训练组合入口</a> · <a href="../../../tinker-cookbook-opd-rl/tinker_cookbook/recipes/distillation/harbor_opd_preflight.py">评分探针</a></li><li><a href="../../../tinker-cookbook-opd-rl/skills/research/SKILL.md">本地官方 Tinker skill</a></li></ul></article>
 </div>
 </section>
-<footer class="footer"><strong>下一件具体的事：</strong>最小评分探针已完成，接下来核查数值一致性与真实多轮 token 对齐；同时准备独立 Harbor smoke 任务。随后通过多轮对齐、一次真实更新和独立 reload，将“本地原型”升级为“已验证的训练闭环”。<p>本文无凭据、无后台请求、无实时成绩。互动仅解释模式与展开步骤，不会启动训练或更改验收状态。离线分享时正文和图仍可用；本地源码链接需要保留 worktree 目录。</p></footer>
+<footer class="footer"><strong>下一件具体的事：</strong>检查更新后失败轨迹，并补有区分度的开发任务。P0 已完成真实参数更新与独立推理；下一关是有效 RL 信号、可重复评测和 optimizer 恢复，能力提升需要新证据。<p>本文无凭据、无后台请求、无实时成绩。互动仅解释模式与展开步骤，不会启动训练或更改验收状态。离线分享时正文和图仍可用；本地源码链接需要保留 worktree 目录。</p></footer>
 </main></div>
 <script>
 const modes={

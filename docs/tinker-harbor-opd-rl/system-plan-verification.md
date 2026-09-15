@@ -2,6 +2,22 @@
 
 2026-09-15。目标文件：system-plan.html。
 
+## 最新验证：P0 工程闭环完成后
+
+本节为当前状态；后文保留最初 HTML 和 HTTP 402 的历史检查，不能将其当作现在的阻塞。
+
+- 数据依据：部署代码 b06728a；run `hybrid-p0-20260915-02` 的 `training_evidence.json`、`parameter_update_report.json`、`reload_report.json`、资源 journal 与 `verification-status.json`。新增 [闭环报告](p0-cloud-closed-loop.md)、[下一里程碑](next-milestone.md) 和 [机器可读摘要](p0-live-status.json) 入口。
+- 内容核对：286 项相关测试；10 个核心模块综合覆盖率 90.67%、分支覆盖率 83.23%。真实更新 1,179 个动作 token / 3,595 个屏蔽位置；loss 181.8892098665；53,520,850 个 LoRA 元素变化；新容器、新进程推理 reload 完成。
+- 结果边界：训练奖励 [1,1]，RL advantage=0；有效学习来自 OPD。验证前 2/2、后 1/2，`passed=true` 仅工程有效；实际任务 scores=[1,0]。没有宣称能力提升、非零 RL 学习或正式 Terminal-Bench 验收。
+- 失败分析：已写入 service-config 重写遗漏字段与轮数上限；明确缺 grader 原始输出和后评估实际 SamplingParams，前后并发不一致，不能因果宣称更新造成退化。
+- 使用 gstack browse 重新加载本地页：桌面 1440×1000 时 `scrollWidth=1440`；手机 390×844 时 `scrollWidth=390`，无正文横向溢出。已查看桌面、手机和架构图截图。
+- OPD、RL、hybrid 三种模式实际逐一点击；文案随之变化，`aria-pressed=true` 始终仅 1 个。展开步骤 7/7；beforeprint 展开 8/8 details，afterprint 恢复至原 1 个。
+- Node JS 语法检查通过；22 个唯一 ID，36 个链接，内部锚点与所有本地文件均有效；console 无错误，无外部脚本/图片/字体依赖。
+- 临时截图 `/tmp/tinker-plan-final-{desktop,mobile,architecture}.png`，不当作持久训练证据。此次文档验证未调用模型、未提交云任务。
+
+## 以下为历史记录
+
+
 ## 内容依据
 - 读取官方 skills/research/SKILL.md、references/sdk.md、references/distillation.md。
 - 源码：上游 Cookbook 485726f，本地实现 f96cc38；安装 SDK tinker 0.29.0、modal 1.5.5。

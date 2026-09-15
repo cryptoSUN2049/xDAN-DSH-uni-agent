@@ -150,35 +150,26 @@ Review：参考MD共222行，已核对所有本地Markdown链接；独立源码�
 
 Review：只读本地DSH与Harbor代码，未查询远端Release、构建运行时或变更运行环境；远端发布状态明确引用用户回执。
 
-## Tinker Harbor OPD/RL（2026-09-15）
-- [x] 项目记忆/设计/交接与独立Cookbook实现
-- [x] 42本地测试
-- [ ] API key/真实任务/更新/reload/benchmark
-Review：入口 tasks/tinker-harbor-opd-rl/handoff.md。未取得性能结果。
+## Tinker Harbor OPD/RL 当前任务
 
-## 2026-09-15：Tinker 系统方案 HTML
-- [x] 读取现有 worktree 交接、官方 research skill、SDK 与训练源代码。
-- [x] 写 HTML 文档设计，核对官方文档。
-- [x] 生成含架构、流程、目标、步骤与验收的独立 HTML。
-- [x] 浏览器验证布局、交互与链接，更新交接。
-- [x] 使用用户临时key实际执行preflight，定位HTTP402计费阻塞并停止等待。
-- [x] 提交本轮文档产物（本地 Conventional Commit；未推送）。
+2026-09-15。已完成授权的一批P0训练与独立验证。后续不自动扩大付费运行。
 
-### HTML 方案 review
-离线单文件，架构图/8步流程/3种算法模式/7阶段验收/SDK契约/云运行缺口齐全；独立审查两处边界问题已修。桌面手机与交互检查通过，git diff --check通过。真实云端训练仍未完成，当前阻塞是账户billing。
+- [x] 4原创任务8次nop/oracle；Student/Teacher基线与真实token评分。
+- [x] research/debug和官方源码复核；系统方案A–G确认并实施A–E工程部分。
+- [x] 观测、资源、生命周期、初始checkpoint、分项信号及独立强校验接入。
+- [x] 286项相关测试通过；10核心模块综合90.67%、分支83.23%。
+- [x] b06728a可追溯wheel；最终Linux日志/Plotly/bootstrap真实通过。
+- [x] 同资源契约云内audit：nop0/oracle1、2沙箱清理。
+- [x] hybrid-p0-20260915-02真实1batch训练，回执与raw token证据通过。
+- [x] 官方下载同源initial/final adapters，53,520,850个LoRA元素改变。
+- [x] 新容器新进程reload；2任务有效运行，实际成功1题；2沙箱清理。
+- [x] 独立审查失败轨迹、参数对比与训练证据；保存报告与项目快照。
+- [ ] 评估记录补齐实际采样参数、终态工具输出、grader原文与截断/耗时语义。
+- [ ] 更有区分度开发集、Teacher优势检验、非零RL信号真实验收。
+- [ ] 官方Terminal-Bench锁定单任务重复、state+optimizer恢复。
+- [ ] 最小Control Panel、预算/恢复协议与baseline/OPD/RL/hybrid消融。
 
-## 充值后评分复测与打开HTML
-- [x] capabilities HTTP200，两目标模型均列出。
-- [x] 最小SDK探针完成：31 prompt /111 action tokens，有效Teacher评分。
-- [x] 更新HTML/脱敏JSON/记忆，按用户要求用默认浏览器打开。
-- [ ] 复核sample/rescore最大差0.273；多轮对齐、update/reload仍未完成。
-
-## 2026-09-15 系统集成复核
-- [x] research + debug官方skills阅读和应用，源码逐项审计。
-- [x] 云端Controller部署，容器内nop/oracle审计通过。
-- [x] Student/Teacher两个验证任务均2/2，真实token评分通过。
-- [x] 首次训练缺git失败归档；本地修复，未重新部署。
-- [x] 117项相关整合回归通过。
-- [x] 保存docs/tinker-harbor-opd-rl/system-integration-review.md，修正HTML最新状态。
-- [ ] 按修订方案A-D补齐支撑能力后再重新提交训练；当前依用户要求暂停。
-- [ ] 参数变化、独立reload、官方TB单任务重复、optimizer恢复和控制台。
+## Review
+工程闭环通过，能力提升未验证。训练两条轨迹同题奖励全1，所以实际RL信号为0。
+验证前2/2、后1/2；失败是配置字段遗漏，不能用小样本和非配对seed断言训练导致退化。
+原始产物保留ignored outputs与Modal Volume；权威摘要见docs/tinker-harbor-opd-rl/p0-cloud-closed-loop.md。

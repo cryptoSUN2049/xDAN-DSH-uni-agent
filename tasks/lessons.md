@@ -53,3 +53,11 @@
 
 ## 逐关验收（2026-09-15用户再次强调）
 每关保留输入、配置、失败与清理证据；上一关失败不进入下一关。测试通过、API提交、API完成、参数改变、独立加载、能力提升分别记录，不能互相替代。
+
+## 2026-09-15：真实 P0 闭环后的审慎验收
+- `passed` 的工程含义与 `task_solved`/`score` 必须分别显示。此次 reload 工程通过，但任务仅 1/2，不能写成两题成功。
+- 训练前2/2、后1/2只能作单次观察；没有配对seed，且并发不同，不能因果归结训练。实际SamplingParams、终态工具输出和grader原文应保存到评估产物。
+- 同组奖励[1,1]使RL advantage全0。配置叫hybrid、参数非零变化，都不能替代非零RL学习证据。
+- Modal SDK1.5.5 CLI下载目录前先创建目标目录；否则目录映射可能因目标is_dir判断产生IsADirectoryError。第一次失败需保留并查明路径，不能盲目覆盖证据。
+- SDK0.29.0的create_rest_client经_get_rest_holder(_skip_session=True)走无session REST路径；不要仅凭构造ServiceClient就判断泄漏远端训练session。训练/采样session仍须实际close回执。
+- 完成新关卡后同步当前状态和handoff，保留旧文件为历史证据；不能靠不断追加“覆盖前文”留下相互矛盾的冷启动说明。

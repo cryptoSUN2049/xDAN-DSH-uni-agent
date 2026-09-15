@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-09-15",
+  "status": "engineering_update_reload_verified",
+  "run_id": "hybrid-p0-20260915-02",
+  "student": "Qwen/Qwen3.5-9B",
+  "teacher": "Qwen/Qwen3.8-27B",
+  "deployed_code_commit": "b06728a",
+  "cloud_image_id": "im-3GvBhwyn7mJ2AuXtElFPPV",
+  "wheel_sha256": "18513048b76f5ef9e2481e38eabb18d5409c7465dce9c3a89515efa2c08281e0",
+  "controller_sha256": "750f244f2a1823a67e1937a4a2eb6dfbf3fce12bad91ad7fce4382da2bddd328",
+  "cloud_calls": {
+    "audit": "fc-01M2J17D3NQ2NH3QNSENTZVS9P",
+    "train": "fc-01M2J1EEA3QRHT0YPFACQYWP7H",
+    "verify": "fc-01M2J1ZVVKBT9PATF66CPVFEFB"
+  },
+  "finished_at": "2026-09-15T16:15:53.030583+08:00",
+  "local_tests": {
+    "related_passed": 286,
+    "core_modules": 10,
+    "core_coverage_percent": 90.67077872012337,
+    "whole_cookbook_suite_passed": false,
+    "known_upstream_failure": "legacy rollout logging test calls removed write_rollout_summaries_jsonl; unrelated to new Store path",
+    "branch_coverage_percent": 83.22981366459628
+  },
+  "training": {
+    "batches": 1,
+    "trajectories": 2,
+    "task": "csv-paid-totals",
+    "loss": {
+      "loss:sum": 181.88920986652374
+    },
+    "optimizer_completed": true,
+    "raw_tokens": {
+      "verified": true,
+      "datums": 6,
+      "action_tokens": 1179,
+      "masked_tokens": 3595,
+      "teacher_scored_datums": 6
+    },
+    "teacher_kl": 0.15764763951301575,
+    "opd_nonzero_action_advantages": 1138,
+    "rl_signal": false,
+    "rewards": [
+      1.0,
+      1.0
+    ],
+    "checkpoint": {
+      "name": "final",
+      "batch": 1,
+      "state_path": "tinker://971c8454-6952-53f2-bf5b-17afa5cf046d:train:0/weights/final",
+      "sampler_path": "tinker://971c8454-6952-53f2-bf5b-17afa5cf046d:train:0/sampler_weights/final"
+    },
+    "session_closed": true,
+    "cleanup": {
+      "confirmed": true,
+      "sandbox_count": 4
+    }
+  },
+  "parameter_update": {
+    "status": "parameter_update_verified",
+    "training_run_id": "971c8454-6952-53f2-bf5b-17afa5cf046d:train:0",
+    "checkpoints_sha256": "b91e68711d712505d052520113bbee2ae786c0eb46234c6bac4e1b5fd105009e",
+    "changed_elements": 53520850,
+    "changed_lora_elements": 53520850,
+    "elements": 94584832,
+    "changed_tensors": 249,
+    "max_abs_diff": 0.00010000001930166036,
+    "l2_diff": 0.6847330752096863,
+    "initial": {
+      "source": "tinker://971c8454-6952-53f2-bf5b-17afa5cf046d:train:0/sampler_weights/initial",
+      "directory": "/__modal/volumes/vo-RDy4e4VxAnV6kLK5MaIfPG/hybrid-p0-20260915-02/checks/adapters/initial",
+      "source_binding": "sdk_download",
+      "weights_sha256": "8bcb688f48c3071fe484664b7fc244e440133298a5146b7b28aef0188cfcd406",
+      "config_sha256": "7c4821f8f443de1d52d092093c5bdb57bafcfe431bd83b0c28b51852283a86bd"
+    },
+    "final": {
+      "source": "tinker://971c8454-6952-53f2-bf5b-17afa5cf046d:train:0/sampler_weights/final",
+      "directory": "/__modal/volumes/vo-RDy4e4VxAnV6kLK5MaIfPG/hybrid-p0-20260915-02/checks/adapters/final",
+      "source_binding": "sdk_download",
+      "weights_sha256": "0ba57338d7f6278f5214ceb728a5b1123d90a3c9892616e2d4d4765f3e678d69",
+      "config_sha256": "7c4821f8f443de1d52d092093c5bdb57bafcfe431bd83b0c28b51852283a86bd"
+    }
+  },
+  "reload": {
+    "infrastructure_passed": true,
+    "model": "Qwen/Qwen3.5-9B",
+    "renderer": "qwen3_5",
+    "sampler_path_sha256": "b69fa97270a2d8dfde706576208435940ed5d680a826dab1b65a35c805257de6",
+    "tasks": [
+      {
+        "task": "tree-sha256-manifest",
+        "infrastructure_passed": true,
+        "task_solved": true,
+        "score": 1.0,
+        "action_tokens": 631,
+        "stop_reason": "max_turns"
+      },
+      {
+        "task": "repair-service-config",
+        "infrastructure_passed": true,
+        "task_solved": false,
+        "score": 0.0,
+        "action_tokens": 458,
+        "stop_reason": "max_turns"
+      }
+    ],
+    "solved": 1,
+    "total": 2,
+    "session_closed": true,
+    "cleanup": {
+      "confirmed": true,
+      "sandbox_count": 2
+    },
+    "failure_analysis": {
+      "task": "repair-service-config",
+      "omitted_required_preserved_fields": [
+        "server.timeout=45",
+        "logging.path=/var/log/service.log"
+      ],
+      "write_command_exit_code": 0,
+      "grading_error": false,
+      "raw_grader_output_retained": false,
+      "final_tool_observation_retained": false,
+      "actual_sampling_params_retained": false,
+      "seed_paired": false,
+      "comparison_limit": "pre evaluation concurrency 2; independent reload sequential; no causal regression claim"
+    }
+  },
+  "pre_update_eval": {
+    "solved": 2,
+    "total": 2,
+    "action_tokens": 1315
+  },
+  "capability_improvement_verified": false,
+  "terminal_bench_verified": false,
+  "nonzero_rl_learning_verified": false,
+  "optimizer_resume_verified": false,
+  "web_control_panel": "not_implemented",
+  "dollar_hard_cap_enforced": false,
+  "raw_evidence_root": "sibling tinker-cookbook-opd-rl",
+  "artifact_index": {
+    "outputs/p0-integrated-gates/report.json": {
+      "bytes": 757,
+      "sha256": "1cb18bbb14ac942002802e502c9add8ecc326369e863ce4665e4f9835c19f37d"
+    },
+    "outputs/p0-integrated-gates/training-result.json": {
+      "bytes": 11065,
+      "sha256": "d45445b7cbfaaac2fb641d4faebf05c8db6ff0a01177d35b28ed54f39cd555bf"
+    },
+    "outputs/p0-integrated-gates/verification-result.json": {
+      "bytes": 343,
+      "sha256": "2d7e301710f0ce6aeac7206b65468a0d7fcfeac8042dcb3de63fca2a0b028995"
+    },
+    "outputs/p0-integrated-gates/cloud-audit-result.json": {
+      "bytes": 2502,
+      "sha256": "681bcf060e2d1e04b9064e80713d3802fc1e36765fc17cf849ca26cf11302a89"
+    },
+    "outputs/p0-verification-cloud-run/parameter_update_report.json": {
+      "bytes": 150997,
+      "sha256": "db82e6f9327da30d24fb913a96d5f4e160f70c155198e57ff0f4957be9c65ff3"
+    },
+    "outputs/p0-verification-cloud-run/reload_report-resources.jsonl": {
+      "bytes": 1346,
+      "sha256": "b487ee5b46a8a4a13fb3f038d00086d2770e12c029b8288366f4f71918c100f6"
+    },
+    "outputs/p0-verification-cloud-run/reload_report.json": {
+      "bytes": 580829,
+      "sha256": "1b1130533ef4fc9a27d9e266c09cd83da2fdb4511b2a47b3501ffa7997718f81"
+    },
+    "outputs/p0-verification-cloud-run/training_evidence.json": {
+      "bytes": 2110,
+      "sha256": "bbdfa9d2c525fe5626212cebe3688c60026b3e70f7b5db36b206db5c3c98ab45"
+    },
+    "outputs/p0-verification-cloud-run/verification-status.json": {
+      "bytes": 343,
+      "sha256": "2d7e301710f0ce6aeac7206b65468a0d7fcfeac8042dcb3de63fca2a0b028995"
+    }
+  },
+  "limitations": [
+    "Original engineering smoke tasks, not official Terminal-Bench.",
+    "Reload passed means valid execution and cleanup, not every task solved.",
+    "Two single-sample task outcomes cannot establish causal improvement or regression.",
+    "Same-batch RL advantage is zero; the realized update signal is OPD.",
+    "Sample/rescore numeric differences remain unresolved for general contexts.",
+    "Base model tensors were not downloaded or audited.",
+    "Pre-update typed eval time_seconds=0 is not real elapsed time; num_truncated=0 and max_turns stop require explicit reporting semantics."
+  ]
+}

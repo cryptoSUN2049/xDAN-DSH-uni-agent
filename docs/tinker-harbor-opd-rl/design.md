@@ -36,8 +36,8 @@ flowchart LR
 - 效果：base/RL-only/OPD-only/hybrid，同任务和预算；最终测试不参与训练。
 
 ## 限制
-当前无 TINKER_API_KEY；代码与本地测试不等于远端训练完成。
+当前Tinker凭据由云Secret注入，P0单批更新与独立reload工程验收已通过；结果见p0-cloud-closed-loop.md，能力目标未验证。
 scoring 使用 Student 的精确上下文，不能悄悄换 Teacher template。
 sampled reverse-KL 是 Monte Carlo 估计，不要求完整 logits，样本可为负。
 4 个 probe 只证明基础设施。大 Teacher 与优质训练不能保证超越 Opus。
-控制进程可放云 VM/Modal Job；本轮先做本地控制端，GPU 工作都交 Tinker。
+控制进程现已部署Modal CPU App；GPU工作都交Tinker。

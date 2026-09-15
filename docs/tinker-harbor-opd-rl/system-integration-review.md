@@ -1,6 +1,6 @@
 # Tinker 训练系统集成复核与验收方案
 
-更新：2026-09-15。用户已明确继续。A–D本地集成286项相关测试通过；新核心模块覆盖率91%。下一关为最终Linux镜像与cloud audit，尚未提交新训练。下文保留原始问题与实施依据。
+更新：2026-09-15。部署代码 b06728a，run hybrid-p0-20260915-02。A–E 的 P0 工程门槛已完成，286 项相关测试通过，10 个新增核心模块综合覆盖率 90.67%（约 91%）、分支覆盖率 83.23%（不代表全仓）。有效 RL 学习与能力提升尚未通过；下文明确区分当前验收和历史问题。
 
 ## 1. 结论与真实状态
 
@@ -8,15 +8,23 @@
 
 不能把“官方存在某功能”当成“当前蒸馏入口已启用该功能”。也不能把“进程退出成功”当成“参数更新、独立恢复、能力提升都成功”。
 
-已实测：
-- 4 个原创任务共 8 次 nop/oracle：奖励分别为 0/1，沙箱均确认清理。
-- 9B Student / 27B Teacher 在 2 个原创验证任务上均为 2/2；不是官方 Terminal-Bench 分数。
-- Student 6 次真实交互：1,602 个动作 token 评分有效，4,482 个 prompt/环境位置的 advantage 为零；采样 reverse-KL 均值 0.16305654。
-- Modal CPU App 已部署，云端 audit_p0 完成一项任务的 nop/oracle，证实容器内动态构建镜像、创建子沙箱、评分和清理可行。
-- 首次 hybrid-p0-20260915-01 在日志初始化时失败：镜像缺 git，code_state() 抛 FileNotFoundError；未进入优化器更新。该入口此前仍执行过付费采样/评分预检，不能说整次尝试没有 Tinker 调用。
-- 失败 status、config 和 trainer.log 已从 Volume 取回。远端运行代码 71176ee；本地 76d8ac4 补 git 和 code_state 构建检查，尚未重新部署验收。
-- 仍无训练 checkpoint、非零参数变化或独立 reload 的真实证据。
-- 最新整合回归：117 项通过。首次整合出现的测试时序假设问题已修复；这不替代云端训练验收。
+当前已实测（完整依据见 [P0 云端闭环报告](p0-cloud-closed-loop.md)、[状态摘要](p0-live-status.json) 和 [下一里程碑](next-milestone.md)）：
+- 最终 Linux 镜像 bootstrap 与同资源 cloud audit 通过；Tinker 0.29.0 / Modal 1.5.5，训练代码 b06728a。
+- 真实单批：6 个 Datum、1,179 个 action token、3,595 个 masked token；原始输入、target shift、Teacher scoring、mask 和 advantage 公式逐项通过。
+- forward_backward 与 optim_step 均有完成回执，实际 loss = 181.8892098665；捕获链完整且导出/回调无丢失。
+- 同一训练 client 的 initial/final adapter 经官方接口下载，249/498 个张量改变，53,520,850 个 LoRA 元素变化，max diff = 0.0001000000193；真实更新成立。
+- 新云容器、新进程从 final sampler 加载并运行两个验证任务，模型/renderer/来源核对通过；这只验收独立推理可用。
+- 同两题训练前 2/2，reload 后 1/2，scores = [1, 0]。前评估并发 2，后评估并发 1；前原始请求 temperature=1/seed=None，后代码默认 temperature=1 但未保存实际 SamplingParams。`passed=true` 表示工程执行有效，任务成功须读 `task_solved/score`。本次未观察到提升；单次两题不足以证明整体退化或归因更新。
+- 训练同组奖励 [1, 1]，RL advantage = 0；OPD 非零位置 1,138。hybrid 接线已运行，本批实际有效学习来自 OPD，不能称非零 RL 学习已验收。
+- 本次 audit 2、训练 4、reload 2 个沙箱均确认清理；训练与独立采样 session 已关闭。
+- 正式 Terminal-Bench、state + optimizer 恢复、长序列数值门槛、实时 Control Panel 尚未完成。
+
+失败轨迹复核：repair-service-config 第二轮重写遗漏 `server.timeout=45` 与 `logging.path=/var/log/service.log`，写入退出码 0；第三轮 cat 后达到 max_turns。没有 grading_error，但原始 grader stdout/stderr 与最后工具输出未保存，因此不能声称已读到具体失败断言。typed eval 的 `time_seconds=0` 不是测得零耗时，`num_truncated=0` 也不能覆盖实际 `max_turns` 终止；这两类证据语义须补齐。下一阶段优先补评估证据契约，不追加训练来代替诊断。
+
+历史证据（保留，不作为当前阻塞）：
+- 4 个原创任务共 8 次 nop/oracle 奖励分别为 0/1且清理；Student/Teacher 原基线各 2/2，不是正式 Terminal-Bench。
+- 早期 Student 6 次交互有 1,602 个动作 token / 4,482 个屏蔽位置，sampled reverse-KL 均值 0.16305654。
+- 首次 hybrid-p0-20260915-01 在日志初始化因镜像缺 git 失败，未进入优化器更新；此前执行过付费采样/评分预检。失败 status/config/trainer.log 已保留。旧部署 71176ee 的问题已在 b06728a 镜像 bootstrap 中验证修复。
 
 ## 2. 官方 skills 如何参与
 
@@ -52,9 +60,11 @@ flowchart TD
 
 控制层负责运行与验收；Cookbook 负责训练、数据结构和记录；Tinker 负责模型计算；Modal Sandbox 负责命令执行。保留这些边界，不让页面直接持有服务密钥或拼接训练 shell 命令。
 
-## 4. 集成矩阵：首训前不能遗漏的能力
+## 4. 集成前问题与验收设计（历史基线）
 
-| 能力 | 官方实现 / 当前实际接入 | 要补的验收 |
+本节表格保留**集成前的发现与验收设计**，其中“当前未接入／尚无更新”等描述仅指旧代码。b06728a 已完成下表的 P0 日志、轨迹、capture、显式 Teacher 审计、session/沙箱生命周期、同链 checkpoint、参数对比和更新分项验收；费用硬上限、故障续训和扩大覆盖仍待完成。当前状态以第 1、9 节及真实报告为准。
+
+| 能力 | 集成前状态 / 当时的官方接入 | 原验收设计 |
 |---|---|---|
 | 环境与bootstrap | 核心SDK已pin；wheel+镜像部署成功；完整日志初始化漏测 | 最终Linux镜像中导入训练模块、解析真实配置、调用ml_log.setup_logging并关闭；写读config/metrics/code.diff；记录git、Python、全量依赖与镜像ID |
 | 配置与来源 | chz、ml_log、code_state；controller已有wheel/manifest hash | 记录最终解析配置、controller源码hash、完整任务树/verifier/seed hash、模型ID、renderer、tokenizer与版本、部署call ID。路径列表hash不能代替任务内容hash |
@@ -90,7 +100,7 @@ W&B / Neptune / Trackio 是官方可选记录出口，不是恢复或正确性�
 
 当前接的是官方Cookbook中的Harbor格式任务与轻量bash harness，不等于完整Harbor CLI执行器或排行榜Agent。
 
-真实缺口：task.toml被解析到HarborTask.config，但当前工厂未使用它配置CPU/内存/GPU/网络/挂载或任务级超时；主要执行参数来自CLI全局值。当前bash命令从 / 运行，不能假定继承任意镜像WORKDIR。原创任务通过不证明任意官方任务可运行。
+集成前缺口是 task.toml 资源未实际进入工厂。b06728a 已为当前支持范围落实 CPU、内存与网络控制，启动前拒绝不支持的 GPU/挂载等需求；存储仍由后端管理，未兑现任务磁盘配额。任务超时由当前 recipe 的全局参数覆盖，bash 从 `/`、grader 从 `/root` 运行。原创任务通过仍不证明任意官方任务可运行。
 
 官方单任务验收步骤：
 1. 锁定Terminal-Bench数据集版本/来源commit、任务ID、完整任务树、镜像digest、harness版本。
@@ -140,15 +150,16 @@ Control Panel第一版四个入口：实验列表与状态；配置/证据预检
 
 ## 9. 实施顺序与重新提交训练的门槛
 
-- [ ] A：Linux bootstrap、完整来源记录、session/logger关闭、sandbox清理记录，全部无更新验证。
-- [ ] B：接入官方轨迹/评估导出、capture及显式Teacher审计；保留基础timing，完整tracing按需开启；产生可读与机器可读产物并由store读回。
-- [ ] C：同client initial checkpoint、参数差异比较器、独立reload流程；先用本地合成权重测试拒绝条件。
-- [ ] D：原始ID/工具mask契约与OPD/RL分项指标；明确非零RL信号门槛。
-- [ ] E：通过A-D后重新运行一次有界训练，下载真实initial/final，完成参数与独立推理验收。
-- [ ] F：官方Terminal-Bench单任务兼容与重复运行；state+optimizer恢复；扩展有区分度的开发任务。
-- [ ] G：接入最小Control Panel；再做baseline/OPD/RL/hybrid消融和最终同口径评测。
+- [x] A：最终 Linux bootstrap、来源/依赖、session/logger 关闭及沙箱清理；云端证据通过。
+- [x] B：官方轨迹/评估/Store、capture、显式 Teacher 原始 scoring 审计；真实产物完整读回。基础 timing 已接入，完整 tracing 仍按需启用。
+- [x] C：同 client initial checkpoint、本地拒绝测试、真实官方 adapter 下载比较及独立 reload。
+- [x] D（工程）：原始 ID / 工具 mask / shift 契约与 OPD、RL 分项指标通过；全同奖励被准确识别为 RL 信号 0。
+- [ ] D（学习）：在有奖励区分的同组轨迹上证明非零 RL advantage 和有效 RL 学习；当前未达到。
+- [x] E：有界 run hybrid-p0-20260915-02 单批更新、非零 LoRA 差异与新进程推理验收完成；后评估 1/2，未证明能力提升。
+- [ ] F：复核失败轨迹；有难度区分的开发集；正式 Terminal-Bench 单任务重复运行；state + optimizer 恢复；长序列数值检查。
+- [ ] G：接入最小 Control Panel，再做 baseline / OPD / RL / hybrid 消融与同口径最终评测。
 
-当前操作状态：用户已批准继续，A–D本地集成与286项回归通过（新核心模块覆盖率91%），源码b06728a；最终Linux镜像正在构建验收，尚未提交新训练。下一步严格按云端bootstrap、同资源cloud audit、单批更新、参数比较、独立reload顺序推进。
+当前操作状态：此次训练和独立验收均已结束，不重复提交相同 run。先解释结果并设计有效学习信号，之后再安排新实验。工程门槛完成不代表研究目标达成，也不自动扩大费用范围。
 
 ## 10. 源码与官方依据
 
