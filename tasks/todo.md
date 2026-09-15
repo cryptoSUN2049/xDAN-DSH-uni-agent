@@ -166,3 +166,9 @@ Review：入口 tasks/tinker-harbor-opd-rl/handoff.md。未取得性能结果。
 
 ### HTML 方案 review
 离线单文件，架构图/8步流程/3种算法模式/7阶段验收/SDK契约/云运行缺口齐全；独立审查两处边界问题已修。桌面手机与交互检查通过，git diff --check通过。真实云端训练仍未完成，当前阻塞是账户billing。
+
+## 充值后评分复测与打开HTML
+- [x] capabilities HTTP200，两目标模型均列出。
+- [x] 最小SDK探针完成：31 prompt /111 action tokens，有效Teacher评分。
+- [x] 更新HTML/脱敏JSON/记忆，按用户要求用默认浏览器打开。
+- [ ] 复核sample/rescore最大差0.273；多轮对齐、update/reload仍未完成。

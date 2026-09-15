@@ -4,8 +4,8 @@
 系统方案 HTML 已完成，入口 docs/tinker-harbor-opd-rl/system-plan.html。
 主线：Tinker Teacher Qwen3.8-27B / Student Qwen3.5-9B 指令版，Harbor任务与Modal沙箱。
 本地组合代码与历史42测试存在；真实更新/reload/benchmark尚未验收。
-本轮用户提供key后真实preflight停在capabilities：HTTP402计费阻塞；已停止等待，未采样或训练。
-下一步：处理Tinker billing，安全注入key重跑；并准备独立Harbor任务。
+充值后capabilities HTTP200，9B/27B均可见；单文本评分探针已完成，31 prompt /111 action tokens。
+下一步：核查Student sample/rescore差异0.273，完成多轮token对齐；准备独立Harbor任务。
 
 ## 本轮交付物
 - `docs/tinker-harbor-opd-rl/system-plan.html` — 313 行；完整离线HTML：架构、流程、目标、模式、SDK、步骤、云运行与缺口。
@@ -30,12 +30,13 @@ forward_backward_async/optim_step_async返回APIFuture，需再result_async；�
 每批Teacher None/非有限分数、全零mask完整拒绝仍待补；HTML契约明确为目标。
 HTTP402时SDK暂停等待billing恢复，可表现为长时间无输出。本轮SDK日志及只读路由均证实402。
 403/1010是urllib诊断中网关响应，标准curl与SDK最终一致为402；不能误读成模型不存在。
-本轮未返回模型列表，未进入Student/Teacher采样评分；无新checkpoint或得分。
+充值前未返回模型列表；充值后单文本采样评分已完成，无训练checkpoint或benchmark得分。
 已查HTML桌面/手机、链接、3模式切换、阶段展开、打印展开、Node语法；无浏览器错误。
 
 ## 下一里程碑任务清单
-- [ ] 用户在 https://tinker.thinkingmachines.ai/billing/balance 完成计费配置或补足账户条件。
-- [ ] 安全注入TINKER_API_KEY，重跑preflight；当前进程未持久保存key。
+- [x] 用户报告充值10美元，复测HTTP200；未查询实际余额。
+- [x] 安全注入key重跑单文本preflight；已完成，凭据未持久保存。
+- [ ] 数值一致性复核：sample/rescore最大差0.273，尚无容差拒绝。
 - [ ] 独立2 train +2 validation任务，Modal oracle/nop与cleanup。
 - [ ] 多轮golden trace、每批评分/有效mask拒绝与故障测试。
 - [ ] 首次hybrid更新、非零更新证据、新sampler与独立reload/后评估。
@@ -47,11 +48,11 @@ HTTP402时SDK暂停等待billing恢复，可表现为长时间无输出。本轮
 项目worktree分支worktree-tinker-harbor-opd-rl；本轮仅文档修改，本地提交、无推送/PR/部署。
 实际Cookbook实现sibling ../tinker-cookbook-opd-rl，feat-harbor-opd-rl，commit f96cc38。
 上游基线485726f；参考clone sibling tinker-cookbook-harbor-opd-rl不是Uni-Agent linked worktree。
-本轮评分探针已停止，无新训练或Modal资源。HTML检查不等于CI或云训练通过。
+本轮充值后评分探针已正常完成，无新训练或Modal资源。HTML检查不等于CI或云训练通过。
 
 ## 冷启动 checklist
 1. 读本文件、memory.md与HTML，再读Cookbook runbook和handoff。
 2. git status核对两个worktree。主仓库历史未跟踪文件不要覆盖。
-3. 先处理真实billing阻塞；不能仅凭key存在宣布账户验证。
+3. billing已通过真实复测；从scoring-probe-status.json读取最新数值及验收边界。
 4. 从P0继续，不重建工作树或复制训练器。任务路径示例仍需替换为真实数据。
 5. 按实际产物更新验收记录；key与账户身份不写入报告。

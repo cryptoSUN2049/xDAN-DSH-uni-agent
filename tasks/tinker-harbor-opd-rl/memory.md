@@ -23,3 +23,9 @@
 
 - 最新阻塞已从“没有提供key”更新为“提供key后真实服务返回HTTP 402计费限制”；凭据未持久化，下次仍需安全注入。
 - 402不能解读为模型不支持；SDK0.29.0会暂停等待计费恢复，表象可能类似卡住。
+
+## 充值后复测
+用户报告充值10美元；capabilities HTTP200，共35个模型，9B/27B均列出。
+现有SDK探针完成：prompt31/action111；teacher fixed评分有效，词表hash365c2d8a0c0e72d4bcc5dbc6c2e9330a87dae7ffc77e9fcd9d65739f4d16bfff。
+Student sample/rescore最大绝对差0.2730098963，探针未设容差，必须继续数值核查，不能宣告完整严格OPD验收。
+Teacher推荐renderer实测qwen3_8_xhigh_reasoning；评分输入保持qwen3_5。没有训练/update/reload/Modal创建，未读取实际余额/费用。

@@ -1,27 +1,30 @@
 {
-  "checked_at_utc": "2026-09-15T06:04:09.681481+00:00",
-  "status": "blocked_billing",
-  "http_status": 402,
-  "stage": "get_server_capabilities",
-  "detail": "Access is blocked due to billing status. Please add payment.",
-  "billing_url": "https://tinker.thinkingmachines.ai/billing/balance",
-  "evidence": [
-    "Tinker SDK preflight logs: job paused due to billing status, Error code 402",
-    "Read-only GET get_server_capabilities returned HTTP 402 with billing detail"
-  ],
-  "requested_models": [
-    "Qwen/Qwen3.5-9B",
-    "Qwen/Qwen3.8-27B"
-  ],
-  "model_availability_verified": false,
-  "sampling_completed": false,
-  "teacher_scoring_completed": false,
+  "checked_at_utc": "2026-09-15T06:09:55.479969+00:00",
+  "status": "scoring_probe_passed_alignment_review_pending",
+  "http_status": 200,
+  "billing_block_resolved": true,
+  "model_count": 35,
+  "requested_models": {
+    "Qwen/Qwen3.5-9B": true,
+    "Qwen/Qwen3.8-27B": true
+  },
+  "scoring_probe": "completed",
   "training_started": false,
   "modal_sandbox_created": false,
-  "probe_process": "stopped after billing blockage was confirmed",
+  "user_reported_deposit_usd": 10,
   "credentials_saved": false,
   "limitations": [
-    "HTTP 402 is not evidence that the requested models are absent.",
-    "No model scores or training performance can be inferred."
-  ]
+    "Single text prompt only; no multi-turn alignment, training update, or reload tested.",
+    "Probe reports sample/rescore discrepancy but does not enforce a numerical tolerance.",
+    "Actual spend and remaining account balance were not retrieved."
+  ],
+  "prompt_tokens": 31,
+  "action_tokens": 111,
+  "teacher_scoring_completed": true,
+  "sampling_completed": true,
+  "renderer_used_for_both_scoring_inputs": "qwen3_5",
+  "teacher_recommended_renderer": "qwen3_8_xhigh_reasoning",
+  "vocab_sha256": "365c2d8a0c0e72d4bcc5dbc6c2e9330a87dae7ffc77e9fcd9d65739f4d16bfff",
+  "sampled_reverse_kl_mean": 0.5617713852475185,
+  "student_sample_rescore_max_abs": 0.27300989627838135
 }

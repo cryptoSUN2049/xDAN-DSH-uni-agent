@@ -31,14 +31,14 @@
 <p class="lead">以 <strong>Qwen3.5-9B</strong> 为 Student，<strong>Qwen3.8-27B</strong> 为 Teacher；复用 Tinker 的训练与采样服务、Cookbook 的 OPD 代码，接入 Harbor 任务与 Modal 沙箱。先证明每个环节正确，再验证能力提升，最后检验能否超过同口径的 Opus 4.6。</p>
 <div class="tagline"><span class="tag">Tinker · 训练 / 采样 / Teacher 评分</span><span class="tag">Harbor · 任务 / 工具 / 评测</span><span class="tag">Modal · 执行沙箱 / 计划中的控制端</span></div>
 <div class="statusbar"><span class="status-dot"></span><strong>目前是可验收的系统原型，尚未跑完真实云端训练。</strong></div>
-<div class="note"><p><strong>本轮实测阻塞 · HTTP 402：</strong>使用用户提供的 key 调用 Tinker 后，SDK 日志与只读 capabilities 路由均返回“账户计费状态阻止访问”。需先在 <a href="https://tinker.thinkingmachines.ai/billing/balance">Tinker Billing</a> 完成支付配置/补足账户计费条件，再重跑探针。已停止计费等待；未进入模型采样、Teacher 评分、训练或 Modal sandbox 阶段。<a href="scoring-probe-status.json">脱敏诊断记录</a></p></div>
+<div class="note green"><p><strong>充值后实测 · HTTP 200：</strong>账户模型列表已返回，包含 Qwen3.5-9B 和 Qwen3.8-27B，之前的计费阻塞已解除。用户报告充值 10 美元；最小采样/固定评分探针已完成：31 个 prompt token、111 个 action token 获得有效评分。Student 采样与重评分最大差值约 0.273，需核查数值一致性；尚未验收多轮对齐，未启动训练或 Modal sandbox。<a href="scoring-probe-status.json">当前诊断记录</a> · <a href="scoring-probe-billing-history.json">历史计费阻塞</a></p></div>
 <div class="cards four">
 <div class="card"><span class="stat-label">当前训练入口</span><strong>已组合</strong><small>官方 OPD trainer + Harbor reward</small></div>
 <div class="card"><span class="stat-label">历史本地验证</span><strong>42 项</strong><small>测试通过记录；本轮文档不重跑训练测试</small></div>
 <div class="card"><span class="stat-label">真实训练 / reload</span><strong>待验收</strong><small>尚无实际更新或独立恢复证据</small></div>
 <div class="card"><span class="stat-label">Terminal-Bench 提升</span><strong>未测量</strong><small>超越 Opus 4.6 是研究目标</small></div>
 </div>
-<p class="caption">本地实现 commit <code>f96cc38</code>；上游 Cookbook 基线 <code>485726f</code>；已安装 Tinker SDK <code>0.29.0</code>、Modal SDK <code>1.5.5</code>。模型账户权限需在线查询。本页面是方案与证据快照，不是实时监控面板。</p>
+<p class="caption">本地实现 commit <code>f96cc38</code>；上游 Cookbook 基线 <code>485726f</code>；已安装 Tinker SDK <code>0.29.0</code>、Modal SDK <code>1.5.5</code>。账户模型列表已在线确认；单文本采样/评分已完成；数值一致性与多轮对齐仍待验收。本页面是方案与证据快照，不是实时监控面板。</p>
 </header>
 
 <section id="goals">
@@ -139,7 +139,7 @@
 <tr><td>梯度 → optimizer</td><td>记录 loss 配置、step、模型版本、有效 token 数；await 提交后还需等待返回的 APIFuture。</td><td>NaN、缺失评分或全零有效 token 阻断；不重复执行结果未知的更新来“重试”。</td></tr>
 <tr><td>保存 → 下一批</td><td>区分 state_path 和 sampler_path；创建绑定新权重的 SamplingClient。</td><td>不让旧 sampler 混入新批。独立 reload 另行验收。</td></tr>
 </tbody></table></div>
-<div class="note"><p><strong>Renderer 风险：</strong>本地模型映射中，9B 推荐 <code>qwen3_5</code>，27B 推荐 <code>qwen3_8</code>。目前 Teacher 评分使用 Student 的原始上下文，避免位置改变；词表一致仍不能证明模板语义、normalizer 或工具状态完全兼容。必须用真实多轮轨迹验证 Teacher 在这一上下文下能提供有效信号。</p></div>
+<div class="note"><p><strong>Renderer 风险：</strong>本地模型映射中，9B 推荐 <code>qwen3_5</code>，27B 本轮解析为 <code>qwen3_8_xhigh_reasoning</code>。目前 Teacher 评分使用 Student 的原始上下文，避免位置改变；词表一致仍不能证明模板语义、normalizer 或工具状态完全兼容。必须用真实多轮轨迹验证 Teacher 在这一上下文下能提供有效信号。</p></div>
 <p class="small"><strong>实际覆盖边界：</strong>当前严格校验覆盖 Harbor reward 与单序列 preflight；官方训练循环尚未在每批显式拒绝所有 Teacher action 分数的 None/非有限值或全零 mask。上表是系统目标契约，仍需补实现和故障注入测试。</p>
 <h3>SDK 调用关系，而非另一份训练器</h3>
 <p>以下是已安装 SDK 的接口示意，变量 <code>batch</code>、<code>full_sequence</code> 由 Cookbook 构造；不是独立可运行脚本。生产训练继续从现有 recipe 启动。</p>
@@ -188,7 +188,7 @@ opt_result = await opt.result_async()
 <section id="roadmap">
 <div class="topline"><div class="section-head"><span>07</span><h2>实施顺序：每阶段都留下可检查产物</h2></div><button class="button expand-button" id="expand" aria-expanded="false">展开全部步骤</button></div>
 <p>时间取决于账户权限、任务准备和真实吞吐，现阶段不承诺几天达标。按下面的退出标准推进，每次只扩大已经验证的部分。</p>
-<details class="phase" open><summary><span class="phase-no">P0</span><span class="phase-label">锁定代码、配置与账户可用性</span><span class="badge pending">计费阻塞</span></summary><div class="phase-body"><ul><li>记录 Cookbook/SDK/renderers 版本、依赖环境、Student/Teacher ID、默认采样参数和实际预算。</li><li>先解决本轮实测 HTTP 402 计费阻塞，再通过环境变量或云 Secret 注入 Tinker key；Modal 账户认证与控制器分开检查。</li><li>执行现有 <code>harbor_opd_preflight</code>：capabilities → Student 采样 → 两模型固定评分。</li><li>保留词表 hash、token 数、sample/rescore 差异。模型不可用时先解决权限或重新选择，不静默换模型。</li></ul><div class="splitline"><div><b>通过标准</b><p>两模型在账户内可用；评分动作位置完整有效。数值差异经重复探针判断，之后增加明确容差验收。</p></div><div><b>证据边界</b><p>现有探针只打印 rescore 最大差值，没有阈值拒绝；128-token 采样只测通信/评分，可能没有完整最终答案。</p></div></div><div class="artifact">建议归档：capabilities.json、resolved-config.json、scoring-probe.json、依赖与代码版本。统一归档格式待补齐。</div></div></details>
+<details class="phase" open><summary><span class="phase-no">P0</span><span class="phase-label">锁定代码、配置与账户可用性</span><span class="badge pending">最小探针通过</span></summary><div class="phase-body"><ul><li>记录 Cookbook/SDK/renderers 版本、依赖环境、Student/Teacher ID、默认采样参数和实际预算。</li><li>充值后已确认模型列表 HTTP 200；通过环境变量或云 Secret 注入 Tinker key；Modal 账户认证与控制器分开检查。</li><li>执行现有 <code>harbor_opd_preflight</code>：capabilities → Student 采样 → 两模型固定评分。</li><li>保留词表 hash、token 数、sample/rescore 差异。模型不可用时先解决权限或重新选择，不静默换模型。</li></ul><div class="splitline"><div><b>通过标准</b><p>两模型在账户内可用；评分动作位置完整有效。数值差异经重复探针判断，之后增加明确容差验收。</p></div><div><b>证据边界</b><p>现有探针只打印 rescore 最大差值，没有阈值拒绝；128-token 采样只测通信/评分，可能没有完整最终答案。</p></div></div><div class="artifact">建议归档：capabilities.json、resolved-config.json、scoring-probe.json、依赖与代码版本。统一归档格式待补齐。</div></div></details>
 <details class="phase"><summary><span class="phase-no">P1</span><span class="phase-label">让任务、沙箱与奖励可信</span><span class="badge pending">待运行</span></summary><div class="phase-body"><ul><li>准备真实 2 train + 2 validation，包含 instruction.md、task.toml、environment/Dockerfile、tests/test.sh；准备 oracle solution。</li><li>执行 oracle：已知正确解通过；执行 nop：空操作失败。用同一 task/sandbox/grader 路径核对。</li><li>验证测试文件不可由旧执行结果“蒙混过关”；模拟缺 reward、NaN、grader 超时并确认故障分类。</li><li>完成创建、执行、退出、异常回收闭环；记录 sandbox ID、TTL、镜像标识与费用。</li></ul><div class="artifact">通过标准：正负对照正确、奖励文件有效、cleanup 有证据。产物：task-audit、oracle/nop 结果、sandbox 生命周期记录。</div></div></details>
 <details class="phase"><summary><span class="phase-no">P2</span><span class="phase-label">多轮 token 对齐与模型基线</span><span class="badge pending">待实现 + 运行</span></summary><div class="phase-body"><ul><li>用真实 Student rollout 覆盖 thinking、bash 调用、工具输出、失败重试和结束标记。</li><li>逐 token 核对输入、target、logprobs、mask、Teacher 评分；添加扰动 token 或错误偏移的负例，确保检测会拒绝。</li><li>对评分序列构造相同 prefix、改变后缀：验证早先动作分数不受后缀影响，并检查已知 token 位置。</li><li>按同一 harness 测 Student 与 Teacher 初始能力，记录逐任务表现；确定训练任务的难度区间。</li></ul><div class="artifact">通过标准：golden trace 对齐通过；基线完整。短序列 preflight 不能代替本阶段。产物：token-alignment-report、baseline-student、baseline-teacher。</div></div></details>
 <details class="phase"><summary><span class="phase-no">P3</span><span class="phase-label">一次真实 hybrid 更新与独立恢复</span><span class="badge pending">待运行</span></summary><div class="phase-body"><ul><li>按下方 P0 参数启动一批，核对任务 reward、sampled KL、有效 action token 数和有限 loss。</li><li>确认 optimizer 更新回执；在固定诊断输入上检查更新前后分数变化，若可导出 adapter 则核对权重差异。</li><li>保存 state 和 sampler 权重；在新进程通过 URI 加载并重新采样/评分。</li><li>单独运行更新后验证；测试从 state + optimizer 恢复，以及只载入权重开启新实验的差别。</li></ul><div class="artifact">通过标准：有更新、保存、新 sampler、独立 reload 与后评估证据。API 成功不等于直接审计了 base 冻结或 LoRA 数值；不可观测项单独标明。</div></div></details>
@@ -267,7 +267,7 @@ tests/test.sh
 <div class="section-head"><span>10</span><h2>当前交付与缺口，一张表看清</h2></div>
 <div class="table-wrap"><table><thead><tr><th>工作项</th><th>已有证据</th><th>下一项验收</th></tr></thead><tbody>
 <tr><td>组合 recipe</td><td><span class="badge done">本地实现</span> <code>harbor_opd_rl.py</code> 三模式、任务分割、官方 trainer。</td><td>真实账户与真实任务运行。</td></tr>
-<tr><td>固定评分探针</td><td><span class="badge done">本地实现</span> capabilities、词表、单序列 sampling/rescoring。</td><td>本轮在线执行停在 capabilities 的 HTTP 402；解决计费后再验收评分、数值容差与多轮对齐。</td></tr>
+<tr><td>固定评分探针</td><td><span class="badge done">本地实现</span> capabilities、词表、单序列 sampling/rescoring。</td><td>充值后 capabilities 与单文本评分通过（111 个动作 token）；sample/rescore 最大差值 0.273，数值一致性及多轮对齐仍待验收。</td></tr>
 <tr><td>奖励与 mask</td><td><span class="badge done">本地测试记录</span> 42 项相关测试；strict grader 拒绝旧/缺失/非有限结果。</td><td>oracle/nop、真实边界；同 sandbox 后台进程防篡改仍非完整隔离。</td></tr>
 <tr><td>训练更新与 checkpoint</td><td><span class="badge done">官方组件已接入</span> LoRA、更新、保存、刷新 sampler。</td><td>实际非零更新、checkpoint URI、新进程 reload 与训练后评估。</td></tr>
 <tr><td>真实训练任务</td><td><span class="badge pending">未准备完成</span> manifest 目前是使用方式，示例目录是占位。</td><td>授权数据、任务族划分、镜像可构建、正负对照。</td></tr>
@@ -294,7 +294,7 @@ tests/test.sh
 <article class="card"><h3>实际代码 worktree</h3><p class="path">.Codex/worktrees/tinker-cookbook-opd-rl<br>分支 feat-harbor-opd-rl · 本地 commit f96cc38</p><ul class="sources"><li><a href="../../../tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/runbook.md">运行说明与历史测试记录</a></li><li><a href="../../../tinker-cookbook-opd-rl/tinker_cookbook/recipes/distillation/harbor_opd_rl.py">训练组合入口</a> · <a href="../../../tinker-cookbook-opd-rl/tinker_cookbook/recipes/distillation/harbor_opd_preflight.py">评分探针</a></li><li><a href="../../../tinker-cookbook-opd-rl/skills/research/SKILL.md">本地官方 Tinker skill</a></li></ul></article>
 </div>
 </section>
-<footer class="footer"><strong>下一件具体的事：</strong>先解决 Tinker HTTP 402 计费阻塞，再运行现有 scoring preflight；同时准备独立 Harbor smoke 任务。随后通过多轮对齐、一次真实更新和独立 reload，将“本地原型”升级为“已验证的训练闭环”。<p>本文无凭据、无后台请求、无实时成绩。互动仅解释模式与展开步骤，不会启动训练或更改验收状态。离线分享时正文和图仍可用；本地源码链接需要保留 worktree 目录。</p></footer>
+<footer class="footer"><strong>下一件具体的事：</strong>最小评分探针已完成，接下来核查数值一致性与真实多轮 token 对齐；同时准备独立 Harbor smoke 任务。随后通过多轮对齐、一次真实更新和独立 reload，将“本地原型”升级为“已验证的训练闭环”。<p>本文无凭据、无后台请求、无实时成绩。互动仅解释模式与展开步骤，不会启动训练或更改验收状态。离线分享时正文和图仍可用；本地源码链接需要保留 worktree 目录。</p></footer>
 </main></div>
 <script>
 const modes={

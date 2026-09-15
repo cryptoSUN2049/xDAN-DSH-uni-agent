@@ -1,0 +1,27 @@
+{
+  "checked_at_utc": "2026-09-15T06:04:09.681481+00:00",
+  "status": "blocked_billing",
+  "http_status": 402,
+  "stage": "get_server_capabilities",
+  "detail": "Access is blocked due to billing status. Please add payment.",
+  "billing_url": "https://tinker.thinkingmachines.ai/billing/balance",
+  "evidence": [
+    "Tinker SDK preflight logs: job paused due to billing status, Error code 402",
+    "Read-only GET get_server_capabilities returned HTTP 402 with billing detail"
+  ],
+  "requested_models": [
+    "Qwen/Qwen3.5-9B",
+    "Qwen/Qwen3.8-27B"
+  ],
+  "model_availability_verified": false,
+  "sampling_completed": false,
+  "teacher_scoring_completed": false,
+  "training_started": false,
+  "modal_sandbox_created": false,
+  "probe_process": "stopped after billing blockage was confirmed",
+  "credentials_saved": false,
+  "limitations": [
+    "HTTP 402 is not evidence that the requested models are absent.",
+    "No model scores or training performance can be inferred."
+  ]
+}

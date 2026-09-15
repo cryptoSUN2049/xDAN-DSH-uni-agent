@@ -34,3 +34,9 @@ Tinker SDK preflight 与独立只读 capabilities 请求均返回 HTTP 402，服
 见 scoring-probe-status.json（不含key或账户名）。付款/额度处理完成后需重新验证两个模型；不能将其 availability 标为 false。
 
 最终回归：Node JS语法检查通过；手机文档无溢出；HTTP402状态已显示，console无错误。
+
+## 充值后新证据
+用户报告充值10美元；GET capabilities HTTP200，共35模型，两目标均在列表。
+SDK原探针返回scoring_probe_passed，31 prompt/111 action tokens；sampled KL均值0.5617713852，Student sample/rescore最大差0.2730098963。
+探针不设该差值阈值，因此仅验收单文本评分可用，不宣告数值一致性或完整OPD通过。
+HTML同步结果并以macOS open成功交给默认浏览器；无训练或Modal sandbox运行，未取实际费用。
