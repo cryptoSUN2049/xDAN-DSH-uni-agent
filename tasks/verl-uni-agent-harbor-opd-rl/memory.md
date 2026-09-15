@@ -25,9 +25,9 @@ Student候选Qwen3.5-9B，Teacher候选Qwen3.8-27B。8×A100是容量规划假�
 
 Tinker云P0已有9B/27B更新和独立推理reload，9个本地证据工件SHA一致；RL advantage全0，实际更新为OPD。不能将它认作Uni-Agent/VERL、正式TB、optimizer恢复或能力提升验收。
 
-## 已启动的升级预检
+## 升级预检（历史，已完成）
 
-已执行固定上游的 --no-commit 合并，正在解决以下7个冲突并运行回归；合并提交尚未完成：
+固定上游合并已完成，提交 `0c61d01`；以下7个冲突均按两边合同解决并回归：
 - docs/source/concepts/gateway-and-trajectories.md
 - tests/uni_agent/framework/test_generate_sequences_on_cpu.py
 - tests/uni_agent/rl_insight/test_adapter.py
@@ -59,3 +59,11 @@ Tinker云P0已有9B/27B更新和独立推理reload，9个本地证据工件SHA�
 依赖不能混称统一锁：UA requirements-test要求vLLM0.23/Ray2.54.1；新VERL uv.lock fsdp+vllm为vLLM0.24/torch2.11/Transformers5.9，TransferQueue精确commit434f8c476b4be24bc087e6e95070e64efcc739f9。当前GPU环境为UA测试lane，完整训练须单独验锁。
 
 用户已答复资源安排：需要时可启动双卡服务器；现在先做代码/单卡验证，不重复问是否提供卡。双卡用于separate_async LoRA RL；独立Teacher组合还需第三角色GPU或另一次colocate OPD验收。优先目标是全异步高性能LoRA RL，OPD接线是其中一环。
+
+## 2026-09-15 实施增量
+
+Teacher桥接、超时、TQ/mask、recipes、真实生成版本准入已提交。`283e3a5`用固定VERL原生loss证明8项CPU梯度合同：RL与OPD独立、hybrid加权相加、工具token梯度为零。Framework/Gateway最近547项CPU回归通过；不代表GPU更新。
+
+Modal已接入Worker/executor/isolated Trial可选后端和独立资源清理；Controller公网入口及registry frozen release仍未接通。当前回归用真实Harbor类构造和fake SDK，不是云端运行。单卡测试环境依赖仍在下载，不能声称GPU验证通过。
+
+`3140271`修复NCCL异步LoRA同步：显式merge=true，18项recipe测试通过。当前为LoRA优化+完整merged权重同步，不是高性能增量adapter同步。用户新增明确授权按验证节点push并维护handoff/tasks/goal，平台goal已创建active；所有push必须Ruff双门。

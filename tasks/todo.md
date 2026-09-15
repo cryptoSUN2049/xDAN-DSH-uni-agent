@@ -10,7 +10,7 @@
 - [x] 新增评分后Framework整目录282通过；Ruff check/format全仓通过。
 - [x] 用户授权GPU服务器，独立源码已同步；确认单卡96GB。
 - [ ] GPU隔离uv测试lane安装及真实GPU算子/依赖回归。
-- [ ] 原生全异步LoRA RL、OPD、hybrid recipe及配置测试。
+- [x] 原生全异步LoRA RL、OPD、hybrid recipe及配置测试（15通过，cc23126）。
 - [ ] Harbor Modal执行器、生命周期/可信verifier与Gateway可达性。
 - [ ] 多卡真实参数更新、LoRA同步、reload/resume与完整闭环。
 - [ ] 性能验收：有效token吞吐、staleness、同步耗时、GPU等待、任务成功率。
@@ -634,15 +634,18 @@ Review：本轮只保存/校验资料，无GPU操作或新训练结果；checkpo
 
 - [x] 复核本机 CPU 测试环境，记录临时 venv 已失效；保留历史 898/90% 证据，恢复后按锁定 venv 重跑。
 
-## verl-uni-agent-harbor-opd-rl
-- [x] worktree来源与证据核对，创建隔离分支
-- [x] Uni-Agent主线设计与断点定位
-- [ ] 完整Teacher数据合同评审与实现批准
-- [ ] 实施、CPU回归、真实GPU验收
+## verl-uni-agent-harbor-opd-rl（2026-09-15 当前实施）
+- [x] worktree来源、旧证据与设计核对；用户明确批准实施
+- [x] Uni-Agent 91618ea / VERL a9f2985 成对升级，保留本地合同
+- [x] 原生Teacher评分→TQ→loss桥接；超时、mask、版本与resident兼容
+- [x] 原生RL/OPD/hybrid recipes与CPU配置验证
+- [x] 固定VERL原生loss的8项非零梯度/混合目标/工具mask验证
+- [x] Modal Worker/executor/Trial后端与资源scope；失败清理确认透传
+- [x] Modal最终191项CPU回归与文档；独立提交/推送按本节点Git记录
+- [x] 核查并修复 separate_async LoRA 权重同步配置（3140271，18项CPU配置测试）
+- [ ] GPU测试lane安装完成，实际CUDA/vLLM/集成验证
+- [ ] Controller持有公网Gateway入口；冻结可拉取registry镜像与任务
+- [ ] 双卡 separate_async LoRA RL：真实rollout/update/权重同步/独立reload
+- [ ] OPD与hybrid多卡验收、optimizer恢复、吞吐/陈旧度测量
 
-Review：9份P0工件SHA核验一致；仅属于Tinker。未新跑GPU或产品测试。
-
-### 2026-09-15 实施启动
-- [x] 用户实施授权及memory.md落盘
-- [x] git merge-tree预检：7个冲突，未改产品代码
-- [ ] 解决成对升级冲突，保留Uni-Agent本地合同
+Review：CPU证据和历史Tinker证据不能代替本分支GPU闭环。当前单卡用于构建/组件验证；用户需要时提供双卡。公网入口和镜像未准备前不能声明Modal可生产运行。
