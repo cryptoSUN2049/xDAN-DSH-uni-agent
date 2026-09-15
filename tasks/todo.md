@@ -611,3 +611,16 @@ Review：本轮只保存/校验资料，无GPU操作或新训练结果；checkpo
 - [x] 审计当前 DSH/VERL/model/Harbor pin 与 source lock 一致性并记录。
 
 - [x] 复核本机 CPU 测试环境，记录临时 venv 已失效；保留历史 898/90% 证据，恢复后按锁定 venv 重跑。
+
+## verl-uni-agent-harbor-opd-rl
+- [x] worktree来源与证据核对，创建隔离分支
+- [x] Uni-Agent主线设计与断点定位
+- [ ] 完整Teacher数据合同评审与实现批准
+- [ ] 实施、CPU回归、真实GPU验收
+
+Review：9份P0工件SHA核验一致；仅属于Tinker。未新跑GPU或产品测试。
+
+### 2026-09-15 实施启动
+- [x] 用户实施授权及memory.md落盘
+- [x] git merge-tree预检：7个冲突，未改产品代码
+- [ ] 解决成对升级冲突，保留Uni-Agent本地合同

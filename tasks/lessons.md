@@ -238,3 +238,6 @@
 - 调整共享测试助手参数（如budget）后，搜索所有直接调用并执行消费审计回归；不能只验证定义所在文件。
 - runtime声明哈希必须与实际SDK resolve结果绑定；inline父环境才会进入DSH子进程，给vLLM设置变量并不能控制DSH。PYTHONPATH必须是绝对路径，避免branch cwd改变导入位置。
 - view调用次数是尝试，不是成功取回或使用事实。报告字段必须准确命名，避免把失败读取算作记忆能力证据。
+
+## 2026-09-15：架构所有权
+用户要求以Uni-Agent为架构主线。不能因Tinker P0成功就改用Cookbook trainer；先查所有worktree和Uni-Agent adapter/TQ/VERL接口，区分算法复用与框架替换。
