@@ -1,6 +1,8 @@
 # Tinker项目交接
 
 ## TL;DR
+最新状态（覆盖以下历史记录）：A–D已完成本地集成，286项相关测试通过，新增核心模块覆盖率91%。
+用户已批准继续；云端新镜像与重试尚未提交。先读sibling实现docs/integration-gates.md。
 主线不变：Tinker 9B Student / 27B Teacher，Harbor + Modal + OPD/RL。
 真实任务、Teacher评分、云端Controller与cloud audit通过；117相关测试通过。
 首个云训练在记录代码来源时缺git失败，未参数更新；本地修复尚未重部署。

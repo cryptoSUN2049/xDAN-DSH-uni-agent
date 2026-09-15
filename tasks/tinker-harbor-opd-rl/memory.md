@@ -8,7 +8,7 @@ research/debug已使用；当前不用inkling。官方capture、Store、logtree�
 实测：8/8原创任务nop/oracle；Student/Teacher各2/2；六轮1602 action、4482 masked Teacher评分通过。
 云端Controller与cloud audit已成功；训练01缺git失败于日志初始化，未update；短付费预检已运行。
 远端代码71176ee，本地76d8ac4修git未重新部署；无checkpoint/reload/能力提升证据；117相关测试通过。
-按用户要求暂停新训练先完成完整集成复核；后续先落实方案A-D，再恢复一批训练。不得自动重试或扩大预算。
+用户已明确继续。A–D已完成本地集成：286项回归，新增核心模块覆盖率91%；下一关是新镜像云端bootstrap与同资源cloud audit，再有界重试一次。新训练尚未提交，不自动重试或扩大预算。
 
 Cookbook源码在sibling tinker-cookbook-opd-rl分支feat-harbor-opd-rl，独立linked worktree。不要改主目录。
 Modal App=tinker-harbor-opd-controller，Volume=tinker-harbor-runs，Secret=tinker-harbor-opd；子sandbox不携带Tinker key。

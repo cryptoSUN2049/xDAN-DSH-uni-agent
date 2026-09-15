@@ -67,6 +67,8 @@
   "local_fix_commit": "76d8ac4",
   "deployed_code_commit": "71176ee",
   "local_fix_cloud_verified": false,
-  "new_training_submissions": "paused_for_integration_review_at_user_request",
-  "local_regression_tests": 117
+  "new_training_submissions": "authorized_bounded_retry_after_cloud_bootstrap",
+  "local_regression_tests": 286,
+  "local_core_coverage_percent": 90.67077872012337,
+  "local_integration": "A-D_passed_waiting_cloud_image"
 }
