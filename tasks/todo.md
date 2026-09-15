@@ -1,4 +1,15 @@
-# 当前执行：verl-uni-agent-harbor-opd-rl（2026-09-15）
+# 当前执行：verify-native-training-closure（2026-09-15）
+
+- [x] 读取最新设计、交接与Git状态，确认另一会话持续实施。
+- [x] 独立验证Teacher/loss 51项及recipe/入口/监督器92项。
+- [x] 只读核查既有GPU与安装状态，未启动或停止作业。
+- [x] 复现默认无checkpoint和单行除零，记录入口恢复缺口。
+- [x] 隔离保存验收报告、修复设计与handoff。
+- [ ] 唯一实施会话修复后复验，再推进GPU更新/reload/恢复。
+
+Review：143项CPU测试通过不等于训练产物合同通过。原实施分支的未提交变更保留；本分支仅文档交付。详见docs/verify-native-training-closure/verification.md。
+
+# 历史执行：verl-uni-agent-harbor-opd-rl（2026-09-15）
 
 本节及tasks/verl-uni-agent-harbor-opd-rl/handoff.md优先于下方继承历史。
 
