@@ -180,3 +180,42 @@ def test_partial_teacher_batch_must_not_silently_drop_supervision(missing, missi
         del fields[missing_index][key]
     with pytest.raises(ValueError):
         _list_of_tq_fields_to_tensordict(fields)
+
+
+@pytest.mark.parametrize("timeout", [0, -1, float("nan"), float("inf"), True, False])
+def test_teacher_timeout_rejects_nonpositive_nonfinite_and_boolean_values(timeout):
+    with pytest.raises(ValueError):
+        GatewayAgentFramework(gateway_manager=SimpleNamespace(), runner_registry={}, teacher_timeout_seconds=timeout)
+
+
+@pytest.mark.asyncio
+async def test_teacher_timeout_cancels_scoring_without_mutating_trajectory():
+    import asyncio
+
+    cancelled = asyncio.Event()
+
+    async def hang(**kwargs):
+        try:
+            await asyncio.Event().wait()
+        finally:
+            cancelled.set()
+
+    manager = _manager(side_effect=hang)
+    framework = GatewayAgentFramework(
+        gateway_manager=SimpleNamespace(),
+        runner_registry={},
+        teacher_server_manager=manager,
+        teacher_timeout_seconds=0.01,
+    )
+    trajectory = _trajectory()
+    snapshot = deepcopy(trajectory)
+    with pytest.raises(TimeoutError):
+        await framework._compute_teacher_logprobs([trajectory], {}, validate=False)
+    assert trajectory == snapshot
+    assert cancelled.is_set(), "Timed-out scoring coroutine must be cancelled"
+
+
+def test_teacher_timeout_default_is_bounded():
+    import inspect
+
+    assert inspect.signature(GatewayAgentFramework).parameters["teacher_timeout_seconds"].default == 300

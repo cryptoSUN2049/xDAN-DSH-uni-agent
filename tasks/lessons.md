@@ -241,3 +241,7 @@
 
 ## 2026-09-15：架构所有权
 用户要求以Uni-Agent为架构主线。不能因Tinker P0成功就改用Cookbook trainer；先查所有worktree和Uni-Agent adapter/TQ/VERL接口，区分算法复用与框架替换。
+
+## 2026-09-15 全异步LoRA RL目标澄清
+
+用户再次明确目标是全异步高性能LoRA RL，OPD是同一通路的可组合学习信号。不要把目标缩减成Teacher评分demo，也不要将colocate_async的阶段切换说成独立训练/rollout同时运行。验收要覆盖LoRA同步、版本滞后、有效吞吐与任务奖励；先完成现有单卡验证，在真正需要时通知用户开双卡，不提前空等资源。

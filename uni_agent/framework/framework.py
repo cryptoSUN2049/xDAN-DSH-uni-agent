@@ -7,6 +7,7 @@ import inspect
 import io
 import json
 import logging
+import math
 import os
 import random
 import re
@@ -334,6 +335,7 @@ class GatewayAgentFramework(AgentFramework):
         *,
         runner_registry: dict[str, _RunnerConfig],
         teacher_server_manager=None,
+        teacher_timeout_seconds: float = 300,
         reward_loop_worker_handles=None,
         custom_reward_function_configured: bool = False,
         processor=None,
@@ -351,6 +353,14 @@ class GatewayAgentFramework(AgentFramework):
         self.gateway_manager = gateway_manager
         self.runner_registry = runner_registry
         self.teacher_server_manager = teacher_server_manager
+        if (
+            isinstance(teacher_timeout_seconds, bool)
+            or not isinstance(teacher_timeout_seconds, int | float)
+            or not math.isfinite(teacher_timeout_seconds)
+            or teacher_timeout_seconds <= 0
+        ):
+            raise ValueError("teacher_timeout_seconds must be a finite positive number")
+        self._teacher_timeout_seconds = teacher_timeout_seconds
         # Materialize inline runners at construction since they run in-process and may maintain state;
         # Ray-dispatched runners are materialized per-run since they run remotely.
         self._inline_runners = {
@@ -490,6 +500,7 @@ class GatewayAgentFramework(AgentFramework):
 
         return cls(
             teacher_server_manager=teacher_server_manager,
+            teacher_timeout_seconds=af_cfg.get("teacher_timeout_seconds", 300),
             gateway_manager=gateway_manager,
             runner_registry=runner_registry,
             reward_loop_worker_handles=reward_loop_worker_handles,
@@ -1227,11 +1238,14 @@ class GatewayAgentFramework(AgentFramework):
         scored = []
         for trajectory in trajectories:
             sequence_ids = trajectory.prompt_ids + trajectory.response_ids
-            teacher_ids, teacher_logprobs = await manager.compute_teacher_logprobs_single(
-                sequence_ids=sequence_ids,
-                multi_modal_data=trajectory.multi_modal_data,
-                mm_processor_kwargs=trajectory.extra_fields.get("mm_processor_kwargs"),
-                routing_key=routing_key,
+            teacher_ids, teacher_logprobs = await asyncio.wait_for(
+                manager.compute_teacher_logprobs_single(
+                    sequence_ids=sequence_ids,
+                    multi_modal_data=trajectory.multi_modal_data,
+                    mm_processor_kwargs=trajectory.extra_fields.get("mm_processor_kwargs"),
+                    routing_key=routing_key,
+                ),
+                timeout=self._teacher_timeout_seconds,
             )
             if (
                 not isinstance(teacher_ids, torch.Tensor)

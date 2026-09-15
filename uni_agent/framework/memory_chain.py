@@ -280,7 +280,9 @@ class NativeMemoryFramework(GatewayAgentFramework):
         self._pending = {}
 
     @classmethod
-    def from_config(cls, *, config, gateway_manager, processor=None, reward_loop_worker_handles=None):
+    def from_config(
+        cls, *, config, gateway_manager, processor=None, reward_loop_worker_handles=None, teacher_client=None
+    ):
         for name, expected in {
             "trainer.use_v1": True,
             "trainer.v1.trainer_mode": "sync",
@@ -289,6 +291,7 @@ class NativeMemoryFramework(GatewayAgentFramework):
         }.items():
             _require(OmegaConf.select(config, name) == expected, f"Memory requires {name}={expected}")
         instance = super().from_config(
+            teacher_client=teacher_client,
             config=config,
             gateway_manager=gateway_manager,
             processor=processor,

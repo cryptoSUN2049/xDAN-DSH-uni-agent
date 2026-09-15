@@ -168,3 +168,41 @@ async def test_strict_group_teacher_failure_writes_no_sibling_trajectory(fake_tq
     assert fake_tq.puts == [
         {"key": "uid-0", "partition_id": "train", "tag": {"status": status}} for status in ("running", "failure")
     ]
+
+
+@pytest.mark.asyncio
+async def test_configured_teacher_timeout_rejects_strict_group_without_tq_write(fake_tq, monkeypatch):
+    import asyncio
+
+    async def hang(**kwargs):
+        await asyncio.Event().wait()
+
+    manager = SimpleNamespace(teacher_key="data_source", compute_teacher_logprobs_single=AsyncMock(side_effect=hang))
+    monkeypatch.setattr(teacher_manager, "AsyncTeacherLLMServerManager", Mock(return_value=manager))
+    config = _config(True)
+    rollout = config.actor_rollout_ref.rollout
+    rollout.n = 1
+    rollout.temperature = 0.7
+    rollout.top_p = 1.0
+    rollout.top_k = -1
+    rollout.calculate_log_probs = True
+    rollout.val_kwargs = {"n": 1, "temperature": 0.0, "top_p": 1.0, "top_k": -1}
+    af = rollout.custom.agent_framework
+    af.teacher_timeout_seconds = 0.01
+    af.fail_on_rollout_error = True
+    af.require_finished_episode = True
+    af.require_verifier_reward = True
+    af.agent_runners = {"runner": _inline_runner_config(_finished_runner)}
+    runtime = _FakeGatewayManager({"session-sample-0-rollout-0": [_trajectory()]})
+    framework = GatewayAgentFramework.from_config(
+        config=config, gateway_manager=runtime, teacher_client={"qwen": object()}
+    )
+    # The outer deadline keeps a broken implementation from hanging the test.
+    # It raises TimeoutError, not the expected framework rollout-failure RuntimeError.
+    with pytest.raises(RuntimeError, match="rollout failure"):
+        await asyncio.wait_for(framework.generate_sequences(_build_prompts(count=1)), timeout=1.0)
+    assert manager.compute_teacher_logprobs_single.await_count == 1
+    assert fake_tq.batch_puts == []
+    assert fake_tq.puts == [
+        {"key": "uid-0", "partition_id": "train", "tag": {"status": status}} for status in ("running", "failure")
+    ]

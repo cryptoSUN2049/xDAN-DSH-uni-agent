@@ -366,6 +366,7 @@ async def test_audit_wrapper_reads_registered_port_not_task_receipt(tmp_path, mo
 
 
 def test_registered_audit_passes_only_explicit_operator_fixture(monkeypatch):
+    from uni_agent.tasks import TaskResult
     from uni_agent.tasks.harbor_dsh import registration as module
 
     trusted_policy = object()
@@ -390,7 +391,11 @@ def test_registered_audit_passes_only_explicit_operator_fixture(monkeypatch):
         controller_id="controller",
         run_spec_sha256="sha256:spec",
     )
-    assert module.validate_registered_trajectories(("trajectory",), **kwargs, t2_fixture=binding) == ["trajectory"]
+    task_result = TaskResult(reward=1.0, verifier_reward=1.0, finished=True)
+    assert module.validate_registered_trajectories(
+        ("trajectory",), task_result=task_result, **kwargs, t2_fixture=binding
+    ) == ["trajectory"]
+    assert seen[-1]["task_result"] is task_result
     assert seen[-1]["t2_fixture"] is binding
     assert seen[-1]["policy"] is trusted_policy
     module.validate_registered_trajectories(("trajectory",), **kwargs)

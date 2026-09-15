@@ -57,3 +57,5 @@ Tinker云P0已有9B/27B更新和独立推理reload，9个本地证据工件SHA�
 用户强调Student自主真实环境探索、Teacher在Student实际上下文逐token指导、Harbor verifier独立任务奖励。已纳入设计。固定VERL原生Teacher要求独立GPU池：colocate_async+OPD至少2卡，separate_async+OPD至少3卡角色；当前单卡可做组件与RL验证。已通过异步问题询问是否补卡，继续不依赖答复的测试。
 
 依赖不能混称统一锁：UA requirements-test要求vLLM0.23/Ray2.54.1；新VERL uv.lock fsdp+vllm为vLLM0.24/torch2.11/Transformers5.9，TransferQueue精确commit434f8c476b4be24bc087e6e95070e64efcc739f9。当前GPU环境为UA测试lane，完整训练须单独验锁。
+
+用户已答复资源安排：需要时可启动双卡服务器；现在先做代码/单卡验证，不重复问是否提供卡。双卡用于separate_async LoRA RL；独立Teacher组合还需第三角色GPU或另一次colocate OPD验收。优先目标是全异步高性能LoRA RL，OPD接线是其中一环。

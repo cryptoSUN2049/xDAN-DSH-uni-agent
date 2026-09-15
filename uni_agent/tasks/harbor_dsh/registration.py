@@ -18,6 +18,7 @@ import aiohttp
 from pydantic import Field, TypeAdapter
 
 from uni_agent.gateway.session import SessionHandle
+from uni_agent.tasks.base import TaskResult
 
 from .protocol import Contract, OpaqueId, RequestPolicy, Sha256
 from .task import RunnerContext, _json, _object, _write
@@ -248,6 +249,7 @@ def load_registered_policy(
 def validate_registered_trajectories(
     trajectories,
     *,
+    task_result: TaskResult | None = None,
     context,
     artifact_root,
     run_id,
@@ -272,6 +274,7 @@ def validate_registered_trajectories(
     )
     return validate_trajectories(
         trajectories,
+        task_result=task_result,
         context=context,
         artifact_root=artifact_root,
         run_id=run_id,
