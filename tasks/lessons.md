@@ -39,3 +39,7 @@
 - clone与git worktree不同；本轮实际代码worktree是tinker-cookbook-opd-rl。
 - 默认指令版9B不能默默改成Base；group reward与sampled KL分别验收。
 - 细节纠正见 tasks/tinker-harbor-opd-rl/memory.md。
+
+## 2026-09-15：Tinker API 验证证据
+- Context7自动生成片段可能与安装SDK签名冲突；compute_logprobs_async返回list，训练async返回APIFuture，分别核对官方API与本地代码。
+- Tinker SDK0.29.0在HTTP402计费问题时暂停并重试；长期等待不能直接归因为代理，也不能把402误读成模型缺失。用无密钥泄露的只读诊断确认服务原始detail。

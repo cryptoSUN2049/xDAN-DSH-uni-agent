@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Tinker + Harbor + Modal 大模型后训练系统方案：Qwen3.5-9B Student、Qwen3.8-27B Teacher，OPD 与 RL 闭环、实施步骤及验收。">
+<title>Tinker 训练系统 · 从闭环验证到能力提升</title>
+<style>
+:root{--bg:#f6f5f0;--card:#fff;--ink:#182b2b;--muted:#526464;--line:#d8e0dc;--teal:#00695c;--soft:#e9f4ed;--gold:#e8ba4a;--amber:#815200;--amber-bg:#fff4d8;--blue:#3159a3;--blue-bg:#edf2fd;--radius:16px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;color:var(--ink);background:var(--bg);font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}a{color:var(--teal);text-underline-offset:4px}button,summary,a,input{touch-action:manipulation}button{font:inherit;cursor:pointer}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:4px}p{margin:10px 0 16px}h1,h2,h3,h4{line-height:1.3;letter-spacing:-.035em}h1{font-size:clamp(32px,4vw,58px);margin:16px 0 24px;max-width:850px}h2{font-size:30px;margin:8px 0 18px}h3{font-size:19px;margin:8px 0 12px}h4{font-size:16px;margin:8px 0}small,.small{font-size:13px;color:var(--muted)}code{font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}p code,li code,td code{background:#eff2ee;border-radius:4px;padding:2px 4px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#122b2b;color:#e4f0e9;border-radius:12px;padding:22px;line-height:1.65;font-size:13px;margin:16px 0}ul,ol{padding-left:23px}li{margin:6px 0}.shell{display:grid;grid-template-columns:234px minmax(0,1fr);max-width:1600px;margin:auto}.sidebar{position:sticky;top:0;height:100vh;padding:30px 20px;border-right:1px solid var(--line);overflow:auto}.brand{font-size:19px;font-weight:800;display:block;letter-spacing:-.03em}.brand i{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--teal);margin-right:10px}.sidebar .sub{font-size:12px;color:var(--muted);margin:5px 0 26px}.sidebar nav a{display:block;padding:8px 10px;font-size:13px;text-decoration:none;color:var(--muted);border-radius:7px}.sidebar nav a:hover{background:var(--soft);color:var(--teal)}.sidebar .bottom{margin-top:28px;font-size:12px;color:var(--muted)}.main{padding:44px 48px 60px;min-width:0}.topline{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}.eyebrow{font:700 11px/1.5 ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}.button{border:1px solid var(--line);padding:8px 14px;background:white;border-radius:8px;color:var(--ink);font-size:13px}.button:hover{border-color:var(--teal)}.lead{font-size:19px;line-height:1.8;max-width:900px;color:#425a56}.hero{padding-bottom:32px;border-bottom:1px solid var(--line)}.tagline{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.tag,.badge{display:inline-block;font-size:12px;border-radius:99px;padding:3px 10px;font-weight:600}.tag{border:1px solid var(--line);background:white}.done{color:var(--teal);background:var(--soft)}.pending{color:var(--amber);background:var(--amber-bg)}.proposed{color:var(--blue);background:var(--blue-bg)}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}.card p:last-child{margin-bottom:0}.card .num{font:700 12px ui-monospace,monospace;color:var(--teal)}.four{grid-template-columns:repeat(4,minmax(0,1fr))}.four .card{padding:19px}.four strong{display:block;font-size:25px;line-height:1.3;margin:6px 0}.stat-label{font-size:12px;color:var(--muted)}section{padding-top:48px}.section-head{display:flex;gap:14px;align-items:baseline}.section-head span{font:700 12px ui-monospace,monospace;color:var(--teal)}.note{border-left:4px solid var(--gold);background:var(--amber-bg);padding:16px 20px;border-radius:0 10px 10px 0;margin:20px 0;color:#594421}.note.green{background:var(--soft);border-color:var(--teal);color:#234c3e}.note.blue{background:var(--blue-bg);border-color:var(--blue);color:#243d69}.note p{margin:0}.diagram{border:1px solid var(--line);border-radius:16px;background:white;padding:18px;overflow:auto}.diagram svg{display:block;width:100%;min-width:750px;height:auto}.caption{font-size:13px;color:var(--muted);margin-top:10px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:white;margin:18px 0}table{border-collapse:collapse;width:100%;font-size:14px;min-width:620px}th{text-align:left;color:var(--muted);font-size:12px;background:#eef2ec}td,th{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}tr:last-child td{border-bottom:0}td:first-child{font-weight:600;min-width:130px}td ul{margin:0;padding-left:17px}.flow{list-style:none;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;counter-reset:flow}.flow li{margin:0;border:1px solid var(--line);background:white;border-radius:12px;padding:18px;position:relative;counter-increment:flow}.flow li:before{content:counter(flow,decimal-leading-zero);display:block;font:700 12px ui-monospace,monospace;color:var(--teal);margin-bottom:10px}.flow h3{font-size:17px}.flow p{font-size:14px;line-height:1.7;margin-bottom:0}.modebar{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.modebar button{border:1px solid var(--line);background:white;border-radius:10px;padding:10px 18px;font-weight:600;color:var(--muted)}.modebar button[aria-pressed="true"]{background:var(--teal);color:white;border-color:var(--teal)}.mode-panel{border:1px solid #a9c9b8;background:#f0f8f1;border-radius:16px;padding:24px}.formula{font:15px/2 ui-monospace,monospace;overflow-wrap:anywhere}.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.tokens{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}.token{padding:10px 13px;border:1px solid var(--line);border-radius:8px;background:#f0f1ee;font-size:12px}.token.action{background:var(--soft);border-color:#97bba6;color:#175840}.token b{display:block}.phase{border:1px solid var(--line);border-radius:12px;background:white;margin:12px 0;overflow:hidden}.phase summary{list-style:none;padding:20px;cursor:pointer;display:flex;align-items:center;gap:14px;font-weight:700}.phase summary::-webkit-details-marker{display:none}.phase summary:after{content:'+';font-size:22px;margin-left:auto;color:var(--teal)}.phase[open] summary:after{content:'−'}.phase .phase-body{padding:0 22px 20px}.phase .phase-body p{font-size:14px}.phase ul{font-size:14px}.phase-no{color:var(--teal);font:700 12px ui-monospace,monospace;min-width:25px}.phase-label{flex:1}.phase summary .badge{font-size:11px;white-space:nowrap}.splitline{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1px solid var(--line);padding-top:14px}.muted{color:var(--muted)}.artifact{font-size:13px;background:#f3f5f1;border-radius:8px;padding:12px;margin-top:12px}.sources{font-size:13px}.sources li{margin:10px 0}.footer{border-top:1px solid var(--line);margin-top:48px;padding-top:24px;color:var(--muted);font-size:13px}.mark{background:#f3df9e;padding:1px 4px}.path{font-size:12px;overflow-wrap:anywhere}.no-margin{margin:0}.statusbar{display:flex;align-items:center;gap:10px;margin:18px 0;flex-wrap:wrap}.status-dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}.section-head h2{margin-bottom:14px}
+@media(max-width:1150px){.main{padding:34px 28px}.shell{grid-template-columns:205px minmax(0,1fr)}.four,.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.shell{display:block}.sidebar{height:auto;position:relative;border-right:0;border-bottom:1px solid var(--line);padding:18px 20px}.sidebar .sub{margin:4px 0 12px}.sidebar nav{display:flex;gap:2px;flex-wrap:wrap}.sidebar nav a{font-size:12px;padding:5px 8px}.sidebar .bottom{display:none}.main{padding:25px 20px}.cards,.splitline{grid-template-columns:1fr}.four,.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding-bottom:20px}h1{font-size:35px}.lead{font-size:17px}h2{font-size:26px}.phase summary{padding:16px;gap:9px;font-size:15px}.phase summary .badge{font-size:10px;padding:2px 6px}.diagram{padding:10px}.card{padding:19px}section{padding-top:34px}}
+@media(max-width:430px){h1{font-size:30px;text-wrap:balance}h1 br{display:none}.four,.flow{grid-template-columns:1fr}.phase summary{flex-wrap:wrap}.phase summary .badge{order:3;margin-left:34px}.phase summary:after{position:absolute;right:35px}.phase-label{padding-right:20px}.topline .eyebrow{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{font-size:11px;background:white}.shell{display:block}.sidebar,.print-button,.modebar,.expand-button{display:none!important}.main{padding:0}h1{font-size:32px}h2{font-size:23px}section{padding-top:22px}.card,.phase,.note{break-inside:avoid}.diagram{overflow:visible}.diagram svg{min-width:0}.table-wrap{overflow:visible}table{min-width:0;font-size:10px}td,th{padding:7px}pre{color:#182b2b;background:#f0f3ef;font-size:10px}.four,.flow{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr 1fr}a{color:inherit}.mode-panel{background:#f0f3ef}.footer{margin-top:24px}@page{size:A4;margin:15mm}}
+</style>
+</head>
+<body>
+<a href="#main" style="position:absolute;left:-10000px" onfocus="this.style.left='16px'" onblur="this.style.left='-10000px'">跳到正文</a>
+<div class="shell">
+<aside class="sidebar" aria-label="文档导航">
+<span class="brand"><i></i>TINKER / LAB</span><div class="sub">大模型后训练 · 系统实施方案</div>
+<nav>
+<a href="#overview">00 / 方案与当前状态</a><a href="#goals">01 / 四个核心目标</a><a href="#architecture">02 / 系统架构</a><a href="#loop">03 / 一次训练如何发生</a><a href="#algorithm">04 / OPD + RL 算法</a><a href="#contracts">05 / Token 与 SDK 契约</a><a href="#data">06 / 数据与评测</a><a href="#roadmap">07 / 阶段与验收</a><a href="#launch">08 / 如何开启训练</a><a href="#operations">09 / 云端运行与费用</a><a href="#gaps">10 / 还差什么</a><a href="#sources">11 / 来源与项目入口</a>
+</nav><div class="bottom">方案快照 · 2026.09.15<br>本地代码已组合<br>真实云端闭环待验收<br><br>离线可打开 · 支持打印<br>无外部字体、脚本或 CDN</div>
+</aside>
+<main class="main" id="main">
+<header class="hero" id="overview">
+<div class="topline"><span class="eyebrow">SYSTEM DESIGN / EXPERIMENT ROADMAP / V1.0</span><button class="button print-button" id="print">打印 / 保存 PDF</button></div>
+<h1>用 Tinker 打通训练闭环，<br>让 9B 学会更强的终端任务。</h1>
+<p class="lead">以 <strong>Qwen3.5-9B</strong> 为 Student，<strong>Qwen3.8-27B</strong> 为 Teacher；复用 Tinker 的训练与采样服务、Cookbook 的 OPD 代码，接入 Harbor 任务与 Modal 沙箱。先证明每个环节正确，再验证能力提升，最后检验能否超过同口径的 Opus 4.6。</p>
+<div class="tagline"><span class="tag">Tinker · 训练 / 采样 / Teacher 评分</span><span class="tag">Harbor · 任务 / 工具 / 评测</span><span class="tag">Modal · 执行沙箱 / 计划中的控制端</span></div>
+<div class="statusbar"><span class="status-dot"></span><strong>目前是可验收的系统原型，尚未跑完真实云端训练。</strong></div>
+<div class="note"><p><strong>本轮实测阻塞 · HTTP 402：</strong>使用用户提供的 key 调用 Tinker 后，SDK 日志与只读 capabilities 路由均返回“账户计费状态阻止访问”。需先在 <a href="https://tinker.thinkingmachines.ai/billing/balance">Tinker Billing</a> 完成支付配置/补足账户计费条件，再重跑探针。已停止计费等待；未进入模型采样、Teacher 评分、训练或 Modal sandbox 阶段。<a href="scoring-probe-status.json">脱敏诊断记录</a></p></div>
+<div class="cards four">
+<div class="card"><span class="stat-label">当前训练入口</span><strong>已组合</strong><small>官方 OPD trainer + Harbor reward</small></div>
+<div class="card"><span class="stat-label">历史本地验证</span><strong>42 项</strong><small>测试通过记录；本轮文档不重跑训练测试</small></div>
+<div class="card"><span class="stat-label">真实训练 / reload</span><strong>待验收</strong><small>尚无实际更新或独立恢复证据</small></div>
+<div class="card"><span class="stat-label">Terminal-Bench 提升</span><strong>未测量</strong><small>超越 Opus 4.6 是研究目标</small></div>
+</div>
+<p class="caption">本地实现 commit <code>f96cc38</code>；上游 Cookbook 基线 <code>485726f</code>；已安装 Tinker SDK <code>0.29.0</code>、Modal SDK <code>1.5.5</code>。模型账户权限需在线查询。本页面是方案与证据快照，不是实时监控面板。</p>
+</header>
+
+<section id="goals">
+<div class="section-head"><span>01</span><h2>四个核心目标，逐级拿证据</h2></div>
+<p>“把系统跑起来”和“把模型训强”需要不同证据。每一级通过后再扩大实验，避免用训练 loss 下降代替能力提升。</p>
+<div class="cards">
+<article class="card"><span class="num">G1 / 工程闭环</span><h3>采样 → 评分 → 更新 → 恢复</h3><p>用最小任务完成一个真实训练 batch；保存状态与采样权重；新进程加载后还能继续解题。</p><p class="small"><b>验收：</b>真实 API 回执、轨迹、更新证据、checkpoint URI、独立 reload 报告。<br><b>不等于：</b>模型能力已经提高。</p></article>
+<article class="card"><span class="num">G2 / 信号可信</span><h3>Teacher 评分正确，任务奖励可靠</h3><p>确保每个参与训练的 token 得到正确条件下的 Teacher logprob；正解通过，空操作失败，grader 故障不冒充低分。</p><p class="small"><b>验收：</b>多轮 golden trace、token/mask/shift 对齐、oracle/nop、任务分割审计。<br><b>不等于：</b>一个文本 prompt 通过就覆盖所有工具场景。</p></article>
+<article class="card"><span class="num">G3 / 能力提升</span><h3>同预算下，9B 超过自身基线</h3><p>比较未训练指令版 9B、OPD、RL、hybrid；在独立验证任务上检验成功率、稳定性、每道成功任务成本。</p><p class="small"><b>验收：</b>配对任务结果、多个随机种子、置信区间和失败分类。<br><b>决策：</b>只有持续改善才扩大数据、轮数与上下文。</p></article>
+<article class="card"><span class="num">G4 / 外部对照</span><h3>检验能否超过 Opus 4.6</h3><p>锁定 Terminal-Bench 版本、Agent harness、工具权限、token/时间预算及重试次数，再运行一次预先定义的最终对照。</p><p class="small"><b>验收：</b>可复现的完整评测报告及不确定性。<br><b>边界：</b>Teacher 更强或参数更多，不保证 Student 达到该目标。</p></article>
+</div>
+<div class="note green"><p><strong>建议的最短路线：</strong>以指令版 9B 开始，优先利用已有工具能力。先走 Tinker 27B Teacher 闭环；只有实验证明 Teacher 是主要瓶颈，再讨论更大模型、自部署评分或额外 SFT。</p></div>
+</section>
+
+<section id="architecture">
+<div class="section-head"><span>02</span><h2>系统架构：谁负责什么</h2></div>
+<p>训练系统由“控制流程、执行任务、模型计算、保存证据”四部分组成。Tinker 承担模型计算；我们负责数据、奖励、实验规则和运行管理。</p>
+<div class="diagram">
+<svg viewBox="0 0 1060 570" role="img" aria-labelledby="arch-title arch-desc" xmlns="http://www.w3.org/2000/svg">
+<title id="arch-title">Tinker、Harbor 与 Modal 训练架构图</title><desc id="arch-desc">控制器读取任务，Student在Modal沙箱执行Harbor任务。Teacher对Student序列评分，Tinker更新LoRA，保存checkpoint并刷新Student。轨迹和独立评测报告写入持久存储。云端控制器与统一产物管理尚待实现。</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#708c81"/></marker></defs>
+<rect x="8" y="8" width="1044" height="132" rx="14" fill="#f1f4ef"/>
+<text x="30" y="35" font-size="12" font-family="sans-serif" fill="#526464">控制层 · 当前本地 Python；目标为 Modal CPU Job + Secret + 持久化存储</text>
+<rect x="30" y="53" width="265" height="65" rx="9" fill="white" stroke="#cbd8ce"/><text x="49" y="80" font-size="16" font-family="sans-serif" fill="#182b2b">任务 manifest / 实验配置</text><text x="49" y="101" font-size="12" font-family="sans-serif" fill="#526464">train / validation / 预算 / 版本</text>
+<path d="M295 85H345" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="350" y="53" width="357" height="65" rx="9" fill="#00695c"/><text x="371" y="80" font-size="17" font-family="sans-serif" fill="white">Cookbook Controller</text><text x="371" y="101" font-size="12" font-family="sans-serif" fill="#d7ecdf">harbor_opd_rl → 官方 train_on_policy</text>
+<path d="M707 85H755" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="760" y="53" width="268" height="65" rx="9" fill="white" stroke="#cbd8ce" stroke-dasharray="5 4"/><text x="779" y="80" font-size="16" font-family="sans-serif" fill="#182b2b">实验账本 / 预算控制</text><text x="779" y="101" font-size="12" font-family="sans-serif" fill="#526464">统一编排与硬限制：待补齐</text>
+<path d="M528 118V171H199V201" fill="none" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M528 140V201" fill="none" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M528 171H861V201" fill="none" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="208" width="310" height="119" rx="12" fill="#e9f4ed" stroke="#a9c9b8"/><text x="49" y="235" font-size="12" font-family="sans-serif" fill="#00695c">TINKER / STUDENT</text><text x="49" y="264" font-size="20" font-family="sans-serif" fill="#182b2b">Qwen3.5-9B + LoRA</text><text x="49" y="288" font-size="13" font-family="sans-serif" fill="#526464">sample → raw tokens + log π_old</text><text x="49" y="310" font-size="13" font-family="sans-serif" fill="#526464">每批使用当前 checkpoint 的新 sampler</text>
+<rect x="373" y="208" width="310" height="119" rx="12" fill="#fff4d8" stroke="#ddc993"/><text x="392" y="235" font-size="12" font-family="sans-serif" fill="#815200">HARBOR / MODAL SANDBOX</text><text x="392" y="264" font-size="20" font-family="sans-serif" fill="#182b2b">终端工具与任务环境</text><text x="392" y="288" font-size="13" font-family="sans-serif" fill="#526464">bash → observation → 下一轮 action</text><text x="392" y="310" font-size="13" font-family="sans-serif" fill="#526464">verifier → reward + grading status</text>
+<rect x="717" y="208" width="310" height="119" rx="12" fill="#e9f4ed" stroke="#a9c9b8"/><text x="736" y="235" font-size="12" font-family="sans-serif" fill="#00695c">TINKER / TEACHER</text><text x="736" y="264" font-size="20" font-family="sans-serif" fill="#182b2b">Qwen3.8-27B · 冻结</text><text x="736" y="288" font-size="13" font-family="sans-serif" fill="#526464">compute_logprobs(原始 token 序列)</text><text x="736" y="310" font-size="13" font-family="sans-serif" fill="#526464">返回 log q_teacher；无需 Teacher rollout</text>
+<path d="M340 261H370" fill="none" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/><path d="M373 280H342" fill="none" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M185 327V387" fill="none" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/><path d="M528 327V355H185" fill="none" stroke="#708c81" stroke-width="2"/><path d="M872 327V387" fill="none" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="394" width="997" height="66" rx="11" fill="#183e36"/><text x="50" y="421" font-size="17" font-family="sans-serif" fill="white">Controller 合成 advantage → Tinker forward_backward → optim_step</text><text x="50" y="443" font-size="12" font-family="sans-serif" fill="#d0e4d9">A = 组内 reward advantage − β × sampled reverse-KL；仅 Student action tokens 参与</text>
+<path d="M350 460V489M821 460V489" fill="none" stroke="#708c81" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="496" width="610" height="56" rx="10" fill="#e9f4ed" stroke="#a9c9b8"/><text x="49" y="520" font-size="16" font-family="sans-serif" fill="#182b2b">Tinker checkpoint → 刷新 Student → 下一批</text><text x="49" y="540" font-size="12" font-family="sans-serif" fill="#526464">state / sampler 分开保存；独立进程 reload 后评测</text>
+<rect x="663" y="496" width="364" height="56" rx="10" fill="#edf2fd" stroke="#b8c9e3"/><text x="681" y="520" font-size="16" font-family="sans-serif" fill="#182b2b">轨迹、指标、任务版本、评测报告</text><text x="681" y="540" font-size="12" font-family="sans-serif" fill="#526464">当前部分本地日志；统一云端归档待实现</text>
+</svg>
+</div>
+<p class="caption">实线表示已复用或已写入本地 recipe 的逻辑，不代表云端运行已验证；虚线为待实现的管理模块。整体按 API 与 Python 组件连接，P0 不需要 Kubernetes、分布式消息队列或自建 Teacher GPU 服务。</p>
+<div class="table-wrap"><table><thead><tr><th>组成</th><th>职责</th><th>实施方式 / 状态</th></tr></thead><tbody>
+<tr><td>Tinker skill</td><td>指导研究设计、模型与 renderer 选择、评测、监控和复现。</td><td>使用官方 <code>skills/research/SKILL.md</code>；它是开发工作流，不是训练运行时服务。</td></tr>
+<tr><td>Tinker SDK</td><td>模型能力查询、LoRA 客户端、采样、固定评分、梯度和优化器、权重保存。</td><td>已安装；正式在线能力由账户与服务实测决定。</td></tr>
+<tr><td>Tinker Cookbook</td><td>训练循环、rollout、advantage、token mask、checkpoint、evaluator。</td><td>复用官方 <code>train_on_policy</code> 与 Harbor recipe；新增薄的组合入口。</td></tr>
+<tr><td>Harbor</td><td>任务目录、指令、工具接口、运行结果与 verifier。</td><td>使用 Cookbook Harbor 组件；训练入口不是简单执行一次 <code>harbor run</code>。</td></tr>
+<tr><td>Modal</td><td>隔离执行模型生成的命令，构建任务镜像并回收 sandbox。</td><td>现有官方适配；目标也托管 CPU 控制进程。无须在 Modal 再部署 27B Teacher。</td></tr>
+<tr><td>我们补齐的系统层</td><td>任务治理、实验配置、阶段验收、预算、恢复与报告。</td><td>拆分 manifest / strict grader 已实现；云端调度、评测矩阵和统一账本待补齐。</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="loop">
+<div class="section-head"><span>03</span><h2>一个训练 batch 的完整流程</h2></div>
+<ol class="flow">
+<li><h3>锁定输入</h3><p>读取配置和任务版本；选取一组训练题；固定本批 Student checkpoint。</p></li>
+<li><h3>创建任务环境</h3><p>Harbor 载入指令；Modal 按任务镜像创建隔离 sandbox，每条 rollout 独立执行。</p></li>
+<li><h3>Student 自己尝试</h3><p>模型生成 thinking、bash 调用或答案；执行工具并返回 observation，直到结束或到达上限。</p></li>
+<li><h3>得到任务分数</h3><p>运行 verifier；区分任务失败和基础设施故障。收集原始 token IDs、logprobs、mask。</p></li>
+<li><h3>Teacher 逐 token 评分</h3><p>将 Student 实际上下文与动作序列送入 compute_logprobs；对齐每个训练目标 token。</p></li>
+<li><h3>合成学习信号</h3><p>任务奖励减组均值得到 RL advantage；再叠加负 β × sampled reverse-KL。</p></li>
+<li><h3>更新与保存</h3><p>Tinker 执行 forward_backward 和 optim_step；消费回执，保存 checkpoint，记录指标。</p></li>
+<li><h3>刷新与检验</h3><p>创建新 sampler；回收 sandbox；下一批使用新权重。指定里程碑做独立 reload 与后评估。</p></li>
+</ol>
+<div class="note"><p><strong>“On-policy” 的关键：</strong>训练轨迹来自本批 Student 策略。初期使用同步批次，每次更新后换新 sampler；跨批复用旧轨迹或旧 sampler 需要额外的策略版本与 off-policy 校正设计。</p></div>
+</section>
+
+<section id="algorithm">
+<div class="section-head"><span>04</span><h2>同一套系统，比较三种学习方式</h2></div>
+<p>切换下面的模式查看信号来源。默认使用官方 <code>importance_sampling</code> policy-gradient loss；这里的 OPD 是对 Student 采样 token 的 reverse-KL 估计。</p>
+<div class="modebar" role="group" aria-label="学习模式">
+<button type="button" data-mode="hybrid" aria-pressed="true">OPD + RL · 主实验</button><button type="button" data-mode="opd" aria-pressed="false">OPD · 对照</button><button type="button" data-mode="rl" aria-pressed="false">RL · 对照</button>
+</div>
+<div class="mode-panel" aria-live="polite"><div class="eyebrow" id="mode-kicker">HYBRID / 任务反馈 + 教师指导</div><h3 id="mode-title">学会成功完成任务，也参考 Teacher 的每一步判断。</h3><div class="formula" id="mode-formula">Aᵢ,ₜ = mᵢ,ₜ × [(Rᵢ − mean_group(R)) − β × (log π_old − log q_teacher)]</div><p id="mode-detail">Harbor 提供任务是否成功的稀疏奖励；Teacher 提供动作 token 的密集反馈。所有同组轨迹分数相同时，RL advantage 为零，OPD 仍可能提供学习信号。</p></div>
+<div class="cards" style="margin-top:16px">
+<article class="card"><h3>严格评分究竟要求什么</h3><p>给定 Student 已经生成的动作 <code>aₜ</code> 及此前上下文 <code>hₜ</code>，取 Teacher 的 <code>log q(aₜ | hₜ)</code>。Teacher 必须对指定序列做 teacher-forcing；返回 Teacher 自己生成答案的 logprobs 不满足这一要求。</p><p>本方案可调用 Tinker 的 <code>compute_logprobs_async(ModelInput)</code>。评分覆盖上下文，但训练 mask 只选择 Student 动作。</p></article>
+<article class="card"><h3>“严格”不等于全词表精确 KL</h3><p>目标形式是 <code>E[a~π][log π(a|h) − log q(a|h)]</code>。我们只在 Student 采到的动作上估计，因此不要求 Teacher 返回全词表 logits，也不是用 top-5 概率补齐分布。</p><p>单 token、单轨迹或单批估计可能为负。Teacher KL 下降也不直接证明任务成功率提高。</p></article>
+</div>
+<div class="table-wrap"><table><thead><tr><th>模式</th><th>任务 reward</th><th>Teacher 信号</th><th>回答的问题</th></tr></thead><tbody>
+<tr><td>OPD</td><td>任务主 reward 设为 0</td><td>β &gt; 0</td><td>Teacher 指导单独能带来多少提升？解析失败/超长等环境惩罚仍可能存在。</td></tr>
+<tr><td>RL</td><td>真实 verifier reward</td><td>β = 0</td><td>只依靠成功/失败反馈能学到多少？当前入口仍检查 Teacher，可在后续消除该依赖。</td></tr>
+<tr><td>Hybrid</td><td>真实 verifier reward</td><td>β &gt; 0</td><td>两种信号是否互补，能否超过各自单独训练？</td></tr>
+</tbody></table></div>
+<p class="small">公式描述默认 <code>kl_discount_factor=0</code>、二值 mask、组内减均值的情形。若启用未来 KL 折扣，信号传播会变化，必须作为独立实验记录。OPD 与 RL 不必强制先后串联；优先比较三种模式，再根据结果考虑“OPD 热身 → RL / hybrid”。</p>
+</section>
+
+<section id="contracts">
+<div class="section-head"><span>05</span><h2>真正决定训练正确性的接口契约</h2></div>
+<h3>先保留原始 token，再讨论损失函数</h3>
+<div class="tokens" aria-label="多轮轨迹中的训练 mask 示例"><div class="token"><b>system + user</b>上下文 · mask 0</div><div class="token action"><b>Student thinking</b>模型生成 · mask 1</div><div class="token action"><b>Student tool call</b>模型生成 · mask 1</div><div class="token"><b>tool observation</b>环境返回 · mask 0</div><div class="token action"><b>Student action / answer</b>模型生成 · mask 1</div></div>
+<p class="small">示意按 token 来源划分；具体 role delimiter、EOS/stop 和追加标记需按 renderer 与真实采样边界核对。对已经生成的序列不要 decode 后再 encode，也不要只保留用户看到的 final content。</p>
+<div class="table-wrap"><table><thead><tr><th>边界</th><th>目标契约 / 需要保存的字段</th><th>目标失败处理（逐项待验收）</th></tr></thead><tbody>
+<tr><td>任务 → rollout</td><td>任务 ID、revision/hash、split、镜像信息；Student checkpoint、renderer、采样参数。</td><td>任务缺文件、split 重叠先拒绝；训练前执行 oracle/nop。</td></tr>
+<tr><td>rollout → 评分</td><td>精确 <code>input_ids</code>、生成边界、每轮 observation、Student logprobs、action mask。</td><td>缺失/错位直接阻断该批；不能将 Teacher 输出替代 Student action。</td></tr>
+<tr><td>Teacher → advantage</td><td>长为 N 的序列得到 N 个位置评分；首 token 通常无前文可评分。动作位置必须非空、有限且有效。</td><td>Teacher/Student 词表 ID 与分词行为检查；不能仅凭长度相等放行。</td></tr>
+<tr><td>序列 → Datum</td><td><code>input=tokens[:-1]</code>、<code>target=tokens[1:]</code>；Teacher 分数也取 <code>[1:]</code>；mask/logprobs/advantages 同目标对齐。</td><td>多轮 golden trace 验证 N/N−1 边界；环境 token 的训练贡献必须为零。</td></tr>
+<tr><td>梯度 → optimizer</td><td>记录 loss 配置、step、模型版本、有效 token 数；await 提交后还需等待返回的 APIFuture。</td><td>NaN、缺失评分或全零有效 token 阻断；不重复执行结果未知的更新来“重试”。</td></tr>
+<tr><td>保存 → 下一批</td><td>区分 state_path 和 sampler_path；创建绑定新权重的 SamplingClient。</td><td>不让旧 sampler 混入新批。独立 reload 另行验收。</td></tr>
+</tbody></table></div>
+<div class="note"><p><strong>Renderer 风险：</strong>本地模型映射中，9B 推荐 <code>qwen3_5</code>，27B 推荐 <code>qwen3_8</code>。目前 Teacher 评分使用 Student 的原始上下文，避免位置改变；词表一致仍不能证明模板语义、normalizer 或工具状态完全兼容。必须用真实多轮轨迹验证 Teacher 在这一上下文下能提供有效信号。</p></div>
+<p class="small"><strong>实际覆盖边界：</strong>当前严格校验覆盖 Harbor reward 与单序列 preflight；官方训练循环尚未在每批显式拒绝所有 Teacher action 分数的 None/非有限值或全零 mask。上表是系统目标契约，仍需补实现和故障注入测试。</p>
+<h3>SDK 调用关系，而非另一份训练器</h3>
+<p>以下是已安装 SDK 的接口示意，变量 <code>batch</code>、<code>full_sequence</code> 由 Cookbook 构造；不是独立可运行脚本。生产训练继续从现有 recipe 启动。</p>
+<pre><code>service = tinker.ServiceClient()
+caps = await service.get_server_capabilities_async()
+
+# Teacher 固定，不需要 training client。
+teacher = service.create_sampling_client(base_model="Qwen/Qwen3.8-27B")
+teacher_logprobs = await teacher.compute_logprobs_async(full_sequence)
+# 此处已返回 list[float | None]，不是 SampleResponse。
+
+# Student 通过 LoRA 训练。batch 为已对齐、mask 已折入 advantages，
+# 并移除辅助 mask 字段后的 Datum；实际复用官方 train_step。
+tc = await service.create_lora_training_client_async(
+    base_model="Qwen/Qwen3.5-9B", rank=32
+)
+fb = await tc.forward_backward_async(batch, loss_fn="importance_sampling")
+opt = await tc.optim_step_async(tinker.AdamParams(learning_rate=1e-4))
+fb_result = await fb.result_async()
+opt_result = await opt.result_async()
+
+# 周期保存与新 sampler：实际 recipe 复用 CheckpointManager。
+# 中断续训：create_training_client_from_state_with_optimizer_async(state_path)
+# 仅用权重初始化新实验：create_training_client_from_state_async(state_path)
+# 独立推理：create_sampling_client(model_path=sampler_path)</code></pre>
+<p class="caption">依据：<a href="https://tinker-docs.thinkingmachines.ai/tinker/api-reference/samplingclient/">SamplingClient 官方 API</a>、<a href="https://github.com/thinking-machines-lab/tinker/blob/main/docs/api/trainingclient.md">TrainingClient 官方文档</a>，并与安装的 SDK 0.29.0 源码核对。Context7 的部分旧自动文档存在返回类型冲突，本方案采用实际 <code>compute_logprobs_async</code> 的列表返回契约。</p>
+</section>
+
+<section id="data">
+<div class="section-head"><span>06</span><h2>数据决定提升空间，评测决定结论可信度</h2></div>
+<div class="cards">
+<article class="card"><h3>训练课程：从能学会的任务开始</h3><ul><li>文件与文本：查找、过滤、编码、格式转换。</li><li>脚本与调试：修复小程序、解析报错、补齐依赖。</li><li>仓库任务：构建、运行测试、定位失败、生成产物。</li><li>系统与长程任务：状态跟踪、多工具组合、错误恢复。</li></ul><p class="small">使用授权且独立的 Harbor 格式任务。按任务族划分 train/validation/final-test，保留来源与许可。任务规模按阶段扩增，不把具体数量当作性能保证。</p></article>
+<article class="card"><h3>先判断 Teacher 是否真的能教</h3><p>在同一批独立任务、相同工具和预算下测 9B 与 27B。重点看 Teacher 能完成而 Student 失败的任务及失败原因。</p><p>若 27B 也大量失败，应先检查环境、任务难度和 harness，再决定换 Teacher。若 9B 已全通过，改用更有学习空间的任务。</p><p class="small">Teacher 参数量和通用能力只能作为候选依据，不能代替本任务基线。</p></article>
+</div>
+<div class="table-wrap"><table><thead><tr><th>集合 / 阶段</th><th>用途</th><th>规模建议与隔离规则</th></tr></thead><tbody>
+<tr><td>Smoke 任务</td><td>验证通信、工具、grader、update 和 reload。</td><td>先 2 个训练 + 2 个验证任务；只证明工程闭环，不估计泛化。</td></tr>
+<tr><td>小型实验集</td><td>比较 OPD / RL / hybrid 和 Teacher 边际收益。</td><td>可从几十个训练任务开始；按任务族留出验证集。数据不足则先补数据，不循环少量题冒充规模。</td></tr>
+<tr><td>验证集</td><td>选超参、checkpoint、课程与停止时机。</td><td>可重复评估，但不能训练；多次选择会对它过拟合，因此另留最终测试。</td></tr>
+<tr><td>最终 Terminal-Bench</td><td>锁定配置后的最终能力报告与 Opus 对照。</td><td>整个研究期间不进入训练、不按它反复调参；固定 benchmark 版本与任务清单。</td></tr>
+</tbody></table></div>
+<h3>“超过 Opus”必须固定比较口径</h3>
+<p>区分<strong>模型权重能力比较</strong>与<strong>Agent 系统成绩比较</strong>。前者尽量固定 harness、工具、预算；后者可用模型适配的系统，但必须披露差异。不能拿自己的一次 best-of-N 成绩，直接比较别人不同设置的公开 pass@1。</p>
+<ul><li>记录精确模型/版本、benchmark revision、Agent 代码 commit、工具权限和依赖镜像。</li><li>报告每任务成功率、终止原因、样本数、随机种子、token/耗时/费用；重试和截断单列。</li><li>OPD/RL/hybrid 从同一初始权重出发。既报告等训练 token 的比较，也报告实际成本，避免忽略 Teacher 评分费用。</li><li>对同一任务做配对比较；重复运行估计方差，按任务聚合置信区间。小样本结果标“探索性”，不写成确定超越。</li></ul>
+</section>
+
+<section id="roadmap">
+<div class="topline"><div class="section-head"><span>07</span><h2>实施顺序：每阶段都留下可检查产物</h2></div><button class="button expand-button" id="expand" aria-expanded="false">展开全部步骤</button></div>
+<p>时间取决于账户权限、任务准备和真实吞吐，现阶段不承诺几天达标。按下面的退出标准推进，每次只扩大已经验证的部分。</p>
+<details class="phase" open><summary><span class="phase-no">P0</span><span class="phase-label">锁定代码、配置与账户可用性</span><span class="badge pending">计费阻塞</span></summary><div class="phase-body"><ul><li>记录 Cookbook/SDK/renderers 版本、依赖环境、Student/Teacher ID、默认采样参数和实际预算。</li><li>先解决本轮实测 HTTP 402 计费阻塞，再通过环境变量或云 Secret 注入 Tinker key；Modal 账户认证与控制器分开检查。</li><li>执行现有 <code>harbor_opd_preflight</code>：capabilities → Student 采样 → 两模型固定评分。</li><li>保留词表 hash、token 数、sample/rescore 差异。模型不可用时先解决权限或重新选择，不静默换模型。</li></ul><div class="splitline"><div><b>通过标准</b><p>两模型在账户内可用；评分动作位置完整有效。数值差异经重复探针判断，之后增加明确容差验收。</p></div><div><b>证据边界</b><p>现有探针只打印 rescore 最大差值，没有阈值拒绝；128-token 采样只测通信/评分，可能没有完整最终答案。</p></div></div><div class="artifact">建议归档：capabilities.json、resolved-config.json、scoring-probe.json、依赖与代码版本。统一归档格式待补齐。</div></div></details>
+<details class="phase"><summary><span class="phase-no">P1</span><span class="phase-label">让任务、沙箱与奖励可信</span><span class="badge pending">待运行</span></summary><div class="phase-body"><ul><li>准备真实 2 train + 2 validation，包含 instruction.md、task.toml、environment/Dockerfile、tests/test.sh；准备 oracle solution。</li><li>执行 oracle：已知正确解通过；执行 nop：空操作失败。用同一 task/sandbox/grader 路径核对。</li><li>验证测试文件不可由旧执行结果“蒙混过关”；模拟缺 reward、NaN、grader 超时并确认故障分类。</li><li>完成创建、执行、退出、异常回收闭环；记录 sandbox ID、TTL、镜像标识与费用。</li></ul><div class="artifact">通过标准：正负对照正确、奖励文件有效、cleanup 有证据。产物：task-audit、oracle/nop 结果、sandbox 生命周期记录。</div></div></details>
+<details class="phase"><summary><span class="phase-no">P2</span><span class="phase-label">多轮 token 对齐与模型基线</span><span class="badge pending">待实现 + 运行</span></summary><div class="phase-body"><ul><li>用真实 Student rollout 覆盖 thinking、bash 调用、工具输出、失败重试和结束标记。</li><li>逐 token 核对输入、target、logprobs、mask、Teacher 评分；添加扰动 token 或错误偏移的负例，确保检测会拒绝。</li><li>对评分序列构造相同 prefix、改变后缀：验证早先动作分数不受后缀影响，并检查已知 token 位置。</li><li>按同一 harness 测 Student 与 Teacher 初始能力，记录逐任务表现；确定训练任务的难度区间。</li></ul><div class="artifact">通过标准：golden trace 对齐通过；基线完整。短序列 preflight 不能代替本阶段。产物：token-alignment-report、baseline-student、baseline-teacher。</div></div></details>
+<details class="phase"><summary><span class="phase-no">P3</span><span class="phase-label">一次真实 hybrid 更新与独立恢复</span><span class="badge pending">待运行</span></summary><div class="phase-body"><ul><li>按下方 P0 参数启动一批，核对任务 reward、sampled KL、有效 action token 数和有限 loss。</li><li>确认 optimizer 更新回执；在固定诊断输入上检查更新前后分数变化，若可导出 adapter 则核对权重差异。</li><li>保存 state 和 sampler 权重；在新进程通过 URI 加载并重新采样/评分。</li><li>单独运行更新后验证；测试从 state + optimizer 恢复，以及只载入权重开启新实验的差别。</li></ul><div class="artifact">通过标准：有更新、保存、新 sampler、独立 reload 与后评估证据。API 成功不等于直接审计了 base 冻结或 LoRA 数值；不可观测项单独标明。</div></div></details>
+<details class="phase"><summary><span class="phase-no">P4</span><span class="phase-label">用消融实验选出有效训练方式</span><span class="badge proposed">研究阶段</span></summary><div class="phase-body"><ul><li>固定初始权重、任务、采样设置、训练 token 预算，分别运行 OPD、RL、hybrid；保留未训练基线。</li><li>先小规模比较；再对胜出候选做多种随机种子。β、学习率、group_size 逐项调整，避免所有参数一起变。</li><li>跟踪成功率、group reward 方差、格式错误、token 消耗、工具失败与费用。依据验证集选择 checkpoint。</li><li>若效果无提升，按数据/奖励/teacher/优化四类定位。系统跑通但目标不达标应记录为研究结果。</li></ul><div class="artifact">通过标准：在预先约定的验证指标和成本范围内稳定超过基线。产物：experiment-matrix、逐任务结果、消融报告。</div></div></details>
+<details class="phase"><summary><span class="phase-no">P5</span><span class="phase-label">扩展任务与纯云端持续运行</span><span class="badge proposed">设计待落地</span></summary><div class="phase-body"><ul><li>将控制脚本封装为 Modal CPU Job，配置 Tinker/Modal 所需 Secret；代码、依赖、任务镜像和任务 manifest 固定版本。</li><li>按有界批次运行；将配置、状态、metrics、轨迹、checkpoint 索引同步持久存储。控制器重启后能查明最后完成的更新。</li><li>补齐预算预留、限流、实验锁、失败恢复与资源回收；再扩大任务数、上下文与组大小。</li><li>自动生成阶段报告，人工检查异常轨迹与 reward hacking。可选引入 SFT 热身和课程调度，必须有实验依据。</li></ul><div class="artifact">通过标准：本机关机后云任务继续；重启/失败可恢复；费用与资源可追踪。该云控制包装与预算控制目前尚未实现。</div></div></details>
+<details class="phase"><summary><span class="phase-no">P6</span><span class="phase-label">锁定配置，进行 Terminal-Bench 最终对照</span><span class="badge proposed">远期目标</span></summary><div class="phase-body"><ul><li>冻结模型 checkpoint、Agent harness、benchmark revision、推理预算、重试规则与主指标。</li><li>在不参与训练/选择的最终任务上运行 9B 初始、最佳训练 9B、Teacher 与 Opus 4.6 对照。</li><li>报告成功率差异及置信区间，披露系统差异、训练数据来源、费用和失败案例。</li><li>保存复现材料；若未超过 Opus，则准确报告与自身基线的进步及剩余差距。</li></ul><div class="artifact">通过标准：结论可复核；“超过”需要同口径数据支持。不能以目标、参数量或单个任务案例宣布成功。</div></div></details>
+</section>
+
+<section id="launch">
+<div class="section-head"><span>08</span><h2>如何开启第一轮训练</h2></div>
+<p>这些命令针对现有 Cookbook 实现 worktree。先执行评分探针、准备真实任务并通过 P1/P2，再运行有费用的训练命令。此 HTML 不自动调用任何云 API。</p>
+<pre><code>cd /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-cookbook-opd-rl
+
+# TINKER_API_KEY 已由 shell 或 Secret 注入；不要写进仓库。
+.venv/bin/python -m tinker_cookbook.recipes.distillation.harbor_opd_preflight
+
+# manifest.json 必须指向真实任务；默认无恢复 checkpoint 时只检查配置。
+.venv/bin/python -m tinker_cookbook.recipes.distillation.harbor_opd_rl \
+  manifest_path=manifest.json dry_run=True</code></pre>
+<details class="phase"><summary><span class="phase-label">展开任务 manifest 示例与最小目录</span></summary><div class="phase-body"><pre><code>{
+  "train": ["data/train/task-a", "data/train/task-b"],
+  "validation": ["data/validation/task-c", "data/validation/task-d"]
+}
+
+# 每个任务目录至少含：
+instruction.md
+task.toml
+environment/Dockerfile
+tests/test.sh
+# oracle 验证另需可执行的已知正确解。</code></pre><p>这些是路径占位示例，当前不代表任务已存在。训练入口目前只有 train/validation；最终测试清单在独立评测侧管理，不添加到训练 manifest。</p></div></details>
+<pre><code># 前置验收通过后：一个有界 batch 的功能实验，会产生 Tinker / Modal 费用。
+.venv/bin/python -m tinker_cookbook.recipes.distillation.harbor_opd_rl \
+  manifest_path=manifest.json mode=hybrid \
+  model_name=Qwen/Qwen3.5-9B teacher_model=Qwen/Qwen3.8-27B \
+  group_size=2 groups_per_batch=1 max_steps=1 \
+  max_turns=4 max_tokens=4096 max_trajectory_tokens=32768 \
+  learning_rate=1e-4 lora_rank=32 kl_penalty_coef=1.0 \
+  temperature=1.0 num_substeps=1 kl_discount_factor=0.0 \
+  eval_every=1 save_every=1 log_path=outputs/harbor-hybrid-p0</code></pre>
+<div class="table-wrap"><table><thead><tr><th>P0 参数</th><th>意义</th><th>为什么这样设</th></tr></thead><tbody>
+<tr><td>group_size=2</td><td>同题两次独立尝试</td><td>最小能产生组内 reward 差异的设置；两次都失败时 RL 信号仍为 0。</td></tr>
+<tr><td>groups_per_batch=1</td><td>每批一题</td><td>训练 sandbox 并发约为 2；验证沙箱另外计算。</td></tr>
+<tr><td>max_steps=1</td><td>仅一批训练</td><td>验证链路，不用于判断能力提升。现有 trainer 遍历一次任务，不自动增加 epoch。</td></tr>
+<tr><td>temperature=1.0</td><td>减少采样分布变换</td><td>降低评分解释复杂度；仍需验证 logprobs 与实际策略定义一致。</td></tr>
+<tr><td>4 turns / 4096 tokens</td><td>限制交互轮数和单次生成</td><td>功能验证预算；复杂终端任务可能被截断。最终评测另设公平预算。</td></tr>
+<tr><td>LR 1e-4 / rank 32 / β 1</td><td>沿用试跑级初值</td><td>只作初始配置，不是适用于本任务的最优超参结论。</td></tr>
+</tbody></table></div>
+<div class="note"><p><strong>容易误判的一点：</strong><code>eval_every=1</code> 当前是在每批更新前评估。跑完一个 batch 后仍需单独进行新 checkpoint 的评估与独立 reload，不能把更新前结果当作训练后成绩。</p></div>
+</section>
+
+<section id="operations">
+<div class="section-head"><span>09</span><h2>从训练脚本到纯云端系统，还要加什么</h2></div>
+<div class="cards">
+<article class="card"><span class="badge done">当前代码形态</span><h3>本地 Controller，远端 GPU 与沙箱</h3><p>本机 Python 调用 Tinker 完成模型计算、调用 Modal 执行任务。控制脚本仍依赖当前进程存活；已有日志和 checkpoint helpers，但尚无完整云端实验管理。</p></article>
+<article class="card"><span class="badge proposed">目标部署形态</span><h3>Modal CPU Job 托管 Controller</h3><p>控制器、任务清单和持久日志运行在云端；Tinker 承担 Student/Teacher 模型服务；Modal sandbox 执行任务。本机只负责提交、查看与下载报告。</p><p class="small">需实际验证云 Job 的认证、最长运行时间、子 sandbox 创建、持久存储提交语义与故障恢复；不能仅凭架构图算部署完成。</p></article>
+</div>
+<div class="table-wrap"><table><thead><tr><th>系统能力</th><th>具体设计</th><th>状态</th></tr></thead><tbody>
+<tr><td>配置与实验版本</td><td>run ID + code SHA +依赖版本 + manifest hash +模型/renderer/sampling配置；每个实验独立 log_path。</td><td>部分已有；统一 run record 待补。</td></tr>
+<tr><td>批次状态</td><td>planned → rollout_done → scored → update_submitted → update_confirmed → checkpointed → evaluated。</td><td>建议增加；不能假设现有脚本具备 exactly-once 恢复。</td></tr>
+<tr><td>故障恢复</td><td>使用 state+optimizer 与已完成 batch 恢复。提交更新后失联须查回执/状态，避免重复应用梯度；环境失败单独记录。</td><td>官方恢复 helpers 已有；中断注入验收与应用级状态待补。</td></tr>
+<tr><td>运行监控</td><td>监控 reward、KL、有效 token、梯度/更新、采样与评分耗时、错误率、checkpoint、sandbox 数量；异常轨迹抽查。</td><td>官方部分 metrics/logtree 已有；统一报表、告警待补。</td></tr>
+<tr><td>费用控制</td><td>每批提交前预留成本；限定训练+验证总并发、最大 token、时间、实验总预算；到限不发新工作并回收资源。</td><td>现有仅局部参数限制；美元硬上限尚未实现。</td></tr>
+<tr><td>资产与权限</td><td>密钥用 Secret；Student 不接触控制器凭据。保存任务来源、模型版本、checkpoint 保留期限与访问范围。</td><td>方案约束；云配置待实现。</td></tr>
+</tbody></table></div>
+<h3>费用怎么算，才能决定是否继续</h3>
+<pre><code>总费用 ≈ Student 输入/采样费用
+       + Teacher 固定序列评分费用（包含需要评分的上下文；缓存按实际服务账单）
+       + Student 训练 token 费用
+       + Modal sandbox / CPU 控制器 / 存储费用
+       + 基线、验证与最终对照评测费用</code></pre>
+<p>先用 P0 的实际 usage 和耗时估计每 batch 成本，再决定实验规模。不要把“每题生成 4096 tokens”误认为 Teacher 只评分 4096 tokens：多轮上下文会增加评分负担。价格以账户实际计费和 <a href="https://tinker-docs.thinkingmachines.ai/tinker/models/">官方模型价格页</a> 为准，本文不虚构固定总价。</p>
+<div class="note blue"><p><strong>暂不纳入主线：</strong>Modal 上的 2.4T Teacher、自租 8 GPU 评分服务、DFLASH scoring 兼容性。旧端点部分路由 404 只说明那条路由未开放，不能推导 Modal 无法部署评分服务。保留此研究分支，主线先消除它对闭环的依赖。</p></div>
+</section>
+
+<section id="gaps">
+<div class="section-head"><span>10</span><h2>当前交付与缺口，一张表看清</h2></div>
+<div class="table-wrap"><table><thead><tr><th>工作项</th><th>已有证据</th><th>下一项验收</th></tr></thead><tbody>
+<tr><td>组合 recipe</td><td><span class="badge done">本地实现</span> <code>harbor_opd_rl.py</code> 三模式、任务分割、官方 trainer。</td><td>真实账户与真实任务运行。</td></tr>
+<tr><td>固定评分探针</td><td><span class="badge done">本地实现</span> capabilities、词表、单序列 sampling/rescoring。</td><td>本轮在线执行停在 capabilities 的 HTTP 402；解决计费后再验收评分、数值容差与多轮对齐。</td></tr>
+<tr><td>奖励与 mask</td><td><span class="badge done">本地测试记录</span> 42 项相关测试；strict grader 拒绝旧/缺失/非有限结果。</td><td>oracle/nop、真实边界；同 sandbox 后台进程防篡改仍非完整隔离。</td></tr>
+<tr><td>训练更新与 checkpoint</td><td><span class="badge done">官方组件已接入</span> LoRA、更新、保存、刷新 sampler。</td><td>实际非零更新、checkpoint URI、新进程 reload 与训练后评估。</td></tr>
+<tr><td>真实训练任务</td><td><span class="badge pending">未准备完成</span> manifest 目前是使用方式，示例目录是占位。</td><td>授权数据、任务族划分、镜像可构建、正负对照。</td></tr>
+<tr><td>纯云端控制器</td><td><span class="badge proposed">本页设计</span> Modal CPU Job +持久化记录。</td><td>代码、部署、恢复测试、费用控制。</td></tr>
+<tr><td>能力提升与 Opus 对照</td><td><span class="badge pending">无实验分数</span></td><td>基线 → 消融 → 独立最终评测。</td></tr>
+</tbody></table></div>
+<h3>建议下一批实现清单</h3>
+<ol><li><strong>真实验收包：</strong>多轮 token 对齐、每批 action 评分与非空 mask 校验、task oracle/nop、checkpoint 独立恢复，沿用现有 SDK/Harbor 组件。</li><li><strong>实验执行包：</strong>任务 manifest 审计、baseline 与三模式对照配置、逐任务结果和固定版本的报告。</li><li><strong>云运行包：</strong>Modal CPU 控制包装、Secret/持久存储、批次状态、预算与异常回收。</li></ol>
+<p class="small">以上是待实现范围，不是已存在的新文件或服务。当前仓库状态足以开始 P0；全系统仍须逐项验收。页面不要求先构建一个通用训练平台才能进行最小实验。</p>
+</section>
+
+<section id="sources">
+<div class="section-head"><span>11</span><h2>官方依据与可恢复的项目入口</h2></div>
+<p>官方 skill 用于组织研究方法，SDK 文档解释接口，固定 commit 的源代码说明当前实现。引用网页的在线存在不代表账户模型调用已经成功。</p>
+<ol class="sources">
+<li><a href="https://github.com/thinking-machines-lab/tinker-cookbook/blob/485726f55d3b2b5abe5fcb4a0d2f3e18e4599dfe/skills/research/SKILL.md">Tinker 官方 research skill（固定上游版本）</a>：先评测、从小实验开始、核对 renderer/mask、保存与监控。</li>
+<li><a href="https://github.com/thinking-machines-lab/tinker-cookbook/tree/485726f55d3b2b5abe5fcb4a0d2f3e18e4599dfe/tinker_cookbook/recipes/harbor_rl">Harbor RL 官方 recipe</a>：任务、工具、奖励、Modal sandbox 的复用依据。</li>
+<li><a href="https://github.com/thinking-machines-lab/tinker-cookbook/tree/485726f55d3b2b5abe5fcb4a0d2f3e18e4599dfe/tinker_cookbook/recipes/distillation">Distillation 官方 recipe</a> 与 <a href="https://github.com/thinking-machines-lab/tinker-cookbook/blob/485726f55d3b2b5abe5fcb4a0d2f3e18e4599dfe/tinker_cookbook/distillation/train_on_policy.py">train_on_policy.py</a>：固定评分、sampled KL、同步更新与 checkpoint。</li>
+<li><a href="https://tinker-docs.thinkingmachines.ai/tinker/api-reference/samplingclient/">SamplingClient</a>、<a href="https://github.com/thinking-machines-lab/tinker/blob/main/docs/api/trainingclient.md">TrainingClient</a>、<a href="https://github.com/thinking-machines-lab/tinker/blob/main/docs/api/serviceclient.md">ServiceClient</a>：使用 Context7 查询并与本地 SDK 交叉核对。评分 API 官方页经 browse 打开验证。</li>
+<li><a href="https://tinker-docs.thinkingmachines.ai/tinker/models/">模型与价格官方入口</a>：上线前实时复核；最终以实际账户 capabilities 与调用结果为准。</li>
+</ol>
+<div class="cards">
+<article class="card"><h3>项目记忆 worktree</h3><p class="path">.Codex/worktrees/tinker-harbor-opd-rl</p><ul class="sources"><li><a href="../../tasks/tinker-harbor-opd-rl/memory.md">项目记忆</a></li><li><a href="../../tasks/tinker-harbor-opd-rl/handoff.md">冷启动交接</a></li><li><a href="design.md">原实施设计</a> · <a href="system-plan-spec.md">本 HTML 设计规格</a></li></ul></article>
+<article class="card"><h3>实际代码 worktree</h3><p class="path">.Codex/worktrees/tinker-cookbook-opd-rl<br>分支 feat-harbor-opd-rl · 本地 commit f96cc38</p><ul class="sources"><li><a href="../../../tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/runbook.md">运行说明与历史测试记录</a></li><li><a href="../../../tinker-cookbook-opd-rl/tinker_cookbook/recipes/distillation/harbor_opd_rl.py">训练组合入口</a> · <a href="../../../tinker-cookbook-opd-rl/tinker_cookbook/recipes/distillation/harbor_opd_preflight.py">评分探针</a></li><li><a href="../../../tinker-cookbook-opd-rl/skills/research/SKILL.md">本地官方 Tinker skill</a></li></ul></article>
+</div>
+</section>
+<footer class="footer"><strong>下一件具体的事：</strong>先解决 Tinker HTTP 402 计费阻塞，再运行现有 scoring preflight；同时准备独立 Harbor smoke 任务。随后通过多轮对齐、一次真实更新和独立 reload，将“本地原型”升级为“已验证的训练闭环”。<p>本文无凭据、无后台请求、无实时成绩。互动仅解释模式与展开步骤，不会启动训练或更改验收状态。离线分享时正文和图仍可用；本地源码链接需要保留 worktree 目录。</p></footer>
+</main></div>
+<script>
+const modes={
+ hybrid:{kicker:'HYBRID / 任务反馈 + 教师指导',title:'学会成功完成任务，也参考 Teacher 的每一步判断。',formula:'Aᵢ,ₜ = mᵢ,ₜ × [(Rᵢ − mean_group(R)) − β × (log π_old − log q_teacher)]',detail:'Harbor 提供任务是否成功的稀疏奖励；Teacher 提供动作 token 的密集反馈。所有同组轨迹分数相同时，RL advantage 为零，OPD 仍可能提供学习信号。'},
+ opd:{kicker:'OPD / 固定序列教师评分',title:'Student 自己尝试，Teacher 对它实际走过的每一步评分。',formula:'Aᵢ,ₜ ≈ −mᵢ,ₜ × β × (log π_old − log q_teacher)',detail:'任务主 reward 设为零，主要由 Teacher 的 token-level 信号训练。当前官方环境仍可能施加解析失败/上下文超限惩罚，因此公式用近似号；验证集始终使用真实 grader。'},
+ rl:{kicker:'RL / 任务成功反馈',title:'根据同题不同尝试的成功与失败，让有效行为更常发生。',formula:'Aᵢ,ₜ = mᵢ,ₜ × [Rᵢ − mean_group(R)]；β = 0',detail:'仅使用组内中心化任务反馈。如果同组全部成功或全部失败，任务 RL advantage 为零。当前入口仍执行 Teacher preflight 并创建 Teacher client，尚未去除该运行依赖。'}
+};
+for(const button of document.querySelectorAll('[data-mode]'))button.addEventListener('click',()=>{
+ for(const other of document.querySelectorAll('[data-mode]'))other.setAttribute('aria-pressed',String(other===button));
+ const mode=modes[button.dataset.mode];for(const key of ['kicker','title','formula','detail'])document.getElementById('mode-'+key).textContent=mode[key];
+});
+const expand=document.getElementById('expand');expand.addEventListener('click',()=>{const open=expand.getAttribute('aria-expanded')!=='true';document.querySelectorAll('#roadmap details').forEach(d=>d.open=open);expand.setAttribute('aria-expanded',String(open));expand.textContent=open?'收起全部步骤':'展开全部步骤';});
+let printState=[];window.addEventListener('beforeprint',()=>{printState=[...document.querySelectorAll('details')].map(d=>[d,d.open]);printState.forEach(([d])=>d.open=true);});window.addEventListener('afterprint',()=>printState.forEach(([d,open])=>d.open=open));document.getElementById('print').addEventListener('click',()=>window.print());
+</script>
+</body>
+</html>

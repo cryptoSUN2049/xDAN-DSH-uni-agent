@@ -155,3 +155,14 @@ Review：只读本地DSH与Harbor代码，未查询远端Release、构建运行�
 - [x] 42本地测试
 - [ ] API key/真实任务/更新/reload/benchmark
 Review：入口 tasks/tinker-harbor-opd-rl/handoff.md。未取得性能结果。
+
+## 2026-09-15：Tinker 系统方案 HTML
+- [x] 读取现有 worktree 交接、官方 research skill、SDK 与训练源代码。
+- [x] 写 HTML 文档设计，核对官方文档。
+- [x] 生成含架构、流程、目标、步骤与验收的独立 HTML。
+- [x] 浏览器验证布局、交互与链接，更新交接。
+- [x] 使用用户临时key实际执行preflight，定位HTTP402计费阻塞并停止等待。
+- [x] 提交本轮文档产物（本地 Conventional Commit；未推送）。
+
+### HTML 方案 review
+离线单文件，架构图/8步流程/3种算法模式/7阶段验收/SDK契约/云运行缺口齐全；独立审查两处边界问题已修。桌面手机与交互检查通过，git diff --check通过。真实云端训练仍未完成，当前阻塞是账户billing。

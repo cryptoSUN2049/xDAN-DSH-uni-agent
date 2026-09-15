@@ -13,3 +13,13 @@
 - 目标超越 Opus 4.6 尚无证据。训练更新、reload、holdout 提升分别验收。
 - 设计 docs/tinker-harbor-opd-rl/design.md；实施 ../tinker-cookbook-opd-rl。
 - 不能根据旧截图推断当前凭据/Endpoint 状态，不保存 API key。
+
+## 2026-09-15：系统方案 HTML
+- 主入口 docs/tinker-harbor-opd-rl/system-plan.html，覆盖目标/架构/流程/算法/SDK契约/数据/阶段/启动/云运行/缺口。
+- 单文件离线HTML；浏览器桌面/手机与三模式交互、打印展开、内部链接检查通过。
+- 目标防护与已实现能力严格区分：每批Teacher评分finite/None/全零mask拒绝尚待补实现。
+- Context7旧自动文档有compute_logprobs返回类型冲突；按SDK0.29.0及官方API实际列表返回契约。
+- 用户本轮提供Tinker key，已仅注入评分探针子进程；未写入任何项目文件。最终停在 capabilities：SDK 与直接只读路由均 HTTP 402（billing blocked）；已停止等待进程，无采样/评分/训练发生。
+
+- 最新阻塞已从“没有提供key”更新为“提供key后真实服务返回HTTP 402计费限制”；凭据未持久化，下次仍需安全注入。
+- 402不能解读为模型不支持；SDK0.29.0会暂停等待计费恢复，表象可能类似卡住。
