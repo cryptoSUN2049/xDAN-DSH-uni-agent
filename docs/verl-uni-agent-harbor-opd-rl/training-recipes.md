@@ -51,8 +51,9 @@ The launcher introduces no new agent loop, trainer, reward function or loss.
 - Native `separate_async` requires a non-naive checkpoint backend; this recipe
   uses `nccl`. It sets `train_batch_size=2`, `ppo_mini_batch_size=1`, and
   `parameter_sync_step=2`, satisfying the pinned trainer's equality constraint.
-- Version-span threshold is 2 with drop policy. This is a conservative starting
-  bound, not measured optimal throughput. Track group rejection, version lag,
+- Prompt scheduling staleness threshold is 2 with drop policy. The pinned ReplayBuffer
+  uses prompt submission versions; actual token-generation min/max versions remain
+  separate evidence and metrics. This is a starting bound, not measured optimal throughput. Track group rejection, version lag,
   Teacher queue time, verifier latency and GPU utilization before tuning it.
 - Reward-model and reference-model KL are disabled; there is no extra model GPU
   pool. Harbor's verifier remains authoritative for the RL task reward.

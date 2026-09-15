@@ -104,3 +104,7 @@ Teacher字段为TQ顶层nested [batch,jagged_sequence,K]，显式ragged_idx=1；
 三种原生训练入口已落盘，使用说明见[训练recipes](training-recipes.md)。配置组合/原生Teacher dataclass共15例通过；无真实多卡更新验收。
 
 Teacher评分增加每条轨迹可配置deadline（agent_framework.teacher_timeout_seconds，默认300秒）；超时取消评分协程、整组失败且不写trajectory。它独立于runner的session timeout，避免Teacher服务挂起让异步TQ永久停留running。Memory/Work-state只补Teacher转发，原有同步、完整组和verifier约束保留，不宣称该专用路线已全异步化。
+
+### Gateway 版本证据准入
+
+新增 `agent_framework.require_version_evidence`，默认 `false` 保留旧 RL 调用兼容；Harbor OPD/RL recipe 显式设 `true`，且必须与 `fail_on_rollout_error=true` 同用。每条轨迹进入 TQ payload 前验证 Gateway-owned `generation_count` 为正整数，`versioned_generation_count` 为相同整数，`version_evidence_complete is True`，`min/max_global_steps` 均为非 bool 的非负整数且 min≤max。缺失或部分证据令整组失败、零轨迹写入，不能回退到调度器 global_steps 冒充采样版本。允许真实跨版本跨度，不在此层强制同步版本或异步滞后阈值；固定 VERL ReplayBuffer 当前按 prompt 调度版本计算 staleness，并不直接约束每个 token 的实际 min/max 跨度；真实 min/max 保留为证据与训练指标，GPU 验收需独立对比两者。Harbor 已复用 `_validate_token_evidence` 验证 response logprobs 长度和有限值，不重复实现该检查。

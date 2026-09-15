@@ -346,6 +346,7 @@ class GatewayAgentFramework(AgentFramework):
         require_finished_episode: bool = False,
         require_verifier_reward: bool = False,
         require_trajectory_dump: bool = False,
+        require_version_evidence: bool = False,
         trajectory_postprocessor_pass_context: bool = False,
         trajectory_postprocessor: TrajectoryPostprocessor | None = None,
         trajectory_postprocessor_kwargs: dict[str, object] | None = None,
@@ -382,6 +383,11 @@ class GatewayAgentFramework(AgentFramework):
         self._require_finished_episode = require_finished_episode
         self._require_verifier_reward = require_verifier_reward
         self._require_trajectory_dump = require_trajectory_dump
+        if type(require_version_evidence) is not bool:
+            raise ValueError("require_version_evidence must be a bool")
+        if require_version_evidence and not fail_on_rollout_error:
+            raise ValueError("require_version_evidence requires fail_on_rollout_error")
+        self._require_version_evidence = require_version_evidence
         self._trajectory_postprocessor_pass_context = trajectory_postprocessor_pass_context
         self._trajectory_postprocessor = trajectory_postprocessor
         self._trajectory_postprocessor_kwargs = trajectory_postprocessor_kwargs or {}
@@ -454,6 +460,12 @@ class GatewayAgentFramework(AgentFramework):
         if require_trajectory_dump and not fail_on_rollout_error:
             raise ValueError("require_trajectory_dump requires fail_on_rollout_error")
 
+        require_version_evidence = af_cfg.get("require_version_evidence", False)
+        if type(require_version_evidence) is not bool:
+            raise ValueError("actor_rollout_ref.rollout.custom.agent_framework.require_version_evidence must be a bool")
+        if require_version_evidence and not fail_on_rollout_error:
+            raise ValueError("require_version_evidence requires fail_on_rollout_error")
+
         postprocessor_pass_context = af_cfg.get("trajectory_postprocessor_pass_context", False)
         if type(postprocessor_pass_context) is not bool:
             raise ValueError(
@@ -513,6 +525,7 @@ class GatewayAgentFramework(AgentFramework):
             require_finished_episode=require_finished_episode,
             require_verifier_reward=require_verifier_reward,
             require_trajectory_dump=require_trajectory_dump,
+            require_version_evidence=require_version_evidence,
             trajectory_postprocessor_pass_context=postprocessor_pass_context,
             trajectory_postprocessor=trajectory_postprocessor,
             trajectory_postprocessor_kwargs=trajectory_postprocessor_kwargs,
@@ -1598,6 +1611,23 @@ class GatewayAgentFramework(AgentFramework):
         global_steps: int | None,
         uid: str,
     ) -> tuple[dict[str, object], dict[str, object]]:
+        if self._require_version_evidence:
+            evidence = trajectory.extra_fields
+            count = evidence.get("generation_count")
+            versioned = evidence.get("versioned_generation_count")
+            minimum = evidence.get("min_global_steps")
+            maximum = evidence.get("max_global_steps")
+            if (
+                type(count) is not int
+                or count <= 0
+                or type(versioned) is not int
+                or versioned != count
+                or evidence.get("version_evidence_complete") is not True
+                or type(minimum) is not int
+                or type(maximum) is not int
+                or not 0 <= minimum <= maximum
+            ):
+                raise ValueError("Trajectory requires complete Gateway generation version evidence before TQ admission")
         prompts = torch.tensor(trajectory.prompt_ids, dtype=torch.long)
         responses = torch.tensor(trajectory.response_ids, dtype=torch.long)
         source_response_mask = torch.tensor(trajectory.response_mask, dtype=torch.long)

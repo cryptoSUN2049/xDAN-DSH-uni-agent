@@ -90,6 +90,7 @@ actor_rollout_ref:
         require_finished_episode: true
         require_verifier_reward: true
         require_trajectory_dump: true
+        require_version_evidence: true
         trajectory_postprocessor_fqn: uni_agent.tasks.harbor_dsh.registration.validate_registered_trajectories
         trajectory_postprocessor_pass_context: true
         agent_runners:
