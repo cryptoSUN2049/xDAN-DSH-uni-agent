@@ -494,3 +494,63 @@ def test_hydra_rejects_unsafe_dictionary_keys(key):
 
     with pytest.raises(ValueError, match="Unexpected Hydra configuration key"):
         _hydra({"source_sha256s": {key: "sha256:value"}})
+
+
+def modal_t2_inputs(inputs):
+    from examples.harbor.prepare_t2_task import prepare
+    from uni_agent.agents.dsh.harbor_release import T2_PATCH_SHA256
+
+    image = "sha256:" + "e" * 64
+    root = inputs["run_spec_path"].parent
+    manifest = prepare(
+        root=REPO,
+        output=root / "modal-task",
+        agent_image_digest=image,
+        modal_origin="https://gateway.example.com",
+        agent_image_ref="ghcr.io/example/dsh-t2@" + image,
+        parent_image_ref="ghcr.io/example/dsh-base@sha256:" + "b" * 64,
+    )
+    spec = json.loads(inputs["run_spec_path"].read_text())
+    spec["modal_ingress"] = {
+        "origin": "https://gateway.example.com",
+        "tunnel_id": "12345678-1234-1234-1234-123456789abc",
+        "credentials_file": str(root / "cloudflared.json"),
+        "listen_port": 18999,
+    }
+    spec["task_dir"] = manifest["task_dir"]
+    spec["policy_template"]["dsh_release"]["patch_sha256s"] = [T2_PATCH_SHA256]
+    spec["policy_template"]["task_refs"] = [manifest["task_ref"]]
+    inputs["run_spec_path"].write_text(json.dumps(spec))
+    binding_path = root / "modal-fixture-binding.json"
+    binding_path.write_text(json.dumps(manifest["t2_fixture"]))
+    return {**inputs, "task_dir": Path(manifest["task_dir"]), "t2_fixture_binding": binding_path}
+
+
+def test_modal_frozen_registry_task_prepares_native_training(inputs):
+    values = modal_t2_inputs(inputs)
+    launch = json.loads(prepare_training(**values).read_text())
+    assert launch["registration"]["run_spec_sha256"] == digest(json.loads(inputs["run_spec_path"].read_text()))
+    assert launch["postprocessor"]["policy_template"]["dsh_release"]["image_digest"] == "sha256:" + "e" * 64
+    assert launch["postprocessor"]["t2_fixture"]["task_ref"]["id"] == "t2-log-tool-dev-01"
+    assert len(pq.read_table(inputs["output_dir"] / "train.parquet")) == 2
+
+
+@pytest.mark.parametrize("change", ["origin", "release", "compose"])
+def test_modal_training_rejects_invalid_frozen_backend_contract(inputs, change):
+    values = modal_t2_inputs(inputs)
+    spec = json.loads(inputs["run_spec_path"].read_text())
+    if change == "origin":
+        spec["modal_ingress"]["origin"] = "https://wrong.example.com"
+    elif change == "release":
+        spec["policy_template"]["dsh_release"]["image_digest"] = "sha256:" + "a" * 64
+    else:
+        (values["task_dir"] / "environment/compose.yaml").write_text("services: {}")
+        ref = spec["policy_template"]["task_refs"][0]
+        ref["sha256"] = task_digest(values["task_dir"])
+        binding = json.loads(values["t2_fixture_binding"].read_text())
+        binding["task_ref"] = ref
+        values["t2_fixture_binding"].write_text(json.dumps(binding))
+    inputs["run_spec_path"].write_text(json.dumps(spec))
+    with pytest.raises(ValueError, match="Gateway|digest|Compose"):
+        prepare_training(**values)
+    assert not inputs["output_dir"].exists()

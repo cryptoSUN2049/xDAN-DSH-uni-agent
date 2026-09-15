@@ -47,6 +47,16 @@ def validate_gateway_origin(origin: str, *, backend: str = "docker") -> str:
     return origin.rstrip("/")
 
 
+def registry_image_digest(image: str) -> str:
+    """Return the manifest digest from a syntactically immutable registry ref.
+
+    This validates identity syntax; it does not claim the image was published.
+    """
+    if not isinstance(image, str) or not re.fullmatch(r"[a-z0-9][a-z0-9./:_-]*@sha256:[0-9a-f]{64}", image):
+        raise ValueError("Expected a registry image pinned by sha256 digest")
+    return image.rsplit("@", 1)[-1]
+
+
 def validate_modal_task(task_dir: Path, task: dict, *, gateway_origin: str, release_digest: str) -> None:
     """Freeze the initial Direct-mode, host-trace-only execution contract."""
     origin = validate_gateway_origin(gateway_origin, backend="modal")
@@ -58,10 +68,7 @@ def validate_modal_task(task_dir: Path, task: dict, *, gateway_origin: str, rele
     verifier = task.get("verifier", {})
     verifier_env = verifier.get("environment", {})
     image = environment.get("docker_image", "")
-    if (
-        not re.fullmatch(r"[a-z0-9][a-z0-9./:_-]*@sha256:[0-9a-f]{64}", image)
-        or image.rsplit("@", 1)[-1] != release_digest
-    ):
+    if registry_image_digest(image) != release_digest:
         raise ValueError("Modal requires a registry image pinned to the approved release digest")
     if environment.get("network_mode") != "allowlist" or environment.get("allowed_hosts") != [
         urlsplit(origin).hostname

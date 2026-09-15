@@ -1,6 +1,8 @@
 # Modal controller integration notes
 
-Read-only audit of the existing controller/worker path, 2026-09-15. This document distinguishes current code from proposed transport extension. No remote resources were created.
+Historical pre-implementation audit, 2026-09-15. The controller/worker and preparer gaps described below were subsequently implemented; see `modal-ingress-design.md` for current code and 217-test evidence. Real cloud deployment remains pending.
+
+Original audit: This document distinguishes current code from proposed transport extension. No remote resources were created.
 
 ## Current complete call path
 

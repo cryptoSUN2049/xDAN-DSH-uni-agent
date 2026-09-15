@@ -21,8 +21,9 @@ from pathlib import Path
 from typing import Annotated
 
 from aiohttp import web
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_serializer, model_validator
 
+from deployment.services.harbor_modal_ingress import ModalIngress, ModalIngressConfig, require_external_private_path
 from deployment.services.harbor_tunnel import SshTunnel
 from uni_agent.tasks.harbor_dsh.protocol import OpaqueId, Port, RequestPolicy, Sha256
 
@@ -82,6 +83,14 @@ class RunSpec(BaseModel):
     model_port: Port
     remote_control_port: Port
     remote_worker_port: Port
+    modal_ingress: ModalIngressConfig | None = None
+
+    @model_serializer(mode="wrap")
+    def _serialize(self, handler):
+        result = handler(self)
+        if self.modal_ingress is None:
+            result.pop("modal_ingress", None)
+        return result
 
     @field_validator("ssh_host")
     @classmethod
@@ -115,6 +124,14 @@ class RunSpec(BaseModel):
             or self.remote_control_port == self.remote_worker_port
         ):
             raise ValueError("Owned forwarding/listening ports must be distinct")
+        if self.modal_ingress is not None and self.modal_ingress.listen_port in {
+            self.control_port,
+            self.worker_port,
+            self.model_port,
+        }:
+            raise ValueError("Modal ingress listen port must be distinct")
+        if self.modal_ingress is not None:
+            require_external_private_path(self.root)
         return self
 
 
@@ -160,7 +177,10 @@ async def start_worker(spec, policy):
         worker_id=spec.worker_id,
         task_dir=spec.task_dir,
         root=spec.root / "jobs",
-        gateway_base_url=f"http://host.docker.internal:{spec.model_port}",
+        gateway_base_url=spec.modal_ingress.origin
+        if spec.modal_ingress
+        else f"http://host.docker.internal:{spec.model_port}",
+        environment_backend="modal" if spec.modal_ingress else "docker",
     )
     runner = web.AppRunner(worker_app(worker, token=read_token(spec.worker_token_file)), access_log=None)
     try:
@@ -175,14 +195,23 @@ async def start_worker(spec, policy):
 
 
 class HarborRunController:
-    def __init__(self, spec, *, tunnel_factory=SshTunnel, worker_factory=start_worker, clock=time.time):
+    def __init__(
+        self,
+        spec,
+        *,
+        tunnel_factory=SshTunnel,
+        worker_factory=start_worker,
+        ingress_factory=ModalIngress,
+        clock=time.time,
+    ):
         self.spec = RunSpec.model_validate(spec.model_dump(mode="json"))
         self.spec_sha256 = digest(self.spec.model_dump(mode="json"))
         self.token = read_token(self.spec.registration_token_file)
         if hmac.compare_digest(self.token, read_token(self.spec.worker_token_file)):
             raise ValueError("Registration and job credentials must differ")
         self.tunnel_factory, self.worker_factory, self.clock = tunnel_factory, worker_factory, clock
-        self.control = self.model = self.worker = None
+        self.ingress_factory = ingress_factory
+        self.control = self.model = self.worker = self.ingress = None
         self.receipt = None
         self.state = "new"
         self.lock = asyncio.Lock()
@@ -222,6 +251,12 @@ class HarborRunController:
             return "model-unavailable"
         if self.state == "ready" and (self.worker is None or not self.worker.alive):
             return "worker-unavailable"
+        if (
+            self.state == "ready"
+            and self.spec.modal_ingress is not None
+            and (self.ingress is None or not self.ingress.alive)
+        ):
+            return "ingress-unavailable"
         return None
 
     def status(self):
@@ -267,7 +302,8 @@ class HarborRunController:
                 raise ValueError("Gateway node is not approved")
             if self.receipt is not None:
                 if (
-                    not self.model.alive
+                    (self.spec.modal_ingress is not None and not self.ingress.alive)
+                    or not self.model.alive
                     or not self.worker.alive
                     or registration.gateway_port != self.receipt["policy"]["gateway_port"]
                 ):
@@ -282,6 +318,10 @@ class HarborRunController:
                 self.model = self.tunnel_factory(self.spec, kind="model", gateway_port=registration.gateway_port)
                 await self.model.start()
                 self._check_time()
+                if self.spec.modal_ingress is not None:
+                    self.ingress = self.ingress_factory(self.spec)
+                    await asyncio.wait_for(self.ingress.start(), min(35, self.spec.deadline_unix - self.clock()))
+                    self._check_time()
                 persist(self.spec.root / "effective-policy.json", policy.model_dump(mode="json"))
                 self.worker = await asyncio.wait_for(
                     self.worker_factory(self.spec, policy), min(30, self.spec.deadline_unix - self.clock())
@@ -305,8 +345,12 @@ class HarborRunController:
                     if self.worker is not None:
                         await asyncio.wait_for(self.worker.close(), 30)
                 finally:
-                    if self.model is not None:
-                        await self.model.close()
+                    try:
+                        if self.ingress is not None:
+                            await self.ingress.close()
+                    finally:
+                        if self.model is not None:
+                            await self.model.close()
                 raise
 
     async def close(self):
@@ -315,7 +359,7 @@ class HarborRunController:
                 return
             self.state = "closed"
             failures = []
-            for service in (self.worker, self.model, self.control):
+            for service in (self.worker, self.ingress, self.model, self.control):
                 if service is not None:
                     try:
                         await asyncio.wait_for(service.close(), 30)

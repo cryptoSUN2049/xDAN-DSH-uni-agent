@@ -16,6 +16,7 @@ import yaml
 
 from deployment.services.harbor_run_controller import RunSpec, digest
 from uni_agent.agents.dsh.harbor_release import release_patch_paths
+from uni_agent.tasks.harbor_dsh.environment_backend import validate_modal_task
 from uni_agent.tasks.harbor_dsh.evolution_scoring import EvolutionBinding, load_evolution_binding
 from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import EvolutionV2Binding, load_evolution_v2_binding
 from uni_agent.tasks.harbor_dsh.protocol import DshRelease, TaskRef
@@ -115,7 +116,14 @@ def prepare_training(
     if len(refs) != 1 or task_digest(task_dir) != refs[0]["sha256"]:
         raise ValueError("Expected the one frozen task directory from the run spec")
     manifest = tomllib.loads((task_dir / "task.toml").read_text())
-    if manifest.get("environment", {}).get("docker_image") != template["dsh_release"]["image_digest"]:
+    if spec.modal_ingress is not None:
+        validate_modal_task(
+            task_dir,
+            manifest,
+            gateway_origin=spec.modal_ingress.origin,
+            release_digest=template["dsh_release"]["image_digest"],
+        )
+    elif manifest.get("environment", {}).get("docker_image") != template["dsh_release"]["image_digest"]:
         raise ValueError("Current task image differs from the frozen DSH release")
     release = DshRelease.model_validate(template["dsh_release"])
     if sum(value is not None for value in (t2_fixture_binding, evolution_binding, evolution_v2_binding)) > 1:
