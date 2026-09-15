@@ -1,0 +1,59 @@
+# 原生训练闭环独立验证交接
+
+## 用户最新交接安排
+
+PR #3已创建，四项GitHub检查已通过；用户要求由对方产品会话合并并执行。本会话保持PR打开，不再操作其分支或GPU。接续入口：[recipient-handoff.md](recipient-handoff.md)。前文合并执行计划由此替代，目标尚未完成。
+
+## 收敛到产品主线
+
+用户明确授权创建PR并合入verl-uni-agent-harbor-opd-rl。a7f8344与本修复临时合并后320项交叉回归通过，无冲突；本提交固定该组合用于PR。合入后仅保留历史证据，后续目标由原产品worktree继续。未跟踪notes.md属于另一会话，不纳入本PR。
+
+## M1最新交付（优先于下方M0历史）
+
+- M0 064e8c5已push并回读；M1本节点提交修复，目标仍active，GPU/效果未完成。
+- launch.py（202行）：原生tokenizer/processor/过滤预检、有效batch拒绝、epoch推导与显式步数/恢复参数。
+- test_harbor_launch_preflight.py（171行）：实际本地tokenizer/过滤与CLI；test_harbor_training_preflight.py（107行）：实际配对fit控制流，模型/队列/日志stub。
+- docs/verify-native-training-closure/checkpoint-fix.md、training-recipes.md、cpu-validation.json：修复、运行参数、123 passed/99%覆盖及源码SHA证据。
+- tasks/todo.md与goal.md同步。原实施会话的Modal/LoRA同步在另一worktree继续，不覆盖其未提交文件。
+- 验证：123 passed，144.74秒，11条依赖提示；入口136/137行覆盖。编译和Ruff双门通过，独立review无剩余阻断。
+- 下一步：集成最新已提交产品增量并交叉验证；GPU可达后真实更新、同步、独立reload与optimizer恢复。两次SSH banner超时不是服务已停止的证明。
+- 运行测试用PYTHONPATH=.:verl:/private/tmp/uni-agent-closure-test-tools，解释器/private/tmp/uni-agent-opd-upgrade-cpu/bin/python。覆盖插件临时独立安装，未改共享环境。
+- 原生最终目标step会保存；显式恢复目标是绝对step，不是新增step。数据过滤后的有效行数决定epoch，不能只靠原始parquet行数。
+- 冷启动先读本节→goal.md→checkpoint-fix.md→training-recipes.md，再核Git与远端状态。
+
+## 1. TL;DR
+- worktree/branch：verify-native-training-closure，来源3eebf20。
+- Teacher/轨迹/loss 51项、recipe/入口/监督器92项通过。
+- 默认2行只运行1外层步，无checkpoint；1行触发除零。
+- 来源工作区另一会话持续施工，本分支仅保存验证及修复设计。
+- 用户已要求继续；下一节点在本隔离worktree修复训练入口合同，独立于Modal施工。
+
+## 2. 本轮交付物
+- docs/verify-native-training-closure/verification.md：62行，结果、复现、修复设计。
+- tasks/todo.md：追加本轮验证清单。
+- 本文件：35行，冷启动入口。
+- tasks/verify-native-training-closure/goal.md：当前目标及M0—M3状态。
+- tasks/lessons.md：记录用户要求的节点提交/推送与状态更新规则。
+
+## 3. 设计约束
+DSH唯一Agent loop，Uni-Agent负责轨迹/准入，VERL负责更新/checkpoint。不得覆盖另一会话未提交文件或修改其安装进程。CPU、有效学习和效果分别验收。
+
+## 4. 已踩坑与真实行为
+- 测试需要PYTHONPATH=.:verl；首次缺少子模块路径导致collection失败，修正调用后通过。
+- 配置测试通过不能覆盖epoch耗尽后的最终保存。
+- separate_async外层步与optimizer子步不同。
+- VERL支持恢复，当前recipe入口尚未提供恢复参数。
+
+## 5. 下一里程碑
+- [ ] 确认唯一实施会话，修复数据—预算—最终保存合同。
+- [ ] 验证过滤后数据不足、最终保存、恢复及有界运行参数。
+- [ ] GPU有效更新、采样同步、独立reload、optimizer恢复。
+- [ ] 同预算独立模型效果评估。
+
+## 6. 分支/部署状态
+独立验证worktree保留；M0文档按本提交交付并推送同名分支，后续以远端回读验证。未部署、PR或启动训练。远端依赖安装是报告中的时间快照，不代表实时状态。
+
+## 7. 冷启动 checklist
+1. 本文件→verification.md→原实施分支最新handoff。
+2. 核Git状态和是否已有checkpoint修复，避免重复施工。
+3. 检查实际环境及资源占用，再按有界实验验收，不重复安装/运行。

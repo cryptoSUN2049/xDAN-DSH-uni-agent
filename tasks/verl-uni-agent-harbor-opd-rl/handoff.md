@@ -1,4 +1,10 @@
 # TL;DR
+
+## 训练入口修复合入说明
+
+来自verify-native-training-closure的b02deb8：原生过滤预检、完整batch前置校验、根据目标步推导epoch、最终checkpoint保存及显式恢复参数。与a7f8344组合的320项CPU交叉回归通过；单独入口回归123项，覆盖率99%。GPU更新/reload/optimizer恢复仍未验收。
+
+产品主线保持verl-uni-agent-harbor-opd-rl，临时验证分支通过PR交付后不再独立推进。详情见docs/verify-native-training-closure/checkpoint-fix.md及training-recipes.md。原有notes.md与其他会话未提交文件保留。
 - 当前 worktree/分支：`verl-uni-agent-harbor-opd-rl`；用户已授权实施、GPU验证和按节点 commit/push。
 - Uni-Agent `91618ea` / VERL `a9f2985` 已配对升级；Teacher→TQ→原生loss接线完成。
 - `283e3a5` 原生loss 8项CPU验证；`cec4a07` Modal后端191项CPU验证。均非GPU训练证据。

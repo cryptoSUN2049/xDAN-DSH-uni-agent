@@ -1,4 +1,22 @@
-# 当前执行：verl-uni-agent-harbor-opd-rl（2026-09-15）
+# 当前执行：verify-native-training-closure（2026-09-15）
+
+- [x] PR #3创建，四项GitHub检查通过；交付recipient-handoff.md。
+- [ ] 按用户最新指示，由产品会话合并PR并执行GPU后续；本会话保持PR打开，不重复操作。
+
+- [x] 读取最新设计、交接与Git状态，确认另一会话持续实施。
+- [x] 独立验证Teacher/loss 51项及recipe/入口/监督器92项。
+- [x] 只读核查既有GPU与安装状态，未启动或停止作业。
+- [x] 复现默认无checkpoint和单行除零，记录入口恢复缺口。
+- [x] 隔离保存验收报告、修复设计与handoff。
+- [x] M0已提交并推送064e8c5，远端回读一致。
+- [x] M1修复原生过滤后数据不足、epoch提前结束与显式恢复入口；123项通过，入口覆盖率99%。
+- [x] 编译与Ruff双门通过，独立review无阻断；保存cpu-validation.json并按本节点commit/push。
+- [ ] 集成另一会话已提交的Modal/LoRA增量，复跑交叉回归。
+- [ ] 可达GPU就绪后验证真实更新/reload/optimizer恢复，继而同预算效果对照。
+
+Review：M0为143项现状审计；M1为123项针对性回归，不能相加冒充去重全仓数量。原实施分支未提交变更保留。两次SSH banner超时，GPU验收未完成。详见docs/verify-native-training-closure/checkpoint-fix.md。
+
+# 历史执行：verl-uni-agent-harbor-opd-rl（2026-09-15）
 
 本节及tasks/verl-uni-agent-harbor-opd-rl/handoff.md优先于下方继承历史。
 
