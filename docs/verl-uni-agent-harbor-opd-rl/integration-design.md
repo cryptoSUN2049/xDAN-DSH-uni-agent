@@ -1,6 +1,6 @@
 # Uni-Agent + Harbor + Modal + VERL + OPD 衔接设计
 
-2026-09-15：只读代码/交接审计与设计，未启动训练、迁移服务或合并代码。
+2026-09-15：实施已授权，正在成对升级及CPU回归；GPU独立环境构建进行中，尚无训练通过证据。
 
 ## 目标与发现
 
@@ -46,12 +46,12 @@ Modal任务沙盒与Teacher推理服务是独立职责；Teacher可放自有8×A
 
 ## 文件与接口计划
 
-以harbor-modal-integration为候选基线，审批后从其固定SHA创建独立集成worktree。先比较harbor-online-rl的唯一代码提交，再按模块迁移；不整支合并、不覆盖未提交工作。Cookbook作为对照实现，迁移算法和合同，不复制第二套Agent loop。
+已以harbor-modal-integration固定SHA创建独立集成worktree。先比较harbor-online-rl的唯一代码提交，再按模块迁移；不整支合并、不覆盖未提交工作。Cookbook作为对照实现，迁移算法和合同，不复制第二套Agent loop。
 
 - uni_agent/tasks/harbor_dsh/：明确Docker→Modal执行后端接口、任务资源、取消/清理及可信结果提取；现有Harbor支持Modal不等于自定义DSH执行器已支持。
 - uni_agent/framework/及Gateway接线：保存student_version、prompt/target token IDs、action mask和完整组身份。
 - Teacher评分适配：输入model/tokenizer revision、原始前缀token IDs；输出同位置Teacher logprob及可选top-k IDs/logprobs；禁止decode/reencode后默默错位。
-- 配对VERL训练扩展：RL advantage加Teacher sampled log-ratio；先验收sampled OPD，再单独评估top-k目标。
+- 配对VERL原生distillation loss：优先复用现有sampled/top-k配置和组合目标，不预设手写RL advantage与Teacher log-ratio相加。
 - examples/集成入口：同一数据和执行链切换rl、opd、hybrid；明确checkpoint与optimizer恢复路径。
 
 ## 实施与验收
@@ -63,11 +63,11 @@ Modal任务沙盒与Teacher推理服务是独立职责；Teacher可放自有8×A
 - [ ] G4 有限梯度、参数变化、采样权重同步、独立推理reload及optimizer续训分别验收。
 - [ ] G5 固定独立评测与预算，报告成功率、成本、失败原文；正式Terminal-Bench题与开发训练题隔离。
 
-现阶段先完成设计审阅；用户要求的代码实施审批仍待明确。未授权操作其他会话的远程进程。本次未重跑历史286项测试，也未查询云服务实时状态。
+用户已明确授权实施及新提供服务器的完整集成验证。其他会话的远程进程仍不得修改。CPU测试正在本worktree独立重跑，不继承历史测试通过数。
 
 ## Uni-Agent主线确认与源码定位
 
-新分支verl-uni-agent-harbor-opd-rl已从9075dfa隔离创建；产品代码尚未修改。主线不是Tinker Cookbook，也不默认增加VeRL-Tinker API层。
+新分支verl-uni-agent-harbor-opd-rl已从9075dfa隔离创建；正在解决上游合并冲突。主线不是Tinker Cookbook，也不默认增加VeRL-Tinker API层。
 
 现有主调用链为VERL trainer → AgentFrameworkRolloutAdapter → AgentFrameworkWorker / GatewayAgentFramework → task runner / DSH → Gateway trajectories → reward / trajectory audit → TransferQueue → VERL训练与权重同步。
 

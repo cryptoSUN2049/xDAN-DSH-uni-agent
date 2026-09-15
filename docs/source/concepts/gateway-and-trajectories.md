@@ -94,12 +94,14 @@ Framework initialization. The callable must follow this contract:
 
 ```python
 from uni_agent.gateway.session import Trajectory
+from uni_agent.tasks import TaskResult
 
 
 def process_trajectories(
     trajectories: tuple[Trajectory, ...],
     *,
     context: dict[str, object],
+    task_result: TaskResult,
     max_total_tokens: int = 262_144,
 ) -> list[Trajectory]:
     return [
@@ -122,10 +124,16 @@ aligned because reward scoring, unfinished masking, and TransferQueue
 materialization run later. Use `dataclasses.replace` when constructing
 transformed trajectories so unrelated fields remain intact.
 
+The Framework automatically passes a deep copy of the Runner's `TaskResult` to
+the postprocessor as the `task_result` keyword argument. Use `task_result.extra_info`
+to access task context. Modifying this copy does not affect the original result
+or later scoring. `trajectory_postprocessor_kwargs` supplies additional keyword
+arguments; do not include `task_result` in this configuration.
+
+A processor may define additional keyword arguments or just accept `task_result`.
 `max_total_tokens` above is defined by the example processor.
 This compact example drops oversized trajectories; a processor that
-crops them must preserve token-array alignment and valid turn boundaries. A
-processor may define different keyword arguments or none at all.
+crops them must preserve token-array alignment and valid turn boundaries.
 
 The hook is disabled when `trajectory_postprocessor_fqn` is omitted or `null`.
 In that case no extension is imported or called, and finalized trajectories
@@ -201,13 +209,13 @@ The result fields have separate contracts:
 - `reward` is the Runner's scalar outcome reward. A streaming Worker receives it as scorer input and decides the final score.
 - `accuracy` becomes the Runner-provided `acc` validation metric.
 - `finished` is a tri-state episode fact, not a validation metric.
-- `extra_info` may contain structured scorer input. A streaming Worker receives it as `extra_info["runner_reward_info"]["reward_context"]`; it is never aggregated directly as a validation metric.
+- `extra_info` is available to postprocessors through the copied `TaskResult` and may contain structured scorer input. A streaming Worker receives it as `extra_info["runner_reward_info"]["reward_context"]`; it is never aggregated directly as a validation metric.
 
 The names at the two boundaries are intentional: `Trajectory.reward_metrics` is
 the Framework's internal field, while VERL's Worker response calls the same
 output channel `reward_extra_info` when it is serialized under
 `extra_fields["reward_extra_info"]`. `TaskResult.extra_info` is a separate
-Runner-to-scorer context channel and is not copied into either metrics field.
+context channel and is not copied into either metrics field.
 
 Runner and Worker metrics are not merged in streaming mode. The Worker's
 `reward_extra_info` is the complete final metric/metadata set returned by the

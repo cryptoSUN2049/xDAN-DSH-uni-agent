@@ -27,7 +27,7 @@ from tensordict.tensorclass import NonTensorData, NonTensorStack
 from uni_agent.gateway.session import SessionHandle, Trajectory
 from uni_agent.logging import LogContext, sample_logging
 from uni_agent.logging.redaction import _redact_sensitive_text
-from uni_agent.rlinsight_adapter import agent_loop_session
+from uni_agent.rl_insight.adapter import agent_loop_session
 from uni_agent.tasks import TaskResult
 from uni_agent.tasks.base import build_reward_info
 from verl.tools.tool_registry import initialize_tools_from_config
@@ -494,6 +494,7 @@ class GatewayAgentFramework(AgentFramework):
     async def _apply_trajectory_postprocessor(
         self,
         trajectories: list[Trajectory],
+        task_result: TaskResult,
         *,
         context: dict[str, object] | None = None,
     ) -> list[Trajectory]:
@@ -513,7 +514,7 @@ class GatewayAgentFramework(AgentFramework):
             if context is None:
                 raise RuntimeError("trajectory postprocessor runtime context is unavailable")
             kwargs["context"] = dict(context)
-        result = self._trajectory_postprocessor(tuple(trajectories), **kwargs)
+        result = self._trajectory_postprocessor(tuple(trajectories), task_result=deepcopy(task_result), **kwargs)
         if inspect.isawaitable(result):
             result = await result
 
@@ -695,6 +696,7 @@ class GatewayAgentFramework(AgentFramework):
         # Keep all successful outcomes in memory until the group decision is known.  A
         # strict GRPO group must be all-or-nothing: writing one sibling before another
         # fails would leave a materializable but undersized group in TransferQueue.
+        await tq.async_kv_put(key=uid, partition_id=partition_id, tag={"status": "running"})
         tasks = [
             self._run_agent_episode_with_concurrency_limit(
                 sample_fields=sample_fields,
@@ -1114,6 +1116,7 @@ class GatewayAgentFramework(AgentFramework):
             if self._trajectory_postprocessor is not None:
                 session_trajectories = await self._apply_trajectory_postprocessor(
                     session_trajectories,
+                    task_result,
                     context=runner_context,
                 )
 
@@ -1153,14 +1156,7 @@ class GatewayAgentFramework(AgentFramework):
             }
             if annotations is None:
                 logger.info("session %s: Framework produced no reward; rm_scores remain zero", session_id)
-                result_trajectories = [
-                    replace(
-                        traj,
-                        finished=task_result.finished,
-                        reward_metrics=dict(task_metrics),
-                    )
-                    for traj in session_trajectories
-                ]
+                result_trajectories = session_trajectories
             else:
                 logger.info("session %s: scored via %s", session_id, reward_source)
                 result_trajectories = [
@@ -1537,10 +1533,14 @@ class GatewayAgentFramework(AgentFramework):
         )
         input_ids = torch.cat([prompts, responses], dim=0)
         attention_mask = torch.ones_like(input_ids, dtype=torch.long)
+        mm_processor_kwargs = trajectory.extra_fields.get("mm_processor_kwargs")
+        if mm_processor_kwargs is not None and not isinstance(mm_processor_kwargs, dict):
+            raise ValueError("trajectory extra_fields.mm_processor_kwargs must be a dict or null")
         multi_modal_inputs = compute_multi_modal_inputs(
             self._processor,
             input_ids.unsqueeze(0),
             trajectory.multi_modal_data,
+            mm_processor_kwargs,
         )
         if self._processor is None:
             position_ids = compute_position_id_with_mask(attention_mask.unsqueeze(0)).squeeze(0)

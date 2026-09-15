@@ -10,6 +10,7 @@ from pathlib import Path
 from pydantic import TypeAdapter
 
 from uni_agent.gateway.session import Trajectory
+from uni_agent.tasks.base import TaskResult
 from uni_agent.tasks.dsh.trajectory_audit import TrajectoryAuditError, _require_finite, _validate_token_evidence
 
 from .client import DownloadedJob
@@ -143,6 +144,7 @@ def _verify_saved(
 def validate_trajectories(
     trajectories: tuple[Trajectory, ...],
     *,
+    task_result: TaskResult | None = None,
     context: Mapping[str, object],
     artifact_root: str,
     run_id: str,

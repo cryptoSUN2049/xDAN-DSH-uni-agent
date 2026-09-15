@@ -9,7 +9,7 @@ import pytest_asyncio
 
 from tests.uni_agent.tasks.test_harbor_dsh_task import config, downloaded, evidence
 from uni_agent.gateway.session import Trajectory
-from uni_agent.tasks.base import build_reward_info
+from uni_agent.tasks.base import TaskResult, build_reward_info
 from uni_agent.tasks.dsh.trajectory_audit import TrajectoryAuditError
 from uni_agent.tasks.harbor_dsh.client import HarborDshClient
 from uni_agent.tasks.harbor_dsh.task import HarborDshTask
@@ -227,7 +227,7 @@ async def test_real_framework_fqn_kwargs_and_context_contract(case):
         trajectory_postprocessor_kwargs=kwargs,
         trajectory_postprocessor_pass_context=True,
     )
-    result = await framework._apply_trajectory_postprocessor([trajectory], context=context)
+    result = await framework._apply_trajectory_postprocessor([trajectory], TaskResult(), context=context)
     assert result[0] is trajectory
 
 

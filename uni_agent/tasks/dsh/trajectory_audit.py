@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from uni_agent.gateway.session import Trajectory
+from uni_agent.tasks.base import TaskResult
 
 _DEFAULT_TRACE_ROOT = "/tmp/uni-agent-dsh/artifacts"
 _DEFAULT_RESULT_ROOT = "/tmp/uni-agent-dsh-task/results"
@@ -253,6 +254,7 @@ def validate_trajectory(
 def validate_trajectories(
     trajectories: tuple[Trajectory, ...],
     *,
+    task_result: TaskResult | None = None,
     context: Mapping[str, object],
     trace_root: str = _DEFAULT_TRACE_ROOT,
     result_root: str = _DEFAULT_RESULT_ROOT,
