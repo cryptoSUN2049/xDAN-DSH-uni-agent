@@ -1,5 +1,8 @@
 # 当前执行：verify-native-training-closure（2026-09-15）
 
+- [x] PR #3创建，四项GitHub检查通过；交付recipient-handoff.md。
+- [ ] 按用户最新指示，由产品会话合并PR并执行GPU后续；本会话保持PR打开，不重复操作。
+
 - [x] 读取最新设计、交接与Git状态，确认另一会话持续实施。
 - [x] 独立验证Teacher/loss 51项及recipe/入口/监督器92项。
 - [x] 只读核查既有GPU与安装状态，未启动或停止作业。
