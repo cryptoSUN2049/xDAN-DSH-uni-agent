@@ -62,7 +62,7 @@ VAL_MAX_SAMPLES="${VAL_MAX_SAMPLES:-1}"
 DATA_SHUFFLE="${DATA_SHUFFLE:-False}"
 TOOL_PARSER="${TOOL_PARSER:-hermes}"
 ATTN_IMPLEMENTATION="${ATTN_IMPLEMENTATION:-sdpa}"
-TRAINER_MODE="${TRAINER_MODE:-sync}"
+TRAINER_MODE="${TRAINER_MODE:-colocate_async}"   # user 2026-09-16: default async on one GPU; sync only for A/B
 NUM_WARMUP_BATCHES="${NUM_WARMUP_BATCHES:-1}"
 # VERL stops at min(total_epochs, total_training_steps). With a tiny dataset one
 # epoch is only TRAIN_MAX_SAMPLES/TRAIN_BATCH_SIZE steps, so derive the epoch
