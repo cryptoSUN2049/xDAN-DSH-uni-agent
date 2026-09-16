@@ -34,7 +34,7 @@
 
 ## 阶段 E：路线 1 收尾
 用户要求（2026-09-16）："现在不关注结构，但要确保全流程完整打通"，且"全流程跑通应通过脚本化驱动"。驱动脚本：`examples/harbor_opd_rl/run_tb21_pipeline.sh`（env → data → oracle → rollout → train → delta → resume → summary，每阶段 `PASSED` 标记 + `pipeline-summary.jsonl`，可 `FROM_STAGE=` 续跑），最终 `summary/verdict.json` 给出 `full_pipeline_mechanically_closed` 与 `learning_signal_observed` 两个布尔。
-- [ ] pipe-r1：attempt1 在 train 第 2 步后因 `total_epochs=1` 提前结束（已修）；attempt2（12:12）在第 1 步被 **Modal spend limit** 拒绝创建沙箱（`Workspace ac-uYbgBZtZlQfKIarWj1fZxk has exceeded its spend limit`），现场 `train-attempt2-modal-spend-limit/`。**阻塞：需用户提高 Modal 消费上限**，然后 `FROM_STAGE=train` 续跑 train / delta / resume / summary / acceptance（约 1h45m）
+- [ ] pipe-r1：attempt1 在 train 第 2 步后因 `total_epochs=1` 提前结束（已修）；attempt2（12:12）在第 1 步被 **Modal spend limit** 拒绝创建沙箱（`Workspace ac-uYbgBZtZlQfKIarWj1fZxk has exceeded its spend limit`），现场 `train-attempt2-modal-spend-limit/`。Modal 额度已恢复；attempt3 因 pod 重建中断（新端口 12063）；attempt4 一条 trial 卡在 Modal API 30+ 分钟（现场 `train-attempt4-modal-hang/`），已加 `trial_timeout_sec=2400` + `FAIL_ON_ROLLOUT_ERROR=0`；**attempt5 14:37 起**：colocate_async、max_turns 50、CONCURRENCY 8、n 4
 验收口径（用户 2026-09-16）：按 wandb 面板实际曲线分析，不只看日志。关注 `critic/score/mean`（reward 均值）、`critic/score/std` 或组内 0/1 混合比例（advantage 是否非零）、`actor/pg_loss`、`actor/grad_norm`（非零且有限）、`response_length/mean`、`timing_s/gen` 与 `timing_s/update_actor`、`val/test_score`（held-out）。
 - [ ] wandb 接入（脚本已改：`trainer.logger=['console','file','wandb']`，凭据在 177 `/root/.netrc`），下一次训练起跑验证面板有 reward / grad_norm 曲线
 - [ ] 多步训练（≥5 步）+ checkpoint reload + 固定 held-out 子集评估；训练题与评测题隔离
