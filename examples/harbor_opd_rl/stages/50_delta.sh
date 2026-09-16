@@ -10,8 +10,10 @@ CK_FIRST="$(dirname "${CK_LAST}")/global_step_1"
 if [[ "${CK_FIRST}" == "${CK_LAST}" ]]; then
   mark_passed; record skipped '"single training step: nothing to diff"'; log "skipped (one step)"; exit 0
 fi
-(cd "${REPO_ROOT}" && "${LANE_PY}" deployment/checks/checkpoint_delta.py \
-   "${CK_FIRST}/model_world_size_1_rank_0.pt" "${CK_LAST}/model_world_size_1_rank_0.pt" \
+model_file() { local ck="$1"; for f in "${ck}/actor/model_world_size_1_rank_0.pt" "${ck}/model_world_size_1_rank_0.pt"; do [[ -f "${f}" ]] && { echo "${f}"; return 0; }; done; return 1; }
+BEFORE=$(model_file "${CK_FIRST}") || { log "no model file under ${CK_FIRST}"; record failed '"first checkpoint model missing"'; exit 1; }
+AFTER=$(model_file "${CK_LAST}") || { log "no model file under ${CK_LAST}"; record failed '"last checkpoint model missing"'; exit 1; }
+(cd "${REPO_ROOT}" && "${LANE_PY}" deployment/checks/checkpoint_delta.py "${BEFORE}" "${AFTER}" \
    --output "${STAGE_DIR}/delta.json") > "${STAGE_DIR}/run.log" 2>&1
 DETAIL=$("${LANE_PY}" -c 'import json,sys; d=json.load(open(sys.argv[1])); print(json.dumps({k:d[k] for k in ("passed","adapter_count","adapter_changed","base_count","base_changed") if k in d}))' "${STAGE_DIR}/delta.json")
 mark_passed; record passed "${DETAIL}"
