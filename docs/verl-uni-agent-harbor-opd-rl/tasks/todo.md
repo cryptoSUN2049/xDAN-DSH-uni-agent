@@ -5,13 +5,13 @@
 为什么不需要 tunnel：Harbor CLI 和 terminus-2 跑在 GPU 宿主机的 Harbor 进程里，只把 shell 命令送进 Modal 沙箱；LLM 调用从宿主机发往本机 Gateway（`LLM_BASE_URL` 等环境变量注入）。
 
 ## 阶段 A：环境（177，lane ws1）
-- [ ] `harbor[modal]>=0.16.1,<0.17` 装入 lane，`uv pip check` 通过，freeze 回写仓库快照 `deployment/versions/uv-lanes/ua-verl-py312-vllm023.freeze.txt` 并更新 uv-runbook lane 表
-- [ ] Modal token 放 `/root/.modal.toml`（pod 重建后需重拷；不进 /workspace、不进仓库），`modal profile current` 在 lane 内可用
-- [ ] `harbor --version` 与 `python -c "import harbor, modal"` 在 lane 内通过
+- [x] `harbor[modal]>=0.16.1,<0.17` 装入 lane，`uv pip check` 通过，freeze 回写仓库快照 `deployment/versions/uv-lanes/ua-verl-py312-vllm023.freeze.txt` 并更新 uv-runbook lane 表
+- [x] Modal token 放 `/root/.modal.toml`（pod 重建后需重拷；不进 /workspace、不进仓库），`modal profile current` 在 lane 内可用
+- [x] `harbor --version` 与 `python -c "import harbor, modal"` 在 lane 内通过
 
 ## 阶段 B：数据与 oracle（不占 GPU）
-- [ ] `python -m uni_agent.tasks.harbor.preprocess --dataset-ref terminal-bench/terminal-bench-2-1 --local-save-dir /workspace/verl-uni-agent-harbor-opd-rl/data --max-instances 5`
-- [ ] `parallel_infer_api.py` + `task_config_oracle.yaml` 跑 2 个实例，确认 Modal 沙箱创建、verifier 打分、`harbor/result.json` 有 reward，沙箱清理
+- [x] `python -m uni_agent.tasks.harbor.preprocess --dataset-ref terminal-bench/terminal-bench-2-1 --local-save-dir /workspace/verl-uni-agent-harbor-opd-rl/data --max-instances 5`
+- [x] `parallel_infer_api.py` + `task_config_oracle.yaml` 跑 2 个实例（2026-09-16：2/2 resolved，reward 1.0，avg 67.8s，证据 `tb21-oracle-r1.json`），确认 Modal 沙箱创建、verifier 打分、`harbor/result.json` 有 reward，沙箱清理
 - 证据：`runs/tb21-oracle-r1/`
 
 ## 阶段 C：Gateway rollout（单卡）

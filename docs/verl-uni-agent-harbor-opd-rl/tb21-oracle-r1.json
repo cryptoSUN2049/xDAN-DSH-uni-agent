@@ -1,0 +1,105 @@
+{
+  "summary": {
+    "data_path": "/workspace/verl-uni-agent-harbor-opd-rl/data/harbor_terminal-bench_terminal-bench-2-1.parquet",
+    "model": "",
+    "rollouts_per_instance": 1,
+    "total_rollouts": 2,
+    "resolved": 2,
+    "wrong_answer": 0,
+    "timeout_or_error": 0,
+    "pass_rate": 1.0,
+    "mean_reward": 1.0,
+    "average_eval_execution_time": 67.76604229095392,
+    "wall_time": 76.81555914878845
+  },
+  "results": [
+    {
+      "instance_id": "terminal-bench/terminal-bench-2-1/adaptive-rejection-sampler",
+      "log_id": "external-0-0-5bf203c9f2114ddcaffd4af3d486d560",
+      "reward": 1.0,
+      "resolved": true,
+      "eval_completed": true,
+      "eval_execution_time": 60.47568585211411,
+      "eval_report": {
+        "trial_id": "996c6d46-5455-45fc-8b26-d5f424672d04",
+        "trial_name": "e97069ea830d4e5b8d5daaed97d2c913",
+        "trial_uri": "file:///workspace/verl-uni-agent-harbor-opd-rl/runs/tb21-oracle-r1/logs/external-0-0-5bf203c9f2114ddcaffd4af3d486d560/harbor",
+        "trial_path": "/workspace/verl-uni-agent-harbor-opd-rl/runs/tb21-oracle-r1/logs/external-0-0-5bf203c9f2114ddcaffd4af3d486d560/harbor",
+        "artifact_path": "/workspace/verl-uni-agent-harbor-opd-rl/runs/tb21-oracle-r1/logs/external-0-0-5bf203c9f2114ddcaffd4af3d486d560/harbor/artifacts",
+        "cli_exit_code": 0,
+        "rewards": {
+          "reward": 1.0
+        },
+        "exception": null,
+        "steps": null,
+        "timings": {
+          "started_at": "2026-09-16T07:54:56.031460Z",
+          "finished_at": "2026-09-16T07:55:51.640562Z",
+          "environment_setup": {
+            "started_at": "2026-09-16T07:54:56.950681Z",
+            "finished_at": "2026-09-16T07:55:04.412781Z"
+          },
+          "agent_setup": {
+            "started_at": "2026-09-16T07:55:04.412877Z",
+            "finished_at": "2026-09-16T07:55:04.412964Z"
+          },
+          "agent_execution": {
+            "started_at": "2026-09-16T07:55:04.413076Z",
+            "finished_at": "2026-09-16T07:55:30.264638Z"
+          },
+          "verifier": {
+            "started_at": "2026-09-16T07:55:33.753606Z",
+            "finished_at": "2026-09-16T07:55:46.391948Z"
+          }
+        },
+        "stdout_tail": "Starting trial: e97069ea830d4e5b8d5daaed97d2c913\nTask: adaptive-rejection-sampler\nAgent: oracle\nEnvironment: modal\nTrials directory: /tmp/harbor-trials\n\nTrial completed!\nTrial name: e97069ea830d4e5b8d5daaed97d2c913\nTask: terminal-bench/adaptive-rejection-sampler\nStarted: 2026-09-16 07:54:56.031460+00:00\nFinished: 2026-09-16 07:55:51.640562+00:00\nRewards: {'reward': 1.0}\n",
+        "stderr_tail": "",
+        "error": null
+      }
+    },
+    {
+      "instance_id": "terminal-bench/terminal-bench-2-1/bn-fit-modify",
+      "log_id": "external-1-0-6c9925b7dc234b48a90680346aecd39b",
+      "reward": 1.0,
+      "resolved": true,
+      "eval_completed": true,
+      "eval_execution_time": 75.05639872979373,
+      "eval_report": {
+        "trial_id": "2bbeea2d-c4d3-4e92-8dd0-87e57f1ab1d0",
+        "trial_name": "66bd7cb2450d479fa3eedec748a7a8eb",
+        "trial_uri": "file:///workspace/verl-uni-agent-harbor-opd-rl/runs/tb21-oracle-r1/logs/external-1-0-6c9925b7dc234b48a90680346aecd39b/harbor",
+        "trial_path": "/workspace/verl-uni-agent-harbor-opd-rl/runs/tb21-oracle-r1/logs/external-1-0-6c9925b7dc234b48a90680346aecd39b/harbor",
+        "artifact_path": "/workspace/verl-uni-agent-harbor-opd-rl/runs/tb21-oracle-r1/logs/external-1-0-6c9925b7dc234b48a90680346aecd39b/harbor/artifacts",
+        "cli_exit_code": 0,
+        "rewards": {
+          "reward": 1.0
+        },
+        "exception": null,
+        "steps": null,
+        "timings": {
+          "started_at": "2026-09-16T07:54:56.079489Z",
+          "finished_at": "2026-09-16T07:56:06.206373Z",
+          "environment_setup": {
+            "started_at": "2026-09-16T07:54:56.950709Z",
+            "finished_at": "2026-09-16T07:55:13.678465Z"
+          },
+          "agent_setup": {
+            "started_at": "2026-09-16T07:55:13.678540Z",
+            "finished_at": "2026-09-16T07:55:13.678629Z"
+          },
+          "agent_execution": {
+            "started_at": "2026-09-16T07:55:13.678722Z",
+            "finished_at": "2026-09-16T07:55:45.696050Z"
+          },
+          "verifier": {
+            "started_at": "2026-09-16T07:55:49.134890Z",
+            "finished_at": "2026-09-16T07:56:05.468412Z"
+          }
+        },
+        "stdout_tail": "Starting trial: 66bd7cb2450d479fa3eedec748a7a8eb\nTask: bn-fit-modify\nAgent: oracle\nEnvironment: modal\nTrials directory: /tmp/harbor-trials\n\nTrial completed!\nTrial name: 66bd7cb2450d479fa3eedec748a7a8eb\nTask: terminal-bench/bn-fit-modify\nStarted: 2026-09-16 07:54:56.079489+00:00\nFinished: 2026-09-16 07:56:06.206373+00:00\nRewards: {'reward': 1.0}\n",
+        "stderr_tail": "",
+        "error": null
+      }
+    }
+  ]
+}
