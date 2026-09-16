@@ -1,6 +1,16 @@
 # Handoff：verl-uni-agent-harbor-opd-rl
 
-更新：2026-09-16。历史逐轮记录保留在同目录 `handoff-history.md`；持久决策在 `memory.md`；探针过程在 `notes.md`。
+更新：2026-09-16 11:00 UTC。
+
+## 0. 当天路线变更（先读）
+
+用户拍板走**上游 Harbor 内置 agent 路线**：`uni_agent/tasks/harbor` + Harbor CLI + `harbor_env: modal` + terminus-2，在 Terminal-Bench 2.1 上打通 Gateway rollout → verifier reward → VERL LoRA GRPO。DSH-in-sandbox（Controller / Cloudflare ingress / registry 镜像）暂停。三步路线：① terminus-2 训练打通 → ② DAPO + OPD 联合更新 → ③ DSH 进沙箱。验收看 wandb（project `xDAN-Verl-Uni-agent-Harbor-rl-opd`，entity `xdan-ai`）。
+
+已证明：oracle 2/2；Gateway rollout 2/2 带 token 轨迹；训练 r2/r3 机制闭环（rollout → 更新 → `global_step_N` checkpoint）但 22 条 rollout reward 全 0 → 零梯度。原因是 4B 在 30 轮内解不出 TB 题。对策：`HARBOR_REWARD_MODE=pass_ratio`（verifier CTRF 部分得分，opt-in，5 单测）。
+
+**全流程脚本化驱动**：`examples/harbor_opd_rl/run_tb21_pipeline.sh` + `stages/00_env … 70_summary.sh`（README 在同目录）。当前 `runs/pipe-r1` 正在 177 上跑（10:55 起），终态看 `runs/pipe-r1/summary/verdict.json` 两个布尔。
+
+冷启动：读 `tasks/todo.md`（含验收口径与三步路线）→ `tasks/memory.md` 末节 → `examples/harbor_opd_rl/README.md` → 177 上 `ls runs/`。历史逐轮记录保留在同目录 `handoff-history.md`；持久决策在 `memory.md`；探针过程在 `notes.md`。
 
 ## 1. TL;DR
 
