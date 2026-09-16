@@ -25,7 +25,7 @@
 
 | Lane | Python | 关键版本 | 用途 |
 |---|---|---|---|
-| `ua-verl-py312-vllm023` | 3.12.3（`/usr/bin/python3.12`） | Torch 2.11.0 / vLLM 0.23.0 / Transformers 5.8.0 / Ray 2.54.1 / peft 0.18.1 / TransferQueue 434f8c4 | Uni-Agent 测试 lane，单卡组件验证已通过（r2/r3/r4） |
+| `ua-verl-py312-vllm023` | 3.12.3（`/usr/bin/python3.12`） | Torch 2.11.0 / vLLM 0.23.0 / Transformers 5.8.0 / Ray 2.54.1 / peft 0.18.1 / TransferQueue 434f8c4 / **harbor 0.16.1 + modal 1.5.5（2026-09-16 加入；resolver 同时降了 openai 3.14→2.54、protobuf 7.36→6.33、websockets 17.1→15.0.1、importlib-metadata 9.0→8.9，`uv pip check` 兼容，GPU smoke 复验见 gpu-smoke-ws1-post-harbor.json）** | Uni-Agent 测试 lane，单卡组件验证已通过（r2/r3/r4）；上游 Harbor 路线用此 lane |
 
 同一台机器上另有 MetaRSI 的 `/workspace/.venvs/metarsi-*-py311`（Torch 2.10 / vLLM 0.18.1 / Transformers 4.57.6）和 VERL 自身 uv.lock（vLLM 0.24 / Transformers 5.9）。三条 lane 不混称统一锁；正式训练前须为训练 lane 单独验锁。
 
@@ -73,6 +73,10 @@ python -c 'import sys; print(sys.executable, sys.prefix)'
 python -c 'import torch; a=torch.arange(32, device="cuda", dtype=torch.float32); assert (a*a).sum().item()==10416; print(torch.__version__, torch.cuda.get_device_name())'
 python -c 'import vllm, ray, transformers, peft, transfer_queue, verl, uni_agent; print("imports passed")'
 ```
+
+### Modal 凭据
+
+`~/.modal.toml` 从本机 scp 到远端 `/root/.modal.toml`（chmod 600）。放 `/root` 是有意的：pod 重建后会丢，需要重拷，但不落在共享网络盘、不进仓库。lane 内 `modal profile current` 应显示 `shootime007`。
 
 ## 修改依赖的规则
 

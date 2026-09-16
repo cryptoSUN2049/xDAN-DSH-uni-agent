@@ -1,0 +1,24 @@
+# Terminal-Bench 2.1 Gateway-rollout smoke: Harbor built-in terminus-2 on the host,
+# Modal sandbox for the task, model served through the Uni-Agent Gateway.
+# Pair with: parallel_infer_verl.py --served-model-name hosted_vllm/<name>
+# (litellm strips the hosted_vllm/ prefix and uses HOSTED_VLLM_BASE_URL injected by the adapter).
+- name: harbor
+  agent:
+    name: terminus-2
+    timeout_sec: 1800
+    kwargs:
+      parser_name: json
+      temperature: 1.0
+      max_turns: 30
+      suppress_max_turns_warning: true
+      model_info:
+        max_input_tokens: 16384
+        max_output_tokens: 2048
+        input_cost_per_token: 0
+        output_cost_per_token: 0
+      llm_call_kwargs:
+        max_tokens: 2048
+  harbor_env: modal
+  timeout_multiplier: 1.0
+  override_cpus: 2
+  override_memory_mb: 4096
