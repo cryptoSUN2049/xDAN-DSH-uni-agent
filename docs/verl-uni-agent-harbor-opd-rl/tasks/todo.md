@@ -15,13 +15,13 @@
 - 证据：`runs/tb21-oracle-r1/`
 
 ## 阶段 C：Gateway rollout（单卡）
-- [ ] `parallel_infer_verl.py --engine vllm --model-path /workspace/models/Qwen3-4B-1cfa9a7 --tp 1 --n-gpus-per-node 1 --task-config examples/quickstart/harbor/task_config.yaml --limit 2 --concurrency 2 --log-dir ...`
-- [ ] 核 `trajectory.json` 有 token 级轨迹、`harbor/result.json` 有 reward、reward 非恒定或至少有 0/1 两类
-- 待定：`--served-model-name` 要给 terminus-2 一个 litellm 可路由的名字（候选 `openai/<name>`，配合注入的 `OPENAI_BASE_URL`）
+- [x] r3（2026-09-16）：`parallel_infer_verl.py --engine vllm --served-model-name hosted_vllm/Qwen3-4B-1cfa9a7 --task-config examples/harbor_opd_rl/tb21_terminus2_smoke.yaml --max-model-len 36864 --limit 2` → 2/2 session 成功，无异常，wall 299s，证据 `tb21-gateway-r3.json`。r1 因 max-model-len 不够失败，r2（16k）按用户要求中止改 32k。
+- [x] `trajectory.json` + `trajectory.npz` 有 token 级轨迹；`harbor/result.json` 有 verifier reward（两题都 0.0，4B 未解出；session-1 跑了 28 步 / 207k 输入 token，session-0 只 3 步）。reward 非恒定还未出现，训练 smoke 只能证明机制
+- 已定：`--served-model-name hosted_vllm/<name>`，litellm 剥前缀后走 `HOSTED_VLLM_BASE_URL`；Gateway 不校验 model 字段
 - 证据：`runs/tb21-gateway-r1/`
 
 ## 阶段 D：RL 一步更新
-- [ ] 按 `docs/source/quickstart/rl-training.md` 组 runtime_env（Modal 凭据）与 harbor task config，跑 2 步 GRPO，`total_training_steps=2`，留 checkpoint
+- [ ] `examples/harbor_opd_rl/train_tb21_lora_smoke.sh`（单机不用 ray job submit，Modal 凭据走 /root/.modal.toml）跑 1 步 GRPO/LoRA，r1 运行中 `runs/tb21-rl-r1/`
 - [ ] 核梯度非零、checkpoint 可独立 reload
 - 证据：`runs/tb21-rl-r1/`
 

@@ -1,0 +1,23 @@
+{
+  "model_path": "/workspace/models/Qwen3-4B-1cfa9a7",
+  "served_model_name": "hosted_vllm/Qwen3-4B-1cfa9a7",
+  "data_path": "/workspace/verl-uni-agent-harbor-opd-rl/data/harbor_terminal-bench_terminal-bench-2-1.parquet",
+  "task_config": "examples/harbor_opd_rl/tb21_terminus2_smoke.yaml",
+  "n": 1,
+  "num_prompts": 2,
+  "num_scored_sessions": 2,
+  "mean_rm_score": 0.0,
+  "mean_rm_score_over_prompts": 0.0,
+  "scores": [
+    0.0,
+    0.0
+  ],
+  "scores_by_uid": {
+    "0eee572e-63d4-4201-8d87-b0cef1469cd4": [
+      0.0
+    ],
+    "2e8f21ae-3c78-456f-ab81-bf25cca687f3": [
+      0.0
+    ]
+  }
+}
