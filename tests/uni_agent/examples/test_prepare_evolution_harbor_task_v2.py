@@ -81,9 +81,9 @@ def test_v2_rejects_wrong_source_identity_before_output(inputs, bad, monkeypatch
         monkeypatch.setattr(
             module,
             "_read",
-            lambda root, path: b"changed"
-            if str(path) == "examples/dsh/evolution_verifier_v2.py"
-            else original(root, path),
+            lambda root, path: (
+                b"changed" if str(path) == "examples/dsh/evolution_verifier_v2.py" else original(root, path)
+            ),
         )
     manifest_path.write_text(json.dumps(manifest))
     inputs["source_manifest_sha256"] = sha(manifest_path.read_bytes())

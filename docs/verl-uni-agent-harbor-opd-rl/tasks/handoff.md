@@ -1,0 +1,89 @@
+# Handoff：verl-uni-agent-harbor-opd-rl
+
+更新：2026-09-16。历史逐轮记录保留在同目录 `handoff-history.md`；持久决策在 `memory.md`；探针过程在 `notes.md`。
+
+## 1. TL;DR
+
+- 分支/worktree：`verl-uni-agent-harbor-opd-rl`，HEAD `0115008`，已推送 origin 同名分支，领先 main 235 提交、落后 0，工作区干净。
+- 状态：代码层与单卡组件层验证闭环（Teacher 接线、Modal 生命周期、4B LoRA 真实更新/导出、native checkpoint 独立恢复），**端到端 Harbor RL / OPD 正式训练一次都没有跑起来**。
+- 远端 GPU 机 2026-09-16 07:21 UTC 观测：GPU 空闲（0 MiB / 97887 MiB，无 compute-app），SSH 可连。其他项目的 vLLM 推理作业已结束。
+- 远端源码快照是 `89ebca9`，比 HEAD 少约 10 个提交（含 b02deb8 入口修复、ingress/preflight 测试、environment_backend 15 行改动），启动训练前必须同步。
+- **GPU venv 已丢失**：之前的环境建在 pod 本地 `/tmp`，pod 重建后没了；`/workspace/.../envs/ua-verl-py312-vllm023` 只是 6.8M 空壳。已把 245 包 freeze 收进仓库 `deployment/versions/uv-lanes/ua-verl-py312-vllm023.freeze.txt`，并继承 MetaRSI 的 uv 管理办法写成 `docs/verl-uni-agent-harbor-opd-rl/uv-runbook.md` + `deployment/bootstrap/uv-lane-bootstrap.sh`。
+- 下一步唯一目标：让一次真实 Harbor RL 跑通并留日志。顺序见第 5 节。
+
+## 2. 本轮交付物（累计，路径为准）
+
+代码：
+- `uni_agent/framework/{entry,framework,memory_chain}.py`：Teacher client 传递、逐 token 评分、TQ 消费合同。
+- `uni_agent/tasks/harbor_dsh/{environment_backend,modal_environment,executor,isolated_trial,worker,worker_http}.py`：Modal 可选后端、隔离 Trial、资源清理确认。
+- `deployment/services/harbor_modal_ingress.py`、`harbor_run_controller.py`：Controller 公网入口与任务准备。
+- `deployment/checks/fsdp_lora_merged_export.py`、`harbor_modal_cleanup_smoke.py`：真实 GPU / Modal 组件探针。
+- `examples/harbor_opd_rl/{base,rl,opd,hybrid}.yaml` + `launch.py`：原生训练 recipe 与入口。
+- `verl` 子模块固定 `a9f2985`；Uni-Agent 上游 `91618ea`。
+
+文档与证据（`docs/verl-uni-agent-harbor-opd-rl/`）：
+- `acceptance-status.md`：验收矩阵，每行区分"已有证据 / 未完成"。
+- `modal-blocker-audit.md`：撤回"Modal 域名是卡点"归因的证据表。
+- `integration-design.md`、`training-recipes.md`、`teacher-bridge-review.md`、`modal-backend-design.md`、`modal-ingress-design.md`、`incremental-lora-sync-design.md`、`async-lora-validation.md`。
+- JSON 证据：`gpu-preflight.json`、`modal-provider-smoke-r2.json`、`fsdp-lora-export-r{1,2}.json`、`fsdp-lora-save-r3.json`、`fsdp-lora-resume-r4.json`。
+
+## 3. 设计约束（铁律）
+
+- Uni-Agent owns Agent/Task/Gateway/trajectory admission/TQ；VERL owns optimizer 与同步；Harbor owns verifier；Modal 只做任务 sandbox。不切换 Tinker trainer，不引入第二套 agent loop。
+- Teacher 概率不是任务成功判定。Teacher 整组失败不得提交部分 trajectory。生成版本、行为 logprobs、工具 mask 必须保留。失败清理确认不得制造 reward。
+- 所有修改留在本 worktree；不覆盖其他工作树或 SkyRL / metarsi 环境；不停止别的项目进程。
+- 每次 push 前全库 `ruff check .` 与 `ruff format --check .` 双门。
+- 组件通过、测试通过、进程启动都不能计为训练闭环；只有日志明确显示失败阶段，才能报告该阶段为卡点。
+
+## 4. 已踩坑 / 已发现的真实行为
+
+环境与远端：
+- **SSH 端口已变**：现为 `ssh root@157.157.221.177 -p 30284 -i ~/.ssh/id_ed25519`（旧记录 12524 已失效）。RunPod pod 重建后端口会变，每次先核。历史上直连偶发 banner timeout，可用 ssh master socket 复用连接；观测失败不等于作业终止。
+- 远端独立根 `/workspace/verl-uni-agent-harbor-opd-rl/{src,envs,cache,runs}`。`src/uni-agent` 是 rsync 副本，**不是 git 仓库**，版本以 `runs/source-manifest-<sha>.json` 为准；目前是 89ebca9。
+- 远端 venv `envs/ua-verl-py312-vllm023`（**当前为空壳，需按 uv-runbook 重建到新目录**）：uv 0.9.0 建，Python 3.12.3（`/usr/bin`），Torch 2.11.0 / vLLM 0.23.0 / Transformers 5.8.0 / Ray 2.54.1 / peft 0.18.1。这是 UA 测试 lane，与 VERL uv.lock（vLLM 0.24 / Transformers 5.9）和 MetaRSI 训练 lane（py311 / Torch 2.10 / vLLM 0.18.1 / Transformers 4.57.6）都不同，不能混称统一锁。完整训练前须单独验锁。
+- 远端 FUSE 不支持 chown，rsync 用 `-rltz`。`/workspace` 是 RunPod Network Volume，df 显示底层共享容量（2.1P）不是购买容量。
+- 模型只有 `/workspace/models/Qwen3-4B-1cfa9a7`；9B Student / 27B Teacher 未下载。
+- uv 管理办法已继承到本项目 `docs/verl-uni-agent-harbor-opd-rl/uv-runbook.md`（来源 MetaRSI `docs/main/uv-runbook.md` 与 `uv-training-design.md`）。核心规则：`UV_CACHE_DIR=/workspace/.cache/uv`；先校验 `sys.prefix`、CUDA 运算和关键 import 再用；venv 失效时新建恢复目录，不覆盖旧环境；`uv pip` 显式版本可能被 `tool.uv.override-dependencies` 覆盖，lock 外 overlay 用 `--no-config` 隔离并实际 `pip check`。
+
+代码：
+- 原生 Teacher 返回全序列 [S,K] 且已 left-shift；首 response 用 prompt_len-1 行，末 dummy 不能再 shift。
+- Teacher TQ 用 ragged_idx=1；缺列不得被 shared_keys 静默丢弃。
+- 非 naive checkpoint path 未传 adapter metadata，未 merge 时可能只导出 base；recipe 已显式 merge=true。当前是 merged 完整权重同步，不是高性能增量 adapter 同步。
+- FSDP 探针 `use_orig_params=True` 与 recipe 默认 False 不一致会前向断言失败；r1 失败 JSON 保留。
+- separate_async 训练与推理分卡；Teacher 必须独立池：纯 separate RL 至少 2 GPU 角色，separate+OPD 至少 3。单卡只能做 colocated 组件验证。
+- 历史 Controller preflight JSON 里 `actual_gateway_used=false`、`mock_ssh_returncode=0`，不是真实 Gateway 连通证据。
+- `deployment/versions/harbor-execution-image.json` 为 `registry_published=false`；本地 image ID 不能当 registry manifest digest。
+
+## 5. 下一里程碑任务清单（按顺序，每步只留一份证据）
+
+- [ ] 同步远端源码到当前 HEAD（rsync `-rltz`，写新 `runs/source-manifest-<sha>.json`），不覆盖 runs/ 与 envs/。
+- [ ] 用 `uv-lane-bootstrap.sh` 在 `/workspace` 重建 lane 到 `envs/ua-verl-py312-vllm023-ws1`，拿到 manifest + freeze 与锁一致的证据。
+- [ ] 发布 DSH 执行镜像并回填 `harbor-execution-image.json` 的 image@digest（不依赖 GPU，先做）。
+- [ ] 用 `prepare_t2_task → 冻结 RunSpec/policy → prepare_m2_training` 生成真实 launch.json / train.parquet。
+- [ ] 用真实 4B 模型跑合并后入口的 `--preflight-only`，核有效 rows 与绝对 step/epoch。
+- [ ] 从真实 Modal sandbox 发起受控 Gateway 请求，保留 DNS/TLS/HTTP/session 路由结果。
+- [ ] 跑完整 Trial + verifier，拿到真实 reward。
+- [ ] 单卡 colocated 跑 2 步真实 Harbor RL，留 group/receipt/TQ/梯度/最终 checkpoint。
+- [ ] 以上通过后再排双卡 separate_async 和三角色 OPD 验收；9B 复验另立节点。
+
+## 6. 分支 / 部署状态
+
+| 项 | 值 |
+|---|---|
+| 本地 worktree | `.Codex/worktrees/verl-uni-agent-harbor-opd-rl` |
+| HEAD | `0115008`，origin 同步，无 PR |
+| 相对 main | +235 / -0，merge-base `d723b5f` |
+| 远端 | `root@157.157.221.177:30284`，RTX PRO 6000 Blackwell 96GB，2026-09-16 空闲 |
+| 远端源码 | 89ebca9（落后 HEAD） |
+| 远端 venv | `envs/ua-verl-py312-vllm023` 空壳，待重建 |
+| 最近 GPU 证据 | resume-r4 passed，scope=single_gpu_native_export_component |
+| 正式训练日志 | 无 |
+
+## 7. 冷启动 checklist
+
+1. 读本文件 → `memory.md` → `acceptance-status.md` → `modal-blocker-audit.md`。
+2. `git status && git log -3 --oneline && git rev-list --count origin/verl-uni-agent-harbor-opd-rl..HEAD`，核 HEAD 与 push 状态。
+3. SSH 远端：`nvidia-smi`、`ps -eo pid,cmd | grep -E "python|ray"`、`ls -lt runs | head`。先查有没有在跑的进程和新证据，再动手；不重复启动、不停别人的进程。
+4. 核远端 `runs/source-manifest-*.json` 最新 sha 与 HEAD 是否一致，不一致先同步。
+5. 读本目录上级 `uv-runbook.md` 再激活环境；空壳 venv 先重建。
+6. 从第 5 节第一个未勾选项开始。用户已授权实施、GPU 验证和按节点 commit/push，勿重复询问。
