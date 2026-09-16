@@ -1,0 +1,21 @@
+{
+  "schema": "dsh.gpu-smoke.v1",
+  "passed": true,
+  "training_accepted": false,
+  "scope": "lane ws1; flash_attn excluded because it is absent from the ua-verl-py312-vllm023 freeze snapshot",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "vllm": "0.23.0",
+  "imports": [
+    "vllm",
+    "ray",
+    "transformers",
+    "transfer_queue",
+    "verl",
+    "uni_agent",
+    "peft"
+  ],
+  "loss": 254.6924591064453,
+  "gradient_norm": 8.884957313537598
+}

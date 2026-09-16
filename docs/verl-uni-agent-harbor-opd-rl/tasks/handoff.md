@@ -56,8 +56,15 @@
 
 ## 5. 下一里程碑任务清单（按顺序，每步只留一份证据）
 
-- [ ] 同步远端源码到当前 HEAD（rsync `-rltz`，写新 `runs/source-manifest-<sha>.json`），不覆盖 runs/ 与 envs/。
-- [ ] 用 `uv-lane-bootstrap.sh` 在 `/workspace` 重建 lane 到 `envs/ua-verl-py312-vllm023-ws1`，拿到 manifest + freeze 与锁一致的证据。
+**2026-09-16 端到端前置条件核查**（两条路径都需要操作者提供资产，代码侧无法自行补齐）：
+- Docker 路径（Harbor 容器跑在 Mac，GPU 通过 SSH 反向端口连 controller）：本机有 Docker Desktop 但 daemon 未启动；177 上没有 docker。
+- Modal 路径：需要本项目专用公网 HTTPS Gateway hostname + Cloudflare named tunnel 凭据（本机已有 8 条其他项目 tunnel，按约束不复用）+ 发布到 registry 的 DSH 镜像（`registry_published=false`）。本机 modal profile `shootime007` 可用。
+- 两条路径都需要：RunSpec（2 小时 deadline、端口、token 文件）、`prepare_t2_task` 冻结任务、`prepare_m2_training` 生成 launch.json。流程模板见 `docs/harbor-modal-integration/harbor-m2-manual-runbook.md`。
+
+
+- [x] 同步远端源码到 `68b45f3`，`runs/source-manifest-68b45f3.json` 已写。
+- [x] lane 重建到 `envs/ua-verl-py312-vllm023-ws1`：激活证明通过，freeze sha256 与快照及历史 gpu-preflight 完全一致（`uv-lane-ws1-manifest.json`）。
+- [x] GPU smoke 通过（`gpu-smoke-ws1.json`）：CUDA 反向、vLLM/ray/transformers/TQ/verl/uni_agent/peft import。原 `gpu_smoke.py` 要求的 flash_attn 不在快照里、历史验证也未用，已排除并在证据里注明。
 - [ ] 发布 DSH 执行镜像并回填 `harbor-execution-image.json` 的 image@digest（不依赖 GPU，先做）。
 - [ ] 用 `prepare_t2_task → 冻结 RunSpec/policy → prepare_m2_training` 生成真实 launch.json / train.parquet。
 - [ ] 用真实 4B 模型跑合并后入口的 `--preflight-only`，核有效 rows 与绝对 step/epoch。
@@ -74,8 +81,8 @@
 | HEAD | `0115008`，origin 同步，无 PR |
 | 相对 main | +235 / -0，merge-base `d723b5f` |
 | 远端 | `root@157.157.221.177:30284`，RTX PRO 6000 Blackwell 96GB，2026-09-16 空闲 |
-| 远端源码 | 89ebca9（落后 HEAD） |
-| 远端 venv | `envs/ua-verl-py312-vllm023` 空壳，待重建 |
+| 远端源码 | 68b45f3（与 push 同步） |
+| 远端 venv | `envs/ua-verl-py312-vllm023-ws1`，2026-09-16 重建并通过激活证明 |
 | 最近 GPU 证据 | resume-r4 passed，scope=single_gpu_native_export_component |
 | 正式训练日志 | 无 |
 
