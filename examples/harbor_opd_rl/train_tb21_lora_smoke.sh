@@ -65,6 +65,7 @@ ATTN_IMPLEMENTATION="${ATTN_IMPLEMENTATION:-sdpa}"
 TRAINER_MODE="${TRAINER_MODE:-sync}"
 NUM_WARMUP_BATCHES="${NUM_WARMUP_BATCHES:-1}"
 RESUME_MODE="${RESUME_MODE:-disable}"
+RESUME_FROM_PATH="${RESUME_FROM_PATH:-}"   # global_step_N dir; sets trainer.resume_from_path when non-empty
 MASK_UNFINISHED_EPISODE="${MASK_UNFINISHED_EPISODE:-True}"
 # wandb: credentials come from ~/.netrc (wandb login) or WANDB_API_KEY, never from this repo.
 WANDB_ENABLED="${WANDB_ENABLED:-1}"
@@ -198,6 +199,7 @@ COMMAND=(
   trainer.total_epochs=1
   trainer.total_training_steps="${TOTAL_TRAINING_STEPS}"
   trainer.resume_mode="${RESUME_MODE}"
+  ${RESUME_FROM_PATH:+trainer.resume_from_path="${RESUME_FROM_PATH}"}
   trainer.default_local_dir="${CKPTS_DIR}"
   trainer.rollout_data_dir="${ROLLOUT_DATA_DIR}"
   trainer.validation_data_dir="${VALIDATION_DATA_DIR}"
