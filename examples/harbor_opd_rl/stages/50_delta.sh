@@ -13,5 +13,6 @@ fi
 (cd "${REPO_ROOT}" && "${LANE_PY}" deployment/checks/checkpoint_delta.py \
    "${CK_FIRST}/model_world_size_1_rank_0.pt" "${CK_LAST}/model_world_size_1_rank_0.pt" \
    --output "${STAGE_DIR}/delta.json") > "${STAGE_DIR}/run.log" 2>&1
-mark_passed; record passed "$(tr -d '\n' < "${STAGE_DIR}/delta.json" | cut -c1-3000)"
+DETAIL=$("${LANE_PY}" -c 'import json,sys; d=json.load(open(sys.argv[1])); print(json.dumps({k:d[k] for k in ("passed","adapter_count","adapter_changed","base_count","base_changed") if k in d}))' "${STAGE_DIR}/delta.json")
+mark_passed; record passed "${DETAIL}"
 log "passed: $(head -c 300 "${STAGE_DIR}/delta.json")"
