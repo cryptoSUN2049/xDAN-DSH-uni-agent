@@ -98,3 +98,8 @@ Modal已接入Worker/executor/isolated Trial可选后端和独立资源清理；
 ## 2026-09-16 12:10 首个学习信号
 
 pass_ratio reward（verifier CTRF 部分得分）让 4B 在 easy 4 题上出现组内 reward 方差，GRPO 首次得到非零梯度：step1 grad_norm 0.0131 / step2 0.0156，reward 均值 0.21→0.41。此前 22 条二值 reward 全 0、梯度全 0。全流程由 `examples/harbor_opd_rl/run_tb21_pipeline.sh` 驱动，验收由 `stages/80_acceptance.sh`（wandb API + 本地指标 + checkpoint delta）给 PASS / MECHANICS_ONLY / FAIL。踩坑：小数据集下 `total_epochs=1` 只够 samples/batch 步，已按步数反推 epoch。
+
+## 2026-09-16 16:47 路线 ① 机制闭环验收 PASS
+
+`run_tb21_pipeline.sh` 一条命令跑完 env→data→oracle→rollout→train(3 步 colocate_async)→delta→resume(step 4)→summary→acceptance，verdict PASS（hard 3 项、soft 5 项全 true）。证据 `docs/verl-uni-agent-harbor-opd-rl/pipe-r1/`。wandb：train `ohz52n9r`、resume `6iwtnfu6`。
+已知现象：grad_norm 只在组内有方差的 step 非零（step 1、3），step 2、4 组内同分 → 0；4B 在 easy 4 题上 16 条轨迹中 16 条撞 max_turns=50、5 条 completed。下一轮的杠杆：stage1 数据（多样性）、n=8、并发 16、held-out 打开、DAPO。

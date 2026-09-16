@@ -1,0 +1,28 @@
+{
+ "stages": {
+  "driver": "start",
+  "env": "passed",
+  "data": "passed",
+  "oracle": "passed",
+  "rollout": "passed",
+  "train": "passed",
+  "delta": "passed",
+  "resume": "passed"
+ },
+ "steps_with_nonzero_grad": [
+  1.0,
+  3.0
+ ],
+ "steps_with_reward_variance": [
+  1.0,
+  2.0,
+  3.0,
+  4.0
+ ],
+ "full_pipeline_mechanically_closed": true,
+ "learning_signal_observed": true,
+ "wandb": {
+  "train": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/ohz52n9r",
+  "resume": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/6iwtnfu6"
+ }
+}

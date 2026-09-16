@@ -8,7 +8,7 @@
 
 已证明：oracle 2/2；Gateway rollout 2/2 带 token 轨迹；训练 r2/r3 机制闭环（rollout → 更新 → `global_step_N` checkpoint）但 22 条 rollout reward 全 0 → 零梯度。原因是 4B 在 30 轮内解不出 TB 题。对策：`HARBOR_REWARD_MODE=pass_ratio`（verifier CTRF 部分得分，opt-in，5 单测）。
 
-**全流程脚本化驱动**：`examples/harbor_opd_rl/run_tb21_pipeline.sh` + `stages/00_env … 70_summary.sh`（README 在同目录）。当前 `runs/pipe-r1` 正在 177 上跑（10:55 起），终态看 `runs/pipe-r1/summary/verdict.json` 两个布尔。
+**全流程脚本化驱动已跑通并验收 PASS（2026-09-16 16:47 UTC）**：`examples/harbor_opd_rl/run_tb21_pipeline.sh` + `stages/00_env … 80_acceptance.sh`（README 在同目录）。pipe-r1 证据在 `docs/verl-uni-agent-harbor-opd-rl/pipe-r1/`（acceptance.json / verdict.json / delta.json / report-tables.md）。关键数字：3 步 colocate_async 训练 + 1 步 resume；grad_norm 0.020 / 0 / 0.015 / 0；504/504 adapter 变、399/399 base 不变；wandb 与日志逐步一致。路线 ① 机制层完成，下一步是 pipe-r2：stage1 数据 20 题、并发 16、n 8、held-out 开启，然后 DAPO，再路线 ②。
 
 冷启动：读 `tasks/todo.md`（含验收口径与三步路线）→ `tasks/memory.md` 末节 → `examples/harbor_opd_rl/README.md` → 177 上 `ls runs/`。历史逐轮记录保留在同目录 `handoff-history.md`；持久决策在 `memory.md`；探针过程在 `notes.md`。
 

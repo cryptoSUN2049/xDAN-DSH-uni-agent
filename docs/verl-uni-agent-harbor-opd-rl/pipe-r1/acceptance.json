@@ -1,0 +1,117 @@
+{
+ "hard": {
+  "mechanics_ok": true,
+  "all_finite": true,
+  "resume_continued": true
+ },
+ "soft": {
+  "learning_signal": true,
+  "reward_variance": true,
+  "wandb_ok": true,
+  "adapter_changed": true,
+  "base_unchanged": true
+ },
+ "checks": {
+  "stages_passed": {
+   "env": "passed",
+   "data": "passed",
+   "oracle": "passed",
+   "rollout": "passed",
+   "train": "passed",
+   "delta": "passed",
+   "resume": "passed"
+  },
+  "mechanics_ok": true,
+  "local_steps": [
+   1.0,
+   2.0,
+   3.0,
+   4.0
+  ],
+  "grad_norm": [
+   0.02001953125,
+   0.0,
+   0.01513671875,
+   0.0
+  ],
+  "pg_loss": [
+   0.13761695474386215,
+   0.0,
+   0.08600803278386593,
+   0.0
+  ],
+  "score_mean": [
+   0.3333333432674408,
+   0.1666666716337204,
+   0.21875,
+   0.2916666567325592
+  ],
+  "reward_variance_steps": [
+   1.0,
+   2.0,
+   3.0,
+   4.0
+  ],
+  "nonzero_grad_steps": [
+   1.0,
+   3.0
+  ],
+  "all_finite": true,
+  "wandb_agrees_steps": [
+   1.0,
+   2.0,
+   3.0,
+   4.0
+  ],
+  "wandb_ok": true,
+  "wandb": {
+   "train": {
+    "url": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/ohz52n9r",
+    "state": "finished",
+    "rows": [
+     {
+      "training/global_step": 1,
+      "critic/score/mean": 0.3333333432674408,
+      "actor/grad_norm": 0.02001953125,
+      "actor/pg_loss": 0.13761695474386215
+     },
+     {
+      "training/global_step": 2,
+      "critic/score/mean": 0.1666666716337204,
+      "actor/grad_norm": 0,
+      "actor/pg_loss": 0
+     },
+     {
+      "training/global_step": 3,
+      "critic/score/mean": 0.21875,
+      "actor/grad_norm": 0.01513671875,
+      "actor/pg_loss": 0.08600803278386593
+     }
+    ]
+   },
+   "resume": {
+    "url": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/6iwtnfu6",
+    "state": "finished",
+    "rows": [
+     {
+      "training/global_step": 4,
+      "critic/score/mean": 0.2916666567325592,
+      "actor/grad_norm": 0,
+      "actor/pg_loss": 0
+     }
+    ]
+   }
+  },
+  "delta": {
+   "passed": true,
+   "adapter_count": 504,
+   "adapter_changed": 504,
+   "base_count": 399,
+   "base_changed": 0
+  },
+  "adapter_changed": true,
+  "base_unchanged": true,
+  "resume_continued": true
+ },
+ "verdict": "PASS"
+}
