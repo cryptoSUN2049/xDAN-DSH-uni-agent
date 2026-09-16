@@ -50,7 +50,9 @@ gpu_free() {
   local used; used=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | head -1)
   [[ "${used}" -lt 2000 ]] || { log "GPU busy (${used} MiB); refusing to start"; exit 3; }
 }
-trainer_pids() { ps -eo pid,cmd | grep -E "^ *[0-9]+ [^ ]*python -m verl\.trainer\.main_ppo" | awk '{print $1}'; }
+# grep exits 1 when nothing matches; with pipefail + set -e that would abort the
+# caller, so an empty match must still return 0.
+trainer_pids() { ps -eo pid,cmd | { grep -E "^ *[0-9]+ [^ ]*python -m verl\.trainer\.main_ppo" || true; } | awk '{print $1}'; }
 stop_lingering_trainer() {
   local pids; pids="$(trainer_pids)"
   if [[ -n "${pids}" ]]; then
