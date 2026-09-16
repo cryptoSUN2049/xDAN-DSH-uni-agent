@@ -92,19 +92,20 @@ def main() -> None:
             flat_cfg[prefix] = obj
 
     flatten("", run.config)
-    history = [
-        {k: h.get(k) for k in KEYS if h.get(k) is not None}
-        for h in run.history(keys=list(KEYS), pandas=False)
-    ]
+    history = [{k: h.get(k) for k in KEYS if h.get(k) is not None} for h in run.history(keys=list(KEYS), pandas=False)]
     history = [h for h in history if "training/global_step" in h]
 
     verdict = {
         "steps": len(history),
         "steps_with_reward_variance": [
-            int(h["training/global_step"]) for h in history if h.get("critic/score/max", 0) > h.get("critic/score/min", 0)
+            int(h["training/global_step"])
+            for h in history
+            if h.get("critic/score/max", 0) > h.get("critic/score/min", 0)
         ],
         "steps_with_nonzero_grad": [
-            int(h["training/global_step"]) for h in history if finite(h.get("actor/grad_norm")) and h["actor/grad_norm"] > 0
+            int(h["training/global_step"])
+            for h in history
+            if finite(h.get("actor/grad_norm")) and h["actor/grad_norm"] > 0
         ],
         "non_finite_steps": [
             int(h["training/global_step"])
@@ -118,7 +119,11 @@ def main() -> None:
         for h in history:
             s = int(h["training/global_step"])
             c = console.get(s)
-            if c and "actor/grad_norm" in c and abs(c["actor/grad_norm"] - h.get("actor/grad_norm", float("nan"))) < 1e-6:
+            if (
+                c
+                and "actor/grad_norm" in c
+                and abs(c["actor/grad_norm"] - h.get("actor/grad_norm", float("nan"))) < 1e-6
+            ):
                 agree.append(s)
             elif c:
                 disagree.append(s)
@@ -127,7 +132,13 @@ def main() -> None:
         verdict["wandb_console_disagree"] = disagree
 
     out = {
-        "run": {"path": run_path(args.run), "name": run.name, "state": run.state, "url": run.url, "created": str(run.created_at)},
+        "run": {
+            "path": run_path(args.run),
+            "name": run.name,
+            "state": run.state,
+            "url": run.url,
+            "created": str(run.created_at),
+        },
         "config": {k: flat_cfg.get(k) for k in CONFIG_KEYS},
         "history": history,
         "verdict": verdict,
