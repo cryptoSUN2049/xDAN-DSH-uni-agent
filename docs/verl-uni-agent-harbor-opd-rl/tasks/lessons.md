@@ -12,3 +12,5 @@
 10. **Modal 消费上限是训练链路的硬依赖。** 一天内 oracle + rollout + 三轮训练约 80 个沙箱就触到了 workspace spend limit，表现为 `ResourceExhaustedError` → 每条 trial `Sandbox not found` → `fail_on_rollout_error` 终止。规则：起长训练前先在 Modal 控制台核余额/上限；acceptance 的 failure_reasons 里出现 `spend limit` 直接判外部阻塞，不重试。
 11. **`ruff … | tail -1` 会吞掉退出码。** 用管道时 `&&` 判断的是 `tail` 的退出码，lint 失败照样 commit/push（f9e1fca 就这样漏过去了）。规则：门禁命令不接管道，或用 `set -o pipefail`；`ruff check .` 直接跑，不截断输出。
 12. **Harbor 的 `--agent-timeout` 不覆盖卡在 Modal API 的沙箱调用。** attempt4 一条 fix-git trial 在 terminus-2 上下文摘要后卡在 Modal 调用 30+ 分钟（进程只连着 Modal 443，vLLM 空闲），整步被拖住。规则：Harbor task config 必设 `trial_timeout_sec`（适配器 `run_harbor_cli` 用 `asyncio.wait_for` 兜底，超时 exit 124）；训练脚本默认 `FAIL_ON_ROLLOUT_ERROR=0`，让 `sync_refill_failed_groups` 补组而不是中断整步；`modal container stop` 在非交互 shell 要加 `-y`。
+13. **VERL v1 checkpoint 布局是 `global_step_N/actor/*.pt` + `data.pt`**（sync 旧布局把 .pt 直接放在 `global_step_N/`）。校验和 delta 都要兼容两种布局；attempt5 训练成功却被误判 "checkpoint missing" 白等一轮。
+14. **`set -e -o pipefail` 下，grep/find 无匹配会让 `x=$(...)` 直接退出脚本，且没有任何输出。** `trainer_pids`、`find_final_ckpt` 两处都因此静默失败。规则：辅助函数里 `grep … || true`、`find` 前先 `[[ -d ]]`；阶段脚本失败时若 driver.log 没有本阶段任何行，先怀疑这一类。

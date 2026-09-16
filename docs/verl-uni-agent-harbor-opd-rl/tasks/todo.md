@@ -24,7 +24,9 @@
 - [x] r1 失败：`require_verifier_reward` 是 DSH 专属字段，Harbor session 全部被判失败并反复重采；现场 `runs/tb21-rl-r1-failed-require-verifier-reward/`
 - [x] r2（2026-09-16 09:23–09:45）：**机制闭环跑通**。8/8 session 成功、0 失败；`timing_s/gen` 878s，`update_actor` 175s；`global_step_1` checkpoint 8.7 GB（model/optim/extra/lora meta）。但 reward 全 0 → `critic/score/mean=0`、`actor/grad_norm=0`、`pg_loss=0`，即零梯度更新。wandb https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/33i5tfan；指标快照 `tb21-rl-r2-step1-metrics.txt`
 - [x] **梯度非零首次出现（2026-09-16 12:09，pipe-r1 train attempt1，pass_ratio）**：step1 `critic/score/mean=0.208 max=0.667 min=0`、`actor/grad_norm=0.0131`、`pg_loss=0.142`；step2 `score/mean=0.406 max=0.75 min=0.25`、`grad_norm=0.0156`、`pg_loss=-0.0115`。wandb run `7ojulum1`。证据 `pipe-r1-train-attempt1-metrics.txt`
-- [ ] checkpoint 可独立 reload（pipeline resume 阶段）
+- [x] **pipe-r1 attempt5 train 通过（colocate_async，3 步，48 min）**：step1 score 0.333/0.667/0.25，grad_norm 0.020；wandb `ohz52n9r`
+- [x] **delta 通过**：504/504 LoRA adapter 张量变化，399/399 base 张量不变（`checkpoint_delta.py`）
+- [ ] resume（16:11 起，从 global_step_3 续训到 step 4）→ summary → acceptance
 - 证据：`runs/tb21-rl-r1/`
 
 ## 总路线（用户 2026-09-16 明确顺序）
