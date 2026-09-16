@@ -110,7 +110,32 @@ python .claude/skills/rl-training-analyst/scripts/wandb_pull.py <run_url_or_path
 - history 为空但 checkpoint 已存：VERL 控制台指标是 Ray actor 缓冲输出，会滞后；wandb 通常先于控制台。
 - 进程结束后仍 `running`：wandb teardown BrokenPipe，run 状态会停在 running/crashed，不影响已上传数据。
 
-## 4. 报告模板
+## 4. 统一对比表（每次汇报必出，格式固定）
+
+用 `scripts/report.py` 生成，行序固定，方便和 Tinker 线（`xdan-ai/xDAN-Tinker-Harbor-OPD-RL`）以及本线不同轮次横向对比：
+
+```bash
+python .claude/skills/rl-training-analyst/scripts/report.py \
+  --run <wandb url|entity/project/id> --run-root <RUN_ROOT> --label "run 0N (题集, reward 模式)" [--json out.json]
+```
+
+| 行 | 来源 | 判读 |
+|---|---|---|
+| reward/mean | task.log | 与上一轮同题对比，不跨题集比较 |
+| 有组内方差的组占比 | task.log 按 (step, sample) 分组 | <0.3 说明信号稀薄，先加 n 或换题 |
+| 非零梯度的 step | wandb `actor/grad_norm` | 必须与 train.log 逐步一致 |
+| grad_norm / score / response_length / gen 每步 | wandb | 看趋势与量级，不看单点 |
+| 轨迹终止 | `harbor/agent/trajectory.json` 最后一步 | completed 占比是模型"会不会收尾"的直接指标；max_turns 占比高先调 `max_turns` |
+| OPD 非零 token / teacher_kl / RL 与 OPD 反号占比 | 路线 ② 接 Teacher 后由 hybrid loss 日志提供 | 未接时写 N/A，不留空 |
+| held-out | `val/test_score` | 未开 val 时写 N/A |
+
+规则：
+- 多轮并排时列出所有轮次，标签写清题集、reward 模式、步数、并发。
+- N/A 必须写明原因（route 2 / val disabled），不能省略行。
+- 表后紧跟 3 条以内"最该动的杠杆"，每条带参数名和目标值。
+- 数值以 wandb 为准，日志用于交叉验证；两者不一致先停止下结论。
+
+## 5. 报告模板
 
 ```
 ## 训练分析：<run 名 / URL>
@@ -127,7 +152,7 @@ python .claude/skills/rl-training-analyst/scripts/wandb_pull.py <run_url_or_path
 ### 下一轮建议配置
 ```
 
-## 5. 本项目已知事实（避免重复踩坑）
+## 6. 本项目已知事实（避免重复踩坑）
 - 22 条二值 reward 全 0 → 引入 `pass_ratio`（verifier CTRF）后首个非零梯度：step1 0.0131、step2 0.0156。
 - `mask_unfinished_episode` 只作用于 `finished is False`；Harbor 的 `finished=None` 不被 mask。
 - Modal 一天约 80 个沙箱触到 spend limit。
