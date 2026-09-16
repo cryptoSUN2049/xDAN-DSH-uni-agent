@@ -21,7 +21,8 @@
 - 证据：`runs/tb21-gateway-r1/`
 
 ## 阶段 D：RL 一步更新
-- [ ] `examples/harbor_opd_rl/train_tb21_lora_smoke.sh`（单机不用 ray job submit，Modal 凭据走 /root/.modal.toml）跑 1 步 GRPO/LoRA，r1 运行中 `runs/tb21-rl-r1/`
+- [x] r1 失败：`require_verifier_reward` 是 DSH 专属字段，Harbor session 全部被判失败并反复重采；现场 `runs/tb21-rl-r1-failed-require-verifier-reward/`
+- [ ] r2（2026-09-16 09:23 起）：去掉该校验，ROLLOUT_N=4 / CONCURRENCY=4，wandb https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/33i5tfan，目录 `runs/tb21-rl-r2/`
 - [ ] 核梯度非零、checkpoint 可独立 reload
 - 证据：`runs/tb21-rl-r1/`
 

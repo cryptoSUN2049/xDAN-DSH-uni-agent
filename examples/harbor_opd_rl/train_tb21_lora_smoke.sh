@@ -70,6 +70,9 @@ MASK_UNFINISHED_EPISODE="${MASK_UNFINISHED_EPISODE:-True}"
 WANDB_ENABLED="${WANDB_ENABLED:-1}"
 export WANDB_PROJECT="${WANDB_PROJECT:-${PROJECT_NAME}}"
 export WANDB_ENTITY="${WANDB_ENTITY:-xdan-ai}"
+# Keep local wandb files with the run, not inside the rsync'd source tree.
+export WANDB_DIR="${WANDB_DIR:-${RUN_ROOT}/wandb}"
+[[ "${PRINT_COMMAND:-0}" == "1" ]] || mkdir -p "${WANDB_DIR}"
 if [[ "${WANDB_ENABLED}" == "1" ]]; then
   TRAINER_LOGGER="['console','file','wandb']"
 else
