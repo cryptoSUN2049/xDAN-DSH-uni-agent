@@ -44,10 +44,10 @@
 ROOT=/workspace/verl-uni-agent-harbor-opd-rl
 rsync -rltz --delete \
   --exclude .git --exclude '__pycache__' --exclude .Codex --exclude '*.egg-info' \
-  -e "ssh -p 30284 -i ~/.ssh/id_ed25519" \
+  -e "ssh -p <当前端口> -i ~/.ssh/id_ed25519"   # pod 重建后端口会变，先核 \
   ./ root@157.157.221.177:$ROOT/src/uni-agent/
 # 远端写 manifest
-ssh -p 30284 -i ~/.ssh/id_ed25519 root@157.157.221.177 \
+ssh -p <当前端口> -i ~/.ssh/id_ed25519 root@157.157.221.177 \
   "printf '{\"sha\":\"%s\",\"utc\":\"%s\"}\n' $(git rev-parse HEAD) $(date -u +%Y%m%dT%H%M%SZ) > $ROOT/runs/source-manifest-$(git rev-parse --short HEAD).json"
 ```
 

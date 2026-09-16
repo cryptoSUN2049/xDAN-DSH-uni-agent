@@ -48,7 +48,7 @@
 ## 4. 已踩坑 / 已发现的真实行为
 
 环境与远端：
-- **SSH 端口已变**：现为 `ssh root@157.157.221.177 -p 30284 -i ~/.ssh/id_ed25519`（旧记录 12524 已失效）。RunPod pod 重建后端口会变，每次先核。历史上直连偶发 banner timeout，可用 ssh master socket 复用连接；观测失败不等于作业终止。
+- **SSH 端口已变**：现为 `ssh root@157.157.221.177 -p 12063 -i ~/.ssh/id_ed25519`（2026-09-16 13:10 pod 再次重建，历史端口 12524 → 30284 → 12063；重建后 `/root` 下 Modal/wandb 凭据需重拷，新 host key 用 `StrictHostKeyChecking=accept-new`）。RunPod pod 重建后端口会变，每次先核。历史上直连偶发 banner timeout，可用 ssh master socket 复用连接；观测失败不等于作业终止。
 - 远端独立根 `/workspace/verl-uni-agent-harbor-opd-rl/{src,envs,cache,runs}`。`src/uni-agent` 是 rsync 副本，**不是 git 仓库**，版本以 `runs/source-manifest-<sha>.json` 为准；目前是 89ebca9。
 - 远端 venv `envs/ua-verl-py312-vllm023`（**当前为空壳，需按 uv-runbook 重建到新目录**）：uv 0.9.0 建，Python 3.12.3（`/usr/bin`），Torch 2.11.0 / vLLM 0.23.0 / Transformers 5.8.0 / Ray 2.54.1 / peft 0.18.1。这是 UA 测试 lane，与 VERL uv.lock（vLLM 0.24 / Transformers 5.9）和 MetaRSI 训练 lane（py311 / Torch 2.10 / vLLM 0.18.1 / Transformers 4.57.6）都不同，不能混称统一锁。完整训练前须单独验锁。
 - 远端 FUSE 不支持 chown，rsync 用 `-rltz`。`/workspace` 是 RunPod Network Volume，df 显示底层共享容量（2.1P）不是购买容量。
@@ -90,7 +90,7 @@
 | 本地 worktree | `.Codex/worktrees/verl-uni-agent-harbor-opd-rl` |
 | HEAD | `0115008`，origin 同步，无 PR |
 | 相对 main | +235 / -0，merge-base `d723b5f` |
-| 远端 | `root@157.157.221.177:30284`，RTX PRO 6000 Blackwell 96GB，2026-09-16 空闲 |
+| 远端 | `root@157.157.221.177:12063`，RTX PRO 6000 Blackwell 96GB，2026-09-16 空闲 |
 | 远端源码 | 68b45f3（与 push 同步） |
 | 远端 venv | `envs/ua-verl-py312-vllm023-ws1`，2026-09-16 重建并通过激活证明 |
 | 最近 GPU 证据 | resume-r4 passed，scope=single_gpu_native_export_component |
