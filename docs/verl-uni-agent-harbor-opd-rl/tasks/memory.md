@@ -79,3 +79,18 @@ Modal已接入Worker/executor/isolated Trial可选后端和独立资源清理；
 连续三轮核查仍缺双卡SSH与项目专用Gateway域名/Tunnel，现有服务器SSH均在banner阶段超时。最后一次exit255；未据此认定服务器/作业停止。没有启动重复作业。总目标未完成，平台goal转blocked，等待外部资源信息后恢复。
 
 恢复入口：提供可连接双卡SSH、GPU型号/显存、专用Gateway域名与Tunnel配置位置；先读acceptance-status.md并核远端进程与源版本，再准备真实launch/data、preflight、双卡训练/发布/TQ恢复。已有4B单卡更新/导出/模型与optimizer恢复和Modal生命周期证据保留，不重做作为替代。
+
+## 2026-09-16 路线决策：上游 Harbor 内置 agent 路线
+
+用户拍板"直接走上游 Harbor 内置 agent 路线"：用上游 `uni_agent/tasks/harbor` adapter + Harbor CLI + `harbor_env: modal` + terminus-2，在 Terminal-Bench 2.1 上打通 Gateway rollout → verifier reward → VERL 更新。DSH-in-sandbox（自建 Controller / Cloudflare ingress / registry 镜像）暂停，训练通路证明后再把 agent 换回 DSH。
+
+关键事实：
+- terminus-2 和 Harbor CLI 跑在 GPU 宿主机进程里，只把 shell 命令送进 Modal 沙箱，LLM 调用从宿主机发往本机 Gateway（adapter 注入 `LLM_BASE_URL`/`HOSTED_VLLM_BASE_URL` 等），**不需要 tunnel、不需要发布镜像**。
+- `--served-model-name hosted_vllm/<name>`：litellm 剥掉前缀后把 `<name>` 发到 Gateway；Gateway 不校验 model 字段。
+- 上游文档 `docs/source/quickstart/harbor-integration.md` 的 Gateway rollout 标 "Not yet validated"，本分支在替上游验证。
+- 用户要求 `agent.model.max_total_tokens` 用 32k（16k 跑不起来）；runner 固定 prompt 4096，所以 `--max-model-len` ≥ 36864。
+- 环境：lane `envs/ua-verl-py312-vllm023-ws1` 加 harbor 0.16.1 + modal 1.5.5；Modal 凭据在 `/root/.modal.toml`（pod 重建后重拷）。
+- 之前的 GPU venv 曾建在 pod 本地 `/tmp`，pod 重建后丢失；一切资产只放 `/workspace`。SSH 端口会随 pod 重建变化（现 30284）。
+- 用户要求：及时按节点 commit/push，关键信息写入项目记忆（本文件）。
+
+已证明：TB 2.1 oracle 2/2 resolved（Modal 沙箱 + verifier 通）；lane 激活证明与 GPU smoke 通过。
