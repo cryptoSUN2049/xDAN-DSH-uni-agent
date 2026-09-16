@@ -13,7 +13,9 @@ TOTAL_STEPS="${TOTAL_STEPS:-${TRAIN_STEPS}}"
 # VERL v1 writes global_step_N/actor/model_world_size_1_rank_0.pt (+ data.pt);
 # the legacy sync layout keeps the .pt files directly under global_step_N.
 model_file() { local ck="$1"; for f in "${ck}/actor/model_world_size_1_rank_0.pt" "${ck}/model_world_size_1_rank_0.pt"; do [[ -f "${f}" ]] && { echo "${f}"; return 0; }; done; return 1; }
-find_final_ckpt() { find "${STAGE_DIR}/checkpoints" -maxdepth 4 -type d -name "global_step_${TOTAL_STEPS}" 2>/dev/null | head -1; }
+# Must succeed with empty output when the checkpoints dir does not exist yet
+# (fresh stage dir): find's non-zero exit would otherwise abort under pipefail.
+find_final_ckpt() { [[ -d "${STAGE_DIR}/checkpoints" ]] || return 0; { find "${STAGE_DIR}/checkpoints" -maxdepth 4 -type d -name "global_step_${TOTAL_STEPS}" 2>/dev/null || true; } | head -1; }
 
 # TRAIN_REUSE=1 (default): a completed run in this stage dir (final checkpoint +
 # step metrics already present) is post-processed instead of retrained, so a
