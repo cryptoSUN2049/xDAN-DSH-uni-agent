@@ -94,3 +94,7 @@ Modal已接入Worker/executor/isolated Trial可选后端和独立资源清理；
 - 用户要求：及时按节点 commit/push，关键信息写入项目记忆（本文件）。
 
 已证明：TB 2.1 oracle 2/2 resolved（Modal 沙箱 + verifier 通）；lane 激活证明与 GPU smoke 通过。
+
+## 2026-09-16 12:10 首个学习信号
+
+pass_ratio reward（verifier CTRF 部分得分）让 4B 在 easy 4 题上出现组内 reward 方差，GRPO 首次得到非零梯度：step1 grad_norm 0.0131 / step2 0.0156，reward 均值 0.21→0.41。此前 22 条二值 reward 全 0、梯度全 0。全流程由 `examples/harbor_opd_rl/run_tb21_pipeline.sh` 驱动，验收由 `stages/80_acceptance.sh`（wandb API + 本地指标 + checkpoint delta）给 PASS / MECHANICS_ONLY / FAIL。踩坑：小数据集下 `total_epochs=1` 只够 samples/batch 步，已按步数反推 epoch。
