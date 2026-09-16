@@ -64,6 +64,12 @@ TOOL_PARSER="${TOOL_PARSER:-hermes}"
 ATTN_IMPLEMENTATION="${ATTN_IMPLEMENTATION:-sdpa}"
 TRAINER_MODE="${TRAINER_MODE:-sync}"
 NUM_WARMUP_BATCHES="${NUM_WARMUP_BATCHES:-1}"
+# VERL stops at min(total_epochs, total_training_steps). With a tiny dataset one
+# epoch is only TRAIN_MAX_SAMPLES/TRAIN_BATCH_SIZE steps, so derive the epoch
+# budget from the requested step target (same rule as launch.py finalize_training_plan).
+STEPS_PER_EPOCH=$(( TRAIN_MAX_SAMPLES / TRAIN_BATCH_SIZE ))
+[[ ${STEPS_PER_EPOCH} -ge 1 ]] || { echo "TRAIN_MAX_SAMPLES must be >= TRAIN_BATCH_SIZE" >&2; exit 2; }
+TOTAL_EPOCHS="${TOTAL_EPOCHS:-$(( (TOTAL_TRAINING_STEPS + STEPS_PER_EPOCH - 1) / STEPS_PER_EPOCH ))}"
 RESUME_MODE="${RESUME_MODE:-disable}"
 RESUME_FROM_PATH="${RESUME_FROM_PATH:-}"   # global_step_N dir; sets trainer.resume_from_path when non-empty
 MASK_UNFINISHED_EPISODE="${MASK_UNFINISHED_EPISODE:-True}"
@@ -196,7 +202,7 @@ COMMAND=(
   trainer.val_before_train="${VAL_BEFORE_TRAIN}"
   trainer.save_freq="${SAVE_FREQ}"
   trainer.test_freq="${TEST_FREQ}"
-  trainer.total_epochs=1
+  trainer.total_epochs="${TOTAL_EPOCHS}"
   trainer.total_training_steps="${TOTAL_TRAINING_STEPS}"
   trainer.resume_mode="${RESUME_MODE}"
   ${RESUME_FROM_PATH:+trainer.resume_from_path="${RESUME_FROM_PATH}"}
