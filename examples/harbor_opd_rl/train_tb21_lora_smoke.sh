@@ -80,6 +80,26 @@ if [[ "${TRAINER_MODE}" != sync && "${TRAINER_MODE}" != colocate_async ]]; then
   echo "TRAINER_MODE must be sync or colocate_async" >&2; exit 2
 fi
 
+# DAPO=1: dynamic sampling (drop groups whose rewards are all equal and refill),
+# clip-higher, optional overlong shaping. Requires reward variance: with all-zero
+# groups the sampler refills until DAPO_MAX_GEN_BATCHES and then aborts the step.
+DAPO="${DAPO:-0}"
+DAPO_MAX_GEN_BATCHES="${DAPO_MAX_GEN_BATCHES:-10}"
+DAPO_METRIC="${DAPO_METRIC:-reward}"
+CLIP_RATIO_LOW="${CLIP_RATIO_LOW:-0.2}"
+CLIP_RATIO_HIGH="${CLIP_RATIO_HIGH:-0.2}"
+DAPO_OVERRIDES=()
+if [[ "${DAPO}" == "1" ]]; then
+  CLIP_RATIO_HIGH="${CLIP_RATIO_HIGH_DAPO:-0.28}"
+  DAPO_OVERRIDES+=(
+    algorithm.filter_groups.enable=True
+    algorithm.filter_groups.metric="${DAPO_METRIC}"
+    algorithm.filter_groups.max_num_gen_batches="${DAPO_MAX_GEN_BATCHES}"
+  )
+  # Overlong reward shaping is not wired here: this VERL config has no
+  # reward.reward_kwargs path; the episode budget (max_total_tokens) bounds length instead.
+fi
+
 COMMAND=(
   "${PYTHON_BIN}" -m verl.trainer.main_ppo
   trainer.use_v1=True
@@ -120,6 +140,9 @@ COMMAND=(
   actor_rollout_ref.actor.ppo_max_token_len_per_gpu="${PPO_MAX_TOKEN_LEN_PER_GPU}"
   actor_rollout_ref.actor.use_kl_loss=False
   actor_rollout_ref.actor.entropy_coeff=0
+  actor_rollout_ref.actor.clip_ratio_low="${CLIP_RATIO_LOW}"
+  actor_rollout_ref.actor.clip_ratio_high="${CLIP_RATIO_HIGH}"
+  actor_rollout_ref.actor.loss_agg_mode=token-mean
   actor_rollout_ref.actor.fsdp_config.param_offload="${ACTOR_PARAM_OFFLOAD}"
   actor_rollout_ref.actor.fsdp_config.optimizer_offload="${ACTOR_OPTIMIZER_OFFLOAD}"
   "actor_rollout_ref.actor.checkpoint.save_contents=['model','optimizer','extra']"
@@ -160,7 +183,8 @@ COMMAND=(
   ++actor_rollout_ref.rollout.custom.agent_framework.use_reward_loop_worker=False
   ++actor_rollout_ref.rollout.custom.agent_framework.mask_unfinished_episode="${MASK_UNFINISHED_EPISODE}"
   ++actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error=True
-  ++actor_rollout_ref.rollout.custom.agent_framework.require_verifier_reward=True
+  # require_verifier_reward is DSH-only (TaskResult.verifier_reward); the Harbor
+  # adapter reports reward + eval_completed, enforced through require_result above.
   ++actor_rollout_ref.rollout.custom.agent_framework.require_trajectory_dump=True
   trainer.logger="${TRAINER_LOGGER}"
   trainer.project_name="${PROJECT_NAME}"
@@ -176,6 +200,7 @@ COMMAND=(
   trainer.validation_data_dir="${VALIDATION_DATA_DIR}"
   trainer.nnodes="${NNODES}"
   trainer.n_gpus_per_node="${NGPUS_PER_NODE}"
+  ${DAPO_OVERRIDES[@]+"${DAPO_OVERRIDES[@]}"}
 )
 
 if [[ "${PRINT_COMMAND:-0}" == "1" ]]; then
