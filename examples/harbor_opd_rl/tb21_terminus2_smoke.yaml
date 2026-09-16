@@ -9,7 +9,7 @@
     kwargs:
       parser_name: json
       temperature: 1.0
-      max_turns: 30
+      max_turns: 50   # 2026-09-16: attempt1 had 13/16 trajectories hit the 30-turn cap; raised per user
       suppress_max_turns_warning: true
       model_info:
         max_input_tokens: 32768

@@ -40,6 +40,9 @@
 - [ ] 多步训练（≥5 步）+ checkpoint reload + 固定 held-out 子集评估；训练题与评测题隔离
 - [ ] r3：TB 2.1 仅 4 题标 easy（fix-git / cobol-modernization / prove-plus-comm / overfull-hbox），已做成 `data/easy/harbor_tb21-easy-tasks.parquet`；n=4、3 步，看 `critic/score/std` 是否离开 0
 
+- [ ] 下一轮（pipe-r2）：`max_turns` 30 → 50（attempt1 16 条轨迹 13 条撞上限，只有 2 条 completed），看 completed 占比与 reward 方差；本地已改 `tb21_terminus2_smoke.yaml`，**pipe-r1 跑完后再同步到 177**（trial 启动时重读配置）
+- [ ] 同轮把 `CONCURRENCY` 提到 16、`ROLLOUT_N` 8，观察 GPU 利用率与 `timing_s/gen`
+
 ## 阶段 F：路线 2 DAPO + OPD
 - [ ] 复核 tinker-cookbook-opd-rl 的 harbor_opd_rl.py 评分合同，对齐到 harbor task 轨迹（token ids / action mask 来自 Gateway npz）
 - [ ] 27B Teacher 服务化（独立 GPU 角色）；单卡先用 4B 自评做接线冒烟
