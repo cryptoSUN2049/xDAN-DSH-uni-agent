@@ -31,6 +31,7 @@
 3. **DSH harness 接入沙箱**：把 agent 从 terminus-2 换回 DSH，届时才需要沙箱回连 Gateway（ingress / tunnel），复用本分支已写好的 Controller + Modal ingress 代码。
 
 ## 阶段 E：路线 1 收尾
+验收口径（用户 2026-09-16）：按 wandb 面板实际曲线分析，不只看日志。关注 `critic/score/mean`（reward 均值）、`critic/score/std` 或组内 0/1 混合比例（advantage 是否非零）、`actor/pg_loss`、`actor/grad_norm`（非零且有限）、`response_length/mean`、`timing_s/gen` 与 `timing_s/update_actor`、`val/test_score`（held-out）。
 - [ ] wandb 接入（脚本已改：`trainer.logger=['console','file','wandb']`，凭据在 177 `/root/.netrc`），下一次训练起跑验证面板有 reward / grad_norm 曲线
 - [ ] 多步训练（≥5 步）+ checkpoint reload + 固定 held-out 子集评估；训练题与评测题隔离
 - [ ] 换更易解的 TB 题或提高 rollout n，让 reward 出现 0/1 混合，证明非零 advantage/梯度
