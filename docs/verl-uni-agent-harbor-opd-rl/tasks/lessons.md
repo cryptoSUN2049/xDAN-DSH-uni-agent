@@ -10,3 +10,4 @@
 8. **DAPO 依赖 reward 方差。** `filter_groups` 会把组内 reward 全相同的 group 扔掉重采，reward 全 0 时只会耗尽 `max_num_gen_batches` 后报错。先用 GRPO 拿到 0/1 混合再开 `DAPO=1`。
 9. **VERL 训练结束后主进程可能挂在 wandb teardown。** r2 的 step、checkpoint、wandb 同步全部完成后，`wandb` atexit 抛 BrokenPipe，主进程不退出、`exit-code` 不写。规则：判定完成看 `global_step_N` 目录 + step 指标行 + wandb "View run"，不等 exit-code；起下一轮前按上一条的模式核进程再清理。
 10. **Modal 消费上限是训练链路的硬依赖。** 一天内 oracle + rollout + 三轮训练约 80 个沙箱就触到了 workspace spend limit，表现为 `ResourceExhaustedError` → 每条 trial `Sandbox not found` → `fail_on_rollout_error` 终止。规则：起长训练前先在 Modal 控制台核余额/上限；acceptance 的 failure_reasons 里出现 `spend limit` 直接判外部阻塞，不重试。
+11. **`ruff … | tail -1` 会吞掉退出码。** 用管道时 `&&` 判断的是 `tail` 的退出码，lint 失败照样 commit/push（f9e1fca 就这样漏过去了）。规则：门禁命令不接管道，或用 `set -o pipefail`；`ruff check .` 直接跑，不截断输出。
