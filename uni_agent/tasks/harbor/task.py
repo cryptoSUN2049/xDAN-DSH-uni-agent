@@ -59,6 +59,9 @@ class HarborTaskConfig(TaskConfig):
     harbor_env: str = Field(default="docker", description="Harbor environment backend.")
     agent: HarborAgentConfig = Field(default_factory=HarborAgentConfig)
     timeout_multiplier: float = Field(default=1.0, gt=0)
+    trial_timeout_sec: float | None = Field(
+        default=None, gt=0, description="Wall clock for the whole Harbor trial process; None disables it."
+    )
     override_cpus: int | None = Field(default=None, gt=0)
     override_memory_mb: int | None = Field(default=None, gt=0)
 
@@ -159,8 +162,19 @@ class HarborCLIResult:
     stderr: str
 
 
-async def run_harbor_cli(command: list[str], *, env: dict[str, str] | None = None) -> HarborCLIResult:
-    """Run Harbor directly on the host and capture its terminal output."""
+HARBOR_TRIAL_TIMEOUT_EXIT_CODE = 124
+
+
+async def run_harbor_cli(
+    command: list[str], *, env: dict[str, str] | None = None, timeout: float | None = None
+) -> HarborCLIResult:
+    """Run Harbor directly on the host and capture its terminal output.
+
+    ``timeout`` is a wall clock for the whole trial (environment build, agent,
+    verifier). Harbor's own ``--agent-timeout`` only bounds the agent loop, so a
+    sandbox call that never returns would otherwise block the rollout forever.
+    On expiry the process is killed and the result carries exit code 124.
+    """
     process = await asyncio.create_subprocess_exec(
         *command,
         stdout=asyncio.subprocess.PIPE,
@@ -168,7 +182,16 @@ async def run_harbor_cli(command: list[str], *, env: dict[str, str] | None = Non
         env={**os.environ, **env} if env else None,
     )
     try:
-        stdout, stderr = await process.communicate()
+        stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=timeout)
+    except TimeoutError:
+        if process.returncode is None:
+            process.kill()
+            await process.wait()
+        return HarborCLIResult(
+            exit_code=HARBOR_TRIAL_TIMEOUT_EXIT_CODE,
+            stdout="",
+            stderr=f"Harbor trial exceeded trial_timeout_sec={timeout:g}; process killed",
+        )
     except BaseException:
         if process.returncode is None:
             process.kill()
@@ -238,7 +261,7 @@ class HarborTask(Task):
         )
         started = time.perf_counter()
         try:
-            response = await run_harbor_cli(command, env=process_env)
+            response = await run_harbor_cli(command, env=process_env, timeout=config.trial_timeout_sec)
         except FileNotFoundError as exc:
             raise RuntimeError(
                 "Harbor CLI executable was not found; install Harbor 0.16.0 or later and ensure `harbor` is on PATH"

@@ -24,5 +24,9 @@
       max_total_tokens: 32768   # episode token budget -> rollout.response_length; runner adds 4096 prompt (user: 16k too small)
   harbor_env: modal
   timeout_multiplier: 1.0
+  # Wall clock for the whole trial (env build + agent + verifier). Harbor's
+  # --agent-timeout does not cover a sandbox call that never returns: 2026-09-16
+  # one fix-git trial hung 30+ min in a Modal API call after context summarization.
+  trial_timeout_sec: 2400
   override_cpus: 2
   override_memory_mb: 4096

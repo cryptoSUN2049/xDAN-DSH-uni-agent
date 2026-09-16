@@ -73,6 +73,19 @@ TOTAL_EPOCHS="${TOTAL_EPOCHS:-$(( (TOTAL_TRAINING_STEPS + STEPS_PER_EPOCH - 1) /
 RESUME_MODE="${RESUME_MODE:-disable}"
 RESUME_FROM_PATH="${RESUME_FROM_PATH:-}"   # global_step_N dir; sets trainer.resume_from_path when non-empty
 MASK_UNFINISHED_EPISODE="${MASK_UNFINISHED_EPISODE:-True}"
+# FAIL_ON_ROLLOUT_ERROR=1 aborts the whole step when any session fails (strict
+# smoke). 0 (default) lets sync_refill_failed_groups replace a failed group, so a
+# single hung Modal sandbox or verifier error cannot kill a multi-step run.
+# require_trajectory_dump is only valid in strict mode (framework validation).
+FAIL_ON_ROLLOUT_ERROR="${FAIL_ON_ROLLOUT_ERROR:-0}"
+if [[ "${FAIL_ON_ROLLOUT_ERROR}" == "1" ]]; then
+  STRICT_OVERRIDES=(
+    ++actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error=True
+    ++actor_rollout_ref.rollout.custom.agent_framework.require_trajectory_dump=True
+  )
+else
+  STRICT_OVERRIDES=(++actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error=False)
+fi
 # wandb: credentials come from ~/.netrc (wandb login) or WANDB_API_KEY, never from this repo.
 WANDB_ENABLED="${WANDB_ENABLED:-1}"
 export WANDB_PROJECT="${WANDB_PROJECT:-${PROJECT_NAME}}"
@@ -192,10 +205,9 @@ COMMAND=(
   ++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.runner_kwargs.require_result=True
   ++actor_rollout_ref.rollout.custom.agent_framework.use_reward_loop_worker=False
   ++actor_rollout_ref.rollout.custom.agent_framework.mask_unfinished_episode="${MASK_UNFINISHED_EPISODE}"
-  ++actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error=True
   # require_verifier_reward is DSH-only (TaskResult.verifier_reward); the Harbor
   # adapter reports reward + eval_completed, enforced through require_result above.
-  ++actor_rollout_ref.rollout.custom.agent_framework.require_trajectory_dump=True
+  "${STRICT_OVERRIDES[@]}"
   trainer.logger="${TRAINER_LOGGER}"
   trainer.project_name="${PROJECT_NAME}"
   trainer.experiment_name="${EXP_NAME}"
