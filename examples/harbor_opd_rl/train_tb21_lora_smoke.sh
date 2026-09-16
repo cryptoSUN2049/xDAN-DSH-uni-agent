@@ -22,7 +22,7 @@ TRAIN_FILE="${TRAIN_FILE:?absolute Harbor parquet for training}"
 TEST_FILE="${TEST_FILE:?absolute Harbor parquet for validation}"
 TASK_CONFIG="${TASK_CONFIG:-${REPO_ROOT}/examples/harbor_opd_rl/tb21_terminus2_smoke.yaml}"
 RUN_ROOT="${RUN_ROOT:?absolute private run root}"
-PROJECT_NAME="${PROJECT_NAME:-tb21-harbor-lora}"
+PROJECT_NAME="${PROJECT_NAME:-xDAN-Verl-Uni-agent-Harbor-rl-opd}"   # also the wandb project
 EXP_NAME="${EXP_NAME:-smoke}"
 CKPTS_DIR="${CKPTS_DIR:-${RUN_ROOT}/checkpoints/${PROJECT_NAME}/${EXP_NAME}}"
 AGENT_LOG_DIR="${AGENT_LOG_DIR:-${RUN_ROOT}/agent-logs/${PROJECT_NAME}/${EXP_NAME}}"
@@ -66,6 +66,15 @@ TRAINER_MODE="${TRAINER_MODE:-sync}"
 NUM_WARMUP_BATCHES="${NUM_WARMUP_BATCHES:-1}"
 RESUME_MODE="${RESUME_MODE:-disable}"
 MASK_UNFINISHED_EPISODE="${MASK_UNFINISHED_EPISODE:-True}"
+# wandb: credentials come from ~/.netrc (wandb login) or WANDB_API_KEY, never from this repo.
+WANDB_ENABLED="${WANDB_ENABLED:-1}"
+export WANDB_PROJECT="${WANDB_PROJECT:-${PROJECT_NAME}}"
+export WANDB_ENTITY="${WANDB_ENTITY:-xdan-ai}"
+if [[ "${WANDB_ENABLED}" == "1" ]]; then
+  TRAINER_LOGGER="['console','file','wandb']"
+else
+  TRAINER_LOGGER="['console','file']"
+fi
 
 if [[ "${TRAINER_MODE}" != sync && "${TRAINER_MODE}" != colocate_async ]]; then
   echo "TRAINER_MODE must be sync or colocate_async" >&2; exit 2
@@ -153,7 +162,7 @@ COMMAND=(
   ++actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error=True
   ++actor_rollout_ref.rollout.custom.agent_framework.require_verifier_reward=True
   ++actor_rollout_ref.rollout.custom.agent_framework.require_trajectory_dump=True
-  trainer.logger="['console','file']"
+  trainer.logger="${TRAINER_LOGGER}"
   trainer.project_name="${PROJECT_NAME}"
   trainer.experiment_name="${EXP_NAME}"
   trainer.val_before_train="${VAL_BEFORE_TRAIN}"

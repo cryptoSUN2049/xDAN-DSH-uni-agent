@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>训练系统架构</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  :root { --bg:#fafafa; --fg:#1a1a1a; --muted:#666; --line:#e2e2e2; --ok:#1b7f3b; --warn:#b26a00; --todo:#8a8a8a; --card:#fff; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#121212; --fg:#eaeaea; --muted:#a0a0a0; --line:#2c2c2c; --card:#1b1b1b; --ok:#5fc47f; --warn:#e0a94a; --todo:#8a8a8a; } }
+  :root[data-theme="dark"] { --bg:#121212; --fg:#eaeaea; --muted:#a0a0a0; --line:#2c2c2c; --card:#1b1b1b; --ok:#5fc47f; --warn:#e0a94a; --todo:#8a8a8a; }
+  body { margin:0; padding:24px 16px 64px; background:var(--bg); color:var(--fg); font:15px/1.6 -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; max-width:1100px; margin-inline:auto; }
+  h1 { font-size:24px; margin:0 0 4px; } h2 { font-size:18px; margin:36px 0 8px; border-bottom:1px solid var(--line); padding-bottom:4px; }
+  .sub { color:var(--muted); font-size:13px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px 14px; margin:12px 0; overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; font-size:14px; } th,td { border-bottom:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top; } th { color:var(--muted); font-weight:600; }
+  .ok { color:var(--ok); font-weight:600; } .warn { color:var(--warn); font-weight:600; } .todo { color:var(--todo); }
+  code { font-family: ui-monospace, Menlo, monospace; font-size:13px; background:var(--line); padding:1px 4px; border-radius:4px; }
+  .mermaid { text-align:center; }
+</style>
+</head>
+<body>
+<h1>xDAN Verl + Uni-Agent + Harbor 训练系统架构</h1>
+<div class="sub">分支 <code>verl-uni-agent-harbor-opd-rl</code> · 更新 2026-09-16 · 路线：① terminus-2 训练打通 → ② DAPO + OPD 联合更新 → ③ DSH harness 进沙箱</div>
+
+<h2>1. 系统总览（当前路线 ①）</h2>
+<div class="card">
+<pre class="mermaid">
+flowchart LR
+  subgraph HOST["GPU 宿主机 177（RTX PRO 6000 96GB，lane ua-verl-py312-vllm023-ws1）"]
+    direction TB
+    VERL["VERL V1 trainer<br/>FSDP + LoRA r32 · GRPO<br/>TransferQueue"]
+    VLLM["vLLM rollout engine<br/>Qwen3-4B（→ 9B）"]
+    GW["Uni-Agent Gateway<br/>/sessions/&lt;id&gt;/v1<br/>token ids · logprobs · action mask"]
+    FW["Agent Framework<br/>task_runner → uni_agent.tasks.harbor"]
+    T2["Harbor CLI + terminus-2<br/>(宿主机进程, litellm hosted_vllm/…)"]
+    WB["wandb<br/>xdan-ai / xDAN-Verl-Uni-agent-Harbor-rl-opd"]
+  end
+  subgraph MODAL["Modal（shootime007）"]
+    SBX["任务沙箱<br/>Terminal-Bench 2.1 task image"]
+    VER["独立 verifier 沙箱<br/>tests/test.sh → reward"]
+  end
+  VERL -- 权重同步 --> VLLM
+  VERL -- 派发 prompt/group --> FW
+  FW -- 起 session · 注入 base_url --> GW
+  FW -- harbor trial start --> T2
+  T2 -- chat/completions --> GW
+  GW -- 转发 --> VLLM
+  T2 -- shell 命令 --> SBX
+  SBX -- 终端输出 --> T2
+  SBX -. 结果文件 .-> VER
+  VER -- result.json reward --> FW
+  GW -- trajectory.npz --> FW
+  FW -- 轨迹 + reward --> VERL
+  VERL -- 指标 --> WB
+</pre>
+</div>
+<p class="sub">要点：terminus-2 跑在宿主机，LLM 调用只到本机 Gateway，所以<strong>不需要公网 tunnel、不需要发布镜像</strong>。Gateway 存在的原因是训练需要采样时的原始 token 与 logprob，文本回来重新 tokenize 对不上。</p>
+
+<h2>2. 一次 rollout 的时序</h2>
+<div class="card">
+<pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant FW as Agent Framework
+  participant GW as Gateway
+  participant H as Harbor CLI / terminus-2
+  participant M as Modal sandbox
+  participant V as verifier
+  participant E as vLLM
+  FW->>GW: 开 session（group_uid, sample_index）
+  FW->>H: harbor trial start --agent terminus-2 --env modal --model hosted_vllm/…<br/>env: HOSTED_VLLM_BASE_URL=/sessions/id/v1
+  H->>M: 创建沙箱（task image, 2 cpu / 4 GB）
+  loop 每轮（≤ max_turns，episode ≤ max_total_tokens）
+    H->>GW: POST chat/completions
+    GW->>E: 转发，记录 prompt/response token + logprob
+    E-->>GW: 生成
+    GW-->>H: 文本
+    H->>M: 执行命令
+    M-->>H: 终端输出
+  end
+  H->>V: 起 verifier 沙箱跑 tests
+  V-->>H: result.json（reward 0/1）
+  H-->>FW: HarborCLIResult + reward
+  GW-->>FW: trajectory.json / .npz
+  FW-->>FW: mask_unfinished_episode · require_verifier_reward
+</pre>
+</div>
+
+<h2>3. 训练闭环与验收门</h2>
+<div class="card">
+<pre class="mermaid">
+flowchart TD
+  A["阶段 A 环境<br/>uv lane 重建 · harbor[modal] · Modal/wandb 凭据"]:::ok --> B["阶段 B 数据/oracle<br/>TB 2.1 parquet · oracle 2/2 pass"]:::ok
+  B --> C["阶段 C Gateway rollout<br/>2/2 session · token 轨迹 · reward 0/0"]:::ok
+  C --> D["阶段 D 1 步 LoRA GRPO<br/>runs/tb21-rl-r1 运行中"]:::warn
+  D --> E["阶段 E 路线① 收尾<br/>wandb 曲线 · ≥5 步 · reload · held-out"]:::todo
+  E --> F["阶段 F 路线② DAPO + OPD<br/>Teacher 逐 token 评分 · hybrid loss"]:::todo
+  F --> G["阶段 G 路线③ DSH 进沙箱<br/>ingress / tunnel / registry 镜像"]:::todo
+  classDef ok fill:#e6f4ea,stroke:#1b7f3b,color:#0b3d1c;
+  classDef warn fill:#fff4e0,stroke:#b26a00,color:#4a2c00;
+  classDef todo fill:#eeeeee,stroke:#8a8a8a,color:#333;
+</pre>
+</div>
+
+<h2>4. 组件与归属</h2>
+<div class="card">
+<table>
+<tr><th>组件</th><th>代码 / 位置</th><th>来源</th><th>状态</th></tr>
+<tr><td>Harbor task adapter</td><td><code>uni_agent/tasks/harbor/{task,preprocess,reward}.py</code></td><td>上游 Uni-Agent</td><td class="ok">oracle + Gateway rollout 已验</td></tr>
+<tr><td>Gateway / Agent Framework</td><td><code>uni_agent/gateway</code>, <code>uni_agent/framework</code></td><td>上游 + 本分支 Teacher 接线</td><td class="ok">token 轨迹落盘</td></tr>
+<tr><td>推理 runner</td><td><code>examples/inference/parallel_infer_verl.py</code></td><td>上游</td><td class="ok">r3 通过</td></tr>
+<tr><td>训练脚本</td><td><code>examples/harbor_opd_rl/train_tb21_lora_smoke.sh</code></td><td>本分支（源自 dsh 4B 脚本）</td><td class="warn">r1 运行中</td></tr>
+<tr><td>任务配置</td><td><code>examples/harbor_opd_rl/tb21_terminus2_smoke.yaml</code></td><td>本分支</td><td class="ok">32k episode 预算</td></tr>
+<tr><td>OPD / hybrid recipe</td><td><code>examples/harbor_opd_rl/{opd,hybrid}.yaml</code>, VERL Teacher manager</td><td>本分支</td><td class="todo">路线②</td></tr>
+<tr><td>DSH-in-sandbox ingress</td><td><code>deployment/services/harbor_modal_ingress.py</code>, <code>harbor_run_controller.py</code></td><td>本分支</td><td class="todo">路线③（暂停）</td></tr>
+<tr><td>环境管理</td><td><code>deployment/bootstrap/uv-lane-bootstrap.sh</code>, <code>uv-runbook.md</code></td><td>继承 MetaRSI</td><td class="ok">激活证明 + GPU smoke</td></tr>
+</table>
+</div>
+
+<h2>5. 关键参数</h2>
+<div class="card">
+<table>
+<tr><th>参数</th><th>值</th><th>说明</th></tr>
+<tr><td><code>--served-model-name</code></td><td><code>hosted_vllm/Qwen3-4B-1cfa9a7</code></td><td>litellm 剥前缀后发给 Gateway；Gateway 不校验 model 字段</td></tr>
+<tr><td><code>agent.model.max_total_tokens</code></td><td>32768</td><td>episode 预算 → <code>rollout.response_length</code>；runner 固定 prompt 4096，故 <code>max_model_len ≥ 36864</code></td></tr>
+<tr><td>terminus-2 kwargs</td><td>max_turns 30 · parser json · temperature 1.0</td><td>smoke 用；正式训练放宽</td></tr>
+<tr><td>沙箱资源</td><td>2 cpu / 4096 MB</td><td>Modal 侧 override</td></tr>
+<tr><td>LoRA</td><td>r32 / α32 / all-linear</td><td>FSDP，actor/optimizer offload</td></tr>
+<tr><td>Modal / wandb 凭据</td><td><code>/root/.modal.toml</code>, <code>/root/.netrc</code></td><td>pod 重建后需重拷；不进 /workspace、不进仓库</td></tr>
+</table>
+</div>
+
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default', securityLevel: 'loose' });
+</script>
+</body>
+</html>

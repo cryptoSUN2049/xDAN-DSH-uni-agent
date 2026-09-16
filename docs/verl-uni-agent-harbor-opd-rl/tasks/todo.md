@@ -25,9 +25,23 @@
 - [ ] 核梯度非零、checkpoint 可独立 reload
 - 证据：`runs/tb21-rl-r1/`
 
-## 阶段 E：接回本分支目标
-- [ ] Teacher OPD 接线换到 harbor task（原生 hybrid recipe）
-- [ ] 评估口径：固定 TB 2.1 子集 held-out，训练题与评测题隔离
+## 总路线（用户 2026-09-16 明确顺序）
+1. **terminus-2 训练完整打通**：阶段 A–D，加 wandb（project `xDAN-Verl-Uni-agent-Harbor-rl-opd`，entity `xdan-ai`），多步训练、checkpoint reload、held-out 评估。
+2. **DAPO + OPD 联合更新（tinker 方案）**：把 tinker-cookbook 里的 RL/OPD/hybrid 逐 token Teacher 评分接到 harbor task 的轨迹上；本分支已有的 `examples/harbor_opd_rl/{opd,hybrid}.yaml` 与 Teacher→TQ→loss 接线复用；DAPO 侧用 VERL 原生 clip-higher / dynamic sampling / token-mean。
+3. **DSH harness 接入沙箱**：把 agent 从 terminus-2 换回 DSH，届时才需要沙箱回连 Gateway（ingress / tunnel），复用本分支已写好的 Controller + Modal ingress 代码。
+
+## 阶段 E：路线 1 收尾
+- [ ] wandb 接入（脚本已改：`trainer.logger=['console','file','wandb']`，凭据在 177 `/root/.netrc`），下一次训练起跑验证面板有 reward / grad_norm 曲线
+- [ ] 多步训练（≥5 步）+ checkpoint reload + 固定 held-out 子集评估；训练题与评测题隔离
+- [ ] 换更易解的 TB 题或提高 rollout n，让 reward 出现 0/1 混合，证明非零 advantage/梯度
+
+## 阶段 F：路线 2 DAPO + OPD
+- [ ] 复核 tinker-cookbook-opd-rl 的 harbor_opd_rl.py 评分合同，对齐到 harbor task 轨迹（token ids / action mask 来自 Gateway npz）
+- [ ] 27B Teacher 服务化（独立 GPU 角色）；单卡先用 4B 自评做接线冒烟
+- [ ] hybrid loss（RL + OPD 加权）在 harbor 轨迹上非零梯度证据
+
+## 阶段 G：路线 3 DSH 进沙箱
+- [ ] 重启 ingress 路线：专用 hostname / tunnel / registry 镜像；agent 切 DSH，其余训练链路不变
 
 ## 约束
 - 每步只留一份证据目录，失败现场不覆盖
