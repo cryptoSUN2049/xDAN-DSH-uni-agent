@@ -48,7 +48,8 @@ try:
         path = url.split("wandb.ai/")[1]  # entity/project/runs/id
         entity, project, _, run_id = path.split("/")[:4]
         run = api.run(f"{entity}/{project}/{run_id}")
-        hist = run.history(keys=["training/global_step", "critic/score/mean", "actor/grad_norm", "actor/pg_loss"], pandas=False)
+        # scan_history: history(keys=[...]) drops every row if any key was never logged
+        hist = [h for h in run.scan_history() if h.get("training/global_step") is not None]
         wandb_report[stage] = {"url": url, "state": run.state, "rows": [
             {k: h.get(k) for k in ("training/global_step", "critic/score/mean", "actor/grad_norm", "actor/pg_loss")} for h in hist]}
     # agreement: every local step's grad_norm appears in wandb within 1e-6

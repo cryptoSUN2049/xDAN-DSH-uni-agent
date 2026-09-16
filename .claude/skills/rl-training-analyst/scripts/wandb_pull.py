@@ -92,7 +92,9 @@ def main() -> None:
             flat_cfg[prefix] = obj
 
     flatten("", run.config)
-    history = [{k: h.get(k) for k in KEYS if h.get(k) is not None} for h in run.history(keys=list(KEYS), pandas=False)]
+    # scan_history returns every logged row; history(keys=[...]) silently drops
+    # rows when any requested key was never logged (e.g. val/test_score).
+    history = [{k: h.get(k) for k in KEYS if h.get(k) is not None} for h in run.scan_history()]
     history = [h for h in history if "training/global_step" in h]
 
     verdict = {
