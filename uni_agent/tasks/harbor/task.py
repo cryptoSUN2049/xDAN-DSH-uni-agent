@@ -20,7 +20,7 @@ from uni_agent.logging import get_current_log_context
 
 from ..base import Task, TaskConfig, TaskResult
 from ..registry import register_task
-from .reward import task_result_from_harbor_trial
+from .reward import infra_failure_policy, task_result_from_harbor_trial
 
 logger = logging.getLogger(__name__)
 _TEMP_TRIALS_DIR = Path("/tmp/harbor-trials")
@@ -163,6 +163,27 @@ class HarborCLIResult:
 
 
 HARBOR_TRIAL_TIMEOUT_EXIT_CODE = 124
+
+
+class HarborInfraFailure(RuntimeError):
+    """An incomplete trial caused by the sandbox/verifier path rather than the agent."""
+
+
+def raise_if_infra_failure(result: TaskResult, instance_id: str) -> None:
+    """Drop infrastructure failures from training instead of scoring them 0.
+
+    Raising makes the framework treat this one session as a failed rollout: with
+    ``fail_on_rollout_error=False`` the other sessions of the group still train, and a
+    group whose sessions all fail is refilled. ``HARBOR_INFRA_FAILURE=zero`` restores
+    the legacy 0 reward.
+    """
+    info = result.extra_info or {}
+    if info.get("eval_completed") or info.get("failure_kind") != "infra":
+        return
+    if infra_failure_policy() != "exclude":
+        return
+    error = (info.get("eval_report") or {}).get("error")
+    raise HarborInfraFailure(f"Harbor infrastructure failure for {instance_id}: {error}")
 
 
 async def run_harbor_cli(
@@ -310,10 +331,12 @@ class HarborTask(Task):
         info = result.extra_info or {}
         if not info.get("eval_completed"):
             logger.warning(
-                "Harbor trial incomplete for %s: %s",
+                "Harbor trial incomplete for %s (%s): %s",
                 instance_id,
+                info.get("failure_kind"),
                 (info.get("eval_report") or {}).get("error"),
             )
+            raise_if_infra_failure(result, instance_id)
         logger.info(
             "Harbor trial done: instance_id=%s reward=%.3f resolved=%s elapsed=%.1fs",
             instance_id,

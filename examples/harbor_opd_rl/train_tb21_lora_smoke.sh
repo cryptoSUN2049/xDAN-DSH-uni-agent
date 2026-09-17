@@ -254,8 +254,10 @@ COMMAND=(
   ++actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.runner_kwargs.require_result=True
   ++actor_rollout_ref.rollout.custom.agent_framework.use_reward_loop_worker=False
   ++actor_rollout_ref.rollout.custom.agent_framework.mask_unfinished_episode="${MASK_UNFINISHED_EPISODE}"
-  # require_verifier_reward is DSH-only (TaskResult.verifier_reward); the Harbor
-  # adapter reports reward + eval_completed, enforced through require_result above.
+  # require_verifier_reward is DSH-only (TaskResult.verifier_reward). require_result
+  # only rejects a missing reward; nothing downstream reads eval_completed. Incomplete
+  # Harbor trials are handled in the adapter: agent failures score 0, infrastructure
+  # failures raise and drop that session (HARBOR_INFRA_FAILURE=exclude|zero).
   "${STRICT_OVERRIDES[@]}"
   trainer.logger="${TRAINER_LOGGER}"
   trainer.project_name="${PROJECT_NAME}"

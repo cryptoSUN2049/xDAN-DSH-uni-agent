@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +13,69 @@ from ..base import TaskResult
 _OUTPUT_TAIL_CHARS = 8000
 _REWARD_MODE_ENV = "HARBOR_REWARD_MODE"
 _REWARD_MODES = ("binary", "pass_ratio")
+_INFRA_FAILURE_ENV = "HARBOR_INFRA_FAILURE"
+_INFRA_FAILURE_POLICIES = ("exclude", "zero")
+# Harbor exceptions that mean the agent itself failed: they are scored 0.
+_AGENT_FAILURE_EXCEPTIONS = frozenset({"AgentTimeoutError", "OutputLengthExceededError"})
+_TRACEBACK_FRAME = re.compile(r'File "([^"]+)", line \d+')
+_NON_WORKSPACE_PATH_MARKERS = ("site-packages", "dist-packages", "/usr/lib/python", "/usr/local/lib/python")
+
+
+def infra_failure_policy() -> str:
+    """How an incomplete trial caused by infrastructure is surfaced to training.
+
+    ``exclude`` (default) makes the Harbor task raise, so the framework drops that one
+    session and the rest of its GRPO group still trains. ``zero`` keeps the legacy
+    behaviour of scoring it 0, which hands a potentially good trajectory the most
+    negative advantage in its group for a sandbox failure it did not cause.
+    """
+    policy = os.environ.get(_INFRA_FAILURE_ENV, "exclude").strip() or "exclude"
+    if policy not in _INFRA_FAILURE_POLICIES:
+        raise ValueError(f"{_INFRA_FAILURE_ENV} must be one of {_INFRA_FAILURE_POLICIES}, got {policy!r}")
+    return policy
+
+
+def _verifier_blames_workspace(trial_dir: Path) -> bool:
+    """True when the verifier's last Python traceback frame is in the task workspace.
+
+    Verifiers such as swe-rebench's run_tests.py treat "no tests collected" as an
+    infrastructure failure and write no reward, even when collection crashed on a
+    SyntaxError the agent wrote into the repository. On audited tasks the untouched
+    repository collects cleanly, so a final frame outside site-packages and the
+    interpreter means the agent broke the code: a task failure, not infrastructure.
+    """
+    verifier_dir = trial_dir / "verifier"
+    texts: list[str] = []
+    stdout_path = verifier_dir / "test-stdout.txt"
+    if stdout_path.is_file():
+        texts.append(stdout_path.read_text(encoding="utf-8", errors="replace"))
+    grade_path = verifier_dir / "grade.json"
+    if grade_path.is_file():
+        try:
+            grade = json.loads(grade_path.read_text(encoding="utf-8", errors="replace"))
+        except json.JSONDecodeError:
+            grade = None
+        if isinstance(grade, dict):
+            for key in ("collect_stdout_tail", "collect_stderr_tail"):
+                if isinstance(grade.get(key), str):
+                    texts.append(grade[key])
+    frames = _TRACEBACK_FRAME.findall("\n".join(texts))
+    if not frames:
+        return False
+    last = frames[-1]
+    return not last.startswith("<") and not any(marker in last for marker in _NON_WORKSPACE_PATH_MARKERS)
+
+
+def _failure_kind(exception: dict[str, Any] | None, cli_exit_code: int, trial_dir: Path) -> str:
+    """Classify an incomplete trial as ``agent`` (scored 0) or ``infra`` (excludable)."""
+    if cli_exit_code != 0 or exception is None:
+        return "infra"
+    exception_type = str(exception.get("exception_type") or "").rsplit(".", 1)[-1]
+    if exception_type in _AGENT_FAILURE_EXCEPTIONS:
+        return "agent"
+    if exception_type == "RewardFileNotFoundError" and _verifier_blames_workspace(trial_dir):
+        return "agent"
+    return "infra"
 
 
 def reward_mode() -> str:
@@ -117,6 +181,7 @@ def task_result_from_harbor_trial(
         error = reward_error
 
     completed = error is None and score is not None
+    failure_kind = None if completed else _failure_kind(exception, cli_exit_code, trial_dir)
     binary_reward = score if completed and score is not None else 0.0
     resolved = completed and binary_reward == 1.0
     scalar_reward = binary_reward
@@ -154,12 +219,14 @@ def task_result_from_harbor_trial(
         "stdout_tail": stdout[-_OUTPUT_TAIL_CHARS:],
         "stderr_tail": stderr[-_OUTPUT_TAIL_CHARS:],
         "error": error,
+        "failure_kind": failure_kind,
         "reward_mode": mode,
         "reward_shaping": shaping,
     }
     extra_info = {
         "resolved": resolved,
         "eval_completed": completed,
+        "failure_kind": failure_kind,
         "eval_execution_time": elapsed,
         "eval_report": eval_report,
         "agent": payload.get("agent_info"),
