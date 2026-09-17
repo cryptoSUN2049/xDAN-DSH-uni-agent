@@ -109,10 +109,14 @@ if [[ "${TRAINER_MODE}" != sync && "${TRAINER_MODE}" != colocate_async ]]; then
 fi
 
 # DAPO=1: dynamic sampling (drop groups whose rewards are all equal and refill),
-# clip-higher, optional overlong shaping. Requires reward variance: with all-zero
-# groups the sampler refills until DAPO_MAX_GEN_BATCHES and then aborts the step.
+# clip-higher, optional overlong shaping. VERL V1's ReplayBuffer ignores
+# filter_groups.max_num_gen_batches: it fetches prompts one at a time and keeps
+# refilling (the dataloader cycles) until train_batch_size groups with variance
+# exist, with at most DAPO_MAX_INFLIGHT x train_batch_size prompts in flight. With
+# ~45% zero-variance groups that is ~2x wall time and sandboxes per step at the
+# default of 1; raise DAPO_MAX_INFLIGHT to trade sandboxes for wall time.
 DAPO="${DAPO:-0}"
-DAPO_MAX_GEN_BATCHES="${DAPO_MAX_GEN_BATCHES:-10}"
+DAPO_MAX_INFLIGHT="${DAPO_MAX_INFLIGHT:-1}"
 DAPO_METRIC="${DAPO_METRIC:-reward}"
 CLIP_RATIO_LOW="${CLIP_RATIO_LOW:-0.2}"
 CLIP_RATIO_HIGH="${CLIP_RATIO_HIGH:-0.2}"
@@ -122,7 +126,7 @@ if [[ "${DAPO}" == "1" ]]; then
   DAPO_OVERRIDES+=(
     algorithm.filter_groups.enable=True
     algorithm.filter_groups.metric="${DAPO_METRIC}"
-    algorithm.filter_groups.max_num_gen_batches="${DAPO_MAX_GEN_BATCHES}"
+    algorithm.filter_groups.max_inflight_gen_batches="${DAPO_MAX_INFLIGHT}"
   )
   # Overlong reward shaping is not wired here: this VERL config has no
   # reward.reward_kwargs path; the episode budget (max_total_tokens) bounds length instead.

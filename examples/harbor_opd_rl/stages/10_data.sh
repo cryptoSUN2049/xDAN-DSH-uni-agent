@@ -9,7 +9,8 @@ source "$(dirname "${BASH_SOURCE[0]}")/common.sh"; stage_dir
 # dirs under <source>/<rev>/runtime-v1/<task>, index/tasks.jsonl with split +
 # difficulty). STAGE1_SLICE=N takes the first N train tasks in index order
 # (20 -> 100 -> all as the dataset grows); STAGE1_SOURCES filters sources.
-# Validation split becomes the held-out parquet. Needs HF_TOKEN or ~/.cache/huggingface/token.
+# Validation split becomes the held-out parquet. Only audit-passed tasks are kept unless
+# STAGE1_REQUIRE_AUDIT=0. Needs HF_TOKEN or ~/.cache/huggingface/token.
 DATASET="${DATASET:-tb21}"
 if [[ "${DATASET}" == stage1 ]]; then
   STAGE1_REPO="${STAGE1_REPO:-gump2049/xDAN-Harbor-Stage1-Tasks}"
@@ -23,6 +24,15 @@ repo, local, slice_n, sources, out = sys.argv[1], sys.argv[2], int(sys.argv[3]),
 path = snapshot_download(repo, repo_type="dataset", local_dir=local, allow_patterns=["index/*", "*/runtime-v1/*"])
 rows = [json.loads(l) for l in open(os.path.join(path, "index", "tasks.jsonl"))]
 rows = [r for r in rows if r["source"] in sources and r["status"] == "derived"]
+# Only tasks whose no-op/oracle sandbox audit passed (nop reward 0, oracle 1) are
+# trainable by default: a task that pays the no-op agent teaches reward hacking,
+# one the oracle cannot solve only burns sandboxes. Unaudited sets (e.g. the Full
+# repo) need an explicit STAGE1_REQUIRE_AUDIT=0.
+require_audit = os.environ.get("STAGE1_REQUIRE_AUDIT", "1") == "1"
+before_audit = len(rows)
+if require_audit:
+    rows = [r for r in rows if isinstance(r.get("nop_oracle_audit"), dict) and r["nop_oracle_audit"].get("passed") is True]
+print("audit filter", "on" if require_audit else "off", before_audit, "->", len(rows))
 train = [r for r in rows if r["split"] == "train"]
 val = [r for r in rows if r["split"] == "validation"]
 if slice_n > 0:
@@ -70,7 +80,7 @@ for name, subset in (("train", train), ("validation", val)):
         stripped[f"{r['source']}:{reason}"] += 1
     print(name, len(subset), root)
 print("docker_image stripped", dict(stripped))
-json.dump({"repo": repo, "slice": slice_n, "sources": sources, "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
+json.dump({"repo": repo, "slice": slice_n, "sources": sources, "require_audit": require_audit, "audit_dropped": before_audit - len(rows), "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
            "difficulty": {d: sum(1 for r in train if r.get("difficulty") == d) for d in ("easy", "medium", "hard")}},
           open(os.path.join(out, "selection.json"), "w"), indent=1)
 PY
