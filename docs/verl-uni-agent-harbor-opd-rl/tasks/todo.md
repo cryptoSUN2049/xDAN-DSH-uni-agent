@@ -60,6 +60,8 @@
 - [x] **pipe-r3 验收 PASS**（12:10 UTC）：Teacher + resume 连续，7/7 步梯度非零，wandb 对账一致；`docs/…/pipe-r3/`
 - [ ] **pipe-r4：9B Student + 27B Teacher**（双卡，12:16 重起；审计混合集 40/7、batch 4、并发 32、6 步 + resume，`docs/…/pipe-r4/chain.sh`）：看 rollout 阶段 9B 推理、actor 是否 OOM、`distillation/loss` 是否离开 0、Teacher 每步耗时
 - [x] pipe-r4 第一次训练：13:41 时 9B 推理引擎 OOM（每步 36864 个 token）→ 13:47 改成每步 8192 个 token 后从训练阶段重起
+- [x] pipe-r4 第二次训练：14:41 引擎显存从 45 涨到 91 GiB 后 OOM → 14:48 与 pipe-r7 同步改为 prefix caching 关、单批 4096、显存比例 0.40 后重起
+- [ ] 两条跑通后：逐项放开（先开 prefix caching），观察 9B 引擎进程显存，确认增长的根因
 - [x] ~~pipe-r5：4B + DAPO~~：12:06 停止，改用 GRPO（V1 下 DAPO 逐批补采、步长约翻倍，开关原本接错参数，469b09b 已修）
 - [x] ~~pipe-r6：4B GRPO 20 步~~：14:00 跑完第 1 步后停止，单卡改作对照组
 - [ ] **pipe-r7：9B 纯 RL 对照组**（单卡，14:02 起）：与 pipe-r4 完全镜像，只是 `TEACHER=0`；明早与 pipe-r4 对比 reward、held-out、步长

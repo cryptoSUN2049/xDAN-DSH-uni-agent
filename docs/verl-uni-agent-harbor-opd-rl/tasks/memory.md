@@ -163,3 +163,8 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 明早比较 pipe-r4 和 pipe-r7：训练集 reward、held-out 7 题、每步耗时（Teacher 的开销）、`actor/distillation/*`。结论只看方向，6 步证明不了效果。
 - Modal：我们峰值 64 个并发，已向 Tinker 线更正，对方如遇持续限流，我们先降到 16。
 
+## 2026-09-17 14:50 两条 9B 同步改用保守引擎设置后重起
+- pipe-r4 第二次训练 14:41 OOM：9B 引擎从 45 GiB 涨到 91 GiB（见 lesson 35）。pipe-r7 还没 OOM，但为保持对照一致一起停掉。两边 14:48 从训练阶段重起：`ROLLOUT_ENABLE_PREFIX_CACHING=False ROLLOUT_MAX_NUM_BATCHED_TOKENS=4096 GPU_MEMORY_UTILIZATION=0.40`；pipe-r4 的 Teacher 仍是 8192 单批、0.85 显存比例。已从 train-command.txt 核对确实生效（408c81b）。
+- 关掉 prefix caching 后，多轮对话每一轮都要重新预填充，生成变慢。预计完成时间推迟到北京时间 08:00–10:00。
+- 旧的训练目录保留为 `train-attempt-2-vllm-growth-oom-8192`（r4）和 `train-attempt-1-stopped-for-parity`（r7）。
+
