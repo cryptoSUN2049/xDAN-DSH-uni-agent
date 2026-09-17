@@ -48,6 +48,10 @@
 - [ ] **pipe-r2 已起（2026-09-17，`runs/pipe-r2`）**：`DATASET=stage1 STAGE1_SLICE=20 STAGE1_SOURCES=terminal-lego-15k TRAIN_STEPS=6 ROLLOUT_N=8 CONCURRENCY=16 VAL_BEFORE_TRAIN=True TEST_FREQ=6 GPU_MEMORY_UTILIZATION=0.45`，prefix caching + CUDA graph 默认开；held-out 来自 validation 5 题，训练前后各评一次；之后 41 → 100+
 
 ## 阶段 F：路线 2 DAPO + OPD
+- [x] 2 卡 pod 接入（2026-09-17 00:42，端口 11965，host dbcea07805e9，同一共享卷）：`gpu-pod-restore.sh` 恢复凭据、模型拷本地 NVMe、lane 重证通过；源码同步到 6b7f362
+- [ ] **pipe-r3 已起（00:43，新 pod，`runs/pipe-r3`）**：`TEACHER=1`（4B 自评 Teacher 先打通接线）+ stage1 20 题 + 6 步 colocate_async + n 8 + 并发 16 + held-out 前后评估。GPU0 = actor + rollout vLLM 0.45，GPU1 = Teacher vLLM 0.8
+- [ ] 后台下载 `Qwen/Qwen3.8-27B`（Teacher）与 `Qwen/Qwen3.5-9B`（Student）到 `/workspace/models/`（日志 `runs/downloads/`）；pipe-r4 换 27B Teacher，pipe-r5 换 9B Student
+- [ ] `report.py` / `80_acceptance.sh` 增加 OPD 三行与 Teacher 检查（teacher logprobs 非空、distillation loss 非零）
 - [ ] 复核 tinker-cookbook-opd-rl 的 harbor_opd_rl.py 评分合同，对齐到 harbor task 轨迹（token ids / action mask 来自 Gateway npz）
 - [ ] 27B Teacher 服务化（独立 GPU 角色）；单卡先用 4B 自评做接线冒烟
 - [ ] hybrid loss（RL + OPD 加权）在 harbor 轨迹上非零梯度证据

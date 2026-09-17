@@ -103,3 +103,7 @@ pass_ratio reward（verifier CTRF 部分得分）让 4B 在 easy 4 题上出现�
 
 `run_tb21_pipeline.sh` 一条命令跑完 env→data→oracle→rollout→train(3 步 colocate_async)→delta→resume(step 4)→summary→acceptance，verdict PASS（hard 3 项、soft 5 项全 true）。证据 `docs/verl-uni-agent-harbor-opd-rl/pipe-r1/`。wandb：train `ohz52n9r`、resume `6iwtnfu6`。
 已知现象：grad_norm 只在组内有方差的 step 非零（step 1、3），step 2、4 组内同分 → 0；4B 在 easy 4 题上 16 条轨迹中 16 条撞 max_turns=50、5 条 completed。下一轮的杠杆：stage1 数据（多样性）、n=8、并发 16、held-out 打开、DAPO。
+
+## 2026-09-17 00:45 2 卡 pod 与路线 ② 起步
+
+用户开了 2 × RTX PRO 6000 的新 pod（端口 11965，共享同一 `/workspace` 卷；旧单卡 pod 12063 仍在跑 pipe-r2）。VERL 原生 Teacher 需要独立 Ray 资源池整数张 GPU，2 卡即满足：GPU0 actor+rollout，GPU1 Teacher。`TEACHER=1` 开关已进训练脚本（k1 on-policy 蒸馏 + task reward 的 hybrid）。pipe-r3 用 4B 自评 Teacher 先跑通接线；27B Teacher（`Qwen/Qwen3.8-27B`）与 9B Student（`Qwen/Qwen3.5-9B`）已在后台下载。
