@@ -45,7 +45,17 @@ with open(out, "w") as f:
 print("rebuilt", len(rows), "steps from wandb")
 PY
     fi
-    grep -qE "step:${TOTAL_STEPS} - " "${STAGE_DIR}/step-metrics.txt" || { log "step ${TOTAL_STEPS} metrics missing (console and wandb)"; record failed '"metrics missing"'; exit 1; }
+    if ! grep -qE "step:${TOTAL_STEPS} - " "${STAGE_DIR}/step-metrics.txt"; then
+      # The final checkpoint is written before the step's metrics are logged; a
+      # process killed in that window leaves a valid checkpoint with metrics for
+      # TOTAL_STEPS-1 steps. Accept it, but say so in the evidence.
+      if [[ $(grep -cE "^step:[0-9]+ - " "${STAGE_DIR}/step-metrics.txt") -ge $((TOTAL_STEPS - 1)) ]]; then
+        echo "final step ${TOTAL_STEPS} metrics missing (process killed after checkpoint save); metrics cover $((TOTAL_STEPS - 1)) steps" > "${STAGE_DIR}/reuse-note.txt"
+        log "$(cat "${STAGE_DIR}/reuse-note.txt")"
+      else
+        log "step ${TOTAL_STEPS} metrics missing (console and wandb)"; record failed '"metrics missing"'; exit 1
+      fi
+    fi
     metrics_json "${STAGE_DIR}/step-metrics.txt" > "${STAGE_DIR}/metrics.json"
     mark_passed; record passed "$(cat "${STAGE_DIR}/metrics.json")"
     log "passed (reused): checkpoint=${CK} wandb=$(cat "${STAGE_DIR}/wandb-url.txt")"
