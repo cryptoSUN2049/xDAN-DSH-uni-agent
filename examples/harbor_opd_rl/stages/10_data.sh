@@ -110,8 +110,12 @@ stripped = Counter()
 for name, subset in (("train", train), ("validation", val)):
     root = os.path.join(out, f"tasks-{name}")
     shutil.rmtree(root, ignore_errors=True); os.makedirs(root)
-    for r in subset:
-        dst = os.path.join(root, f"{r['source']}__{r['task']}")
+    for i, r in enumerate(subset):
+        # preprocess sorts task dirs by name; with per-source quotas an ordinal
+        # prefix keeps the interleaved order (otherwise every epoch runs one source
+        # after the other, as pipe-r6's steps 1-5 were all swe-rebench).
+        prefix = f"{i:04d}__" if train_quota > 0 else ""
+        dst = os.path.join(root, f"{prefix}{r['source']}__{r['task']}")
         shutil.copytree(os.path.join(path, r["task_dir"]), dst)
         toml_path = os.path.join(dst, "task.toml")
         dockerfile = os.path.join(dst, "environment", "Dockerfile")
