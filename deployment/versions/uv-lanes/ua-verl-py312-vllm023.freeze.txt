@@ -53,6 +53,8 @@ fastar==0.12.0
 fastsafetensors==0.4.0
 fastuuid==0.14.0
 filelock==3.32.6
+fla-core==0.5.2
+flash-linear-attention==0.5.2
 flashinfer-cubin==0.6.12
 flashinfer-python==0.6.12
 frozenlist==1.8.0
