@@ -6,7 +6,10 @@ STAGE_NAME=delta
 source "$(dirname "${BASH_SOURCE[0]}")/common.sh"; stage_dir
 
 CK_LAST="$(cat "${PIPE_ROOT}/train/final-checkpoint.txt")"
-CK_FIRST="$(dirname "${CK_LAST}")/global_step_1"
+# With trainer.max_actor_ckpt_to_keep=N only the newest N survive; compare the
+# earliest surviving checkpoint with the final one (consecutive steps still prove
+# adapter-changed / base-unchanged).
+CK_FIRST="$(ls -d "$(dirname "${CK_LAST}")"/global_step_* 2>/dev/null | sort -t_ -k3 -n | head -1)"
 if [[ "${CK_FIRST}" == "${CK_LAST}" ]]; then
   mark_passed; record skipped '"single training step: nothing to diff"'; log "skipped (one step)"; exit 0
 fi

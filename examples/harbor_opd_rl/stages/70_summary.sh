@@ -21,4 +21,7 @@ verdict={"stages":{k:v["status"] for k,v in last.items() if k!="summary"},
  "wandb":{k:open(f"{sys.argv[2].rsplit('/',2)[0]}/{k}/wandb-url.txt").read().strip() for k in ("train","resume") if last.get(k)}}
 json.dump(verdict,open(sys.argv[2],"w"),indent=1); print(json.dumps(verdict))
 PY
+# Retention on this run only (dry-run output kept as evidence, then applied).
+bash "${REPO_ROOT}/deployment/bootstrap/retain-checkpoints.sh" --keep "${RETAIN_KEEP:-10}" "${PIPE_ROOT}" > "${STAGE_DIR}/retention-plan.txt" 2>&1 || true
+bash "${REPO_ROOT}/deployment/bootstrap/retain-checkpoints.sh" --apply --keep "${RETAIN_KEEP:-10}" "${PIPE_ROOT}" > "${STAGE_DIR}/retention-applied.txt" 2>&1 || true
 mark_passed; record passed "$(tr -d '\n' < "${STAGE_DIR}/verdict.json")"

@@ -56,6 +56,10 @@ TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE:-2}"
 PPO_MINI_BATCH_SIZE="${PPO_MINI_BATCH_SIZE:-2}"
 TOTAL_TRAINING_STEPS="${TOTAL_TRAINING_STEPS:-1}"
 SAVE_FREQ="${SAVE_FREQ:-1}"
+# VERL keeps only the newest N actor checkpoints (8.7 GB each for 4B LoRA with
+# optimizer state). Newest 10 by default (user decision); a checkpoint corrupted mid-save
+# still leaves good predecessors. Post-run retention: deployment/bootstrap/retain-checkpoints.sh
+MAX_CKPT_TO_KEEP="${MAX_CKPT_TO_KEEP:-10}"   # user 2026-09-17: keep the newest 10
 TEST_FREQ="${TEST_FREQ:--1}"
 VAL_BEFORE_TRAIN="${VAL_BEFORE_TRAIN:-False}"
 TRAIN_MAX_SAMPLES="${TRAIN_MAX_SAMPLES:-2}"
@@ -254,6 +258,7 @@ COMMAND=(
   trainer.experiment_name="${EXP_NAME}"
   trainer.val_before_train="${VAL_BEFORE_TRAIN}"
   trainer.save_freq="${SAVE_FREQ}"
+  trainer.max_actor_ckpt_to_keep="${MAX_CKPT_TO_KEEP}"
   trainer.test_freq="${TEST_FREQ}"
   trainer.total_epochs="${TOTAL_EPOCHS}"
   trainer.total_training_steps="${TOTAL_TRAINING_STEPS}"
