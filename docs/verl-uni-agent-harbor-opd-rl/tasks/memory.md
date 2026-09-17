@@ -185,3 +185,12 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - `10_data.sh` 默认剔除保留集，关闭用 `STAGE1_EXCLUDE_RESERVED=0`。在 Full 上实测：剔除 170 道后，Terminal-Lego 剩 96 道、SWE 剩 467 道可选；按每个来源 50 训练 / 20 held-out 选题，与保留集重叠 0。
 - 下一步 held-out：Tinker 线明天上午会从保留集中挑 50 道 SWE、50 道 Terminal-Lego，都是基座 9B 时对时错的题，发出 manifest。届时我们把 held-out 换成这份 manifest，两条线就在同一套题上比较 checkpoint。
 
+## 2026-09-17 17:2x pipe-r4 第 1 步：真 Teacher 信号出现，但数据对 9B 太简单
+- wandb `m848n94f`，第 1 步（9B Student + 27B Teacher，设置 v2，无 OOM）：
+  - `actor/distillation/loss = 0.1224`、`abs_loss = 0.2135`（4B 自评 Teacher 时是 0.0001）→ **路线 ② 的真 Teacher 信号确认**。
+  - `actor/grad_norm = 0.1035`，比 4B 几轮的 0.01 大一个量级。
+  - `critic/score/mean = 0.9163`（max 1.0 / min 0.857），训练前 held-out 0.988 → **审计通过的 40 题混合集对 9B 已接近饱和，组内几乎没有方差**，GRPO 学不到东西。
+  - `timing_s/step = 1733`（gen 969 / update_actor 517 / old_log_prob 209），回复平均 24691 token、62.9 轮。
+  - Teacher 打分没有单独计时项，要用 pipe-r7 对照组的每步耗时差值来估算。
+- **结论影响下一轮选题**：不能只按"审计通过 + index 顺序"取题，要挑对 9B 有难度的题（基座时对时错）。Tinker 线的 eval-set-v1 用的就是这个筛法，同样的规则应该用到训练题上。
+

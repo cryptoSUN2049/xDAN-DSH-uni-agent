@@ -71,6 +71,7 @@
 - [ ] **部署 f81ae2c + e50b110（基础设施故障剔除、agent 失败记 0）**：pipe-r4 和 pipe-r7 都结束后，把 `uni_agent/tasks/harbor/{reward,task}.py` 同步到共享卷，再起下一轮。不能在 run 进行中同步，否则同一个 run 里会混用两种计分规则
 - [x] 数据阶段支持 Full 仓库（e50b110 / 9d6a11d）：合并审计 sidecar、按来源限额选题、held-out 用审计通过但没进训练的 train 题补足、只解压选中的题、按来源交错排序。实测 100 道训练 / 40 道 held-out，无重叠
 - [ ] **下一轮（pipe-r4 和 pipe-r7 都结束、f81ae2c 部署之后）**：`STAGE1_REPO=gump2049/xDAN-Harbor-Stage1-Tasks-Full STAGE1_TRAIN_PER_SOURCE=50 STAGE1_VAL_PER_SOURCE=20`。双卡跑 9B + 27B Teacher，单卡跑 9B 纯 RL 对照，两边数据和步数相同，`ROLLOUT_MAX_NUM_BATCHED_TOKENS=8192`；双卡另加 `TEACHER_MAX_NUM_BATCHED_TOKENS=8192`
+- [ ] **选题要按难度筛**：pipe-r4 第 1 步训练集得分 0.916、held-out 0.988，说明审计通过的题对 9B 太简单。下一轮训练题应挑基座 9B 时对时错的题（与 eval-set-v1 同一筛法），或至少限定 medium/hard
 - [x] 数据阶段默认剔除 eval-set-v1 保留集（仓库 / 题目），在 Full 上实测与保留集重叠 0
 - [ ] 收到 Tinker 线的 eval-set-v1 manifest（100 道，明天上午）后，数据阶段支持用 manifest 指定 held-out，替换当前"顺延 20 道"的规则
 - [x] SWE-rebench 25 题 verifier `--ctrf` 不可用 → 根因是 `docker_image` 跳过 Dockerfile，5fa9d6a 修复，oracle 复验 3/3 通过；下一轮起 `STAGE1_SLICE=0` 混合 41 题
