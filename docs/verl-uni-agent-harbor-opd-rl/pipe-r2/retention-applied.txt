@@ -1,0 +1,8 @@
+[retain] target=/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-r2 keep=10 strip_optim=0 apply=1
+== resume-attempt1-killed-0248/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-resume (1 checkpoints)
+   corrupt/incomplete: global_step_7 -> remove
+   keep: 
+== resume/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-resume (1 checkpoints)
+   keep: global_step_7 
+== train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train (2 checkpoints)
+   keep: global_step_1 global_step_6 

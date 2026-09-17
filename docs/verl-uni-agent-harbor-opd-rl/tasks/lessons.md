@@ -19,3 +19,6 @@
 17. **共享卷配额（500 GB）被 22 个 8.7 GB checkpoint 撑满，`Disk quota exceeded`。** 每条 run 只留首尾 checkpoint；清理前先核对哪个 checkpoint 可能损坏（保存中被杀的 `global_step_N` 会 `EOFError`），别把它前一个删了——pipe-r3 的 step 6 损坏、step 5 已删，只能重训。配额已加到 1 TB。
 18. **checkpoint 保存后、指标上报前被杀 → 有 checkpoint 无指标。** 复用逻辑改为：控制台缺失则从 wandb 重建；仍缺最后一步时接受但写 `reuse-note.txt`。
 19. **评测比训练更吃 Modal 额度。** 89 题 × n 次 = 每次基线 89–267 个沙箱，加上镜像构建也计费；两次基线把当天额度打穿，连带训练链被迫暂停。规则：基线评测先 n=1；起评测前用探针沙箱核额度；额度按"训练每步 batch×n + 评测题数×n"预估并留 50% 余量。`ImageBuildError: terminated due to external shut-down` 与 `NotFoundError/ConflictError` 成片出现都是额度耗尽的表现，不是任务本身的问题。
+20. **共享卷上的 `pipeline-summary.jsonl` 可能出现 NUL 填充的撕裂行。** pod 断电/重建时正在 append 的一行被写成一串 `\0` 再接 JSON，`json.loads` 直接失败，summary/acceptance 整阶段 FAIL（pipe-r2 07:36）。规则：读 jsonl 证据一律去 NUL、跳空行；写证据的 `record` 保持单次 `printf`。
+21. **验收要以记录为准，不以环境变量为准。** 重跑 `FROM_STAGE=acceptance` 时没带 `TRAIN_STEPS`，脚本用默认值算 `resume_continued` 得出 FAIL；同时控制台解析把非指标行记成 `{}`，让 `all_finite` 与 wandb 对账假失败。规则：验收从 train 记录里取实际步数；解析器丢弃没有 `training/global_step` 的行；假 FAIL 与真 FAIL 要在脚本里分清。
+

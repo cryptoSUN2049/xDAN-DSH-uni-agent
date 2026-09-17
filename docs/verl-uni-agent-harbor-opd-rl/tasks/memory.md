@@ -111,3 +111,11 @@ pass_ratio reward（verifier CTRF 部分得分）让 4B 在 easy 4 题上出现�
 ## 2026-09-17 01:55 路线 ② 接线证明
 
 pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，step 1/2 完成 hybrid 更新，wandb 出现 `actor/distillation/*` 指标。自评 Teacher 下 distillation loss ≈ 0 是正确的零点校验（k1 = log p_student − log p_teacher）。27B Teacher 与 9B Student 已在 `/workspace/models/`，pipe-r4 只改 `TEACHER_MODEL_PATH`。
+
+## 2026-09-17 07:46 pipe-r2（stage1 20 题纯 RL）验收 PASS
+- 证据 `docs/verl-uni-agent-harbor-opd-rl/pipe-r2/`：acceptance.json（PASS，hard 3/3 soft 5/5）、report-tables.md、verdict.json、delta.json；wandb train `dzlqgapu`、resume `eg1ix7eo`。
+- held-out（validation 5 题，n=1）：0.328 → 0.497（step 6）→ 0.458（step 7）；同一 checkpoint 两次评估差 0.06（0.497 vs 0.56），5 题的噪声就是这个量级，只作机制证据。
+- 轨迹终止分布仍以 max_turns 为主（train 72/122、resume 22/42），parse_error 14/10；这两项是下一步的样本效率问题，不是链路问题。
+- pipe-r3（4B 自评 Teacher，wandb `pg4xsj19`）重训中：step 1 约 906 s，distillation/loss ≈ -0.0001（自评应为 0），预计 09:30 UTC 前进入 delta/resume。
+- 假 FAIL 修复提交 2466495、31bcea8，已同步两台 pod 的 `src/uni-agent/examples/harbor_opd_rl/stages/`。
+

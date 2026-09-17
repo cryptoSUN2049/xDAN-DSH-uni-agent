@@ -1,0 +1,159 @@
+{
+ "hard": {
+  "mechanics_ok": true,
+  "all_finite": true,
+  "resume_continued": true
+ },
+ "soft": {
+  "learning_signal": true,
+  "reward_variance": true,
+  "wandb_ok": true,
+  "adapter_changed": true,
+  "base_unchanged": true
+ },
+ "checks": {
+  "stages_passed": {
+   "env": "passed",
+   "data": "passed",
+   "oracle": "passed",
+   "rollout": "passed",
+   "train": "passed",
+   "delta": "passed",
+   "resume": "passed"
+  },
+  "mechanics_ok": true,
+  "local_steps": [
+   1.0,
+   2.0,
+   3.0,
+   4.0,
+   5.0,
+   6.0,
+   7.0
+  ],
+  "grad_norm": [
+   0.052734375,
+   0.00653076171875,
+   0.00909423828125,
+   0.01470947265625,
+   0.0240478515625,
+   0.012451171875,
+   0.0089111328125
+  ],
+  "pg_loss": [
+   -0.40618230029940605,
+   0.17747810343280435,
+   0.11204825366439763,
+   0.3791673295199871,
+   0.014397208578884602,
+   0.06528228987008333,
+   -0.1686715167015791
+  ],
+  "score_mean": [
+   0.5951923131942749,
+   0.26538461446762085,
+   0.18583330512046814,
+   0.5715278387069702,
+   0.6041666865348816,
+   0.6527778506278992,
+   0.2827380895614624
+  ],
+  "reward_variance_steps": [
+   1.0,
+   2.0,
+   3.0,
+   4.0,
+   5.0,
+   6.0,
+   7.0
+  ],
+  "nonzero_grad_steps": [
+   1.0,
+   2.0,
+   3.0,
+   4.0,
+   5.0,
+   6.0,
+   7.0
+  ],
+  "all_finite": true,
+  "wandb_agrees_steps": [
+   1.0,
+   2.0,
+   3.0,
+   4.0,
+   5.0,
+   6.0,
+   7.0
+  ],
+  "wandb_ok": true,
+  "wandb": {
+   "train": {
+    "url": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/dzlqgapu",
+    "state": "finished",
+    "rows": [
+     {
+      "training/global_step": 1,
+      "critic/score/mean": 0.5951923131942749,
+      "actor/grad_norm": 0.052734375,
+      "actor/pg_loss": -0.40618230029940605
+     },
+     {
+      "training/global_step": 2,
+      "critic/score/mean": 0.26538461446762085,
+      "actor/grad_norm": 0.00653076171875,
+      "actor/pg_loss": 0.17747810343280435
+     },
+     {
+      "training/global_step": 3,
+      "critic/score/mean": 0.18583330512046814,
+      "actor/grad_norm": 0.00909423828125,
+      "actor/pg_loss": 0.11204825366439763
+     },
+     {
+      "training/global_step": 4,
+      "critic/score/mean": 0.5715278387069702,
+      "actor/grad_norm": 0.01470947265625,
+      "actor/pg_loss": 0.3791673295199871
+     },
+     {
+      "training/global_step": 5,
+      "critic/score/mean": 0.6041666865348816,
+      "actor/grad_norm": 0.0240478515625,
+      "actor/pg_loss": 0.014397208578884602
+     },
+     {
+      "training/global_step": 6,
+      "critic/score/mean": 0.6527778506278992,
+      "actor/grad_norm": 0.012451171875,
+      "actor/pg_loss": 0.06528228987008333
+     }
+    ]
+   },
+   "resume": {
+    "url": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/eg1ix7eo",
+    "state": "finished",
+    "rows": [
+     {
+      "training/global_step": 7,
+      "critic/score/mean": 0.2827380895614624,
+      "actor/grad_norm": 0.0089111328125,
+      "actor/pg_loss": -0.1686715167015791
+     }
+    ]
+   }
+  },
+  "delta": {
+   "passed": true,
+   "adapter_count": 504,
+   "adapter_changed": 504,
+   "base_count": 399,
+   "base_changed": 0
+  },
+  "adapter_changed": true,
+  "base_unchanged": true,
+  "train_steps": 6,
+  "resume_continued": true
+ },
+ "verdict": "PASS"
+}
