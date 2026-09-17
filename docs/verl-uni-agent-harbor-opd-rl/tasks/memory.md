@@ -194,3 +194,10 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
   - Teacher 打分没有单独计时项，要用 pipe-r7 对照组的每步耗时差值来估算。
 - **结论影响下一轮选题**：不能只按"审计通过 + index 顺序"取题，要挑对 9B 有难度的题（基座时对时错）。Tinker 线的 eval-set-v1 用的就是这个筛法，同样的规则应该用到训练题上。
 
+## 2026-09-17 17:45 Tinker 线的长度偏置警告（对 OPD 线直接相关）
+- 他们的 r4（9B Student + 27B Teacher，24 题 5 次更新）训练后在 4 道留出题上**退步**：15/16 → 11/16。原因是输出暴涨：同一道题训练前每次 3.6k–5.5k action token 且 4 次对 3 次，训练后 25k–109k token 且 4 次全错，大多跑满 32 轮。每轮平均约 3.4k token，未触及单轮上限，所以不是截断，更像 OPD 的奖励或损失里存在长度偏置。
+- 我们的起点已经很长：pipe-r4 第 1 步 `response_length/mean = 24691`、`num_turns/mean = 62.9`（配置 `max_turns=50`，指标定义待核，怀疑统计的是消息条数）。监听已加逐步长度、轮数、得分、蒸馏 loss 的跟踪。
+- 判据：若第 2 到 6 步长度持续上升而 `critic/score/mean` 不升，就按同一个长度偏置处理（对策：奖励里加长度惩罚、或降低蒸馏系数、或限制轮数）。
+- 他们还将发布 `eval-set-v1/base-rates.jsonl`（保留集逐题基座通过率，Qwen3.5-9B，32 轮 / 32768 token / temperature 1.0），只能用于校准选题规则，不能用于训练。训练题的通过率筛选需要他们的用户批预算。
+- Terminal-Lego 全集难度分布：easy 9223、medium 4440、hard 153，按 index 顺序取几乎全是 easy。
+
