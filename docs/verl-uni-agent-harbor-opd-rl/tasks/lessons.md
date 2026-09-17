@@ -18,3 +18,4 @@
 16. **Mac 断网 → 两台 pod 的 Ray 同时收到 SIGTERM（2026-09-17 02:48/02:50）。** 用 `nohup … &` 从 ssh 命令里起的驱动仍和会话有隶属关系。规则：远端长任务一律 `examples/harbor_opd_rl/launch-detached.sh`（setsid + nohup + /dev/null，trap 记录信号），"训练完接评测"用服务器端 `;`/`&&` 链，不在 Mac 上挂等待。
 17. **共享卷配额（500 GB）被 22 个 8.7 GB checkpoint 撑满，`Disk quota exceeded`。** 每条 run 只留首尾 checkpoint；清理前先核对哪个 checkpoint 可能损坏（保存中被杀的 `global_step_N` 会 `EOFError`），别把它前一个删了——pipe-r3 的 step 6 损坏、step 5 已删，只能重训。配额已加到 1 TB。
 18. **checkpoint 保存后、指标上报前被杀 → 有 checkpoint 无指标。** 复用逻辑改为：控制台缺失则从 wandb 重建；仍缺最后一步时接受但写 `reuse-note.txt`。
+19. **评测比训练更吃 Modal 额度。** 89 题 × n 次 = 每次基线 89–267 个沙箱，加上镜像构建也计费；两次基线把当天额度打穿，连带训练链被迫暂停。规则：基线评测先 n=1；起评测前用探针沙箱核额度；额度按"训练每步 batch×n + 评测题数×n"预估并留 50% 余量。`ImageBuildError: terminated due to external shut-down` 与 `NotFoundError/ConflictError` 成片出现都是额度耗尽的表现，不是任务本身的问题。

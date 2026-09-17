@@ -16,9 +16,13 @@
 | 路线 ② Teacher 接线（独立 GPU、prompt_logprobs、hybrid loss） | **打通**：双卡 pod 上 4B 自评 Teacher，`actor/distillation/*` 指标出现 | wandb `0jz8wq6h` |
 | 27B Teacher / 9B Student 权重 | **就绪**（已下载到共享卷） | `/workspace/models/` |
 | 训练前 held-out 基线（5 题） | 0.328（pipe-r2）/ 0.394（pipe-r3），同一模型的差异即噪声水平 | `runs/pipe-r*/train/agent-logs/*/step_0` |
-| 训练后 held-out、TB 2.1 官方基线 | **进行中**：pipe-r2 验收阶段；单卡 pod 排程 4B 的 TB 2.1 全 89 题基线 | `runs/eval-tb21-4b-base-n1` |
+| TB 2.1 官方基线（4B） | **初步 ≈ 0%**：两次评测（n=1 / n=3）有效样本 54 / 62 条全部未通过；因 Modal 额度中途触顶，样本不完整，需额度恢复后重跑 n=1 定为正式基线 | `runs/eval-tb21-4b-base-n1`、`-n3` |
+| 训练后 held-out | **未完成**：pipe-r2 resume / pipe-r3 重训因 Modal 额度暂停 | `runs/pipe-r2`、`runs/pipe-r3` |
 
 基础设施：2 台 RunPod pod 共享一个网盘（单卡做评测，双卡做训练）；wandb 项目 `xDAN-Verl-Uni-agent-Harbor-rl-opd`；一条命令冷启动（`gpu-pod-restore.sh`）与一条命令训练（`run_tb21_pipeline.sh`）；agent 可执行的操作 skill 与人工手册各一份。
+
+## 当前阻塞（04:00 UTC）
+Modal 工作区 spend limit 再次触顶（评测约 360 个沙箱）。两条训练链已暂停在引擎初始化阶段，额度恢复后一条命令续跑。凌晨 02:48/02:50 两台 pod 的 Ray 收到 SIGTERM（与本机断网同窗口），已改用 setsid 脱离会话启动并加信号日志；共享卷曾配额满（500 GB → 已扩 1 TB），已加 checkpoint 保留机制（最近 10 个、坏文件自动剔除）。
 
 ## 今天解决的阻塞
 Modal 消费上限、pod 两次重建、Modal API 挂起（加 trial 级超时与失败补组）、小数据集 epoch 上限、二值 reward 全 0（改用 verifier 部分得分）、数据集镜像别名不可拉取。全部记入 `tasks/lessons.md`（15 条）。
