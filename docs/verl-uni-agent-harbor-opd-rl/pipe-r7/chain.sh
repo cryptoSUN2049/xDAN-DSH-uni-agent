@@ -3,9 +3,9 @@
 # audited stage1 mix (40 train / 7 held-out), GRPO, 4 prompts x 8 rollouts per
 # step, 32 concurrent sandboxes, 6 steps + resume, 8192-token engine steps; the
 # only difference is TEACHER=0 (no 27B on-policy distillation).
-# Attempt 2 (14:41 UTC): with prefix caching on (vLLM mamba "align" cache mode for
-# Qwen3.5) the 9B engine grew from ~45 GiB to 91 GiB and OOMed; both runs now use
-# prefix caching off, 4096-token engine steps and gpu_memory_utilization 0.40.
+# Student engine settings (prefix caching off, 4096-token steps, gpu_memory_utilization
+# 0.40) mirror pipe-r4. They were adopted after pipe-r4 OOMs that were later traced to
+# its 27B Teacher, not the student; kept for parity.
 R=/workspace/verl-uni-agent-harbor-opd-rl; P=$R/runs/pipe-r7
 mkdir -p /tmp/models
 if [[ ! -f /tmp/models/.qwen35-9b-copy-ok ]]; then

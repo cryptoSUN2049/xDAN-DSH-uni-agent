@@ -1,4 +1,4 @@
-# 进度汇报：Uni-Agent × Harbor × VERL 训练通路（截至 2026-09-17 14:50 UTC）
+# 进度汇报：Uni-Agent × Harbor × VERL 训练通路（截至 2026-09-17 16:00 UTC）
 
 ## 终局目标
 
@@ -21,7 +21,7 @@
 | 训练后 held-out（5 题 n=1） | 0.328 → 0.497（step 6）→ 0.458（step 7）；同一 checkpoint 两次评估相差 0.06，**5 题只能证明机制，不能证明提升** | wandb `dzlqgapu` / `eg1ix7eo` val-core |
 | pipe-r3（4B 自评 Teacher，路线 ② 接线） | **验收 PASS**（12:10）：Teacher + 断点续训连续，7/7 步梯度非零，与 wandb 对账一致 | `docs/…/pipe-r3/acceptance.json` |
 | TB 2.1 官方基线（4B，n=1，正式） | **0/66 有效通过**（上界约 4.5%），23 题因镜像构建/额度未完成；三次评测一致 | `docs/…/tb21-4b-baseline-n1/summary.json` |
-| pipe-r4（9B Student + 27B Teacher，路线 ② 真 Teacher） | **运行中**（双卡）：9B 推理引擎两次 OOM，第一次是单批过大，第二次是引擎显存持续增长；14:48 改用保守设置（prefix caching 关、单批 4096、显存比例 0.40）重起；预计北京时间 08:00–10:00 完成 | `docs/…/pipe-r4/chain.sh` |
+| pipe-r4（9B Student + 27B Teacher，路线 ② 真 Teacher） | **运行中**（双卡，第 4 次训练，15:48 起）：前三次 OOM 查实都是 27B Teacher 显存比例过高（0.85），放不下 prompt logprobs 缓冲；已改为 0.70 / 单批 4096；预计北京时间 09:00–11:00 完成 | `docs/…/pipe-r4/chain.sh` |
 | pipe-r7（9B 纯 RL，pipe-r4 的对照组） | **运行中**（单卡）：与 pipe-r4 同步改用保守引擎设置，14:48 重起；两边 40/7 题目已核对完全一致 | `docs/…/pipe-r7/chain.sh` |
 | SWE-rebench 数据源（22 道审计通过） | **已修复**：`docker_image` 跳过了 Dockerfile，已在本线与数据源头两处修掉，oracle 复验 3/3 | `docs/…/swe-ctrf-fix/` |
 | Full 数据集（15.4k 题） | **数据阶段就绪**：按审计结果每个来源抽 50 道训练 + 20 道 held-out，实测 100 / 40、无重叠；下一轮使用 | `examples/harbor_opd_rl/stages/10_data.sh` |

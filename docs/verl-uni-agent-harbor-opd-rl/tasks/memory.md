@@ -168,3 +168,9 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 关掉 prefix caching 后，多轮对话每一轮都要重新预填充，生成变慢。预计完成时间推迟到北京时间 08:00–10:00。
 - 旧的训练目录保留为 `train-attempt-2-vllm-growth-oom-8192`（r4）和 `train-attempt-1-stopped-for-parity`（r7）。
 
+## 2026-09-17 16:00 纠正：OOM 出在 Teacher；pipe-r4 第 4 次训练
+- 三次 OOM 都是 Qwen3.8-27B Teacher（GPU1，显存比例 0.85），prompt logprobs 缓冲放不下。14:50 那条"9B 学生引擎显存增长"的记录是误判（见 lesson 33、35 的更正）。
+- pipe-r4 于 15:48 从训练阶段重起：`TEACHER_GPU_MEM=0.70 TEACHER_MAX_NUM_BATCHED_TOKENS=4096`。学生侧仍是 prefix caching 关、单批 4096、显存比例 0.40，与 pipe-r7 一致，已从 train-command.txt 核对。三次失败的训练目录已按 Teacher OOM 重命名。
+- pipe-r7 不受影响，一直在正常训练。监听预警改为任何 vLLM 进程达到 85 GiB 就报，Teacher 也覆盖在内。
+- 下一轮：学生侧恢复 prefix caching、8192、0.45（两边同步），Teacher 保持 0.70 / 4096。
+
