@@ -180,3 +180,8 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - pipe-r4 第 5 次训练在初始化时停掉，16:09 按 v2 从训练阶段重起（第 6 次），生效参数已从 train-command.txt 核对。
 - **单卡 pod（12063）约 15:52 起卡住**：pipe-r7 此后没有任何写入；约 16:01 起 SSH 握手一直被对端断开，但 TCP 端口仍然通，原因未知。pipe-r7 v2 的启动脚本已放到 `runs/pipe-r7/chain.sh.v2`，pod 恢复后要先停掉旧会话（sid 304956），再用它替换 chain.sh 并重起。如果 pod 被重建，端口会变，需要先跑 `gpu-pod-restore.sh <新端口>`。
 
+## 2026-09-17 16:50 共享评估集 eval-set-v1 已冻结，数据阶段默认剔除
+- Tinker 线的用户已确认保留名单：`gump2049/xDAN-Harbor-Stage1-Tasks-Full` 的 `eval-set-v1/reserved.json`，冻结于 2026-09-18 00:43（北京时间），数据集 sha 957c879。SWE 按仓库保留 37 个，Terminal-Lego 按题保留 308 道。判定规则：Terminal-Lego 的 task id 在名单里即算保留；SWE 的 task id 去掉末尾的 `-数字` 得到仓库名，仓库在名单里即算保留。
+- `10_data.sh` 默认剔除保留集，关闭用 `STAGE1_EXCLUDE_RESERVED=0`。在 Full 上实测：剔除 170 道后，Terminal-Lego 剩 96 道、SWE 剩 467 道可选；按每个来源 50 训练 / 20 held-out 选题，与保留集重叠 0。
+- 下一步 held-out：Tinker 线明天上午会从保留集中挑 50 道 SWE、50 道 Terminal-Lego，都是基座 9B 时对时错的题，发出 manifest。届时我们把 held-out 换成这份 manifest，两条线就在同一套题上比较 checkpoint。
+
