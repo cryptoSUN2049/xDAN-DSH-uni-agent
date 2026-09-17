@@ -145,3 +145,8 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - **pipe-r4（双卡，12:16 重起）**：9B + 27B Teacher，同一份 40/7，batch 4、并发 32，6 步 + resume。第一次按 Terminal-Lego 20/5 起跑，到 oracle 阶段时停掉，旧目录改名为 `*-attempt1*`。
 - **与 Tinker 线的协调**（会话 `xdan-dsh-uni-agent-e1`）：共用 Modal l98348740 的 spend limit，对方同意我们用 48 并发，对方自己 16 并发，新工作区偶发 "App create rate limit exceeded"。Full 仓库归档已去掉 `docker_image`。SWE 全集审计进度 558/1581，通过率约 86%，预计明天下午完成。Terminal-Lego 前 104 道审计明早出结果，逐题状态写在 `audits/harbor-sources-audit-{swe,tl}-full/audit-status.jsonl`。
 
+## 2026-09-17 13:45 未完成 trial 的计分语义
+- 现状（f81ae2c 部署前）：Harbor trial 只要没完成就记 0 分。模型改坏代码时 0 分是对的；沙箱或 verifier 故障时 0 分是错的，会给轨迹一个很强的负 advantage。
+- f81ae2c：`failure_kind` 分为 agent 和 infra。infra 默认抛异常，只剔除这一条会话；`HARBOR_INFRA_FAILURE=zero` 恢复旧行为。已在隔离目录里用 lane 解释器跑过测试，20/20 通过。**尚未部署**，等 pipe-r4 和 pipe-r6 结束后再部署。
+- pipe-r4 13:19 完成初始化（9B 占 61 GB，27B 占 86 GB，没有 OOM）；pipe-r6 在 13:20 左右已跑完 27 条 trial，平均分 0.78。wandb：pipe-r6 train `r382x2fw`。
+
