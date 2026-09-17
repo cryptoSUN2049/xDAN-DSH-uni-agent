@@ -157,3 +157,9 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - Tinker 线：Terminal-Lego 前 104 道审计通过 102 道，SWE 已审 629 道、通过 502 道。评分器已按同一规则修复（351e691）；run_tests.py 要等全集审计完成后才改源头，在此之前我们保留兜底逻辑。
 - 已提交但**未部署**：f81ae2c 与 e50b110 里 `uni_agent/tasks/harbor/reward.py` / `task.py` 的改动，等两条 run 结束后再同步。`10_data.sh` 和训练脚本已同步（默认行为不变）。
 
+## 2026-09-17 14:05 单卡改作对照组：pipe-r6 停止，pipe-r7 = 9B 纯 RL
+- 用户决定保留单卡 pod 作为对照组。pipe-r6（4B）和 pipe-r4 的模型、步数都不同，数据还按来源成块排列，当不了对照组，所以跑完第 1 步后停掉，停止原因已写进 `runs/pipe-r6/pipeline-summary.jsonl`。
+- **pipe-r7**（单卡，14:02 起）：Qwen3.5-9B，与 pipe-r4 完全镜像，唯一区别是 `TEACHER=0`。数据同为 40/7 审计集，每步 4 题 × 8 条、并发 32，6 步 + resume，`ROLLOUT_MAX_NUM_BATCHED_TOKENS=8192`。参数用 diff 核对过，只差 DATA_DIR 和 Teacher 相关项。脚本在 `docs/…/pipe-r7/chain.sh`。
+- 明早比较 pipe-r4 和 pipe-r7：训练集 reward、held-out 7 题、每步耗时（Teacher 的开销）、`actor/distillation/*`。结论只看方向，6 步证明不了效果。
+- Modal：我们峰值 64 个并发，已向 Tinker 线更正，对方如遇持续限流，我们先降到 16。
+

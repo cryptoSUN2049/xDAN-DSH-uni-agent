@@ -1,4 +1,4 @@
-# 进度汇报：Uni-Agent × Harbor × VERL 训练通路（截至 2026-09-17 14:00 UTC）
+# 进度汇报：Uni-Agent × Harbor × VERL 训练通路（截至 2026-09-17 14:05 UTC）
 
 ## 终局目标
 
@@ -22,7 +22,7 @@
 | pipe-r3（4B 自评 Teacher，路线 ② 接线） | **验收 PASS**（12:10）：Teacher + 断点续训连续，7/7 步梯度非零，与 wandb 对账一致 | `docs/…/pipe-r3/acceptance.json` |
 | TB 2.1 官方基线（4B，n=1，正式） | **0/66 有效通过**（上界约 4.5%），23 题因镜像构建/额度未完成；三次评测一致 | `docs/…/tb21-4b-baseline-n1/summary.json` |
 | pipe-r4（9B Student + 27B Teacher，路线 ② 真 Teacher） | **运行中**（双卡）：第一次训练 13:41 时 9B 推理引擎 OOM，改成每步 8192 个 token 后 13:47 重起；预计北京时间 06:00–08:00 完成 | `docs/…/pipe-r4/chain.sh` |
-| pipe-r6（4B GRPO，40/7，20 步） | **运行中**（单卡）：训练前 held-out 0.559；SWE 题冷构建镜像，约 30 分钟一步；预计北京时间 07:00–09:00 完成 | wandb `r382x2fw` |
+| pipe-r7（9B 纯 RL，pipe-r4 的对照组） | **运行中**（单卡，14:02 起）：与 pipe-r4 只差 Teacher；替换了当不了对照组的 4B pipe-r6（跑完 1 步后停止）；预计北京时间 06:00–08:00 完成 | `docs/…/pipe-r7/chain.sh` |
 | SWE-rebench 数据源（22 道审计通过） | **已修复**：`docker_image` 跳过了 Dockerfile，已在本线与数据源头两处修掉，oracle 复验 3/3 | `docs/…/swe-ctrf-fix/` |
 | Full 数据集（15.4k 题） | **数据阶段就绪**：按审计结果每个来源抽 50 道训练 + 20 道 held-out，实测 100 / 40、无重叠；下一轮使用 | `examples/harbor_opd_rl/stages/10_data.sh` |
 
