@@ -17,13 +17,13 @@
 | 27B Teacher / 9B Student 权重 | **就绪**（已下载到共享卷） | `/workspace/models/` |
 | 训练前 held-out 基线（5 题） | 0.328（pipe-r2）/ 0.394（pipe-r3），同一模型的差异即噪声水平 | `runs/pipe-r*/train/agent-logs/*/step_0` |
 | TB 2.1 官方基线（4B） | **初步 ≈ 0%**：两次评测（n=1 / n=3）有效样本 54 / 62 条全部未通过；因 Modal 额度中途触顶，样本不完整，需额度恢复后重跑 n=1 定为正式基线 | `runs/eval-tb21-4b-base-n1`、`-n3` |
-| pipe-r4（9B Student + 27B Teacher，路线 ② 真 Teacher） | **已排队**：双卡 pod 在 pipe-r3 验收后自动开始；4B 与 27B 词表不同，只能用 9B 做 Student；已补装 Qwen3.5 训练依赖 fla | `runs/pipe-r4/chain.sh` |
-| pipe-r5（4B + DAPO，20 步） | **运行中**（单卡 pod，11:17 起）：目标是看到训练集 reward 上升曲线与 DAPO 重采指标 | `runs/pipe-r5` |
-| SWE-rebench 数据源（25 题） | **暂不可用**：oracle 闸门发现 verifier 的 `pytest --ctrf` 在任务镜像中不可用、不产生 reward | `runs/pipe-r5/oracle-attempt1-swe-rebench-no-reward-file/` |
 | pipe-r2（stage1 20 题纯 RL）验收 | **PASS**（07:46）：7/7 步非零梯度且与 wandb 对账一致；resume 从 step 7 接续 | `docs/verl-uni-agent-harbor-opd-rl/pipe-r2/acceptance.json` |
 | 训练后 held-out（5 题 n=1） | 0.328 → 0.497（step 6）→ 0.458（step 7）；同一 checkpoint 两次评估相差 0.06，**5 题只能证明机制，不能证明提升** | wandb `dzlqgapu` / `eg1ix7eo` val-core |
 | pipe-r3（4B 自评 Teacher，路线 ② 接线） | **train + delta PASS**（08:30）：6 步梯度全非零，`distillation/*` 全程在线；resume 在 step 7 保存后被 Modal 额度打断，额度恢复后自动续跑 | wandb `pg4xsj19`、`docs/…/pipe-r3/` |
 | TB 2.1 官方基线（4B，n=1，正式） | **0/66 有效通过**（上界约 4.5%），23 题因镜像构建/额度未完成；三次评测一致 | `docs/…/tb21-4b-baseline-n1/summary.json` |
+| pipe-r4（9B Student + 27B Teacher，路线 ② 真 Teacher） | **已排队**：双卡 pod 在 pipe-r3 验收后自动开始；4B 与 27B 词表不同，只能用 9B 做 Student；已补装 Qwen3.5 训练依赖 fla | `runs/pipe-r4/chain.sh` |
+| pipe-r5（4B + DAPO，20 步） | **运行中**（单卡 pod，11:17 起）：目标是看到训练集 reward 上升曲线与 DAPO 重采指标 | `runs/pipe-r5` |
+| SWE-rebench 数据源（25 题） | **暂不可用**：oracle 闸门发现 verifier 的 `pytest --ctrf` 在任务镜像中不可用、不产生 reward | `runs/pipe-r5/oracle-attempt1-swe-rebench-no-reward-file/` |
 
 基础设施：2 台 RunPod pod 共享一个网盘（单卡做评测，双卡做训练）；wandb 项目 `xDAN-Verl-Uni-agent-Harbor-rl-opd`；一条命令冷启动（`gpu-pod-restore.sh`）与一条命令训练（`run_tb21_pipeline.sh`）；agent 可执行的操作 skill 与人工手册各一份。
 
