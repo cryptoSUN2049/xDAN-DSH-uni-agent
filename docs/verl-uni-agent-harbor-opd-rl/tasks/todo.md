@@ -57,9 +57,11 @@
 - [x] **4B TB 2.1 正式基线 n=1：0/66 有效通过**（23 题因镜像/额度未完成）。`docs/…/tb21-4b-baseline-n1/`
 - [x] 换 Modal 工作区 profile `l98348740`（2026-09-17 10:34），本机与两台 pod 均已激活；pipe-r3 续跑链 10:45 自动放行
 - [x] resume 继承 train 冻结参数（1ec1b22），pipe-r3 resume 11:08 按 20/5 口径重跑
-- [ ] pipe-r3 resume → summary → acceptance（双卡，自动）
-- [ ] **pipe-r4：9B Student + 27B Teacher**（双卡，pipe-r3 结束后自动接，`runs/pipe-r4/chain.sh`）：看 rollout 阶段 9B 推理、actor OOM 与否、`distillation/loss` 离开 0、Teacher 每步耗时
-- [ ] **pipe-r5：4B + DAPO=1，20 步**（单卡，11:17 起）：看 `training/filter_groups/*`、reward 曲线是否上升、held-out 0/10/20 步
+- [x] **pipe-r3 验收 PASS**（12:10 UTC）：Teacher + resume 连续，7/7 步梯度非零，wandb 对账一致；`docs/…/pipe-r3/`
+- [ ] **pipe-r4：9B Student + 27B Teacher**（双卡，12:16 重起；审计混合集 40/7、batch 4、并发 32、6 步 + resume，`docs/…/pipe-r4/chain.sh`）：看 rollout 阶段 9B 推理、actor 是否 OOM、`distillation/loss` 是否离开 0、Teacher 每步耗时
+- [x] ~~pipe-r5：4B + DAPO~~：12:06 停止，改用 GRPO（V1 下 DAPO 逐批补采、步长约翻倍，开关原本接错参数，469b09b 已修）
+- [ ] **pipe-r6：4B GRPO，40/7 审计混合集，batch 4、并发 32、20 步**（单卡，12:08 起）：看训练集 reward 曲线，并在第 0/10/20 步评 held-out 7 题
+- [ ] 明天：从 Full 抽 100 道（按 SWE 审计状态 50 道 + Terminal-Lego 前 104 道审计通过的 50 道）；数据阶段要支持 tar.gz 解包，并合并 audit-status.jsonl
 - [x] SWE-rebench 25 题 verifier `--ctrf` 不可用 → 根因是 `docker_image` 跳过 Dockerfile，5fa9d6a 修复，oracle 复验 3/3 通过；下一轮起 `STAGE1_SLICE=0` 混合 41 题
 - [ ] Full 数据集（15397 题，未审计）：`10_data.sh` 支持 `runtime-v1.tar.gz` 解包 + 按审计结果过滤；先切 100 题（审计通过的 SWE + 自审的 Terminal-Lego 抽样），再 500–1000 题
 - [x] 04:00 Modal 触顶 → 06:46 用户加了 $10（≈300 条 trial）。已按价值顺序脱离会话重启：pipe-r2 resume 重做（旧 pod，≈$0.7）、pipe-r3 带 Teacher 重训（新 pod，≈$4）；基线重跑与 pipe-r4 等额度

@@ -137,3 +137,11 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - SWE-rebench 25 题可用了：5fa9d6a 去掉等于 Dockerfile `FROM` 的 `docker_image`，oracle 复验 aiohttp-8538 / anta-969 / click-2788 全部 reward 1.0。已通知 Tinker 线（两个 xdan-dsh-uni-agent 会话）。stage1 现在可以 `STAGE1_SLICE=0` 混合 41 train / 9 val，从下一轮开始用。
 - `gump2049/xDAN-Harbor-Stage1-Tasks-Full`（2026-09-17 11:11 UTC 发布，sha 209d36a）：Terminal-Lego 11051 train / 2765 val，SWE-rebench 1265 train / 316 val，状态"未审计"、`training_ready=false`。任务打包在 `<source>-full/<rev>/runtime-v1.tar.gz`，现有 `10_data.sh` 读不了，需要加解包。Tinker 线的审计进度：SWE 547/1581 已审计，471 通过、76 失败；Terminal-Lego 尚未审计。
 
+## 2026-09-17 12:20 pipe-r3 验收 PASS；换回 GRPO、放开并发、切到 40/7 审计混合集
+- **pipe-r3 PASS**（约 12:10 UTC）：4B 自评 Teacher，6 步 + resume 到 step 7，7/7 步 grad_norm 非零，与 wandb 逐步对账一致，adapter 变、base 不变。wandb train `pg4xsj19`、resume `zlimfmcf`。证据 `docs/…/pipe-r3/`。**路线 ② 接线闭环**。
+- **pipe-r5 停止**（12:06）：V1 下 DAPO 逐批补采，步长约翻倍；DAPO 开关原本设置的参数被 V1 忽略（469b09b 已改为 `max_inflight_gen_batches`）。按用户意见换回 GRPO。
+- **数据**：Tinker 线在源头删掉了 `docker_image`，并排除 3 道审计未通过的 SWE 题；已审计集 sha 1129d6e 共 47 道，训练 40、验证 7。数据阶段默认只收 `nop_oracle_audit.passed=true` 的题。
+- **pipe-r6（单卡，12:08 起）**：4B GRPO，40/7，`TRAIN_BATCH_SIZE=4 CONCURRENCY=32`，20 步（2 epoch），第 0/10/20 步评 held-out。
+- **pipe-r4（双卡，12:16 重起）**：9B + 27B Teacher，同一份 40/7，batch 4、并发 32，6 步 + resume。第一次按 Terminal-Lego 20/5 起跑，到 oracle 阶段时停掉，旧目录改名为 `*-attempt1*`。
+- **与 Tinker 线的协调**（会话 `xdan-dsh-uni-agent-e1`）：共用 Modal l98348740 的 spend limit，对方同意我们用 48 并发，对方自己 16 并发，新工作区偶发 "App create rate limit exceeded"。Full 仓库归档已去掉 `docker_image`。SWE 全集审计进度 558/1581，通过率约 86%，预计明天下午完成。Terminal-Lego 前 104 道审计明早出结果，逐题状态写在 `audits/harbor-sources-audit-{swe,tl}-full/audit-status.jsonl`。
+
