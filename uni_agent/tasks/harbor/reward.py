@@ -17,7 +17,9 @@ _INFRA_FAILURE_ENV = "HARBOR_INFRA_FAILURE"
 _INFRA_FAILURE_POLICIES = ("exclude", "zero")
 # Harbor exceptions that mean the agent itself failed: they are scored 0.
 _AGENT_FAILURE_EXCEPTIONS = frozenset({"AgentTimeoutError", "OutputLengthExceededError"})
-_TRACEBACK_FRAME = re.compile(r'File "([^"]+)", line \d+')
+# Python traceback frames (`File "path", line N`) and pytest's short frames
+# (`path.py:N: in <module>`, possibly after pytest's `E ` prefix), in text order.
+_TRACEBACK_FRAME = re.compile(r'File "([^"]+)", line \d+|^[ \t]*(?:E[ \t]+)?(\S+\.py):\d+:', re.MULTILINE)
 _NON_WORKSPACE_PATH_MARKERS = ("site-packages", "dist-packages", "/usr/lib/python", "/usr/local/lib/python")
 
 
@@ -37,6 +39,9 @@ def infra_failure_policy() -> str:
 
 def _verifier_blames_workspace(trial_dir: Path) -> bool:
     """True when the verifier's last Python traceback frame is in the task workspace.
+
+    Relative frames (pytest prints paths relative to its rootdir, the workdir) count
+    as workspace frames unless they point into site-packages or the interpreter.
 
     Verifiers such as swe-rebench's run_tests.py treat "no tests collected" as an
     infrastructure failure and write no reward, even when collection crashed on a
@@ -59,7 +64,7 @@ def _verifier_blames_workspace(trial_dir: Path) -> bool:
             for key in ("collect_stdout_tail", "collect_stderr_tail"):
                 if isinstance(grade.get(key), str):
                     texts.append(grade[key])
-    frames = _TRACEBACK_FRAME.findall("\n".join(texts))
+    frames = [quoted or short for quoted, short in _TRACEBACK_FRAME.findall("\n".join(texts))]
     if not frames:
         return False
     last = frames[-1]

@@ -107,3 +107,25 @@ def test_unknown_policy_is_rejected(tmp_path, monkeypatch):
     result = _result(tmp_path, exception_type="ImageBuildError")
     with pytest.raises(ValueError, match="HARBOR_INFRA_FAILURE"):
         harbor_task.raise_if_infra_failure(result, "x")
+
+
+def test_pytest_relative_frame_in_repo_is_agent_failure(tmp_path):
+    stdout_text = (
+        "_ ERROR collecting tests/test_api.py _\n"
+        "tests/test_api.py:3: in <module>\n"
+        "    from pkg.api import removed_symbol\n"
+        "pkg/api.py:12: in <module>\n"
+        "E   ImportError: cannot import name 'helper' from 'pkg.util'\n"
+    )
+    result = _result(tmp_path, exception_type="RewardFileNotFoundError", stdout_text=stdout_text)
+    assert result.extra_info["failure_kind"] == "agent"
+
+
+def test_pytest_frame_in_site_packages_is_infra(tmp_path):
+    stdout_text = (
+        "pkg/api.py:12: in <module>\n"
+        "/usr/local/lib/python3.11/site-packages/_pytest/python.py:617: in _importtestmodule\n"
+        "E   ImportError: plugin failed\n"
+    )
+    result = _result(tmp_path, exception_type="RewardFileNotFoundError", stdout_text=stdout_text)
+    assert result.extra_info["failure_kind"] == "infra"

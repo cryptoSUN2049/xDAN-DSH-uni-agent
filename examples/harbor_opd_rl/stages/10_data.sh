@@ -9,6 +9,8 @@ source "$(dirname "${BASH_SOURCE[0]}")/common.sh"; stage_dir
 # dirs under <source>/<rev>/runtime-v1/<task>, index/tasks.jsonl with split +
 # difficulty). STAGE1_SLICE=N takes the first N train tasks in index order
 # (20 -> 100 -> all as the dataset grows); STAGE1_SOURCES filters sources.
+# STAGE1_TRAIN_PER_SOURCE / STAGE1_VAL_PER_SOURCE select per-source quotas instead
+# (e.g. STAGE1_REPO=gump2049/xDAN-Harbor-Stage1-Tasks-Full with 50 / 20).
 # Validation split becomes the held-out parquet. Only audit-passed tasks are kept unless
 # STAGE1_REQUIRE_AUDIT=0. Needs HF_TOKEN or ~/.cache/huggingface/token.
 DATASET="${DATASET:-tb21}"
@@ -18,16 +20,31 @@ if [[ "${DATASET}" == stage1 ]]; then
   STAGE1_SOURCES="${STAGE1_SOURCES:-terminal-lego-15k swe-rebench-v2-fv}"
   S1="${DATA_DIR}/stage1"; mkdir -p "${S1}"
   "${LANE_PY}" - "${STAGE1_REPO}" "${S1}/repo" "${STAGE1_SLICE}" "${STAGE1_SOURCES}" "${S1}" > "${STAGE_DIR}/stage1-select.log" 2>&1 <<'PY'
-import json, os, shutil, sys
+import glob, itertools, json, os, shutil, sys, tarfile
 from huggingface_hub import snapshot_download
 repo, local, slice_n, sources, out = sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4].split(), sys.argv[5]
-path = snapshot_download(repo, repo_type="dataset", local_dir=local, allow_patterns=["index/*", "*/runtime-v1/*"])
+# The audited repo ships unpacked task dirs; the Full repo ships one
+# <batch>/<rev>/runtime-v1.tar.gz per source plus per-task audit sidecars.
+path = snapshot_download(repo, repo_type="dataset", local_dir=local, allow_patterns=[
+    "index/*", "*/runtime-v1/*", "*/runtime-v1.tar.gz", "audits/*/audit-status.jsonl"])
 rows = [json.loads(l) for l in open(os.path.join(path, "index", "tasks.jsonl"))]
 rows = [r for r in rows if r["source"] in sources and r["status"] == "derived"]
+# Audit sidecars (Full repo): audits/*/audit-status.jsonl rows {task, status}. They
+# fill nop_oracle_audit where the index leaves it null.
+sidecar = {}
+for audit_file in sorted(glob.glob(os.path.join(path, "audits", "*", "audit-status.jsonl"))):
+    for line in open(audit_file):
+        entry = json.loads(line)
+        sidecar[entry["task"]] = {"passed": entry.get("status") == "passed", "sidecar": os.path.relpath(audit_file, path)}
+merged = 0
+for r in rows:
+    if r.get("nop_oracle_audit") is None and r["task"] in sidecar:
+        r["nop_oracle_audit"] = sidecar[r["task"]]; merged += 1
+print("audit sidecar entries", len(sidecar), "merged", merged)
 # Only tasks whose no-op/oracle sandbox audit passed (nop reward 0, oracle 1) are
 # trainable by default: a task that pays the no-op agent teaches reward hacking,
-# one the oracle cannot solve only burns sandboxes. Unaudited sets (e.g. the Full
-# repo) need an explicit STAGE1_REQUIRE_AUDIT=0.
+# one the oracle cannot solve only burns sandboxes. Unaudited tasks need an
+# explicit STAGE1_REQUIRE_AUDIT=0.
 require_audit = os.environ.get("STAGE1_REQUIRE_AUDIT", "1") == "1"
 before_audit = len(rows)
 if require_audit:
@@ -35,8 +52,42 @@ if require_audit:
 print("audit filter", "on" if require_audit else "off", before_audit, "->", len(rows))
 train = [r for r in rows if r["split"] == "train"]
 val = [r for r in rows if r["split"] == "validation"]
-if slice_n > 0:
+# STAGE1_TRAIN_PER_SOURCE=N / STAGE1_VAL_PER_SOURCE=M: per-source quotas in index
+# order, sources interleaved so a non-shuffled dataloader alternates sources. When a
+# source has fewer than M audited validation tasks (Full audits cover train only),
+# the held-out set is topped up with the next audited train tasks after the
+# training quota, so held-out and training never overlap.
+train_quota = int(os.environ.get("STAGE1_TRAIN_PER_SOURCE", "0"))
+val_quota = int(os.environ.get("STAGE1_VAL_PER_SOURCE", "0"))
+val_from_train = 0
+if train_quota > 0:
+    per_train, per_val = [], []
+    for src in sources:
+        src_train = [r for r in train if r["source"] == src]
+        src_val = [r for r in val if r["source"] == src]
+        chosen = src_train[:train_quota]
+        held = src_val[:val_quota] if val_quota > 0 else src_val
+        if val_quota > 0 and len(held) < val_quota:
+            extra = src_train[train_quota:train_quota + val_quota - len(held)]
+            val_from_train += len(extra); held = held + extra
+        per_train.append(chosen); per_val.append(held)
+        print("source", src, "train", len(chosen), "held-out", len(held), "(audited train pool", len(src_train), ")")
+    train = [r for group in itertools.zip_longest(*per_train) for r in group if r is not None]
+    val = [r for group in itertools.zip_longest(*per_val) for r in group if r is not None]
+elif slice_n > 0:
     train = train[:slice_n]
+# Unpack only the selected tasks from runtime-v1.tar.gz when the repo is packed.
+needed = {}
+for r in train + val:
+    if not os.path.isdir(os.path.join(path, r["task_dir"])):
+        batch_root = r["task_dir"].rsplit("/runtime-v1/", 1)[0]
+        needed.setdefault(batch_root, set()).add(r["task_dir"].rsplit("/", 1)[1])
+for batch_root, tasks in needed.items():
+    archive = os.path.join(path, batch_root, "runtime-v1.tar.gz")
+    with tarfile.open(archive) as tf:
+        members = [m for m in tf if m.name.split("/")[1:2] and m.name.split("/")[1] in tasks]
+        tf.extractall(os.path.join(path, batch_root), members=members, filter="data")
+    print("unpacked", len(tasks), "tasks from", os.path.relpath(archive, path))
 import re
 from collections import Counter
 # Harbor pulls task.toml `docker_image` from a registry and skips
@@ -80,7 +131,8 @@ for name, subset in (("train", train), ("validation", val)):
         stripped[f"{r['source']}:{reason}"] += 1
     print(name, len(subset), root)
 print("docker_image stripped", dict(stripped))
-json.dump({"repo": repo, "slice": slice_n, "sources": sources, "require_audit": require_audit, "audit_dropped": before_audit - len(rows), "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
+json.dump({"repo": repo, "slice": slice_n, "sources": sources, "require_audit": require_audit, "audit_dropped": before_audit - len(rows),
+           "audit_sidecar_merged": merged, "train_per_source": train_quota, "val_per_source": val_quota, "val_from_train": val_from_train, "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
            "difficulty": {d: sum(1 for r in train if r.get("difficulty") == d) for d in ("easy", "medium", "hard")}},
           open(os.path.join(out, "selection.json"), "w"), indent=1)
 PY
