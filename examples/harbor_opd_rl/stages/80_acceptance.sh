@@ -23,8 +23,9 @@ checks["stages_passed"] = {s: last.get(s, {}).get("status") for s in required}
 checks["mechanics_ok"] = all(v in ("passed", "skipped") for v in checks["stages_passed"].values())
 
 # 2 dynamics: local metrics
-def steps(stage):
-    d = last.get(stage, {}).get("detail"); return d if isinstance(d, list) else []
+def steps(stage):  # older runs recorded an empty {} row for non-metric console lines
+    d = last.get(stage, {}).get("detail")
+    return [s for s in d if isinstance(s, dict) and s.get("training/global_step") is not None] if isinstance(d, list) else []
 local = steps("train") + steps("resume")
 finite = lambda x: isinstance(x, (int, float)) and math.isfinite(x)
 checks["local_steps"] = [s.get("training/global_step") for s in local]
@@ -71,7 +72,12 @@ if os.path.exists(delta_file):
 else:
     checks["delta"] = last.get("delta", {}).get("status")
     checks["adapter_changed"] = None; checks["base_unchanged"] = None
+# The recorded train steps are the truth; TRAIN_STEPS is only a fallback for a
+# re-run whose train record was lost (the env default differs from the run's).
+recorded = [s["training/global_step"] for s in steps("train")]
+train_steps = int(max(recorded)) if recorded else train_steps
 resume_steps = [s.get("training/global_step") for s in steps("resume")]
+checks["train_steps"] = train_steps
 checks["resume_continued"] = any(st == train_steps + 1 for st in resume_steps)
 
 hard = {

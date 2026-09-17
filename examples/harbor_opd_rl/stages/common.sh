@@ -71,6 +71,7 @@ keys=("training/global_step","critic/score/mean","critic/score/max","critic/scor
 out=[]
 for line in open(sys.argv[1]):
     m=dict(re.findall(r"([\w/\-]+):(-?[0-9.]+(?:e-?\d+)?)",line))
+    if "training/global_step" not in m: continue  # non-metric console line
     out.append({k:float(m[k]) for k in keys if k in m})
 print(json.dumps(out))
 PY
