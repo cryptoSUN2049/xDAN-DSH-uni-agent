@@ -41,6 +41,13 @@ GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-0.40}"
 # Must match agent.model.max_total_tokens in TASK_CONFIG (episode budget).
 MAX_PROMPT_LENGTH="${MAX_PROMPT_LENGTH:-4096}"
 MAX_RESPONSE_LENGTH="${MAX_RESPONSE_LENGTH:-32768}"
+# Tokens per vLLM engine step (chunked prefill). The default is a whole context in
+# one step, which is fine for Qwen3-4B but OOMs Qwen3.5-9B (hybrid linear
+# attention, 248k vocab): pipe-r4 tried a 26.84 GiB allocation at 36864 tokens.
+# The Teacher computes prompt logprobs over the batched tokens, so its
+# vocab-sized buffer scales the same way. Use 8192 for Qwen3.5 / 27B Teachers.
+ROLLOUT_MAX_NUM_BATCHED_TOKENS="${ROLLOUT_MAX_NUM_BATCHED_TOKENS:-$((MAX_PROMPT_LENGTH + MAX_RESPONSE_LENGTH))}"
+TEACHER_MAX_NUM_BATCHED_TOKENS="${TEACHER_MAX_NUM_BATCHED_TOKENS:-$((MAX_PROMPT_LENGTH + MAX_RESPONSE_LENGTH))}"
 PPO_MAX_TOKEN_LEN_PER_GPU="${PPO_MAX_TOKEN_LEN_PER_GPU:-$((MAX_PROMPT_LENGTH + MAX_RESPONSE_LENGTH))}"
 LORA_RANK="${LORA_RANK:-32}"
 LORA_ALPHA="${LORA_ALPHA:-32}"
@@ -163,7 +170,7 @@ if [[ "${TEACHER}" == "1" ]]; then
     distillation.teacher_models.teacher_model.inference.tensor_model_parallel_size=1
     distillation.teacher_models.teacher_model.inference.gpu_memory_utilization="${TEACHER_GPU_MEM}"
     distillation.teacher_models.teacher_model.inference.max_model_len=$((MAX_PROMPT_LENGTH + MAX_RESPONSE_LENGTH + 1))
-    distillation.teacher_models.teacher_model.inference.max_num_batched_tokens=$((MAX_PROMPT_LENGTH + MAX_RESPONSE_LENGTH))
+    distillation.teacher_models.teacher_model.inference.max_num_batched_tokens="${TEACHER_MAX_NUM_BATCHED_TOKENS}"
     distillation.teacher_models.teacher_model.inference.max_num_seqs="${TEACHER_MAX_NUM_SEQS}"
   )
   if [[ "${TEACHER_SHARE_GPU}" == "1" ]]; then
@@ -237,7 +244,7 @@ COMMAND=(
   actor_rollout_ref.rollout.prompt_length="${MAX_PROMPT_LENGTH}"
   actor_rollout_ref.rollout.response_length="${MAX_RESPONSE_LENGTH}"
   actor_rollout_ref.rollout.max_model_len=$((MAX_PROMPT_LENGTH + MAX_RESPONSE_LENGTH))
-  actor_rollout_ref.rollout.max_num_batched_tokens=$((MAX_PROMPT_LENGTH + MAX_RESPONSE_LENGTH))
+  actor_rollout_ref.rollout.max_num_batched_tokens="${ROLLOUT_MAX_NUM_BATCHED_TOKENS}"
   actor_rollout_ref.rollout.multi_turn.enable=True
   actor_rollout_ref.rollout.multi_turn.max_parallel_calls=1
   actor_rollout_ref.rollout.multi_turn.format="${TOOL_PARSER}"

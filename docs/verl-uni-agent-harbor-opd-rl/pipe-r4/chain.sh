@@ -3,6 +3,8 @@
 # on the audited stage1 mix (40 train / 7 held-out, shared with pipe-r6), GRPO,
 # 4 prompts x 8 rollouts per step, 32 concurrent sandboxes. Models are staged on
 # local NVMe first; an optional PID argument waits for a previous run to exit.
+# Engine steps are capped at 8192 tokens: attempt 1 OOMed the 9B vLLM engine at
+# 36864 (26.84 GiB allocation, 13:41 UTC).
 R=/workspace/verl-uni-agent-harbor-opd-rl; P=$R/runs/pipe-r4; WAIT_PID="${1:-}"
 mkdir -p /tmp/models
 if [[ ! -f /tmp/models/.qwen35-copy-ok ]]; then
@@ -22,4 +24,5 @@ echo "[chain $(date -u +%H:%M:%S)] starting pipe-r4 with models from ${M}"
 PIPE_ROOT=$P DATA_DIR=$R/data-r4 DATASET=stage1 STAGE1_SLICE=0 TRAIN_STEPS=6 RESUME_EXTRA_STEPS=1 \
 ROLLOUT_N=8 TRAIN_BATCH_SIZE=4 CONCURRENCY=32 TRAIN_MAX_SAMPLES=40 VAL_MAX_SAMPLES=7 VAL_BEFORE_TRAIN=True TEST_FREQ=6 \
 MODEL_PATH=$M/Qwen3.5-9B GPU_MEMORY_UTILIZATION=0.45 TEACHER=1 TEACHER_MODEL_PATH=$M/Qwen3.8-27B TEACHER_GPU_MEM=0.85 \
-HARBOR_REWARD_MODE=pass_ratio DAPO=0 bash examples/harbor_opd_rl/run_tb21_pipeline.sh
+HARBOR_REWARD_MODE=pass_ratio DAPO=0 ROLLOUT_MAX_NUM_BATCHED_TOKENS=8192 TEACHER_MAX_NUM_BATCHED_TOKENS=8192 \
+bash examples/harbor_opd_rl/run_tb21_pipeline.sh
