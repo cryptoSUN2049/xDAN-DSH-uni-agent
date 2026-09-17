@@ -150,3 +150,10 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - f81ae2c：`failure_kind` 分为 agent 和 infra。infra 默认抛异常，只剔除这一条会话；`HARBOR_INFRA_FAILURE=zero` 恢复旧行为。已在隔离目录里用 lane 解释器跑过测试，20/20 通过。**尚未部署**，等 pipe-r4 和 pipe-r6 结束后再部署。
 - pipe-r4 13:19 完成初始化（9B 占 61 GB，27B 占 86 GB，没有 OOM）；pipe-r6 在 13:20 左右已跑完 27 条 trial，平均分 0.78。wandb：pipe-r6 train `r382x2fw`。
 
+## 2026-09-17 14:00 pipe-r4 OOM 重起；Full 数据阶段就绪；时间预估修正
+- pipe-r4：第一次训练 13:41 时 9B 推理引擎 OOM，13:47 以 `ROLLOUT/TEACHER_MAX_NUM_BATCHED_TOKENS=8192` 从训练阶段重起，env/data/oracle/rollout 四个阶段直接复用。
+- pipe-r6：第 1 步在 13:37 保存，约 30 分钟一步（SWE 冷镜像）；held-out 训练前 0.559（wandb `r382x2fw`）。数据按目录名排序，每 5 步换一次来源，读曲线时只比较同一来源。
+- 预计完成时间（北京时间）：pipe-r4 约 06:00–08:00，pipe-r6 约 07:00–09:00。
+- Tinker 线：Terminal-Lego 前 104 道审计通过 102 道，SWE 已审 629 道、通过 502 道。评分器已按同一规则修复（351e691）；run_tests.py 要等全集审计完成后才改源头，在此之前我们保留兜底逻辑。
+- 已提交但**未部署**：f81ae2c 与 e50b110 里 `uni_agent/tasks/harbor/reward.py` / `task.py` 的改动，等两条 run 结束后再同步。`10_data.sh` 和训练脚本已同步（默认行为不变）。
+

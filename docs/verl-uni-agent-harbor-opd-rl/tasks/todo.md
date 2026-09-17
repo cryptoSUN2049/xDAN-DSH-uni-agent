@@ -59,10 +59,12 @@
 - [x] resume 继承 train 冻结参数（1ec1b22），pipe-r3 resume 11:08 按 20/5 口径重跑
 - [x] **pipe-r3 验收 PASS**（12:10 UTC）：Teacher + resume 连续，7/7 步梯度非零，wandb 对账一致；`docs/…/pipe-r3/`
 - [ ] **pipe-r4：9B Student + 27B Teacher**（双卡，12:16 重起；审计混合集 40/7、batch 4、并发 32、6 步 + resume，`docs/…/pipe-r4/chain.sh`）：看 rollout 阶段 9B 推理、actor 是否 OOM、`distillation/loss` 是否离开 0、Teacher 每步耗时
+- [x] pipe-r4 第一次训练：13:41 时 9B 推理引擎 OOM（每步 36864 个 token）→ 13:47 改成每步 8192 个 token 后从训练阶段重起
 - [x] ~~pipe-r5：4B + DAPO~~：12:06 停止，改用 GRPO（V1 下 DAPO 逐批补采、步长约翻倍，开关原本接错参数，469b09b 已修）
 - [ ] **pipe-r6：4B GRPO，40/7 审计混合集，batch 4、并发 32、20 步**（单卡，12:08 起）：看训练集 reward 曲线，并在第 0/10/20 步评 held-out 7 题
 - [ ] **部署 f81ae2c（基础设施故障剔除、agent 失败记 0）**：pipe-r4 和 pipe-r6 都结束后，把 `uni_agent/tasks/harbor/{reward,task}.py` 同步到共享卷，再起下一轮。不能在 run 进行中同步，否则同一个 run 里会混用两种计分规则
-- [ ] 明天：从 Full 抽 100 道（按 SWE 审计状态 50 道 + Terminal-Lego 前 104 道审计通过的 50 道）；数据阶段要支持 tar.gz 解包，并合并 audit-status.jsonl
+- [x] 数据阶段支持 Full 仓库（e50b110 / 9d6a11d）：合并审计 sidecar、按来源限额选题、held-out 用审计通过但没进训练的 train 题补足、只解压选中的题、按来源交错排序。实测 100 道训练 / 40 道 held-out，无重叠
+- [ ] **下一轮（pipe-r4 和 pipe-r6 都结束、f81ae2c 部署之后）**：`STAGE1_REPO=gump2049/xDAN-Harbor-Stage1-Tasks-Full STAGE1_TRAIN_PER_SOURCE=50 STAGE1_VAL_PER_SOURCE=20`。双卡跑 9B + 27B Teacher，单卡跑 9B 纯 RL 对照，两边数据和步数相同，`ROLLOUT_MAX_NUM_BATCHED_TOKENS=8192`；双卡另加 `TEACHER_MAX_NUM_BATCHED_TOKENS=8192`
 - [x] SWE-rebench 25 题 verifier `--ctrf` 不可用 → 根因是 `docker_image` 跳过 Dockerfile，5fa9d6a 修复，oracle 复验 3/3 通过；下一轮起 `STAGE1_SLICE=0` 混合 41 题
 - [ ] Full 数据集（15397 题，未审计）：`10_data.sh` 支持 `runtime-v1.tar.gz` 解包 + 按审计结果过滤；先切 100 题（审计通过的 SWE + 自审的 Terminal-Lego 抽样），再 500–1000 题
 - [x] 04:00 Modal 触顶 → 06:46 用户加了 $10（≈300 条 trial）。已按价值顺序脱离会话重启：pipe-r2 resume 重做（旧 pod，≈$0.7）、pipe-r3 带 Teacher 重训（新 pod，≈$4）；基线重跑与 pipe-r4 等额度

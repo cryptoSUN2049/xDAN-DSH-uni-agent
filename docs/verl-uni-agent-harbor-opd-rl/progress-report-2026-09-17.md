@@ -1,4 +1,4 @@
-# 进度汇报：Uni-Agent × Harbor × VERL 训练通路（截至 2026-09-17 12:25 UTC）
+# 进度汇报：Uni-Agent × Harbor × VERL 训练通路（截至 2026-09-17 14:00 UTC）
 
 ## 终局目标
 
@@ -21,9 +21,10 @@
 | 训练后 held-out（5 题 n=1） | 0.328 → 0.497（step 6）→ 0.458（step 7）；同一 checkpoint 两次评估相差 0.06，**5 题只能证明机制，不能证明提升** | wandb `dzlqgapu` / `eg1ix7eo` val-core |
 | pipe-r3（4B 自评 Teacher，路线 ② 接线） | **验收 PASS**（12:10）：Teacher + 断点续训连续，7/7 步梯度非零，与 wandb 对账一致 | `docs/…/pipe-r3/acceptance.json` |
 | TB 2.1 官方基线（4B，n=1，正式） | **0/66 有效通过**（上界约 4.5%），23 题因镜像构建/额度未完成；三次评测一致 | `docs/…/tb21-4b-baseline-n1/summary.json` |
-| pipe-r4（9B Student + 27B Teacher，路线 ② 真 Teacher） | **运行中**（双卡，12:16 起）：审计混合集 40/7，每步 4 题 × 8 条、并发 32，6 步 + resume | `docs/…/pipe-r4/chain.sh` |
-| pipe-r6（4B GRPO，40/7，20 步） | **运行中**（单卡，12:08 起）：目标是训练集 reward 上升曲线，held-out 7 题在第 0/10/20 步评估；替代已停止的 pipe-r5 DAPO | `runs/pipe-r6` |
+| pipe-r4（9B Student + 27B Teacher，路线 ② 真 Teacher） | **运行中**（双卡）：第一次训练 13:41 时 9B 推理引擎 OOM，改成每步 8192 个 token 后 13:47 重起；预计北京时间 06:00–08:00 完成 | `docs/…/pipe-r4/chain.sh` |
+| pipe-r6（4B GRPO，40/7，20 步） | **运行中**（单卡）：训练前 held-out 0.559；SWE 题冷构建镜像，约 30 分钟一步；预计北京时间 07:00–09:00 完成 | wandb `r382x2fw` |
 | SWE-rebench 数据源（22 道审计通过） | **已修复**：`docker_image` 跳过了 Dockerfile，已在本线与数据源头两处修掉，oracle 复验 3/3 | `docs/…/swe-ctrf-fix/` |
+| Full 数据集（15.4k 题） | **数据阶段就绪**：按审计结果每个来源抽 50 道训练 + 20 道 held-out，实测 100 / 40、无重叠；下一轮使用 | `examples/harbor_opd_rl/stages/10_data.sh` |
 
 基础设施：2 台 RunPod pod 共享一个网盘（单卡做评测，双卡做训练）；wandb 项目 `xDAN-Verl-Uni-agent-Harbor-rl-opd`；一条命令冷启动（`gpu-pod-restore.sh`）与一条命令训练（`run_tb21_pipeline.sh`）；agent 可执行的操作 skill 与人工手册各一份。
 
