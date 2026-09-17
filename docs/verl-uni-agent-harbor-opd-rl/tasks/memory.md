@@ -133,3 +133,7 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - **架构事实**：4B 与 9B/27B 词表不同（151936 vs 248320），27B Teacher 只能配 9B；Qwen3.5 训练需 fla（已装，ecbde4b）。
 - **Modal 成本粗估**（每 trial 约 $0.033）：pipe-r3 收尾约 $1，pipe-r4 约 $5，pipe-r5 约 $12–16（DAPO 重采可能再加三到五成）。
 
+## 2026-09-17 11:40 SWE-rebench 修复；Full 数据集现状
+- SWE-rebench 25 题可用了：5fa9d6a 去掉等于 Dockerfile `FROM` 的 `docker_image`，oracle 复验 aiohttp-8538 / anta-969 / click-2788 全部 reward 1.0。已通知 Tinker 线（两个 xdan-dsh-uni-agent 会话）。stage1 现在可以 `STAGE1_SLICE=0` 混合 41 train / 9 val，从下一轮开始用。
+- `gump2049/xDAN-Harbor-Stage1-Tasks-Full`（2026-09-17 11:11 UTC 发布，sha 209d36a）：Terminal-Lego 11051 train / 2765 val，SWE-rebench 1265 train / 316 val，状态"未审计"、`training_ready=false`。任务打包在 `<source>-full/<rev>/runtime-v1.tar.gz`，现有 `10_data.sh` 读不了，需要加解包。Tinker 线的审计进度：SWE 547/1581 已审计，471 通过、76 失败；Terminal-Lego 尚未审计。
+

@@ -60,7 +60,8 @@
 - [ ] pipe-r3 resume → summary → acceptance（双卡，自动）
 - [ ] **pipe-r4：9B Student + 27B Teacher**（双卡，pipe-r3 结束后自动接，`runs/pipe-r4/chain.sh`）：看 rollout 阶段 9B 推理、actor OOM 与否、`distillation/loss` 离开 0、Teacher 每步耗时
 - [ ] **pipe-r5：4B + DAPO=1，20 步**（单卡，11:17 起）：看 `training/filter_groups/*`、reward 曲线是否上升、held-out 0/10/20 步
-- [ ] SWE-rebench 21+4 题 verifier `--ctrf` 不可用（oracle 闸门拦下），根因排查中；修复后再 `STAGE1_SLICE=0` 混合 41 题
+- [x] SWE-rebench 25 题 verifier `--ctrf` 不可用 → 根因是 `docker_image` 跳过 Dockerfile，5fa9d6a 修复，oracle 复验 3/3 通过；下一轮起 `STAGE1_SLICE=0` 混合 41 题
+- [ ] Full 数据集（15397 题，未审计）：`10_data.sh` 支持 `runtime-v1.tar.gz` 解包 + 按审计结果过滤；先切 100 题（审计通过的 SWE + 自审的 Terminal-Lego 抽样），再 500–1000 题
 - [x] 04:00 Modal 触顶 → 06:46 用户加了 $10（≈300 条 trial）。已按价值顺序脱离会话重启：pipe-r2 resume 重做（旧 pod，≈$0.7）、pipe-r3 带 Teacher 重训（新 pod，≈$4）；基线重跑与 pipe-r4 等额度
 - [ ] 有效 TB 2.1 基线需要：Modal 额度 ≥ 500 沙箱/天；建议 Docker Hub 登录（Harbor `registry_secret`，适配器需透传）避免匿名拉取限流
 - [x] ~~pipe-r4 用 4B Student + 27B Teacher~~：词表不同（151936 vs 248320）不可行，改为 9B Student（见上）
