@@ -15,3 +15,6 @@
 13. **VERL v1 checkpoint 布局是 `global_step_N/actor/*.pt` + `data.pt`**（sync 旧布局把 .pt 直接放在 `global_step_N/`）。校验和 delta 都要兼容两种布局；attempt5 训练成功却被误判 "checkpoint missing" 白等一轮。
 14. **`set -e -o pipefail` 下，grep/find 无匹配会让 `x=$(...)` 直接退出脚本，且没有任何输出。** `trainer_pids`、`find_final_ckpt` 两处都因此静默失败。规则：辅助函数里 `grep … || true`、`find` 前先 `[[ -d ]]`；阶段脚本失败时若 driver.log 没有本阶段任何行，先怀疑这一类。
 15. **两个 pod 共享一个 `/workspace` 时，data 阶段会重建 `data/stage1/tasks-*`，可能打断另一 pod 正在启动的 trial。** 第二台机器起 pipeline 时用 `SKIP_STAGES=data`（沿用已 PASSED 的 parquet）或独立 `DATA_DIR`；`rsync --delete` 源码也只做一次。
+16. **Mac 断网 → 两台 pod 的 Ray 同时收到 SIGTERM（2026-09-17 02:48/02:50）。** 用 `nohup … &` 从 ssh 命令里起的驱动仍和会话有隶属关系。规则：远端长任务一律 `examples/harbor_opd_rl/launch-detached.sh`（setsid + nohup + /dev/null，trap 记录信号），"训练完接评测"用服务器端 `;`/`&&` 链，不在 Mac 上挂等待。
+17. **共享卷配额（500 GB）被 22 个 8.7 GB checkpoint 撑满，`Disk quota exceeded`。** 每条 run 只留首尾 checkpoint；清理前先核对哪个 checkpoint 可能损坏（保存中被杀的 `global_step_N` 会 `EOFError`），别把它前一个删了——pipe-r3 的 step 6 损坏、step 5 已删，只能重训。配额已加到 1 TB。
+18. **checkpoint 保存后、指标上报前被杀 → 有 checkpoint 无指标。** 复用逻辑改为：控制台缺失则从 wandb 重建；仍缺最后一步时接受但写 `reuse-note.txt`。
