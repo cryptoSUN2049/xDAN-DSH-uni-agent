@@ -27,12 +27,27 @@ train = [r for r in rows if r["split"] == "train"]
 val = [r for r in rows if r["split"] == "validation"]
 if slice_n > 0:
     train = train[:slice_n]
+import re
+# Terminal-Lego task.toml keeps the upstream `docker_image = "terminal-lego/<id>:latest"`
+# alias, which is not pullable; Harbor then tries Image.from_registry instead of
+# building environment/Dockerfile (the pre-baked one the dataset ships). Strip
+# aliases that are not registry-qualified so Harbor builds from the Dockerfile.
+strip_prefixes = tuple(p for p in os.environ.get("STAGE1_STRIP_IMAGE_PREFIXES", "terminal-lego/").split() if p)
+stripped = 0
 for name, subset in (("train", train), ("validation", val)):
     root = os.path.join(out, f"tasks-{name}")
     shutil.rmtree(root, ignore_errors=True); os.makedirs(root)
     for r in subset:
-        shutil.copytree(os.path.join(path, r["task_dir"]), os.path.join(root, f"{r['source']}__{r['task']}"))
+        dst = os.path.join(root, f"{r['source']}__{r['task']}")
+        shutil.copytree(os.path.join(path, r["task_dir"]), dst)
+        toml_path = os.path.join(dst, "task.toml")
+        text = open(toml_path).read()
+        m = re.search(r'^docker_image\s*=\s*"([^"]+)"\s*$', text, re.M)
+        if m and m.group(1).startswith(strip_prefixes) and os.path.exists(os.path.join(dst, "environment", "Dockerfile")):
+            open(toml_path, "w").write(text[: m.start()] + "# docker_image alias removed by 10_data.sh; built from environment/Dockerfile\n" + text[m.end():])
+            stripped += 1
     print(name, len(subset), root)
+print("docker_image aliases stripped", stripped)
 json.dump({"repo": repo, "slice": slice_n, "sources": sources, "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
            "difficulty": {d: sum(1 for r in train if r.get("difficulty") == d) for d in ("easy", "medium", "hard")}},
           open(os.path.join(out, "selection.json"), "w"), indent=1)
