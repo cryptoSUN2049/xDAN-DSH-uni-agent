@@ -13,7 +13,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/common.sh"; stage_dir
 "${LANE_PY}" - "${PIPE_ROOT}" "${STAGE_DIR}/acceptance.json" "${TRAIN_STEPS}" <<'PY'
 import json, math, os, sys
 root, out, train_steps = sys.argv[1], sys.argv[2], int(sys.argv[3])
-rows = [json.loads(l) for l in open(f"{root}/pipeline-summary.jsonl")]
+rows = [json.loads(t) for l in open(f"{root}/pipeline-summary.jsonl", errors="replace") if (t := l.replace("\x00", "").strip())]
 last = {r["stage"]: r for r in rows}
 checks = {}
 

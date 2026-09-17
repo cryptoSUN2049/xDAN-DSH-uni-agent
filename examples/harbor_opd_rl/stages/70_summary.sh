@@ -7,7 +7,9 @@ source "$(dirname "${BASH_SOURCE[0]}")/common.sh"; stage_dir
 
 "${LANE_PY}" - "${SUMMARY}" "${STAGE_DIR}/verdict.json" <<'PY'
 import json,sys
-rows=[json.loads(l) for l in open(sys.argv[1])]
+# Torn writes on the shared volume (pod rebuild mid-append) leave NUL-padded
+# lines; strip NULs and skip blanks instead of failing the whole stage.
+rows=[json.loads(t) for l in open(sys.argv[1],errors="replace") if (t:=l.replace("\x00","").strip())]
 last={r["stage"]:r for r in rows}
 def steps(stage): d=last.get(stage,{}).get("detail"); return d if isinstance(d,list) else []
 train=steps("train")+steps("resume")
