@@ -200,4 +200,5 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 判据：若第 2 到 6 步长度持续上升而 `critic/score/mean` 不升，就按同一个长度偏置处理（对策：奖励里加长度惩罚、或降低蒸馏系数、或限制轮数）。
 - 他们还将发布 `eval-set-v1/base-rates.jsonl`（保留集逐题基座通过率，Qwen3.5-9B，32 轮 / 32768 token / temperature 1.0），只能用于校准选题规则，不能用于训练。训练题的通过率筛选需要他们的用户批预算。
 - Terminal-Lego 全集难度分布：easy 9223、medium 4440、hard 153，按 index 顺序取几乎全是 easy。
+- 口径核对（与 Tinker 线对齐）：我们的 `num_turns` 是消息条数 + 1（工具返回算 user 消息），62.9 ≈ 31 次模型动作，未越过 `max_turns=50`；每次动作约 796 token。Tinker 线训练前每次动作 110–170 token、训练后 780–3400，单条轨迹 3.8k → 26k。**我们第 1 步的 24.7k 起点高，主要来自 terminus-2 的风格差异，所以只看相对变化（第 1 步作基线），不与他们的绝对值比较。** 他们 reward 是二值、`kl_penalty_coef=1.0`、group_size 4；我们是 pass_ratio、无单独 KL 项、group_size 8。
 

@@ -73,7 +73,7 @@
 - [ ] **下一轮（pipe-r4 和 pipe-r7 都结束、f81ae2c 部署之后）**：`STAGE1_REPO=gump2049/xDAN-Harbor-Stage1-Tasks-Full STAGE1_TRAIN_PER_SOURCE=50 STAGE1_VAL_PER_SOURCE=20`。双卡跑 9B + 27B Teacher，单卡跑 9B 纯 RL 对照，两边数据和步数相同，`ROLLOUT_MAX_NUM_BATCHED_TOKENS=8192`；双卡另加 `TEACHER_MAX_NUM_BATCHED_TOKENS=8192`
 - [ ] **选题要按难度筛**：pipe-r4 第 1 步训练集得分 0.916、held-out 0.988，说明审计通过的题对 9B 太简单。下一轮训练题应挑基座 9B 时对时错的题（与 eval-set-v1 同一筛法），或至少限定 medium/hard
 - [ ] **跟踪长度偏置**：逐步记录 `response_length/mean` 与 `num_turns/mean`；若长度升而得分不升，按 Tinker 线 r4 的退步案例处理
-- [ ] 核对 `training/num_turns/mean=62.9` 与配置 `max_turns=50` 的口径差异（疑为消息条数）
+- [x] 核对 `num_turns` 口径：`_count_chat_turns`（`uni_agent/gateway/session/session.py:958`）= user + assistant 消息数 + 1，工具返回算 user 消息。62.9 约等于 31 次模型动作，未越过 `max_turns=50`；每次动作约 796 token
 - [x] 数据阶段默认剔除 eval-set-v1 保留集（仓库 / 题目），在 Full 上实测与保留集重叠 0
 - [ ] 收到 Tinker 线的 eval-set-v1 manifest（100 道，明天上午）后，数据阶段支持用 manifest 指定 held-out，替换当前"顺延 20 道"的规则
 - [x] SWE-rebench 25 题 verifier `--ctrf` 不可用 → 根因是 `docker_image` 跳过 Dockerfile，5fa9d6a 修复，oracle 复验 3/3 通过；下一轮起 `STAGE1_SLICE=0` 混合 41 题
