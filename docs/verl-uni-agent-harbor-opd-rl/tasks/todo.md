@@ -66,6 +66,8 @@
 - [x] ~~pipe-r5：4B + DAPO~~：12:06 停止，改用 GRPO（V1 下 DAPO 逐批补采、步长约翻倍，开关原本接错参数，469b09b 已修）
 - [x] ~~pipe-r6：4B GRPO 20 步~~：14:00 跑完第 1 步后停止，单卡改作对照组
 - [ ] **pipe-r7：9B 纯 RL 对照组**（单卡，14:02 起）：与 pipe-r4 完全镜像，只是 `TEACHER=0`；明早与 pipe-r4 对比 reward、held-out、步长
+- [ ] **单卡 pod 失联（15:52 起）**：用户在 RunPod 控制台重启 → 必要时跑 `gpu-pod-restore.sh` → 停掉旧 pipe-r7 会话 → 把 `runs/pipe-r7/chain.sh.v2` 复制为 chain.sh → 从训练阶段重起（设置 v2）
+- [x] 设置 v2（用户决定，16:05）：Teacher 单批 4096；学生侧 prefix caching 开 / 8192 / 0.45；pipe-r4 于 16:09 重起（第 6 次）
 - [ ] **部署 f81ae2c + e50b110（基础设施故障剔除、agent 失败记 0）**：pipe-r4 和 pipe-r7 都结束后，把 `uni_agent/tasks/harbor/{reward,task}.py` 同步到共享卷，再起下一轮。不能在 run 进行中同步，否则同一个 run 里会混用两种计分规则
 - [x] 数据阶段支持 Full 仓库（e50b110 / 9d6a11d）：合并审计 sidecar、按来源限额选题、held-out 用审计通过但没进训练的 train 题补足、只解压选中的题、按来源交错排序。实测 100 道训练 / 40 道 held-out，无重叠
 - [ ] **下一轮（pipe-r4 和 pipe-r7 都结束、f81ae2c 部署之后）**：`STAGE1_REPO=gump2049/xDAN-Harbor-Stage1-Tasks-Full STAGE1_TRAIN_PER_SOURCE=50 STAGE1_VAL_PER_SOURCE=20`。双卡跑 9B + 27B Teacher，单卡跑 9B 纯 RL 对照，两边数据和步数相同，`ROLLOUT_MAX_NUM_BATCHED_TOKENS=8192`；双卡另加 `TEACHER_MAX_NUM_BATCHED_TOKENS=8192`

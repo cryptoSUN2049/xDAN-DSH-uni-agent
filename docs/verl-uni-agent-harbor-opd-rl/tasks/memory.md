@@ -175,3 +175,8 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 下一轮：学生侧恢复 prefix caching、8192、0.45（两边同步），Teacher 保持 0.70 / 4096。
 - 16:00 按用户要求 Teacher 再保守一档：`TEACHER_MAX_NUM_BATCHED_TOKENS=2048 TEACHER_MAX_NUM_SEQS=4`，显存比例保持 0.70；pipe-r4 第 4 次训练在初始化阶段停掉，改为第 5 次重起。学生侧和 pipe-r7 保持一致，不动。
 
+## 2026-09-17 16:10 设置 v2（用户决定）；单卡 pod 失联
+- 用户确认 2 卡方案：GPU0 放 9B 学生，GPU1 放 27B Teacher，不加卡。设置 v2：Teacher 单批 4096（显存比例 0.70、最多 4 条序列不变）；学生侧恢复 prefix caching 开、单批 8192、显存比例 0.45；对照组同步修改（da036c7）。
+- pipe-r4 第 5 次训练在初始化时停掉，16:09 按 v2 从训练阶段重起（第 6 次），生效参数已从 train-command.txt 核对。
+- **单卡 pod（12063）约 15:52 起卡住**：pipe-r7 此后没有任何写入；约 16:01 起 SSH 握手一直被对端断开，但 TCP 端口仍然通，原因未知。pipe-r7 v2 的启动脚本已放到 `runs/pipe-r7/chain.sh.v2`，pod 恢复后要先停掉旧会话（sid 304956），再用它替换 chain.sh 并重起。如果 pod 被重建，端口会变，需要先跑 `gpu-pod-restore.sh <新端口>`。
+
