@@ -51,7 +51,8 @@
 - [x] 2 卡 pod 接入（2026-09-17 00:42，端口 11965，host dbcea07805e9，同一共享卷）：`gpu-pod-restore.sh` 恢复凭据、模型拷本地 NVMe、lane 重证通过；源码同步到 6b7f362
 - [x] **pipe-r3 路线 ② 接线打通（2026-09-17 01:5x）**：`TEACHER=1`（4B 自评）在 GPU1 起 Teacher vLLM（79 GB），step1/2 更新成功，wandb `0jz8wq6h` 出现 `actor/distillation/{loss,abs_loss,loss_max,loss_min,ppo_kl}`；自评 Teacher 下 loss≈0（-0.0001，abs 0.0016，max 1.04 / min -1.91）符合预期（student≡teacher）。原任务：：`TEACHER=1`（4B 自评 Teacher 先打通接线）+ stage1 20 题 + 6 步 colocate_async + n 8 + 并发 16 + held-out 前后评估。GPU0 = actor + rollout vLLM 0.45，GPU1 = Teacher vLLM 0.8
 - [x] 下载完成：`/workspace/models/Qwen3.8-27B`（52 GB，18 shards）、`/workspace/models/Qwen3.5-9B`（19 GB）
-- [ ] pipe-r4（等 pipe-r3 释放 GPU）：`TEACHER_MODEL_PATH=/workspace/models/Qwen3.8-27B TEACHER_GPU_MEM=0.85`，看 distillation/loss 离开 0、Teacher 打分吞吐（GPU1 忙碌时长 / step）
+- [ ] 评测排程（用户 2026-09-17）：pipe-r2 结束 → 单卡 pod `eval_tb21.sh` 4B 基线 n=1（`runs/eval-tb21-4b-base-n1`）；pipe-r3 结束 → 双卡 pod 4B 基线 n=3（`runs/eval-tb21-4b-base-n3`）。基线出来前不起 pipe-r4
+- [ ] pipe-r4（基线之后）：`TEACHER_MODEL_PATH=/workspace/models/Qwen3.8-27B TEACHER_GPU_MEM=0.85`，看 distillation/loss 离开 0、Teacher 打分吞吐（GPU1 忙碌时长 / step）
 - [ ] pipe-r5：`MODEL_PATH=/workspace/models/Qwen3.5-9B`（Student 9B）
 - [ ] `report.py` / `80_acceptance.sh` 增加 OPD 三行与 Teacher 检查（teacher logprobs 非空、distillation loss 非零）
 - [ ] 复核 tinker-cookbook-opd-rl 的 harbor_opd_rl.py 评分合同，对齐到 harbor task 轨迹（token ids / action mask 来自 Gateway npz）
