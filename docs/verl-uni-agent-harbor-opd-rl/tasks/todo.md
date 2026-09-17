@@ -52,7 +52,7 @@
 - [x] **pipe-r3 路线 ② 接线打通（2026-09-17 01:5x）**：`TEACHER=1`（4B 自评）在 GPU1 起 Teacher vLLM（79 GB），step1/2 更新成功，wandb `0jz8wq6h` 出现 `actor/distillation/{loss,abs_loss,loss_max,loss_min,ppo_kl}`；自评 Teacher 下 loss≈0（-0.0001，abs 0.0016，max 1.04 / min -1.91）符合预期（student≡teacher）。原任务：：`TEACHER=1`（4B 自评 Teacher 先打通接线）+ stage1 20 题 + 6 步 colocate_async + n 8 + 并发 16 + held-out 前后评估。GPU0 = actor + rollout vLLM 0.45，GPU1 = Teacher vLLM 0.8
 - [x] 下载完成：`/workspace/models/Qwen3.8-27B`（52 GB，18 shards）、`/workspace/models/Qwen3.5-9B`（19 GB）
 - [x] 4B TB 2.1 基线跑了两次（03:15–03:58）：n=1 `runs/eval-tb21-4b-base-n1` 89 题 0 通过（有效 54 条：20 ImageBuildError、13 NotFound）；n=3 `runs/eval-tb21-4b-base-n3` 267 条 0 通过（有效 62 条：129 ResourceExhausted、60 ImageBuildError="external shut-down"）。**结论：有效样本上 4B ≈ 0%，但因 Modal 额度中途触顶，基线不完整，需在额度恢复后重跑 n=1 作为正式基线**
-- [ ] **阻塞（04:00 UTC）：Modal spend limit 再次触顶**（评测约 360 个沙箱）。两条训练链（pipe-r2 resume 重做、pipe-r3 带 Teacher 重训）已在引擎初始化阶段暂停，额度恢复后一条命令续跑
+- [x] 04:00 Modal 触顶 → 06:46 用户加了 $10（≈300 条 trial）。已按价值顺序脱离会话重启：pipe-r2 resume 重做（旧 pod，≈$0.7）、pipe-r3 带 Teacher 重训（新 pod，≈$4）；基线重跑与 pipe-r4 等额度
 - [ ] 有效 TB 2.1 基线需要：Modal 额度 ≥ 500 沙箱/天；建议 Docker Hub 登录（Harbor `registry_secret`，适配器需透传）避免匿名拉取限流
 - [ ] pipe-r4（基线之后）：`TEACHER_MODEL_PATH=/workspace/models/Qwen3.8-27B TEACHER_GPU_MEM=0.85`，看 distillation/loss 离开 0、Teacher 打分吞吐（GPU1 忙碌时长 / step）
 - [ ] pipe-r5：`MODEL_PATH=/workspace/models/Qwen3.5-9B`（Student 9B）
