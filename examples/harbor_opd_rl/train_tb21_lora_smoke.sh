@@ -124,6 +124,46 @@ if [[ "${DAPO}" == "1" ]]; then
   # reward.reward_kwargs path; the episode budget (max_total_tokens) bounds length instead.
 fi
 
+# TEACHER=1: route 2 (OPD). VERL's native Teacher is a frozen vLLM replica that
+# scores the student's own tokens with prompt_logprobs; the Agent Framework
+# receives teacher_client automatically when distillation.enabled=True. It needs
+# its OWN Ray resource pool of whole GPUs. On a single physical GPU,
+# TEACHER_SHARE_GPU=1 advertises two logical GPUs to Ray and stops Ray from
+# rewriting CUDA_VISIBLE_DEVICES, so actor/rollout and teacher share device 0
+# (memory budget: student vLLM GPU_MEMORY_UTILIZATION + TEACHER_GPU_MEM < ~0.8).
+TEACHER="${TEACHER:-0}"
+TEACHER_MODEL_PATH="${TEACHER_MODEL_PATH:-${MODEL_PATH}}"   # 4B self-teacher is enough for wiring
+TEACHER_SHARE_GPU="${TEACHER_SHARE_GPU:-0}"   # 0 = teacher on its own physical GPU (recommended); 1 = single-GPU smoke hack
+TEACHER_GPU_MEM="${TEACHER_GPU_MEM:-0.25}"
+TEACHER_MAX_NUM_SEQS="${TEACHER_MAX_NUM_SEQS:-8}"
+DISTILL_LOSS_MODE="${DISTILL_LOSS_MODE:-k1}"          # k1 = on-policy distillation (TML blog); k3 = topk/forward-KL variants
+DISTILL_LOSS_COEF="${DISTILL_LOSS_COEF:-1.0}"
+DISTILL_USE_TASK_REWARDS="${DISTILL_USE_TASK_REWARDS:-True}"   # hybrid: RL reward + OPD
+TEACHER_OVERRIDES=()
+if [[ "${TEACHER}" == "1" ]]; then
+  [[ -n "${TEACHER_MODEL_PATH}" ]] || { echo "TEACHER=1 requires TEACHER_MODEL_PATH (or MODEL_PATH)" >&2; exit 2; }
+  TEACHER_OVERRIDES+=(
+    distillation.enabled=True
+    distillation.nnodes=1
+    distillation.n_gpus_per_node=1
+    distillation.distillation_loss.loss_mode="${DISTILL_LOSS_MODE}"
+    distillation.distillation_loss.use_policy_gradient=True
+    distillation.distillation_loss.use_task_rewards="${DISTILL_USE_TASK_REWARDS}"
+    distillation.distillation_loss.distillation_loss_coef="${DISTILL_LOSS_COEF}"
+    distillation.teacher_models.teacher_model.model_path="${TEACHER_MODEL_PATH}"
+    distillation.teacher_models.teacher_model.num_replicas=1
+    distillation.teacher_models.teacher_model.inference.tensor_model_parallel_size=1
+    distillation.teacher_models.teacher_model.inference.gpu_memory_utilization="${TEACHER_GPU_MEM}"
+    distillation.teacher_models.teacher_model.inference.max_model_len=$((MAX_PROMPT_LENGTH + MAX_RESPONSE_LENGTH + 1))
+    distillation.teacher_models.teacher_model.inference.max_num_batched_tokens=$((MAX_PROMPT_LENGTH + MAX_RESPONSE_LENGTH))
+    distillation.teacher_models.teacher_model.inference.max_num_seqs="${TEACHER_MAX_NUM_SEQS}"
+  )
+  if [[ "${TEACHER_SHARE_GPU}" == "1" ]]; then
+    export RAY_EXPERIMENTAL_NOSET_CUDA_VISIBLE_DEVICES=1
+    TEACHER_OVERRIDES+=(++ray_kwargs.ray_init.num_gpus=2)
+  fi
+fi
+
 COMMAND=(
   "${PYTHON_BIN}" -m verl.trainer.main_ppo
   trainer.use_v1=True
@@ -225,6 +265,7 @@ COMMAND=(
   trainer.nnodes="${NNODES}"
   trainer.n_gpus_per_node="${NGPUS_PER_NODE}"
   ${DAPO_OVERRIDES[@]+"${DAPO_OVERRIDES[@]}"}
+  ${TEACHER_OVERRIDES[@]+"${TEACHER_OVERRIDES[@]}"}
 )
 
 if [[ "${PRINT_COMMAND:-0}" == "1" ]]; then
