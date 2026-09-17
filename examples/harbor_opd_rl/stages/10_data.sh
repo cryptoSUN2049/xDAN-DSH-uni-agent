@@ -28,12 +28,24 @@ val = [r for r in rows if r["split"] == "validation"]
 if slice_n > 0:
     train = train[:slice_n]
 import re
-# Terminal-Lego task.toml keeps the upstream `docker_image = "terminal-lego/<id>:latest"`
-# alias, which is not pullable; Harbor then tries Image.from_registry instead of
-# building environment/Dockerfile (the pre-baked one the dataset ships). Strip
-# aliases that are not registry-qualified so Harbor builds from the Dockerfile.
+from collections import Counter
+# Harbor pulls task.toml `docker_image` from a registry and skips
+# environment/Dockerfile unless force_build is set. Two dataset patterns make that
+# wrong, so the alias is stripped and Harbor builds the Dockerfile instead:
+#   alias       Terminal-Lego keeps `terminal-lego/<id>:latest`, which is not pullable
+#               (prefixes in STAGE1_STRIP_IMAGE_PREFIXES).
+#   base-image  docker_image equals the Dockerfile's FROM, i.e. it names the bare
+#               base image and the Dockerfile's extra layers (swe-rebench installs
+#               pytest-json-ctrf there, which the verifier's `pytest --ctrf` needs)
+#               would never be applied. STAGE1_KEEP_BASE_IMAGE=1 disables this.
 strip_prefixes = tuple(p for p in os.environ.get("STAGE1_STRIP_IMAGE_PREFIXES", "terminal-lego/").split() if p)
-stripped = 0
+keep_base = os.environ.get("STAGE1_KEEP_BASE_IMAGE") == "1"
+def norm(image):
+    for prefix in ("docker.io/library/", "docker.io/"):
+        if image.startswith(prefix):
+            return image[len(prefix):]
+    return image
+stripped = Counter()
 for name, subset in (("train", train), ("validation", val)):
     root = os.path.join(out, f"tasks-{name}")
     shutil.rmtree(root, ignore_errors=True); os.makedirs(root)
@@ -41,13 +53,23 @@ for name, subset in (("train", train), ("validation", val)):
         dst = os.path.join(root, f"{r['source']}__{r['task']}")
         shutil.copytree(os.path.join(path, r["task_dir"]), dst)
         toml_path = os.path.join(dst, "task.toml")
+        dockerfile = os.path.join(dst, "environment", "Dockerfile")
         text = open(toml_path).read()
         m = re.search(r'^docker_image\s*=\s*"([^"]+)"\s*$', text, re.M)
-        if m and m.group(1).startswith(strip_prefixes) and os.path.exists(os.path.join(dst, "environment", "Dockerfile")):
-            open(toml_path, "w").write(text[: m.start()] + "# docker_image alias removed by 10_data.sh; built from environment/Dockerfile\n" + text[m.end():])
-            stripped += 1
+        if not (m and os.path.exists(dockerfile)):
+            continue
+        image = m.group(1)
+        base = re.search(r"^\s*FROM\s+(?:--platform=\S+\s+)?(\S+)", open(dockerfile).read(), re.M | re.I)
+        if image.startswith(strip_prefixes):
+            reason = "alias"
+        elif base and norm(base.group(1)) == norm(image) and not keep_base:
+            reason = "base-image"
+        else:
+            continue
+        open(toml_path, "w").write(text[: m.start()] + f"# docker_image {image} removed by 10_data.sh ({reason}); built from environment/Dockerfile\n" + text[m.end():])
+        stripped[f"{r['source']}:{reason}"] += 1
     print(name, len(subset), root)
-print("docker_image aliases stripped", stripped)
+print("docker_image stripped", dict(stripped))
 json.dump({"repo": repo, "slice": slice_n, "sources": sources, "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
            "difficulty": {d: sum(1 for r in train if r.get("difficulty") == d) for d in ("easy", "medium", "hard")}},
           open(os.path.join(out, "selection.json"), "w"), indent=1)
