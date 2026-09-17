@@ -1,4 +1,4 @@
-# 进度汇报：Uni-Agent × Harbor × VERL 训练通路（截至 2026-09-17 07:50 UTC）
+# 进度汇报：Uni-Agent × Harbor × VERL 训练通路（截至 2026-09-17 09:20 UTC）
 
 ## 终局目标
 
@@ -19,12 +19,13 @@
 | TB 2.1 官方基线（4B） | **初步 ≈ 0%**：两次评测（n=1 / n=3）有效样本 54 / 62 条全部未通过；因 Modal 额度中途触顶，样本不完整，需额度恢复后重跑 n=1 定为正式基线 | `runs/eval-tb21-4b-base-n1`、`-n3` |
 | pipe-r2（stage1 20 题纯 RL）验收 | **PASS**（07:46）：7/7 步非零梯度且与 wandb 对账一致；resume 从 step 7 接续 | `docs/verl-uni-agent-harbor-opd-rl/pipe-r2/acceptance.json` |
 | 训练后 held-out（5 题 n=1） | 0.328 → 0.497（step 6）→ 0.458（step 7）；同一 checkpoint 两次评估相差 0.06，**5 题只能证明机制，不能证明提升** | wandb `dzlqgapu` / `eg1ix7eo` val-core |
-| pipe-r3（4B 自评 Teacher 重训） | **进行中**：step 1 用时 906 s，`distillation/loss≈0` 符合自评预期 | wandb `pg4xsj19` |
+| pipe-r3（4B 自评 Teacher，路线 ② 接线） | **train + delta PASS**（08:30）：6 步梯度全非零，`distillation/*` 全程在线；resume 在 step 7 保存后被 Modal 额度打断，额度恢复后自动续跑 | wandb `pg4xsj19`、`docs/…/pipe-r3/` |
+| TB 2.1 官方基线（4B，n=1，正式） | **0/66 有效通过**（上界约 4.5%），23 题因镜像构建/额度未完成；三次评测一致 | `docs/…/tb21-4b-baseline-n1/summary.json` |
 
 基础设施：2 台 RunPod pod 共享一个网盘（单卡做评测，双卡做训练）；wandb 项目 `xDAN-Verl-Uni-agent-Harbor-rl-opd`；一条命令冷启动（`gpu-pod-restore.sh`）与一条命令训练（`run_tb21_pipeline.sh`）；agent 可执行的操作 skill 与人工手册各一份。
 
-## 当前阻塞（07:50 UTC）
-无硬阻塞。Modal 于 06:46 补了 $10（≈300 条 trial），pipe-r2 已收口，pipe-r3 在跑；剩余额度需优先留给 pipe-r3 收尾与 4B TB 2.1 基线 n=1。早前的阻塞记录：凌晨 02:48/02:50 两台 pod 的 Ray 收到 SIGTERM（与本机断网同窗口），已改用 setsid 脱离会话启动并加信号日志；共享卷曾配额满（500 GB → 已扩 1 TB），已加 checkpoint 保留机制（最近 10 个、坏文件自动剔除）。
+## 当前阻塞（09:20 UTC）
+**Modal spend limit 第三次触顶**（06:46 加的 $10 在 2.5 小时内用完：pipe-r3 约 1000 个沙箱 + 基线 89 个）。这是工作区"账期上限"设置，需要在 Modal 设置里调高，而不只是充值。pod 上已布置额度探针链，恢复后 pipe-r3 resume/验收自动完成。早前的阻塞记录：凌晨 02:48/02:50 两台 pod 的 Ray 收到 SIGTERM（与本机断网同窗口），已改用 setsid 脱离会话启动并加信号日志；共享卷曾配额满（500 GB → 已扩 1 TB），已加 checkpoint 保留机制（最近 10 个、坏文件自动剔除）。
 
 ## 今天解决的阻塞
 Modal 消费上限、pod 两次重建、Modal API 挂起（加 trial 级超时与失败补组）、小数据集 epoch 上限、二值 reward 全 0（改用 verifier 部分得分）、数据集镜像别名不可拉取。全部记入 `tasks/lessons.md`（15 条）。

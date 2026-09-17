@@ -119,3 +119,9 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - pipe-r3（4B 自评 Teacher，wandb `pg4xsj19`）重训中：step 1 约 906 s，distillation/loss ≈ -0.0001（自评应为 0），预计 09:30 UTC 前进入 delta/resume。
 - 假 FAIL 修复提交 2466495、31bcea8，已同步两台 pod 的 `src/uni-agent/examples/harbor_opd_rl/stages/`。
 
+## 2026-09-17 09:15 Modal 第三次触顶；pipe-r3 train 6 步完成，resume 待额度
+- pipe-r3（TEACHER=1 4B 自评，wandb `pg4xsj19`）：train PASSED 08:30，6 步 grad_norm 0.0093/0.0219/0.0165/0.0172/0.0262/0.0297 全非零，score/mean 0.21→0.58→0.07→0.50→0.53→0.68，`distillation/loss` 量级 1e-4（自评应为 0）；delta 08:32 PASS（504/504、399/399）。held-out 训练前 0.597，resume 起点重评 0.41（5 题噪声）。
+- resume（wandb `1t9jeruh`）step 7 checkpoint 已保存但指标未记录（09:10 额度触顶，进程 Traceback），目录移到 `resume-attempt3-quota-step7-nometrics`；已在 pod 11965 布置 `modal-quota-wait.sh && FROM_STAGE=resume` 脱离会话链，额度恢复后自动重做 resume→summary→acceptance。
+- 4B TB 2.1 正式基线（`runs/eval-tb21-4b-base-n1-official`，n=1）：89 题，66 题有效得分，**0/66 通过**（rule-of-three 上界约 4.5%）；23 题因 ImageBuildError 6 / NotFoundError 4 / ConflictError 2 / ResourceExhausted 2 等未完成。这是第三次得到 0%，作为 4B 基线足够。证据 `docs/…/tb21-4b-baseline-n1/summary.json`。
+- 待用户：在 Modal 工作区把 spend limit 调高（不只是加余额）。
+

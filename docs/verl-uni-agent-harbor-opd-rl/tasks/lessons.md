@@ -21,4 +21,5 @@
 19. **评测比训练更吃 Modal 额度。** 89 题 × n 次 = 每次基线 89–267 个沙箱，加上镜像构建也计费；两次基线把当天额度打穿，连带训练链被迫暂停。规则：基线评测先 n=1；起评测前用探针沙箱核额度；额度按"训练每步 batch×n + 评测题数×n"预估并留 50% 余量。`ImageBuildError: terminated due to external shut-down` 与 `NotFoundError/ConflictError` 成片出现都是额度耗尽的表现，不是任务本身的问题。
 20. **共享卷上的 `pipeline-summary.jsonl` 可能出现 NUL 填充的撕裂行。** pod 断电/重建时正在 append 的一行被写成一串 `\0` 再接 JSON，`json.loads` 直接失败，summary/acceptance 整阶段 FAIL（pipe-r2 07:36）。规则：读 jsonl 证据一律去 NUL、跳空行；写证据的 `record` 保持单次 `printf`。
 21. **验收要以记录为准，不以环境变量为准。** 重跑 `FROM_STAGE=acceptance` 时没带 `TRAIN_STEPS`，脚本用默认值算 `resume_continued` 得出 FAIL；同时控制台解析把非指标行记成 `{}`，让 `all_finite` 与 wandb 对账假失败。规则：验收从 train 记录里取实际步数；解析器丢弃没有 `training/global_step` 的行；假 FAIL 与真 FAIL 要在脚本里分清。
+22. **Modal 的 spend limit 是"账期上限"设置，不是余额。** 报错原文 `Container terminated due to reaching billing cycle spend limit` / `Workspace … has exceeded its spend limit`：加 $10 后 2.5 小时内（pipe-r3 6 步 + resume + 89 题基线）第三次触顶。规则：训练前让用户在 Modal 工作区设置里把 spend limit 调到覆盖整个计划（每步 batch×n 个沙箱 + 评测题数×n，留 50% 余量）；链路上一律用 `deployment/bootstrap/modal-quota-wait.sh && …` 排队，额度恢复自动续跑，不靠人盯。
 
