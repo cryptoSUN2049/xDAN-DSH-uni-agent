@@ -125,3 +125,11 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 4B TB 2.1 正式基线（`runs/eval-tb21-4b-base-n1-official`，n=1）：89 题，66 题有效得分，**0/66 通过**（rule-of-three 上界约 4.5%）；23 题因 ImageBuildError 6 / NotFoundError 4 / ConflictError 2 / ResourceExhausted 2 等未完成。这是第三次得到 0%，作为 4B 基线足够。证据 `docs/…/tb21-4b-baseline-n1/summary.json`。
 - 待用户：在 Modal 工作区把 spend limit 调高（不只是加余额）。
 
+## 2026-09-17 11:20 换 Modal 工作区，双卡与单卡同时训练
+- **Modal**：用户提供新 profile `l98348740`（token 只写在本机与两台 pod 的 `~/.modal.toml`，不进仓库；旧 profile `shootime007` 保留、已不激活）。本机 `~/.zshenv` 另加了 `TINKER_API_KEY`。
+- **双卡 pod 11965**：10:45 探针用新 profile 放行，pipe-r3 resume 自动开跑；因续跑链漏传样本上限（训练 4 题 / held-out 1 题）被我停掉，11:08 按冻结参数重跑（20 题 / 5 题，inherited 15 knobs）。之后 `runs/pipe-r4/chain.sh` 自动接 **pipe-r4：Qwen3.5-9B Student + Qwen3.8-27B Teacher**（`TEACHER_GPU_MEM=0.85`，模型拷到本地 NVMe，Terminal-Lego 20/5，6 步 + resume），脚本副本在 `docs/…/pipe-r4/chain.sh`。
+- **单卡 pod 12063**：**pipe-r5：4B 纯 RL + DAPO=1**，Terminal-Lego 20/5，20 步（约 2 epoch），held-out 在第 0/10/20 步评估；独立数据目录 `data-r5`，与双卡互不覆盖。
+- **SWE-rebench 暂不入训**：oracle 闸门发现 verifier 的 `pytest --ctrf` 在任务镜像里不可用、不写 reward（证据 `runs/pipe-r5/oracle-attempt1-swe-rebench-no-reward-file/`）；根因排查中，结论出来前两条线都只用 Terminal-Lego。
+- **架构事实**：4B 与 9B/27B 词表不同（151936 vs 248320），27B Teacher 只能配 9B；Qwen3.5 训练需 fla（已装，ecbde4b）。
+- **Modal 成本粗估**（每 trial 约 $0.033）：pipe-r3 收尾约 $1，pipe-r4 约 $5，pipe-r5 约 $12–16（DAPO 重采可能再加三到五成）。
+

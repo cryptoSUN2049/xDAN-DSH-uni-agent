@@ -12,7 +12,7 @@
 ```bash
 MODELS_TO_FETCH="Qwen/Qwen3.8-27B Qwen/Qwen3.5-9B" bash deployment/bootstrap/gpu-pod-restore.sh <端口> --cache-local
 ```
-看到 `[env …] passed: modal=shootime007 wandb=xdan-ai` 即成功。它做了：host key、`/root` 凭据、源码 git 精确 SHA 检出（含 verl 子模块）、模型拷本地 NVMe、后台下载大模型、lane 激活证明。
+看到 `[env …] passed: modal=l98348740 wandb=xdan-ai`（profile 以本机 `modal profile current` 为准） 即成功。它做了：host key、`/root` 凭据、源码 git 精确 SHA 检出（含 verl 子模块）、模型拷本地 NVMe、后台下载大模型、lane 激活证明。
 
 失败时：
 - `Connection closed` / banner timeout：pod 可能重建，去 RunPod 看新端口，重跑。

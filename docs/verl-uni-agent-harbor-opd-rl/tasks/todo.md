@@ -55,11 +55,15 @@
 - [x] **pipe-r2 验收 PASS（2026-09-17 07:46，`docs/…/pipe-r2/acceptance.json`）**：6 步训练 + resume 到 step 7，7/7 步 grad_norm 非零、7/7 步与 wandb 对账一致，504/504 adapter 变、399/399 base 不变；held-out 5 题 n=1：训练前 0.328 → step 6 0.497 → resume 起点 0.56 → step 7 0.458（5 题噪声 ±0.2，不能作为提升证据）；summary/acceptance 两个假 FAIL 已修（NUL 撕裂行、空指标行、TRAIN_STEPS 默认值）
 - [x] **pipe-r3 train + delta PASS（08:30/08:32）**，6 步 Teacher 蒸馏指标齐全；resume 在 step 7 保存后被 Modal 第三次触顶打断（09:10），已布置 `modal-quota-wait.sh` 自动续跑链
 - [x] **4B TB 2.1 正式基线 n=1：0/66 有效通过**（23 题因镜像/额度未完成）。`docs/…/tb21-4b-baseline-n1/`
-- [ ] 用户调高 Modal spend limit → pipe-r3 resume/验收自动完成 → pipe-r4（27B Teacher）
+- [x] 换 Modal 工作区 profile `l98348740`（2026-09-17 10:34），本机与两台 pod 均已激活；pipe-r3 续跑链 10:45 自动放行
+- [x] resume 继承 train 冻结参数（1ec1b22），pipe-r3 resume 11:08 按 20/5 口径重跑
+- [ ] pipe-r3 resume → summary → acceptance（双卡，自动）
+- [ ] **pipe-r4：9B Student + 27B Teacher**（双卡，pipe-r3 结束后自动接，`runs/pipe-r4/chain.sh`）：看 rollout 阶段 9B 推理、actor OOM 与否、`distillation/loss` 离开 0、Teacher 每步耗时
+- [ ] **pipe-r5：4B + DAPO=1，20 步**（单卡，11:17 起）：看 `training/filter_groups/*`、reward 曲线是否上升、held-out 0/10/20 步
+- [ ] SWE-rebench 21+4 题 verifier `--ctrf` 不可用（oracle 闸门拦下），根因排查中；修复后再 `STAGE1_SLICE=0` 混合 41 题
 - [x] 04:00 Modal 触顶 → 06:46 用户加了 $10（≈300 条 trial）。已按价值顺序脱离会话重启：pipe-r2 resume 重做（旧 pod，≈$0.7）、pipe-r3 带 Teacher 重训（新 pod，≈$4）；基线重跑与 pipe-r4 等额度
 - [ ] 有效 TB 2.1 基线需要：Modal 额度 ≥ 500 沙箱/天；建议 Docker Hub 登录（Harbor `registry_secret`，适配器需透传）避免匿名拉取限流
-- [ ] pipe-r4（基线之后）：`TEACHER_MODEL_PATH=/workspace/models/Qwen3.8-27B TEACHER_GPU_MEM=0.85`，看 distillation/loss 离开 0、Teacher 打分吞吐（GPU1 忙碌时长 / step）
-- [ ] pipe-r5：`MODEL_PATH=/workspace/models/Qwen3.5-9B`（Student 9B）
+- [x] ~~pipe-r4 用 4B Student + 27B Teacher~~：词表不同（151936 vs 248320）不可行，改为 9B Student（见上）
 - [ ] `report.py` / `80_acceptance.sh` 增加 OPD 三行与 Teacher 检查（teacher logprobs 非空、distillation loss 非零）
 - [ ] 复核 tinker-cookbook-opd-rl 的 harbor_opd_rl.py 评分合同，对齐到 harbor task 轨迹（token ids / action mask 来自 Gateway npz）
 - [ ] 27B Teacher 服务化（独立 GPU 角色）；单卡先用 4B 自评做接线冒烟

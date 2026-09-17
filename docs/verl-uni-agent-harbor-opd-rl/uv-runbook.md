@@ -76,7 +76,7 @@ python -c 'import vllm, ray, transformers, peft, transfer_queue, verl, uni_agent
 
 ### Modal 凭据
 
-`~/.modal.toml` 从本机 scp 到远端 `/root/.modal.toml`（chmod 600）。放 `/root` 是有意的：pod 重建后会丢，需要重拷，但不落在共享网络盘、不进仓库。lane 内 `modal profile current` 应显示 `shootime007`。
+`~/.modal.toml` 从本机 scp 到远端 `/root/.modal.toml`（chmod 600）。放 `/root` 是有意的：pod 重建后会丢，需要重拷，但不落在共享网络盘、不进仓库。lane 内 `modal profile current` 应与本机一致（2026-09-17 起为 `l98348740`）。
 
 ## 修改依赖的规则
 
