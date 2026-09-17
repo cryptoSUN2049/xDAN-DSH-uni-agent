@@ -10,7 +10,8 @@ source "$(dirname "${BASH_SOURCE[0]}")/common.sh"; stage_dir
 # difficulty). STAGE1_SLICE=N takes the first N train tasks in index order
 # (20 -> 100 -> all as the dataset grows); STAGE1_SOURCES filters sources.
 # STAGE1_TRAIN_PER_SOURCE / STAGE1_VAL_PER_SOURCE select per-source quotas instead
-# (e.g. STAGE1_REPO=gump2049/xDAN-Harbor-Stage1-Tasks-Full with 50 / 20).
+# (e.g. STAGE1_REPO=gump2049/xDAN-Harbor-Stage1-Tasks-Full with 50 / 20). Tasks in a
+# shared eval-set-*/reserved.json are always excluded unless STAGE1_EXCLUDE_RESERVED=0.
 # Validation split becomes the held-out parquet. Only audit-passed tasks are kept unless
 # STAGE1_REQUIRE_AUDIT=0. Needs HF_TOKEN or ~/.cache/huggingface/token.
 DATASET="${DATASET:-tb21}"
@@ -26,7 +27,7 @@ repo, local, slice_n, sources, out = sys.argv[1], sys.argv[2], int(sys.argv[3]),
 # The audited repo ships unpacked task dirs; the Full repo ships one
 # <batch>/<rev>/runtime-v1.tar.gz per source plus per-task audit sidecars.
 path = snapshot_download(repo, repo_type="dataset", local_dir=local, allow_patterns=[
-    "index/*", "*/runtime-v1/*", "*/runtime-v1.tar.gz", "audits/*/audit-status.jsonl"])
+    "index/*", "*/runtime-v1/*", "*/runtime-v1.tar.gz", "audits/*/audit-status.jsonl", "eval-set-*/reserved.json"])
 rows = [json.loads(l) for l in open(os.path.join(path, "index", "tasks.jsonl"))]
 rows = [r for r in rows if r["source"] in sources and r["status"] == "derived"]
 # Audit sidecars (Full repo): audits/*/audit-status.jsonl rows {task, status}. They
@@ -50,6 +51,24 @@ before_audit = len(rows)
 if require_audit:
     rows = [r for r in rows if isinstance(r.get("nop_oracle_audit"), dict) and r["nop_oracle_audit"].get("passed") is True]
 print("audit filter", "on" if require_audit else "off", before_audit, "->", len(rows))
+# Shared evaluation sets (eval-set-*/reserved.json, frozen jointly with the Tinker line)
+# are never trained on: Terminal-Lego by task id, swe-rebench by repository (task id
+# with its trailing "-<number>" removed). STAGE1_EXCLUDE_RESERVED=0 disables this.
+reserved_files = sorted(glob.glob(os.path.join(path, "eval-set-*", "reserved.json")))
+reserved_tasks, reserved_repos = set(), set()
+if os.environ.get("STAGE1_EXCLUDE_RESERVED", "1") == "1":
+    for reserved_file in reserved_files:
+        reserved = json.load(open(reserved_file))
+        reserved_tasks.update(reserved.get("terminal_lego", {}).get("tasks", []))
+        reserved_repos.update(reserved.get("swe", {}).get("repos", []))
+def is_reserved(r):
+    if r["task"] in reserved_tasks:
+        return True
+    return r["source"].startswith("swe-rebench") and r["task"].rsplit("-", 1)[0] in reserved_repos
+before_reserved = len(rows)
+rows = [r for r in rows if not is_reserved(r)]
+print("reserved eval sets", [os.path.relpath(f, path) for f in reserved_files], "tasks", len(reserved_tasks),
+      "repos", len(reserved_repos), "excluded", before_reserved - len(rows))
 train = [r for r in rows if r["split"] == "train"]
 val = [r for r in rows if r["split"] == "validation"]
 # STAGE1_TRAIN_PER_SOURCE=N / STAGE1_VAL_PER_SOURCE=M: per-source quotas in index
@@ -136,7 +155,7 @@ for name, subset in (("train", train), ("validation", val)):
     print(name, len(subset), root)
 print("docker_image stripped", dict(stripped))
 json.dump({"repo": repo, "slice": slice_n, "sources": sources, "require_audit": require_audit, "audit_dropped": before_audit - len(rows),
-           "audit_sidecar_merged": merged, "train_per_source": train_quota, "val_per_source": val_quota, "val_from_train": val_from_train, "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
+           "audit_sidecar_merged": merged, "reserved_excluded": before_reserved - len(rows), "train_per_source": train_quota, "val_per_source": val_quota, "val_from_train": val_from_train, "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
            "difficulty": {d: sum(1 for r in train if r.get("difficulty") == d) for d in ("easy", "medium", "hard")}},
           open(os.path.join(out, "selection.json"), "w"), indent=1)
 PY
