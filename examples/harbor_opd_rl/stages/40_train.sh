@@ -22,12 +22,30 @@ find_final_ckpt() { [[ -d "${STAGE_DIR}/checkpoints" ]] || return 0; { find "${S
 # failed post-check never costs another GPU hour.
 if [[ "${TRAIN_REUSE:-1}" == "1" ]]; then
   CK=$(find_final_ckpt)
-  if [[ -n "${CK}" ]] && model_file "${CK}" >/dev/null && grep -qE "step:${TOTAL_STEPS} - " "${STAGE_DIR}/train.log" 2>/dev/null; then
+  if [[ -n "${CK}" ]] && model_file "${CK}" >/dev/null; then
     log "reusing completed run in ${STAGE_DIR} (global_step_${TOTAL_STEPS} present)"
     stop_lingering_trainer
     echo "${CK}" > "${STAGE_DIR}/final-checkpoint.txt"
-    grep -oE "step:[0-9]+ - .*" "${STAGE_DIR}/train.log" > "${STAGE_DIR}/step-metrics.txt"
     grep -oE "wandb: .*View run at .*" "${STAGE_DIR}/train.log" | head -1 | sed 's/.*View run at //' > "${STAGE_DIR}/wandb-url.txt" || true
+    { grep -oE "step:[0-9]+ - .*" "${STAGE_DIR}/train.log" || true; } > "${STAGE_DIR}/step-metrics.txt"
+    # Console step lines are Ray-actor buffered and are lost when the process is
+    # killed; wandb holds the same metrics. Rebuild step-metrics.txt from wandb
+    # when the final step's console line is missing.
+    if ! grep -qE "step:${TOTAL_STEPS} - " "${STAGE_DIR}/step-metrics.txt" && [[ -s "${STAGE_DIR}/wandb-url.txt" ]]; then
+      log "console metrics incomplete; rebuilding from wandb $(cat "${STAGE_DIR}/wandb-url.txt")"
+      "${LANE_PY}" - "$(cat "${STAGE_DIR}/wandb-url.txt")" "${STAGE_DIR}/step-metrics.txt" <<'PY'
+import sys, wandb
+url, out = sys.argv[1], sys.argv[2]
+ent, proj, _, rid = url.split("wandb.ai/")[1].split("/")[:4]
+rows = [h for h in wandb.Api().run(f"{ent}/{proj}/{rid}").scan_history() if h.get("training/global_step") is not None]
+with open(out, "w") as f:
+    for h in rows:
+        items = [f"{k}:{v}" for k, v in h.items() if not k.startswith("_") and isinstance(v, (int, float))]
+        f.write(f"step:{int(h['training/global_step'])} - " + " - ".join(items) + "\n")
+print("rebuilt", len(rows), "steps from wandb")
+PY
+    fi
+    grep -qE "step:${TOTAL_STEPS} - " "${STAGE_DIR}/step-metrics.txt" || { log "step ${TOTAL_STEPS} metrics missing (console and wandb)"; record failed '"metrics missing"'; exit 1; }
     metrics_json "${STAGE_DIR}/step-metrics.txt" > "${STAGE_DIR}/metrics.json"
     mark_passed; record passed "$(cat "${STAGE_DIR}/metrics.json")"
     log "passed (reused): checkpoint=${CK} wandb=$(cat "${STAGE_DIR}/wandb-url.txt")"
