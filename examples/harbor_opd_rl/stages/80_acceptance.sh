@@ -93,5 +93,17 @@ print(json.dumps({"verdict": report["verdict"], "hard": hard, "soft": soft}))
 sys.exit(0 if all(hard.values()) else 1)
 PY
 STATUS=$?
+# Standard comparison tables (same format as the Tinker line) for train + resume.
+REPORT="${REPO_ROOT}/.claude/skills/rl-training-analyst/scripts/report.py"
+if [[ -f "${REPORT}" ]]; then
+  : > "${STAGE_DIR}/report-tables.md"
+  for s in train resume; do
+    url=$(cat "${PIPE_ROOT}/${s}/wandb-url.txt" 2>/dev/null || true)
+    [[ -n "${url}" && -d "${PIPE_ROOT}/${s}" ]] || continue
+    "${LANE_PY}" "${REPORT}" --run "${url}" --run-root "${PIPE_ROOT}/${s}" --label "$(basename "${PIPE_ROOT}") ${s}" \
+      --json "${STAGE_DIR}/report-${s}.json" >> "${STAGE_DIR}/report-tables.md" 2>/dev/null || echo "(report for ${s} failed)" >> "${STAGE_DIR}/report-tables.md"
+    echo >> "${STAGE_DIR}/report-tables.md"
+  done
+fi
 mark_passed; record "$([[ ${STATUS} -eq 0 ]] && echo passed || echo failed)" "$(tr -d '\n' < "${STAGE_DIR}/acceptance.json" | cut -c1-4000)"
 exit ${STATUS}
