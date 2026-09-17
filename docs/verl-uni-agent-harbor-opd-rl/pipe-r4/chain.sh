@@ -6,7 +6,8 @@
 # All three OOMs (13:41, 14:41, 15:4x UTC) were the Qwen3.8-27B Teacher vLLM on GPU1
 # (it sees its card as cuda:0), not the 9B student: at gpu_memory_utilization 0.85
 # weights + KV fill ~81 GiB and the prompt-logprob buffer (batched tokens x 248k
-# vocab x 4 bytes, 7.25 GiB at 8192) does not fit. Teacher now 0.70 / 4096 tokens.
+# vocab x 4 bytes, 7.25 GiB at 8192) does not fit. Teacher now 0.70, 2048-token
+# steps and 4 concurrent sequences (user asked for extra margin, 16:00 UTC).
 # Student engine settings (prefix caching off, 4096, 0.40) stay identical to the
 # pipe-r7 control even though they turned out not to be the cause.
 R=/workspace/verl-uni-agent-harbor-opd-rl; P=$R/runs/pipe-r4; WAIT_PID="${1:-}"
@@ -28,5 +29,5 @@ echo "[chain $(date -u +%H:%M:%S)] starting pipe-r4 with models from ${M}"
 PIPE_ROOT=$P DATA_DIR=$R/data-r4 DATASET=stage1 STAGE1_SLICE=0 TRAIN_STEPS=6 RESUME_EXTRA_STEPS=1 \
 ROLLOUT_N=8 TRAIN_BATCH_SIZE=4 CONCURRENCY=32 TRAIN_MAX_SAMPLES=40 VAL_MAX_SAMPLES=7 VAL_BEFORE_TRAIN=True TEST_FREQ=6 \
 MODEL_PATH=$M/Qwen3.5-9B GPU_MEMORY_UTILIZATION=0.40 TEACHER=1 TEACHER_MODEL_PATH=$M/Qwen3.8-27B TEACHER_GPU_MEM=0.70 \
-HARBOR_REWARD_MODE=pass_ratio DAPO=0 ROLLOUT_MAX_NUM_BATCHED_TOKENS=4096 ROLLOUT_ENABLE_PREFIX_CACHING=False TEACHER_MAX_NUM_BATCHED_TOKENS=4096 \
+HARBOR_REWARD_MODE=pass_ratio DAPO=0 ROLLOUT_MAX_NUM_BATCHED_TOKENS=4096 ROLLOUT_ENABLE_PREFIX_CACHING=False TEACHER_MAX_NUM_BATCHED_TOKENS=2048 TEACHER_MAX_NUM_SEQS=4 \
 bash examples/harbor_opd_rl/run_tb21_pipeline.sh

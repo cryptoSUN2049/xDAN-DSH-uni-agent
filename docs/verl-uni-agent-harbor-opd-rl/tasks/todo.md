@@ -61,6 +61,7 @@
 - [ ] **pipe-r4：9B Student + 27B Teacher**（双卡，12:16 重起；审计混合集 40/7、batch 4、并发 32、6 步 + resume，`docs/…/pipe-r4/chain.sh`）：看 rollout 阶段 9B 推理、actor 是否 OOM、`distillation/loss` 是否离开 0、Teacher 每步耗时
 - [x] pipe-r4 第一次训练：13:41 时 9B 推理引擎 OOM（每步 36864 个 token）→ 13:47 改成每步 8192 个 token 后从训练阶段重起
 - [x] pipe-r4 第二、三次训练 OOM（14:41、15:4x）：最初误判为学生引擎显存增长，15:45 查实三次都是 27B Teacher 显存比例 0.85 放不下 prompt logprobs 缓冲 → 15:48 改为 Teacher 0.70 / 4096 后重起（第 4 次）
+- [x] 16:00 按用户要求 Teacher 再保守：单批 2048、同时 4 条序列、显存比例 0.70 → pipe-r4 第 5 次训练
 - [ ] 下一轮两边同步把学生侧恢复为 prefix caching 开、单批 8192、显存比例 0.45（当前的保守设置是误判后加上的），Teacher 保持 0.70 / 4096
 - [x] ~~pipe-r5：4B + DAPO~~：12:06 停止，改用 GRPO（V1 下 DAPO 逐批补采、步长约翻倍，开关原本接错参数，469b09b 已修）
 - [x] ~~pipe-r6：4B GRPO 20 步~~：14:00 跑完第 1 步后停止，单卡改作对照组

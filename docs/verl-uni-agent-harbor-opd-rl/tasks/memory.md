@@ -173,4 +173,5 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - pipe-r4 于 15:48 从训练阶段重起：`TEACHER_GPU_MEM=0.70 TEACHER_MAX_NUM_BATCHED_TOKENS=4096`。学生侧仍是 prefix caching 关、单批 4096、显存比例 0.40，与 pipe-r7 一致，已从 train-command.txt 核对。三次失败的训练目录已按 Teacher OOM 重命名。
 - pipe-r7 不受影响，一直在正常训练。监听预警改为任何 vLLM 进程达到 85 GiB 就报，Teacher 也覆盖在内。
 - 下一轮：学生侧恢复 prefix caching、8192、0.45（两边同步），Teacher 保持 0.70 / 4096。
+- 16:00 按用户要求 Teacher 再保守一档：`TEACHER_MAX_NUM_BATCHED_TOKENS=2048 TEACHER_MAX_NUM_SEQS=4`，显存比例保持 0.70；pipe-r4 第 4 次训练在初始化阶段停掉，改为第 5 次重起。学生侧和 pipe-r7 保持一致，不动。
 
