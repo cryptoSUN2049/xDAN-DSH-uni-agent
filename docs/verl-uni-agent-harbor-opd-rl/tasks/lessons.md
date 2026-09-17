@@ -14,3 +14,4 @@
 12. **Harbor 的 `--agent-timeout` 不覆盖卡在 Modal API 的沙箱调用。** attempt4 一条 fix-git trial 在 terminus-2 上下文摘要后卡在 Modal 调用 30+ 分钟（进程只连着 Modal 443，vLLM 空闲），整步被拖住。规则：Harbor task config 必设 `trial_timeout_sec`（适配器 `run_harbor_cli` 用 `asyncio.wait_for` 兜底，超时 exit 124）；训练脚本默认 `FAIL_ON_ROLLOUT_ERROR=0`，让 `sync_refill_failed_groups` 补组而不是中断整步；`modal container stop` 在非交互 shell 要加 `-y`。
 13. **VERL v1 checkpoint 布局是 `global_step_N/actor/*.pt` + `data.pt`**（sync 旧布局把 .pt 直接放在 `global_step_N/`）。校验和 delta 都要兼容两种布局；attempt5 训练成功却被误判 "checkpoint missing" 白等一轮。
 14. **`set -e -o pipefail` 下，grep/find 无匹配会让 `x=$(...)` 直接退出脚本，且没有任何输出。** `trainer_pids`、`find_final_ckpt` 两处都因此静默失败。规则：辅助函数里 `grep … || true`、`find` 前先 `[[ -d ]]`；阶段脚本失败时若 driver.log 没有本阶段任何行，先怀疑这一类。
+15. **两个 pod 共享一个 `/workspace` 时，data 阶段会重建 `data/stage1/tasks-*`，可能打断另一 pod 正在启动的 trial。** 第二台机器起 pipeline 时用 `SKIP_STAGES=data`（沿用已 PASSED 的 parquet）或独立 `DATA_DIR`；`rsync --delete` 源码也只做一次。
