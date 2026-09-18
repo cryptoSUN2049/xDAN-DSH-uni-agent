@@ -236,3 +236,9 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - **更正**：复盘里"命令行没暴露 sandbox_timeout_secs"是错的（`cli/trials.py:411` → `factory.py:313`）。由会话 xdan-dsh-uni-agent-67 指出并修复清理脚本的误杀缺陷。
 - 我引入过一个严重缺陷：清理脚本把"年龄未知"当成"该杀"，常驻守卫会终止所有运行中的沙箱。在误杀发生前停掉了守卫。教训：先查上游有没有声明式参数，再考虑外部轮询补救。
 
+## 2026-09-18 02:45 本轮数据与训练计划已落盘
+- 按约定写进 `tasks/todo.md` 的「阶段 H」：H1 数据计划、H2 训练计划、H3 判据、H4 明确不追求的。
+- 数据侧改用官方合并索引 `audits/passing-tasks.jsonl`（baf66ee），题池 Terminal-Lego 81 / SWE 422（medium-hard），50+50 的正式轮次不再缺题。
+- 训练侧：冒烟通过且成本核验通过后起 pipe-r9（9B + 27B Teacher，100 题、20 步、并发 16），单卡恢复后起 pipe-r10 对照组（`TEACHER=0`）。
+- 判据四条缺一不可：成本、机制、学习信号、长度副作用。明确不追求 TB 2.1 分数提升和 held-out 绝对分数结论。
+

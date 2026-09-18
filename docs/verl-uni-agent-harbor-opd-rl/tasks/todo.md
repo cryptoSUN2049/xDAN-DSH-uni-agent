@@ -90,6 +90,32 @@
 - [ ] 27B Teacher 服务化（独立 GPU 角色）；单卡先用 4B 自评做接线冒烟
 - [ ] hybrid loss（RL + OPD 加权）在 harbor 轨迹上非零梯度证据
 
+## 阶段 H：2026-09-18 数据与训练计划
+
+### H1 数据计划（题从哪来、怎么筛、怎么留出）
+- [x] 题源：`gump2049/xDAN-Harbor-Stage1-Tasks-Full`，用官方合并索引 `audits/passing-tasks.jsonl`（每 30 分钟更新），取 `status == passed && reserved_for_eval == false`
+- [x] 三道过滤：审计通过 → 剔除共享评估集 → 只取 medium/hard。实测 1498 已审 / 1003 可训练 / 606 为 medium-hard；池子 Terminal-Lego 81、SWE 422
+- [x] 选题规则：每来源按索引顺序取 N 道训练，再往后取 M 道做 held-out，两者不重叠；目录加序号前缀保证两来源交替（否则每个 epoch 会先跑完一个来源）
+- [x] 每条 run 独立 `DATA_DIR`（两台 pod 共享 `/workspace`）
+- [ ] 收到 eval-set-v1 的 100 道 manifest 后，held-out 换成它，两条线用同一把尺子；数据阶段加 `STAGE1_VAL_MANIFEST`
+- [ ] Terminal-Lego 可训练池扩到约 320 道后（Tinker 线在补审），把每来源配额从 50 提到 100
+
+### H2 训练计划（本轮 pipe-r9）
+- [ ] **前置门 1**：`pipe-r8-smoke` 验收 PASS 且成本核验通过（泄漏 0、计费/实际 ≤1.5、每条 ≤0.05 美元）
+- [ ] **pipe-r9 正式轮次**：Qwen3.5-9B Student + Qwen3.8-27B Teacher，100 道 medium/hard（各 50），held-out 40 道，20 步（2 epoch），每步 4 题 × 8 条，并发 16，预计 7–9 小时、约 700 条 trial、12–15 美元
+- [ ] **pipe-r10 对照组**（单卡 pod 恢复后）：同数据、同步数、`TEACHER=0`，用于分离 Teacher 的贡献与开销
+- [ ] 用 eval-set-v1 复测 pipe-r4 的 checkpoint，确认 held-out 0.988 → 0.914 是噪声还是退步
+
+### H3 本轮的判据（跑完按这四条下结论，缺一不可）
+- [ ] 成本：泄漏沙箱 0、计费与实际时长之比 ≤1.5、每条 trial ≤0.05 美元（`90_cost.sh` 自动核验）
+- [ ] 机制：验收 PASS（阶段全过、指标有限、续训连续、adapter 变而 base 不变）
+- [ ] 学习信号：训练集 reward 在同来源的第 2 epoch 高于第 1 epoch（比较第 11–15 步与第 1–5 步、第 16–20 步与第 6–10 步）
+- [ ] 副作用：轨迹长度不随步数单调上升（Tinker 线出现过训练后暴涨 7 倍导致退步）
+
+### H4 明确不追求的
+- [ ] Terminal-Bench 2.1 分数提升：需要 500 题以上、200 步以上，本轮做不到
+- [ ] held-out 绝对分数的结论：现有 7 道题训练前已 0.988（饱和），要等共享评估集
+
 ## 阶段 G：路线 3 DSH 进沙箱
 - [ ] 重启 ingress 路线：专用 hostname / tunnel / registry 镜像；agent 切 DSH，其余训练链路不变
 
