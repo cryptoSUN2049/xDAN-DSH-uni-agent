@@ -56,9 +56,13 @@ TEST_FREQ="${TEST_FREQ:-10}"
 
 # Data: audit-passed tasks only, shared eval sets excluded, medium/hard by default
 # (9B scored 0.92 on an unfiltered slice in pipe-r4, leaving GRPO no spread).
-STAGE1_REPO="${STAGE1_REPO:-gump2049/xDAN-Harbor-Stage1-Tasks-Full}"
+# Default source: the data line's published slice (audited, eval-set excluded,
+# decontaminated against Terminal-Bench 2.0/2.1 and 21 other benchmarks). Set
+# STAGE1_SLICE_NAME= (empty) with STAGE1_REPO=...-Full to fall back to the index.
+STAGE1_REPO="${STAGE1_REPO:-gump2049/xDAN-Harbor-Stage1-Tasks}"
+STAGE1_SLICE_NAME="${STAGE1_SLICE_NAME-stage1-swe150-tl50-v1}"
 STAGE1_TRAIN_PER_SOURCE="${STAGE1_TRAIN_PER_SOURCE:-50}"
-STAGE1_VAL_PER_SOURCE="${STAGE1_VAL_PER_SOURCE:-20}"
+STAGE1_VAL_PER_SOURCE="${STAGE1_VAL_PER_SOURCE:-4}"
 STAGE1_DIFFICULTY="${STAGE1_DIFFICULTY:-medium hard}"
 HARBOR_REWARD_MODE="${HARBOR_REWARD_MODE:-pass_ratio}"
 DAPO="${DAPO:-0}"
@@ -99,10 +103,10 @@ fi
 
 cd "${REPO_ROOT}"
 bash deployment/bootstrap/modal-quota-wait.sh --interval "${QUOTA_INTERVAL:-1800}" --max-hours "${QUOTA_MAX_HOURS:-48}" || exit 1
-log "starting ${ROUND}: student=${STUDENT_MODEL} teacher=${TEACHER} steps=${TRAIN_STEPS} tasks=${TRAIN_MAX_SAMPLES} concurrency=${CONCURRENCY} smoke=${SMOKE}"
+log "starting ${ROUND}: student=${STUDENT_MODEL} teacher=${TEACHER} steps=${TRAIN_STEPS} tasks=${TRAIN_MAX_SAMPLES} slice=${STAGE1_SLICE_NAME:-none} concurrency=${CONCURRENCY} smoke=${SMOKE}"
 
 env PIPE_ROOT="${PIPE_ROOT}" DATA_DIR="${DATA_DIR}" DATASET=stage1 STAGE1_SLICE=0 \
-  STAGE1_REPO="${STAGE1_REPO}" STAGE1_TRAIN_PER_SOURCE="${STAGE1_TRAIN_PER_SOURCE}" \
+  STAGE1_REPO="${STAGE1_REPO}" STAGE1_SLICE_NAME="${STAGE1_SLICE_NAME}" STAGE1_TRAIN_PER_SOURCE="${STAGE1_TRAIN_PER_SOURCE}" \
   STAGE1_VAL_PER_SOURCE="${STAGE1_VAL_PER_SOURCE}" STAGE1_DIFFICULTY="${STAGE1_DIFFICULTY}" \
   TRAIN_STEPS="${TRAIN_STEPS}" RESUME_EXTRA_STEPS="${RESUME_EXTRA_STEPS}" TEST_FREQ="${TEST_FREQ}" \
   TRAIN_MAX_SAMPLES="${TRAIN_MAX_SAMPLES}" VAL_MAX_SAMPLES="${VAL_MAX_SAMPLES}" VAL_BEFORE_TRAIN=True \
