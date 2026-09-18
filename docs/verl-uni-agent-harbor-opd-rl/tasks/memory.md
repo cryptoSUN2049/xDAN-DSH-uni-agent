@@ -248,3 +248,9 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 难度：swe150-tl50 的训练题中 SWE 有 59 道 easy、89 medium、2 hard，Terminal-Lego 50 道全是 medium。我们在切片上再筛 medium/hard，得到 148 道（TL 50 / SWE 91）。
 - 数据阶段支持 `STAGE1_SLICE_NAME`（5712381）。已请 5e 确认"在切片上再筛子集"是否可接受，或出一个 medium/hard 的官方切片以保证两条线训练集完全一致。
 
+## 2026-09-18 03:45 决定：沙箱继续用 Modal
+- 用户决定继续用 Modal，不迁移。依据：RunPod Pod 不能自建 Docker（官方文档写明 "you cannot spin up your own Docker instance or use Docker Compose on Pods"，博客称 Kata 时代的 Docker-in-Docker 已取消；实测无 CAP_SYS_ADMIN、用户命名空间与 overlay 挂载被拒、cgroup 只读）；另租 Docker 虚拟机与修好泄漏后的 Modal 成本同一量级。
+- 降本方向改为减少沙箱小时数：每题采样 8→4（成本减半）、轮数上限 50→30（降三到四成），在小切片上先做对比；并发与 GPU 吞吐匹配，避免沙箱排队空等。
+- 重新评估迁移的触发条件：出现已付费且闲置的 Docker 机器，或换到支持特权容器、训练与沙箱同机的 GPU 平台。
+- 同日成本预估更正：581 道有信号的题（SWE easy 379 + Terminal-Lego medium 202）跑一遍约 4648 条轨迹、约 833 沙箱小时，Modal 约 55–70 美元（此前"100 美元以上"估高了）。以 pipe-r9 成本核验的实测单价为准。
+
