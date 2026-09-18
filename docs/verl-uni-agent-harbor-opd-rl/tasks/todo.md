@@ -93,8 +93,9 @@
 ## 阶段 H：2026-09-18 数据与训练计划
 
 ### H1 数据计划（题从哪来、怎么筛、怎么留出）
-- [x] 题源：`gump2049/xDAN-Harbor-Stage1-Tasks-Full`，用官方合并索引 `audits/passing-tasks.jsonl`（每 30 分钟更新），取 `status == passed && reserved_for_eval == false`
-- [x] 三道过滤：审计通过 → 剔除共享评估集 → 只取 medium/hard。实测 1498 已审 / 1003 可训练 / 606 为 medium-hard；池子 Terminal-Lego 81、SWE 422
+- [x] **题源改为官方训练切片**（数据线 5e 会话发布，5712381 接入）：`gump2049/xDAN-Harbor-Stage1-Tasks` 的 `slices/stage1-swe150-tl50-v1`（200 训练 / 8 验证）与 `stage1-swe300-tl200-v1`（500 / 8）。审计通过、已剔除评估集、对 23 个评测（含 Terminal-Bench 2.0/2.1、SWE-bench Verified/Pro）做过防污染。参数 `STAGE1_SLICE_NAME`
+- [x] 备用题源：Full 仓库的合并索引 `audits/passing-tasks.jsonl`（无防污染保证，只在切片不够用时使用）
+- [x] 在切片上叠加 medium/hard 筛选：stage1-swe150-tl50-v1 的 208 道 → 148 道（Terminal-Lego 50，SWE 91），按来源各取 50 道训练
 - [x] 选题规则：每来源按索引顺序取 N 道训练，再往后取 M 道做 held-out，两者不重叠；目录加序号前缀保证两来源交替（否则每个 epoch 会先跑完一个来源）
 - [x] 每条 run 独立 `DATA_DIR`（两台 pod 共享 `/workspace`）
 - [ ] 收到 eval-set-v1 的 100 道 manifest 后，held-out 换成它，两条线用同一把尺子；数据阶段加 `STAGE1_VAL_MANIFEST`
@@ -102,7 +103,7 @@
 
 ### H2 训练计划（本轮 pipe-r9）
 - [ ] **前置门 1**：`pipe-r8-smoke` 验收 PASS 且成本核验通过（泄漏 0、计费/实际 ≤1.5、每条 ≤0.05 美元）
-- [ ] **pipe-r9 正式轮次**：Qwen3.5-9B Student + Qwen3.8-27B Teacher，100 道 medium/hard（各 50），held-out 40 道，20 步（2 epoch），每步 4 题 × 8 条，并发 16，预计 7–9 小时、约 700 条 trial、12–15 美元
+- [ ] **pipe-r9 正式轮次**：Qwen3.5-9B Student + Qwen3.8-27B Teacher，数据 `STAGE1_SLICE_NAME=stage1-swe150-tl50-v1` + medium/hard，各 50 道共 100 道，20 步（2 epoch），每步 4 题 × 8 条，并发 16，预计 7–9 小时、约 700 条 trial、12–15 美元；held-out 先用切片的 7 道验证题，eval-set-v1 清单到位后复测
 - [ ] **pipe-r10 对照组**（单卡 pod 恢复后）：同数据、同步数、`TEACHER=0`，用于分离 Teacher 的贡献与开销
 - [ ] 用 eval-set-v1 复测 pipe-r4 的 checkpoint，确认 held-out 0.988 → 0.914 是噪声还是退步
 
