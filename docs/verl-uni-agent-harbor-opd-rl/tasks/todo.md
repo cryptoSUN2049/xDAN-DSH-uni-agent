@@ -107,6 +107,26 @@
 - [ ] **pipe-r10 对照组**（单卡 pod 恢复后）：同数据、同步数、`TEACHER=0`，用于分离 Teacher 的贡献与开销
 - [ ] 用 eval-set-v1 复测 pipe-r4 的 checkpoint，确认 held-out 0.988 → 0.914 是噪声还是退步
 
+### H2b pipe-r9 结局（2026-09-18）
+- [x] 03:27 启动，数据实际用 `stage1-swe50e-tl50m-v1`（SWE easy 50 + Terminal-Lego medium 50，验证 4 + 4，切片上不再叠加难度筛选）
+- [x] 06:07 在第 4/20 步停止：`pass_ratio` 奖励在 SWE 上"什么都不做"的下限中位数 0.936（证据 `pipe-r9/reward-floor-finding.md`）
+- [x] 停止时成本核验：171 条 trial、29.25 小时、5.26 美元、计费/实用 1.0、每条 0.031 美元、残留沙箱 0（`runs/pipe-r9/cost-at-stop.json`）；第 1–4 步 checkpoint 保留
+
+### H5 pipe-r11（2026-09-18 06:09 UTC 启动，替代 pipe-r9）
+- **目标**：在同一份 100 道题上，用干净的二值奖励重跑 pipe-r9，验证四件事：成本纪律、训练机制、真实的学习信号（按二值解决率）、长度副作用。
+- **与 pipe-r9 的唯一训练差异**：`HARBOR_REWARD_MODE=binary`（判分脚本的官方结论：修复前失败的测试全部修好且原有测试全部通过才记 1）。另外两处不影响训练：oracle 阶段改用 `tb21_oracle.yaml`（沙箱生命周期与 `verl-harbor` 应用），cost 阶段已修复。
+- **数据**：`gump2049/xDAN-Harbor-Stage1-Tasks` 切片 `stage1-swe50e-tl50m-v1`。训练 100 道（SWE easy 50、Terminal-Lego medium 50，两来源交替），验证 8 道（各 4）。全部 nop/oracle 审计通过，已剔除 eval-set-v1，对 23 个评测做过防污染。base 9B 的分桶解决率：SWE easy 约 33%，Terminal-Lego medium 约 52%。
+- **配置**：Qwen3.5-9B 学生（LoRA r32，GPU0）+ Qwen3.8-27B Teacher（整卡 GPU1，显存比例 0.70、单批 4096）；GRPO + OPD 蒸馏（k1，同时用任务奖励）；20 步，每步 4 题 × 8 条，约 0.8 个 epoch；并发 16；最多 50 轮、单条 trial 1800 秒；训练前、第 10 步、第 20 步各验证一次；保留最新 10 个 checkpoint。
+- **预计**：每步约 24 分钟，全部阶段约 15:30–16:00 UTC 结束；约 700 条 trial，Modal 约 20 美元。
+- **命令**：`launch-detached.sh runs/pipe-r11/driver.log "ROUND=pipe-r11 TEACHER=1 TRAIN_STEPS=20 HARBOR_REWARD_MODE=binary bash examples/harbor_opd_rl/run_opd_round.sh"`，代码 b12bd2f（rsync）。
+- **判据**（跑完按四条下结论）：
+  - [ ] 成本：残留 0、计费/实用 ≤ 1.5、每条 ≤ 0.05 美元（`90_cost.sh`）
+  - [ ] 机制：验收 PASS
+  - [ ] 学习信号：按二值解决率，第 11–20 步高于第 1–10 步（同一批题的第二次出现，与抽题无关）；并记录每步"组内有对有错"的题数
+  - [ ] 副作用：平均回复长度与轮数不随步数单调上升（pipe-r9 前 3 步 1.54 万 → 2.11 万 token，需确认是抽题造成还是趋势）
+- **已知风险**：二值奖励下组内全对或全错的题没有 RL 梯度（pipe-r9 第 1 步按二值算是 0/4）。若前 5 步有信号的题比例 < 25%，下一轮先按难度筛题或加大每步题数，不退回部分分。
+- **下一轮待改（本轮不动，保持单变量）**：智能体时限改为任务声明值 × 倍数并让整条 trial 时限覆盖判分；轮数上限 50 → 30 的对比；单卡 pod 恢复后跑 pipe-r10（同配置、`TEACHER=0`）分离 OPD 的贡献。
+
 ### H3 本轮的判据（跑完按这四条下结论，缺一不可）
 - [ ] 成本：泄漏沙箱 0、计费与实际时长之比 ≤1.5、每条 trial ≤0.05 美元（`90_cost.sh` 自动核验）
 - [ ] 机制：验收 PASS（阶段全过、指标有限、续训连续、adapter 变而 base 不变）
