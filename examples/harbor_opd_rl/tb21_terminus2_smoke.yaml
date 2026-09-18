@@ -27,6 +27,8 @@
   # Wall clock for the whole trial (env build + agent + verifier). Harbor's
   # --agent-timeout does not cover a sandbox call that never returns: 2026-09-16
   # one fix-git trial hung 30+ min in a Modal API call after context summarization.
-  trial_timeout_sec: 2400
-  override_cpus: 2
-  override_memory_mb: 4096
+  trial_timeout_sec: 1800
+  # Tasks declare cpus=1 and 1-2 GB; 2 cpus / 4 GB doubled the bill for nothing.
+  # Modal charges CPU and memory per second for the whole sandbox lifetime.
+  override_cpus: 1
+  override_memory_mb: 2048
