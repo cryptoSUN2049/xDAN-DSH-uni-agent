@@ -38,4 +38,7 @@
 36. **回复语言必须一直是中文，包括简短的通知确认。** 2026-09-17 夜里监听事件密集时，连续几条回复写成了英文，用户纠正"中文回复"。规则：不管是长汇报还是一两句的事件确认，面向用户的文字一律用中文；专业术语、命令、文件名可以保留英文。
 37. **换模型或换关键配置，先跑一步冒烟。** pipe-r4 把 27B Teacher 的显存配置从 4B 的经验直接照搬，没做冒烟就开 6 步长跑，连续三次 OOM，加上两次主动停止，共浪费约 500 条 trial 和一晚的双卡时间。一次 `--smoke`（1 步、4 道题、8 并发）只要几十条 trial、约 40 分钟，能覆盖模型加载、引擎显存、Teacher 打分、checkpoint 保存这几个最容易出事的环节。规则：`run_opd_round.sh --smoke` 通过后才起正式轮次。
 38. **共用 Modal 工作区必须约定并发。** 两条线各跑 32 并发一整夜，把工作区账期上限打穿，两边同时停摆。约定：我们 16，对方筛选期 32、平时 8，峰值 48；并建议把上限改成按天，触顶只影响当天。
+39. **Harbor 的 Modal 沙箱默认活 24 小时，进程被杀不销毁，这是最贵的一个坑。** `harbor/environments/modal.py:881` 写死 `sandbox_timeout_secs=86400`、`sandbox_idle_timeout_secs=None`，命令行没暴露这两个参数。2026-09-17 我们强杀了 7 次训练（5 次 27B OOM 相关、2 次改配置），每次 16 到 32 个沙箱被留下，`modal billing report --for yesterday --show-resources` 显示 `__harbor__` 当天 CPU 267.88 + 内存 90.20 美元，折合约 2820 沙箱小时，而 trial 实际只跑约 200 小时，超出约 14 倍。规则：(a) 杀训练后立刻 `deployment/bootstrap/modal-sandbox-cleanup.sh --apply`；(b) 每台 pod 常驻 `modal-sandbox-guard.sh`，每 15 分钟清理存活超过 60 分钟的沙箱；(c) 每轮开始前自动清理一次（已写进 `run_opd_round.sh`）。
+40. **沙箱规格不要统一覆盖，按任务自己的资源契约走。** 我们曾统一设 2 核 4 GB，而 Terminal-Lego 声明 1 核 1 GB、swe-rebench 1 核 2 GB，等于每条 trial 多付一倍。规则：`override_cpus` / `override_memory_mb` 留空，只在排查个别任务时临时指定。
+41. **第三次踩"kill 模式命中自己 ssh 会话"**（见第 24 条）。这次是 `ps | awk` 的匹配串出现在同一条远程命令里，连自己一起杀。规则固化：列 PID 和杀 PID 必须是两条独立命令，杀的那条只出现数字，不出现任何匹配模式。
 
