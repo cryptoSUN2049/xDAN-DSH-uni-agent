@@ -282,3 +282,8 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 用户决定"尽快合理调整"。06:07 按会话号 616001 结束 pipe-r9 全部 108 个进程（含 Ray 与 vLLM），两卡显存归零，第 1–4 步 checkpoint 保留；`modal-sandbox-cleanup.sh --apply --older-than 0` 终止 16 个在跑沙箱。停止时成本：171 条、5.26 美元、比值 1.0、残留 0。
 - b12bd2f 经 `sync-source.sh 11965 --rsync` 同步到 pod，关键文件 md5 与本地一致。06:09 启动 pipe-r11（`HARBOR_REWARD_MODE=binary`，其余同 pipe-r9）。计划与判据见 `todo.md` H5。
 - 20 步 × 4 题只覆盖 80 道题、没有重复，学习信号改为"前后半趋势（弱）+ 训练后同题重跑（强）"。
+
+## 2026-09-18 07:50 取题顺序核查（应 e1 提醒）
+- 切片的 train 清单按来源成块（前 50 SWE、后 50 Terminal-Lego）。Tinker r6 因此前 12 步只练一种题。
+- 本线不受影响：训练 `data.shuffle=False` 按顺序取，但 `10_data.sh` 给目录加序号前缀让两来源交替（0000 TL、0001 SWE……）。pipe-r11 第 1 步实测 0000–0007 交替，20 步用 0000–0079，两来源各 40；未用的 0080–0099 各 10。
+- 若以后按难度分层，可参考 Tinker 的 `interleave_by_stratum`（e8cbfce）。
