@@ -90,6 +90,8 @@ if [[ -n "${WAIT_PID:-}" ]]; then
   while kill -0 "${WAIT_PID}" 2>/dev/null; do sleep 60; done
 fi
 ray stop --force >/dev/null 2>&1 || true; sleep 10
+# Collect sandboxes leaked by an earlier killed run before paying for a new one.
+bash deployment/bootstrap/modal-sandbox-cleanup.sh --apply --older-than "${CLEANUP_OLDER_THAN:-60}" 2>&1 | tail -2 || true
 
 cd "${REPO_ROOT}"
 bash deployment/bootstrap/modal-quota-wait.sh --interval "${QUOTA_INTERVAL:-1800}" --max-hours "${QUOTA_MAX_HOURS:-48}" || exit 1

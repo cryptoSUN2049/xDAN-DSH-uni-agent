@@ -28,7 +28,8 @@
   # --agent-timeout does not cover a sandbox call that never returns: 2026-09-16
   # one fix-git trial hung 30+ min in a Modal API call after context summarization.
   trial_timeout_sec: 1800
-  # Tasks declare cpus=1 and 1-2 GB; 2 cpus / 4 GB doubled the bill for nothing.
-  # Modal charges CPU and memory per second for the whole sandbox lifetime.
-  override_cpus: 1
-  override_memory_mb: 2048
+  # No resource override: each task's own contract applies (Terminal-Lego asks for
+  # 1 cpu / 1 GB, swe-rebench 1 cpu / 2 GB). Modal bills CPU and memory per second
+  # for the whole sandbox lifetime, and the old uniform 2 cpu / 4 GB doubled every
+  # trial's price for nothing. Set override_cpus / override_memory_mb only to
+  # diagnose a task that genuinely needs more.

@@ -21,7 +21,7 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 while true; do
   out=$(bash "${HERE}/modal-sandbox-cleanup.sh" ${MODE} --older-than "${OLDER_THAN}" 2>&1)
   # Only log when something existed or the call failed: a quiet guard is a readable log.
-  if ! grep -qE "^app .* 0 sandbox\(s\) known" <<<"${out}"; then
+  if ! grep -qE "^app .* 0 sandbox\(es\) known" <<<"${out}"; then
     printf '[guard %s]\n%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "${out}"
   fi
   sleep "${INTERVAL}"

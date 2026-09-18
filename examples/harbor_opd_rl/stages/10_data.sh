@@ -12,6 +12,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/common.sh"; stage_dir
 # STAGE1_TRAIN_PER_SOURCE / STAGE1_VAL_PER_SOURCE select per-source quotas instead
 # (e.g. STAGE1_REPO=gump2049/xDAN-Harbor-Stage1-Tasks-Full with 50 / 20). Tasks in a
 # shared eval-set-*/reserved.json are always excluded unless STAGE1_EXCLUDE_RESERVED=0.
+# STAGE1_DIFFICULTY="medium hard" keeps only those difficulties.
 # Validation split becomes the held-out parquet. Only audit-passed tasks are kept unless
 # STAGE1_REQUIRE_AUDIT=0. Needs HF_TOKEN or ~/.cache/huggingface/token.
 DATASET="${DATASET:-tb21}"
@@ -69,6 +70,15 @@ before_reserved = len(rows)
 rows = [r for r in rows if not is_reserved(r)]
 print("reserved eval sets", [os.path.relpath(f, path) for f in reserved_files], "tasks", len(reserved_tasks),
       "repos", len(reserved_repos), "excluded", before_reserved - len(rows))
+# STAGE1_DIFFICULTY filters by the dataset's difficulty field. Index order is
+# dominated by easy tasks (Terminal-Lego full: easy 9223 / medium 4440 / hard 153),
+# and pipe-r4 showed 9B scoring 0.92 on an unfiltered slice, which leaves GRPO
+# almost no within-group spread to learn from.
+difficulties = [d for d in os.environ.get("STAGE1_DIFFICULTY", "").split() if d]
+if difficulties:
+    before_difficulty = len(rows)
+    rows = [r for r in rows if r.get("difficulty") in difficulties]
+    print("difficulty filter", difficulties, before_difficulty, "->", len(rows))
 train = [r for r in rows if r["split"] == "train"]
 val = [r for r in rows if r["split"] == "validation"]
 # STAGE1_TRAIN_PER_SOURCE=N / STAGE1_VAL_PER_SOURCE=M: per-source quotas in index
@@ -155,7 +165,7 @@ for name, subset in (("train", train), ("validation", val)):
     print(name, len(subset), root)
 print("docker_image stripped", dict(stripped))
 json.dump({"repo": repo, "slice": slice_n, "sources": sources, "require_audit": require_audit, "audit_dropped": before_audit - len(rows),
-           "audit_sidecar_merged": merged, "reserved_excluded": before_reserved - len(rows), "train_per_source": train_quota, "val_per_source": val_quota, "val_from_train": val_from_train, "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
+           "audit_sidecar_merged": merged, "reserved_excluded": before_reserved - len(rows), "difficulty_filter": difficulties, "train_per_source": train_quota, "val_per_source": val_quota, "val_from_train": val_from_train, "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
            "difficulty": {d: sum(1 for r in train if r.get("difficulty") == d) for d in ("easy", "medium", "hard")}},
           open(os.path.join(out, "selection.json"), "w"), indent=1)
 PY
