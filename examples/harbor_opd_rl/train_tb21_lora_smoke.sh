@@ -86,8 +86,12 @@ RESUME_MODE="${RESUME_MODE:-disable}"
 RESUME_FROM_PATH="${RESUME_FROM_PATH:-}"   # global_step_N dir; sets trainer.resume_from_path when non-empty
 MASK_UNFINISHED_EPISODE="${MASK_UNFINISHED_EPISODE:-True}"
 # FAIL_ON_ROLLOUT_ERROR=1 aborts the whole step when any session fails (strict
-# smoke). 0 (default) lets sync_refill_failed_groups replace a failed group, so a
-# single hung Modal sandbox or verifier error cannot kill a multi-step run.
+# smoke). 0 (default) keeps the run going: drop_incomplete_groups marks a group that
+# lost any session as failed, and the replay buffer evicts and refills it, so a single
+# hung Modal sandbox or verifier error cannot kill a multi-step run.
+# Without drop_incomplete_groups the surviving 7 of 8 trajectories are trained, VERL
+# pads the batch with a copy of a real sample, and that copy's teacher_logprobs do not
+# match its tokens: distillation then fails an assertion (pipe-r11 step 5, 2026-09-18).
 # require_trajectory_dump is only valid in strict mode (framework validation).
 FAIL_ON_ROLLOUT_ERROR="${FAIL_ON_ROLLOUT_ERROR:-0}"
 if [[ "${FAIL_ON_ROLLOUT_ERROR}" == "1" ]]; then
@@ -96,7 +100,10 @@ if [[ "${FAIL_ON_ROLLOUT_ERROR}" == "1" ]]; then
     ++actor_rollout_ref.rollout.custom.agent_framework.require_trajectory_dump=True
   )
 else
-  STRICT_OVERRIDES=(++actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error=False)
+  STRICT_OVERRIDES=(
+    ++actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error=False
+    ++actor_rollout_ref.rollout.custom.agent_framework.drop_incomplete_groups=True
+  )
 fi
 # wandb: credentials come from ~/.netrc (wandb login) or WANDB_API_KEY, never from this repo.
 WANDB_ENABLED="${WANDB_ENABLED:-1}"

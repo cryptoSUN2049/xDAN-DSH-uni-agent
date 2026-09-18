@@ -343,6 +343,7 @@ class GatewayAgentFramework(AgentFramework):
         log_dir: str | None = None,
         mask_unfinished_episode: bool = False,
         fail_on_rollout_error: bool = False,
+        drop_incomplete_groups: bool = False,
         require_finished_episode: bool = False,
         require_verifier_reward: bool = False,
         require_trajectory_dump: bool = False,
@@ -380,6 +381,9 @@ class GatewayAgentFramework(AgentFramework):
         self._log_dir = log_dir
         self._mask_unfinished_episode = mask_unfinished_episode
         self._fail_on_rollout_error = fail_on_rollout_error
+        if type(drop_incomplete_groups) is not bool:
+            raise ValueError("drop_incomplete_groups must be a bool")
+        self._drop_incomplete_groups = drop_incomplete_groups
         self._require_finished_episode = require_finished_episode
         self._require_verifier_reward = require_verifier_reward
         self._require_trajectory_dump = require_trajectory_dump
@@ -441,6 +445,10 @@ class GatewayAgentFramework(AgentFramework):
         fail_on_rollout_error = af_cfg.get("fail_on_rollout_error", False)
         if type(fail_on_rollout_error) is not bool:
             raise ValueError("actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error must be a bool")
+
+        drop_incomplete_groups = af_cfg.get("drop_incomplete_groups", False)
+        if type(drop_incomplete_groups) is not bool:
+            raise ValueError("actor_rollout_ref.rollout.custom.agent_framework.drop_incomplete_groups must be a bool")
 
         require_finished_episode = af_cfg.get("require_finished_episode", False)
         if type(require_finished_episode) is not bool:
@@ -522,6 +530,7 @@ class GatewayAgentFramework(AgentFramework):
             log_dir=log_dir,
             mask_unfinished_episode=mask_unfinished_episode,
             fail_on_rollout_error=fail_on_rollout_error,
+            drop_incomplete_groups=drop_incomplete_groups,
             require_finished_episode=require_finished_episode,
             require_verifier_reward=require_verifier_reward,
             require_trajectory_dump=require_trajectory_dump,
@@ -789,6 +798,29 @@ class GatewayAgentFramework(AgentFramework):
         if self._require_finished_episode and strict_unfinished_episodes:
             failed_sessions += strict_unfinished_episodes
             failure_reasons.append(f"{strict_unfinished_episodes} unfinished episode(s) for uid={uid}")
+
+        if self._drop_incomplete_groups and not self._fail_on_rollout_error and failed_sessions:
+            # A group that lost a session would enter the trainer short (e.g. 7 of 8), and
+            # VERL pads the batch back up with a synthetic sample copied from a real one.
+            # That copy keeps the real sample's per-token teacher_logprobs/teacher_ids, so
+            # distillation fails its length assertion (pipe-r11 step 5, 2026-09-18).
+            # Marking the whole group failed lets the replay buffer evict and refill it,
+            # so every trained group stays complete and no padding sample is needed.
+            logger.warning(
+                "incomplete rollout group dropped for uid=%s: %s/%s session(s) failed; the trainer refills it",
+                uid,
+                failed_sessions,
+                num_sessions,
+            )
+            await tq.async_kv_put(key=uid, partition_id=partition_id, tag={"status": "failure"})
+            return {
+                "num_success_sessions": 0,
+                "num_failed_sessions": failed_sessions,
+                "num_success_outputs": 0,
+                "num_unfinished_episodes": strict_unfinished_episodes,
+                "num_failed_uids": 1,
+                "failure_reasons": failure_reasons,
+            }
 
         if self._fail_on_rollout_error and failed_sessions:
             logger.warning(
