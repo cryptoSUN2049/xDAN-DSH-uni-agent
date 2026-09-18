@@ -28,6 +28,12 @@
   # --agent-timeout does not cover a sandbox call that never returns: 2026-09-16
   # one fix-git trial hung 30+ min in a Modal API call after context summarization.
   trial_timeout_sec: 1800
+  # Modal enforces these server-side, so a killed trainer cannot leak a sandbox that
+  # bills for the default 24 h (2026-09-17: 358 USD in one day). 2700 s is 1.5x the
+  # trial timeout; the separate app keeps our cleanup away from other lines' sandboxes.
+  environment_kwargs:
+    sandbox_timeout_secs: 2700
+    app_name: verl-harbor
   # No resource override: each task's own contract applies (Terminal-Lego asks for
   # 1 cpu / 1 GB, swe-rebench 1 cpu / 2 GB). Modal bills CPU and memory per second
   # for the whole sandbox lifetime, and the old uniform 2 cpu / 4 GB doubled every

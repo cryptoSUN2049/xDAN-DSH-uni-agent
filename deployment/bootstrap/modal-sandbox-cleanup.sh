@@ -34,18 +34,49 @@ except Exception as exc:
     print(f"app {app_name!r} not found ({type(exc).__name__}); nothing to clean")
     raise SystemExit(0)
 
+# modal.Sandbox.list() yields objects without created_at (modal 1.5.5 hydrates only
+# app_id and result), so ages come from the SandboxList RPC, whose SandboxInfo carries
+# the server-side created_at. If that private API ever breaks, ages become unknown and
+# unknown-age sandboxes are kept unless --older-than 0 asks to stop everything.
+def list_created_at(app_id):
+    from modal._utils.async_utils import synchronizer
+    from modal.client import _Client
+    from modal.sandbox import _get_environment_name
+    from modal_proto import api_pb2
+
+    @synchronizer.create_blocking
+    async def _list():
+        client = await _Client.from_env()
+        created, before = {}, None
+        while True:
+            resp = await client.stub.SandboxList(api_pb2.SandboxListRequest(
+                app_id=app_id, before_timestamp=before,
+                environment_name=_get_environment_name(), include_finished=False))
+            if not resp.sandboxes:
+                return created
+            created.update({info.id: info.created_at for info in resp.sandboxes})
+            before = resp.sandboxes[-1].created_at
+
+    return _list()
+
 sandboxes = list(modal.Sandbox.list(app_id=app.app_id))
 print(f"app {app_name} ({app.app_id}): {len(sandboxes)} sandbox(es) known to Modal")
+created_at = {}
+if sandboxes:
+    try:
+        created_at = list_created_at(app.app_id)
+    except Exception as exc:
+        print(f"  warning: cannot read sandbox ages ({type(exc).__name__}: {exc}); unknown ages are kept")
 terminated = kept = 0
 for sb in sandboxes:
-    created = getattr(sb, "created_at", None)
-    created_s = created.timestamp() if hasattr(created, "timestamp") else created
-    age_min = (time.time() - created_s) / 60 if isinstance(created_s, (int, float)) else None
-    old_enough = age_min is None or age_min >= older_than_min
+    created_s = created_at.get(sb.object_id)
+    age_min = (time.time() - created_s) / 60 if created_s else None
+    old_enough = older_than_min <= 0 or (age_min is not None and age_min >= older_than_min)
     label = f"{sb.object_id} age={age_min:.0f}min" if age_min is not None else f"{sb.object_id} age=unknown"
     if not old_enough:
         kept += 1
-        print(f"  keep    {label} (younger than {older_than_min:.0f} min)")
+        reason = "age unknown" if age_min is None else f"younger than {older_than_min:.0f} min"
+        print(f"  keep    {label} ({reason})")
         continue
     if apply_now:
         try:

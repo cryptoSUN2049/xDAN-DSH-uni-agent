@@ -91,7 +91,11 @@ if [[ -n "${WAIT_PID:-}" ]]; then
 fi
 ray stop --force >/dev/null 2>&1 || true; sleep 10
 # Collect sandboxes leaked by an earlier killed run before paying for a new one.
-bash deployment/bootstrap/modal-sandbox-cleanup.sh --apply --older-than "${CLEANUP_OLDER_THAN:-60}" 2>&1 | tail -2 || true
+# Opt-in until the age filter is fixed: modal 1.5.5's Sandbox.list() has no created_at,
+# so the current script treats unknown age as old and would terminate live trials.
+if [[ "${CLEANUP_BEFORE_ROUND:-0}" == "1" ]]; then
+  HARBOR_MODAL_APP="${HARBOR_MODAL_APP:-verl-harbor}"     bash deployment/bootstrap/modal-sandbox-cleanup.sh --apply --older-than "${CLEANUP_OLDER_THAN:-60}" 2>&1 | tail -2 || true
+fi
 
 cd "${REPO_ROOT}"
 bash deployment/bootstrap/modal-quota-wait.sh --interval "${QUOTA_INTERVAL:-1800}" --max-hours "${QUOTA_MAX_HOURS:-48}" || exit 1

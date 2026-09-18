@@ -64,6 +64,16 @@ class HarborTaskConfig(TaskConfig):
     )
     override_cpus: int | None = Field(default=None, gt=0)
     override_memory_mb: int | None = Field(default=None, gt=0)
+    environment_kwargs: dict[str, Any] = Field(
+        default_factory=dict,
+        description=(
+            "Forwarded to Harbor as --environment-kwarg key=value (JSON values). For the Modal "
+            "backend this is the only way to bound a sandbox server-side: sandbox_timeout_secs "
+            "defaults to 86400, so a killed client leaks a sandbox that bills for a day. Set "
+            "sandbox_timeout_secs, optionally sandbox_idle_timeout_secs, and app_name to keep "
+            "this line's sandboxes in their own Modal app."
+        ),
+    )
 
     @field_validator("agent", mode="before")
     @classmethod
@@ -129,6 +139,8 @@ def build_harbor_trial_command(
         command.extend(["--model", config.agent.model.model_name])
     if config.agent.timeout_sec is not None:
         command.extend(["--agent-timeout", f"{config.agent.timeout_sec:g}"])
+    for key, value in sorted(config.environment_kwargs.items()):
+        command.extend(["--environment-kwarg", f"{key}={json.dumps(value, ensure_ascii=False, separators=(',', ':'))}"])
     if config.override_cpus is not None:
         command.extend(["--override-cpus", str(config.override_cpus)])
     if config.override_memory_mb is not None:
