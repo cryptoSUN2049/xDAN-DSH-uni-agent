@@ -56,8 +56,9 @@ TRAIN_STEPS="${TRAIN_STEPS:-20}"
 RESUME_EXTRA_STEPS="${RESUME_EXTRA_STEPS:-1}"
 TEST_FREQ="${TEST_FREQ:-10}"
 
-# Data: audit-passed tasks only, shared eval sets excluded, medium/hard by default
-# (9B scored 0.92 on an unfiltered slice in pipe-r4, leaving GRPO no spread).
+# Data: a published slice by default; with the full index instead, audit-passed
+# tasks only, shared eval sets excluded, medium/hard (pipe-r4 showed an unfiltered
+# index slice leaves 9B at 0.92 with no within-group spread for GRPO).
 # Default source: the data line's slice stage1-swe50e-tl50m-v1 (audited, eval-set excluded,
 # decontaminated against Terminal-Bench 2.0/2.1 and 21 other benchmarks). Set
 # STAGE1_SLICE_NAME= (empty) with STAGE1_REPO=...-Full to fall back to the index.
