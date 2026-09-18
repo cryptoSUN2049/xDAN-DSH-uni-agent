@@ -62,6 +62,26 @@ PY
     exit 0
   fi
 fi
+run_train_script() {
+  (cd "${REPO_ROOT}" && env MODEL_PATH="${MODEL_PATH}" MODEL_ID="${SERVED_MODEL_NAME}" TRAIN_FILE="$(train_parquet)" \
+     TEST_FILE="$(full_parquet)" TASK_CONFIG="${TASK_CONFIG}" RUN_ROOT="${STAGE_DIR}" PYTHON_BIN="${LANE_PY}" \
+     EXP_NAME="${EXP_NAME}" TOTAL_TRAINING_STEPS="${TOTAL_STEPS}" TRAIN_MAX_SAMPLES="${TRAIN_MAX_SAMPLES}" \
+     VAL_MAX_SAMPLES="${VAL_MAX_SAMPLES}" TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE}" PPO_MINI_BATCH_SIZE="${TRAIN_BATCH_SIZE}" \
+     ROLLOUT_N="${ROLLOUT_N}" CONCURRENCY="${CONCURRENCY}" ROLLOUT_MAX_NUM_SEQS="${CONCURRENCY}" SAVE_FREQ=1 \
+     RESUME_MODE="${RESUME_MODE:-disable}" RESUME_FROM_PATH="${RESUME_FROM_PATH:-}" DAPO="${DAPO:-0}" \
+     bash examples/harbor_opd_rl/train_tb21_lora_smoke.sh "$@")
+}
+# CONFIG_DRY_RUN=1: resolve the full VERL/Hydra config (every override, Teacher and
+# engine setting) and stop, without Ray, GPUs or sandboxes. This is the fast smoke:
+# it catches a mistyped override or missing file in seconds instead of after a
+# fifteen-minute model load.
+if [[ "${CONFIG_DRY_RUN:-0}" == "1" ]]; then
+  if run_train_script --cfg job > "${STAGE_DIR}/config-dryrun.txt" 2>&1 && grep -q "^trainer:" "${STAGE_DIR}/config-dryrun.txt"; then
+    mark_passed; record passed '{"config_dry_run":true}'
+    log "passed: config resolves (${STAGE_DIR}/config-dryrun.txt)"; exit 0
+  fi
+  log "config dry run failed; see ${STAGE_DIR}/config-dryrun.txt"; record failed '"config dry run failed"'; exit 1
+fi
 gpu_free
 # The train stage freezes every knob that shapes the run into stage-env.sh;
 # 60_resume.sh sources it so a resume always matches the run it continues,
@@ -75,13 +95,7 @@ if [[ "${STAGE_NAME}" == train ]]; then
     [[ -n "${!v+x}" ]] && printf 'export %s=%q\n' "${v}" "${!v}"
   done > "${STAGE_DIR}/stage-env.sh"
 fi
-(cd "${REPO_ROOT}" && env MODEL_PATH="${MODEL_PATH}" MODEL_ID="${SERVED_MODEL_NAME}" TRAIN_FILE="$(train_parquet)" \
-   TEST_FILE="$(full_parquet)" TASK_CONFIG="${TASK_CONFIG}" RUN_ROOT="${STAGE_DIR}" PYTHON_BIN="${LANE_PY}" \
-   EXP_NAME="${EXP_NAME}" TOTAL_TRAINING_STEPS="${TOTAL_STEPS}" TRAIN_MAX_SAMPLES="${TRAIN_MAX_SAMPLES}" \
-   VAL_MAX_SAMPLES="${VAL_MAX_SAMPLES}" TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE}" PPO_MINI_BATCH_SIZE="${TRAIN_BATCH_SIZE}" \
-   ROLLOUT_N="${ROLLOUT_N}" CONCURRENCY="${CONCURRENCY}" ROLLOUT_MAX_NUM_SEQS="${CONCURRENCY}" SAVE_FREQ=1 \
-   RESUME_MODE="${RESUME_MODE:-disable}" RESUME_FROM_PATH="${RESUME_FROM_PATH:-}" DAPO="${DAPO:-0}" \
-   bash examples/harbor_opd_rl/train_tb21_lora_smoke.sh) > "${STAGE_DIR}/train.log" 2>&1 || true
+run_train_script > "${STAGE_DIR}/train.log" 2>&1 || true
 
 CK=$(find_final_ckpt)
 [[ -n "${CK}" ]] && model_file "${CK}" >/dev/null || { log "global_step_${TOTAL_STEPS} checkpoint missing"; record failed '"checkpoint missing"'; exit 1; }

@@ -9,16 +9,18 @@
 #   ROUND=pipe-r8 TEACHER=1 TRAIN_STEPS=20 bash examples/harbor_opd_rl/run_opd_round.sh
 #   ROUND=pipe-r9 TEACHER=0 WAIT_PID=12345 bash examples/harbor_opd_rl/run_opd_round.sh
 #
-# --smoke runs 1 step on 4 tasks: always do this after changing model, Teacher or
-# engine settings. pipe-r4 burned five failed 6-step attempts (~500 sandboxes) on
-# a Teacher OOM that a single smoke step would have caught.
+# --smoke (<= 10 min, no GPU) checks env, task selection, one oracle sandbox and the
+# fully resolved training config: run it before every round.
+# --smoke-gpu (~30 min) loads the models once and runs one tiny step: run it after
+# changing the model, the engine settings or the Teacher. pipe-r4 burned five failed
+# 6-step attempts (~500 sandboxes) on a Teacher OOM that one GPU smoke would catch.
 #
 # Launch it detached so a laptop going offline cannot kill it:
 #   bash examples/harbor_opd_rl/launch-detached.sh <run>/driver.log \
 #     "ROUND=<run> TEACHER=1 bash examples/harbor_opd_rl/run_opd_round.sh"
 set -euo pipefail
 SMOKE=0
-for arg in "$@"; do case "${arg}" in --smoke) SMOKE=1;; *) echo "unknown argument: ${arg}" >&2; exit 2;; esac; done
+for arg in "$@"; do case "${arg}" in --smoke) SMOKE=1;; --smoke-gpu) SMOKE=2;; *) echo "unknown argument: ${arg}" >&2; exit 2;; esac; done
 
 LANE_ROOT="${LANE_ROOT:-/workspace/verl-uni-agent-harbor-opd-rl}"
 REPO_ROOT="${REPO_ROOT:-${LANE_ROOT}/src/uni-agent}"
@@ -56,24 +58,37 @@ TEST_FREQ="${TEST_FREQ:-10}"
 
 # Data: audit-passed tasks only, shared eval sets excluded, medium/hard by default
 # (9B scored 0.92 on an unfiltered slice in pipe-r4, leaving GRPO no spread).
-# Default source: the data line's published medium/hard slice (audited, eval-set excluded,
+# Default source: the data line's slice stage1-swe50e-tl50m-v1 (audited, eval-set excluded,
 # decontaminated against Terminal-Bench 2.0/2.1 and 21 other benchmarks). Set
 # STAGE1_SLICE_NAME= (empty) with STAGE1_REPO=...-Full to fall back to the index.
 STAGE1_REPO="${STAGE1_REPO:-gump2049/xDAN-Harbor-Stage1-Tasks}"
-STAGE1_SLICE_NAME="${STAGE1_SLICE_NAME-stage1-mh-swe50-tl50-v1}"
+STAGE1_SLICE_NAME="${STAGE1_SLICE_NAME-stage1-swe50e-tl50m-v1}"
 STAGE1_TRAIN_PER_SOURCE="${STAGE1_TRAIN_PER_SOURCE:-50}"
 STAGE1_VAL_PER_SOURCE="${STAGE1_VAL_PER_SOURCE:-4}"
-# The official mh slices are already restricted to medium/hard training tasks by the
-# data line, and their 8 shared validation tasks (one easy on purpose) must stay
-# intact so every slice's validation is comparable: no extra filter on a slice.
+# Slices are already chosen by difficulty by the data line: base 9B passes SWE easy
+# 33% but SWE medium only 7% (about 90% of groups all-wrong, no GRPO signal), while
+# Terminal-Lego medium passes 52%. Their 8 shared validation tasks must stay intact
+# so every slice's validation is comparable, so no extra filter on a slice.
 if [[ -n "${STAGE1_SLICE_NAME}" ]]; then STAGE1_DIFFICULTY="${STAGE1_DIFFICULTY-}"
 else STAGE1_DIFFICULTY="${STAGE1_DIFFICULTY-medium hard}"; fi
 HARBOR_REWARD_MODE="${HARBOR_REWARD_MODE:-pass_ratio}"
 DAPO="${DAPO:-0}"
 
+VAL_BEFORE_TRAIN="${VAL_BEFORE_TRAIN:-True}"
+SKIP_STAGES="${SKIP_STAGES:-}"
+ORACLE_LIMIT="${ORACLE_LIMIT:-2}"
+CONFIG_DRY_RUN="${CONFIG_DRY_RUN:-0}"
 if [[ ${SMOKE} -eq 1 ]]; then
-  TRAIN_STEPS=1; RESUME_EXTRA_STEPS=1; TEST_FREQ=1
-  STAGE1_TRAIN_PER_SOURCE=2; STAGE1_VAL_PER_SOURCE=1; CONCURRENCY=8
+  # Fast smoke, target <= 10 min, no GPU: env, task selection, one oracle sandbox
+  # with this round's sandbox settings, and a full resolve of the training config.
+  TRAIN_STEPS=1; STAGE1_TRAIN_PER_SOURCE=1; STAGE1_VAL_PER_SOURCE=1; ORACLE_LIMIT=1
+  CONFIG_DRY_RUN=1; STAGE_MODELS=0; SKIP_STAGES="rollout delta resume summary acceptance cost"
+elif [[ ${SMOKE} -eq 2 ]]; then
+  # GPU smoke, ~30 min: one model load and one tiny step to prove memory settings.
+  # Only needed after changing the model, the engine settings or the Teacher.
+  TRAIN_STEPS=1; STAGE1_TRAIN_PER_SOURCE=1; STAGE1_VAL_PER_SOURCE=1
+  TRAIN_BATCH_SIZE=2; ROLLOUT_N=2; CONCURRENCY=4; VAL_BEFORE_TRAIN=False; TEST_FREQ=-1
+  SKIP_STAGES="rollout delta resume summary acceptance"
 fi
 TRAIN_MAX_SAMPLES="${TRAIN_MAX_SAMPLES:-$(( STAGE1_TRAIN_PER_SOURCE * 2 ))}"
 VAL_MAX_SAMPLES="${VAL_MAX_SAMPLES:-$(( STAGE1_VAL_PER_SOURCE * 2 ))}"
@@ -113,7 +128,8 @@ env PIPE_ROOT="${PIPE_ROOT}" DATA_DIR="${DATA_DIR}" DATASET=stage1 STAGE1_SLICE=
   STAGE1_REPO="${STAGE1_REPO}" STAGE1_SLICE_NAME="${STAGE1_SLICE_NAME}" STAGE1_TRAIN_PER_SOURCE="${STAGE1_TRAIN_PER_SOURCE}" \
   STAGE1_VAL_PER_SOURCE="${STAGE1_VAL_PER_SOURCE}" STAGE1_DIFFICULTY="${STAGE1_DIFFICULTY}" \
   TRAIN_STEPS="${TRAIN_STEPS}" RESUME_EXTRA_STEPS="${RESUME_EXTRA_STEPS}" TEST_FREQ="${TEST_FREQ}" \
-  TRAIN_MAX_SAMPLES="${TRAIN_MAX_SAMPLES}" VAL_MAX_SAMPLES="${VAL_MAX_SAMPLES}" VAL_BEFORE_TRAIN=True \
+  TRAIN_MAX_SAMPLES="${TRAIN_MAX_SAMPLES}" VAL_MAX_SAMPLES="${VAL_MAX_SAMPLES}" VAL_BEFORE_TRAIN="${VAL_BEFORE_TRAIN}" \
+  SKIP_STAGES="${SKIP_STAGES}" ORACLE_LIMIT="${ORACLE_LIMIT}" CONFIG_DRY_RUN="${CONFIG_DRY_RUN}" \
   TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE}" ROLLOUT_N="${ROLLOUT_N}" CONCURRENCY="${CONCURRENCY}" \
   MODEL_PATH="${MODEL_DIR}/${STUDENT_MODEL}" GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION}" \
   ROLLOUT_MAX_NUM_BATCHED_TOKENS="${ROLLOUT_MAX_NUM_BATCHED_TOKENS}" \
