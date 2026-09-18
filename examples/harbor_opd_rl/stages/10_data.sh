@@ -28,16 +28,32 @@ repo, local, slice_n, sources, out = sys.argv[1], sys.argv[2], int(sys.argv[3]),
 # The audited repo ships unpacked task dirs; the Full repo ships one
 # <batch>/<rev>/runtime-v1.tar.gz per source plus per-task audit sidecars.
 path = snapshot_download(repo, repo_type="dataset", local_dir=local, allow_patterns=[
-    "index/*", "*/runtime-v1/*", "*/runtime-v1.tar.gz", "audits/*/audit-status.jsonl", "eval-set-*/reserved.json"])
+    "index/*", "*/runtime-v1/*", "*/runtime-v1.tar.gz", "eval-set-*/reserved.json",
+    "audits/passing-tasks.jsonl", "audits/*/audit-status.jsonl"])
 rows = [json.loads(l) for l in open(os.path.join(path, "index", "tasks.jsonl"))]
 rows = [r for r in rows if r["source"] in sources and r["status"] == "derived"]
 # Audit sidecars (Full repo): audits/*/audit-status.jsonl rows {task, status}. They
 # fill nop_oracle_audit where the index leaves it null.
-sidecar = {}
-for audit_file in sorted(glob.glob(os.path.join(path, "audits", "*", "audit-status.jsonl"))):
-    for line in open(audit_file):
+# audits/passing-tasks.jsonl is the merged index the dataset publishes every 30 min:
+# one row per audited task with status and reserved_for_eval already resolved. Older
+# snapshots only have the per-worker audits/*/audit-status.jsonl files, so fall back.
+sidecar, merged_index = {}, os.path.join(path, "audits", "passing-tasks.jsonl")
+if os.path.isfile(merged_index):
+    for line in open(merged_index):
         entry = json.loads(line)
-        sidecar[entry["task"]] = {"passed": entry.get("status") == "passed", "sidecar": os.path.relpath(audit_file, path)}
+        sidecar[entry["task"]] = {
+            "passed": entry.get("status") == "passed" and not entry.get("reserved_for_eval"),
+            "sidecar": "audits/passing-tasks.jsonl",
+            "reserved_for_eval": bool(entry.get("reserved_for_eval")),
+        }
+    print("merged audit index:", len(sidecar), "audited,",
+          sum(1 for v in sidecar.values() if v["passed"]), "trainable,",
+          sum(1 for v in sidecar.values() if v.get("reserved_for_eval")), "reserved for eval")
+else:
+    for audit_file in sorted(glob.glob(os.path.join(path, "audits", "*", "audit-status.jsonl"))):
+        for line in open(audit_file):
+            entry = json.loads(line)
+            sidecar[entry["task"]] = {"passed": entry.get("status") == "passed", "sidecar": os.path.relpath(audit_file, path)}
 merged = 0
 for r in rows:
     if r.get("nop_oracle_audit") is None and r["task"] in sidecar:
