@@ -12,7 +12,8 @@ source "$(dirname "${BASH_SOURCE[0]}")/common.sh"; stage_dir
 # STAGE1_TRAIN_PER_SOURCE / STAGE1_VAL_PER_SOURCE select per-source quotas instead
 # (e.g. STAGE1_REPO=gump2049/xDAN-Harbor-Stage1-Tasks-Full with 50 / 20). Tasks in a
 # shared eval-set-*/reserved.json are always excluded unless STAGE1_EXCLUDE_RESERVED=0.
-# STAGE1_DIFFICULTY="medium hard" keeps only those difficulties.
+# STAGE1_DIFFICULTY="medium hard" keeps only those difficulties. STAGE1_SLICE_NAME
+# selects a published slice from slices/<name>/ instead of the full index.
 # Validation split becomes the held-out parquet. Only audit-passed tasks are kept unless
 # STAGE1_REQUIRE_AUDIT=0. Needs HF_TOKEN or ~/.cache/huggingface/token.
 DATASET="${DATASET:-tb21}"
@@ -27,11 +28,39 @@ from huggingface_hub import snapshot_download
 repo, local, slice_n, sources, out = sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4].split(), sys.argv[5]
 # The audited repo ships unpacked task dirs; the Full repo ships one
 # <batch>/<rev>/runtime-v1.tar.gz per source plus per-task audit sidecars.
-path = snapshot_download(repo, repo_type="dataset", local_dir=local, allow_patterns=[
-    "index/*", "*/runtime-v1/*", "*/runtime-v1.tar.gz", "eval-set-*/reserved.json",
-    "audits/passing-tasks.jsonl", "audits/*/audit-status.jsonl"])
-rows = [json.loads(l) for l in open(os.path.join(path, "index", "tasks.jsonl"))]
-rows = [r for r in rows if r["source"] in sources and r["status"] == "derived"]
+# STAGE1_SLICE_NAME picks a published training slice (slices/<name>/ in the audited
+# repo): the data line's single source of truth, audited, eval-set-excluded and
+# decontaminated against 23 benchmarks including Terminal-Bench 2.0/2.1. Difficulty
+# filters and per-source quotas below still apply on top of it.
+slice_name = os.environ.get("STAGE1_SLICE_NAME", "").strip()
+SLICE_SOURCES = {"swe": "swe-rebench-v2-fv", "terminal-lego": "terminal-lego-15k"}
+if slice_name:
+    path = snapshot_download(repo, repo_type="dataset", local_dir=local,
+                             allow_patterns=[f"slices/{slice_name}/*"])
+    slice_dir = os.path.join(path, "slices", slice_name)
+    tasks_root = os.path.join(slice_dir, "tasks")
+    if not os.path.isdir(tasks_root):
+        with tarfile.open(os.path.join(slice_dir, "tasks.tar.gz")) as tf:
+            tf.extractall(tasks_root, filter="data")
+    manifest = json.load(open(os.path.join(slice_dir, "manifest.json")))
+    split_of = {t: "train" for t in manifest["train"]} | {t: "validation" for t in manifest["validation"]}
+    rows = []
+    for line in open(os.path.join(slice_dir, "tasks.jsonl")):
+        r = json.loads(line)
+        audit = r.get("nop_oracle_audit")
+        rows.append({"task": r["task"], "source": SLICE_SOURCES.get(r["source"], r["source"]),
+                     "split": split_of.get(r["task"], r.get("split")), "difficulty": r.get("difficulty"),
+                     "status": "derived", "task_dir": os.path.join(tasks_root, r["task"]),
+                     "nop_oracle_audit": audit if isinstance(audit, dict) else {"passed": True, "sidecar": "slice"}})
+    rows = [r for r in rows if r["source"] in sources]
+    print("slice", slice_name, "tasks", len(rows), "train", sum(r["split"] == "train" for r in rows),
+          "validation", sum(r["split"] == "validation" for r in rows))
+else:
+    path = snapshot_download(repo, repo_type="dataset", local_dir=local, allow_patterns=[
+        "index/*", "*/runtime-v1/*", "*/runtime-v1.tar.gz", "eval-set-*/reserved.json",
+        "audits/passing-tasks.jsonl", "audits/*/audit-status.jsonl"])
+    rows = [json.loads(l) for l in open(os.path.join(path, "index", "tasks.jsonl"))]
+    rows = [r for r in rows if r["source"] in sources and r["status"] == "derived"]
 # Audit sidecars (Full repo): audits/*/audit-status.jsonl rows {task, status}. They
 # fill nop_oracle_audit where the index leaves it null.
 # audits/passing-tasks.jsonl is the merged index the dataset publishes every 30 min:
@@ -181,7 +210,7 @@ for name, subset in (("train", train), ("validation", val)):
     print(name, len(subset), root)
 print("docker_image stripped", dict(stripped))
 json.dump({"repo": repo, "slice": slice_n, "sources": sources, "require_audit": require_audit, "audit_dropped": before_audit - len(rows),
-           "audit_sidecar_merged": merged, "reserved_excluded": before_reserved - len(rows), "difficulty_filter": difficulties, "train_per_source": train_quota, "val_per_source": val_quota, "val_from_train": val_from_train, "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
+           "audit_sidecar_merged": merged, "slice": slice_name or None, "reserved_excluded": before_reserved - len(rows), "difficulty_filter": difficulties, "train_per_source": train_quota, "val_per_source": val_quota, "val_from_train": val_from_train, "train": [r["task"] for r in train], "validation": [r["task"] for r in val],
            "difficulty": {d: sum(1 for r in train if r.get("difficulty") == d) for d in ("easy", "medium", "hard")}},
           open(os.path.join(out, "selection.json"), "w"), indent=1)
 PY
