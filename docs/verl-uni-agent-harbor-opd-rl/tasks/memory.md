@@ -287,3 +287,10 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 切片的 train 清单按来源成块（前 50 SWE、后 50 Terminal-Lego）。Tinker r6 因此前 12 步只练一种题。
 - 本线不受影响：训练 `data.shuffle=False` 按顺序取，但 `10_data.sh` 给目录加序号前缀让两来源交替（0000 TL、0001 SWE……）。pipe-r11 第 1 步实测 0000–0007 交替，20 步用 0000–0079，两来源各 40；未用的 0080–0099 各 10。
 - 若以后按难度分层，可参考 Tinker 的 `interleave_by_stratum`（e8cbfce）。
+
+## 2026-09-18 09:15 pipe-r11 第 5 步崩溃、修复、续训
+- 08:41 一条 SWE 轨迹（mpmath-904）沙箱故障 `AddTestsDirError`，按剔除策略中止；08:57 第 5 步更新权重时崩溃：`no_padding_2_padding` 断言 `sequence_offsets[-1] == values.shape[0]` 失败，调用栈在 `compute_distillation_loss_reverse_kl_estimator` 的 `teacher_logprobs`。
+- 根因：宽松模式（`fail_on_rollout_error=False`）把剩下 7 条写入并标记完成，整批 31 条；VERL `padding_utils.construct_minimal_padding_template` 生成 128 token 的占位样本时复制了真实样本的全部字段，只重建了 token、掩码、奖励与 routed_experts，没有重建 `teacher_logprobs`/`teacher_ids`（Uni-Agent 在写入前已按整条序列算好），长度对不上。严格模式也不行：遇到任何失败会直接抛错中止训练。
+- 修复（aa044f9）：Uni-Agent 新增 `drop_incomplete_groups`，宽松模式下组内有失败就整组写成失败、不写轨迹，异步 replay buffer 会驱逐并补一组；训练脚本默认打开。pod 上 120 个框架与 Harbor 测试通过。VERL 的补齐缺陷是上游问题，未改子模块。
+- 续训：训练日志另存为 `train/train.attempt1-crash-step5.log`；清理了崩溃后仍存活约 23 分钟的 16 个沙箱（空闲 20 分钟回收似乎没有及时生效，45 分钟硬寿命仍兜底）；09:13 以 `FROM_STAGE=train RESUME_MODE=resume_path RESUME_FROM_PATH=.../global_step_4 VAL_BEFORE_TRAIN=False` 续训，其余参数不变，驱动日志 `runs/pipe-r11/driver-attempt2.log`。wandb 会是一个新的 run。
+
