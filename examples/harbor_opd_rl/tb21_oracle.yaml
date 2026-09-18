@@ -1,0 +1,13 @@
+# Oracle smoke for the RL pipeline (stage 20_oracle.sh): Harbor's oracle agent applies
+# each task's reference solution, proving the sandbox and verifier work before training.
+# Same sandbox lifetime and app as tb21_terminus2_smoke.yaml, so a killed oracle stage
+# cannot leave a 24 h sandbox behind and its cost lands in the run's own app.
+- name: harbor
+  agent:
+    name: oracle
+  harbor_env: modal
+  timeout_multiplier: 1.0
+  environment_kwargs:
+    sandbox_timeout_secs: 2700
+    sandbox_idle_timeout_secs: 1200
+    app_name: verl-harbor

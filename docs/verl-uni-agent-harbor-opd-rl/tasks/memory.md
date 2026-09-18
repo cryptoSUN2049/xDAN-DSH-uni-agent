@@ -221,7 +221,7 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 
 ## 2026-09-18 01:00 Modal 成本复盘与沙箱纪律
 - 账单事实（`modal billing report --for yesterday --show-resources`）：2026-09-17 `__harbor__` 应用 CPU 267.88 + 内存 90.20 = 358.08 美元，GPU 为 0；Tinker 线三个应用合计 6.52 美元。工作区本账期已计费 439.25，触发 `billing cycle spend limit`，两条线同时停摆。
-- 折算：CPU 约 5680 核时 ÷ 2 核 = 约 2840 沙箱小时；内存按 4 GB 折算约 2820 小时，互相印证。当天约 700 条 trial、每条实际 10–20 分钟，应约 200 小时，**超出约 14 倍**。
+- 折算（**2026-09-18 更正**：下面原写的 2840 小时、14 倍按 Function 单价算，是错的）：按 Sandbox 单价，CPU 267.88 美元约合 1888 核时，内存 90.20 美元约合 3756 GiB 时，按 2 核 4 GB 都折合约 940 沙箱小时，与 SandboxList 实测 953 小时一致。当天约 700 条 trial、每条实际 10–20 分钟，应约 200 小时，计费约为实际的 **4.8 倍，约八成空转**。
 - 根因：Harbor `harbor/environments/modal.py:881` 写死 `sandbox_timeout_secs=86400`、无空闲超时，CLI 被杀不销毁沙箱。当天我们强杀 7 次训练（5 次与 27B Teacher OOM 有关），每次 16–32 个沙箱留在后台计费。次因：统一 2 核 4 GB 覆盖（任务只要 1 核 1–2 GB）、沙箱等 GPU 生成时照常计费、两条线共用工作区 64 并发跑整夜。
 - 已落地的纪律（提交 2957442、7cf1876、9a491ea、1cc29a7）：规格改回任务契约；trial 超时 1800；`modal-sandbox-cleanup.sh`（带 `--older-than` 保护）；`modal-sandbox-guard.sh` 已在 11965 常驻（15 分钟一次，清理存活超 60 分钟的沙箱，日志 `runs/modal-guard.log`）；`run_opd_round.sh` 开跑前自动清理；默认并发 16；`--smoke` 先行。
 - 待用户：Modal 后台调高本账期上限（建议改按天）；重启单卡 pod。
@@ -252,5 +252,13 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 用户决定继续用 Modal，不迁移。依据：RunPod Pod 不能自建 Docker（官方文档写明 "you cannot spin up your own Docker instance or use Docker Compose on Pods"，博客称 Kata 时代的 Docker-in-Docker 已取消；实测无 CAP_SYS_ADMIN、用户命名空间与 overlay 挂载被拒、cgroup 只读）；另租 Docker 虚拟机与修好泄漏后的 Modal 成本同一量级。
 - 降本方向改为减少沙箱小时数：每题采样 8→4（成本减半）、轮数上限 50→30（降三到四成），在小切片上先做对比；并发与 GPU 吞吐匹配，避免沙箱排队空等。
 - 重新评估迁移的触发条件：出现已付费且闲置的 Docker 机器，或换到支持特权容器、训练与沙箱同机的 GPU 平台。
-- 同日成本预估更正：581 道有信号的题（SWE easy 379 + Terminal-Lego medium 202）跑一遍约 4648 条轨迹、约 833 沙箱小时，Modal 约 55–70 美元（此前"100 美元以上"估高了）。以 pipe-r9 成本核验的实测单价为准。
+- 同日成本预估更正：581 道有信号的题（SWE easy 379 + Terminal-Lego medium 202）跑一遍约 4648 条轨迹、约 833 沙箱小时，Modal 约 55–70 美元（此前"100 美元以上"估高了）。以 pipe-r9 成本核验的实测单价为准。**（2026-09-18 05:00 更正：55–70 美元用的是 Function 单价，错。按 Sandbox 单价约 100–160 美元，见下一节。）**
 
+## 2026-09-18 05:10 成本核验阶段修复与单价更正
+- **单价更正**：Modal 沙箱按 Sandbox 单价计费（CPU 每核每小时约 0.142 美元、内存每 GiB 每小时约 0.024 美元，是 Function 单价的 3 倍）。09-17 事故计费约 950 沙箱小时，对约 200 实际小时，4.8 倍、约八成空转，不是 14 倍。由 e1 和会话 67 指出，e1 已按此改好 W38 周报第 15、87 行（提交 02791a2）。
+- **581 道题预算更正**：约 4648 条轨迹。按 pipe-r4 每条 10.75 分钟算约 140–160 美元；按 pipe-r9 中途实测每条约 0.023 美元（本切片 trial 平均约 5 分钟）算约 110 美元。区间约 100–160 美元，以 pipe-r9 cost 阶段终值为准。之前给用户的 55–70 美元偏低。
+- **cost 阶段重写**（`stages/cost_report.py` + `90_cost.sh`）：按小时取本轮时间窗内本轮 app 的 CPU/内存账单（`modal billing report -r h --show-resources --json`，`--end` 取明天以包含当前小时）；app 从任务配置 `environment_kwargs.app_name` 读；测不到记失败；开始前等 300 秒让账单与沙箱回收落定。已原子替换到 11965 的 `src/uni-agent`，pipe-r9 结束时生效。pipe-r9 中途试跑：50 条 trial、4.18 小时、计费 1.14 美元、每条 0.023 美元（中途比值偏高，因为进行中的 trial 已计费但未计入完成时长）。
+- **oracle 阶段的沙箱原先落在 `__harbor__`、生命周期 24 小时**：新增 `examples/harbor_opd_rl/tb21_oracle.yaml`（同样的生命周期与 `verl-harbor` app），`common.sh` 默认指向它。未部署到 pod（pipe-r9 的 oracle 已跑完），下次同步时生效。
+- **Modal 额度风险**：2026-09-18 00:00–04:35 UTC 全工作区已花 34.77 美元，Tinker 线约 32 美元（eval-pool 约 19、runner 约 8.5），本线约 2.7。pipe-r9 余下约 15 美元。用户只充值了 50 美元，额度可能在今天触顶，需用户确认上限。
+- **pipe-r9 训练进度**：第 1 步 23 分钟，第 2 步约 27 分钟。有得分差异的题，第 1 步 4 道中 1 道，第 2 步 4 道中 2 道。第 1 步平均分 0.729，平均回复长度 1.54 万 token，平均轮数 42.6，梯度范数 0.108。训练前验证分 0.924，平均轮数 49.4，几乎跑满 50 轮上限。
+- **wandb 每步指标晚一步出现**：VERL 用 `logger.log(step=N)`，wandb 要等 step N+1 写入才提交第 N 行。实时看分数读本地 `train/rollouts/*/*/<N>.jsonl`。
