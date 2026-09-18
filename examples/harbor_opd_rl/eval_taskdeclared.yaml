@@ -1,0 +1,47 @@
+# Evaluation config for the shared eval set (eval-set-v1): the training harness
+# (terminus-2 in Modal through the Uni-Agent Gateway, same turn and token caps) but
+# with each task's declared time limits enforced, and its own Modal app so the bill
+# splits from training. Derived from tb21_terminus2_smoke.yaml; keep the two in step.
+# Terminal-Bench 2.1 Gateway-rollout smoke: Harbor built-in terminus-2 on the host,
+# Modal sandbox for the task, model served through the Uni-Agent Gateway.
+# Pair with: parallel_infer_verl.py --served-model-name hosted_vllm/<name>
+# (litellm strips the hosted_vllm/ prefix and uses HOSTED_VLLM_BASE_URL injected by the adapter).
+- name: harbor
+  agent:
+    name: terminus-2
+    # No timeout_sec: Harbor applies each task's declared [agent] timeout_sec
+    # (SWE 900 s, Terminal-Lego 600 s), the same rule the Tinker line evaluates with.
+    kwargs:
+      parser_name: json
+      temperature: 1.0
+      max_turns: 50   # 2026-09-16: attempt1 had 13/16 trajectories hit the 30-turn cap; raised per user
+      suppress_max_turns_warning: true
+      model_info:
+        max_input_tokens: 32768
+        max_output_tokens: 4096
+        input_cost_per_token: 0
+        output_cost_per_token: 0
+      llm_call_kwargs:
+        max_tokens: 4096
+    model:
+      temperature: 1.0
+      top_p: 1.0
+      max_total_tokens: 32768   # episode token budget -> rollout.response_length; runner adds 4096 prompt (user: 16k too small)
+  harbor_env: modal
+  timeout_multiplier: 1.0
+  # Wall clock for the whole trial (env build + agent + verifier). Harbor's
+  # --agent-timeout does not cover a sandbox call that never returns: 2026-09-16
+  # one fix-git trial hung 30+ min in a Modal API call after context summarization.
+  trial_timeout_sec: 3000   # SWE build 900 + agent 900 + verifier 900 + margin; Terminal-Lego needs 1020
+  # Modal enforces these server-side, so a killed trainer cannot leak a sandbox that
+  # bills for the default 24 h (2026-09-17: 358 USD in one day). 2700 s is 1.5x the
+  # trial timeout; the separate app keeps our cleanup away from other lines' sandboxes.
+  environment_kwargs:
+    sandbox_timeout_secs: 3600      # hard lifetime above the 3000 s trial wall clock
+    sandbox_idle_timeout_secs: 1200 # reclaim 20 min after the client stops driving it
+    app_name: verl-eval             # eval sandboxes bill separately from training
+  # No resource override: each task's own contract applies (Terminal-Lego asks for
+  # 1 cpu / 1 GB, swe-rebench 1 cpu / 2 GB). Modal bills CPU and memory per second
+  # for the whole sandbox lifetime, and the old uniform 2 cpu / 4 GB doubled every
+  # trial's price for nothing. Set override_cpus / override_memory_mb only to
+  # diagnose a task that genuinely needs more.
