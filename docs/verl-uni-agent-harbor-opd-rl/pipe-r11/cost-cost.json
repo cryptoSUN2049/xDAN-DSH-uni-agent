@@ -1,0 +1,29 @@
+{
+ "trials": 840,
+ "trial_hours": 145.08,
+ "leaked_sandboxes": 0,
+ "billed_usd": 26.83,
+ "billed_usd_by_resource": {
+  "CPU": 20.9935,
+  "Memory": 5.8338
+ },
+ "billed_core_hours": 147.9,
+ "billed_gib_hours": 243.0,
+ "billed_to_used_ratio": 1.02,
+ "usd_per_trial": 0.0319,
+ "thresholds": {
+  "billed_to_used_ratio": 1.5,
+  "usd_per_trial": 0.05,
+  "leaked_sandboxes": 0
+ },
+ "breaches": [],
+ "passed": true,
+ "app": "verl-harbor",
+ "window_start": "2026-09-18T06:09:57Z",
+ "billing_through_hour": "2026-09-18T18:00:00",
+ "measured_at": "2026-09-18T18:23:04Z",
+ "notes": [
+  "the newest billing hour may still be filling in; rerun FROM_STAGE=cost an hour later for the final bill",
+  "another run using the same app inside this window inflates the billed numbers"
+ ]
+}

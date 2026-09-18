@@ -294,3 +294,9 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 修复（aa044f9）：Uni-Agent 新增 `drop_incomplete_groups`，宽松模式下组内有失败就整组写成失败、不写轨迹，异步 replay buffer 会驱逐并补一组；训练脚本默认打开。pod 上 120 个框架与 Harbor 测试通过。VERL 的补齐缺陷是上游问题，未改子模块。
 - 续训：训练日志另存为 `train/train.attempt1-crash-step5.log`；清理了崩溃后仍存活约 23 分钟的 16 个沙箱（空闲 20 分钟回收似乎没有及时生效，45 分钟硬寿命仍兜底）；09:13 以 `FROM_STAGE=train RESUME_MODE=resume_path RESUME_FROM_PATH=.../global_step_4 VAL_BEFORE_TRAIN=False` 续训，其余参数不变，驱动日志 `runs/pipe-r11/driver-attempt2.log`。wandb 会是一个新的 run。
 
+## 2026-09-18 18:23 pipe-r11 完成：验收 PASS
+- 全部阶段通过；成本 840 条、26.83 美元、计费/实用 1.02、每条 0.032 美元、残留 0（修复后的 cost 阶段第一次测到真实账单）。
+- 学习信号看不出提升：训练集二值解决率前后两半 0.553 / 0.544；验证 3/8 → 5/8 → 3/8。长度无副作用。组内有对有错 39/80。
+- 续训后 8 次沙箱故障，6 个组被整组丢弃补题，训练未中断（指标 `training/rollout_failure/evicted_samples`）。
+- 监控 12:10–18:10 UTC 中断（见 lessons 48）。证据与报告：`../pipe-r11/`。
+
