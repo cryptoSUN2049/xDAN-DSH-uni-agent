@@ -56,14 +56,18 @@ TEST_FREQ="${TEST_FREQ:-10}"
 
 # Data: audit-passed tasks only, shared eval sets excluded, medium/hard by default
 # (9B scored 0.92 on an unfiltered slice in pipe-r4, leaving GRPO no spread).
-# Default source: the data line's published slice (audited, eval-set excluded,
+# Default source: the data line's published medium/hard slice (audited, eval-set excluded,
 # decontaminated against Terminal-Bench 2.0/2.1 and 21 other benchmarks). Set
 # STAGE1_SLICE_NAME= (empty) with STAGE1_REPO=...-Full to fall back to the index.
 STAGE1_REPO="${STAGE1_REPO:-gump2049/xDAN-Harbor-Stage1-Tasks}"
-STAGE1_SLICE_NAME="${STAGE1_SLICE_NAME-stage1-swe150-tl50-v1}"
+STAGE1_SLICE_NAME="${STAGE1_SLICE_NAME-stage1-mh-swe50-tl50-v1}"
 STAGE1_TRAIN_PER_SOURCE="${STAGE1_TRAIN_PER_SOURCE:-50}"
 STAGE1_VAL_PER_SOURCE="${STAGE1_VAL_PER_SOURCE:-4}"
-STAGE1_DIFFICULTY="${STAGE1_DIFFICULTY:-medium hard}"
+# The official mh slices are already restricted to medium/hard training tasks by the
+# data line, and their 8 shared validation tasks (one easy on purpose) must stay
+# intact so every slice's validation is comparable: no extra filter on a slice.
+if [[ -n "${STAGE1_SLICE_NAME}" ]]; then STAGE1_DIFFICULTY="${STAGE1_DIFFICULTY-}"
+else STAGE1_DIFFICULTY="${STAGE1_DIFFICULTY-medium hard}"; fi
 HARBOR_REWARD_MODE="${HARBOR_REWARD_MODE:-pass_ratio}"
 DAPO="${DAPO:-0}"
 
