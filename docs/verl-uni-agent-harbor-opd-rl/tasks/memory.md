@@ -219,3 +219,12 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - **已排队**：`runs/pipe-r8-smoke`，额度恢复后自动开跑（9B + 27B Teacher，1 步 4 题）。冒烟通过再起正式一轮。
 - 教训：换模型或换关键配置前先跑 `--smoke`。pipe-r4 连续 5 次失败尝试浪费了约 500 条 trial，一次冒烟只要几十条。
 
+## 2026-09-18 01:00 Modal 成本复盘与沙箱纪律
+- 账单事实（`modal billing report --for yesterday --show-resources`）：2026-09-17 `__harbor__` 应用 CPU 267.88 + 内存 90.20 = 358.08 美元，GPU 为 0；Tinker 线三个应用合计 6.52 美元。工作区本账期已计费 439.25，触发 `billing cycle spend limit`，两条线同时停摆。
+- 折算：CPU 约 5680 核时 ÷ 2 核 = 约 2840 沙箱小时；内存按 4 GB 折算约 2820 小时，互相印证。当天约 700 条 trial、每条实际 10–20 分钟，应约 200 小时，**超出约 14 倍**。
+- 根因：Harbor `harbor/environments/modal.py:881` 写死 `sandbox_timeout_secs=86400`、无空闲超时，CLI 被杀不销毁沙箱。当天我们强杀 7 次训练（5 次与 27B Teacher OOM 有关），每次 16–32 个沙箱留在后台计费。次因：统一 2 核 4 GB 覆盖（任务只要 1 核 1–2 GB）、沙箱等 GPU 生成时照常计费、两条线共用工作区 64 并发跑整夜。
+- 已落地的纪律（提交 2957442、7cf1876、9a491ea、1cc29a7）：规格改回任务契约；trial 超时 1800；`modal-sandbox-cleanup.sh`（带 `--older-than` 保护）；`modal-sandbox-guard.sh` 已在 11965 常驻（15 分钟一次，清理存活超 60 分钟的沙箱，日志 `runs/modal-guard.log`）；`run_opd_round.sh` 开跑前自动清理；默认并发 16；`--smoke` 先行。
+- 待用户：Modal 后台调高本账期上限（建议改按天）；重启单卡 pod。
+- 新文档：`docs/…/modal-cost-postmortem.md`（复盘）、`docs/…/modal-alternatives-brief.md`（替代沙箱调研简报，供独立会话执行）、`tasks/handoff.md`（已重写）。
+- 待验证：`deployment/bootstrap/modal-sandbox-probe.sh` 额度恢复后先跑，实测规格、正常结束是否自动销毁、被杀后是否泄漏、清理脚本能否收拾。
+
