@@ -277,3 +277,8 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - wandb 第 2 步：平均回复长度 1.92 万（第 1 步 1.54 万），平均轮数 34.7（第 1 步 42.6），梯度范数 0.08，蒸馏损失 0.101。
 - 默认奖励改为 `binary`（仓库已改，未部署到 pod）。pipe-r9 是否停止、改二值重开，待用户决定。
 
+
+## 2026-09-18 06:10 pipe-r9 停止，pipe-r11 用二值奖励重开
+- 用户决定"尽快合理调整"。06:07 按会话号 616001 结束 pipe-r9 全部 108 个进程（含 Ray 与 vLLM），两卡显存归零，第 1–4 步 checkpoint 保留；`modal-sandbox-cleanup.sh --apply --older-than 0` 终止 16 个在跑沙箱。停止时成本：171 条、5.26 美元、比值 1.0、残留 0。
+- b12bd2f 经 `sync-source.sh 11965 --rsync` 同步到 pod，关键文件 md5 与本地一致。06:09 启动 pipe-r11（`HARBOR_REWARD_MODE=binary`，其余同 pipe-r9）。计划与判据见 `todo.md` H5。
+- 20 步 × 4 题只覆盖 80 道题、没有重复，学习信号改为"前后半趋势（弱）+ 训练后同题重跑（强）"。
