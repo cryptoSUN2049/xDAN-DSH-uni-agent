@@ -42,6 +42,12 @@
 
 RunPod pod 是无特权容器，dockerd、rootless Docker、Podman、Singularity（Harbor 也支持该后端）都需要挂载或命名空间权限，全部起不来。pod 的 256 核空闲算力无法用于沙箱。
 
+官方依据（2026-09-18 查证）：
+- RunPod 文档 [Pods overview](https://docs.runpod.io/pods/overview)："Docker Compose is not supported: Runpod runs Docker for you, so you cannot spin up your own Docker instance or use Docker Compose on Pods." Harbor 的 docker 后端恰好依赖 docker compose。
+- RunPod 博客 [Enhanced CPU Pods](https://www.runpod.io/blog/enhanced-cpu-pods-docker-network)（2026-09-13 更新）：此前基于 Kata 的 Pod 支持 Docker-in-Docker，现在的 Docker 运行时不再支持，官方建议预先构建镜像推到仓库。
+- 文档里的"用 Bazel 模拟 Docker-in-Docker"只能构建镜像，不能运行容器，对 Harbor 沙箱无用。
+- 理论上可以用 proot 这类无特权方案配合 Harbor 的自定义环境接口，但没有真正的隔离，agent 会在沙箱里执行 apt、pip、rm 等命令，放在训练 pod 上不安全，不建议。
+
 **仍然可行的自建路线**：Harbor 默认后端就是 `docker`，它走 docker compose，可以通过 `DOCKER_HOST` 连到另一台有 Docker 的真实虚拟机或物理机。可选的机器：
 - 按小时租用的云虚拟机（非容器实例）。
 - Tinker 线审计 SWE 用的 prd 服务器已有 Docker，但它访问 apt、PyPI、GitHub 很慢，Terminal-Lego 镜像构建曾全部超时，只适合 SWE 类任务。
