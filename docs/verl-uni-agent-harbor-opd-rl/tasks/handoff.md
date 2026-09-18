@@ -42,10 +42,11 @@ bash examples/harbor_opd_rl/launch-detached.sh \
 
 | 规则 | 落地位置 |
 |---|---|
+| **沙箱生命周期在创建时传入，服务端强制** | `tb21_terminus2_smoke.yaml` 的 `environment_kwargs`：`sandbox_timeout_secs=2700`、`sandbox_idle_timeout_secs=1200`、`app_name=verl-harbor` |
 | 沙箱规格按任务契约，不统一覆盖 | `tb21_terminus2_smoke.yaml`（`override_cpus`/`override_memory_mb` 留空） |
 | trial 超时 1800 秒 | 同上 |
 | 杀训练后必须清理泄漏沙箱 | `deployment/bootstrap/modal-sandbox-cleanup.sh --apply` |
-| 每台 pod 常驻清理守卫（15 分钟一次，清理存活超 60 分钟的） | `deployment/bootstrap/modal-sandbox-guard.sh`，已在 11965 上运行，日志 `runs/modal-guard.log` |
+| 清理脚本与守卫（兜底，不常驻） | `deployment/bootstrap/modal-sandbox-{cleanup,guard}.sh`，只在怀疑泄漏时手动用 |
 | 每轮开跑前自动清理一次 | `run_opd_round.sh` |
 | 换配置先冒烟 | `run_opd_round.sh --smoke` |
 | 并发 16（与 Tinker 线约定，峰值 48） | `run_opd_round.sh` 默认值 |
