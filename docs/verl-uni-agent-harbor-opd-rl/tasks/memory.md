@@ -211,3 +211,11 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 每步耗时 1079–1732 s；Teacher 打分没有单独计时项，仍需 pipe-r7 对照组的差值来估算。
 - 单卡 pod 从 15:52 起失联，对照组 pipe-r7 未能启动；双卡 pod 20:0x–20:37 期间 SSH 也间歇性无响应，但训练未受影响。
 
+## 2026-09-18 00:20 固化：一条命令起一轮训练；Modal 再次触顶
+- **Modal 工作区 `ac-zkyegsbayv51TZenFRbIqQ`（profile l98348740）花费上限触顶**，两条线都无法创建沙箱。我们的探针与 Tinker 线的报错一致。需要用户在 Modal 设置里调高本账期上限（不是余额问题）。
+- **并发约定（与 Tinker 线）**：恢复后我们固定 16；他们评估筛选期间 32、筛完降到 8，峰值 48（昨晚 64 打穿了上限）。
+- **新入口 `examples/harbor_opd_rl/run_opd_round.sh`（a5bb9c8）**：替代一次性的 chain.sh。默认值即 pipe-r4 验证过的设置：9B 学生 + prefix caching + 单批 8192 + 显存比例 0.45；Teacher 0.70 / 4096 / 4 条序列；并发 16；数据取审计通过、剔除共享评估集、只要 medium/hard。`--smoke` 跑 1 步 4 道题。内置模型本地暂存、等 Modal 额度、等前一条 run 退出。
+- **已部署**（此前因有 run 在跑而推迟）：`uni_agent/tasks/harbor/{reward,task}.py` 的基础设施故障剔除（f81ae2c、e50b110），已校验共享盘与本地一致。
+- **已排队**：`runs/pipe-r8-smoke`，额度恢复后自动开跑（9B + 27B Teacher，1 步 4 题）。冒烟通过再起正式一轮。
+- 教训：换模型或换关键配置前先跑 `--smoke`。pipe-r4 连续 5 次失败尝试浪费了约 500 条 trial，一次冒烟只要几十条。
+

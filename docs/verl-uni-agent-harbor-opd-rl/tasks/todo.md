@@ -70,7 +70,11 @@
 - [x] 设置 v2（用户决定，16:05）：Teacher 单批 4096；学生侧 prefix caching 开 / 8192 / 0.45；pipe-r4 于 16:09 重起（第 6 次）
 - [ ] **部署 f81ae2c + e50b110（基础设施故障剔除、agent 失败记 0）**：pipe-r4 和 pipe-r7 都结束后，把 `uni_agent/tasks/harbor/{reward,task}.py` 同步到共享卷，再起下一轮。不能在 run 进行中同步，否则同一个 run 里会混用两种计分规则
 - [x] 数据阶段支持 Full 仓库（e50b110 / 9d6a11d）：合并审计 sidecar、按来源限额选题、held-out 用审计通过但没进训练的 train 题补足、只解压选中的题、按来源交错排序。实测 100 道训练 / 40 道 held-out，无重叠
-- [ ] **下一轮（pipe-r4 和 pipe-r7 都结束、f81ae2c 部署之后）**：`STAGE1_REPO=gump2049/xDAN-Harbor-Stage1-Tasks-Full STAGE1_TRAIN_PER_SOURCE=50 STAGE1_VAL_PER_SOURCE=20`。双卡跑 9B + 27B Teacher，单卡跑 9B 纯 RL 对照，两边数据和步数相同，`ROLLOUT_MAX_NUM_BATCHED_TOKENS=8192`；双卡另加 `TEACHER_MAX_NUM_BATCHED_TOKENS=8192`
+- [x] 固化脚本：`examples/harbor_opd_rl/run_opd_round.sh`（a5bb9c8），一条命令起一轮，默认值即 pipe-r4 验证过的配置，含 `--smoke`
+- [x] 部署适配器修复（基础设施故障剔除）到共享盘，已校验一致
+- [x] 数据阶段加难度筛选 `STAGE1_DIFFICULTY`（默认 medium hard）
+- [ ] **Modal 额度恢复后**：`runs/pipe-r8-smoke` 会自动开跑（已排队）；冒烟通过后起正式轮次（20 步以上、held-out 换成 100 道共享评估集）
+- [ ] 单卡 pod 恢复后起 9B 纯 RL 对照组（同一份数据与步数，`TEACHER=0`）
 - [ ] **选题要按难度筛**：pipe-r4 第 1 步训练集得分 0.916、held-out 0.988，说明审计通过的题对 9B 太简单。下一轮训练题应挑基座 9B 时对时错的题（与 eval-set-v1 同一筛法），或至少限定 medium/hard
 - [ ] **跟踪长度偏置**：逐步记录 `response_length/mean` 与 `num_turns/mean`；若长度升而得分不升，按 Tinker 线 r4 的退步案例处理
 - [x] 核对 `num_turns` 口径：`_count_chat_turns`（`uni_agent/gateway/session/session.py:958`）= user + assistant 消息数 + 1，工具返回算 user 消息。62.9 约等于 31 次模型动作，未越过 `max_turns=50`；每次动作约 796 token
