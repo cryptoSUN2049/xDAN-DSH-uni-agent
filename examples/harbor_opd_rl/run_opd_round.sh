@@ -121,6 +121,16 @@ if ps -eo args= | grep -qE "^[^ ]*python[0-9.]* -m verl\.trainer\.main_ppo"; the
   else log "a trainer is already running on this pod; refusing to start ${ROUND}"; exit 3; fi
 else
   ray stop --force >/dev/null 2>&1 || true; sleep 10
+  # ray stop does not reap vLLM EngineCore children: after the 2026-09-18 incident a
+  # Teacher engine kept 68 GB on GPU1 with no trainer alive. With no trainer running,
+  # anything still holding a GPU is an orphan of an earlier run.
+  if [[ ${SMOKE} -ne 1 ]]; then
+    orphans=$(nvidia-smi --query-compute-apps=pid --format=csv,noheader 2>/dev/null | tr -d ' ')
+    if [[ -n "${orphans}" ]]; then
+      log "terminating orphaned GPU processes: $(echo ${orphans})"
+      kill -TERM ${orphans} 2>/dev/null; sleep 10
+    fi
+  fi
 fi
 # Collect sandboxes leaked by an earlier killed run before paying for a new one.
 # Opt-in until the age filter is fixed: modal 1.5.5's Sandbox.list() has no created_at,
