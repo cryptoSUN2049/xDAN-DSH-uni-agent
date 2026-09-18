@@ -91,11 +91,34 @@ if [[ "${STAGE_NAME}" == train ]]; then
   for v in MODEL_PATH SERVED_MODEL_NAME TASK_CONFIG TRAIN_STEPS TRAIN_MAX_SAMPLES VAL_MAX_SAMPLES TRAIN_BATCH_SIZE \
            ROLLOUT_N CONCURRENCY DAPO DAPO_MAX_GEN_BATCHES DAPO_METRIC TEACHER TEACHER_MODEL_PATH TEACHER_GPU_MEM \
            TEACHER_SHARE_GPU GPU_MEMORY_UTILIZATION VAL_BEFORE_TRAIN TEST_FREQ HARBOR_REWARD_MODE TRAINER_MODE \
-           MAX_RESPONSE_LENGTH MAX_PROMPT_LENGTH LORA_RANK LR ATTN_IMPLEMENTATION; do
+           MAX_RESPONSE_LENGTH MAX_PROMPT_LENGTH LORA_RANK LR LR_WARMUP_STEPS ATTN_IMPLEMENTATION \
+           VAL_ROLLOUT_N VAL_TEMPERATURE MIN_VALID_SESSIONS PIN_CKPT_EVERY; do
     [[ -n "${!v+x}" ]] && printf 'export %s=%q\n' "${v}" "${!v}"
   done > "${STAGE_DIR}/stage-env.sh"
 fi
+# PIN_CKPT_EVERY=N keeps every N-th checkpoint out of the MAX_CKPT_TO_KEEP rotation: a
+# background pass hard-links global_step_{N,2N,...} into ${STAGE_DIR}/pinned/ once VERL
+# has finished writing it (latest_checkpointed_iteration.txt >= N). Hard links cost no
+# space and survive VERL deleting the original; plain copy is the fallback.
+pin_once() {
+  local every="$1" dst="${STAGE_DIR}/pinned" ck n latest
+  mkdir -p "${dst}"
+  for ck in $(find "${STAGE_DIR}/checkpoints" -mindepth 3 -maxdepth 3 -type d -name 'global_step_*' 2>/dev/null || true); do
+    n="${ck##*_}"; [[ "${n}" =~ ^[0-9]+$ ]] && (( n % every == 0 )) || continue
+    [[ -e "${dst}/global_step_${n}" ]] && continue
+    latest=$(cat "$(dirname "${ck}")/latest_checkpointed_iteration.txt" 2>/dev/null || echo 0)
+    [[ "${latest}" =~ ^[0-9]+$ ]] && (( latest >= n )) || continue
+    rm -rf "${dst}/.global_step_${n}.tmp"
+    cp -al "${ck}" "${dst}/.global_step_${n}.tmp" 2>/dev/null || cp -a "${ck}" "${dst}/.global_step_${n}.tmp" || continue
+    mv "${dst}/.global_step_${n}.tmp" "${dst}/global_step_${n}" && log "pinned global_step_${n}"
+  done
+}
+PIN_PID=""
+if [[ "${PIN_CKPT_EVERY:-0}" =~ ^[1-9][0-9]*$ ]]; then
+  ( set +e; while true; do pin_once "${PIN_CKPT_EVERY}"; sleep 60; done ) & PIN_PID=$!
+fi
 run_train_script > "${STAGE_DIR}/train.log" 2>&1 || true
+if [[ -n "${PIN_PID}" ]]; then kill "${PIN_PID}" 2>/dev/null || true; pin_once "${PIN_CKPT_EVERY}" || true; fi
 
 CK=$(find_final_ckpt)
 [[ -n "${CK}" ]] && model_file "${CK}" >/dev/null || { log "global_step_${TOTAL_STEPS} checkpoint missing"; record failed '"checkpoint missing"'; exit 1; }

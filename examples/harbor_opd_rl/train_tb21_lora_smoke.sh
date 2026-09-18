@@ -35,6 +35,14 @@ NGPUS_PER_NODE="${NGPUS_PER_NODE:-1}"
 ROLLOUT_TP="${ROLLOUT_TP:-1}"
 ROLLOUT_N="${ROLLOUT_N:-2}"
 VAL_ROLLOUT_N="${VAL_ROLLOUT_N:-1}"
+# Validation sampling. VERL defaults to greedy (temperature 0), which makes
+# VAL_ROLLOUT_N > 1 near-identical; VAL_TEMPERATURE=1.0 samples like training rollouts.
+VAL_TEMPERATURE="${VAL_TEMPERATURE:-}"
+# LoRA learning rate. 1e-5 moved pipe-r11 by only ~1e-4 of |W| in 20 steps (Adam moves
+# each weight ~lr per step); LoRA wants ~10x a full fine-tune LR. LR_WARMUP_STEPS
+# linearly warms up the first steps, when Adam's normalised update is largest.
+LR="${LR:-1e-5}"
+LR_WARMUP_STEPS="${LR_WARMUP_STEPS:--1}"
 GATEWAY_COUNT="${GATEWAY_COUNT:-1}"
 CONCURRENCY="${CONCURRENCY:-2}"
 GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-0.40}"
@@ -223,7 +231,8 @@ COMMAND=(
   actor_rollout_ref.model.lora_alpha="${LORA_ALPHA}"
   actor_rollout_ref.model.target_modules=all-linear
   actor_rollout_ref.actor.strategy=fsdp
-  actor_rollout_ref.actor.optim.lr=1e-5
+  actor_rollout_ref.actor.optim.lr="${LR}"
+  actor_rollout_ref.actor.optim.lr_warmup_steps="${LR_WARMUP_STEPS}"
   actor_rollout_ref.actor.ppo_mini_batch_size="${PPO_MINI_BATCH_SIZE}"
   actor_rollout_ref.actor.ppo_epochs=1
   actor_rollout_ref.actor.use_dynamic_bsz=True
@@ -245,6 +254,9 @@ COMMAND=(
   actor_rollout_ref.rollout.gpu_memory_utilization="${GPU_MEMORY_UTILIZATION}"
   actor_rollout_ref.rollout.n="${ROLLOUT_N}"
   actor_rollout_ref.rollout.val_kwargs.n="${VAL_ROLLOUT_N}"
+  ${VAL_TEMPERATURE:+actor_rollout_ref.rollout.val_kwargs.temperature="${VAL_TEMPERATURE}"}
+  ${VAL_TEMPERATURE:+actor_rollout_ref.rollout.val_kwargs.top_p=1.0}
+  ${VAL_TEMPERATURE:+actor_rollout_ref.rollout.val_kwargs.do_sample=True}
   actor_rollout_ref.rollout.load_format=safetensors
   actor_rollout_ref.rollout.layered_summon="${ROLLOUT_LAYERED_SUMMON}"
   actor_rollout_ref.rollout.free_cache_engine="${ROLLOUT_FREE_CACHE_ENGINE}"

@@ -33,6 +33,7 @@ repo, local, slice_n, sources, out = sys.argv[1], sys.argv[2], int(sys.argv[3]),
 # decontaminated against 23 benchmarks including Terminal-Bench 2.0/2.1. Difficulty
 # filters and per-source quotas below still apply on top of it.
 slice_name = os.environ.get("STAGE1_SLICE_NAME", "").strip()
+slice_order = {}
 SLICE_SOURCES = {"swe": "swe-rebench-v2-fv", "terminal-lego": "terminal-lego-15k"}
 if slice_name:
     path = snapshot_download(repo, repo_type="dataset", local_dir=local,
@@ -43,6 +44,9 @@ if slice_name:
         with tarfile.open(os.path.join(slice_dir, "tasks.tar.gz")) as tf:
             tf.extractall(tasks_root, filter="data")
     manifest = json.load(open(os.path.join(slice_dir, "manifest.json")))
+    # The slice's train list is already ordered by the data line (stratified by source x
+    # difficulty and spread across the run); kept as is when no per-source quota is set.
+    slice_order = {t: i for i, t in enumerate(manifest["train"])}
     split_of = {t: "train" for t in manifest["train"]} | {t: "validation" for t in manifest["validation"]}
     rows = []
     for line in open(os.path.join(slice_dir, "tasks.jsonl")):
@@ -150,6 +154,27 @@ if train_quota > 0:
     val = [r for group in itertools.zip_longest(*per_val) for r in group if r is not None]
 elif slice_n > 0:
     train = train[:slice_n]
+if slice_order and train_quota <= 0:
+    train.sort(key=lambda r: slice_order.get(r["task"], len(slice_order)))
+    print("slice order kept:", len(train), "train tasks in manifest order")
+# STAGE1_ORDER=stratified: group train tasks by (source, difficulty), shuffle each group
+# with STAGE1_SEED, then spread every group evenly over the run (task i of a group of n
+# sits at (i + 0.5) / n). Published slices list tasks in source blocks, so manifest order
+# would train one source for dozens of steps (Tinker r6, 2026-09-18); this is the same
+# idea as the Tinker line's interleave_by_stratum.
+if os.environ.get("STAGE1_ORDER", "") == "stratified":
+    import random
+    seed = int(os.environ.get("STAGE1_SEED", "20260918"))
+    strata = {}
+    for r in train:
+        strata.setdefault((r["source"], r.get("difficulty")), []).append(r)
+    placed = []
+    for key in sorted(strata, key=str):
+        group = sorted(strata[key], key=lambda r: r["task"])
+        random.Random(f"{seed}:{key}").shuffle(group)
+        placed += [((i + 0.5) / len(group), str(key), r) for i, r in enumerate(group)]
+    train = [r for _, _, r in sorted(placed, key=lambda x: (x[0], x[1]))]
+    print("stratified order seed", seed, {str(k): len(v) for k, v in sorted(strata.items(), key=str)})
 # Unpack only the selected tasks from runtime-v1.tar.gz when the repo is packed.
 needed = {}
 for r in train + val:
@@ -188,7 +213,7 @@ for name, subset in (("train", train), ("validation", val)):
         # preprocess sorts task dirs by name; with per-source quotas an ordinal
         # prefix keeps the interleaved order (otherwise every epoch runs one source
         # after the other, as pipe-r6's steps 1-5 were all swe-rebench).
-        prefix = f"{i:04d}__" if train_quota > 0 else ""
+        prefix = f"{i:04d}__" if (train_quota > 0 or slice_order or os.environ.get("STAGE1_ORDER")) else ""
         dst = os.path.join(root, f"{prefix}{r['source']}__{r['task']}")
         shutil.copytree(os.path.join(path, r["task_dir"]), dst)
         toml_path = os.path.join(dst, "task.toml")

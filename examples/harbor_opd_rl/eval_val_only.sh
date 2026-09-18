@@ -59,14 +59,10 @@ printf '{"model_path":"%s","resume_from":"%s","data":"%s","tasks":%s,"n":%s,"tas
    PYTHON_BIN="${LANE_PY}" EXP_NAME="eval-$(basename "${EVAL_ROOT}")" TOTAL_TRAINING_STEPS=20 \
    TRAIN_MAX_SAMPLES=100 VAL_MAX_SAMPLES="${VAL_MAX}" TRAIN_BATCH_SIZE=4 PPO_MINI_BATCH_SIZE=4 ROLLOUT_N=8 \
    CONCURRENCY="${CONCURRENCY}" ROLLOUT_MAX_NUM_SEQS="${CONCURRENCY}" SAVE_FREQ=-1 DAPO=0 TEACHER=0 \
-   VAL_ROLLOUT_N="${EVAL_N}" VAL_BEFORE_TRAIN=True TEST_FREQ=-1 WANDB_ENABLED=0 MIN_VALID_SESSIONS=0 \
+   VAL_ROLLOUT_N="${EVAL_N}" VAL_TEMPERATURE=1.0 VAL_BEFORE_TRAIN=True TEST_FREQ=-1 WANDB_ENABLED=0 MIN_VALID_SESSIONS=0 \
    GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-0.6}" \
    RESUME_MODE="$([[ -n "${RESUME_FROM}" ]] && echo resume_path || echo disable)" RESUME_FROM_PATH="${RESUME_FROM}" \
-   bash examples/harbor_opd_rl/train_tb21_lora_smoke.sh \
-     trainer.val_only=True \
-     actor_rollout_ref.rollout.val_kwargs.temperature=1.0 \
-     actor_rollout_ref.rollout.val_kwargs.top_p=1.0 \
-     actor_rollout_ref.rollout.val_kwargs.do_sample=True) > "${EVAL_ROOT}/eval.log" 2>&1 || true
+   bash examples/harbor_opd_rl/train_tb21_lora_smoke.sh trainer.val_only=True) > "${EVAL_ROOT}/eval.log" 2>&1 || true
 
 "${LANE_PY}" - "${EVAL_ROOT}" <<'PY'
 import glob, json, os, re, sys
