@@ -33,9 +33,12 @@ ROLLOUT_N="${ROLLOUT_N:-4}"
 CONCURRENCY="${CONCURRENCY:-4}"
 TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE:-2}"
 # binary = Harbor's primary verifier reward; pass_ratio = passed/total tests from the
-# verifier CTRF report when the binary reward is 0 (dense signal for weak policies).
-# Inherited by the Ray workers because the trainer starts a local Ray instance.
-export HARBOR_REWARD_MODE="${HARBOR_REWARD_MODE:-pass_ratio}"
+# verifier CTRF report when the binary reward is 0. Default binary: SWE tasks count
+# pass_to_pass tests, so doing nothing already scores high under pass_ratio (pipe-r9:
+# median do-nothing floor 0.936 over 50 SWE tasks, 30 of them >= 0.9), which rewards
+# not touching the code in groups nobody solves. Use pass_ratio only on task sets whose
+# tests all fail before the fix. Inherited by the Ray workers (local Ray instance).
+export HARBOR_REWARD_MODE="${HARBOR_REWARD_MODE:-binary}"
 SUMMARY="${PIPE_ROOT}/pipeline-summary.jsonl"
 mkdir -p "${PIPE_ROOT}"
 

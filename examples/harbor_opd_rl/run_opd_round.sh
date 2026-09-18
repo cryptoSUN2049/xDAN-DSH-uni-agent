@@ -72,7 +72,7 @@ STAGE1_VAL_PER_SOURCE="${STAGE1_VAL_PER_SOURCE:-4}"
 # so every slice's validation is comparable, so no extra filter on a slice.
 if [[ -n "${STAGE1_SLICE_NAME}" ]]; then STAGE1_DIFFICULTY="${STAGE1_DIFFICULTY-}"
 else STAGE1_DIFFICULTY="${STAGE1_DIFFICULTY-medium hard}"; fi
-HARBOR_REWARD_MODE="${HARBOR_REWARD_MODE:-pass_ratio}"
+HARBOR_REWARD_MODE="${HARBOR_REWARD_MODE:-binary}"  # see stages/common.sh for why not pass_ratio
 DAPO="${DAPO:-0}"
 
 VAL_BEFORE_TRAIN="${VAL_BEFORE_TRAIN:-True}"
