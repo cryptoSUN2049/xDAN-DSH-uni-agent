@@ -228,3 +228,11 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 新文档：`docs/…/modal-cost-postmortem.md`（复盘）、`docs/…/modal-alternatives-brief.md`（替代沙箱调研简报，供独立会话执行）、`tasks/handoff.md`（已重写）。
 - 待验证：`deployment/bootstrap/modal-sandbox-probe.sh` 额度恢复后先跑，实测规格、正常结束是否自动销毁、被杀后是否泄漏、清理脚本能否收拾。
 
+## 2026-09-18 00:55 沙箱生命周期实测结论（证据 `sandbox-lifecycle/probe-report.md`）
+- **正常结束会释放**：trial 运行中 1 个沙箱，退出码 0，结束 20 秒后为 0。
+- **客户端被杀会泄漏**：杀掉 Harbor CLI 后 30 秒、90 秒仍各有 1 个沙箱存活。这就是 2026-09-17 那 358 美元的来源，现已实证。
+- **清理脚本可用**：`terminated 1, kept 0`，清理后为 0。修复版通过 SandboxList RPC 读 `created_at`（modal 1.5.5 的 `Sandbox.list()` 没有这个属性），年龄未知一律保留。
+- **设计已改为创建时传参**（用户要求，也是正确做法）：`environment_kwargs` → `sandbox_timeout_secs=2700`、`sandbox_idle_timeout_secs=1200`、`app_name=verl-harbor`，Harbor 经 `--environment-kwarg` 透传，Modal 服务端强制执行。守卫降级为手动兜底，不再常驻。
+- **更正**：复盘里"命令行没暴露 sandbox_timeout_secs"是错的（`cli/trials.py:411` → `factory.py:313`）。由会话 xdan-dsh-uni-agent-67 指出并修复清理脚本的误杀缺陷。
+- 我引入过一个严重缺陷：清理脚本把"年龄未知"当成"该杀"，常驻守卫会终止所有运行中的沙箱。在误杀发生前停掉了守卫。教训：先查上游有没有声明式参数，再考虑外部轮询补救。
+

@@ -41,4 +41,6 @@
 39. **Harbor 的 Modal 沙箱默认活 24 小时，进程被杀不销毁，这是最贵的一个坑。** `harbor/environments/modal.py:881` 写死 `sandbox_timeout_secs=86400`、`sandbox_idle_timeout_secs=None`，命令行没暴露这两个参数。2026-09-17 我们强杀了 7 次训练（5 次 27B OOM 相关、2 次改配置），每次 16 到 32 个沙箱被留下，`modal billing report --for yesterday --show-resources` 显示 `__harbor__` 当天 CPU 267.88 + 内存 90.20 美元，折合约 2820 沙箱小时，而 trial 实际只跑约 200 小时，超出约 14 倍。规则：(a) 杀训练后立刻 `deployment/bootstrap/modal-sandbox-cleanup.sh --apply`；(b) 每台 pod 常驻 `modal-sandbox-guard.sh`，每 15 分钟清理存活超过 60 分钟的沙箱；(c) 每轮开始前自动清理一次（已写进 `run_opd_round.sh`）。
 40. **沙箱规格不要统一覆盖，按任务自己的资源契约走。** 我们曾统一设 2 核 4 GB，而 Terminal-Lego 声明 1 核 1 GB、swe-rebench 1 核 2 GB，等于每条 trial 多付一倍。规则：`override_cpus` / `override_memory_mb` 留空，只在排查个别任务时临时指定。
 41. **第三次踩"kill 模式命中自己 ssh 会话"**（见第 24 条）。这次是 `ps | awk` 的匹配串出现在同一条远程命令里，连自己一起杀。规则固化：列 PID 和杀 PID 必须是两条独立命令，杀的那条只出现数字，不出现任何匹配模式。
+42. **先找上游的声明式参数，再考虑外部轮询补救。** 沙箱泄漏的正解是创建时传 `sandbox_timeout_secs` / `sandbox_idle_timeout_secs`（Harbor 经 `--environment-kwarg` 支持，`cli/trials.py:411` → `factory.py:313`），由 Modal 服务端强制。我却先写了"事后轮询清理 + 常驻守卫"，既没治本，还引入了会误杀运行中沙箱的缺陷（modal 1.5.5 的 `Sandbox.list()` 没有 `created_at`，我把"未知年龄"当成"够老该杀"）。规则：碰到"资源没被回收"这类问题，先读上游 API 有没有生命周期参数；轮询清理只能当兜底，且必须对"信息缺失"取保守分支。
+43. **实测要保证被测场景真的发生了。** 第一版探针固定 sleep 90 秒再观察，而 oracle trial 只跑 20 秒，于是"运行中沙箱数"永远是 0，两个测试步骤都无效却看起来像通过。规则：测量前先轮询等待被测状态出现（沙箱出现、进程就绪），再执行动作；固定 sleep 只能用于已知时长的场景。
 
