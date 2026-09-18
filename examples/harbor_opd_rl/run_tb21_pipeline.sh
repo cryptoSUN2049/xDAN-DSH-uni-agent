@@ -10,12 +10,13 @@
 #   bash examples/harbor_opd_rl/run_tb21_pipeline.sh
 #
 # Stages: env -> data -> oracle -> rollout -> train -> delta -> resume -> summary
+# -> acceptance -> cost (sandbox spend discipline: leaks, billed/used ratio, $/trial)
 set -euo pipefail
 STAGES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/stages"
 PIPE_ROOT="${PIPE_ROOT:?absolute pipeline run root}"
 FROM_STAGE="${FROM_STAGE:-}"
 SKIP_STAGES="${SKIP_STAGES:-}"
-ORDER=(env data oracle rollout train delta resume summary acceptance)
+ORDER=(env data oracle rollout train delta resume summary acceptance cost)
 mkdir -p "${PIPE_ROOT}"
 printf '{"stage":"driver","status":"start","utc":"%s","detail":{"argv":"%s","from":"%s","skip":"%s"}}\n' \
   "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$0" "${FROM_STAGE}" "${SKIP_STAGES}" >> "${PIPE_ROOT}/pipeline-summary.jsonl"
