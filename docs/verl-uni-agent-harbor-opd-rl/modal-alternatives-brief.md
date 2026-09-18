@@ -27,6 +27,27 @@
 3. **Novita / Runloop / Blaxel**。同类沙箱服务，价格与区域各异，用同一套基准测。
 4. **继续用 Modal，但把泄漏堵住**。如果清理脚本加优雅停止能把实际成本压到每条 0.016 美元，一轮 20 步约 12 美元，可能已经够用，不必迁移。这条要作为基线一起测。
 
+## 二点五、已确认的事实（2026-09-18）
+
+**在 RunPod GPU pod 内自建 Docker 不可行**（双卡 pod 11965 只读检查）：
+
+| 检查项 | 结果 |
+|---|---|
+| `CAP_SYS_ADMIN` | 没有（CapEff `a80425fb`） |
+| seccomp | 过滤模式（2） |
+| cgroup v2 | 只读 |
+| 用户命名空间（`unshare --user`） | 不允许 |
+| overlay 挂载 | 被拒 |
+| `/var/run/docker.sock` | 不存在 |
+
+RunPod pod 是无特权容器，dockerd、rootless Docker、Podman、Singularity（Harbor 也支持该后端）都需要挂载或命名空间权限，全部起不来。pod 的 256 核空闲算力无法用于沙箱。
+
+**仍然可行的自建路线**：Harbor 默认后端就是 `docker`，它走 docker compose，可以通过 `DOCKER_HOST` 连到另一台有 Docker 的真实虚拟机或物理机。可选的机器：
+- 按小时租用的云虚拟机（非容器实例）。
+- Tinker 线审计 SWE 用的 prd 服务器已有 Docker，但它访问 apt、PyPI、GitHub 很慢，Terminal-Lego 镜像构建曾全部超时，只适合 SWE 类任务。
+
+**经济性提醒**：修好泄漏后，Modal 在并发 16 时约为每小时 1 美元（1 核 2 GB 约 0.063 美元/小时 × 16）。一台能承接 16 到 32 个沙箱的云虚拟机也在这个价位，只有在使用已付费、闲置的 Docker 机器时，自建才明显更省。
+
 ## 三、实验设计
 
 固定用同一批 10 道题（5 道 Terminal-Lego + 5 道 SWE，来自审计通过集），同一个 agent 与 verifier，分别在每个后端跑一遍，记录：
