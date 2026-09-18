@@ -25,6 +25,11 @@ DIRTY=$([[ -n "$(git -C "${REPO_ROOT}" status --porcelain)" ]] && echo true || e
 SSH_OPTS=(-o BatchMode=yes -o ConnectTimeout=30 -o StrictHostKeyChecking=accept-new -p "${PORT}" -i "${KEY}")
 SRC="${LANE_ROOT}/src/uni-agent"
 
+# Upstream VERL fixes (patches/verl/*.patch) must be re-applied after every sync.
+apply_patches() {
+  ssh "${SSH_OPTS[@]}" "${HOST}" "bash ${SRC}/deployment/bootstrap/apply-verl-patches.sh ${SRC}"
+}
+
 manifest() {
   ssh "${SSH_OPTS[@]}" "${HOST}" "printf '{\"sha\":\"%s\",\"branch\":\"%s\",\"mode\":\"%s\",\"dirty\":%s,\"utc\":\"%s\"}\n' '${SHA}' '${BRANCH}' '$1' ${DIRTY} '$(date -u +%Y%m%dT%H%M%SZ)' > ${LANE_ROOT}/runs/source-manifest-${SHA:0:7}.json; cat ${LANE_ROOT}/runs/source-manifest-${SHA:0:7}.json"
 }
@@ -33,7 +38,7 @@ if [[ "${MODE}" == rsync ]]; then
   echo "[sync] rsync ${SHA:0:7} (dirty=${DIRTY}) -> ${HOST}:${SRC} ${DELETE}"
   rsync -rltz ${DELETE} --exclude .git --exclude '__pycache__' --exclude .Codex --exclude '*.egg-info' \
     --exclude .pytest_cache --exclude .ruff_cache --exclude wandb -e "ssh ${SSH_OPTS[*]}" "${REPO_ROOT}/" "${HOST}:${SRC}/"
-  manifest rsync; exit 0
+  apply_patches; manifest rsync; exit 0
 fi
 
 # --git
@@ -55,4 +60,5 @@ else
     ssh "${SSH_OPTS[@]}" "${HOST}" "mv ${SRC} ${SRC}.rsync-bak-\$(date -u +%Y%m%dT%H%M) && mv ${SRC}.git-checkout ${SRC} && echo '[sync] swapped git checkout into place'"
   fi
 fi
+apply_patches
 manifest git

@@ -86,14 +86,19 @@ RESUME_MODE="${RESUME_MODE:-disable}"
 RESUME_FROM_PATH="${RESUME_FROM_PATH:-}"   # global_step_N dir; sets trainer.resume_from_path when non-empty
 MASK_UNFINISHED_EPISODE="${MASK_UNFINISHED_EPISODE:-True}"
 # FAIL_ON_ROLLOUT_ERROR=1 aborts the whole step when any session fails (strict
-# smoke). 0 (default) keeps the run going: drop_incomplete_groups marks a group that
-# lost any session as failed, and the replay buffer evicts and refills it, so a single
-# hung Modal sandbox or verifier error cannot kill a multi-step run.
-# Without drop_incomplete_groups the surviving 7 of 8 trajectories are trained, VERL
-# pads the batch with a copy of a real sample, and that copy's teacher_logprobs do not
-# match its tokens: distillation then fails an assertion (pipe-r11 step 5, 2026-09-18).
+# smoke). 0 (default) keeps the run going and keeps as much finished work as possible:
+#   - a group that lost sessions is trained on its valid ones while at least
+#     MIN_VALID_SESSIONS remain (default half of ROLLOUT_N: 8 -> 4; GRPO's group
+#     mean/std use only the samples present, nothing is imputed);
+#   - below that the whole group is marked failed and the replay buffer refills it.
+# Worker-side errors never reach the trainer (generate_sequences is fire-and-forget),
+# so an outage shows as repeated "rollout group dropped" lines, not as a crash.
+# A short group makes VERL pad the batch with a synthetic sample; patches/verl/0001
+# (applied by sync-source.sh) gives that sample teacher rows of its own length, which
+# upstream forgot and which crashed pipe-r11 at step 5 on 2026-09-18.
 # require_trajectory_dump is only valid in strict mode (framework validation).
 FAIL_ON_ROLLOUT_ERROR="${FAIL_ON_ROLLOUT_ERROR:-0}"
+MIN_VALID_SESSIONS="${MIN_VALID_SESSIONS:-$(( ROLLOUT_N / 2 > 2 ? ROLLOUT_N / 2 : 2 ))}"
 if [[ "${FAIL_ON_ROLLOUT_ERROR}" == "1" ]]; then
   STRICT_OVERRIDES=(
     ++actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error=True
@@ -102,7 +107,7 @@ if [[ "${FAIL_ON_ROLLOUT_ERROR}" == "1" ]]; then
 else
   STRICT_OVERRIDES=(
     ++actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error=False
-    ++actor_rollout_ref.rollout.custom.agent_framework.drop_incomplete_groups=True
+    ++actor_rollout_ref.rollout.custom.agent_framework.min_valid_sessions_per_group="${MIN_VALID_SESSIONS}"
   )
 fi
 # wandb: credentials come from ~/.netrc (wandb login) or WANDB_API_KEY, never from this repo.

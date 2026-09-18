@@ -133,10 +133,10 @@
 
 ### H6 轨迹失败的处理：最大限度保留有效工作（用户 2026-09-18 确认）
 规则（每组 8 条）：有效 ≥ 4 条照常训练，只在有效轨迹之间比较（GRPO 本就按组内实有样本算均值与标准差，不补假分数）；有效 ≤ 3 条整组废弃、补一道新题；一步里失败比例过高则熔断停训。
-- [ ] VERL 占位样本缺陷：`padding_utils.construct_minimal_padding_template` 也重建 `teacher_logprobs`/`teacher_ids`（按占位长度补零，损失掩码本为 0）。以补丁文件放在 `patches/verl/`，同步代码后在 pod 上幂等打上，不改上游子模块；CPU 测试复现崩溃路径
-- [ ] Uni-Agent：`drop_incomplete_groups` 换成 `min_valid_sessions_per_group`（有效数低于它才整组废弃；至少为 2，因为单条样本的组会把原始分数直接当优势）；训练脚本默认取 `ROLLOUT_N` 的一半（8 → 4）
-- [ ] 熔断：训练分区最近 64 个会话失败比例 > 25% 时抛错停训，错误信息写明"疑似基础设施故障"，已有 checkpoint 可续训
-- [ ] 题目隔离暂不做：20 步不足一个 epoch，每道题本轮只抽一次；先在汇总里按题记录基础设施故障次数
+- [x] VERL 占位样本缺陷：`padding_utils.construct_minimal_padding_template` 也重建 `teacher_logprobs`/`teacher_ids`（按占位长度补零，损失掩码本为 0）。以补丁文件放在 `patches/verl/`，同步代码后在 pod 上幂等打上，不改上游子模块；CPU 测试复现崩溃路径
+- [x] Uni-Agent：`drop_incomplete_groups` 换成 `min_valid_sessions_per_group`（有效数低于它才整组废弃；至少为 2，因为单条样本的组会把原始分数直接当优势）；训练脚本默认取 `ROLLOUT_N` 的一半（8 → 4）
+- [ ] 熔断：**未实现**。框架里抛错传不到训练器（`AgentFrameworkRolloutAdapter.generate_sequences` 是 fire-and-forget，`.remote()` 的结果没人取），写了也不会停训。可行方案：框架写停止标记文件，由 `40_train.sh` 轮询后结束训练并记录原因。目前大面积故障的表现是日志里连续出现 "rollout group dropped"，由监控发现
+- [ ] 题目隔离（推迟）：20 步不足一个 epoch，每道题本轮只抽一次；先在汇总里按题记录基础设施故障次数
 - [ ] 部署时机：pipe-r11 跑完再同步（它的续训阶段会重新导入代码，中途替换会让同一轮前后行为不一致）；测试在 pod 的独立目录里跑，不碰运行中的源码
 
 ### H3 本轮的判据（跑完按这四条下结论，缺一不可）

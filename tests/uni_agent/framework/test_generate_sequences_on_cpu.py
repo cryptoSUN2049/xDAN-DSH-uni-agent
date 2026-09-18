@@ -142,7 +142,7 @@ async def _build_framework_with_agent_runners(
     log_dir: str | None = None,
     mask_unfinished_episode: bool = False,
     fail_on_rollout_error: bool = False,
-    drop_incomplete_groups: bool = False,
+    min_valid_sessions_per_group: int = 0,
     require_finished_episode: bool = False,
     require_verifier_reward: bool = False,
     require_trajectory_dump: bool = False,
@@ -157,7 +157,7 @@ async def _build_framework_with_agent_runners(
         "agent_runners": agent_runners,
         "mask_unfinished_episode": mask_unfinished_episode,
         "fail_on_rollout_error": fail_on_rollout_error,
-        "drop_incomplete_groups": drop_incomplete_groups,
+        "min_valid_sessions_per_group": min_valid_sessions_per_group,
         "require_finished_episode": require_finished_episode,
         "require_verifier_reward": require_verifier_reward,
         "require_trajectory_dump": require_trajectory_dump,
@@ -1863,52 +1863,66 @@ async def test_generate_sequences_keeps_successful_sessions_when_one_session_fai
     assert runtime.aborted_sessions[0].startswith("session-sample-0-rollout-1-")
 
 
+def _runtime_for(prompts: int, n: int):
+    return _FakeGatewayManager(
+        {f"session-sample-{p}-rollout-{r}": [_trajectory()] for p in range(prompts) for r in range(n)}
+    )
+
+
+def _failing_runner(failing: set[tuple[int, int]]):
+    async def agent_runner(*, raw_prompt, session, sample_index, tools_kwargs, **kwargs):
+        for prompt, rollout in failing:
+            if session.session_id.startswith(f"session-sample-{prompt}-rollout-{rollout}-"):
+                raise RuntimeError("Harbor infrastructure failure: AddTestsDirError")
+
+    return agent_runner
+
+
 @pytest.mark.cpu
 @pytest.mark.level0
 @pytest.mark.asyncio
-async def test_drop_incomplete_groups_marks_a_group_with_a_failed_session_failed(fake_tq):
-    # pipe-r11 step 5: one sandbox infra failure left a 7-of-8 group; VERL padded the
-    # batch with a copy whose teacher_logprobs did not match its tokens. With the flag
-    # the group is written as failed (no trajectories) so the trainer refills it, and
-    # generation itself keeps going instead of raising.
-    runtime = _FakeGatewayManager(
-        {
-            "session-sample-0-rollout-0": [_trajectory()],
-            "session-sample-0-rollout-1": [_trajectory()],
-            "session-sample-1-rollout-0": [_trajectory()],
-            "session-sample-1-rollout-1": [_trajectory()],
-        }
-    )
-
-    async def agent_runner(*, raw_prompt, session, sample_index, tools_kwargs, **kwargs):
-        if session.session_id.startswith("session-sample-0-rollout-1-"):
-            raise RuntimeError("Harbor infrastructure failure: AddTestsDirError")
-
+@pytest.mark.parametrize(
+    "failed_rollouts,written",
+    [
+        # 1 of 4 failed, 3 valid >= 2: keep the three (GRPO uses only samples present).
+        ({3}, ["uid-0_0_0", "uid-0_1_0", "uid-0_2_0", "uid-1_0_0", "uid-1_1_0", "uid-1_2_0", "uid-1_3_0"]),
+        # 3 of 4 failed, 1 valid < 2: the group is dropped for the trainer to refill.
+        ({1, 2, 3}, ["uid-1_0_0", "uid-1_1_0", "uid-1_2_0", "uid-1_3_0"]),
+    ],
+    ids=["keep-valid", "drop-below-floor"],
+)
+async def test_min_valid_sessions_keeps_work_until_the_floor(fake_tq, failed_rollouts, written):
     framework = await _build_framework_with_agent_runners(
-        agent_runners={"runner": _inline_runner_config(agent_runner)},
-        gateway_manager=runtime,
-        n=2,
-        val_n=2,
-        drop_incomplete_groups=True,
+        agent_runners={"runner": _inline_runner_config(_failing_runner({(0, r) for r in failed_rollouts}))},
+        gateway_manager=_runtime_for(prompts=2, n=4),
+        n=4,
+        val_n=1,
+        min_valid_sessions_per_group=2,
     )
 
+    # Prompt 1 is always healthy, so the call as a whole has output (a call with none
+    # raises "All rollouts failed", which the fire-and-forget trainer never sees anyway).
     await framework.generate_sequences(_build_prompts(count=2, global_steps=8))
 
-    written = [key for put in fake_tq.batch_puts for key in put["keys"]]
-    assert written == ["uid-1_0_0", "uid-1_1_0"]
-    statuses = {(put["key"], put["tag"]["status"]) for put in fake_tq.puts}
-    assert ("uid-0", "failure") in statuses
-    assert ("uid-0", "finished") not in statuses
-    assert ("uid-1", "finished") in statuses
+    assert sorted(key for put in fake_tq.batch_puts for key in put["keys"]) == written
+    final_status = [put["tag"]["status"] for put in fake_tq.puts if put["key"] == "uid-0"][-1]
+    assert final_status == ("finished" if "uid-0_0_0" in written else "failure")
 
 
 @pytest.mark.asyncio
-async def test_drop_incomplete_groups_must_be_a_bool(fake_tq):
-    with pytest.raises(ValueError, match="drop_incomplete_groups must be a bool"):
+@pytest.mark.parametrize(
+    "kwargs,match",
+    [
+        ({"min_valid_sessions_per_group": 1}, "min_valid_sessions_per_group"),
+        ({"min_valid_sessions_per_group": -1}, "min_valid_sessions_per_group"),
+    ],
+)
+async def test_failure_handling_options_are_validated(fake_tq, kwargs, match):
+    with pytest.raises(ValueError, match=match):
         await _build_framework_with_agent_runners(
             agent_runners={"runner": _inline_runner_config(_async_noop_runner)},
             gateway_manager=_FakeGatewayManager({}),
-            drop_incomplete_groups="yes",
+            **kwargs,
         )
 
 

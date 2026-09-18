@@ -1,0 +1,35 @@
+diff --git a/verl/trainer/ppo/padding_utils.py b/verl/trainer/ppo/padding_utils.py
+index ffbd517b..a8500dc4 100644
+--- a/verl/trainer/ppo/padding_utils.py
++++ b/verl/trainer/ppo/padding_utils.py
+@@ -56,6 +56,15 @@ def build_padding_position_ids(source_position_ids: Any, attention_mask: torch.T
+     return position_ids.reshape(view_shape).expand(*source_position_ids.shape[:-1], -1).clone()
+ 
+ 
++def build_padding_per_token(source: Any, seq_len: int) -> torch.Tensor | None:
++    """Build a zero tensor with ``seq_len`` rows and the source's per-token trailing shape."""
++    if not isinstance(source, torch.Tensor):
++        return None
++    if source.dim() == 0:
++        return torch.zeros_like(source)
++    return torch.zeros((seq_len, *source.shape[1:]), dtype=source.dtype, device=source.device)
++
++
+ def build_padding_routed_experts(source_routed_experts: Any, seq_len: int) -> torch.Tensor | None:
+     """Build a zero routed-experts tensor matching the source per-token expert shape."""
+     if not isinstance(source_routed_experts, torch.Tensor):
+@@ -121,6 +130,14 @@ def construct_minimal_padding_template(
+         template_sample["routed_experts"] = routed_experts
+     else:
+         template_sample.pop("routed_experts", None)
++    # On-policy distillation stores one teacher row per token of the real sample. The
++    # synthetic sequence needs rows of its own length, or the distillation loss fails
++    # its offset check (sequence_offsets[-1] == values.shape[0]). Zeros are inert:
++    # response_mask is all zero, so these rows never reach a loss term.
++    for key in ("teacher_logprobs", "teacher_ids"):
++        padded = build_padding_per_token(template_sample.get(key), input_ids.size(0))
++        if padded is not None:
++            template_sample[key] = padded
+ 
+     # Padding flag is deployed to protect metrics calculation (e.g. response length, score, reward).
+     template_tag.update(

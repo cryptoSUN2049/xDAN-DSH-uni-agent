@@ -343,7 +343,7 @@ class GatewayAgentFramework(AgentFramework):
         log_dir: str | None = None,
         mask_unfinished_episode: bool = False,
         fail_on_rollout_error: bool = False,
-        drop_incomplete_groups: bool = False,
+        min_valid_sessions_per_group: int = 0,
         require_finished_episode: bool = False,
         require_verifier_reward: bool = False,
         require_trajectory_dump: bool = False,
@@ -381,9 +381,16 @@ class GatewayAgentFramework(AgentFramework):
         self._log_dir = log_dir
         self._mask_unfinished_episode = mask_unfinished_episode
         self._fail_on_rollout_error = fail_on_rollout_error
-        if type(drop_incomplete_groups) is not bool:
-            raise ValueError("drop_incomplete_groups must be a bool")
-        self._drop_incomplete_groups = drop_incomplete_groups
+        # 0 keeps any group that has a successful session. Otherwise a group that lost
+        # sessions is kept only with at least this many valid ones; 1 is not allowed
+        # because GRPO turns a one-sample group's raw score into its advantage.
+        if (
+            type(min_valid_sessions_per_group) is not int
+            or min_valid_sessions_per_group == 1
+            or min_valid_sessions_per_group < 0
+        ):
+            raise ValueError("min_valid_sessions_per_group must be 0 (off) or an int >= 2")
+        self._min_valid_sessions_per_group = min_valid_sessions_per_group
         self._require_finished_episode = require_finished_episode
         self._require_verifier_reward = require_verifier_reward
         self._require_trajectory_dump = require_trajectory_dump
@@ -446,9 +453,7 @@ class GatewayAgentFramework(AgentFramework):
         if type(fail_on_rollout_error) is not bool:
             raise ValueError("actor_rollout_ref.rollout.custom.agent_framework.fail_on_rollout_error must be a bool")
 
-        drop_incomplete_groups = af_cfg.get("drop_incomplete_groups", False)
-        if type(drop_incomplete_groups) is not bool:
-            raise ValueError("actor_rollout_ref.rollout.custom.agent_framework.drop_incomplete_groups must be a bool")
+        min_valid_sessions_per_group = af_cfg.get("min_valid_sessions_per_group", 0)
 
         require_finished_episode = af_cfg.get("require_finished_episode", False)
         if type(require_finished_episode) is not bool:
@@ -530,7 +535,7 @@ class GatewayAgentFramework(AgentFramework):
             log_dir=log_dir,
             mask_unfinished_episode=mask_unfinished_episode,
             fail_on_rollout_error=fail_on_rollout_error,
-            drop_incomplete_groups=drop_incomplete_groups,
+            min_valid_sessions_per_group=min_valid_sessions_per_group,
             require_finished_episode=require_finished_episode,
             require_verifier_reward=require_verifier_reward,
             require_trajectory_dump=require_trajectory_dump,
@@ -799,18 +804,24 @@ class GatewayAgentFramework(AgentFramework):
             failed_sessions += strict_unfinished_episodes
             failure_reasons.append(f"{strict_unfinished_episodes} unfinished episode(s) for uid={uid}")
 
-        if self._drop_incomplete_groups and not self._fail_on_rollout_error and failed_sessions:
-            # A group that lost a session would enter the trainer short (e.g. 7 of 8), and
-            # VERL pads the batch back up with a synthetic sample copied from a real one.
-            # That copy keeps the real sample's per-token teacher_logprobs/teacher_ids, so
-            # distillation fails its length assertion (pipe-r11 step 5, 2026-09-18).
-            # Marking the whole group failed lets the replay buffer evict and refill it,
-            # so every trained group stays complete and no padding sample is needed.
+        valid_sessions = len(successful_outcomes)
+        if (
+            self._min_valid_sessions_per_group
+            and not self._fail_on_rollout_error
+            and failed_sessions
+            and valid_sessions < self._min_valid_sessions_per_group
+        ):
+            # Keep as much finished work as possible: a group that lost a few sessions is
+            # trained on its valid ones (GRPO's group mean/std use only the samples that
+            # exist, so nothing is imputed). Below the floor the baseline is too thin, so
+            # the whole group is marked failed and the replay buffer evicts and refills it.
             logger.warning(
-                "incomplete rollout group dropped for uid=%s: %s/%s session(s) failed; the trainer refills it",
+                "rollout group dropped for uid=%s: %s/%s session(s) failed, %s valid < %s; the trainer refills it",
                 uid,
                 failed_sessions,
                 num_sessions,
+                valid_sessions,
+                self._min_valid_sessions_per_group,
             )
             await tq.async_kv_put(key=uid, partition_id=partition_id, tag={"status": "failure"})
             return {
@@ -821,6 +832,15 @@ class GatewayAgentFramework(AgentFramework):
                 "num_failed_uids": 1,
                 "failure_reasons": failure_reasons,
             }
+
+        if self._min_valid_sessions_per_group and not self._fail_on_rollout_error and failed_sessions:
+            logger.warning(
+                "rollout group kept short for uid=%s: %s/%s session(s) failed, training on %s valid",
+                uid,
+                failed_sessions,
+                num_sessions,
+                valid_sessions,
+            )
 
         if self._fail_on_rollout_error and failed_sessions:
             logger.warning(
