@@ -82,6 +82,7 @@ if [[ ${SMOKE} -eq 1 ]]; then
   # Fast smoke, target <= 10 min, no GPU: env, task selection, one oracle sandbox
   # with this round's sandbox settings, and a full resolve of the training config.
   TRAIN_STEPS=1; STAGE1_TRAIN_PER_SOURCE=1; STAGE1_VAL_PER_SOURCE=1; ORACLE_LIMIT=1
+  TRAIN_BATCH_SIZE=2; ROLLOUT_N=2; CONCURRENCY=4
   CONFIG_DRY_RUN=1; STAGE_MODELS=0; SKIP_STAGES="rollout delta resume summary acceptance cost"
 elif [[ ${SMOKE} -eq 2 ]]; then
   # GPU smoke, ~30 min: one model load and one tiny step to prove memory settings.
@@ -112,7 +113,14 @@ if [[ -n "${WAIT_PID:-}" ]]; then
   log "waiting for run ${WAIT_PID} to finish"
   while kill -0 "${WAIT_PID}" 2>/dev/null; do sleep 60; done
 fi
-ray stop --force >/dev/null 2>&1 || true; sleep 10
+# Only clear Ray when no trainer is alive: an unconditional stop killed the running
+# pipe-r8-smoke resume stage on 2026-09-18 when a fast smoke was started beside it.
+if ps -eo args= | grep -qE "^[^ ]*python[0-9.]* -m verl\.trainer\.main_ppo"; then
+  if [[ ${SMOKE} -eq 1 ]]; then log "a trainer is running; fast smoke leaves Ray alone"
+  else log "a trainer is already running on this pod; refusing to start ${ROUND}"; exit 3; fi
+else
+  ray stop --force >/dev/null 2>&1 || true; sleep 10
+fi
 # Collect sandboxes leaked by an earlier killed run before paying for a new one.
 # Opt-in until the age filter is fixed: modal 1.5.5's Sandbox.list() has no created_at,
 # so the current script treats unknown age as old and would terminate live trials.
