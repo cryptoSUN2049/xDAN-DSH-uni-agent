@@ -1,14 +1,14 @@
 # Handoff：verl-uni-agent-harbor-opd-rl
 
-更新：2026-09-18 01:00 UTC。历史逐轮记录在 `handoff-history.md`，持久决策在 `memory.md`，踩坑在 `lessons.md`（41 条），任务清单在 `todo.md`，成本复盘在 `../modal-cost-postmortem.md`，替代沙箱调研简报在 `../modal-alternatives-brief.md`。
+更新：2026-09-18 07:40 UTC。历史逐轮记录在 `handoff-history.md`，持久决策与每轮记录在 `memory.md`（按时间追加），踩坑在 `lessons.md`（46 条），任务清单与每轮计划在 `todo.md`（最新是阶段 H5），成本复盘在 `../modal-cost-postmortem.md`。
 
 ## 1. TL;DR
 
-- **目标**：用 VERL 生态把真实软件工程任务上的 agent 能力训进模型，评测口径 Terminal-Bench 2.1。三步路线：① terminus-2 + Modal 纯 RL 通路 → ② DAPO + OPD（Teacher）联合更新 → ③ DSH harness 进沙箱。
-- **路线 ① 与 ② 的机制都已闭环**：pipe-r1/r2（4B 纯 RL）、pipe-r3（4B 自评 Teacher）、**pipe-r4（Qwen3.5-9B Student + Qwen3.8-27B Teacher）2026-09-17 20:07 验收 PASS**。证据在 `../pipe-r4/`，wandb `m848n94f`。
-- **效果尚未验证**。pipe-r4 只有 6 步、held-out 只有 7 道且训练前就 0.988（饱和），得分从 0.988 降到 0.914 属噪声，不能当作退步或提升。
-- **当前两个硬阻塞**：Modal 工作区账期花费上限触顶（两条线都建不了沙箱，需工作区所有者在后台调高）；单卡 pod（端口 12063）自 2026-09-17 15:52 起 SSH 无响应，需在 RunPod 控制台重启。
-- **昨天烧了 358 美元**，主因是 Harbor 的 Modal 沙箱默认活 24 小时且进程被杀不销毁。修复已落地，见第 4 节。
+- **目标**：用 VERL 把真实软件工程任务上的 agent 能力训进 Qwen3.5-9B，评测口径 Terminal-Bench 2.1。三步路线：① terminus-2 + Modal 沙箱的纯 RL 通路 → ② RL 加 27B Teacher 蒸馏（OPD）→ ③ DSH harness 进沙箱。① 和 ② 的机制都已跑通（pipe-r4 于 2026-09-17 验收 PASS）。
+- **正在跑：pipe-r11**（双卡 pod 11965，2026-09-18 06:09 UTC 启动，wandb `xf24vrka`）。9B 学生 + 27B Teacher，100 道题、20 步，二值奖励。07:36 时在第 2/20 步。预计 15:30–16:00 UTC 全部结束（训练 → 权重差异 → 续训 → 汇总 → 验收 → 成本核验，全自动）。它还在训练，不是对比测试。
+- **为什么是 r11**：pipe-r9 用了"按测试通过比例"的部分分奖励，SWE 题什么都不改也能拿约 0.94 分（`../pipe-r9/reward-floor-finding.md`），06:07 在第 4 步停掉，改二值奖励原样重开。pipe-r10 这个编号留给单卡上去掉 Teacher 的对照组。
+- **已知数字**：训练前验证 3/8 解决（0.375）；第 1 步 32 条解决 15 条，4 道题里只有 1 道组内有对有错（其余全对或全错，没有 RL 梯度）。
+- **待负责人决定**：Modal 额度余量约 18 美元（账期约 400、上限 500，Tinker r6 约 60、本轮约 20），建议调高；单卡 pod（12063）需在 RunPod 控制台重启，才能跑对照组；是否把训练拉到 50 步（2 个 epoch，约 20 小时、约 50 美元）。
 
 ## 2. 一条命令起一轮训练
 
@@ -16,61 +16,67 @@
 ssh -p 11965 -i ~/.ssh/id_ed25519 root@157.157.221.177
 cd /workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent
 
-# 换模型或换配置后，先冒烟（1 步 4 题，几十条沙箱）
+# 换模型或换配置后，先冒烟（约 6 分钟，不占 GPU）
 bash examples/harbor_opd_rl/launch-detached.sh \
   /workspace/verl-uni-agent-harbor-opd-rl/runs/<run>-smoke/driver.log \
   "ROUND=<run>-smoke TEACHER=1 bash examples/harbor_opd_rl/run_opd_round.sh --smoke"
 
-# 正式一轮
+# 正式一轮（pipe-r11 用的就是这条）
 bash examples/harbor_opd_rl/launch-detached.sh \
   /workspace/verl-uni-agent-harbor-opd-rl/runs/<run>/driver.log \
-  "ROUND=<run> TEACHER=1 TRAIN_STEPS=20 bash examples/harbor_opd_rl/run_opd_round.sh"
+  "ROUND=<run> TEACHER=1 TRAIN_STEPS=20 HARBOR_REWARD_MODE=binary bash examples/harbor_opd_rl/run_opd_round.sh"
 ```
 
-`run_opd_round.sh` 的默认值就是 pipe-r4 验证过的配置：9B 学生开 prefix caching、单批 8192、显存比例 0.45；27B Teacher 显存比例 0.70、单批 4096、最多 4 条序列；并发 16；数据取审计通过、剔除共享评估集、只要 medium/hard；内置模型本地暂存、等 Modal 额度、等前一条 run 退出、开跑前清理泄漏沙箱。对照组把 `TEACHER=1` 改成 `TEACHER=0` 即可，其余保持一致。
+默认值：数据切片 `stage1-swe50e-tl50m-v1`（SWE easy 50 + Terminal-Lego medium 50，验证 4 + 4）；9B 学生 prefix caching、单批 8192、显存比例 0.45；27B Teacher 整卡、显存比例 0.70、单批 4096、最多 4 条序列；并发 16；二值奖励。对照组把 `TEACHER=1` 改成 `TEACHER=0`，其余不变。
+
+代码同步到 pod：本机 `bash deployment/bootstrap/sync-source.sh 11965 --rsync`（有 run 在跑时不要同步它正在执行的脚本）。
+
+停一轮：`launch-detached.sh` 的输出里有会话号 sid，`pkill -TERM -s <sid>` 结束整轮（含 Ray 与 vLLM），再 `HARBOR_MODAL_APP=verl-harbor bash deployment/bootstrap/modal-sandbox-cleanup.sh --apply --older-than 0` 清掉在跑的沙箱。
 
 ## 3. 设计约束（铁律）
 
 - Uni-Agent owns Agent/Task/Gateway/轨迹准入；VERL owns optimizer；Harbor owns verifier；Modal 只做沙箱。
 - 验收看三层：机制（阶段 PASSED）、动力学（wandb 与 train.log 逐步一致）、权重（delta + resume 连续）。`80_acceptance.sh` 给 PASS / MECHANICS_ONLY / FAIL。
+- **奖励默认二值**。部分分只能按 `fail_to_pass` 计，不能把修复前就通过的测试算进分母。换数据或换奖励前先算"什么都不做"能拿多少分（`../pipe-r9/reward_floor_audit.py`）。
+- **看效果要看二值解决率**，不只看奖励均值。wandb 的第 N 步指标要等第 N+1 步写入才出现；实时看 `train/rollouts/*/*/<N>.jsonl`。
 - 每次 push 前 `ruff check .` 与 `ruff format --check .`，不接管道。
-- 资产只放 `/workspace`；凭据只放 pod 的 `/root`，不进仓库。
-- 两台 pod 共享 `/workspace` 与同一份源码：有 run 在跑时不要覆盖它正在执行的脚本（`40_train.sh`、`60_resume.sh`、`run_tb21_pipeline.sh`）；每条 run 用独立 `DATA_DIR`。
+- 资产只放 `/workspace`；凭据只放 pod 的 `/root` 与本机 home，不进仓库。
+- 两台 pod 共享 `/workspace` 与同一份源码；每条 run 用独立 `DATA_DIR`（`run_opd_round.sh` 自动按 run 名分开）。
 - **列 PID 与杀 PID 必须分两条命令**，杀的那条只出现数字。
 
-## 4. 成本纪律（2026-09-18 新增）
+## 4. 成本纪律
 
 | 规则 | 落地位置 |
 |---|---|
-| **沙箱生命周期在创建时传入，服务端强制** | `tb21_terminus2_smoke.yaml` 的 `environment_kwargs`：`sandbox_timeout_secs=2700`、`sandbox_idle_timeout_secs=1200`、`app_name=verl-harbor` |
-| 沙箱规格按任务契约，不统一覆盖 | `tb21_terminus2_smoke.yaml`（`override_cpus`/`override_memory_mb` 留空） |
-| trial 超时 1800 秒 | 同上 |
-| 杀训练后必须清理泄漏沙箱 | `deployment/bootstrap/modal-sandbox-cleanup.sh --apply` |
-| 清理脚本与守卫（兜底，不常驻） | `deployment/bootstrap/modal-sandbox-{cleanup,guard}.sh`，只在怀疑泄漏时手动用 |
-| 每轮开跑前自动清理一次 | `run_opd_round.sh` |
+| 沙箱生命周期在创建时传入，Modal 服务端强制 | `tb21_terminus2_smoke.yaml` 与 `tb21_oracle.yaml` 的 `environment_kwargs`：寿命 2700 秒、空闲 1200 秒回收、独立应用 `verl-harbor` |
+| 沙箱规格按任务契约，不统一覆盖 | 同上（`override_cpus`/`override_memory_mb` 留空） |
+| 每轮结束自动核验账单 | `stages/90_cost.sh` → `cost_report.py`：按小时取本轮应用的账单，Sandbox 单价折算；门槛计费/实用 ≤ 1.5、每条 ≤ 0.05 美元、残留 0；测不到记失败 |
+| 杀训练后清理在跑的沙箱 | `modal-sandbox-cleanup.sh --apply`（手动兜底） |
 | 换配置先冒烟 | `run_opd_round.sh --smoke` |
-| 并发 16（与 Tinker 线约定，峰值 48） | `run_opd_round.sh` 默认值 |
-| 规格与生命周期实测 | `deployment/bootstrap/modal-sandbox-probe.sh`，额度恢复后先跑它 |
+
+单价：Modal 沙箱每核每小时约 0.142 美元、内存每 GiB 每小时约 0.024 美元（是 Function 单价的 3 倍）。pipe-r9 停止时实测每条 trial 0.031 美元、计费/实用 1.0、残留 0。
 
 ## 5. 与 Tinker 训练线的协作（会话 `xdan-dsh-uni-agent-e1`）
 
-- **共享评估集 eval-set-v1**：保留名单已冻结在 `gump2049/xDAN-Harbor-Stage1-Tasks-Full` 的 `eval-set-v1/reserved.json`，我们的数据阶段默认剔除。100 道正式清单（50 SWE + 50 Terminal-Lego，基座时对时错）待 Modal 恢复后产出，届时用作两条线共同的 held-out。
-- **他们的关键发现**：9B + 27B 蒸馏后输出暴涨、留出题退步（15/16 → 11/16）。我们 pipe-r4 没有重现，轨迹长度反而从 24.7k 降到 14.4k。两边配置差异（二值 vs pass_ratio、有无 KL 惩罚、组大小 4 vs 8）正好用于交叉验证。
-- **数据事实**：Terminal-Lego 全集 easy 9223 / medium 4440 / hard 153，按 index 顺序取几乎全是 easy；9B 在未筛选题上得 0.92，学不到东西，所以默认只取 medium/hard。
+- 共用同一个 Modal 工作区和额度。Tinker 线 r6 于 05:14 UTC 启动，预计 11–16 小时。
+- **共享评估集 eval-set-v1**：保留名单在 `gump2049/xDAN-Harbor-Stage1-Tasks-Full` 的 `eval-set-v1/reserved.json`，我们的数据阶段默认剔除。100 道正式清单到位后，用作两条线共同的 held-out。
+- Tinker 线的 SWE 奖励一直是二值的；他们 r5 的失败原因（上下文超限、任务时限不执行）已在本线核查，见 `memory.md` 2026-09-18 05:25 一节。
+- 周报：`docs/tinker-cookbook-opd-rl/weekly/2026-W38.md`（在 Tinker 的 worktree 里，由 e1 合并）。
 
 ## 6. 下一里程碑
 
-1. Modal 额度恢复 → 自动跑 `runs/pipe-r8-smoke`（已排队）；先跑 `modal-sandbox-probe.sh` 确认规格与销毁行为。
-2. 冒烟通过 → 正式一轮：9B + 27B Teacher，20 步以上，100 道按难度筛的题，held-out 换成共享评估集。
-3. 单卡 pod 恢复 → 同参数、`TEACHER=0` 的对照组，用于分离 Teacher 的贡献与开销。
-4. 用共享评估集复测 pipe-r4 的 checkpoint，确认 0.988 → 0.914 是不是噪声。
-5. 之后：开 DAPO、扩到 500 题、Terminal-Bench 2.1 正式评测。
+1. pipe-r11 跑完 → 按 `todo.md` H5 的四条判据下结论（成本、机制、学习信号、长度副作用）。
+2. 同题重跑：用最终 checkpoint 在第 1–5 步的 20 道题上各跑 8 条，与训练时的解决率比较（脚本待写）。
+3. 前 5 步"组内有对有错"的题若 < 25%：下一轮先按难度筛题或加大每步题数。
+4. 单卡 pod 恢复 → pipe-r10 对照组（同配置、`TEACHER=0`）。
+5. 下一轮待改（每轮只改一个变量）：智能体时限改为任务声明值 × 倍数；轮数上限 50 → 30 的对比；数据阶段加"什么都不做得分"关卡。
+6. 共享评估集到位 → 复测 pipe-r4、pipe-r11 的 checkpoint。
 
 ## 7. 冷启动 checklist
 
-1. 读本文件 → `todo.md` → `memory.md` 末节 → `../modal-cost-postmortem.md`。
+1. 读本文件 → `todo.md` 的 H5 → `memory.md` 最后三节 → `lessons.md` 第 44–46 条。
 2. `git log -3 --oneline`，确认 HEAD 已推送。
-3. 双卡 pod：`ssh -p 11965`，`nvidia-smi`、`tail runs/modal-guard.log`（守卫是否在跑）、`bash deployment/bootstrap/modal-quota-wait.sh --once`（额度是否恢复）。
-4. 单卡 pod：`ssh -p 12063`；连不上说明还没重启，端口变了要先跑 `gpu-pod-restore.sh <新端口>`。
-5. 起跑用第 2 节的命令；监听只看阶段结果、checkpoint、OOM、额度、显存告警。
+3. 双卡 pod：`ssh -p 11965`，`nvidia-smi`；看进度：`tail runs/pipe-r11/driver.log`、`grep -a "Training Progress" runs/pipe-r11/train/train.log | tail -1`、`cat runs/pipe-r11/pipeline-summary.jsonl`。
+4. 效果：`python docs/verl-uni-agent-harbor-opd-rl/pipe-r9/resolve_by_step.py <run 目录>`（按步、按来源的二值解决率）。
+5. 单卡 pod：`ssh -p 12063`；连不上说明还没重启，端口变了先跑 `gpu-pod-restore.sh <新端口>`。
 6. 每个节点 commit/push，关键事实写 `memory.md`，踩坑写 `lessons.md`。
