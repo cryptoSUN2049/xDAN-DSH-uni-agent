@@ -1,4 +1,4 @@
-# 进度汇报：Uni-Agent × Harbor × VERL 训练通路（截至 2026-09-17 17:30 UTC）
+# 进度汇报：Uni-Agent × Harbor × VERL 训练通路（截至 2026-09-17 20:40 UTC）
 
 ## 终局目标
 
@@ -21,7 +21,7 @@
 | 训练后 held-out（5 题 n=1） | 0.328 → 0.497（step 6）→ 0.458（step 7）；同一 checkpoint 两次评估相差 0.06，**5 题只能证明机制，不能证明提升** | wandb `dzlqgapu` / `eg1ix7eo` val-core |
 | pipe-r3（4B 自评 Teacher，路线 ② 接线） | **验收 PASS**（12:10）：Teacher + 断点续训连续，7/7 步梯度非零，与 wandb 对账一致 | `docs/…/pipe-r3/acceptance.json` |
 | TB 2.1 官方基线（4B，n=1，正式） | **0/66 有效通过**（上界约 4.5%），23 题因镜像构建/额度未完成；三次评测一致 | `docs/…/tb21-4b-baseline-n1/summary.json` |
-| pipe-r4（9B Student + 27B Teacher，路线 ② 真 Teacher） | **第 1、2 步完成，无 OOM**：`distillation/loss=0.122`（4B 自评时为 0.0001），grad_norm 0.104，每步约 29 分钟；训练集得分 0.916、held-out 0.988，**数据对 9B 已接近饱和** | wandb `m848n94f` |
+| pipe-r4（9B Student + 27B Teacher，路线 ② 真 Teacher） | **验收 PASS**（20:07）：6 步 + 续训第 7 步，7/7 步梯度非零且与 wandb 一致，adapter 变 / base 不变；蒸馏 loss 0.10–0.13；长度 24.7k→14.4k 未暴涨；held-out 7 题 0.988→0.914 | `docs/…/pipe-r4/acceptance.json` |
 | pipe-r7（9B 纯 RL，pipe-r4 的对照组） | **中断**：单卡 pod 约 15:52 起卡住，SSH 连不上；pod 恢复后按设置 v2 重起 | `runs/pipe-r7/chain.sh.v2` |
 | SWE-rebench 数据源（22 道审计通过） | **已修复**：`docker_image` 跳过了 Dockerfile，已在本线与数据源头两处修掉，oracle 复验 3/3 | `docs/…/swe-ctrf-fix/` |
 | Full 数据集（15.4k 题） | **数据阶段就绪**：按审计结果每个来源抽 50 道训练 + 20 道 held-out，实测 100 / 40、无重叠；下一轮使用 | `examples/harbor_opd_rl/stages/10_data.sh` |

@@ -1,0 +1,17 @@
+export MODEL_PATH=/tmp/models/Qwen3.5-9B
+export SERVED_MODEL_NAME=hosted_vllm/Qwen3.5-9B
+export TASK_CONFIG=/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/examples/harbor_opd_rl/tb21_terminus2_smoke.yaml
+export TRAIN_STEPS=6
+export TRAIN_MAX_SAMPLES=40
+export VAL_MAX_SAMPLES=7
+export TRAIN_BATCH_SIZE=4
+export ROLLOUT_N=8
+export CONCURRENCY=32
+export DAPO=0
+export TEACHER=1
+export TEACHER_MODEL_PATH=/tmp/models/Qwen3.8-27B
+export TEACHER_GPU_MEM=0.70
+export GPU_MEMORY_UTILIZATION=0.45
+export VAL_BEFORE_TRAIN=True
+export TEST_FREQ=6
+export HARBOR_REWARD_MODE=pass_ratio

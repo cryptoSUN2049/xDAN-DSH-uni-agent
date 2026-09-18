@@ -202,3 +202,12 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - Terminal-Lego 全集难度分布：easy 9223、medium 4440、hard 153，按 index 顺序取几乎全是 easy。
 - 口径核对（与 Tinker 线对齐）：我们的 `num_turns` 是消息条数 + 1（工具返回算 user 消息），62.9 ≈ 31 次模型动作，未越过 `max_turns=50`；每次动作约 796 token。Tinker 线训练前每次动作 110–170 token、训练后 780–3400，单条轨迹 3.8k → 26k。**我们第 1 步的 24.7k 起点高，主要来自 terminus-2 的风格差异，所以只看相对变化（第 1 步作基线），不与他们的绝对值比较。** 他们 reward 是二值、`kl_penalty_coef=1.0`、group_size 4；我们是 pass_ratio、无单独 KL 项、group_size 8。
 
+## 2026-09-17 20:07 pipe-r4 验收 PASS：路线 ② 真 Teacher 全流程闭环
+- 9B Student + 27B Teacher，审计混合集 40 训练 / 7 held-out，每步 4 题 × 8 条、并发 32，6 步 + resume 到第 7 步，全程无 OOM。wandb `m848n94f`，证据 `docs/…/pipe-r4/`。
+- 验收 PASS：hard 3/3、soft 5/5；7/7 步 grad_norm 非零（0.089–0.153）且与 wandb 逐步一致；delta 通过：adapter 496/716 变、base 760/760 不变。
+- 蒸馏 loss 全程 0.10–0.13（4B 自评 Teacher 时为 0.0001）→ **真 Teacher 信号确认**。
+- 轨迹长度 24691 → 20869 → 21034 → 25801 → 14649 → 14351，**没有出现 Tinker 线的长度暴涨**，反而收敛。
+- **held-out（7 题）：训练前 0.988 → 训练后 0.914，下降**。这套 held-out 已饱和（训练前近满分）、只有 7 题、reward 是 pass_ratio，波动 ±0.07 属噪声范围，但方向与 Tinker 线 r4 的退步一致，需要在 100 题评估集上复核。
+- 每步耗时 1079–1732 s；Teacher 打分没有单独计时项，仍需 pipe-r7 对照组的差值来估算。
+- 单卡 pod 从 15:52 起失联，对照组 pipe-r7 未能启动；双卡 pod 20:0x–20:37 期间 SSH 也间歇性无响应，但训练未受影响。
+
