@@ -315,3 +315,17 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 快检：`data-eval-set-v1/quick/harbor_tasks-quick.parquet`（58 行，从 prd `/root/Code/tinker-cookbook-opd-rl/outputs/eval-set-v1/quick-tasks.txt` 筛出）；GPU0 原版 `runs/qc-base`，GPU1 第 12 步 `runs/qc-s1-step12`（`EVAL_RUN=runs/pipe-s1`），每题 2 次、任务声明时限、温度 1.0。
 - 决定规则：显著退步 → 改为只用 RL 从原版重训；未检出差异 → 与用户商量是否从第 12 步续跑。
 - 额度：Tinker 报本月已计量 568 美元，上限 700 美元，建议用户调到 800–900 美元。
+
+## 2026-09-19 03:05 负责人决定：S1 保持 Teacher=1 跑完 60 步；快检后自动续跑
+- 用户："现在如果 teacher=1 就继续跑完为止"。快检不再作为止损关卡，只作参考（结果照常报告，也给 Tinker 会话 1a）。
+- 快检进度：02:26 起跑，03:00 时原版 7/116 条完成，每边约需 3 小时。
+- **续跑方式**（pipe-r11 用过的方式）：pod 上脱机挂 `runs/pipe-s1/resume-attempt2.sh`，日志 `runs/pipe-s1/driver-attempt2.log`。
+  - 等两个快检都退出后，按第 12 节原命令加 `FROM_STAGE=train RESUME_MODE=resume_path RESUME_FROM_PATH=runs/pipe-s1/train/pinned/global_step_12 VAL_BEFORE_TRAIN=False`。
+  - 快检 8 小时仍未结束则不续跑，只报告。
+- 第一段证据：`train/train.attempt1-paused-step12.log`、`train/metrics-20260918T192629Z.jsonl`（第 1–12 步逐步指标）、`train/stage-env.attempt1.sh`。
+- 续跑前修复（e178270）：文件记录器改为每次尝试一个文件，控制台缺行时从这些文件取指标（见 todo H7）。同步后 VERL 补丁一度缺失，已重打并确认 `already=1`（lessons 52）。
+- **成本与额度**：
+  - S1 沙箱约 3 美元/小时，约 1.5 美元/步（第 1–12 步 20:00–02:00 UTC 共约 17.8 美元）。剩余 48 步约 72 美元、约 24 小时。
+  - 本月 Modal 已计 569.38 美元，上限 700 美元，只剩约 130 美元。S1 与快检需要约 90 美元，Tinker 的 4 组训练也在消耗同一额度。
+  - **大概率会在 S1 跑完前撞上限。** 撞上限后沙箱创建失败，组被丢弃、补题循环，训练停住但不崩溃，额度调高后自动继续。已建议用户调到约 900 美元。
+- 算法差异对照（VERL S1 与 Tinker）见 `../verl-vs-tinker-algorithm.md`。

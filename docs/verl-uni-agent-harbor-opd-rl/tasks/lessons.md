@@ -52,3 +52,4 @@
 50. **短训练的 LoRA 不能合并成 bf16 权重去评估。** pipe-r11 20 步后，LoRA 改动量约为权重的 1e-4（|W| 约 1e-2、|ΔW| 约 2e-6），而 bf16 的相对精度约 4e-3：合并后只有 3%–12% 的元素变了，且变化量是舍入误差而不是 ΔW，得到的"训练后模型"基本就是基座。VERL 的 model_merger 本身也不合并，它输出基座权重加一个单独的 `lora_adapter/`。规则：评估训练后的 LoRA 策略走训练同一条推理路径（vLLM 分开计算 LoRA），用 `examples/harbor_opd_rl/eval_val_only.sh`（`trainer.val_only=True` 加从 checkpoint 续训）；`merge_lora_checkpoint.py` 自带 ΔW 数值检查，会拒绝这种合并。
 51. **VERL 的验证默认是贪心解码。** `val_kwargs.temperature` 默认 0、`do_sample=False`，Uni-Agent 在 val 分区也照用。pipe-r11 的训练中验证（3/8 → 5/8 → 3/8）因此是贪心结果；每题测多次（k=4）时必须显式设 `val_kwargs.temperature=1.0 top_p=1.0 do_sample=True`，否则几次结果几乎一样，配对统计失真。
 
+52. **`sync-source.sh --rsync` 会用本地未打补丁的 verl 覆盖 pod 上已打补丁的文件，补丁靠同步脚本最后一步重打；连接中途断开时补丁就缺了。** 2026-09-19 03:00 同步 e178270 时，SSH 在重打补丁前断开，`apply-verl-patches.sh` 手动重跑报 `applied=1 already=0`，说明这段时间 pod 上的 VERL 没有补丁；如果这时启动训练，第一次补齐占位样本就会重现 pipe-r11 第 5 步的崩溃。规则：每次同步后单独跑一次 `apply-verl-patches.sh`，看到 `already=1` 才能启动训练或续跑。
