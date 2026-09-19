@@ -1,0 +1,94 @@
+{
+ "base": {
+  "all": {
+   "rollouts": 116,
+   "graded": 112,
+   "solve_rate": 0.679,
+   "out_tokens_median": 9270,
+   "max_turns_share": 0.276,
+   "timeout_share": 0.138,
+   "parse_error_share": 0.0,
+   "parse_errors_mean": 0.0,
+   "exceptions": {
+    "AgentTimeoutError": 15,
+    "VerifierTimeoutError": 1,
+    "RuntimeError": 1,
+    "RewardFileNotFoundError": 2
+   }
+  },
+  "swe-rebench-v2-fv": {
+   "rollouts": 56,
+   "graded": 54,
+   "solve_rate": 0.685,
+   "out_tokens_median": 11599,
+   "max_turns_share": 0.482,
+   "timeout_share": 0.054,
+   "parse_error_share": 0.0,
+   "parse_errors_mean": 0.0,
+   "exceptions": {
+    "RewardFileNotFoundError": 2,
+    "AgentTimeoutError": 3
+   }
+  },
+  "terminal-lego-15k": {
+   "rollouts": 60,
+   "graded": 58,
+   "solve_rate": 0.672,
+   "out_tokens_median": 8392,
+   "max_turns_share": 0.083,
+   "timeout_share": 0.217,
+   "parse_error_share": 0.0,
+   "parse_errors_mean": 0.0,
+   "exceptions": {
+    "AgentTimeoutError": 12,
+    "VerifierTimeoutError": 1,
+    "RuntimeError": 1
+   }
+  }
+ },
+ "s1-step12": {
+  "all": {
+   "rollouts": 116,
+   "graded": 113,
+   "solve_rate": 0.504,
+   "out_tokens_median": 13745,
+   "max_turns_share": 0.353,
+   "timeout_share": 0.267,
+   "parse_error_share": 0.0,
+   "parse_errors_mean": 0.0,
+   "exceptions": {
+    "AgentTimeoutError": 30,
+    "NotFoundError": 1,
+    "VerifierTimeoutError": 1
+   }
+  },
+  "swe-rebench-v2-fv": {
+   "rollouts": 56,
+   "graded": 56,
+   "solve_rate": 0.411,
+   "out_tokens_median": 15340,
+   "max_turns_share": 0.679,
+   "timeout_share": 0.143,
+   "parse_error_share": 0.0,
+   "parse_errors_mean": 0.0,
+   "exceptions": {
+    "AgentTimeoutError": 8
+   }
+  },
+  "terminal-lego-15k": {
+   "rollouts": 60,
+   "graded": 57,
+   "solve_rate": 0.596,
+   "out_tokens_median": 9643,
+   "max_turns_share": 0.05,
+   "timeout_share": 0.383,
+   "parse_error_share": 0.0,
+   "parse_errors_mean": 0.0,
+   "exceptions": {
+    "AgentTimeoutError": 22,
+    "NotFoundError": 1,
+    "VerifierTimeoutError": 1
+   }
+  }
+ }
+}

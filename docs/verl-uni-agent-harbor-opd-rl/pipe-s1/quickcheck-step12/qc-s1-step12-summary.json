@@ -1,0 +1,241 @@
+{
+ "tasks": 58,
+ "samples": 114,
+ "pass_rate": 0.4396551724137931,
+ "infra_incomplete": {
+  "terminal-lego-15k__task_12592": 1,
+  "terminal-lego-15k__task_08999": 1
+ },
+ "per_task": {
+  "swe-rebench-v2-fv__copier-org__copier-2145": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__cs-si__eodag-751": [
+   1.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__cuthbertlab__music21-1736": [
+   1.0,
+   1.0
+  ],
+  "swe-rebench-v2-fv__enthought__traits-1501": [
+   1.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__ethereum__web3.py-3690": [
+   1.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__gammapy__gammapy-5508": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__gammapy__gammapy-5525": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__keras-team__keras-19284": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__keras-team__keras-19387": [
+   1.0,
+   1.0
+  ],
+  "swe-rebench-v2-fv__keras-team__keras-20550": [
+   1.0,
+   1.0
+  ],
+  "swe-rebench-v2-fv__mirumee__ariadne-codegen-203": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__narwhals-dev__narwhals-2864": [
+   1.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__natcap__invest-1530": [
+   0.0,
+   1.0
+  ],
+  "swe-rebench-v2-fv__natcap__invest-542": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__natcap__pygeoprocessing-408": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__owkin__pydeseq2-127": [
+   0.0,
+   1.0
+  ],
+  "swe-rebench-v2-fv__pallets__jinja-1762": [
+   1.0,
+   1.0
+  ],
+  "swe-rebench-v2-fv__pallets__jinja-1782": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__pallets__jinja-1852": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__pycqa__flake8-1642": [
+   1.0,
+   1.0
+  ],
+  "swe-rebench-v2-fv__pytask-dev__pytask-138": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__python-attrs__attrs-1107": [
+   0.0,
+   1.0
+  ],
+  "swe-rebench-v2-fv__python-attrs__attrs-888": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__qiskit__qiskit-terra-5818": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__qiskit__qiskit-terra-5833": [
+   0.0,
+   0.0
+  ],
+  "swe-rebench-v2-fv__qiskit__qiskit-terra-8099": [
+   1.0,
+   1.0
+  ],
+  "swe-rebench-v2-fv__qiskit__qiskit-terra-8799": [
+   1.0,
+   1.0
+  ],
+  "swe-rebench-v2-fv__qiskit__qiskit-terra-9089": [
+   0.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_00813": [
+   1.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_02131": [
+   1.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_04347": [
+   1.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_05612": [
+   0.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_06307": [
+   0.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_06514": [
+   1.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_06940": [
+   1.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_07241": [
+   0.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_07256": [
+   0.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_07895": [
+   0.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_07954": [
+   0.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_08262": [
+   1.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_08318": [
+   0.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_08927": [
+   1.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_08999": [
+   1.0
+  ],
+  "terminal-lego-15k__task_09961": [
+   1.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_10159": [
+   1.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_10740": [
+   1.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_10833": [
+   0.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_10834": [
+   0.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_10836": [
+   0.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_10990": [
+   1.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_11458": [
+   0.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_11848": [
+   1.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_12343": [
+   0.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_12592": [
+   0.0
+  ],
+  "terminal-lego-15k__task_12645": [
+   1.0,
+   0.0
+  ],
+  "terminal-lego-15k__task_13437": [
+   1.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_14020": [
+   1.0,
+   1.0
+  ],
+  "terminal-lego-15k__task_15034": [
+   0.0,
+   0.0
+  ]
+ }
+}
