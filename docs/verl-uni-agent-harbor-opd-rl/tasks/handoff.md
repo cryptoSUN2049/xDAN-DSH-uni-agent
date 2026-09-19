@@ -126,9 +126,9 @@ pod 连接：`ssh -o ConnectTimeout=30 -o BatchMode=yes -p 11965 -i ~/.ssh/id_ed
 | 驱动 `run_opd_then_rl.sh` | 1530153 | 阶段 A，然后阶段 B；启动命令在 `runs/pipe-s2-launch.txt` | `runs/pipe-s2-driver.log` | 看末尾 `[round …]`、`[driver …]` 行；退出时写 `[detached] exit=` |
 | 守护 `supervise_run.sh` | 1734737（12:07 起；第一个实例 1630551 已换下，日志是 `pipe-s2-supervise.attempt1.log`） | 驱动退出后，如果 `runs/pipe-s2-done-check.txt` 不成立（要求 `pipe-s2-rl/train/PASSED` 存在，并且 final 是 `global_step_60`），就用原命令续跑。最多续跑 3 次。续跑前等所有 `verl.trainer.main_ppo` 退出，最多等 14 小时（`TRAINER_WAIT_POLLS=420` × 120 秒）。它自己从不杀进程 | `runs/pipe-s2-supervise.log` | 现在只有两行 start/cmd。出现 `relaunch`、`giving up`、`still alive` 就要处理 |
 | 快检 `runs/pipe-s2-qc-a.sh` | 1530184 | 等 B 的 `train.log` 出现 "Loaded model from"，再等 600 秒，然后选显存小于 2000 MiB 的卡，用 `eval_val_only.sh` 跑 A 的 final：quick 58 × 2。没有空卡就 exit 3，不跑 | `runs/pipe-s2-qc-a.log` | 产物 `runs/qc-pipe-s2-opd-step12/summary.json` |
-| 评测队列 `runs/pipe-s2-evalq.sh` | 1734775 | 等快检日志出现 `[detached] exit`，最多等 10 小时，也就是到约 22:07。然后在空卡上依次跑 `tb21-base-9b-n3`（TB2.1 89 × 3，约 8 小时）和 `eval-v1-base-9b-n4`（78 × 4，约 3 小时）。每一项没有空卡就跳过 | `runs/pipe-s2-evalq.log` | 产物是两个目录下的 `summary.json` |
+| 评测队列 `runs/pipe-s2-evalq2.sh`（14:21 替换 `pipe-s2-evalq.sh`/1734775） | 1849753 | 等快检日志出现 `[detached] exit`（最多 8 小时），然后在空卡上只跑 `eval-v1-base-9b-n4`（78 × 4，约 21:00–22:00 结束）。TB2.1 原版 89 × 3 挪到 09-20 5e 全量结束之后，在 GPU1 上跑 | `runs/pipe-s2-evalq2.log` | 产物 `runs/eval-v1-base-9b-n4/summary.json` |
 
-**时间推算（会浮动）：** 快检约 13:00–14:30；TB2.1 原版约 14:30–22:30；eval-set-v1 原版约 22:30–01:30。**eval-set-v1 可能拖过 01:00**，挤占评测会话的 GPU1 窗口。00:30 前核一次进度，拖了就和评测会话商量。
+**时间推算（14:25 更新，会浮动）：** 快检 13:09 起，比预计慢，约 17:00 结束；eval-set-v1 原版约 17:00–22:00；GPU1 在 01:00 前让给 5e。阶段 B 每步 31–36 分钟，第 60 步约在 09-20 13:00–16:00。TB2.1 原版挪到 09-20 5e 全量结束之后。
 
 ## 3. 本轮交付物（09-18 18:30 以后）
 
