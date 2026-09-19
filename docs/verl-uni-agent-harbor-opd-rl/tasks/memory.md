@@ -383,3 +383,20 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
   - 监控长度：如果阶段 A 的回复长度撞上限比例超过 20%，报告用户。
 - **费用：** 沙箱约 72 美元（约 1.5 美元/步）。Modal 本月已花 585.95 美元，上限 700；Tinker 今晚还要约 75–100 美元，**必须由用户把上限调到约 900**，否则会撞上限：训练会停住但不会崩，调高后自动继续。
 - 启动：`runs/pipe-s2-driver.log`（`run_opd_then_rl.sh`）与 `runs/pipe-s2-qc-a.log`（A 的快检链）。
+
+## 2026-09-19 07:55 pipe-s2 训练中；负责人决定"先完整训练完再说"；磁盘第 1 档清理完成
+- 阶段 A 06:08 开始训练。第 0 步原版验证 mean@4 为 0.438。第 1、2 步：解题率 0.733 / 0.433，平均回复 1.62 万 / 1.95 万 token，撞上限 3.3%，蒸馏损失 0.108 / 0.117，每步 21–25 分钟。
+- 纯 OPD 模式下日志仍会记录 `actor/pg_loss`：VERL 照常计算 ppo_loss 的指标，但 `use_task_rewards=False` 时把 policy loss 置 0，不参与梯度。
+- 每次尝试单独写一个指标文件的修复在生产中验证：`runs/pipe-s2-opd/train/metrics-20260919T060827Z.jsonl`。
+- Tinker 1a 同步：他们"先 OPD 8 步再 RL 8 步"快检 −0.284 [−0.379, −0.190]，比 OPD 刚结束时（−0.129）更差；token 2.1 倍，跑满轮数 64%。
+- **负责人决定：pipe-s2 不改动，完整跑完 12 + 48 步再讨论。** 阶段 A 结束后的快检照常自动运行（占 B 空出的 GPU，不影响训练）。
+- Modal：负责人去把上限调到 900 美元，尚未在账单侧确认。
+- 磁盘第 1 档清理（负责人批准，07:53 执行）。删除的只是各目录下的 checkpoints，日志、rollouts、validation 都保留：
+  - `runs/pipe-r9/train/checkpoints`（73G）
+  - `runs/pipe-r8-smoke/train/checkpoints`（19G）
+  - `runs/pipe-r6/train/checkpoints`（8.7G）
+  - `runs/pipe-r3/{resume-attempt3-quota-step7-nometrics,train-attempt1-step6-corrupt-sigterm}/checkpoints`（18G）
+  - `/workspace/models/pipe-r11-step20-merged.verl-merger/model.safetensors`（18G，只是基座权重）
+  - `/tmp/models/Qwen3-4B-1cfa9a7`（7.6G，`/workspace/models` 有备份）
+  - `cache/uv/.tmp*`（17 个）
+  - 结果：容器盘从 80% 降到 73%，`/workspace` 约腾出 146 GB。第 2 档（约 446 GB）未动。
