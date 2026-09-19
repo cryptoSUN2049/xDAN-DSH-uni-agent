@@ -31,8 +31,8 @@ pod 连接：`ssh -o ConnectTimeout=30 -o BatchMode=yes -p 11965 -i ~/.ssh/id_ed
 | 会话 | 负责 | 交接文档 |
 |---|---|---|
 | **VERL 线（本文）** | VERL 训练（pipe-s2 及以后）；这台 pod 的 GPU 排期；本线口径的评测（`eval_val_only.sh`） | 本文 |
-| Tinker 训练线 `1a`（原 c6、e1） | Tinker 训练、训练数据选用、HF 发布、Modal 额度 | Tinker `tasks/handoff.md` |
-| Tinker 评测线 `76` | 所有模型的 TB2.1 官方口径评测（terminus-2、89 × 5、开思考），在本 pod 的 GPU 上用 vLLM 跑 | Tinker `tasks/handoff-eval.md` |
+| Tinker 训练线 `4b`（09-19 重启前为 1a，更早是 c6、e1） | Tinker 训练、训练数据选用、HF 发布、Modal 额度 | Tinker `tasks/handoff.md` |
+| Tinker 评测线 `5e`（09-19 重启前为 76） | 所有模型的 TB2.1 官方口径评测（terminus-2、89 × 5、开思考），在本 pod 的 GPU 上用 vLLM 跑 | Tinker `tasks/handoff-eval.md` |
 
 - **会话名重启后会变**，联系前先 `ListAgents`。
 - **负责人约 12:00 UTC 定的规矩**（Tinker 文档记为北京时间 20:00）：所有模型的评测，包括 Tinker 的，统一在本 pod 的 GPU 上做。
@@ -40,11 +40,11 @@ pod 连接：`ssh -o ConnectTimeout=30 -o BatchMode=yes -p 11965 -i ~/.ssh/id_ed
   - GPU1 09-20 01:00–07:30 做部署验收，07:30 硬截止；
   - GPU1 08:30 以后跑全量；
   - GPU0 08:30 以后留给 pipe-s2 最终模型的评测。
-- **有一条消息没送达**：评测会话改了名，发给它的确认没送到。`ListAgents` 找到它后补发，内容如下：
-  1. 排期确认，照 `gpu-schedule.md`；
-  2. 建议一个 `vllm serve --enable-lora` 同时承载原版和 A'；
-  3. 孤儿进程误杀已修（1541ce7，12:46 已部署），但前提是外部进程启动时导出 `KEEP_GPU_PROCESS=1`（例如 `KEEP_GPU_PROCESS=1 vllm serve …`），否则仍会被当成孤儿（第 6 节）；
-  4. 磁盘：容器盘只剩约 28 GB，文件放 `/workspace/tinker-eval/`。环境：`envs/ua-verl-py312-vllm023-ws1` 只读借用，Harbor 装在自己的 venv，Modal 用 `/root/.modal.toml`（l98348740）。
+- **与评测会话的约定（09-19 约 13:10 已由 5e 确认，并写进 Tinker `handoff-eval.md` §3.3）：**
+  1. 排期照 `gpu-schedule.md`：01:00–07:30 GPU1 部署验收（启动前先确认显存小于 2 GB）；08:30 以后只用 GPU1，一个 `vllm serve --enable-lora` 同时承载原版和 A'；GPU0 不碰。
+  2. 所有 vllm serve 都导出 `KEEP_GPU_PROCESS=1`（孤儿清理会跳过，1541ce7），并用 `launch-detached.sh` 启动。
+  3. 文件和缓存放 `/workspace/tinker-eval/`。只读借用 `envs/ua-verl-py312-vllm023-ws1`；Harbor 装在它自己的 venv 里。
+  4. 每次启动前，它会发来启动时间、预计时长和卡号。
 
 ## 0. TL;DR
 
@@ -54,7 +54,7 @@ pod 连接：`ssh -o ConnectTimeout=30 -o BatchMode=yes -p 11965 -i ~/.ssh/id_ed
    - 阶段 A 12:41 UTC 通过；阶段 B 12:41:48 开始，预计 09-20 08:30–09:30 到第 60 步。守护进程在，驱动崩了会自动续跑。
 3. **他线参照：Tinker 的分阶段 run（OPD 8 + RL 24）比原版 −0.160，比只用 RL 的 A' −0.359。Tinker 主线已改为只用 RL**（A' +0.199 [+0.115, +0.282]）。
    - pipe-s2 回答的问题是：重置优化器之后，RL 能不能把 OPD 造成的退步追回来。
-4. **12:44–12:47 两个修复已提交并部署到 pod**：delta 阶段不再挑中空壳 checkpoint（1c6b65b）；孤儿进程清理跳过带 `KEEP_GPU_PROCESS=1` 的进程（1541ce7）。**评测会话 09-20 01:00 用 GPU1 前，必须收到"启动 vLLM 时导出 `KEEP_GPU_PROCESS=1`"这条消息**，否则阶段 B 一旦崩溃续跑，仍会杀掉它的 vLLM。
+4. **12:44–12:47 两个修复已提交并部署到 pod**：delta 阶段不再挑中空壳 checkpoint（1c6b65b）；孤儿进程清理跳过带 `KEEP_GPU_PROCESS=1` 的进程（1541ce7）。评测会话 5e 已确认：它启动 vLLM 时会导出 `KEEP_GPU_PROCESS=1`。
 5. **下一轮建议同数据只用 RL（`TEACHER=0`），和 Tinker A' 对齐。** OPD 变体要等 D1 证明老师在无思考时明显更强再考虑。由负责人定。
 
 ## 1. 来龙去脉
@@ -218,7 +218,7 @@ pod 连接：`ssh -o ConnectTimeout=30 -o BatchMode=yes -p 11965 -i ~/.ssh/id_ed
 ## 7. 下一步清单
 
 - [x] 孤儿进程清理跳过 `KEEP_GPU_PROCESS=1`（1541ce7），delta 修复（1c6b65b）。都已提交、推送，12:44–12:46 单文件部署到 pod，md5 已核。
-- [ ] **09-20 01:00 UTC 前：把"分工"一节那条消息送到评测会话**，重点是启动 vLLM 时导出 `KEEP_GPU_PROCESS=1`。
+- [x] 已通知评测会话 5e（13:10 确认）：启动 vLLM 时导出 `KEEP_GPU_PROCESS=1`，排期照 `gpu-schedule.md`。
 - [ ] **确认阶段 B 开始跑**：`runs/pipe-s2-rl/train/train.log` 出现 "Loaded model from"，之后出现第 13 步的指标文件。
 - [ ] pipe-s2 结束后核算阶段 A 和 B 的 Modal 费用：按小时账单合并算，因为 A 的 cost 阶段没跑。
 - [ ] **收快检结果**：`runs/qc-pipe-s2-opd-step12/summary.json` 出现后，跑 `eval_pair_report.py runs/qc-base/summary.json runs/qc-pipe-s2-opd-step12/summary.json --labels base pipe-s2-opd-step12`，再跑 `eval_behavior_report.py`。
@@ -283,7 +283,7 @@ for f in sorted(glob.glob("pipe-s2-opd/train/metrics-*.jsonl")) + sorted(glob.gl
 EOF' && break; sleep 10; done
 ```
 
-4. 用 `ListAgents` 找 Tinker 训练会话（原 1a）和评测会话（原 76），先补发"分工"一节里那条没送达的消息。
+4. 用 `ListAgents` 找 Tinker 训练会话（09-19 为 4b）和评测会话（09-19 为 5e）。会话名重启后会变，找不到时以两边的交接文档为准。
 5. **重挂监控。** 在本机用后台 Bash（`run_in_background`）跑一次性等待：状态一变就退出、唤醒会话，处理完立刻重挂。它会在这些时候醒：阶段通过、出现永久保留的 checkpoint、评测产物生成、守护日志有新行、作业退出，以及 90 分钟没有新指标（`STALE`）。
 
 ```bash
