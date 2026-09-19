@@ -53,3 +53,4 @@
 51. **VERL 的验证默认是贪心解码。** `val_kwargs.temperature` 默认 0、`do_sample=False`，Uni-Agent 在 val 分区也照用。pipe-r11 的训练中验证（3/8 → 5/8 → 3/8）因此是贪心结果；每题测多次（k=4）时必须显式设 `val_kwargs.temperature=1.0 top_p=1.0 do_sample=True`，否则几次结果几乎一样，配对统计失真。
 
 52. **`sync-source.sh --rsync` 会用本地未打补丁的 verl 覆盖 pod 上已打补丁的文件，补丁靠同步脚本最后一步重打；连接中途断开时补丁就缺了。** 2026-09-19 03:00 同步 e178270 时，SSH 在重打补丁前断开，`apply-verl-patches.sh` 手动重跑报 `applied=1 already=0`，说明这段时间 pod 上的 VERL 没有补丁；如果这时启动训练，第一次补齐占位样本就会重现 pipe-r11 第 5 步的崩溃。规则：每次同步后单独跑一次 `apply-verl-patches.sh`，看到 `already=1` 才能启动训练或续跑。
+53. **断言"格式不一致"之前，先读这次运行的实际配置，并用真实轨迹验证。** 2026-09-19 我用开思考的对话渲染两个模板，得出"学生删历史思考、老师加 Reasoning effort 行"，当成 S1 的问题报告给用户。其实 S1 是 `enable_thinking=False`，网关也从不重新渲染历史，老师看到的序列与原生无思考格式逐字一致。规则：比较格式时，(a) 从 `train-command.txt` 取实际的模板参数；(b) 按网关真实的拼接方式构造序列，不能用 `apply_chat_template` 一次性渲染来代替；(c) 用一条真实轨迹确认；三步都做完才下结论。
