@@ -217,6 +217,11 @@ pod 连接：`ssh -o ConnectTimeout=30 -o BatchMode=yes -p 11965 -i ~/.ssh/id_ed
 
 ## 7. 下一步清单
 
+- [ ] **第 60 步出结果后，同步给 Tinker 训练会话 4b 三项**（它 14:55 要求，用于 `open-question-opd-harm.md` §8）：
+  1. 与原版的配对差值。全量 78 × 4 已包含快检的 58 题，可以同时报"快检子集、每题前 2 次"的口径，与阶段 A 的 −0.190 直接比较。
+  2. 阶段 B 里"组内有对有错"的比例怎么随步数变化：从 `runs/pipe-s2-rl/train/agent-logs/.../step_N/session-*/`（`trajectory.json` 的 `group_uid` 加 `harbor/verifier/reward.txt`）按步统计。
+  3. token 中位数有没有回落：`eval_behavior_report.py`，拿原版、阶段 A 第 12 步、第 60 步三方对比。
+
 - [x] 孤儿进程清理跳过 `KEEP_GPU_PROCESS=1`（1541ce7），delta 修复（1c6b65b）。都已提交、推送，12:44–12:46 单文件部署到 pod，md5 已核。
 - [x] 已通知评测会话 5e（13:10 确认）：启动 vLLM 时导出 `KEEP_GPU_PROCESS=1`，排期照 `gpu-schedule.md`。
 - [ ] **确认阶段 B 开始跑**：`runs/pipe-s2-rl/train/train.log` 出现 "Loaded model from"，之后出现第 13 步的指标文件。
