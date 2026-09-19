@@ -364,3 +364,22 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 顺带修复：`diag_teacher_scoring.py` 初版把两边对数概率截到 −10，与生产不符（`log_prob_min_clamp` 只用于 top-k 损失），已改为生产公式。不分块的 vLLM 预填充在 0.7 显存下 OOM（2.1 万 token 的提示 logprob 要约 20 GB），因此"不分块"这条路径由 HF 参考覆盖。
 - 用户决定路线为先 OPD 后 RL。代码 613aab9：`run_opd_then_rl.sh`、格式守卫、`CKPT_LOAD_CONTENTS`；阶段 B 默认只恢复模型（全新 Adam + 重新预热）。启动前冒烟进行中。
 - Modal 本月已花 585.95 美元，上限 700。
+
+## 2026-09-19 05:50 pipe-s2（先 OPD 后 RL）启动记录
+- **目标：** 按负责人决定的路线，独立复现"先 OPD 后 RL"，与 Tinker 线 13:09 启动的分阶段 run 对照。回答两个问题：纯 OPD 阶段伤多少？RL 阶段能否从 OPD 起点超过原版，超过多少？
+- **配置：**
+  - 阶梯 A 500 题，按来源 × 难度分层，种子 20260918，每步 8 题 × 4 条，二值奖励，学习率 1e-4，LoRA 秩 32，与 S1 相同。
+  - 阶段 A（`runs/pipe-s2-opd`）：12 步，TEACHER=1，`DISTILL_USE_TASK_REWARDS=False`，纯 OPD，k1，覆盖动作 token，学生不思考；训练前做一次原版验证。
+  - 阶段 B（`runs/pipe-s2-rl`）：从 A 的第 12 步起，TEACHER=0 纯 GRPO，跑到第 60 步。只加载模型，Adam 重新开始，并重新预热 3 步。数据接着 A 往下取。
+  - 两阶段都只保留最近 3 个 checkpoint，另外第 20、40、60 步永久保留。
+- **启动前验证（全部通过）：**
+  - 格式守卫：真实分词器上网关序列与老师原生渲染逐 token 一致，818 个 token。
+  - 冒烟 A：`use_task_rewards: false`，蒸馏开启。
+  - 冒烟 B：`load_contents: [model]`，蒸馏关闭。
+  - VERL 补丁 `already=1`；代码 a960af2。
+- **判据与计划：**
+  - A 结束后，在 B 空出的 GPU 上快检 A 的第 12 步（58 题 × 2），与 `qc-base` 配对。预期退步，参照 Tinker E' −0.129、S1 −0.172；只记录，不止损，B 照常跑。
+  - B 结束后：全量 78 × 4，与原版配对；外部参照 Tinker A' +0.199 和 Tinker 分阶段 run。
+  - 监控长度：如果阶段 A 的回复长度撞上限比例超过 20%，报告用户。
+- **费用：** 沙箱约 72 美元（约 1.5 美元/步）。Modal 本月已花 585.95 美元，上限 700；Tinker 今晚还要约 75–100 美元，**必须由用户把上限调到约 900**，否则会撞上限：训练会停住但不会崩，调高后自动继续。
+- 启动：`runs/pipe-s2-driver.log`（`run_opd_then_rl.sh`）与 `runs/pipe-s2-qc-a.log`（A 的快检链）。
