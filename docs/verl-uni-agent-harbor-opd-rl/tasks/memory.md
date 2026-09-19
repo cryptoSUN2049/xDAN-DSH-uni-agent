@@ -307,3 +307,11 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 第 1 步学习率 3.33e-5、第 2 步 6.67e-5，预热按预期；梯度范数 0.084 / 0.088，平均回复 1.73 万 / 2.01 万 token，撞上限 3.1% / 3.2%。
 - **VERL 补丁（patches/verl/0001）在生产中验证**：第 2 步批次 31 条，VERL 21:09:47 补 1 条占位样本到 32，更新完成、checkpoint 保存，没有出现 pipe-r11 第 5 步的断言错误。少的那 1 条没有对应的会话中止记录，原因待查。
 - 监控改读 VERL 文件记录器的逐步指标（`src/uni-agent/<project>/pipe-train.jsonl`，实时写入）；训练日志不再出现 `step:N` 汇总行。
+
+## 2026-09-19 02:40 S1 暂停，按 Tinker 标准快检第 12 步
+- Tinker 线（会话 1a，原 c6）第 8 步快检：三种带 Teacher 信号的方式全部显著退步（约 −0.13），只用 RL 第 16 步 +0.181 [+0.052, +0.310]；长度稳定也不代表没退步。其快检标准：quick-tasks.txt 58 题（SWE 28 + Terminal-Lego 30）× 2，每 25% 节点做一次；最终结论只看 eval-set-v1 78 × 4；和原版在同一 harness 下配对，区间整体 < 0 为退步。
+- 用户选择"暂停先快检"。02:22 UTC 按会话号结束 S1（停在第 12 步，第 13 步未完成），清理 16 个沙箱，写入 `runs/pipe-s1/PAUSED`；第 12 步已用硬链接永久保留在 `train/pinned/global_step_12`。
+- S1 第 1–12 步：长度 1.73 万 → 约 2.2 万 token（波动），撞上限 3.1%–3.7%，蒸馏损失 0.107 → 约 0.06，梯度范数 0.084 → 0.041；超时强杀 ≥ 10 条，补齐占位样本 ≥ 5 次（补丁每次生效）。
+- 快检：`data-eval-set-v1/quick/harbor_tasks-quick.parquet`（58 行，从 prd `/root/Code/tinker-cookbook-opd-rl/outputs/eval-set-v1/quick-tasks.txt` 筛出）；GPU0 原版 `runs/qc-base`，GPU1 第 12 步 `runs/qc-s1-step12`（`EVAL_RUN=runs/pipe-s1`），每题 2 次、任务声明时限、温度 1.0。
+- 决定规则：显著退步 → 改为只用 RL 从原版重训；未检出差异 → 与用户商量是否从第 12 步续跑。
+- 额度：Tinker 报本月已计量 568 美元，上限 700 美元，建议用户调到 800–900 美元。
