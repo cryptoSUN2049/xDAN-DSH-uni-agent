@@ -140,9 +140,11 @@ else
   ray stop --force >/dev/null 2>&1 || true; sleep 10
   # ray stop does not reap vLLM EngineCore children: after the 2026-09-18 incident a
   # Teacher engine kept 68 GB on GPU1 with no trainer alive. With no trainer running,
-  # anything still holding a GPU is an orphan of an earlier run.
+  # anything still holding a GPU is an orphan of an earlier run, except processes started
+  # with KEEP_GPU_PROCESS=1 (another session's vllm serve on the GPU a one-GPU run leaves
+  # free; gpu_orphans.sh, docs/verl-uni-agent-harbor-opd-rl/gpu-schedule.md).
   if [[ ${SMOKE} -ne 1 ]]; then
-    orphans=$(nvidia-smi --query-compute-apps=pid --format=csv,noheader 2>/dev/null | tr -d ' ')
+    orphans=$(bash "${REPO_ROOT}/examples/harbor_opd_rl/gpu_orphans.sh" | tr '\n' ' ' | sed 's/ *$//')
     if [[ -n "${orphans}" ]]; then
       log "terminating orphaned GPU processes: $(echo ${orphans})"
       kill -TERM ${orphans} 2>/dev/null; sleep 10

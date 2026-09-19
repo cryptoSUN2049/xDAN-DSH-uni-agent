@@ -18,8 +18,8 @@ GPU1 上的评测由 `runs/pipe-s2-evalq.sh` 自动排队。时间会随训练�
 ## 共用规则
 
 1. **`run_opd_round.sh` 会误杀别人的 GPU 进程。** 每轮开始时，如果没有 `verl.trainer.main_ppo` 在跑，它会 `kill -TERM` 所有占着 GPU 的进程，当作孤儿处理。pipe-s2 由守护进程 `supervise_run.sh` 看护，阶段 B 崩溃后会自动续跑，续跑就会执行这一步。
-   - 待办：改成跳过带环境变量 `KEEP_GPU_PROCESS=1` 的进程。在改好之前，外部的 `vllm serve` 只有在"pipe-s2 恰好于其运行期间崩溃"时才有风险。
-   - 外部进程启动时请导出 `KEEP_GPU_PROCESS=1`。
+   - **已修复（09-19 12:50，已部署）**：孤儿列表由 `examples/harbor_opd_rl/gpu_orphans.sh` 生成，环境变量中带 `KEEP_GPU_PROCESS=1` 的进程（及继承该变量的子进程，比如 vLLM EngineCore）会被跳过。
+   - **外部进程启动时务必导出 `KEEP_GPU_PROCESS=1`**，例如 `KEEP_GPU_PROCESS=1 vllm serve ...`。
 2. **训练阶段收尾时会清场。** `40_train.sh` 的 `stop_lingering_trainer` 会结束所有 `verl.trainer.main_ppo` 并执行 `ray stop --force`。约 09-20 08:30 pipe-s2 结束时会触发。独立的、不走 Ray 的 `vllm serve` 不受影响；用 `eval_val_only.sh` 或 `eval_tb21.sh` 跑的评测不要跨过这个时间点。
 3. **启动前的冲突与等待。**
    - `run_opd_round.sh` 发现有 main_ppo 在跑时会拒绝启动。
