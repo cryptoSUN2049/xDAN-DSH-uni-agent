@@ -400,3 +400,4 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
   - `/tmp/models/Qwen3-4B-1cfa9a7`（7.6G，`/workspace/models` 有备份）
   - `cache/uv/.tmp*`（17 个）
   - 结果：容器盘从 80% 降到 73%，`/workspace` 约腾出 146 GB。第 2 档（约 446 GB）未动。
+- 08:10 负责人确认 Modal 上限已调到 900 美元。本月已计 624.67 美元（05:27 时为 585.95，其间两条线合计约 14 美元/小时），额度探测 `QUOTA_OK`。Modal CLI 读不到上限，以负责人确认为准。
