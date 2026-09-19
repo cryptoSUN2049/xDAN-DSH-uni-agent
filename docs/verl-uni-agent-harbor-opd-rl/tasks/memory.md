@@ -401,3 +401,8 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
   - `cache/uv/.tmp*`（17 个）
   - 结果：容器盘从 80% 降到 73%，`/workspace` 约腾出 146 GB。第 2 档（约 446 GB）未动。
 - 08:10 负责人确认 Modal 上限已调到 900 美元。本月已计 624.67 美元（05:27 时为 585.95，其间两条线合计约 14 美元/小时），额度探测 `QUOTA_OK`。Modal CLI 读不到上限，以负责人确认为准。
+- 08:41 负责人要求"全部训练都要完成"，为此在 pod 上脱机挂了守护进程（`supervise_run.sh`，提交在 5b 之后）。日志 `runs/pipe-s2-supervise.log`，会话 1630551。
+  - 驱动退出时如果第 60 步还没完成（`pipe-s2-rl/train/PASSED` 且最终 checkpoint 为 `global_step_60`），就另存旧的驱动日志和未完成的 `train.log`，等到没有 VERL 训练进程在跑时，用 `runs/pipe-s2-launch.txt` 里的原命令续跑。
+  - 阶段 A 续跑用 `RESUME_MODE=auto`；阶段 B 从自己最新的 checkpoint 全量恢复。
+  - 最多续跑 3 次，从不杀进程。
+  - 第一次启动时我的防重检查用了进程匹配，结果匹配到了自己的 ssh 命令，误报"已在运行"。改用日志文件判断后，确认只有一个实例。
