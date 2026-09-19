@@ -15,4 +15,6 @@ fi
 TOTAL=$(( TRAIN_STEPS + RESUME_EXTRA_STEPS ))
 STAGE_NAME=resume EXP_NAME=pipe-resume TOTAL_STEPS="${TOTAL}" RESUME_MODE=resume_path RESUME_FROM_PATH="${CK_LAST}" \
   bash "${STAGES_DIR}/40_train.sh"
-grep -qE "step:$(( TRAIN_STEPS + 1 )) - " "${PIPE_ROOT}/resume/train.log" || { echo "resume did not continue from step ${TRAIN_STEPS}" >&2; exit 1; }
+# step-metrics.txt (40_train.sh) holds the console step lines or, when those are
+# missing, the file-logger ones.
+grep -qE "step:$(( TRAIN_STEPS + 1 )) - " "${PIPE_ROOT}/resume/step-metrics.txt" || { echo "resume did not continue from step ${TRAIN_STEPS}" >&2; exit 1; }

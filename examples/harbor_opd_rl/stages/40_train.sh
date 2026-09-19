@@ -16,6 +16,16 @@ model_file() { local ck="$1"; for f in "${ck}/actor/model_world_size_1_rank_0.pt
 # Must succeed with empty output when the checkpoints dir does not exist yet
 # (fresh stage dir): find's non-zero exit would otherwise abort under pipefail.
 find_final_ckpt() { [[ -d "${STAGE_DIR}/checkpoints" ]] || return 0; { find "${STAGE_DIR}/checkpoints" -maxdepth 4 -type d -name "global_step_${TOTAL_STEPS}" 2>/dev/null || true; } | head -1; }
+# step-metrics.txt from the console step lines, else from the per-attempt file-logger
+# files (file_logger_metrics.py): console lines are Ray-actor buffered and S1 stopped
+# printing them after step 9. The reuse path below still falls back to wandb after this.
+collect_step_metrics() {
+  { grep -oE "step:[0-9]+ - .*" "${STAGE_DIR}/train.log" 2>/dev/null || true; } > "${STAGE_DIR}/step-metrics.txt"
+  if ! grep -qE "step:${TOTAL_STEPS} - " "${STAGE_DIR}/step-metrics.txt" && compgen -G "${STAGE_DIR}/metrics-*.jsonl" >/dev/null; then
+    log "console step lines incomplete; using the file-logger metrics"
+    "${LANE_PY}" "${STAGES_DIR}/file_logger_metrics.py" "${STAGE_DIR}" > "${STAGE_DIR}/step-metrics.txt"
+  fi
+}
 
 # TRAIN_REUSE=1 (default): a completed run in this stage dir (final checkpoint +
 # step metrics already present) is post-processed instead of retrained, so a
@@ -27,10 +37,10 @@ if [[ "${TRAIN_REUSE:-1}" == "1" ]]; then
     stop_lingering_trainer
     echo "${CK}" > "${STAGE_DIR}/final-checkpoint.txt"
     grep -oE "wandb: .*View run at .*" "${STAGE_DIR}/train.log" | head -1 | sed 's/.*View run at //' > "${STAGE_DIR}/wandb-url.txt" || true
-    { grep -oE "step:[0-9]+ - .*" "${STAGE_DIR}/train.log" || true; } > "${STAGE_DIR}/step-metrics.txt"
+    collect_step_metrics
     # Console step lines are Ray-actor buffered and are lost when the process is
     # killed; wandb holds the same metrics. Rebuild step-metrics.txt from wandb
-    # when the final step's console line is missing.
+    # when neither the console nor the file logger has the final step.
     if ! grep -qE "step:${TOTAL_STEPS} - " "${STAGE_DIR}/step-metrics.txt" && [[ -s "${STAGE_DIR}/wandb-url.txt" ]]; then
       log "console metrics incomplete; rebuilding from wandb $(cat "${STAGE_DIR}/wandb-url.txt")"
       "${LANE_PY}" - "$(cat "${STAGE_DIR}/wandb-url.txt")" "${STAGE_DIR}/step-metrics.txt" <<'PY'
@@ -53,7 +63,7 @@ PY
         echo "final step ${TOTAL_STEPS} metrics missing (process killed after checkpoint save); metrics cover $((TOTAL_STEPS - 1)) steps" > "${STAGE_DIR}/reuse-note.txt"
         log "$(cat "${STAGE_DIR}/reuse-note.txt")"
       else
-        log "step ${TOTAL_STEPS} metrics missing (console and wandb)"; record failed '"metrics missing"'; exit 1
+        log "step ${TOTAL_STEPS} metrics missing (console, file logger and wandb)"; record failed '"metrics missing"'; exit 1
       fi
     fi
     metrics_json "${STAGE_DIR}/step-metrics.txt" > "${STAGE_DIR}/metrics.json"
@@ -117,15 +127,20 @@ PIN_PID=""
 if [[ "${PIN_CKPT_EVERY:-0}" =~ ^[1-9][0-9]*$ ]]; then
   ( set +e; while true; do pin_once "${PIN_CKPT_EVERY}"; sleep 60; done ) & PIN_PID=$!
 fi
+# VERL's file logger opens its file with "wb": a second attempt of the same experiment
+# (a resume after a pause or crash) overwrote the first attempt's per-step metrics
+# (S1, 2026-09-19). Each attempt writes its own file in the stage dir; the local Ray
+# workers inherit the variable.
+export VERL_FILE_LOGGER_PATH="${STAGE_DIR}/metrics-$(date -u +%Y%m%dT%H%M%SZ).jsonl"
 run_train_script > "${STAGE_DIR}/train.log" 2>&1 || true
 if [[ -n "${PIN_PID}" ]]; then kill "${PIN_PID}" 2>/dev/null || true; pin_once "${PIN_CKPT_EVERY}" || true; fi
 
 CK=$(find_final_ckpt)
 [[ -n "${CK}" ]] && model_file "${CK}" >/dev/null || { log "global_step_${TOTAL_STEPS} checkpoint missing"; record failed '"checkpoint missing"'; exit 1; }
-grep -qE "step:${TOTAL_STEPS} - " "${STAGE_DIR}/train.log" || { log "step ${TOTAL_STEPS} metrics missing"; record failed '"metrics missing"'; exit 1; }
+collect_step_metrics
+grep -qE "step:${TOTAL_STEPS} - " "${STAGE_DIR}/step-metrics.txt" || { log "step ${TOTAL_STEPS} metrics missing"; record failed '"metrics missing"'; exit 1; }
 stop_lingering_trainer
 echo "${CK}" > "${STAGE_DIR}/final-checkpoint.txt"
-grep -oE "step:[0-9]+ - .*" "${STAGE_DIR}/train.log" > "${STAGE_DIR}/step-metrics.txt"
 grep -oE "wandb: .*View run at .*" "${STAGE_DIR}/train.log" | head -1 | sed 's/.*View run at //' > "${STAGE_DIR}/wandb-url.txt" || true
 metrics_json "${STAGE_DIR}/step-metrics.txt" > "${STAGE_DIR}/metrics.json"
 mark_passed; record passed "$(cat "${STAGE_DIR}/metrics.json")"
