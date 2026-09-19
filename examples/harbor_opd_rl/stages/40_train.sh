@@ -95,14 +95,18 @@ fi
 gpu_free
 # The train stage freezes every knob that shapes the run into stage-env.sh;
 # 60_resume.sh sources it so a resume always matches the run it continues,
-# whatever environment the resume was launched with.
+# whatever environment the resume was launched with. The DISTILL_* knobs record
+# whether a Teacher run was joint OPD+RL or pure OPD (run_opd_then_rl.sh phase A);
+# CKPT_LOAD_CONTENTS records what this stage restored from RESUME_FROM_PATH (a resume
+# stage sourcing it restores the same subset).
 TRAIN_MAX_SAMPLES="${TRAIN_MAX_SAMPLES:-4}"; VAL_MAX_SAMPLES="${VAL_MAX_SAMPLES:-1}"
 if [[ "${STAGE_NAME}" == train ]]; then
   for v in MODEL_PATH SERVED_MODEL_NAME TASK_CONFIG TRAIN_STEPS TRAIN_MAX_SAMPLES VAL_MAX_SAMPLES TRAIN_BATCH_SIZE \
            ROLLOUT_N CONCURRENCY DAPO DAPO_MAX_GEN_BATCHES DAPO_METRIC TEACHER TEACHER_MODEL_PATH TEACHER_GPU_MEM \
            TEACHER_SHARE_GPU GPU_MEMORY_UTILIZATION VAL_BEFORE_TRAIN TEST_FREQ HARBOR_REWARD_MODE TRAINER_MODE \
            MAX_RESPONSE_LENGTH MAX_PROMPT_LENGTH LORA_RANK LR LR_WARMUP_STEPS ATTN_IMPLEMENTATION \
-           VAL_ROLLOUT_N VAL_TEMPERATURE MIN_VALID_SESSIONS PIN_CKPT_EVERY; do
+           VAL_ROLLOUT_N VAL_TEMPERATURE MIN_VALID_SESSIONS PIN_CKPT_EVERY \
+           DISTILL_USE_TASK_REWARDS DISTILL_LOSS_COEF DISTILL_LOSS_MODE CKPT_LOAD_CONTENTS; do
     [[ -n "${!v+x}" ]] && printf 'export %s=%q\n' "${v}" "${!v}"
   done > "${STAGE_DIR}/stage-env.sh"
 fi

@@ -110,6 +110,23 @@ fi
 MODEL_DIR="${MODEL_STORE}"
 [[ -f "/tmp/models/.${STUDENT_MODEL}.ok" ]] && MODEL_DIR=/tmp/models
 
+# Teacher format guard (opd-then-rl-design.md §4): the Teacher scores the student's token ids as
+# the Gateway built them, so they must equal the Teacher's own chat-template render of the same
+# conversation, or OPD distils against a format the Teacher never saw (e.g. a thinking-mode
+# Teacher adds a Reasoning effort line). Nothing downstream would notice. Tokenizers only, CPU,
+# seconds, so it also runs in both smokes. TEACHER_FORMAT_CHECK=0 bypasses it, only for a
+# deliberate cross-format experiment.
+if [[ "${TEACHER}" == "1" && "${TEACHER_FORMAT_CHECK:-1}" != "0" ]]; then
+  log "checking the Teacher's chat format against the Gateway's token stream"
+  if ! (cd "${REPO_ROOT}" && PYTHONPATH="${REPO_ROOT}:${REPO_ROOT}/verl${PYTHONPATH:+:${PYTHONPATH}}" \
+        python examples/harbor_opd_rl/stages/teacher_format_check.py \
+          --student-model "${MODEL_DIR}/${STUDENT_MODEL}" --teacher-model "${MODEL_DIR}/${TEACHER_MODEL}" \
+          --json "${PIPE_ROOT}/teacher-format-check.json"); then
+    log "Teacher format check failed (evidence above and in ${PIPE_ROOT}/teacher-format-check.json); refusing to start ${ROUND}"
+    exit 4
+  fi
+fi
+
 if [[ -n "${WAIT_PID:-}" ]]; then
   log "waiting for run ${WAIT_PID} to finish"
   while kill -0 "${WAIT_PID}" 2>/dev/null; do sleep 60; done

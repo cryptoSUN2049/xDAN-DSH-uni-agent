@@ -92,6 +92,20 @@ STEPS_PER_EPOCH=$(( TRAIN_MAX_SAMPLES / TRAIN_BATCH_SIZE ))
 TOTAL_EPOCHS="${TOTAL_EPOCHS:-$(( (TOTAL_TRAINING_STEPS + STEPS_PER_EPOCH - 1) / STEPS_PER_EPOCH ))}"
 RESUME_MODE="${RESUME_MODE:-disable}"
 RESUME_FROM_PATH="${RESUME_FROM_PATH:-}"   # global_step_N dir; sets trainer.resume_from_path when non-empty
+# What a resume restores (VERL checkpoint.load_contents): model, optimizer (Adam moments) and
+# extra (lr scheduler + RNG). Empty restores all three. "model,extra" drops the Adam moments,
+# e.g. when RL continues from an OPD checkpoint (run_opd_then_rl.sh): they were accumulated
+# under a different loss. The dataloader position (data.pt) is restored either way.
+CKPT_LOAD_CONTENTS="${CKPT_LOAD_CONTENTS:-}"
+LOAD_CONTENTS="['model','optimizer','extra']"
+if [[ -n "${CKPT_LOAD_CONTENTS}" ]]; then
+  contents="${CKPT_LOAD_CONTENTS// /}"
+  if ! [[ ",${contents}," =~ ^(,(model|optimizer|extra))+,$ && ",${contents}," == *,model,* ]]; then
+    echo "CKPT_LOAD_CONTENTS must be comma-separated model[,optimizer][,extra] (got '${CKPT_LOAD_CONTENTS}')" >&2; exit 2
+  fi
+  quote_sep="','"
+  LOAD_CONTENTS="['${contents//,/${quote_sep}}']"
+fi
 MASK_UNFINISHED_EPISODE="${MASK_UNFINISHED_EPISODE:-True}"
 # FAIL_ON_ROLLOUT_ERROR=1 aborts the whole step when any session fails (strict
 # smoke). 0 (default) keeps the run going and keeps as much finished work as possible:
@@ -246,7 +260,7 @@ COMMAND=(
   actor_rollout_ref.actor.fsdp_config.param_offload="${ACTOR_PARAM_OFFLOAD}"
   actor_rollout_ref.actor.fsdp_config.optimizer_offload="${ACTOR_OPTIMIZER_OFFLOAD}"
   "actor_rollout_ref.actor.checkpoint.save_contents=['model','optimizer','extra']"
-  "actor_rollout_ref.actor.checkpoint.load_contents=['model','optimizer','extra']"
+  "actor_rollout_ref.actor.checkpoint.load_contents=${LOAD_CONTENTS}"
   ++actor_rollout_ref.actor.checkpoint.save_lora_only="${SAVE_LORA_ONLY}"
   actor_rollout_ref.rollout.name=vllm
   actor_rollout_ref.rollout.mode=async
