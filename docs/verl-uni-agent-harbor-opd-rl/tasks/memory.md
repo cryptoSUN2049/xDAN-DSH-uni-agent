@@ -436,3 +436,9 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
   - Harbor 接入 `uni_agent/tasks/harbor` 是官方 verl-project/uni-agent 的 PR #117（2026-08-25），有官方文档 `harbor-integration.md`。推理入口 `parallel_infer_verl.py`（#83）和网关（#25）也是官方的。VERL 核心本身没有 Harbor/TB 代码。
   - 本线在其上加了评测脚本、奖励模式、试验总时长上限、基础设施故障剔除和沙箱寿命。
 - Tinker 1a：分阶段 run 最终结果与 76 同步的一致；**Tinker 线决定老师不再进入训练信号，主线只用 RL**（复盘 `retros/stage1-staged-opd-rl-v1-20260919-1130.md`，ca2b962）。pipe-s2 阶段 B 重置了 Adam，可以检验"动量延续"这个解释，结果出来后同步。
+
+## 2026-09-19 12:45 pipe-s2 阶段 A 完成，阶段 B 启动；delta 阶段修复
+- 阶段 A：12:41 训练通过。第 12 步解题率 0.312，回复长度 2.52 万，撞上限 3.1%，蒸馏损失 0.066。最终 checkpoint 为 `runs/pipe-s2-opd/train/checkpoints/.../global_step_12`。
+- 阶段 A 的 delta 阶段失败：VERL 轮转只删 `actor/`，留下 `global_step_1/data.pt` 的空壳，delta 挑中了空壳。A 的驱动因此在 delta 处退出，summary 和 cost 没跑。按设计，阶段 B 照常启动（12:41:48，只加载模型）。
+- 修复 `stages/50_delta.sh`：改为挑选最早的、仍有模型文件的 checkpoint，按数字排序；只剩一个时跳过。3 个测试在旧脚本上以同样的报错失败，在新脚本上通过。已部署到 pod，供阶段 B 收尾时使用。
+- 训练完成不受影响：守护进程只看 `pipe-s2-rl/train/PASSED` 和 `global_step_60`。阶段 A 的费用等 pipe-s2 结束后按小时账单合并核算。
