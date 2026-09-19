@@ -425,3 +425,14 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
 - 行为：token 中位数是原版的 2.1 倍，跑满轮数 50%。RL 阶段每轮 token 是 OPD 刚结束时的 1.3–2.0 倍；训练 reward 0.11–0.30，A' 同期 0.45–0.77。
 - 解读：OPD 8 步造成的退步，24 步 RL 修不回来，篇幅膨胀延续到 RL 阶段。
 - 本线 pipe-s2 的区别在于阶段 B 重置 Adam 并重新预热，学生也不思考。它可以区分两种解释："Adam 动量延续"，还是"OPD 塑造的行为本身难以逆转"。
+
+## 2026-09-19 12:08 TB2.1 原版评测排队；守护进程等待上限延长；Tinker 线决定主线只用 RL
+- 用户问能否评测 TB2.1 原版，选择每题 3 次。
+  - 用 `eval_val_only.sh` 评测，数据为 `data/tb21-full/...terminal-bench-2-1.parquet`（89 题），按任务声明时限（`eval_taskdeclared.yaml`），温度 1.0，关闭思考。
+  - 不用 `eval_tb21.sh`：它要求合并 LoRA，而短训练合并无效（lessons 50）。用同一路径，原版才能和 pipe-s2 最终模型逐题配对。
+- 评测队列 `runs/pipe-s2-evalq.sh`（日志 `runs/pipe-s2-evalq.log`）：等阶段 A 快检结束后，在空闲 GPU 上依次跑 `tb21-base-9b-n3`（约 8 小时，30–40 美元）和 `eval-v1-base-9b-n4`（78 × 4 原版全量，约 3 小时，是最终配对的基线）。
+- 守护进程的等待上限从 4 小时延长到 14 小时（`TRAINER_WAIT_POLLS=420`）：评测进程也是 `verl.trainer.main_ppo`，否则阶段 B 如果在评测期间崩溃，守护进程会等不到而放弃。旧守护按会话号 1630551 结束，已确认不影响训练；新守护会话 1734737，旧日志存为 `pipe-s2-supervise.attempt1.log`。
+- 接入来源（用户问）：
+  - Harbor 接入 `uni_agent/tasks/harbor` 是官方 verl-project/uni-agent 的 PR #117（2026-08-25），有官方文档 `harbor-integration.md`。推理入口 `parallel_infer_verl.py`（#83）和网关（#25）也是官方的。VERL 核心本身没有 Harbor/TB 代码。
+  - 本线在其上加了评测脚本、奖励模式、试验总时长上限、基础设施故障剔除和沙箱寿命。
+- Tinker 1a：分阶段 run 最终结果与 76 同步的一致；**Tinker 线决定老师不再进入训练信号，主线只用 RL**（复盘 `retros/stage1-staged-opd-rl-v1-20260919-1130.md`，ca2b962）。pipe-s2 阶段 B 重置了 Adam，可以检验"动量延续"这个解释，结果出来后同步。
