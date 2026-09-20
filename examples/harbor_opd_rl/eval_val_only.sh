@@ -65,6 +65,7 @@ printf '{"model_path":"%s","resume_from":"%s","data":"%s","tasks":%s,"n":%s,"tas
   "${MODEL_PATH}" "${RESUME_FROM}" "${EVAL_DATA}" "${VAL_MAX}" "${EVAL_N}" "${TASK_CONFIG}" "${GPU_ID}" \
   "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "${EVAL_ROOT}/eval-config.json"
 
+trainer_exit=0
 (cd "${REPO_ROOT}" && env MODEL_PATH="${MODEL_PATH}" MODEL_ID="hosted_vllm/$(basename "${MODEL_PATH}")" \
    TRAIN_FILE="${TRAIN_DATA}" TEST_FILE="${EVAL_DATA}" TASK_CONFIG="${TASK_CONFIG}" RUN_ROOT="${EVAL_ROOT}" \
    PYTHON_BIN="${LANE_PY}" EXP_NAME="eval-$(basename "${EVAL_ROOT}")" TOTAL_TRAINING_STEPS="${RUN_STEPS}" \
@@ -74,26 +75,18 @@ printf '{"model_path":"%s","resume_from":"%s","data":"%s","tasks":%s,"n":%s,"tas
    VAL_ROLLOUT_N="${EVAL_N}" VAL_TEMPERATURE=1.0 VAL_BEFORE_TRAIN=True TEST_FREQ=-1 WANDB_ENABLED=0 MIN_VALID_SESSIONS=0 \
    GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-0.6}" \
    RESUME_MODE="$([[ -n "${RESUME_FROM}" ]] && echo resume_path || echo disable)" RESUME_FROM_PATH="${RESUME_FROM}" \
-   bash examples/harbor_opd_rl/train_tb21_lora_smoke.sh trainer.val_only=True) > "${EVAL_ROOT}/eval.log" 2>&1 || true
+   bash examples/harbor_opd_rl/train_tb21_lora_smoke.sh trainer.val_only=True) > "${EVAL_ROOT}/eval.log" 2>&1 || trainer_exit=$?
 
-"${LANE_PY}" - "${EVAL_ROOT}" <<'PY'
-import glob, json, os, re, sys
-root = sys.argv[1]
-per_task, infra = {}, {}
-done = re.compile(r"Harbor trial done: instance_id=(\S+) reward=[0-9.]+ resolved=(\w+)")
-bad = re.compile(r"Harbor trial incomplete for (\S+) \(infra\)")
-for f in glob.glob(os.path.join(root, "agent-logs", "**", "task.log"), recursive=True):
-    text = open(f, errors="replace").read()
-    for m in done.finditer(text):
-        per_task.setdefault(m.group(1).split("/")[-1], []).append(1.0 if m.group(2) == "True" else 0.0)
-    for m in bad.finditer(text):
-        name = m.group(1).split("/")[-1]
-        infra[name] = infra.get(name, 0) + 1
-means = [sum(v) / len(v) for v in per_task.values()]
-summary = {"tasks": len(per_task), "samples": sum(len(v) for v in per_task.values()),
-           "pass_rate": sum(means) / len(means) if means else None,
-           "infra_incomplete": infra, "per_task": dict(sorted(per_task.items()))}
-json.dump(summary, open(os.path.join(root, "summary.json"), "w"), indent=1)
-print(json.dumps({k: summary[k] for k in ("tasks", "samples", "pass_rate")} | {"infra_incomplete": sum(infra.values())}))
-PY
-echo "eval done: ${EVAL_ROOT}/summary.json"
+check_exit=0
+"${LANE_PY}" "${SCRIPT_DIR}/eval_result_check.py" \
+  --root "${EVAL_ROOT}" --data "${EVAL_DATA}" --n "${EVAL_N}" --limit "${EVAL_LIMIT}" \
+  --process-exit "${trainer_exit}" --resume-from "${RESUME_FROM}" || check_exit=$?
+if [[ "${trainer_exit}" -ne 0 ]]; then
+  echo "eval failed: trainer exit ${trainer_exit}; evidence in ${EVAL_ROOT}" >&2
+  exit "${trainer_exit}"
+fi
+if [[ "${check_exit}" -ne 0 ]]; then
+  echo "eval incomplete or invalid: evidence in ${EVAL_ROOT}" >&2
+  exit "${check_exit}"
+fi
+echo "eval complete: ${EVAL_ROOT}/summary.json"

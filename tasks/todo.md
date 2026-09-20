@@ -1,4 +1,13 @@
-# 当前执行：verify-native-training-closure（2026-09-15）
+# 当前执行：S2 全版本 checkpoint 全量评测（2026-09-20）
+
+- [x] 清点 S2 保留 checkpoint，识别 pinned 重复和 step58 文件异常。
+- [x] 只读对比成功/失败评测的显存、GPU 路由与启动阶段。
+- [x] 设计写入 docs/verl-uni-agent-harbor-opd-rl/checkpoint-full-eval-design.md。
+- [ ] 批准设计后修复评测失败传播，验证首题，执行全部78×4评测与整体报告。
+
+Review：目前没有新的评测结果；独立 step20 快检仍0题失败。相同显存配置曾成功，失败时额外占用来源未知，不归咎checkpoint。
+
+# 历史执行：verify-native-training-closure（2026-09-15）
 
 - [x] PR #3创建，四项GitHub检查通过；交付recipient-handoff.md。
 - [ ] 按用户最新指示，由产品会话合并PR并执行GPU后续；本会话保持PR打开，不重复操作。

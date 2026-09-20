@@ -1,0 +1,62 @@
+{
+  "output": "/workspace/verl-uni-agent-harbor-opd-rl/runs/full-matrix-20260920",
+  "gpu": 0,
+  "base": "/workspace/verl-uni-agent-harbor-opd-rl/runs/eval-v1-base-9b-n4",
+  "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+  "env": {
+    "EVAL_DATA": "/workspace/verl-uni-agent-harbor-opd-rl/data-eval-set-v1/eval/harbor_tasks-eval.parquet",
+    "CONCURRENCY": "16",
+    "GPU_MEMORY_UTILIZATION": "0.6",
+    "CKPT_LOAD_CONTENTS": "model"
+  },
+  "versions": [
+    {
+      "label": "pipe-s2-rl-step60",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl",
+      "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl/train/pinned/global_step_60"
+    },
+    {
+      "label": "pipe-s2-opd-step12",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd",
+      "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd/train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train/global_step_12"
+    },
+    {
+      "label": "pipe-s2-rl-step20",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl",
+      "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl/train/pinned/global_step_20"
+    },
+    {
+      "label": "pipe-s2-rl-step40",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl",
+      "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl/train/pinned/global_step_40"
+    },
+    {
+      "label": "pipe-s2-opd-step10",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd",
+      "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd/train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train/global_step_10"
+    },
+    {
+      "label": "pipe-s2-opd-step11",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd",
+      "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd/train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train/global_step_11"
+    },
+    {
+      "label": "pipe-s2-rl-step59",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl",
+      "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl/train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train/global_step_59"
+    },
+    {
+      "label": "pipe-s2-rl-step58",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl",
+      "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl/train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train/global_step_58"
+    },
+    {
+      "label": "pipe-s1-step12",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s1",
+      "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s1/train/pinned/global_step_12"
+    }
+  ],
+  "data_sha256": "26d5bacd089cb4d2229e8a0e4a8e4feacc2cb54d0a8563048754d2cd9a618cbc",
+  "base_summary_sha256": "8b2fd1548823d00ef352bb0efccb85013291c8306f032c51a36a4f9090f697f5",
+  "probe_root": "/workspace/verl-uni-agent-harbor-opd-rl/runs/matrix-probe60"
+}
