@@ -56,3 +56,18 @@
 - 下一次先检查probe validation.json：只有complete才让全量开跑；失败时队列会停，不反复空跑。
 
 - 15:20 UTC复核：probe于14:55:35 UTC完整通过，1题1样本，得分0；第60步成功加载。队列重新启动sid2686667，首版本step60全量；仍需检查status.json实际running。
+
+## 2026-09-21 继续推进
+- 13:46 UTC远端队列仍在运行，非全部完成。RL60 attempt2完整46.15%，差-17.95pp [-25,-10.90]；RL40 attempt1完整47.76%，差-16.35pp [-24.36,-8.65]。
+- OPD12/RL20各两次后仍311/312，原队列标exhausted。固定以attempt2补缺，不能挑得分高的attempt。
+- OPD12缺TL10836：tmux no server；RL20缺TL08999：verifier timeout300s。只补infra缺口，不改已有效0分；由eval_supplement.py新模块执行（实现中）。
+- GPU0评OPD10，GPU1空闲可补缺；运行队列仍旧进程，不能声称新代码自动热更新。
+- 新证据目录 docs/verl-uni-agent-harbor-opd-rl/checkpoint-full-eval/evidence-20260921/。
+- 尚未得到全版本整体结果；用户明确要继续推进。
+
+## 2026-09-21 补测部署
+- eval_supplement.py 与 test_harbor_eval_supplement.py：9项补测测试+5项队列测试=14 passed，Ruff全仓双门通过。
+- GPU1补测驱动：runs/run-supplements-20260921.sh；日志runs/supplements-20260921.log。固定OPD12/RL20 attempt2各补1，输出各自-label-supplemented-20260921目录，原attempt不动。
+- 源全量队列status仍会显示这两项exhausted，不自动改写其他进程state；查询必须额外读取新目录validation.json、pair.json。
+- 汇总时保留缺失当0的source_coverage_adjusted_framework_rate与补齐aggregate_framework_rate；历史infra事件不抹掉。
+- 校验主要口径为framework resolved，behavior脚本raw reward solve_rate不同，不能混用。

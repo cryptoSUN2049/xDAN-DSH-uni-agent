@@ -1,0 +1,149 @@
+[
+  {
+    "label": "pipe-s2-rl-step60",
+    "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl/train/pinned/global_step_60",
+    "status": "complete",
+    "output": "/workspace/verl-uni-agent-harbor-opd-rl/runs/full-matrix-20260920/pipe-s2-rl-step60-attempt2",
+    "started_utc": "2026-09-20T18:48:41Z",
+    "returncode": 0,
+    "comparison": {
+      "all": {
+        "tasks": 78,
+        "base_rate": 0.641,
+        "other_rate": 0.4615,
+        "diff": -0.1795,
+        "ci95": [
+          -0.25,
+          -0.109
+        ],
+        "gain_claimed": false,
+        "regression_flagged": true,
+        "tasks_up": 10,
+        "tasks_down": 44
+      },
+      "swe-rebench-v2-fv": {
+        "tasks": 28,
+        "base_rate": 0.7143,
+        "other_rate": 0.4821,
+        "diff": -0.2321,
+        "ci95": [
+          -0.3304,
+          -0.1518
+        ],
+        "gain_claimed": false,
+        "regression_flagged": true,
+        "tasks_up": 1,
+        "tasks_down": 19
+      },
+      "terminal-lego-15k": {
+        "tasks": 50,
+        "base_rate": 0.6,
+        "other_rate": 0.45,
+        "diff": -0.15,
+        "ci95": [
+          -0.245,
+          -0.055
+        ],
+        "gain_claimed": false,
+        "regression_flagged": true,
+        "tasks_up": 9,
+        "tasks_down": 25
+      }
+    }
+  },
+  {
+    "label": "pipe-s2-opd-step12",
+    "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd/train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train/global_step_12",
+    "status": "exhausted",
+    "output": "/workspace/verl-uni-agent-harbor-opd-rl/runs/full-matrix-20260920/pipe-s2-opd-step12-attempt2",
+    "started_utc": "2026-09-21T01:16:46Z",
+    "returncode": 4
+  },
+  {
+    "label": "pipe-s2-rl-step20",
+    "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl/train/pinned/global_step_20",
+    "status": "exhausted",
+    "output": "/workspace/verl-uni-agent-harbor-opd-rl/runs/full-matrix-20260920/pipe-s2-rl-step20-attempt2",
+    "started_utc": "2026-09-21T07:31:16Z",
+    "returncode": 4
+  },
+  {
+    "label": "pipe-s2-rl-step40",
+    "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl/train/pinned/global_step_40",
+    "status": "complete",
+    "output": "/workspace/verl-uni-agent-harbor-opd-rl/runs/full-matrix-20260920/pipe-s2-rl-step40-attempt1",
+    "started_utc": "2026-09-21T10:27:05Z",
+    "returncode": 0,
+    "comparison": {
+      "all": {
+        "tasks": 78,
+        "base_rate": 0.641,
+        "other_rate": 0.4776,
+        "diff": -0.1635,
+        "ci95": [
+          -0.2436,
+          -0.0865
+        ],
+        "gain_claimed": false,
+        "regression_flagged": true,
+        "tasks_up": 14,
+        "tasks_down": 36
+      },
+      "swe-rebench-v2-fv": {
+        "tasks": 28,
+        "base_rate": 0.7143,
+        "other_rate": 0.5446,
+        "diff": -0.1696,
+        "ci95": [
+          -0.2857,
+          -0.0625
+        ],
+        "gain_claimed": false,
+        "regression_flagged": true,
+        "tasks_up": 3,
+        "tasks_down": 13
+      },
+      "terminal-lego-15k": {
+        "tasks": 50,
+        "base_rate": 0.6,
+        "other_rate": 0.44,
+        "diff": -0.16,
+        "ci95": [
+          -0.265,
+          -0.06
+        ],
+        "gain_claimed": false,
+        "regression_flagged": true,
+        "tasks_up": 11,
+        "tasks_down": 23
+      }
+    }
+  },
+  {
+    "label": "pipe-s2-opd-step10",
+    "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd/train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train/global_step_10",
+    "status": "running",
+    "output": "/workspace/verl-uni-agent-harbor-opd-rl/runs/full-matrix-20260920/pipe-s2-opd-step10-attempt1",
+    "started_utc": "2026-09-21T13:29:50Z"
+  },
+  {
+    "label": "pipe-s2-opd-step11",
+    "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd/train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train/global_step_11",
+    "status": "pending"
+  },
+  {
+    "label": "pipe-s2-rl-step59",
+    "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl/train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train/global_step_59",
+    "status": "pending"
+  },
+  {
+    "label": "pipe-s2-rl-step58",
+    "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl/train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train/global_step_58",
+    "status": "pending"
+  },
+  {
+    "label": "pipe-s1-step12",
+    "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s1/train/pinned/global_step_12",
+    "status": "pending"
+  }
+]

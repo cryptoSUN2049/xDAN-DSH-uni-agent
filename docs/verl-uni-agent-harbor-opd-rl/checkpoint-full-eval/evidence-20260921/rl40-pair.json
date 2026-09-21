@@ -1,0 +1,62 @@
+{
+ "labels": [
+  "base",
+  "pipe-s2-rl-step40"
+ ],
+ "samples_per_task": {
+  "base": [
+   4
+  ],
+  "pipe-s2-rl-step40": [
+   4
+  ]
+ },
+ "missing": {
+  "only_base": [],
+  "only_pipe-s2-rl-step40": []
+ },
+ "groups": {
+  "all": {
+   "tasks": 78,
+   "base_rate": 0.641,
+   "other_rate": 0.4776,
+   "diff": -0.1635,
+   "ci95": [
+    -0.2436,
+    -0.0865
+   ],
+   "gain_claimed": false,
+   "regression_flagged": true,
+   "tasks_up": 14,
+   "tasks_down": 36
+  },
+  "swe-rebench-v2-fv": {
+   "tasks": 28,
+   "base_rate": 0.7143,
+   "other_rate": 0.5446,
+   "diff": -0.1696,
+   "ci95": [
+    -0.2857,
+    -0.0625
+   ],
+   "gain_claimed": false,
+   "regression_flagged": true,
+   "tasks_up": 3,
+   "tasks_down": 13
+  },
+  "terminal-lego-15k": {
+   "tasks": 50,
+   "base_rate": 0.6,
+   "other_rate": 0.44,
+   "diff": -0.16,
+   "ci95": [
+    -0.265,
+    -0.06
+   ],
+   "gain_claimed": false,
+   "regression_flagged": true,
+   "tasks_up": 11,
+   "tasks_down": 23
+  }
+ }
+}
