@@ -1,5 +1,11 @@
 # 项目经验
 
+## 2026-09-21：跨benchmark真实控制与沙箱命名
+
+- Harbor trial_name会成为Modal共享app内的sandbox名字；不同benchmark并行控制不能都叫nop/oracle，需加入数据集/输出路径唯一摘要。目录不同不代表云端名字隔离。
+- 依赖数据下载成功和CPU回归不足以放行模型评测；先用nop/oracle检查实际任务和verifier。build-cython-ext本次oracle出现10通过1失败，不能算模型退步，也不能悄悄删除该题或改评分。
+- SSH/scp会偶发Connection closed，依赖部署的后续命令必须等上传exit=0并核SHA，不能把session_id当上传完成。
+
 ## 2026-09-15：用户指定交接即停止重复执行
 
 - 用户选择“PR＋handoff，由对方会话执行”后，保持PR开放并交付明确接续入口；不继续替对方合并、部署或启动GPU。

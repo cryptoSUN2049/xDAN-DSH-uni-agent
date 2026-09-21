@@ -59,3 +59,14 @@ def test_merge_adds_task_with_all_samples_missing():
 def test_coverage_adjusted_framework_rate_counts_missing_as_zero():
     assert mod.coverage_adjusted_rate({"a": [0, 0, 1], "b": [1, 0, 0, 0]}, 2, 4) == 0.25
     assert mod.coverage_adjusted_rate({"a": [0, 0, 1, 1], "b": [1, 0, 0, 0]}, 2, 4) == 0.375
+
+
+def test_base_identity_allows_no_checkpoint_and_binds_model(tmp_path):
+    model = tmp_path / "model"
+    model.mkdir()
+    (model / "config.json").write_text("{}")
+    identity = mod.model_identity({"resume_from": ""}, {"resume_from": "", "model_path": str(model)}, "")
+    assert identity["kind"] == "base"
+    assert identity["model_path"] == str(model)
+    with pytest.raises(ValueError):
+        mod.model_identity({"resume_from": ""}, {"resume_from": "/wrong", "model_path": str(model)}, "")

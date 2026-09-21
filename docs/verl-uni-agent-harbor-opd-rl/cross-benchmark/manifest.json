@@ -1,0 +1,63 @@
+{
+  "output": "/workspace/verl-uni-agent-harbor-opd-rl/runs/cross-benchmark-20260921",
+  "gpu": 1,
+  "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+  "env": {
+    "MODEL_PATH": "/workspace/models/Qwen3.5-9B",
+    "CONCURRENCY": "8",
+    "GPU_MEMORY_UTILIZATION": "0.6",
+    "CKPT_LOAD_CONTENTS": "model"
+  },
+  "stop_file": "/workspace/verl-uni-agent-harbor-opd-rl/runs/cross-benchmark-20260921/STOP",
+  "datasets": [
+    {
+      "label": "tb21",
+      "data": "/workspace/verl-uni-agent-harbor-opd-rl/data/tb21-full/harbor_terminal-bench_terminal-bench-2-1.parquet",
+      "sha256": "a6b2c1c589b2c87f2e9bd3b3c39a18e34b2fe323beacde5dacbcb6795b422c6b",
+      "tasks": 89,
+      "n": 3,
+      "task_config": "/workspace/verl-uni-agent-harbor-opd-rl/runs/cross-benchmark-20260921/tb21-task.yaml",
+      "task_config_sha256": "cefd4a3caf411b718223fa00becd55a561b2074d299bc64b70fd10bd47a396b2",
+      "probe_ids": [
+        "terminal-bench/terminal-bench-2-1/build-cython-ext",
+        "terminal-bench/terminal-bench-2-1/cancel-async-tasks",
+        "terminal-bench/terminal-bench-2-1/configure-git-webserver"
+      ],
+      "audit": "/workspace/verl-uni-agent-harbor-opd-rl/runs/cross-benchmark-20260921/tb21-audit.json",
+      "audit_sha256": "a3c3688679a3354363f48bee0dd147462f0f37638fb92be0cf57d0417fc4df8d"
+    },
+    {
+      "label": "sweverified",
+      "data": "/workspace/verl-uni-agent-harbor-opd-rl/data-swe-verified-20260921/harbor_swe-bench_swe-bench-verified.parquet",
+      "sha256": "89dc7c4488a7b2c5905ecf83daf7855046785d9c1cd53f6acd57402899e4d1b6",
+      "tasks": 500,
+      "n": 1,
+      "task_config": "/workspace/verl-uni-agent-harbor-opd-rl/runs/cross-benchmark-20260921/sweverified-task.yaml",
+      "task_config_sha256": "d48e0c0937800ef36fbae5ab9614f43c7390f133933ea322693e95cb7eaee9bc",
+      "probe_ids": [
+        "swe-bench/swe-bench-verified/astropy__astropy-12907",
+        "swe-bench/swe-bench-verified/django__django-10097",
+        "swe-bench/swe-bench-verified/sympy__sympy-11618"
+      ],
+      "audit": "/workspace/verl-uni-agent-harbor-opd-rl/runs/cross-benchmark-20260921/sweverified-audit.json",
+      "audit_sha256": "af4785835b048de214016d183434946ba2cd03417a1e73c6d674059993fee7d1"
+    }
+  ],
+  "versions": [
+    {
+      "label": "base",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd",
+      "checkpoint": ""
+    },
+    {
+      "label": "opd12",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd",
+      "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-opd/train/checkpoints/xDAN-Verl-Uni-agent-Harbor-rl-opd/pipe-train/global_step_12"
+    },
+    {
+      "label": "rl60",
+      "run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl",
+      "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/pipe-s2-rl/train/pinned/global_step_60"
+    }
+  ]
+}

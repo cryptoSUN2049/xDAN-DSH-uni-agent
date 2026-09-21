@@ -2,8 +2,9 @@
 
 ## TL;DR
 - 用户要求每个版本 checkpoint 全量评测，取得整体结果。
-- 本轮默认 S2 所有保留版本，加原版与 S1 step12；是否包括 r1–r11 已异步询问。
-- 用户已批准继续。评测校验和队列已实现并部署；GPU0单题探针运行，队列等待probe验证收据，尚无新全量结果。
+- 本轮S2所有保留版本，加原版与S1 step12；GPU0全量队列持续运行。
+- 已有完整结果：原版64.10%、OPD12 43.27%、RL20 50.96%、RL40 47.76%、RL60 46.15%；OPD12/RL20已补齐infra缺失。
+- 新授权：TB2.1→SWE-bench Verified，固定原版/OPD12/RL60，GPU1。数据审计完成，正在验证沙箱/评分器。全量启动待核实既有Modal900美元上限；当前账单856.04美元。
 - 先读 `docs/verl-uni-agent-harbor-opd-rl/checkpoint-full-eval-design.md`；旧训练历史在该 docs 目录的 `tasks/handoff.md`。
 
 ## 本轮交付物
@@ -71,3 +72,20 @@
 - 源全量队列status仍会显示这两项exhausted，不自动改写其他进程state；查询必须额外读取新目录validation.json、pair.json。
 - 汇总时保留缺失当0的source_coverage_adjusted_framework_rate与补齐aggregate_framework_rate；历史infra事件不抹掉。
 - 校验主要口径为framework resolved，behavior脚本raw reward solve_rate不同，不能混用。
+
+## 2026-09-21 补测完成与跨集方案
+- 补测驱动14:43:23 UTC exit=0。OPD12/RL20 aggregate validation均complete、errors=[]，每题4次无缺失。
+- OPD12补齐43.27%，相对原版-20.83pp，95%区间[-28.53,-13.14]；RL20补齐50.96%，差-13.14pp，区间[-18.59,-7.37]。pair已存到checkpoint-full-eval/evidence-20260921/。
+- 用户询问OPD+RL是否无效、能否评测其他软件benchmark。新文档docs/verl-uni-agent-harbor-opd-rl/cross-benchmark-proposal.md记录结论边界、TB2.1/Verified/EvalPlus可行性和三模型对照方案。
+- TB2.1 parquet远端存在；Verified适配入口存在但未端到端验证。新benchmark尚未启动。不能将本次序列训练结果推广为所有OPD/RL无效；缺严格纯RL对照。
+
+## 2026-09-21 新跨集评测授权与部署
+- 用户明确要求完成TB2.1后SWE-bench Verified三模型同预算评测，原队列继续。范围/manifest/config/audit均在docs/verl-uni-agent-harbor-opd-rl/cross-benchmark/。
+- Verified500题已下载。两套与实际S2训练500题的canonical ID/repo/题面哈希/词7-gram相似度检查无重叠；任务内容SHA已存，不能称语义污染完全排除。
+- Verified500个verifier均采用FAIL_TO_PASS/PASS_TO_PASS及ResolvedStatus.FULL。远端nop/oracle控制驱动sid3495293，日志runs/cross-benchmark-20260921/verifier-controls.log。
+- 新driver eval_benchmark_matrix.py，base/OPD12/RL60各固定3题探针后全量（TB n3、Verified n1）；--probe-only只验证不启动全量；base补缺已支持。新20测试通过；旧gate/matrix14通过；全仓Ruff lint/format通过。
+- TB每题声明时间最多24600秒，Verified7800秒；配置外层分别25200/8400秒，sandbox25800/9000秒，同benchmark三模型一致。资源随任务，不压缩官方题目为满足旧3000秒。
+- full计划2301条轨迹；已询问用户是否调高共享900美元上限。未获答复前不能默认扩额或启动整个full队列。小规模验证继续，GPU0旧矩阵不停止。
+- 真实控制已完成：TB cancel-async-tasks、Verified astropy均nop0/oracle1；build-cython-ext oracle在planarity1.0.0/networkx3.6.1组合缺pos，作为已知参考解问题保留89题主结果，不能算模型失败证据。
+- GPU1 TB三模型probe-only已发起，日志cross-benchmark-20260921/tb-model-probes.log，状态status-tb21-probe.json；不自动进入full。后续查真实加载/样本状态，不能把启动当成功。
+- 新旧针对性回归合并34项通过，全仓Ruff519files通过；源码和manifest远端SHA与本地一致。全量仍未开始，预算答复待收。

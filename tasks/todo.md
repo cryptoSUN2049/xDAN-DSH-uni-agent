@@ -1,3 +1,15 @@
+# 当前执行：跨 benchmark 三模型评测（2026-09-21）
+
+- [x] 用户确认顺序TB2.1→SWE-bench Verified，固定原版/OPD12/RL60；旧全checkpoint队列继续。
+- [x] 读取交接、经验和当前worktree状态，保留已有未提交文档与结果。
+- [x] 固定数据版本、训练重叠审计、任务契约与verifier静态核验。
+- [x] 核对GPU/Modal额度，准备同工具同预算配置与可恢复队列；34项回归通过。
+- [x] 完成真实nop/oracle控制：TB cancel-async-tasks与Verified astropy均0/1；build-cython-ext参考解依赖兼容问题已定位并注记，89题不删。
+- [ ] 每套先真实探针，再三版本全量；只补基础设施缺口。
+- [ ] 汇总配对结果、行为/超时/费用并更新交接。
+
+Review：用户已批准前文三模型对照方案。TB89×3×3、Verified500×1×3；已就既有900美元共享上限发问，待确认。新benchmark尚无模型结果，不能把部署/排队当完成。
+
 # 当前执行：S2 全版本 checkpoint 全量评测（2026-09-20）
 
 - [x] 清点 S2 保留 checkpoint，识别 pinned 重复和 step58 文件异常。

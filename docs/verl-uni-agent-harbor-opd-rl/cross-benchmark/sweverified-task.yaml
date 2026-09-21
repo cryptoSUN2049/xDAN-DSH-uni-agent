@@ -1,0 +1,27 @@
+# Frozen cross-benchmark config. Declared per-task agent/verifier limits apply.
+- name: harbor
+  agent:
+    name: terminus-2
+    kwargs:
+      parser_name: json
+      temperature: 1.0
+      max_turns: 50
+      suppress_max_turns_warning: true
+      model_info:
+        max_input_tokens: 32768
+        max_output_tokens: 4096
+        input_cost_per_token: 0
+        output_cost_per_token: 0
+      llm_call_kwargs:
+        max_tokens: 4096
+    model:
+      temperature: 1.0
+      top_p: 1.0
+      max_total_tokens: 32768
+  harbor_env: modal
+  timeout_multiplier: 1.0
+  trial_timeout_sec: 8400
+  environment_kwargs:
+    sandbox_timeout_secs: 9000
+    sandbox_idle_timeout_secs: 3600
+    app_name: verl-crossbench

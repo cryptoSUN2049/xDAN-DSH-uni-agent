@@ -75,6 +75,25 @@ def link_logs(source, destination):
                 target.symlink_to(path.resolve())
 
 
+def model_identity(receipt, config, run):
+    checkpoint = receipt["resume_from"]
+    if config["resume_from"] != checkpoint:
+        raise ValueError("checkpoint identity mismatch")
+    model = Path(config["model_path"]).resolve()
+    identity = {"model_path": str(model), "model_config_sha256": digest(model / "config.json")}
+    if checkpoint:
+        if not run or not Path(checkpoint).resolve().is_relative_to(Path(run).resolve()):
+            raise ValueError("checkpoint is outside requested training run")
+        identity.update(
+            kind="checkpoint",
+            checkpoint=checkpoint,
+            checkpoint_model_sha256=digest(Path(checkpoint) / "actor/model_world_size_1_rank_0.pt"),
+        )
+    else:
+        identity.update(kind="base", checkpoint="")
+    return identity
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--source", type=Path, required=True)
@@ -89,12 +108,9 @@ def main():
     summary = load(source / "summary.json")
     config = load(source / "eval-config.json")
     plan = plan_missing(receipt, summary["per_task"])
-    if not Path(receipt["resume_from"]).resolve().is_relative_to(Path(args.run).resolve()):
-        raise ValueError("checkpoint is outside requested training run")
+    identity = model_identity(receipt, config, args.run)
     data = Path(receipt["data"])
     checkpoint = receipt["resume_from"]
-    if not checkpoint or Path(config["resume_from"]).resolve() != Path(checkpoint).resolve():
-        raise ValueError("checkpoint identity mismatch")
     if Path(config["data"]).resolve() != data.resolve() or config["n"] != receipt["expected_n"]:
         raise ValueError("data or sampling identity mismatch")
     import pandas as pd
@@ -115,7 +131,7 @@ def main():
         "data": str(data),
         "data_sha256": digest(data),
         "checkpoint": checkpoint,
-        "checkpoint_model_sha256": digest(Path(checkpoint) / "actor/model_world_size_1_rank_0.pt"),
+        "model_identity": identity,
         "source_coverage_adjusted_framework_rate": coverage_adjusted_rate(
             summary["per_task"], receipt["expected_tasks"], receipt["expected_n"]
         ),
