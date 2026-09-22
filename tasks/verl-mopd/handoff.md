@@ -29,3 +29,8 @@ New isolated local branch, no deployment. Original VERL HEAD7897cad was clean wh
 
 ## Cold start
 Read this file and design, inspect git/submodule state, read latest original-line handoff and GPU schedule, continue bounded CPU implementation, freeze concrete GPU commands/resources before new calls.
+
+## Design review checkpoint
+- Design committed locally as bc2e183. User selected VERL, then asked for the implementation logic; presenting the concrete PG-MOPD design for review before code changes under the supplied Development Preflight rule.
+- No VERL training code changed; no new training/deployment/cancellation.
+- Whole-repository Ruff lint passed. Format check with the borrowed Tinker Ruff reports nine inherited Markdown code-block formatting differences outside this scope. No push performed; resolve the project formatter/version and mandatory format gate before pushing. Do not silently claim the full format gate passed.
