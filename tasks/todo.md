@@ -716,3 +716,13 @@ SSH 已恢复成功读取。GPU 0%、约50GB显存，存在 metarsi-apus 推理/
 - [ ] 验证 sandbox→Gateway 请求和完整 Trial，再启动训练。
 
 Review：没有完整训练启动后卡在 Modal 的证据，不将组件通过计为闭环。
+
+## VERL MOPD — 2026-09-22
+- [x] User chose VERL; create isolated worktree-verl-mopd from7897cad.
+- [x] Read latest handoff, inspect native MOPD/scoring/gradient path, write docs/verl-mopd/design.md.
+- [ ] Implement minimal domain/registry/evidence integration after design review.
+- [ ] Pass CPU tests and independent review.
+- [ ] Freeze loadable teachers, GPU allocation, unique run identity and budget.
+- [ ] Execute real two-teacher update/save/resume and acceptance report.
+
+Review: Tinker candidate retained only as reference. No new MOPD cloud run has been submitted on either backend.
