@@ -1,0 +1,105 @@
+{
+  "schema": "mimo-objectives-acceptance-v1",
+  "checked_at_utc": "2026-09-22T07:38:51.319859+00:00",
+  "status": "cpu_verified_gpu_and_capability_pending",
+  "branch": "worktree-verl-mopd",
+  "base_commit": "7f835fe",
+  "native_verl_commit": "a9f2985159536a607211dcac730d3f5d55028950",
+  "source_sha256": "a5eeb1d8cdc820696d4b21453f43d8ad4487064125f6f5e826025778b4b05cf3",
+  "patches": {
+    "patches/verl/0001-padding-rebuild-teacher-fields.patch": "65bb77d4c97feacc56d058850525e0439a8b53118bfaf92b1dd8d5c8ea82c39c",
+    "patches/verl/0002-mopd-objectives.patch": "ad6f807802700235c31b27e5adedd21ada282cecaaeb1484e0bec6b3e5f0ec92"
+  },
+  "objectives": [
+    "mopd_pg_sequence",
+    "mopd_top64_reverse",
+    "mopd_flash_orm"
+  ],
+  "tests": [
+    {
+      "junit": "outputs/mimo-objectives-regression.xml",
+      "sha256": "db02803dc2ab0f9f4d1d20ddf444db0857643172e1292d48ef1622cc4d7f3cb1",
+      "tests": 551,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "junit": "outputs/mimo-objectives-final.xml",
+      "sha256": "12d76800f3bc10bb6e1c6495d8a27de3886b94410a0d5a34864579cfd275c920",
+      "tests": 125,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "unique_cpu_tests": 557,
+  "coverage": {
+    "examples/harbor_mopd/launch.py": {
+      "covered_lines": 289,
+      "num_statements": 314,
+      "percent_covered": 92.03821656050955,
+      "percent_covered_display": "92",
+      "missing_lines": 25,
+      "excluded_lines": 0,
+      "percent_statements_covered": 92.03821656050955,
+      "percent_statements_covered_display": "92"
+    },
+    "uni_agent/training/mopd_objectives.py": {
+      "covered_lines": 94,
+      "num_statements": 105,
+      "percent_covered": 89.52380952380952,
+      "percent_covered_display": "90",
+      "missing_lines": 11,
+      "excluded_lines": 0,
+      "percent_statements_covered": 89.52380952380952,
+      "percent_statements_covered_display": "90"
+    },
+    "verl/verl/trainer/distillation/mopd.py": {
+      "covered_lines": 97,
+      "num_statements": 112,
+      "percent_covered": 86.60714285714286,
+      "percent_covered_display": "87",
+      "missing_lines": 15,
+      "excluded_lines": 0,
+      "percent_statements_covered": 86.60714285714286,
+      "percent_statements_covered_display": "87"
+    }
+  },
+  "build": {
+    "wheel": "dist/uni_agent-0.1.0.dev0-py3-none-any.whl",
+    "sha256": "b6b1101248aa3b228dd62b989f4454d1ce72d125fca12a870a7569748c04a6fd",
+    "math_and_framework_match": true,
+    "examples_and_patches_require_source_checkout": true
+  },
+  "cpu_resume": {
+    "all_three_native_objectives": true,
+    "real_adamw_scheduler_cursor_disk_restore": true,
+    "continuous_equals_restored_exactly": true,
+    "gpu_or_teacher_service_claim": false
+  },
+  "training_method": "inherited LoRA rank16 alpha32 all-linear; not full-parameter reproduction",
+  "lint": {
+    "ruff_version": "0.13.3",
+    "whole_tree_check": "passed",
+    "whole_tree_format": "passed"
+  },
+  "gpu": {
+    "run_submitted": false,
+    "actual_teacher_loading_verified": false,
+    "actual_student_update_verified": false,
+    "actual_distributed_communication_verified": false,
+    "actual_resource_cleanup_verified": false
+  },
+  "remaining": [
+    "independent GPU allocation and GPU/Modal budget",
+    "frozen domain-RL datasets and uncontaminated heldout",
+    "qualified same-origin specialist teachers and loadable HF exports",
+    "runtime profile, teacher identity and exact prefix/token checks",
+    "real rollout/update/save/new-process resume per recipe",
+    "length/repetition/token-class diagnostics on real trajectories and paired capability/cost evaluation",
+    "27B resource sizing and separate full-parameter experiment"
+  ],
+  "capability_accepted": false,
+  "patch_clean_apply_after_whitespace_normalization": "2 focused tests passed"
+}

@@ -2,10 +2,10 @@
 
 用户已于 2026-09-22 确认 PG-MOPD 设计并授权实现。工作分支 `worktree-verl-mopd`，不替换正在运行的 VERL 评测。
 
-## 本轮实际配方
+## 保留的基线配方（native-pg）
 
 - 单机三个独立 GPU 角色：学生 actor/rollout 共置一张，SWE 与 Terminal 教师各一张，TP=1。显存是否足够还需要实际验证。
-- 使用同步 V1 trainer；复用原生 TeacherManager、`k1` PG loss、Harbor adapter，无 VERL submodule 修改。
+- 使用同步 V1 trainer；复用原生 TeacherManager、`k1` PG loss、Harbor adapter，基线算法不变。新 MiMo 配方通过下述固定版本补丁接入。
 - 路由字段 `teacher_domain`，保留原 `data_source` 和 Harbor metadata。
 - N=1，temperature=1，不截断采样分布；teacher 对学生原始 token 与相同前缀评分。
 - 学生生成 token 有梯度，prompt/tool observation 无直接蒸馏梯度。
@@ -121,3 +121,41 @@ GPU真实闭环和9B/27B能力收益仍待执行；CPU测试与本地数据准�
 现有节点仅两张 RTX PRO6000 Blackwell Server Edition 96GB。03:58 UTC 快照中 GPU0约79.8GB被旧评测占用，GPU1空闲；闲置不代表已分配。当前原生三角色布局不能在该节点原样执行。Qwen3.5-9B 与 Qwen3.8-27B 的本地 safetensors 分别4与18个；tokenizer.json SHA不同，首版严格合同会拒绝直接混用，需要单独验证语义兼容性。旧 merged.verl-merger 目录没有 safetensors，不能直接注册为可服务教师。
 
 补充只读结构核查：9B/27B tokenizer.json 的差异仅在 added_tokens；model.vocab 相同，added token 的 id→content 映射并非完全相同。此证据不能证明旧实验存在错位，也不能证明差异 token 出现在本任务中；跨尺寸实验必须检查实际序列使用的 ID，并验证特殊 token 语义后再放宽当前严格合同。
+
+## MiMo 新配方：2026-09-22 实施
+
+先应用本仓库补丁，保持 VERL submodule HEAD 为 a9f2985：
+
+```bash
+bash deployment/bootstrap/apply-verl-patches.sh .
+```
+
+0001 保留 padding teacher payload；0002 接入精确目标、全局有效轨迹计数、Top64 logits 分派。源码、补丁和实际依赖均进入恢复合同；不得从旧 native-pg run 切换新算法后续跑。
+
+| `--recipe` | 目标 | 轨迹归约 | N | 奖励 |
+|---|---|---|---|---|
+| `native-pg`（默认，保留旧基线） | 原生 k1 + PPO | token mean | 1 | 仅老师 |
+| `pg-sequence` | detached teacher-current log-ratio，clip ±5，直接 score-function surrogate | 每轨迹平均 | 1 | 仅老师 |
+| `top64-reverse` | teacher Top64 上 p log(p/q)−p+q，全词表归一化 | 每轨迹平均 | 1 | 仅老师 |
+| `flash-orm` | teacher advantage + alpha×ORM，current/sampling IS 越界置零 | 每轨迹平均 | 4 | Harbor verifier 的 GRPO 优势 |
+
+新配方的 `use_policy_gradient=false` 是为了防止原生 wrapper 再套 PPO；pg-sequence 和 flash-orm 内部仍是显式 policy-gradient 代理式。Top64 是 direct loss。三者都拒绝上游重复 IS、entropy/reference KL 正则以及不支持的 fused/TP/SP 路径。
+
+沿用前面完整命令，增加 `--recipe pg-sequence` 或 `--recipe top64-reverse`。Flash 必须显式提供本次研究选择的系数，不存在可照抄的官方默认值：
+
+```bash
+# 这些数值仅演示参数格式，不是论文超参，也不是已经批准的实验配方。
+--recipe flash-orm --orm-alpha 0.3 --is-lower 0.5 --is-upper 2.0
+```
+
+每种配方使用独立 run-root。默认仍然只 preflight，实际运行须附 `--execute`。更改 recipe、alpha、IS 区间或任何模型/源码/数据都会导致原 run 的恢复合同不匹配。
+
+### 训练方式与复现边界
+
+当前继承 `base.yaml` 的 LoRA rank16、alpha32、all-linear；这是可调试的工程配方，并不等于 MiMo 生产训练全部设置。公开公式复刻、GPU工程闭环、专家能力整合、全参数规模复现分别验收。未公开数据/超参不作还原声明。
+
+同期权重版本检查只要求每条轨迹的实际 min/max version 相同；不能直接把训练 step 当作权重版本。原生同步 trainer 在 step1 采样时使用已发布的 version0，保存与恢复也要保留这个区别。
+
+新的数学诊断记录 OPD/ORM/联合优势与 IS 拒绝量；Top64 报告师生候选概率质量。各 microbatch 的平均诊断不冒充全局加权统计。现有 JSON/NPZ 保留原始 token、mask、turn、reward、版本与教师张量，可离线按领域及长度复核；thinking/action/EOS 分类仍需实际 tokenizer 与 renderer 语义，不能凭总长度作结论。
+
+资源合同、容量估算与9B→27B扩展见 [resource-readiness.md](resource-readiness.md)。三张卡仅为当前角色下限，尚无GPU显存实测或训练通过证据。

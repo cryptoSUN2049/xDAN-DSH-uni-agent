@@ -1,0 +1,26 @@
+# MiMo public objective; merge over mopd.yaml. Research parameters are explicit.
+actor_rollout_ref:
+  model:
+    use_fused_kernels: false
+  actor:
+    loss_agg_mode: seq-mean-token-mean
+    ulysses_sequence_parallel_size: 1
+    fsdp_config:
+      ulysses_sequence_parallel_size: 1
+      pad_to_length: false
+  rollout:
+    n: 4
+    custom:
+      agent_framework:
+        require_single_policy_version: true
+distillation:
+  distillation_loss:
+    loss_mode: mopd_flash_orm
+    use_policy_gradient: false
+    use_task_rewards: true
+    distillation_loss_coef: 1.0
+    loss_max_clamp: null
+    log_prob_min_clamp: null
+    mopd_orm_alpha: ???
+    mopd_is_lower: ???
+    mopd_is_upper: ???

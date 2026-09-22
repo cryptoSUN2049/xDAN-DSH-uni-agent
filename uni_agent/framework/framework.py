@@ -348,6 +348,7 @@ class GatewayAgentFramework(AgentFramework):
         require_verifier_reward: bool = False,
         require_trajectory_dump: bool = False,
         require_version_evidence: bool = False,
+        require_single_policy_version: bool = False,
         require_single_trajectory_per_session: bool = False,
         trajectory_postprocessor_pass_context: bool = False,
         trajectory_postprocessor: TrajectoryPostprocessor | None = None,
@@ -400,6 +401,11 @@ class GatewayAgentFramework(AgentFramework):
         if require_version_evidence and not fail_on_rollout_error:
             raise ValueError("require_version_evidence requires fail_on_rollout_error")
         self._require_version_evidence = require_version_evidence
+        if type(require_single_policy_version) is not bool:
+            raise ValueError("require_single_policy_version must be a bool")
+        if require_single_policy_version and not require_version_evidence:
+            raise ValueError("require_single_policy_version requires require_version_evidence")
+        self._require_single_policy_version = require_single_policy_version
         if type(require_single_trajectory_per_session) is not bool:
             raise ValueError("require_single_trajectory_per_session must be a bool")
         if require_single_trajectory_per_session:
@@ -549,6 +555,7 @@ class GatewayAgentFramework(AgentFramework):
             require_verifier_reward=require_verifier_reward,
             require_trajectory_dump=require_trajectory_dump,
             require_version_evidence=require_version_evidence,
+            require_single_policy_version=af_cfg.get("require_single_policy_version", False),
             require_single_trajectory_per_session=af_cfg.get("require_single_trajectory_per_session", False),
             trajectory_postprocessor_pass_context=postprocessor_pass_context,
             trajectory_postprocessor=trajectory_postprocessor,
@@ -1758,6 +1765,8 @@ class GatewayAgentFramework(AgentFramework):
                 or not 0 <= minimum <= maximum
             ):
                 raise ValueError("Trajectory requires complete Gateway generation version evidence before TQ admission")
+            if self._require_single_policy_version and minimum != maximum:
+                raise ValueError("MiMo synchronous trajectory requires a single policy version")
         prompts = torch.tensor(trajectory.prompt_ids, dtype=torch.long)
         responses = torch.tensor(trajectory.response_ids, dtype=torch.long)
         source_response_mask = torch.tensor(trajectory.response_mask, dtype=torch.long)

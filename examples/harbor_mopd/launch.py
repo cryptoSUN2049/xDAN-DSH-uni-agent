@@ -8,6 +8,88 @@ import re
 from pathlib import Path
 
 DOMAINS = {"swe", "terminal"}
+RECIPES = {
+    "native-pg": "k1",
+    "pg-sequence": "mopd_pg_sequence",
+    "top64-reverse": "mopd_top64_reverse",
+    "flash-orm": "mopd_flash_orm",
+}
+
+
+def recipe_overlay(recipe, *, orm_alpha=None, is_lower=None, is_upper=None):
+    """Explicit research parameters; no unpublished Flash defaults."""
+    import math
+
+    from omegaconf import OmegaConf
+
+    if recipe not in RECIPES:
+        raise ValueError(f"Unknown MOPD recipe: {recipe}")
+    parameters = (orm_alpha, is_lower, is_upper)
+    if recipe == "flash-orm":
+        if any(value is None for value in parameters):
+            raise ValueError("Flash requires explicit orm_alpha, is_lower and is_upper experimental parameters")
+        if any(isinstance(v, bool) or not isinstance(v, int | float) or not math.isfinite(v) for v in parameters):
+            raise ValueError("Flash parameters must be finite numbers")
+        if not (orm_alpha >= 0 and 0 < is_lower <= 1 <= is_upper):
+            raise ValueError("Flash requires alpha >= 0 and 0 < IS lower <= 1 <= upper")
+    elif any(value is not None for value in parameters):
+        raise ValueError("ORM/IS parameters apply only to flash-orm")
+    if recipe == "native-pg":
+        return OmegaConf.create({})
+    overlay = OmegaConf.load(Path(__file__).with_name("recipes") / f"{recipe}.yaml")
+    if recipe == "flash-orm":
+        loss = overlay.distillation.distillation_loss
+        loss.mopd_orm_alpha, loss.mopd_is_lower, loss.mopd_is_upper = parameters
+    return overlay
+
+
+def validate_recipe(config, recipe):
+    """Reject execution paths that silently change the MiMo objective."""
+    from omegaconf import OmegaConf
+
+    if recipe not in RECIPES:
+        raise ValueError(f"Unknown MOPD recipe: {recipe}")
+    if recipe == "native-pg":
+        return
+    expected = {
+        "distillation.distillation_loss.loss_mode": RECIPES[recipe],
+        "distillation.distillation_loss.use_policy_gradient": False,
+        "distillation.distillation_loss.use_task_rewards": recipe == "flash-orm",
+        "distillation.distillation_loss.distillation_loss_coef": 1.0,
+        "distillation.distillation_loss.loss_max_clamp": None,
+        "distillation.distillation_loss.log_prob_min_clamp": None,
+        "actor_rollout_ref.actor.loss_agg_mode": "seq-mean-token-mean",
+        "actor_rollout_ref.actor.strategy": "fsdp",
+        "actor_rollout_ref.actor.ulysses_sequence_parallel_size": 1,
+        "actor_rollout_ref.actor.fsdp_config.ulysses_sequence_parallel_size": 1,
+        "actor_rollout_ref.actor.fsdp_config.pad_to_length": False,
+        "actor_rollout_ref.model.use_fused_kernels": False,
+        "actor_rollout_ref.actor.ppo_epochs": 1,
+        "actor_rollout_ref.actor.use_kl_loss": False,
+        "actor_rollout_ref.actor.entropy_coeff": 0.0,
+        "actor_rollout_ref.rollout.n": 4 if recipe == "flash-orm" else 1,
+        "actor_rollout_ref.rollout.temperature": 1.0,
+        "actor_rollout_ref.rollout.top_p": 1.0,
+        "actor_rollout_ref.rollout.top_k": -1,
+        "actor_rollout_ref.rollout.calculate_log_probs": True,
+        "actor_rollout_ref.rollout.custom.agent_framework.require_single_policy_version": True,
+        "algorithm.rollout_correction.rollout_is": None,
+        "algorithm.rollout_correction.rollout_rs": None,
+        "algorithm.rollout_correction.bypass_mode": False,
+        "algorithm.use_kl_in_reward": False,
+        "algorithm.adv_estimator": "grpo",
+        "trainer.v1.trainer_mode": "sync",
+    }
+    if recipe == "top64-reverse":
+        expected["distillation.distillation_loss.topk"] = 64
+    for key, value in expected.items():
+        if OmegaConf.select(config, key) != value:
+            raise ValueError(f"{recipe} requires {key}={value!r}")
+    if config.actor_rollout_ref.actor.ppo_mini_batch_size != config.data.train_batch_size:
+        raise ValueError("MiMo smoke requires one full optimizer minibatch per rollout batch")
+    if recipe == "flash-orm":
+        loss = config.distillation.distillation_loss
+        recipe_overlay(recipe, orm_alpha=loss.mopd_orm_alpha, is_lower=loss.mopd_is_lower, is_upper=loss.mopd_is_upper)
 
 
 def file_sha256(path: Path) -> str:
@@ -112,7 +194,21 @@ def validate_allocation(allocation: dict, *, target_step: int) -> None:
         raise ValueError("Allocation requires a finite positive budget_usd; external cost accounting remains required")
 
 
-def build_overrides(launch, registry, receipt, allocation, *, run_root, tool_parser, target_step, resume=None):
+def build_overrides(
+    launch,
+    registry,
+    receipt,
+    allocation,
+    *,
+    run_root,
+    tool_parser,
+    target_step,
+    resume=None,
+    recipe="native-pg",
+    orm_alpha=None,
+    is_lower=None,
+    is_upper=None,
+):
     from omegaconf import OmegaConf
 
     from examples.harbor_opd_rl.launch import FRAMEWORK, RECIPE, _overrides
@@ -123,7 +219,9 @@ def build_overrides(launch, registry, receipt, allocation, *, run_root, tool_par
     if not isinstance(tool_parser, str) or not tool_parser.strip():
         raise ValueError("Explicit tool parser is required")
     config = OmegaConf.merge(
-        OmegaConf.load(RECIPE / "base.yaml"), OmegaConf.load(Path(__file__).with_name("mopd.yaml"))
+        OmegaConf.load(RECIPE / "base.yaml"),
+        OmegaConf.load(Path(__file__).with_name("mopd.yaml")),
+        recipe_overlay(recipe, orm_alpha=orm_alpha, is_lower=is_lower, is_upper=is_upper),
     )
     values = {
         "trainer.nnodes": 1,
@@ -151,9 +249,22 @@ def build_overrides(launch, registry, receipt, allocation, *, run_root, tool_par
         values.update({"trainer.resume_mode": "resume_path", "trainer.resume_from_path": str(resume)})
     for key, value in values.items():
         OmegaConf.update(config, key, value, force_add=True)
+    validate_recipe(config, recipe)
     # Resolve interpolation only after all required inputs have been supplied.
     result = list(_overrides(OmegaConf.to_container(config, resolve=True)))
-    result = ["++" + value if value.startswith("distillation.teacher_models.teacher_") else value for value in result]
+    result = [
+        "++" + value
+        if value.startswith(
+            (
+                "distillation.teacher_models.teacher_",
+                "distillation.distillation_loss.mopd_",
+                "distillation.distillation_loss.chunked_topk_chunk_size=",
+                "actor_rollout_ref.actor.fsdp_config.pad_to_length=",
+            )
+        )
+        else value
+        for value in result
+    ]
     # The empty placeholder adds no override; native ppo_trainer supplies it.
     return result
 
@@ -211,6 +322,7 @@ def source_identity(root: Path) -> str:
     paths = []
     for directory in ("uni_agent", "verl/verl", "examples/harbor_mopd", "examples/harbor_opd_rl"):
         paths.extend(p for p in (root / directory).rglob("*") if p.suffix in {".py", ".yaml"} and p.is_file())
+    paths.extend((root / "patches/verl").glob("*.patch"))
     paths.append(root / "examples/harbor/train_m2_online_rl.py")
     return digest({str(path.relative_to(root)): file_sha256(path) for path in sorted(paths)})
 
@@ -324,6 +436,10 @@ def main(argv=None):
     for name in ("launch", "registry", "data-receipt", "allocation", "run-root", "resume-from-path"):
         parser.add_argument(f"--{name}", type=Path)
     parser.add_argument("--tool-parser")
+    parser.add_argument("--recipe", choices=tuple(RECIPES), default="native-pg")
+    parser.add_argument("--orm-alpha", type=float)
+    parser.add_argument("--is-lower", type=float)
+    parser.add_argument("--is-upper", type=float)
     parser.add_argument("--target-step", type=int, default=1)
     parser.add_argument("--execute", action="store_true", help="Run after full preflight; default only validates")
     args = parser.parse_args(argv)
@@ -352,8 +468,13 @@ def main(argv=None):
         tool_parser=args.tool_parser,
         target_step=args.target_step,
         resume=resume,
+        recipe=args.recipe,
+        orm_alpha=args.orm_alpha,
+        is_lower=args.is_lower,
+        is_upper=args.is_upper,
     )
     config = compose_config(overrides)
+    validate_recipe(config, args.recipe)
     from verl.utils.config import omega_conf_to_dataclass
 
     omega_conf_to_dataclass(config.distillation)  # validates actual native pool/route semantics
@@ -374,6 +495,7 @@ def main(argv=None):
         )
     contract = {
         "schema": "harbor-mopd-run-contract-v1",
+        "recipe": args.recipe,
         "config_sha256": digest(semantic_config(config)),
         "registry": registry,
         "local_model_identity": identities,

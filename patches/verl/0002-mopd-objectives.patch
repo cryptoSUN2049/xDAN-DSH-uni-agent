@@ -1,0 +1,354 @@
+diff --git a/verl/trainer/distillation/losses.py b/verl/trainer/distillation/losses.py
+index eb1e1bbd..7f945283 100644
+--- a/verl/trainer/distillation/losses.py
++++ b/verl/trainer/distillation/losses.py
+@@ -134,6 +134,11 @@ def compute_topk_loss(
+     - student_mass: (bsz, seqlen/cp_size)
+     - teacher_mass: (bsz, seqlen/cp_size)
+     """
++    if distillation_config.distillation_loss.loss_mode == "mopd_top64_reverse":
++        from verl.trainer.distillation.mopd import topk_logits
++
++        return topk_logits(config, distillation_config, data, student_logits, data_format)
++
+     match config.strategy:
+         # VeOmni uses FSDP2 internally, so its loss computation is identical to FSDP.
+         case "fsdp" | "veomni":
+@@ -204,6 +209,12 @@ def distillation_ppo_loss(
+     if student_logits is not None:
+         return compute_topk_loss(config, distillation_config, data, student_logits, data_format)
+
++    # Exact MiMo objectives have their own PG/direct loss; never add PPO again.
++    from verl.trainer.distillation.mopd import MODES, objective_loss
++
++    if distillation_config.distillation_loss.loss_mode in MODES:
++        return objective_loss(config, distillation_config, model_output, data)
++
+     # Called as final policy loss
+     distillation_loss_config = distillation_config.distillation_loss
+     distill_loss, distill_metrics = distillation_loss(config, distillation_config, model_output, data)
+@@ -403,3 +414,10 @@ def compute_distillation_loss_reverse_kl_estimator(
+         "distillation/abs_loss": Metric(AggregationType.MEAN, distillation_losses[response_mask_bool].abs().mean()),
+     }
+     return distillation_losses, metrics
++
++
++@register_distillation_loss(DistillationLossSettings(names=["mopd_pg_sequence", "mopd_flash_orm"], use_estimator=True))
++@register_distillation_loss(DistillationLossSettings(names="mopd_top64_reverse", use_topk=True))
++def compute_mopd_registered(config, distillation_config, model_output, data):
++    """These exact objectives must pass through distillation_ppo_loss dispatch."""
++    raise RuntimeError("MiMo objectives require the native final-objective dispatcher")
+diff --git a/verl/trainer/ppo/ray_trainer.py b/verl/trainer/ppo/ray_trainer.py
+index 9352bcfa..020ce372 100644
+--- a/verl/trainer/ppo/ray_trainer.py
++++ b/verl/trainer/ppo/ray_trainer.py
+@@ -1342,8 +1342,10 @@ class RayPPOTrainer:
+             else False
+         )
+         distillation_only = False  # distillation_only flag means we can skip policy loss and reduce mem footprint
++        mopd_exact_objective = False
+         if is_distillation_enabled(self.config.get("distillation")):
+             distillation_loss_cfg = self.distillation_config.distillation_loss
++            mopd_exact_objective = distillation_loss_cfg.loss_mode.startswith("mopd_")
+             distillation_only = (
+                 distillation_use_topk
+                 and not distillation_loss_cfg.use_task_rewards
+@@ -1359,6 +1361,7 @@ class RayPPOTrainer:
+             calculate_entropy=calculate_entropy,
+             distillation_use_topk=distillation_use_topk,
+             distillation_only=distillation_only,
++            mopd_exact_objective=mopd_exact_objective,
+             global_batch_size=ppo_mini_batch_size,
+             mini_batch_size=ppo_mini_batch_size,
+             epochs=ppo_epochs,
+diff --git a/verl/trainer/ppo/v1/trainer_base.py b/verl/trainer/ppo/v1/trainer_base.py
+index 6e5b286e..d10b9cf4 100644
+--- a/verl/trainer/ppo/v1/trainer_base.py
++++ b/verl/trainer/ppo/v1/trainer_base.py
+@@ -1779,8 +1779,10 @@ class PPOTrainer(ABC):
+             else False
+         )
+         distillation_only = False  # distillation_only flag means we can skip policy loss and reduce mem footprint
++        mopd_exact_objective = False
+         if is_distillation_enabled(self.config.get("distillation")):
+             distillation_loss_cfg = self.distillation_config.distillation_loss
++            mopd_exact_objective = distillation_loss_cfg.loss_mode.startswith("mopd_")
+             distillation_only = (
+                 distillation_use_topk
+                 and not distillation_loss_cfg.use_task_rewards
+@@ -1790,6 +1792,7 @@ class PPOTrainer(ABC):
+             "calculate_entropy": calculate_entropy,
+             "distillation_use_topk": distillation_use_topk,
+             "distillation_only": distillation_only,
++            "mopd_exact_objective": mopd_exact_objective,
+             "global_batch_size": ppo_mini_batch_size,
+             "mini_batch_size": ppo_mini_batch_size,
+             "epochs": self.config.actor_rollout_ref.actor.ppo_epochs,
+diff --git a/verl/workers/config/distillation.py b/verl/workers/config/distillation.py
+index b58f8bcc..8316fc10 100644
+--- a/verl/workers/config/distillation.py
++++ b/verl/workers/config/distillation.py
+@@ -13,6 +13,7 @@
+ # limitations under the License.
+
+ import logging
++import math
+ import os
+ from dataclasses import dataclass, field
+ from typing import Optional
+@@ -81,6 +82,12 @@ class DistillationLossConfig(BaseConfig):
+     # overhead (saved-tensor total stays constant either way).
+     chunked_topk_chunk_size: int = 4096
+
++    # Explicit MiMo recipe fields, not published production defaults.
++    mopd_advantage_clip: float = 5.0
++    mopd_orm_alpha: Optional[float] = None
++    mopd_is_lower: Optional[float] = None
++    mopd_is_upper: Optional[float] = None
++
+     use_policy_gradient: bool = True
+     policy_loss_mode: str = "vanilla"
+     clip_ratio: float = 0.2
+@@ -103,6 +110,30 @@ class DistillationLossConfig(BaseConfig):
+
+         self.loss_settings: DistillationLossSettings = get_distillation_loss_settings(self.loss_mode)
+
++        if self.loss_mode.startswith("mopd_"):
++            if self.use_policy_gradient:
++                raise ValueError("MiMo exact objectives require use_policy_gradient=false; no second PPO")
++            if self.loss_max_clamp is not None or self.log_prob_min_clamp is not None:
++                raise ValueError("MiMo exact objectives require both native clamps=null")
++            if self.distillation_loss_coef != 1.0:
++                raise ValueError("MiMo exact objectives require distillation_loss_coef=1")
++            if self.loss_mode == "mopd_top64_reverse" and self.topk != 64:
++                raise ValueError("MiMo corrected reverse requires topk=64")
++            if self.loss_mode == "mopd_pg_sequence" and (
++                not math.isfinite(self.mopd_advantage_clip) or self.mopd_advantage_clip <= 0
++            ):
++                raise ValueError("mopd_advantage_clip must be finite and positive")
++            if self.loss_mode == "mopd_flash_orm":
++                parameters = (self.mopd_orm_alpha, self.mopd_is_lower, self.mopd_is_upper)
++                if any(value is None or not math.isfinite(value) for value in parameters):
++                    raise ValueError("Flash requires explicit finite alpha and IS lower/upper")
++                if self.mopd_orm_alpha < 0 or not 0 < self.mopd_is_lower <= 1 <= self.mopd_is_upper:
++                    raise ValueError("Flash requires alpha>=0 and 0<lower<=1<=upper")
++                if not self.use_task_rewards:
++                    raise ValueError("Flash requires use_task_rewards=true")
++            elif self.use_task_rewards:
++                raise ValueError("Pure MiMo objectives require use_task_rewards=false")
++
+         if self.policy_loss_mode != "vanilla":
+             raise NotImplementedError(
+                 f"Only vanilla policy loss is currently supported when use_policy_gradient is True, "
+diff --git a/verl/workers/engine/fsdp/transformer_impl.py b/verl/workers/engine/fsdp/transformer_impl.py
+index b385c9bb..8b82e518 100644
+--- a/verl/workers/engine/fsdp/transformer_impl.py
++++ b/verl/workers/engine/fsdp/transformer_impl.py
+@@ -728,6 +728,16 @@ class FSDPEngine(BaseEngine):
+         )
+         tu.assign_non_tensor(data, batch_num_tokens=batch_num_tokens.item())
+         tu.assign_non_tensor(data, dp_size=self.get_data_parallel_size())
++        if tu.get_non_tensor_data(data, "mopd_exact_objective", False):
++            # Count BEFORE microbatch splitting; padded empty trajectories contribute
++            # neither to the sequence denominator nor to the gradient.
++            from verl.trainer.distillation.mopd import valid_sequence_count
++
++            valid_sequences = valid_sequence_count(data["response_mask"]).to(get_device_id())
++            torch.distributed.all_reduce(
++                valid_sequences, op=torch.distributed.ReduceOp.SUM, group=self.get_data_parallel_group()
++            )
++            tu.assign_non_tensor(data, global_valid_sequences=valid_sequences.item())
+
+         micro_batches, indices = prepare_micro_batches(
+             data=data, dp_group=self.get_data_parallel_group(), same_micro_num_in_dp=True
+@@ -1152,6 +1162,11 @@ class FSDPEngineWithLMHead(FSDPEngine):
+         use_remove_padding = tu.get_non_tensor_data(data=micro_batch, key="use_remove_padding", default=True)
+         pad_mode = tu.get_non_tensor_data(data=micro_batch, key="pad_mode", default=DatasetPadMode.NO_PADDING)
+         use_fused_kernels = tu.get_non_tensor_data(data=micro_batch, key="use_fused_kernels", default=False)
++        if tu.get_non_tensor_data(micro_batch, "mopd_exact_objective", False):
++            if use_fused_kernels or self.ulysses_sequence_parallel_size != 1:
++                raise ValueError("MiMo objectives require unfused FSDP with SP=1")
++            if getattr(self.engine_config, "tensor_parallel_size", 1) != 1:
++                raise ValueError("MiMo objectives require TP=1")
+         temperature = micro_batch["temperature"]
+         temperature_item = temperature
+         temperature_is_one = _is_scalar_unit_temperature(temperature)
+diff --git a/verl/trainer/distillation/mopd.py b/verl/trainer/distillation/mopd.py
+new file mode 100644
+index 00000000..e53b10d9
+--- /dev/null
++++ b/verl/trainer/distillation/mopd.py
+@@ -0,0 +1,173 @@
++"""Explicit MiMo objective adapters for uni-agent's version-pinned VERL patch.
++
++The mathematical kernels live in uni_agent.training.mopd_objectives. Importing
++an unpatched upstream VERL does not enable these modes.
++"""
++
++import torch
++
++from verl.utils import tensordict_utils as tu
++from verl.utils.metric import AggregationType, Metric
++from verl.workers.utils.padding import no_padding_2_padding
++
++MODES = {"mopd_pg_sequence", "mopd_top64_reverse", "mopd_flash_orm"}
++
++
++def valid_sequence_count(mask):
++    """Local valid trajectories before microbatch partition, excluding empty pads."""
++    values = mask.values() if mask.is_nested else mask
++    if not ((values == 0) | (values == 1)).all():
++        raise ValueError("MiMo requires binary trajectory masks")
++    if mask.is_nested:
++        return torch.stack([row.bool().any() for row in mask.unbind()]).sum()
++    return mask.bool().any(-1).sum()
++
++
++def validate_runtime(config, data):
++    valid_sequence_count(data["response_mask"])
++    if config.strategy not in ("fsdp", "fsdp2"):
++        raise NotImplementedError("MiMo objectives require FSDP")
++    if config.entropy_coeff != 0 or config.use_kl_loss:
++        raise ValueError("MiMo objectives forbid unimplemented entropy/reference KL terms")
++    if config.loss_agg_mode != "seq-mean-token-mean":
++        raise ValueError("MiMo objectives require seq-mean-token-mean")
++    for owner in (config, getattr(config, "engine", None), getattr(config, "model_config", None)):
++        if owner is None:
++            continue
++        if getattr(owner, "use_fused_kernels", False):
++            raise ValueError("MiMo objectives require use_fused_kernels=false")
++        if getattr(owner, "ulysses_sequence_parallel_size", 1) != 1:
++            raise ValueError("MiMo objectives require SP=1")
++        if getattr(owner, "tensor_parallel_size", 1) != 1:
++            raise ValueError("MiMo objectives require TP=1")
++    if tu.get_non_tensor_data(data, "use_fused_kernels", False):
++        raise ValueError("MiMo objectives require use_fused_kernels=false")
++    if tu.get_non_tensor_data(data, "sp_size", 1) != 1:
++        raise ValueError("MiMo objectives require SP=1")
++    temperature = tu.get_non_tensor_data(data, "temperature", 1.0)
++    if not torch.as_tensor(temperature).eq(1.0).all():
++        raise ValueError("MiMo initial recipes require temperature=1")
++    if "rollout_is_weights" in data:
++        raise ValueError("MiMo objectives forbid upstream rollout importance weights")
++
++
++def _padded(tensor):
++    return tensor.to_padded_tensor(0.0) if tensor.is_nested else tensor
++
++
++def topk_logits(config, distillation_config, data, student_logits, data_format):
++    from uni_agent.training.mopd_objectives import corrected_topk_reverse
++
++    validate_runtime(config, data)
++    if data_format not in ("thd", "bshd"):
++        raise ValueError("MiMo top64 supports only THD/BSHD")
++    from verl.utils.ulysses import get_ulysses_sequence_parallel_world_size
++
++    if get_ulysses_sequence_parallel_world_size() != 1:
++        raise ValueError("MiMo top64 requires SP=1")
++    teacher = data["teacher_logprobs"]
++    ids = data["teacher_ids"]
++    if not teacher.is_nested or not ids.is_nested:
++        raise ValueError("MiMo top64 requires native nested teacher payload")
++    if not torch.equal(teacher.offsets(), ids.offsets()):
++        raise ValueError("Teacher probability/candidate sequence offsets differ")
++    if teacher.shape[-1] != 64 or ids.shape[-1] != 64:
++        raise ValueError("MiMo top64 requires exactly 64 candidates")
++    # Teacher payload indexes NEXT-token distributions over the full packed
++    # sequence. Only response predictions are meaningful; final dummy rows and
++    # prompt/tool observations must not be validated as teacher candidates.
++    masks = []
++    response_masks = data["response_mask"].unbind()
++    prompts = data["prompts"]
++    prompt_lengths = (
++        prompts.offsets().diff() if prompts.is_nested else data["attention_mask"][:, : prompts.shape[1]].sum(-1)
++    )
++    responses = data["responses"]
++    response_lengths = (
++        responses.offsets().diff() if responses.is_nested else data["attention_mask"][:, prompts.shape[1] :].sum(-1)
++    )
++    for row, mask, plen, rlen in zip(teacher.unbind(), response_masks, prompt_lengths, response_lengths, strict=True):
++        if row.shape[0] != int(plen) + int(rlen):
++            raise ValueError("Teacher sequence length does not match prompt plus response")
++        valid = torch.zeros(row.shape[0], dtype=torch.bool, device=row.device)
++        start, count = int(plen) - 1, int(rlen)
++        if start < 0 or start + count >= len(valid):
++            raise ValueError("Invalid prompt/response lengths for next-token alignment")
++        valid[start : start + count] = mask[:count].bool()
++        masks.append(valid)
++    if student_logits.shape[:2] == (1, teacher.values().shape[0]):
++        logq, candidates = teacher.values()[None], ids.values()[None]
++        valid = torch.cat(masks)[None]
++    elif data_format == "bshd":
++        # Explicit row padding avoids jagged to_padded_tensor shape metadata
++        # differences between PyTorch releases and preserves [B, S, K].
++        logq = torch.nn.utils.rnn.pad_sequence(list(teacher.unbind()), batch_first=True)
++        candidates = torch.nn.utils.rnn.pad_sequence(list(ids.unbind()), batch_first=True)
++        valid = torch.nn.utils.rnn.pad_sequence(masks, batch_first=True)
++    else:
++        raise ValueError("Student/teacher packed shape mismatch")
++    losses, metrics = corrected_topk_reverse(
++        student_logits,
++        candidates,
++        logq,
++        valid,
++        chunk_size=distillation_config.distillation_loss.chunked_topk_chunk_size,
++    )
++    return {
++        "distillation_losses": losses,
++        "student_mass": metrics["student_mass"],
++        "teacher_mass": metrics["teacher_mass"],
++    }
++
++
++def objective_loss(config, distillation_config, model_output, data):
++    from uni_agent.training.mopd_objectives import (
++        flash_orm_token_loss,
++        pg_sequence_token_loss,
++        sequence_mean,
++    )
++
++    validate_runtime(config, data)
++    lc = distillation_config.distillation_loss
++    mask = _padded(data["response_mask"]).bool()
++    global_b = tu.get_non_tensor_data(data, "global_valid_sequences", None)
++    if global_b is None:
++        raise ValueError("MiMo loss requires pre-microbatch global_valid_sequences")
++    dp_size = tu.get_non_tensor_data(data, "dp_size", 1)
++    # Diagnostic means are local microbatch statistics, not token-weighted
++    # global estimates when DP ranks or microbatches have unequal lengths.
++    metrics = {}
++    if lc.loss_mode == "mopd_top64_reverse":
++        tokens = no_padding_2_padding(model_output["distillation_losses"], data)
++        for name in ("student_mass", "teacher_mass"):
++            mass = no_padding_2_padding(model_output[name], data)[mask]
++            metrics["distillation/microbatch/" + name] = mass.mean().detach() if mass.numel() else 0.0
++    else:
++        logp = no_padding_2_padding(model_output["log_probs"], data)
++        logq = no_padding_2_padding(data["teacher_logprobs"], data).squeeze(-1)
++        if lc.loss_mode == "mopd_pg_sequence":
++            tokens, details = pg_sequence_token_loss(logp, logq, mask, advantage_clip=lc.mopd_advantage_clip)
++        elif lc.loss_mode == "mopd_flash_orm":
++            if "rollout_log_probs" not in data:
++                raise ValueError("Flash requires actual rollout_log_probs")
++            tokens, details = flash_orm_token_loss(
++                logp,
++                logq,
++                _padded(data["rollout_log_probs"]),
++                _padded(data["advantages"]),
++                mask,
++                alpha=lc.mopd_orm_alpha,
++                is_lower=lc.mopd_is_lower,
++                is_upper=lc.mopd_is_upper,
++            )
++        else:
++            raise ValueError("Unknown MiMo objective")
++        # Tensor diagnostics remain detached; do not serialize token arrays as
++        # scalar metrics. The framework persists original per-token evidence.
++        for name, value in details.items():
++            if isinstance(value, torch.Tensor) and value.ndim == 0:
++                metrics["distillation/microbatch/" + name] = value.detach()
++    loss = sequence_mean(tokens, mask, global_num_sequences=global_b, dp_size=dp_size)
++    metrics["distillation/loss"] = Metric(value=loss.detach(), aggregation=AggregationType.SUM)
++    metrics["distillation/valid_sequences"] = Metric(value=valid_sequence_count(mask), aggregation=AggregationType.SUM)
++    return loss, metrics

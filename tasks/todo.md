@@ -730,3 +730,15 @@ Review：没有完整训练启动后卡在 Modal 的证据，不将组件通过�
 Review: Tinker candidate retained only as reference. No new MOPD cloud run has been submitted on either backend.
 
 VERL MOPD implementation review (2026-09-22): native code unchanged; strict task/trajectory cardinality, actual current-probability PG gradient tests and explicit resume contract verified. Real local4train2validation data prepared; old-validation contamination disclosed. Whole-tree Ruff0.13.3 checks and wheel/source match pass. GPU acceptance remains pending3GPU allocation, valid teacher exports/token mapping, runtime identity and independent budget. No new cloud submission/deployment/cancellation.
+
+## MiMo objective extensions — 2026-09-22
+- [x] Read original equations and inspect pinned native TopK/PG/rollout correction/reduction hooks.
+- [x] Write concrete design docs/verl-mopd/mimo-objectives-design.md including user-added trajectory-length weighting.
+- [x] Confirm new objective/patch design: user explicitly requested full implementation through real validation on 2026-09-22.
+- [x] M1 sequence reduction + paper PG reference + scalar diagnostics; tokenizer-specific real length audit remains pending.
+- [x] M2 corrected teacher-Top64 reverse kernel/native integration, CPU gradients verified.
+- [x] M3 Flash ORM advantage + current/sampling IS zero-outside + N4 contracts, CPU verified.
+- [ ] M4 real GPU update/save/resume after allocation and teacher readiness.
+Review: native topk dispatch hardcodes forward-KL; native hybrid is not the Flash combined-advantage surrogate; tokenmean weights are not measured gradient shares. No new training or code implementation in this design step.
+
+MiMo review: 551 integrated CPU tests plus125 final focused pass (557 unique). New math/native/launcher coverage90% aggregate; three native objective AdamW/cursor disk resumes exactly equal continuous2updates. Wheel includes current math/framework. Fixed upstream plus tracked patches retained. No GPU training or capability pass; independent resource/teacher/data work remains.
