@@ -48,6 +48,7 @@
 - [x] 最终125项定向恢复/diagnostics测试、wheel源码一致与摘要；提交状态以git log核对。
 - [ ] 获得独立节点、唯一操作者排期和GPU/Modal费用上限。
 - [ ] 冻结同源S0，领域RL数据与无污染held-out，训练/资格评测两位专家；完成HF导出与实际加载证明。
+  领域候选与训练合同已写入 `domain-expert-rl-roadmap.md`；当前仍只有4train+2工程验证，不构成教师训练集。
 - [ ] 实机profile后逐配方运行rollout→teacher→update→save→新进程resume→下一批update→资源清理。
 - [ ] 领域能力、遗忘、长度/成本的配对实验；9B通过后再定27B资源，不声称私有生产配方完整复原。
 

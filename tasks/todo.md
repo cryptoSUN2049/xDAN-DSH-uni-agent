@@ -742,3 +742,14 @@ VERL MOPD implementation review (2026-09-22): native code unchanged; strict task
 Review: native topk dispatch hardcodes forward-KL; native hybrid is not the Flash combined-advantage surrogate; tokenmean weights are not measured gradient shares. No new training or code implementation in this design step.
 
 MiMo review: 551 integrated CPU tests plus125 final focused pass (557 unique). New math/native/launcher coverage90% aggregate; three native objective AdamW/cursor disk resumes exactly equal continuous2updates. Wheel includes current math/framework. Fixed upstream plus tracked patches retained. No GPU training or capability pass; independent resource/teacher/data work remains.
+
+
+## 领域 RL 专家培养调研 — 2026-09-22
+- [x] 核对 MiMo V2.5/V2.6 官方来源与教师披露边界。
+- [x] 深查 coding、可验证推理与跨行业任务环境，区分训练资产和评测资产。
+- [x] 输出领域目标、奖励、数据划分、教师资格及 MOPD 实验路线。
+- [x] 核验引用和当前资产边界，更新本 worktree 交接。
+
+范围：文献与方案交付，不启动新训练、不部署或取消旧作业；新专家建设实施另按设计与资源授权推进。
+
+Review（2026-09-22）：新增 `docs/verl-mopd/domain-expert-rl-roadmap.md`，覆盖同源教师定义、公开资产、coding/工具/可验证推理/IF/网络安全/视觉编码/SQL/零售/航空/电信/金融/制造领域目标、奖励、验证器、数据桶、资格门及 9B→27B 路线。未启动训练或云资源；Exa DNS 不可用，正文仅引用已通过 gstack browse 读取的官方来源。
