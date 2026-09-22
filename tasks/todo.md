@@ -720,9 +720,13 @@ Review：没有完整训练启动后卡在 Modal 的证据，不将组件通过�
 ## VERL MOPD — 2026-09-22
 - [x] User chose VERL; create isolated worktree-verl-mopd from7897cad.
 - [x] Read latest handoff, inspect native MOPD/scoring/gradient path, write docs/verl-mopd/design.md.
-- [ ] Implement minimal domain/registry/evidence integration after design review.
-- [ ] Pass CPU tests and independent review.
+- [x] User approved concrete PG-MOPD design; implement data/registry/native-config/evidence/strict-chain integration.
+- [x] Reuse six audited local tasks; prepare4train2engineering-validation with explicit domain routes.
+- [x] Independent review corrected task-vs-trajectory batching and native scheduler/transport assumptions.
+- [x] Pass CPU tests and independent review:475 integrated regression +59 final focused,476 unique; new launcher/data line coverage92%.
 - [ ] Freeze loadable teachers, GPU allocation, unique run identity and budget.
 - [ ] Execute real two-teacher update/save/resume and acceptance report.
 
 Review: Tinker candidate retained only as reference. No new MOPD cloud run has been submitted on either backend.
+
+VERL MOPD implementation review (2026-09-22): native code unchanged; strict task/trajectory cardinality, actual current-probability PG gradient tests and explicit resume contract verified. Real local4train2validation data prepared; old-validation contamination disclosed. Whole-tree Ruff0.13.3 checks and wheel/source match pass. GPU acceptance remains pending3GPU allocation, valid teacher exports/token mapping, runtime identity and independent budget. No new cloud submission/deployment/cancellation.

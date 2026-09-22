@@ -348,6 +348,7 @@ class GatewayAgentFramework(AgentFramework):
         require_verifier_reward: bool = False,
         require_trajectory_dump: bool = False,
         require_version_evidence: bool = False,
+        require_single_trajectory_per_session: bool = False,
         trajectory_postprocessor_pass_context: bool = False,
         trajectory_postprocessor: TrajectoryPostprocessor | None = None,
         trajectory_postprocessor_kwargs: dict[str, object] | None = None,
@@ -399,6 +400,14 @@ class GatewayAgentFramework(AgentFramework):
         if require_version_evidence and not fail_on_rollout_error:
             raise ValueError("require_version_evidence requires fail_on_rollout_error")
         self._require_version_evidence = require_version_evidence
+        if type(require_single_trajectory_per_session) is not bool:
+            raise ValueError("require_single_trajectory_per_session must be a bool")
+        if require_single_trajectory_per_session:
+            if not fail_on_rollout_error:
+                raise ValueError("require_single_trajectory_per_session requires fail_on_rollout_error")
+            if any(runner.trajectory_selection != "all" for runner in runner_registry.values()):
+                raise ValueError("require_single_trajectory_per_session requires trajectory_selection='all'")
+        self._require_single_trajectory_per_session = require_single_trajectory_per_session
         self._trajectory_postprocessor_pass_context = trajectory_postprocessor_pass_context
         self._trajectory_postprocessor = trajectory_postprocessor
         self._trajectory_postprocessor_kwargs = trajectory_postprocessor_kwargs or {}
@@ -540,6 +549,7 @@ class GatewayAgentFramework(AgentFramework):
             require_verifier_reward=require_verifier_reward,
             require_trajectory_dump=require_trajectory_dump,
             require_version_evidence=require_version_evidence,
+            require_single_trajectory_per_session=af_cfg.get("require_single_trajectory_per_session", False),
             trajectory_postprocessor_pass_context=postprocessor_pass_context,
             trajectory_postprocessor=trajectory_postprocessor,
             trajectory_postprocessor_kwargs=trajectory_postprocessor_kwargs,
@@ -1212,6 +1222,15 @@ class GatewayAgentFramework(AgentFramework):
                     context=runner_context,
                 )
 
+            if self._require_single_trajectory_per_session and len(session_trajectories) != 1:
+                # One task must mean one optimizer example for recipes whose
+                # full-batch minibatch size is expressed in tasks. Never select
+                # a longest chain or silently discard a valid additional chain.
+                raise ValueError(
+                    "require_single_trajectory_per_session requires exactly one admitted trajectory; "
+                    f"session {session_id} produced {len(session_trajectories)} after postprocessing"
+                )
+
             if not session_trajectories:
                 session_trace.finish(
                     runner_name=runner_name,
@@ -1295,11 +1314,39 @@ class GatewayAgentFramework(AgentFramework):
     ) -> list[Trajectory]:
         """Score every admitted chain using VERL's already shifted full-sequence contract."""
         manager = self.teacher_server_manager
+        teacher_domain = sample_fields.get("teacher_domain")
+        if teacher_domain is not None:
+            if hasattr(teacher_domain, "item"):
+                teacher_domain = teacher_domain.item()
+            trajectories = [
+                replace(trajectory, extra_fields={**trajectory.extra_fields, "teacher_domain": teacher_domain})
+                for trajectory in trajectories
+            ]
         if manager is None or validate:
             return trajectories
         routing_key = sample_fields.get(manager.teacher_key)
         if routing_key is not None and hasattr(routing_key, "item"):
             routing_key = routing_key.item()
+        # Use the scoring manager's own resolver/config, never a dataset-supplied
+        # checkpoint label. Native scoring currently returns tensors only: this
+        # proves the configured route, NOT the weights loaded by a remote worker.
+        identity = None
+        model_configs = getattr(manager, "teacher_model_configs", None)
+        if model_configs is not None:
+            resolved_key = manager._resolve_teacher_key(routing_key)
+            model_path = model_configs[resolved_key].model_path
+            if not isinstance(model_path, str) or not model_path.strip():
+                raise ValueError("Resolved native teacher must have a nonempty model_path")
+            identity = {
+                "routing_field": manager.teacher_key,
+                "requested_routing_key": routing_key,
+                "resolved_teacher_key": resolved_key,
+                "configured_model_path": model_path,
+                "identity_source": "native_manager_configuration",
+                "loaded_weights_verified": False,
+            }
+        elif manager.teacher_key == "teacher_domain":
+            raise ValueError("MOPD evidence requires native teacher routing configuration")
         scored = []
         for trajectory in trajectories:
             sequence_ids = trajectory.prompt_ids + trajectory.response_ids
@@ -1326,6 +1373,26 @@ class GatewayAgentFramework(AgentFramework):
                 raise ValueError("Teacher outputs must be finite aligned [sequence_length, K] tensors with integer IDs")
             # VERL already shifts next-token scores and appends a dummy tail row.
             # Keep all prefix/tool positions; the original action mask selects loss tokens.
+            evidence = {}
+            if identity is not None:
+
+                def token_hash(values):
+                    payload = json.dumps([int(value) for value in values], separators=(",", ":")).encode("utf-8")
+                    return "sha256:" + hashlib.sha256(payload).hexdigest()
+
+                evidence["teacher_scoring_evidence"] = {
+                    "schema": "uni-agent.teacher-scoring-evidence.v1",
+                    **identity,
+                    "token_hash_encoding": "compact-json-integer-array-utf8",
+                    "prompt_token_ids_sha256": token_hash(trajectory.prompt_ids),
+                    "sequence_token_ids_sha256": token_hash(sequence_ids),
+                    "response_mask_sha256": token_hash(trajectory.response_mask),
+                    "sequence_length": len(sequence_ids),
+                    "assistant_token_count": sum(trajectory.response_mask),
+                    "teacher_topk": teacher_ids.shape[1],
+                    "alignment": "native-next-token-shifted-with-dummy-tail",
+                    "multimodal_payload_bound": not bool(trajectory.multi_modal_data),
+                }
             scored.append(
                 replace(
                     trajectory,
@@ -1333,6 +1400,7 @@ class GatewayAgentFramework(AgentFramework):
                         **trajectory.extra_fields,
                         "teacher_ids": teacher_ids,
                         "teacher_logprobs": teacher_logprobs,
+                        **evidence,
                     },
                 )
             )
@@ -1426,6 +1494,10 @@ class GatewayAgentFramework(AgentFramework):
                 arrays[f"traj{i}_response_mask"] = np.asarray(traj.response_mask, dtype=np.int8)
                 if traj.response_logprobs is not None:
                     arrays[f"traj{i}_response_logprobs"] = np.asarray(traj.response_logprobs, dtype=np.float32)
+                for key in ("teacher_ids", "teacher_logprobs"):
+                    value = traj.extra_fields.get(key)
+                    if value is not None:
+                        arrays[f"traj{i}_{key}"] = value.detach().cpu().numpy()
 
             buf = io.BytesIO()
             np.savez_compressed(buf, **arrays)
@@ -1486,6 +1558,12 @@ class GatewayAgentFramework(AgentFramework):
             "reward_extra_info": dict(traj.reward_metrics),
             # Retain a read-compatible DSH evidence projection in schema 2 dumps.
             **({"reward_info": deepcopy(extra["dsh_reward_info"])} if "dsh_reward_info" in extra else {}),
+            **({"teacher_domain": extra["teacher_domain"]} if "teacher_domain" in extra else {}),
+            **(
+                {"teacher_scoring_evidence": deepcopy(extra["teacher_scoring_evidence"])}
+                if "teacher_scoring_evidence" in extra
+                else {}
+            ),
             "materialization_reason": extra.get("materialization_reason"),
             **(
                 {
@@ -1746,6 +1824,7 @@ class GatewayAgentFramework(AgentFramework):
             "uid",
             "raw_prompt",
             "data_source",
+            "teacher_domain",
             "reward_model",
             "extra_info",
             "tools_kwargs",

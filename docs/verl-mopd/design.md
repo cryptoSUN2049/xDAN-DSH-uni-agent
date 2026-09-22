@@ -55,7 +55,7 @@ L = sum(m_t * ell_t) / sum(m_t)
 
 Current native `vanilla` policy loss includes PPO ratio clipping and default dual clip 3. This is not the simple IS objective used in the Tinker candidate. Native k1 uses current actor logprobs to form a detached advantage; it does not freeze the rollout logprob difference across repeated actor updates. The old-policy anchor is normally recomputed; rollout correction/bypass settings must be explicit.
 
-First engineering recipe: `loss_mode=k1`, `use_policy_gradient=true`, `use_task_rewards=false`, `policy_loss_mode=vanilla`, explicit `loss_max_clamp=5`, explicit PPO/dual-clip settings, `loss_agg_mode=token-mean`, `ppo_epochs=1`, one optimizer minibatch spanning the rollout batch. Temperature 1, no top-p/top-k truncation. N=1 is a candidate for pure OPD engineering smoke; it is valid without a group-relative task reward. Fix the final N and batching contract before a real run.
+First engineering recipe: `loss_mode=k1`, `use_policy_gradient=true`, `use_task_rewards=false`, `policy_loss_mode=vanilla`, explicit `loss_max_clamp=5`, explicit PPO/dual-clip settings, `loss_agg_mode=token-mean`, `ppo_epochs=1`, one optimizer minibatch spanning the rollout batch; synchronous V1 trainer and exactly one admitted trajectory per task. Temperature 1, no top-p/top-k truncation. N=1 is a candidate for pure OPD engineering smoke; it is valid without a group-relative task reward. Fix the final N and batching contract before a real run.
 
 `use_task_rewards=false` removes task-reward PPO from the final gradient; keep verifier results as diagnostics. In this native pure-OPD mode, `distillation_loss_coef` is effectively 1; it is not a usable strength knob. Real gradient tests must verify that task-reward changes do not change pure OPD gradients.
 
@@ -94,3 +94,7 @@ No new VERL training or deployment has been submitted. New MOPD resource/budget 
 - https://github.com/verl-project/verl/blob/main/docs/algo/opd.md (current documentation verified with Context7)
 - Local pinned `verl/verl/trainer/distillation/losses.py`, `verl/verl/trainer/ppo/core_algos.py`, `verl/verl/experimental/teacher_loop/teacher_manager.py`.
 - Native examples: `verl/examples/on_policy_distillation_trainer/run_qwen3_8b_mopd_fsdp.sh` and its VeOmni counterpart.
+
+## Approved implementation refinements (2026-09-22)
+
+User approved implementation. First smoke uses native sync training, constant LR with zero warmup, four unique training tasks and an opt-in single-admitted-trajectory guard. Native trainer overwrites optimizer horizon and forces checkpoint transport naive; these behaviors are reflected explicitly in the configuration. Distillation dual clip 3 is the pinned native fallback, not a supported DistillationLossConfig field. See runbook.md for exact inputs, commands and remaining GPU evidence.

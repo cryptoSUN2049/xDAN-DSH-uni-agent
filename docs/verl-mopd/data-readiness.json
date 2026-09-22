@@ -1,0 +1,248 @@
+{
+  "schema": "harbor-mopd-data-readiness-v1",
+  "checked_at_utc": "2026-09-22T04:11:38.171090+00:00",
+  "status": "local_real_task_parquet_prepared_and_revalidated",
+  "purpose": "engineering_smoke_not_capability_evaluation",
+  "preparation_backend": "VERL Harbor parquet using existing build_harbor_dataset and new explicit-domain join",
+  "source_bundle": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-mopd/outputs/mopd-acceptance-bundle",
+  "source_manifest_scope": "engineering smoke; validation tasks are from historical train pool, not a generalization benchmark",
+  "historical_audit": {
+    "original_audit_sha256": "22cc4b305fafbe482c71c7fe6de29b96b7c7ce70d5f41af22355280245816bfb",
+    "domain_manifest_sha256": {
+      "swe": "b4a1e1c31ade00bebd5b8180e4d0324fd2a12c1ae3380d544c85f09dcdf6b8e8",
+      "terminal": "f9d9e3aa3f1041bc0d22e696b8d0ed53bde328d60ad61bebf9315aa31201bcde"
+    },
+    "verified_task_count": 6,
+    "verified_historical_nop_oracle_rows": 12,
+    "verification": "Exact relative-file-path -> SHA256 maps of all source task files equal audit.provenance.tasks; each task has exactly one passed nop=0 and one passed oracle=1 with cleanup_confirmed and no error.",
+    "rerun": false,
+    "note": "No sandbox, verifier or model ran during this preparation. Historical audit fingerprints cover content and file paths, not permissions.",
+    "tasks": [
+      {
+        "task_id": "brazilian-utils__brutils-python-125",
+        "audit_file_count": 9,
+        "nop_reward": 0.0,
+        "oracle_reward": 1.0,
+        "audit_content_match": true
+      },
+      {
+        "task_id": "asottile__add-trailing-comma-178",
+        "audit_file_count": 9,
+        "nop_reward": 0.0,
+        "oracle_reward": 1.0,
+        "audit_content_match": true
+      },
+      {
+        "task_id": "task_03102",
+        "audit_file_count": 8,
+        "nop_reward": 0.0,
+        "oracle_reward": 1.0,
+        "audit_content_match": true
+      },
+      {
+        "task_id": "task_05096",
+        "audit_file_count": 8,
+        "nop_reward": 0.0,
+        "oracle_reward": 1.0,
+        "audit_content_match": true
+      },
+      {
+        "task_id": "wtforms__wtforms-583",
+        "audit_file_count": 9,
+        "nop_reward": 0.0,
+        "oracle_reward": 1.0,
+        "audit_content_match": true
+      },
+      {
+        "task_id": "task_03141",
+        "audit_file_count": 8,
+        "nop_reward": 0.0,
+        "oracle_reward": 1.0,
+        "audit_content_match": true
+      }
+    ]
+  },
+  "fingerprints": {
+    "new_algorithm": "sha256-canonical-json-relative-files-mode-content-v1",
+    "distinction": "The new preparation fingerprint includes relative file paths, POSIX file modes and per-file content hashes in canonical JSON. It is distinct from the legacy audit map; the two are never compared as equal digests.",
+    "copied_task_fingerprints_match_source": true
+  },
+  "revision_policy": {
+    "swe": "Actual task.toml metadata.source_base_commit; no invented upstream commit.",
+    "terminal": "No upstream commit supplied in source task metadata. revision is explicitly task-content-sha256:<new_task_fingerprint>, a local audited content address."
+  },
+  "tasks": [
+    {
+      "instance_id": "tasks-train/brazilian-utils__brutils-python-125",
+      "task_id": "brazilian-utils__brutils-python-125",
+      "source": "swe-rebench-v2",
+      "family": "brazilian-utils/brutils-python",
+      "revision": "9046eed21cc73b66b35d73fcbc42c9afe6ec6dd9",
+      "split": "train",
+      "fingerprint": "2daa8462e6c2799d9f89870a331b28bfa66dccf3d35933e0a78e52500fb465b2",
+      "teacher_domain": "swe",
+      "leakage_group": "swe-rebench-v2:brazilian-utils__brutils-python-125",
+      "revision_kind": "upstream_repository_commit",
+      "original_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-mopd/outputs/mopd-acceptance-bundle/brazilian-utils__brutils-python-125",
+      "copied_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/source/tasks-train/brazilian-utils__brutils-python-125",
+      "source_basis": "task.toml task.name"
+    },
+    {
+      "instance_id": "tasks-train/task_03102",
+      "task_id": "task_03102",
+      "source": "terminal-lego",
+      "family": "https://stackoverflow.com/questions/30434786/mixed-content-page-requested-an-insecure-stylesheet-error",
+      "revision": "task-content-sha256:718e2c1cc264e4644de3e4bf82aabaa62cb712b545ca582c83d3a096ecbf9905",
+      "split": "train",
+      "fingerprint": "718e2c1cc264e4644de3e4bf82aabaa62cb712b545ca582c83d3a096ecbf9905",
+      "teacher_domain": "terminal",
+      "leakage_group": "terminal-lego:task_03102",
+      "revision_kind": "local_audited_task_content_address",
+      "original_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-mopd/outputs/mopd-acceptance-bundle/task_03102",
+      "copied_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/source/tasks-train/task_03102",
+      "source_basis": "task.toml docker_image namespace terminal-lego and original audit merged_from terminal-lego reports"
+    },
+    {
+      "instance_id": "tasks-train/asottile__add-trailing-comma-178",
+      "task_id": "asottile__add-trailing-comma-178",
+      "source": "swe-rebench-v2",
+      "family": "asottile/add-trailing-comma",
+      "revision": "5a4579120b7172c9a23f0a03b473133b8643b46d",
+      "split": "train",
+      "fingerprint": "8be61bc8ca99d65df2dd9ecf2d14bba79d80765e880c224c2108ac63b4665908",
+      "teacher_domain": "swe",
+      "leakage_group": "swe-rebench-v2:asottile__add-trailing-comma-178",
+      "revision_kind": "upstream_repository_commit",
+      "original_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-mopd/outputs/mopd-acceptance-bundle/asottile__add-trailing-comma-178",
+      "copied_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/source/tasks-train/asottile__add-trailing-comma-178",
+      "source_basis": "task.toml task.name"
+    },
+    {
+      "instance_id": "tasks-train/task_05096",
+      "task_id": "task_05096",
+      "source": "terminal-lego",
+      "family": "https://stackoverflow.com/questions/60330837/jupyter-server-not-started-no-kernel-in-visual-studio-code",
+      "revision": "task-content-sha256:466ecc70d6135d7ef1d8d66823659800dc8bf335f9aea3b646ebb9bd0d97df88",
+      "split": "train",
+      "fingerprint": "466ecc70d6135d7ef1d8d66823659800dc8bf335f9aea3b646ebb9bd0d97df88",
+      "teacher_domain": "terminal",
+      "leakage_group": "terminal-lego:task_05096",
+      "revision_kind": "local_audited_task_content_address",
+      "original_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-mopd/outputs/mopd-acceptance-bundle/task_05096",
+      "copied_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/source/tasks-train/task_05096",
+      "source_basis": "task.toml docker_image namespace terminal-lego and original audit merged_from terminal-lego reports"
+    },
+    {
+      "instance_id": "tasks-validation/wtforms__wtforms-583",
+      "task_id": "wtforms__wtforms-583",
+      "source": "swe-rebench-v2",
+      "family": "wtforms/wtforms",
+      "revision": "55009f7e1c38ba83a91fd0ed5ba1ef7cf3d40106",
+      "split": "validation",
+      "fingerprint": "fa4e861c09bd4986af059d8318b6e9970a244e226204fad712939c363559159a",
+      "teacher_domain": "swe",
+      "leakage_group": "swe-rebench-v2:wtforms__wtforms-583",
+      "revision_kind": "upstream_repository_commit",
+      "original_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-mopd/outputs/mopd-acceptance-bundle/wtforms__wtforms-583",
+      "copied_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/source/tasks-validation/wtforms__wtforms-583",
+      "source_basis": "task.toml task.name"
+    },
+    {
+      "instance_id": "tasks-validation/task_03141",
+      "task_id": "task_03141",
+      "source": "terminal-lego",
+      "family": "https://stackoverflow.com/questions/7170664/how-to-configure-heroku-application-dns-to-godaddy-domain",
+      "revision": "task-content-sha256:6ffa51a2290b50c9cd00ee25fdd3ed803e4f3d2ec3e0d43cd2399a590dbeb688",
+      "split": "validation",
+      "fingerprint": "6ffa51a2290b50c9cd00ee25fdd3ed803e4f3d2ec3e0d43cd2399a590dbeb688",
+      "teacher_domain": "terminal",
+      "leakage_group": "terminal-lego:task_03141",
+      "revision_kind": "local_audited_task_content_address",
+      "original_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-mopd/outputs/mopd-acceptance-bundle/task_03141",
+      "copied_task_path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/source/tasks-validation/task_03141",
+      "source_basis": "task.toml docker_image namespace terminal-lego and original audit merged_from terminal-lego reports"
+    }
+  ],
+  "prepared_receipt": {
+    "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/prepared/receipt.json",
+    "sha256": "63cafb8eabc45f434233a37259e6972602ca0a584dce5dba77867d21bdca8269"
+  },
+  "prepared_files": {
+    "train": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/prepared/train.parquet",
+      "sha256": "e86b786c688bfdda8d0c504b8ad22967789acf7476cf40c0839b0834eb95e67a"
+    },
+    "validation": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/prepared/validation.parquet",
+      "sha256": "85f8d774c7fdd796a2496a02db277ca6c82bd674ac6d0b72bbeb20e53ef87c11"
+    }
+  },
+  "source_files": {
+    "train.parquet": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/source/train.parquet",
+      "sha256": "0a79d2ae8d7c5dac3224757b662f829969a803b09236a1931c2170c298ea3001"
+    },
+    "validation.parquet": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/source/validation.parquet",
+      "sha256": "5daee794be648dbb5778ca19583a3cdff6fa7a0e88893806ee0403f686fb77ac"
+    },
+    "manifest.json": {
+      "path": "/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-mopd/outputs/mopd-data-smoke/source/manifest.json",
+      "sha256": "2314c245ec509eb4ce022653672462f1f8efbecc29f33b9db36e729f18d375f7"
+    }
+  },
+  "validation": {
+    "launcher_validate_data": {
+      "train_rows": 4,
+      "validation_rows": 2
+    },
+    "domain_counts": {
+      "train": {
+        "swe": 2,
+        "terminal": 2
+      },
+      "validation": {
+        "swe": 1,
+        "terminal": 1
+      }
+    },
+    "train_domain_order": [
+      "swe",
+      "terminal",
+      "swe",
+      "terminal"
+    ],
+    "train_task_order": [
+      "brazilian-utils__brutils-python-125",
+      "task_03102",
+      "asottile__add-trailing-comma-178",
+      "task_05096"
+    ],
+    "validation_task_order": [
+      "wtforms__wtforms-583",
+      "task_03141"
+    ],
+    "every_two_task_train_batch_has_both_domains": true,
+    "train_validation_task_and_fingerprint_disjoint": true,
+    "data_source_preserved": [
+      "tasks-train",
+      "tasks-validation"
+    ],
+    "harbor_dispatch_preserved": "extra_info.tools_kwargs.task.name=harbor"
+  },
+  "reproduction": {
+    "environment": "/private/tmp/verl-mopd-cpu/bin/python; PYTHONPATH=.:verl; from worktree root",
+    "preprocess_function": "uni_agent.tasks.harbor.preprocess.build_harbor_dataset(source/tasks-<split>); reorder rows by the explicit train_task_order/validation_task_order in this report; copy each original task.toml metadata into extra_info.tools_kwargs.task.metadata.source_metadata; write pyarrow.Table.from_pylist(rows).",
+    "prepare_command": "PYTHONPATH=.:verl /private/tmp/verl-mopd-cpu/bin/python -m examples.harbor_mopd.prepare --train-parquet outputs/mopd-data-smoke/source/train.parquet --validation-parquet outputs/mopd-data-smoke/source/validation.parquet --manifest outputs/mopd-data-smoke/source/manifest.json --domains swe terminal --output-dir outputs/mopd-data-smoke/reprepared",
+    "validate_python": "import json; from pathlib import Path; from examples.harbor_mopd.launch import validate_data; print(validate_data(json.loads(Path('outputs/mopd-data-smoke/prepared/receipt.json').read_text())))",
+    "output_rule": "Use a new output directory; prepare refuses existing output directories. Reprepared parquet absolute paths change the receipt; verify freshly generated hashes."
+  },
+  "limits": [
+    "Local absolute task/parquet paths only. Copy task trees and regenerate parquet/receipt on the allocated training host before launch; do not patch receipt hashes by hand.",
+    "Historical validation tasks came from the previous training pool. This six-task split demonstrates within-smoke isolation only, not absence of teacher training exposure or generalization.",
+    "No student tokenizer prompt-length preflight yet; model-dependent dataset validation remains required.",
+    "No fresh Modal/verifier execution, teacher inference, optimizer update or checkpoint restore performed.",
+    "Task TOML Docker images include mutable tags; this report binds local task definitions, not resolved container image digests or newly tested runtime compatibility.",
+    "Two domain labels are present; complementary expert qualification and actual teacher checkpoint loading remain separate requirements."
+  ]
+}

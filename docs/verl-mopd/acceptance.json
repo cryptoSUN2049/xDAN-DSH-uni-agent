@@ -1,0 +1,102 @@
+{
+  "schema": "harbor-mopd-acceptance-v1",
+  "checked_at_utc": "2026-09-22T04:22:06.406544+00:00",
+  "status": "cpu_implementation_verified_gpu_acceptance_pending",
+  "branch": "worktree-verl-mopd",
+  "native_verl_commit": "a9f2985159536a607211dcac730d3f5d55028950",
+  "source_sha256": "9c270e29c83994f1e35bc9da5ebab757ab11857ac4b1c067ad6cfa016a33f02a",
+  "user_design_approved": true,
+  "tests": [
+    {
+      "name": "integrated_regression",
+      "tests": 475,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "junit_sha256": "bb0594444de900b409c5d2ca46874420401459fd61dbdfd67ebc762ca13cec93",
+      "local_junit": "outputs/mopd-cpu-tests.xml"
+    },
+    {
+      "name": "final_focused",
+      "tests": 59,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "junit_sha256": "a37e0d260934a42fe0aab4a8cd256e2c76263c2b60904d806d941ec1f5a745e0",
+      "local_junit": "outputs/mopd-final-focused.xml"
+    }
+  ],
+  "unique_tests_verified": 476,
+  "coverage": {
+    "scope": [
+      "examples.harbor_mopd.launch",
+      "examples.harbor_mopd.prepare"
+    ],
+    "covered_lines": 388,
+    "statements": 424,
+    "percent": 91.50943396226415,
+    "files": {
+      "examples/harbor_mopd/launch.py": 91.38576779026218,
+      "examples/harbor_mopd/prepare.py": 91.71974522292993
+    }
+  },
+  "dependencies": {
+    "torch": "2.14.0",
+    "ray": "2.54.1",
+    "transformers": "5.5.4",
+    "tensordict": "0.10.0",
+    "pytest": "9.1.1",
+    "hydra-core": "1.3.7"
+  },
+  "lint": {
+    "tool": "ruff",
+    "version": "0.13.3",
+    "whole_repository_check": "passed",
+    "whole_repository_format": "passed"
+  },
+  "build": {
+    "wheel": "dist/uni_agent-0.1.0.dev0-py3-none-any.whl",
+    "sha256": "5afdb234284cc6edfc4d3141c4971c11886be60b6a78c3177caa05db23d6567f",
+    "packaged_framework_matches_source": true,
+    "examples_require_source_checkout": true
+  },
+  "data": {
+    "readiness_report": "docs/verl-mopd/data-readiness.json",
+    "train": 4,
+    "engineering_validation": 2,
+    "heldout_generalization_claim": false,
+    "historical_oracle_reexecuted": false
+  },
+  "gpu": {
+    "new_run_submitted": false,
+    "required_single_node_gpu_roles": 3,
+    "observed_existing_node_gpus": 2,
+    "teacher_loaded_weight_identity_verified": false,
+    "actual_student_update_verified": false,
+    "actual_optimizer_resume_verified": false,
+    "owned_resource_cleanup_verified": false
+  },
+  "tokenizer_readonly_observation": {
+    "models": [
+      "Qwen3.5-9B",
+      "Qwen3.8-27B"
+    ],
+    "base_vocab_equal": true,
+    "added_token_mapping_equal": false,
+    "actual_rollout_token_compatibility_verified": false,
+    "causal_claim_about_prior_opd_regression": false
+  },
+  "budget": {
+    "new_mopd_allocation_approved": false,
+    "hard_dollar_cap_enforced": false,
+    "mode": "external_operator_accounting"
+  },
+  "remaining": [
+    "allocate three GPU roles on one node and independent budget",
+    "prepare and qualify loadable teacher HF exports",
+    "verify actual used token ID compatibility and teacher worker weight identity",
+    "prepare remote task paths and unique Harbor registration",
+    "run real two-teacher update/save/reload/resume and inspect rollout/version/gradient/cleanup evidence"
+  ],
+  "capability_accepted": false
+}

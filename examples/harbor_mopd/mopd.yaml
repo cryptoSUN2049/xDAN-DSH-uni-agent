@@ -1,0 +1,140 @@
+# Merge after ../harbor_opd_rl/base.yaml, then onto native ppo_trainer.
+# Required paths and the explicitly allocated topology come from launch.py.
+# This recipe allocates separate teacher workers; GPU sharing is not implied.
+trainer:
+  nnodes: ???
+  n_gpus_per_node: ???
+  project_name: uni-agent-harbor-mopd
+  experiment_name: ???
+  total_training_steps: ???
+  save_freq: 1
+  test_freq: -1
+  val_before_train: false
+  resume_mode: disable
+  default_local_dir: ???
+  rollout_data_dir: ???
+  validation_data_dir: ???
+  v1:
+    trainer_mode: sync
+    sampler:
+      # Native span counts the current version as one, so zero is invalid.
+      max_off_policy_threshold: 1
+      max_off_policy_strategy: drop
+      sync_refill_failed_groups: false
+data:
+  train_files: ???
+  val_files: ???
+  train_batch_size: 2
+  shuffle: false
+  seed: 42
+  truncation: error
+  filter_overlong_prompts: false
+algorithm:
+  adv_estimator: grpo
+  use_kl_in_reward: false
+  filter_groups:
+    enable: false
+  rollout_correction:
+    bypass_mode: false
+    rollout_is: null
+    rollout_rs: null
+    rollout_is_batch_normalize: false
+actor_rollout_ref:
+  model:
+    path: ???
+  actor:
+    ppo_mini_batch_size: ${data.train_batch_size}
+    ppo_epochs: 1
+    shuffle: false
+    loss_agg_mode: token-mean
+    use_kl_loss: false
+    entropy_coeff: 0.0
+    clip_ratio: 0.2
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.2
+    clip_ratio_c: 3.0
+    # Native trainer rewrites scheduler horizon to the current target step.
+    # Constant LR without warmup remains identical across save/resume targets.
+    optim:
+      lr_scheduler_type: constant
+      lr_warmup_steps: 0
+      lr_warmup_steps_ratio: 0.0
+  rollout:
+    # Synchronous trainer shares actor GPUs with rollout; teachers are separate.
+    nnodes: 0
+    n_gpus_per_node: ${trainer.n_gpus_per_node}
+    n: 1
+    temperature: 1.0
+    top_p: 1.0
+    top_k: -1
+    do_sample: true
+    calculate_log_probs: true
+    checkpoint_engine:
+      # Pinned V1 trainer forces this backend; record the actual behavior.
+      backend: naive
+    multi_turn:
+      format: ???
+    custom:
+      agent_framework:
+        log_dir: ???
+        # Task batch size equals trajectory minibatch size only with one chain per task.
+        require_single_trajectory_per_session: true
+distillation:
+  enabled: true
+  nnodes: ???
+  n_gpus_per_node: ???
+  teacher_key: teacher_domain
+  distillation_loss:
+    loss_mode: k1
+    use_policy_gradient: true
+    use_task_rewards: false
+    # Native pure OPD forces coefficient 1; this is not a strength knob.
+    distillation_loss_coef: 1.0
+    loss_max_clamp: 5.0
+    log_prob_min_clamp: null
+    policy_loss_mode: vanilla
+    clip_ratio: 0.2
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.2
+    # DistillationLossConfig has no clip_ratio_c field at the pinned revision.
+    # Its vanilla loss uses the native fallback 3.0, verified by CPU tests.
+  teacher_models:
+    # Retain native placeholder: DistillationConfig requires and then removes it.
+    teacher_model: {}
+    teacher_swe:
+      key: swe
+      model_path: ???
+      num_replicas: 1
+      inference:
+        name: vllm
+        dtype: bfloat16
+        tensor_model_parallel_size: 1
+        data_parallel_size: 1
+        pipeline_model_parallel_size: 1
+        gpu_memory_utilization: 0.8
+        enforce_eager: true
+        # Prompt scoring generates one token after the 8192-token student prefix.
+        max_model_len: 8193
+        max_num_batched_tokens: 8192
+        max_num_seqs: 8
+        temperature: 1.0
+        prompt_length: ${data.max_prompt_length}
+        response_length: ${data.max_response_length}
+    teacher_terminal:
+      key: terminal
+      model_path: ???
+      num_replicas: 1
+      inference:
+        name: vllm
+        dtype: bfloat16
+        tensor_model_parallel_size: 1
+        data_parallel_size: 1
+        pipeline_model_parallel_size: 1
+        gpu_memory_utilization: 0.8
+        enforce_eager: true
+        max_model_len: 8193
+        max_num_batched_tokens: 8192
+        max_num_seqs: 8
+        temperature: 1.0
+        prompt_length: ${data.max_prompt_length}
+        response_length: ${data.max_response_length}
