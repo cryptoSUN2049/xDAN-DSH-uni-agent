@@ -19,6 +19,7 @@
 - `docs/verl-mopd/resource-readiness.md`：约110行，独立资源/显存估算/分阶段验收。
 - `docs/verl-mopd/replication-plan.md`：约45行，SFT→专家RL→MOPD数据/教师/能力验证缺口。
 - `docs/verl-mopd/runbook.md`：约175行，配方启动、补丁、恢复与复现边界。
+- `docs/verl-mopd/domain-expert-rl-roadmap.html`：领域专家方案的独立离线 HTML，含三级目录；主专题已在 tinker worktree 内嵌同源内容。
 - 旧数据prepare、registry、evidence及4train2工程validation沿用；详细历史见acceptance.json/data-readiness.json。
 
 ## 3. 设计约束

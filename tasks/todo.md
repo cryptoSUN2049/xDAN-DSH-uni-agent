@@ -753,3 +753,5 @@ MiMo review: 551 integrated CPU tests plus125 final focused pass (557 unique). N
 范围：文献与方案交付，不启动新训练、不部署或取消旧作业；新专家建设实施另按设计与资源授权推进。
 
 Review（2026-09-22）：新增 `docs/verl-mopd/domain-expert-rl-roadmap.md`，覆盖同源教师定义、公开资产、coding/工具/可验证推理/IF/网络安全/视觉编码/SQL/零售/航空/电信/金融/制造领域目标、奖励、验证器、数据桶、资格门及 9B→27B 路线。未启动训练或云资源；Exa DNS 不可用，正文仅引用已通过 gstack browse 读取的官方来源。
+
+Review（2026-09-22）：HTML 交付完成：生成独立 `docs/verl-mopd/domain-expert-rl-roadmap.html`，并将同源章节嵌入 tinker 主专题；未启动训练。
