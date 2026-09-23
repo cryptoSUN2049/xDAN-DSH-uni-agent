@@ -1,6 +1,6 @@
 # Performance-9B Mid-training 专项设计
 
-状态：方案阶段，服务 `performance-9b`；尚未启动 mid-training。本文与 [训练体系 v2](training-system-v2-design.md) 和 [唯一入口](architecture.html) 配套。
+状态：方案阶段，服务 `performance-9b`；尚未启动 mid-training。本文与 [训练体系 v2](training-system-v2-design.md)、[2026 主参考文献集](2026-reference-set.md) 和 [唯一入口](architecture.html) 配套。2025 年论文不作为本专项的设计依据。
 
 ## 1. 为什么需要 mid-training
 

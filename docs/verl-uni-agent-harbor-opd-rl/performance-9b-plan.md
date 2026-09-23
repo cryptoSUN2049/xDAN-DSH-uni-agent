@@ -102,7 +102,7 @@ MiMo 专题报告（[本地报告](/Users/gumpm5/Documents/Code/xDAN-Project-Hop
 
 每个保留 checkpoint 都记录：TB2.1、SWE-bench Verified、固定 dev、数学/科学子集、工具调用/多语言/安全行为集。所有版本使用相同 harness、上下文、temperature、top-p、turn/token/time budget 和 verifier。报告必须包含任务级 paired diff、CI、完整性、超时、tokens、turns、infra failure、成本和污染状态。
 
-外部参考： [Ornith-1.5 官方说明](https://ornith.ai/ornith_1_5.html)、[Ornith-1.5-9B model card](https://huggingface.co/ornith-ai/Ornith-1.5-9B)。其自生成任务/scaffold/rollout 闭环和 frontier difficulty 值得借鉴，但其 harness、上下文和多次平均口径不同，不能直接横比。
+主参考改为 [2026-reference-set.md](2026-reference-set.md)。外部基线包括 [Ornith-1.5 官方说明](https://ornith.ai/ornith_1_5.html) 和 [Ornith-1.5-9B model card](https://huggingface.co/ornith-ai/Ornith-1.5-9B)；其自生成任务/scaffold/rollout 闭环和 frontier difficulty 值得借鉴，但其 harness、上下文和多次平均口径不同，不能直接横比。2025 年论文不参与本分支的路线、超参数或放行决策。
 
 ## 7. Infra 专项交付
 

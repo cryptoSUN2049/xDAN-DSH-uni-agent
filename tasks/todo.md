@@ -4,6 +4,7 @@
 - [x] 创建并推送 `performance-9b` 分支。
 - [x] 完成 9B 起点、SFT/OPD/RL 数据版本、Ornith 外部基线和本地数据盘点。
 - [x] 将 MiMo mid-training、任务合成、scaffold、verifier、MixRL/MOPD 启发纳入专项设计。
+- [x] 建立 2026 主参考文献集；2025 论文从 performance-9b 主方案剔除，仅保留历史背景。
 - [ ] 建立 `performance-9b-data-v1` 与 `performance-9b-mt-v1` manifest/schema。
 - [ ] 完成 P0/P1 训练观测与控制器，再执行 9B+27B OPD 探针。
 - [ ] GPU0 旧评测归属确认后，完成 teacher 单题、1-step、4-step、reload 门。
