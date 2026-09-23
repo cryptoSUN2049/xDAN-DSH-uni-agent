@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xdan.ai/schemas/performance-9b-data-v1.schema.json",
+  "title": "Performance-9B data manifest v1",
+  "type": "object",
+  "required": ["release_id", "created_utc", "base_tokenizer", "splits", "assets"],
+  "properties": {
+    "release_id": {"type": "string", "pattern": "^performance-9b-data-v[0-9]+$"},
+    "created_utc": {"type": "string", "format": "date-time"},
+    "base_tokenizer": {"type": "object", "required": ["name", "revision", "hash"], "properties": {"name": {"type": "string"}, "revision": {"type": "string"}, "hash": {"type": "string"}}},
+    "splits": {"type": "object", "required": ["train", "dev", "sealed"], "properties": {"train": {"$ref": "#/$defs/split"}, "dev": {"$ref": "#/$defs/split"}, "sealed": {"$ref": "#/$defs/split"}}},
+    "assets": {"type": "array", "items": {"$ref": "#/$defs/asset"}},
+    "policy": {"type": "object", "properties": {"license_allowlist": {"type": "array", "items": {"type": "string"}}, "contamination_methods": {"type": "array", "items": {"type": "string"}}, "max_duplicate_rate": {"type": "number", "minimum": 0, "maximum": 1}}}
+  },
+  "$defs": {
+    "split": {"type": "object", "required": ["manifest_sha256", "groups", "frozen"], "properties": {"manifest_sha256": {"type": "string"}, "groups": {"type": "integer", "minimum": 0}, "frozen": {"type": "boolean"}}},
+    "asset": {"type": "object", "required": ["asset_id", "layer", "uri", "sha256", "source", "license", "domain", "split", "quality", "contamination"], "properties": {
+      "asset_id": {"type": "string"},
+      "layer": {"enum": ["MT-v1", "SFT-v1", "OPD-v1", "RL-v1", "sealed"]},
+      "uri": {"type": "string"},
+      "sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+      "source": {"type": "string"},
+      "source_revision": {"type": "string"},
+      "license": {"type": "string"},
+      "domain": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+      "language": {"type": "array", "items": {"type": "string"}},
+      "split": {"enum": ["train", "dev", "sealed"]},
+      "quality": {"type": "object", "required": ["status", "verifier"], "properties": {"status": {"enum": ["pending", "pass", "quarantine", "reject"]}, "verifier": {"type": "string"}, "teacher_agreement": {"type": "number", "minimum": 0, "maximum": 1}, "execution_pass_rate": {"type": "number", "minimum": 0, "maximum": 1}}},
+      "contamination": {"type": "object", "required": ["status", "method"], "properties": {"status": {"enum": ["pending", "clean", "overlap", "unknown"]}, "method": {"type": "array", "items": {"type": "string"}}, "matched_groups": {"type": "integer", "minimum": 0}}},
+      "sampling": {"type": "object", "properties": {"target_tokens": {"type": "integer", "minimum": 0}, "weight": {"type": "number", "minimum": 0}, "max_completion_tokens": {"type": "integer", "minimum": 1}, "thinking_mode": {"enum": ["thinking", "non-thinking", "mixed"]}}}
+    }}
+  }
+}

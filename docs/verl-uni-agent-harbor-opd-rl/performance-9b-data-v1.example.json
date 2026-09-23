@@ -1,0 +1,12 @@
+{
+  "release_id": "performance-9b-data-v1",
+  "created_utc": "2026-09-23T00:00:00Z",
+  "base_tokenizer": {"name": "Qwen/Qwen3-8B-Base", "revision": "TO_BE_PINNED", "hash": "TO_BE_COMPUTED"},
+  "splits": {
+    "train": {"manifest_sha256": "TO_BE_COMPUTED", "groups": 0, "frozen": false},
+    "dev": {"manifest_sha256": "TO_BE_COMPUTED", "groups": 0, "frozen": true},
+    "sealed": {"manifest_sha256": "TO_BE_COMPUTED", "groups": 0, "frozen": true}
+  },
+  "policy": {"license_allowlist": ["Apache-2.0", "MIT", "CC-BY-compatible"], "contamination_methods": ["exact", "7gram", "minhash", "semantic", "repo-family", "patch-fingerprint"], "max_duplicate_rate": 0.02},
+  "assets": []
+}
