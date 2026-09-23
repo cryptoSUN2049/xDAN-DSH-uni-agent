@@ -19,6 +19,22 @@ Review：用户已批准前文三模型对照方案。TB89×3×3、Verified500×
 
 Review：目前没有新的评测结果；独立 step20 快检仍0题失败。相同显存配置曾成功，失败时额外占用来源未知，不归咎checkpoint。
 
+# 当前设计：训练体系 v2 观测与止损闭环（2026-09-23）
+
+- [x] 回溯 VERL、Uni-Agent、Gateway、Harbor/Modal、TransferQueue、checkpoint、评测和 W&B 观测链。
+- [x] 核实 S2 W&B 已记录 `val-core/*` / `val-aux/*`，但现有分析脚本没有读取；RL20/40/60 验证结果分别为 0.50 / 0.40625 / 0.50，OPD12 为 0.40625，OPD step12 的 step0 基线为 0.4375。
+- [x] 核实 RL 训练 59 个 rollout batch 中 57 个出现短组，累计 96 个失败 session；当前配置仍允许短组进入训练。
+- [x] 识别现有 acceptance 只验证“曾经非零梯度”，没有验证能力回退、有效组比例、预算、成本和自动止损。
+- [x] 写入 [训练体系 v2 设计](../docs/verl-uni-agent-harbor-opd-rl/training-system-v2-design.md)，包含架构、指标合同、W&B/verl-insight/Prometheus、固定验证集、行为预算、有效 RL 组、自动止损、HTML 内容收敛和测试计划。
+- [ ] 用户审查并批准 P0/P1 设计后，实现 W&B 指标归一化、标准报告和控制器。
+- [ ] 用已完成 S2 W&B run 做离线回放，验证报告与日志逐步一致。
+- [ ] 注入短组、基础设施失败、验证集回退和成本越界测试，验证自动暂停与现场保留。
+- [x] 升级 architecture.html 为唯一入口，并补充重训 G0–G5、纯 RL 起点、统计边界和专项验收。
+- [x] 只读核实重训资源：当前节点为 2×RTX PRO 6000 Blackwell、约96 GiB/卡；GPU0 仍被旧全量评测占用，GPU1 空闲；已补资源矩阵与清场约束。
+- [ ] P0/P1 通过后，再接入 verl-insight/Prometheus；逐门执行重训。
+
+Review：本节点只完成只读审计、W&B 回溯和设计文档，没有启动新训练、修改远端作业或改变现有评测队列。
+
 # 历史执行：verify-native-training-closure（2026-09-15）
 
 - [x] PR #3创建，四项GitHub检查通过；交付recipient-handoff.md。

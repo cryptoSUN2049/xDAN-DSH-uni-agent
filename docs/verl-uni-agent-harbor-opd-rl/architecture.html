@@ -1,138 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<title>训练系统架构</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-<style>
-  :root { --bg:#fafafa; --fg:#1a1a1a; --muted:#666; --line:#e2e2e2; --ok:#1b7f3b; --warn:#b26a00; --todo:#8a8a8a; --card:#fff; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#121212; --fg:#eaeaea; --muted:#a0a0a0; --line:#2c2c2c; --card:#1b1b1b; --ok:#5fc47f; --warn:#e0a94a; --todo:#8a8a8a; } }
-  :root[data-theme="dark"] { --bg:#121212; --fg:#eaeaea; --muted:#a0a0a0; --line:#2c2c2c; --card:#1b1b1b; --ok:#5fc47f; --warn:#e0a94a; --todo:#8a8a8a; }
-  body { margin:0; padding:24px 16px 64px; background:var(--bg); color:var(--fg); font:15px/1.6 -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; max-width:1100px; margin-inline:auto; }
-  h1 { font-size:24px; margin:0 0 4px; } h2 { font-size:18px; margin:36px 0 8px; border-bottom:1px solid var(--line); padding-bottom:4px; }
-  .sub { color:var(--muted); font-size:13px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px 14px; margin:12px 0; overflow-x:auto; }
-  table { border-collapse:collapse; width:100%; font-size:14px; } th,td { border-bottom:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top; } th { color:var(--muted); font-weight:600; }
-  .ok { color:var(--ok); font-weight:600; } .warn { color:var(--warn); font-weight:600; } .todo { color:var(--todo); }
-  code { font-family: ui-monospace, Menlo, monospace; font-size:13px; background:var(--line); padding:1px 4px; border-radius:4px; }
-  .mermaid { text-align:center; }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VERL + Uni-Agent 训练系统｜唯一执行入口</title>
+  <style>
+    :root{--bg:#10131a;--panel:#171c26;--panel2:#1e2633;--fg:#eef2f7;--muted:#a8b2c1;--line:#303b4d;--accent:#75a7ff;--good:#69d39b;--warn:#f2bd68;--bad:#ff7d87}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 system-ui,-apple-system,"PingFang SC",sans-serif}
+    main{max-width:1180px;margin:auto;padding:30px 20px 70px} h1{font-size:30px;margin:0 0 6px} h2{font-size:21px;margin:42px 0 12px;border-bottom:1px solid var(--line);padding-bottom:7px} h3{font-size:16px;margin:20px 0 6px}
+    p{margin:8px 0}.muted{color:var(--muted)}.hero,.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin:14px 0}.hero{border-color:#466da9;background:linear-gradient(135deg,#18263d,#171c26)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.stat{background:var(--panel2);padding:14px;border-radius:9px}.stat b{display:block;font-size:21px;color:var(--accent)}
+    nav{position:sticky;top:0;background:#10131aee;backdrop-filter:blur(8px);padding:10px 0;z-index:2;border-bottom:1px solid var(--line)}nav a{color:var(--accent);margin-right:15px;text-decoration:none;font-size:13px}
+    code{background:#0d1118;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font:12px ui-monospace,SFMono-Regular,Menlo,monospace} table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}th{color:var(--muted);font-weight:600}.good{color:var(--good);font-weight:600}.warn{color:var(--warn);font-weight:600}.bad{color:var(--bad);font-weight:600}
+    .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.node{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px}.arrow{color:var(--accent)}ul,ol{padding-left:23px}a{color:var(--accent)}.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 8px;margin:2px;color:var(--muted);font-size:12px}
+  </style>
 </head>
-<body>
-<h1>xDAN Verl + Uni-Agent + Harbor 训练系统架构</h1>
-<div class="sub">分支 <code>verl-uni-agent-harbor-opd-rl</code> · 更新 2026-09-16 · 路线：① terminus-2 训练打通 → ② DAPO + OPD 联合更新 → ③ DSH harness 进沙箱</div>
+<body><main>
+  <div class="hero">
+    <h1>VERL + Uni-Agent 训练系统：完整方案与执行入口</h1>
+    <p class="muted">本页是当前 worktree 的唯一训练入口。版本：v2｜更新：2026-09-23｜范围：训练、观测、验证、止损、评测和证据归档。状态：设计已形成，控制面尚未实现，未启动新训练。</p>
+    <p>目标是把一次训练变成可复现、可比较、可停止、可审计的实验，而不是只确认“产生了 checkpoint”。</p>
+  </div>
+  <nav><a href="#goal">目标</a><a href="#architecture">架构</a><a href="#lifecycle">流程</a><a href="#contract">合同</a><a href="#gates">门禁</a><a href="#gaps">补齐</a><a href="#roadmap">专项推进</a><a href="#runbook">执行方案</a><a href="#evidence">证据</a></nav>
 
-<h2>1. 系统总览（当前路线 ①）</h2>
-<div class="card">
-<pre class="mermaid">
-flowchart LR
-  subgraph HOST["GPU 宿主机 177（RTX PRO 6000 96GB，lane ua-verl-py312-vllm023-ws1）"]
-    direction TB
-    VERL["VERL V1 trainer<br/>FSDP + LoRA r32 · GRPO<br/>TransferQueue"]
-    VLLM["vLLM rollout engine<br/>Qwen3-4B（→ 9B）"]
-    GW["Uni-Agent Gateway<br/>/sessions/&lt;id&gt;/v1<br/>token ids · logprobs · action mask"]
-    FW["Agent Framework<br/>task_runner → uni_agent.tasks.harbor"]
-    T2["Harbor CLI + terminus-2<br/>(宿主机进程, litellm hosted_vllm/…)"]
-    WB["wandb<br/>xdan-ai / xDAN-Verl-Uni-agent-Harbor-rl-opd"]
-  end
-  subgraph MODAL["Modal（profile l98348740）"]
-    SBX["任务沙箱<br/>Terminal-Bench 2.1 task image"]
-    VER["独立 verifier 沙箱<br/>tests/test.sh → reward"]
-  end
-  VERL -- 权重同步 --> VLLM
-  VERL -- 派发 prompt/group --> FW
-  FW -- 起 session · 注入 base_url --> GW
-  FW -- harbor trial start --> T2
-  T2 -- chat/completions --> GW
-  GW -- 转发 --> VLLM
-  T2 -- shell 命令 --> SBX
-  SBX -- 终端输出 --> T2
-  SBX -. 结果文件 .-> VER
-  VER -- result.json reward --> FW
-  GW -- trajectory.npz --> FW
-  FW -- 轨迹 + reward --> VERL
-  VERL -- 指标 --> WB
-</pre>
-</div>
-<p class="sub">要点：terminus-2 跑在宿主机，LLM 调用只到本机 Gateway，所以<strong>不需要公网 tunnel、不需要发布镜像</strong>。Gateway 存在的原因是训练需要采样时的原始 token 与 logprob，文本回来重新 tokenize 对不上。</p>
+  <section id="goal"><h2>1. 目标与当前判断</h2>
+    <div class="grid"><div class="stat"><b>执行链已具备</b>环境、数据、rollout、VERL 更新、checkpoint、独立评测和 W&B。</div><div class="stat"><b>控制面缺失</b>验证结果、有效 RL 组、行为预算、基础设施失败没有进入统一决策。</div><div class="stat"><b>重训原则</b>先 preflight 和 control-only，再正式训练；任何关键证据缺失都暂停。</div></div>
+    <p>现有 S2 证明了链路能运行，但不能证明 OPD→RL 带来能力提升：固定验证已经写入 W&B，却没有被标准报告和止损器消费；短组和 infrastructure failure 也没有与任务失败分开。</p>
+  </section>
 
-<h2>2. 一次 rollout 的时序</h2>
-<div class="card">
-<pre class="mermaid">
-sequenceDiagram
-  autonumber
-  participant FW as Agent Framework
-  participant GW as Gateway
-  participant H as Harbor CLI / terminus-2
-  participant M as Modal sandbox
-  participant V as verifier
-  participant E as vLLM
-  FW->>GW: 开 session（group_uid, sample_index）
-  FW->>H: harbor trial start --agent terminus-2 --env modal --model hosted_vllm/…<br/>env: HOSTED_VLLM_BASE_URL=/sessions/id/v1
-  H->>M: 创建沙箱（task image, 2 cpu / 4 GB）
-  loop 每轮（≤ max_turns，episode ≤ max_total_tokens）
-    H->>GW: POST chat/completions
-    GW->>E: 转发，记录 prompt/response token + logprob
-    E-->>GW: 生成
-    GW-->>H: 文本
-    H->>M: 执行命令
-    M-->>H: 终端输出
-  end
-  H->>V: 起 verifier 沙箱跑 tests
-  V-->>H: result.json（reward 0/1）
-  H-->>FW: HarborCLIResult + reward
-  GW-->>FW: trajectory.json / .npz
-  FW-->>FW: mask_unfinished_episode · require_verifier_reward
-</pre>
-</div>
+  <section id="architecture"><h2>2. 系统架构</h2>
+    <div class="flow"><span class="node">Run manifest</span><span class="arrow">→</span><span class="node">训练状态机</span><span class="arrow">→</span><span class="node">VERL V1 / FSDP LoRA</span><span class="arrow">→</span><span class="node">vLLM rollout</span><span class="arrow">→</span><span class="node">Uni-Agent Gateway</span><span class="arrow">→</span><span class="node">Harbor / Modal / Verifier</span><span class="arrow">→</span><span class="node">TransferQueue + update</span></div>
+    <div class="flow" style="margin-top:12px"><span class="node">train.log / trajectory / receipt</span><span class="arrow">+</span><span class="node">W&B history</span><span class="arrow">+</span><span class="node">validation JSONL</span><span class="arrow">+</span><span class="node">cost evidence</span><span class="arrow">→</span><span class="node">观测汇聚器</span><span class="arrow">→</span><span class="node">继续 / 暂停 / 回退</span></div>
+    <p class="muted">原则：同一个 <code>run_id / step / group_uid / sample_id / rollout_id / policy_version / checkpoint_id</code> 必须贯穿 rollout、verifier、update、validation 和报告。</p>
+    <div class="card"><h3>当前两卡资源结论</h3><p>SSH 节点实测为 <b>2 × RTX PRO 6000 Blackwell，约 96 GiB/卡</b>。纯 RL（9B）可行：一张卡训练，另一张卡评测或备用。9B + 27B OPD 也可行，但必须 student/teacher 分卡，先做 teacher 单题 logprob probe，并降低 teacher 的显存比例与 token batch。若实际是 48 GiB RTX 6000，正式 OPD 不作为默认方案，先走纯 RL；不能通过虚报 Ray GPU 数解决显存问题。当前 GPU0 仍有旧评测进程占用，重训前必须完成归属确认和交接。</p></div>
+  </section>
 
-<h2>3. 训练闭环与验收门</h2>
-<div class="card">
-<pre class="mermaid">
-flowchart TD
-  A["阶段 A 环境<br/>uv lane 重建 · harbor[modal] · Modal/wandb 凭据"]:::ok --> B["阶段 B 数据/oracle<br/>TB 2.1 parquet · oracle 2/2 pass"]:::ok
-  B --> C["阶段 C Gateway rollout<br/>2/2 session · token 轨迹 · reward 0/0"]:::ok
-  C --> D["阶段 D 1 步 LoRA GRPO<br/>runs/tb21-rl-r1 运行中"]:::warn
-  D --> E["阶段 E 路线① 收尾<br/>wandb 曲线 · ≥5 步 · reload · held-out"]:::todo
-  E --> F["阶段 F 路线② DAPO + OPD<br/>Teacher 逐 token 评分 · hybrid loss"]:::todo
-  F --> G["阶段 G 路线③ DSH 进沙箱<br/>ingress / tunnel / registry 镜像"]:::todo
-  classDef ok fill:#e6f4ea,stroke:#1b7f3b,color:#0b3d1c;
-  classDef warn fill:#fff4e0,stroke:#b26a00,color:#4a2c00;
-  classDef todo fill:#eeeeee,stroke:#8a8a8a,color:#333;
-</pre>
-</div>
+  <section id="lifecycle"><h2>3. 一次严谨训练的生命周期</h2><ol><li><b>冻结 manifest：</b>commit、依赖、模型/tokenizer hash、数据 hash、任务 ID、预算、拓扑、W&B run。</li><li><b>Preflight：</b>GPU、CUDA/NCCL、vLLM、Gateway、Harbor、Modal 额度、W&B 写入和磁盘空间逐项验证。</li><li><b>固定基线：</b>base 在 step-validation 和 development holdout 上独立评测；sealed 留到最终候选确定后。</li><li><b>Control-only：</b>2–4 步小跑，验证指标、短组分类、停止器和 checkpoint reload，不改变正式参数。</li><li><b>正式训练：</b>每步先记录 rollout，再执行准入、update、checkpoint 和 step validation。</li><li><b>门禁决策：</b>质量、有效组、行为预算、基础设施、数值稳定性、成本六类指标共同决定继续或暂停。</li><li><b>候选选择：</b>只按 development holdout 选择 best checkpoint，禁止按训练 reward 选最优。</li><li><b>独立 reload：</b>新进程加载候选，重新跑固定集，确认 checkpoint 可用且结果可复现。</li><li><b>最终评测：</b>base / OPD / RL / hybrid 使用相同工具、任务版本、采样次数和预算。</li><li><b>归档：</b>生成 manifest、summary、paired diff、behavior、cost、stop reason 和静态报告。</li></ol></section>
 
-<h2>4. 组件与归属</h2>
-<div class="card">
-<table>
-<tr><th>组件</th><th>代码 / 位置</th><th>来源</th><th>状态</th></tr>
-<tr><td>Harbor task adapter</td><td><code>uni_agent/tasks/harbor/{task,preprocess,reward}.py</code></td><td>上游 Uni-Agent</td><td class="ok">oracle + Gateway rollout 已验</td></tr>
-<tr><td>Gateway / Agent Framework</td><td><code>uni_agent/gateway</code>, <code>uni_agent/framework</code></td><td>上游 + 本分支 Teacher 接线</td><td class="ok">token 轨迹落盘</td></tr>
-<tr><td>推理 runner</td><td><code>examples/inference/parallel_infer_verl.py</code></td><td>上游</td><td class="ok">r3 通过</td></tr>
-<tr><td>训练脚本</td><td><code>examples/harbor_opd_rl/train_tb21_lora_smoke.sh</code></td><td>本分支（源自 dsh 4B 脚本）</td><td class="warn">r1 运行中</td></tr>
-<tr><td>任务配置</td><td><code>examples/harbor_opd_rl/tb21_terminus2_smoke.yaml</code></td><td>本分支</td><td class="ok">32k episode 预算</td></tr>
-<tr><td>OPD / hybrid recipe</td><td><code>examples/harbor_opd_rl/{opd,hybrid}.yaml</code>, VERL Teacher manager</td><td>本分支</td><td class="todo">路线②</td></tr>
-<tr><td>DSH-in-sandbox ingress</td><td><code>deployment/services/harbor_modal_ingress.py</code>, <code>harbor_run_controller.py</code></td><td>本分支</td><td class="todo">路线③（暂停）</td></tr>
-<tr><td>环境管理</td><td><code>deployment/bootstrap/uv-lane-bootstrap.sh</code>, <code>uv-runbook.md</code></td><td>继承 MetaRSI</td><td class="ok">激活证明 + GPU smoke</td></tr>
-</table>
-</div>
+  <section id="contract"><h2>4. 观测与数据合同</h2><div class="card"><table><thead><tr><th>维度</th><th>必须记录</th><th>判定用途</th></tr></thead><tbody>
+    <tr><td>能力</td><td>固定集 mean@4、任务级 paired diff、CI、完整性</td><td>选择 best、检测回退</td></tr><tr><td>有效 RL</td><td>expected/valid group size、mixed group、reward distinct、non-zero advantage、补采</td><td>判断是否真的有学习信号</td></tr><tr><td>行为预算</td><td>prompt/completion tokens、turns、tool calls、max-turn、timeout、wall time</td><td>检测“更贵但更差”</td></tr><tr><td>基础设施</td><td>infra/task failure、verifier timeout、缺失 receipt、staleness、队列积压</td><td>拒绝污染 batch</td></tr><tr><td>系统与成本</td><td>GPU 利用率、throughput、sandbox 数、GPU/Modal 成本</td><td>止损与复盘</td></tr></tbody></table></div>
+    <p>所有字段同时写本地 <code>metrics.jsonl</code>、W&B 和最终 JSON；缺失、未计算、零值必须有不同状态，不能把验证失败写成 0 分。</p></section>
 
-<h2>5. 关键参数</h2>
-<div class="card">
-<table>
-<tr><th>参数</th><th>值</th><th>说明</th></tr>
-<tr><td><code>--served-model-name</code></td><td><code>hosted_vllm/Qwen3-4B-1cfa9a7</code></td><td>litellm 剥前缀后发给 Gateway；Gateway 不校验 model 字段</td></tr>
-<tr><td><code>agent.model.max_total_tokens</code></td><td>32768</td><td>episode 预算 → <code>rollout.response_length</code>；runner 固定 prompt 4096，故 <code>max_model_len ≥ 36864</code></td></tr>
-<tr><td>terminus-2 kwargs</td><td>max_turns 30 · parser json · temperature 1.0</td><td>smoke 用；正式训练放宽</td></tr>
-<tr><td>沙箱资源</td><td>2 cpu / 4096 MB</td><td>Modal 侧 override</td></tr>
-<tr><td>LoRA</td><td>r32 / α32 / all-linear</td><td>FSDP，actor/optimizer offload</td></tr>
-<tr><td>Modal / wandb 凭据</td><td><code>/root/.modal.toml</code>, <code>/root/.netrc</code></td><td>pod 重建后需重拷；不进 /workspace、不进仓库</td></tr>
-</table>
-</div>
+  <section id="gates"><h2>5. 自动门禁与止损</h2><table><thead><tr><th>门</th><th>默认规则</th><th>动作</th></tr></thead><tbody><tr><td>质量</td><td>小验证集回退先预警；按预注册规则做独立确认，确认后暂停</td><td class="bad">暂停，保留 best</td></tr><tr><td>学习信号</td><td>effective group fraction 连续两步低于阈值，或 reward 无方差</td><td class="warn">暂停并换题/补采/调整 n</td></tr><tr><td>准入健康</td><td>infra failure、短组、receipt 缺失超过阈值</td><td class="bad">拒绝 batch；连续超阈值暂停</td></tr><tr><td>行为预算</td><td>token、turn、timeout 或单步 wall time 超 run cap</td><td class="bad">停止新 rollout并保存现场</td></tr><tr><td>数值</td><td>NaN、非有限梯度、KL/prob diff 尖峰</td><td class="bad">立即停止</td></tr></tbody></table><p>每次动作写出 machine-readable <code>stop_reason.json</code>，并在 W&B 写入 <code>control/decision</code>、阈值和证据 URI。</p></section>
 
-<script>
-  mermaid.initialize({ startOnLoad: true, theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default', securityLevel: 'loose' });
-</script>
-</body>
-</html>
+  <section id="gaps"><h2>6. 必须补齐的环节</h2><table><thead><tr><th>优先级</th><th>缺口</th><th>补齐结果</th></tr></thead><tbody><tr><td class="bad">P0</td><td>W&B pull/report 漏读 <code>val-core/*</code>、failure、staleness、budget</td><td>报告与 W&B 逐 step 对账，validation 不再显示 N/A</td></tr><tr><td class="bad">P0</td><td>短组、infra failure、task failure 混在一起</td><td>统一 failure taxonomy 和 group accounting</td></tr><tr><td class="warn">P1</td><td>没有训练过程控制器</td><td>checkpoint 后自动继续/暂停/回退</td></tr><tr><td class="warn">P1</td><td>acceptance 只看 grad_norm 和 reward variance</td><td>加入能力、有效组、预算、成本硬门</td></tr><tr><td>P2</td><td>step/group/checkpoint identity 不全贯穿</td><td>Uni-Agent、VERL、verifier 共享 trace identity</td></tr><tr><td>P3</td><td>verl-insight、Prometheus、W&B 面板割裂</td><td>复用现有 <code>uni_agent/rl_insight</code> facade/adapter，补 step timeline 与资源原因</td></tr><tr><td>P4</td><td>benchmark 口径不统一</td><td>TB2.1、SWE-bench Verified 等统一 manifest 和 paired matrix</td></tr></tbody></table></section>
+
+  <section id="roadmap"><h2>7. 专项推进顺序</h2><div class="grid"><div class="card"><h3>P0｜证据闭环</h3><p>扩展 <code>wandb_pull.py</code> 与 <code>report.py</code>；统一 key、step、valid/missing reason；离线重建现有 S2。</p></div><div class="card"><h3>P1｜控制器</h3><p>只读观测器 + policy engine；每个 checkpoint 调用；暂停优雅退出并保存现场。</p></div><div class="card"><h3>P2｜训练合同</h3><p>failure taxonomy、短组补采、有效组指标、policy version 与 checkpoint identity。</p></div><div class="card"><h3>P3｜观测平台</h3><p>复用现有 rl-insight，接入 step/group/verifier/budget/checkpoint；补 W&B 五类面板。</p></div><div class="card"><h3>P4｜评测矩阵</h3><p>固定 base / OPD / RL / hybrid，统一 TB2.1、SWE-bench Verified 的工具与预算。</p></div></div><p class="muted">执行原则：先 P0，再 P1；P0/P1 通过小规模真实验证后，才启动长周期正式训练。</p></section>
+
+  <section id="runbook"><h2>8. 可参考执行方案</h2><div class="card"><h3>启动前</h3><ol><li>创建唯一 <code>run_id</code> 和 manifest，冻结代码、数据、模型、依赖、阈值与 W&B。</li><li>执行环境、额度、GPU、Gateway、Modal、W&B、固定验证集 preflight；任一失败不启动。</li><li>运行 control-only 2–4 步并执行 reload + fixed validation；记录成本和完整性。</li></ol><h3>训练中</h3><ol><li>每步保存 raw rollout、准入清单、组统计、metrics、checkpoint 和 validation。</li><li>每步由控制器输出 <code>CONTINUE</code>、<code>PAUSE</code> 或 <code>ROLLBACK</code>，不允许人工凭单条日志判断。</li><li>超过阈值立即停新 rollout，保留进程日志、W&B、receipt 和 stop reason。</li></ol><h3>训练后</h3><ol><li>按 development holdout 选候选；独立进程 reload；再跑 sealed benchmark。</li><li>对 base/OPD/RL/hybrid 做相同配置的全量 paired evaluation。</li><li>归档到 <code>docs/verl-uni-agent-harbor-opd-rl/&lt;run-name&gt;/</code>，更新 handoff 和 lessons。</li></ol></div><p><span class="tag">首轮从 base 做纯 RL：2–4 步机制验证，再有界试训</span><span class="tag">正式长跑需 P0/P1 通过</span><span class="tag">单卡/双卡按 manifest 固定</span></p></section>
+
+  <section id="evidence"><h2>9. 权威文档与证据</h2><ul><li><a href="training-system-v2-design.md">training-system-v2-design.md</a>：实现合同、测试计划和第 9 节重训 G0–G5 执行协议。</li><li><a href="checkpoint-full-eval-design.md">checkpoint-full-eval-design.md</a>：checkpoint 全量评测和 paired 统计合同。</li><li><a href="operator-runbook.md">operator-runbook.md</a>：现有环境与运行手册。</li><li><a href="opd-then-rl-design.md">opd-then-rl-design.md</a>：OPD/Teacher 算法审计。</li><li><a href="../dsh-v3-live-smoke/uni-agent-system-plan.html">uni-agent-system-plan.html</a>：跨 worktree 的 Uni-Agent/Harbor/Modal 背景方案。</li></ul><p class="muted">本页负责“怎么运行和怎么判定”；实现细节以设计文档为准；当前运行状态以对应 worktree 的 handoff 为准。</p></section>
+</main></body></html>
