@@ -1,3 +1,16 @@
+# 当前执行：performance-9b + mid-training 专项（2026-09-23）
+
+- [x] 保存训练体系 v2 文档并推送 `verl-uni-agent-harbor-opd-rl`。
+- [x] 创建并推送 `performance-9b` 分支。
+- [x] 完成 9B 起点、SFT/OPD/RL 数据版本、Ornith 外部基线和本地数据盘点。
+- [x] 将 MiMo mid-training、任务合成、scaffold、verifier、MixRL/MOPD 启发纳入专项设计。
+- [ ] 建立 `performance-9b-data-v1` 与 `performance-9b-mt-v1` manifest/schema。
+- [ ] 完成 P0/P1 训练观测与控制器，再执行 9B+27B OPD 探针。
+- [ ] GPU0 旧评测归属确认后，完成 teacher 单题、1-step、4-step、reload 门。
+- [ ] 运行 base/instruct 两轨 mid-training smoke，再决定正式 SFT/RL 规模。
+
+Review：MiMo 的 mid-training 不是“大量合成 SFT”的同义词；本轮新增 `mid-training-design.md`，把合成任务、Agent 轨迹、失败反例、verifier 和 RL 题池拆为独立资产。当前未强杀 GPU0 旧评测任务、未启动新训练。
+
 # 当前执行：跨 benchmark 三模型评测（2026-09-21）
 
 - [x] 用户确认顺序TB2.1→SWE-bench Verified，固定原版/OPD12/RL60；旧全checkpoint队列继续。

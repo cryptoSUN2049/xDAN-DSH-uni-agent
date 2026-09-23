@@ -182,6 +182,17 @@ flowchart TD
 
 ## 5. 组件建设清单
 
+### 数据生产层（与 P0–P4 并行）
+
+训练体系不能只有“消费数据”的脚本，还需要可回溯的合成数据工厂。参考 MiMo V2.6 专题中对 mid-training、任务合成、scaffold、rollout、verifier/rubric 和 sample mixer 的拆分，本项目新增四类可独立版本化的资产：
+
+- `MT-v1`：Agent/代码/研究轨迹、工具反馈、失败恢复和长上下文压缩，目标是扩大 9B 的可探索行为状态。
+- `SFT-v1`：多能力冷启动示范、反例、安全和 thinking/no-thinking 对照，目标是建立稳定格式与基础能力。
+- `OPD-v1`：同一 student prefix 上的 teacher token 概率和 mask，目标是能力迁移；不能把 teacher 完整答案混称为 OPD。
+- `RL-v1`：带 scaffold、环境、verifier、reward contract、novelty 和 hack-resistance 证据的在线任务，目标是可验证改进。
+
+合成候选必须经过许可证/来源登记、结构校验、teacher agreement 或 verifier、精确与语义去重、benchmark 污染审计和人工抽样；失败样本与反例保留为质量资产，但不能未经分类直接进入正向 SFT。MiMo V2-Flash 曾披露特定阶段约 5% 合成推理数据，这个数字不作为本项目固定比例；本项目按有效 token、能力覆盖和独立验证结果调节。
+
 ### P0：观测合同和报告修复
 
 - 扩展 `wandb_pull.py`：支持 `val-core/*`、`val-aux/*`、failure、staleness、turn、budget、throughput 和配置快照。
