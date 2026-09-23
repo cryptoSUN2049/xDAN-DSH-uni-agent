@@ -1,0 +1,26 @@
+{
+  "attempts": [
+    {
+      "id": "compat-vllm-attempt1",
+      "status": "failed",
+      "reason": "FlashInfer sampler SM12.x CUDA toolchain compatibility error; retry used native sampler via VLLM_USE_FLASHINFER_SAMPLER=0",
+      "checkpoint": null
+    },
+    {
+      "id": "training-attempt1",
+      "status": "failed",
+      "reason": "Requested FlashAttention2 absent in dedicated venv. Fixed actor attention to SDPA with padding retained. No trained checkpoint produced.",
+      "remote_evidence": "runs/overnight-opd-20260924-control/train-smoke.log"
+    },
+    {
+      "id": "data-v1",
+      "status": "superseded",
+      "reason": "160/40 candidate data failed substantive question audit; v2 retains122/30 with original split. Old1024-token base/teacher results are diagnostic only, not final comparison."
+    },
+    {
+      "id": "scorer-review",
+      "status": "corrected",
+      "reason": "Rejected empty IF/code outputs; recognized final angle-bracket and Option Selected MCQA formats. Six regression controls passed."
+    }
+  ]
+}

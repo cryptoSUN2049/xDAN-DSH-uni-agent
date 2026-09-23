@@ -1,0 +1,29 @@
+{
+  "format": "peft_adapter_only",
+  "base_model": "/workspace/models/Qwen3.5-9B",
+  "checkpoints": [
+    {
+      "step": 1,
+      "status": "exported",
+      "adapter": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-control-attempt2/adapters-smoke/global_step_1/lora_adapter",
+      "rank": 16,
+      "alpha": 32.0,
+      "tensor_count": 716,
+      "modules": 358,
+      "modules_with_nonzero_B": 248,
+      "weights_sha256": "6735b4e27cc8a2d622692ee5944a4d989cd76f1b530b9b860447a4cef2083ff8",
+      "config_sha256": "683ba3a958a430e1b0f7493402caa74d0e42255337e42e5c43ea481736aff366",
+      "validation": "finite paired tensors; nonzero B; metadata matched",
+      "generation_reload_verified": true,
+      "source_actor": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-attempt2-smoke/checkpoints/global_step_1/actor",
+      "source_metadata_sha256": "82c99ce144bb1153a915c91b27ccf741f35dcdfc4aa85f9f6034d12667732b35",
+      "source_shards": [
+        {
+          "name": "model_world_size_1_rank_0.pt",
+          "sha256": "fc58b48ffd512dc750d909c350938b57b361bc317af765f3ab35ab84cc5f6618"
+        }
+      ],
+      "reload_evaluation": "models/smoke-step1/eval.json"
+    }
+  ]
+}

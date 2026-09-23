@@ -1,0 +1,375 @@
+{
+  "status": "review_filtered_exploratory_pilot_not_comprehensively_certified",
+  "seed": 20260924,
+  "counts": {
+    "math": {
+      "train": 23,
+      "val": 5
+    },
+    "instruction": {
+      "train": 32,
+      "val": 8
+    },
+    "knowledge_mcqa": {
+      "train": 3,
+      "val": 1
+    },
+    "code": {
+      "train": 32,
+      "val": 8
+    },
+    "chat": {
+      "train": 32,
+      "val": 8
+    }
+  },
+  "rejections": {},
+  "prompt_token_cap": 1024,
+  "thinking": false,
+  "tokenizer_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+  "chat_template_sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+  "limitations": [
+    "Only exact normalized prompt dedup; near-duplicate and external benchmark corpus checks pending.",
+    "Benchmark name exclusion is not a contamination guarantee. DeepMath tasks may overlap public benchmarks; MBPP uses explicitly official sanitized train only.",
+    "Code uses MBPP sanitized train, tests not executed; syntax diagnostic only.",
+    "Knowledge MCQA natural-science keyword screened, answer truth not independently verified; not GPQA.",
+    "IF tests check format only, not helpfulness. Chat is unscored, not zero ability.",
+    "Third-party archive declares Apache-2.0; underlying source license audit not complete.",
+    "Small head sample selection is not representative of full source diversity; not a capability leaderboard.",
+    "knowledge_mcqa contains only 3 training and 1 validation samples: chain coverage only, no domain capability/quality conclusion. Remaining domains also not comprehensively fact-verified."
+  ],
+  "mbpp_train_sha256": "d95f8ad6d2fff08fe4826122d6e3e31f75716825d0c5c340d297aca5e9e0de0e",
+  "chat_head_sha256": "b8835c45e8d3160bf001a990497cb25c4f7e8f0c4d92245d05b72b67bac9ce28",
+  "manual_review": [
+    "Chat selected IDs: standalone prompts reviewed; no answer-quality or factuality certification.",
+    "Science selected topic excerpts reviewed; rejected row108 suspect Calvin premise and row228 missing curve reference; answers not independently proven."
+  ],
+  "source_files": {
+    "DeepMath-103K/train_filtered_level6.parquet": "de3350fdd00bc0410550098ea65179e2be873da99e4075f80de575fc17670597",
+    "IF/train.parquet": "5abf528e0cca38d1d24179dc4a418d448af8b085c7feb35ff9ac39ef6ceedb00",
+    "Science/train.parquet": "a669294107dbd9ae327293a9424f8b75a6e523da91597cec8801a76c7ef556ff"
+  },
+  "artifacts": {
+    "train.jsonl": "54873014b602f859b0c7efba1b43e675456d8d9ec6a3976b3b5ea0a35ac06f0a",
+    "train.parquet": "3cb57bfa109499ca5e73166e82eff21243ddc29abdb6e5e42c002c5f88d1f1a1",
+    "val.jsonl": "254c705631a8e7ecbe04dc5f9973795da92b99ed4f457445ba10b3025de804b2",
+    "val.parquet": "89d57a27cc8459a95b310aa5c105debeb5929152c668490804f018f4a5e1f18a",
+    "existing-eval-overlap.json": "b93b59466aaa63dfe10000900626cd23c936b6cfb1517ee4930c8346094cf580",
+    "quality-review-80.json": "979de56a22cb42328bb5e120e787f4c4e05fed564dce77f84f78976e640724c9"
+  },
+  "version": "v2-strict-review-freeze",
+  "counts_by_split": {
+    "train": {
+      "math": 23,
+      "instruction": 32,
+      "knowledge_mcqa": 3,
+      "code": 32,
+      "chat": 32
+    },
+    "val": {
+      "math": 5,
+      "instruction": 8,
+      "knowledge_mcqa": 1,
+      "code": 8,
+      "chat": 8
+    }
+  },
+  "parent_version": "v1-160train-40val",
+  "parent_artifacts": {
+    "train.parquet": "8a7ad28afda0d1cd2eda7b3af3b870b31395ac9bc9054b8de4d7c72d3ed1851c",
+    "val.parquet": "a2eba54549ae598b12214c3b11eeafa1efc0923857a866d6da67fbaf87a01844"
+  },
+  "quality_review_path": "quality-review-80.json",
+  "quality_review_sha256": "979de56a22cb42328bb5e120e787f4c4e05fed564dce77f84f78976e640724c9",
+  "filter_policy": "math/knowledge_mcqa keep only; uncertain and exclude removed. Other 3 domains byte-content unchanged. Original splits unchanged. No replacement or synthetic tasks.",
+  "excluded_samples": [
+    {
+      "sample_id": "math-07f9881d82ddfd9fba84",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "math-dec38fa6cae4da5e8192",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "math-3ab95f01e119c82af379",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "math-63ffb0d7c42bd9ba610b",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "math-3d8d56fc4da28e7c5507",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "math-64146a9d44183905a001",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "math-9c5936d26ea869526160",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "math-256ee733ffeb8eb449e9",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "math-cbc66129f4430a9f347c",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-784c3bf189ddcfb5bafd",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-f01ac6ab5d86ecbd4fa4",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-5ffaaf46671fc03945a4",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-d72c986d54f90b259776",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-fce3bc68e3502893f004",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-4dca9acef75553158519",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-ac3e937be4843ac0efeb",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-5d82db355ddcd6d54640",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-8c37316ad581b3c829bb",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-774efce035df290d6598",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-f158111880d3f55f5a89",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-093115afe4613a96c28f",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-a8fafd1711be98ca2c4d",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-57ed3e9941eee1af2b37",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-6248d1723cd6c2828a6b",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-6ccf16ff814edb7a33a4",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-0af5b8dc3ef9cf6a237d",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-ee074e5327662707a52a",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-f590810657b1be390bc8",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-5cd00a9a9f7379d434f3",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-f1ba4f86455ee4804887",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-2229064fe7d2e150135b",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-6fb69c96542e4cf54829",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-bf11bbcae8deaec74361",
+      "split": "train",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-094fef7158b66b0d99d6",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-945ca844d12cd192b932",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-392cecb1183f27d00bf8",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-ecd471aa91e7fd488fe6",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-7b98fdc7bbdb664ba7cc",
+      "split": "train",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "math-1b37c68f8fc0ac2ed15c",
+      "split": "val",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "math-22032b5f0136d14968b4",
+      "split": "val",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "math-45756cf9507f4b0229ef",
+      "split": "val",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-c77da4a3b6f4043b0fa4",
+      "split": "val",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-b8b76da8b37a01a509af",
+      "split": "val",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-350d5d0f1dc1a8394578",
+      "split": "val",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-bd78d37850601432ccae",
+      "split": "val",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-10491d016a7b36aa0e40",
+      "split": "val",
+      "decision": "uncertain"
+    },
+    {
+      "sample_id": "knowledge_mcqa-c7a95f48c8a11bdcef6b",
+      "split": "val",
+      "decision": "exclude"
+    },
+    {
+      "sample_id": "knowledge_mcqa-65d106392a7c5948a78b",
+      "split": "val",
+      "decision": "exclude"
+    }
+  ],
+  "critical_caveat": "knowledge_mcqa contains only 3 training and 1 validation samples: chain coverage only, no domain capability/quality conclusion. Remaining domains also not comprehensively fact-verified.",
+  "domains": [
+    {
+      "domain": "math",
+      "count": 28,
+      "source": "icemoon28/MOPD-Training-Data / DeepMath-103K/train_filtered_level6.parquet",
+      "split": {
+        "train": 23,
+        "val": 5
+      }
+    },
+    {
+      "domain": "instruction",
+      "count": 40,
+      "source": "icemoon28/MOPD-Training-Data / IF/train.parquet",
+      "split": {
+        "train": 32,
+        "val": 8
+      }
+    },
+    {
+      "domain": "knowledge_mcqa",
+      "count": 4,
+      "source": "icemoon28/MOPD-Training-Data / Science/train.parquet",
+      "split": {
+        "train": 3,
+        "val": 1
+      }
+    },
+    {
+      "domain": "code",
+      "count": 40,
+      "source": "google-research-datasets/mbpp / sanitized/train-00000-of-00001.parquet",
+      "split": {
+        "train": 32,
+        "val": 8
+      }
+    },
+    {
+      "domain": "chat",
+      "count": 40,
+      "source": "nvidia/Nemotron-Cascade-2-SFT-Data / chat/chat_part_1.jsonl",
+      "split": {
+        "train": 32,
+        "val": 8
+      }
+    }
+  ]
+}

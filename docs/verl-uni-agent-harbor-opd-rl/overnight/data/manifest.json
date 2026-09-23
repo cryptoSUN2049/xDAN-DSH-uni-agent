@@ -1,0 +1,55 @@
+{
+  "status": "candidate_pilot_not_production_quality",
+  "seed": 20260924,
+  "counts": {
+    "math": {
+      "train": 32,
+      "val": 8
+    },
+    "instruction": {
+      "train": 32,
+      "val": 8
+    },
+    "knowledge_mcqa": {
+      "train": 32,
+      "val": 8
+    },
+    "code": {
+      "train": 32,
+      "val": 8
+    },
+    "chat": {
+      "train": 32,
+      "val": 8
+    }
+  },
+  "rejections": {},
+  "prompt_token_cap": 1024,
+  "thinking": false,
+  "tokenizer_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+  "chat_template_sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+  "limitations": [
+    "Only exact normalized prompt dedup; near-duplicate and external benchmark corpus checks pending.",
+    "Benchmark name exclusion is not a contamination guarantee. DeepMath tasks may overlap public benchmarks; MBPP uses explicitly official sanitized train only.",
+    "Code uses MBPP sanitized train, tests not executed; syntax diagnostic only.",
+    "Knowledge MCQA natural-science keyword screened, answer truth not independently verified; not GPQA.",
+    "IF tests check format only, not helpfulness. Chat is unscored, not zero ability.",
+    "Third-party archive declares Apache-2.0; underlying source license audit not complete.",
+    "Small head sample selection is not representative of full source diversity; not a capability leaderboard."
+  ],
+  "mbpp_train_sha256": "d95f8ad6d2fff08fe4826122d6e3e31f75716825d0c5c340d297aca5e9e0de0e",
+  "chat_head_sha256": "b8835c45e8d3160bf001a990497cb25c4f7e8f0c4d92245d05b72b67bac9ce28",
+  "manual_review": [
+    "Chat selected IDs: standalone prompts reviewed; no answer-quality or factuality certification.",
+    "Science selected topic excerpts reviewed; rejected row108 suspect Calvin premise and row228 missing curve reference; answers not independently proven."
+  ],
+  "source_files": {
+    "DeepMath-103K/train_filtered_level6.parquet": "de3350fdd00bc0410550098ea65179e2be873da99e4075f80de575fc17670597",
+    "IF/train.parquet": "5abf528e0cca38d1d24179dc4a418d448af8b085c7feb35ff9ac39ef6ceedb00",
+    "Science/train.parquet": "a669294107dbd9ae327293a9424f8b75a6e523da91597cec8801a76c7ef556ff"
+  },
+  "artifacts": {
+    "train.parquet": "8a7ad28afda0d1cd2eda7b3af3b870b31395ac9bc9054b8de4d7c72d3ed1851c",
+    "val.parquet": "a2eba54549ae598b12214c3b11eeafa1efc0923857a866d6da67fbaf87a01844"
+  }
+}

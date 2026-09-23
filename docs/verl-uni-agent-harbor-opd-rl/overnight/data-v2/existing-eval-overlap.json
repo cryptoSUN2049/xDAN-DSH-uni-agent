@@ -1,0 +1,8 @@
+{
+  "eval_instructions_checked": 78,
+  "pilot_prompts": 152,
+  "exact_normalized_overlap": 0,
+  "scope": "data-eval-set-v1/tasks-eval/*/instruction.md only; no fuzzy or global benchmark audit",
+  "parent_pilot_prompts": 200,
+  "method": "strict subset of already checked parent; no new or edited prompts"
+}

@@ -1,0 +1,1247 @@
+{
+  "review_type": "manual_reasoning_audit_no_external_factual_certification",
+  "original_parquet_modified": false,
+  "policy": "Only keep eligible; uncertain excluded from rigorous pilot. Keep original split.",
+  "summary": {
+    "math": {
+      "train": {
+        "keep": 23,
+        "exclude": 7,
+        "uncertain": 2
+      },
+      "val": {
+        "uncertain": 1,
+        "keep": 5,
+        "exclude": 2
+      }
+    },
+    "knowledge_mcqa": {
+      "train": {
+        "uncertain": 18,
+        "exclude": 11,
+        "keep": 3
+      },
+      "val": {
+        "exclude": 4,
+        "uncertain": 3,
+        "keep": 1
+      }
+    }
+  },
+  "items": [
+    {
+      "sample_id": "math-316c92ed5e84f625fd3a",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "Δ(u²)=2|∇u|²，因此u常数且u(0)=0，唯一u≡0。",
+      "source_row": 28,
+      "ground_truth": "0",
+      "prompt": [
+        {
+          "content": "Find all real harmonic functions $u$ on the unit disk $D$ centered at $0$ in the complex plane such that $u(0) = 0$ and $u^2$ is also harmonic on $D$.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-07f9881d82ddfd9fba84",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "要求判断并提供证明；GT1不能验收证明。独立公平coin假设亦未明示。",
+      "source_row": 6,
+      "ground_truth": "1",
+      "prompt": [
+        {
+          "content": "Consider a sequence $(r_n)$ resulting from infinite coin flips, where $R_n=1$ if $r_n$ is a head and $R_n=-1$ if $r_n$ is a tail. Determine if $P\\left(\\sum \\frac{R_n}{n} < \\infty\\right) = 1$. Provide a justification for your answer.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-9f900599f3b34875e2c4",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "标准单位权单边移位：对正交基e_n，Ke_n→0而||Se_n||=1，距离≥1；K=0达1。",
+      "source_row": 141,
+      "ground_truth": "1",
+      "prompt": [
+        {
+          "content": "Compute the distance between the unilateral shift operator $S$ and the set of compact operators in a Hilbert space, denoted as $d(S, \\mathbb{K}(\\mathcal{H})) = \\inf\\{\\|S-K\\| : K \\in \\mathbb{K}(\\mathcal{H})\\}$, where $S \\in \\mathbb{B}(\\mathcal{H})$ is a unilateral shift and $\\mathbb{K}(\\mathcal{H})$ is the set of compact operators.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-6fecf116c198b55ce973",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "正初值上下界迭代m↦2√m、M↦2√M均趋4，夹逼极限4。",
+      "source_row": 128,
+      "ground_truth": "4",
+      "prompt": [
+        {
+          "content": "Determine whether the sequence defined by \\(a_{n+2} = \\sqrt{a_n} + \\sqrt{a_{n+1}}\\) with initial conditions \\(a_1 > 0\\) and \\(a_2 > 0\\) converges or diverges. If it converges, find the limit.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-680104154f95d33558b9",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "枚举1..10三变量全部解乘积144与54，和198；已独立CPU枚举。",
+      "source_row": 104,
+      "ground_truth": "198",
+      "prompt": [
+        {
+          "content": "Let $a, b, c$ be positive integers such that $0 < a, b, c < 11$. If $a, b, $ and $c$ satisfy the following system of congruences:\n\\[\n\\begin{align*}\n3a+b+c&\\equiv abc\\pmod{11} \\\\\na+3b+c&\\equiv 2abc\\pmod{11} \\\\\na+b+3c&\\equiv 4abc\\pmod{11} \\\\\n\\end{align*}\n\\]\nfind the sum of all possible values of $abc$. \\(\\boxed{\\text{Answer}}\\)\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-4b388c6f4e19e09cfe04",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "Q[π,√11]≅Q(√11)[t]维1，加x,y维3，非零主理想降维至2。",
+      "source_row": 131,
+      "ground_truth": "2",
+      "prompt": [
+        {
+          "content": "Determine the Krull dimension of the ring \\( A = \\mathbb{Q}[\\pi,\\sqrt{11},x,y]/I \\), where \\( I = \\langle x^2-y^3+xy+3 \\rangle \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-271f87f7e221ca99af6a",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "正x趋0，第一因子渐近x^-1，第二因子渐近x，积趋1；实数分数幂自然定义域右侧。",
+      "source_row": 89,
+      "ground_truth": "1",
+      "prompt": [
+        {
+          "content": "Evaluate the limit: \\[ \\lim_{x \\to 0} \\left(1+\\frac{1}{x^\\frac{1-a}{a}}\\right)^{\\frac{a}{1-a}} \\left(x^{\\frac{1}{a}}+x \\right) \\] where \\(0 < a < 1\\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-ef416b2b97bb17bf7f96",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "设s=a+b,t=c/s且ab≤s²/4，界为4(2/t+10+24t+16t²)，t=1/4最小100。",
+      "source_row": 62,
+      "ground_truth": "100",
+      "prompt": [
+        {
+          "content": "Find the largest constant \\( k \\) such that \\[ \\frac{kabc}{a+b+c} \\leq (a+b)^2 + (a+b+4c)^2 \\] for all positive \\( a, b, c \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-dec38fa6cae4da5e8192",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "没有指定距离范数；且题称Y⊂X错误，积分0连续函数未必f(0)=0；还直接给答案要求验证。",
+      "source_row": 1,
+      "ground_truth": "0.5",
+      "prompt": [
+        {
+          "content": "Verify that the distance from the function \\( f = x \\) to the set \\( Y = \\{ f \\in C[0,1] : \\int_0^1 f = 0 \\} \\) is 0.5, given that \\( Y \\) is a closed subset of \\( X = \\{ f \\in C[0,1] : f(0) = 0 \\} \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-c169e701885bf53e0f91",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "x=cos t,y=sin t,z=cos2t代入线积分；各项周期积分为0。",
+      "source_row": 106,
+      "ground_truth": "0",
+      "prompt": [
+        {
+          "content": "Calculate the work done by the vector field \\( f(x,y,z) = (x,z,2y) \\) along the curve formed by the intersection of the surfaces \\( x^2 + y^2 = 1 \\) and \\( z = x^2 - y^2 \\), traversed in the anti-clockwise direction as viewed from the point (0,0,100).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-3ab95f01e119c82af379",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "分母省略号未明确币值集合；若标准1,5,10,25,50有5个(x^k-1)因子，整体符号负，与正292矛盾。",
+      "source_row": 16,
+      "ground_truth": "292",
+      "prompt": [
+        {
+          "content": "Find the number of ways to make change for a dollar using generating functions. Specifically, determine the coefficient of the \\(x^{100}\\) term in the expansion of the generating function \\(\\frac{1}{(x-1)(x^5-1)\\cdots(x^{50}-1)}\\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-0df8a5ba33371f8556de",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "π(x)~x/log x，故比值趋0。",
+      "source_row": 5,
+      "ground_truth": "0",
+      "prompt": [
+        {
+          "content": "Determine the limit of \\( \\frac{\\pi(x)}{x} \\) as \\( x \\to \\infty \\), where \\( \\pi(x) \\) is the prime counting function.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-4a8a82107cc0dce5dad1",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "x=1时生成函数(1-r)^-1，各系数1。",
+      "source_row": 8,
+      "ground_truth": "1",
+      "prompt": [
+        {
+          "content": "Using the generating function \\( \\sum_{n=0}^{\\infty}P_n(x)r^n=(1-2rx+r^2)^{-\\frac{1}{2}} \\), find the value of \\( P_n(1) \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-48aa0fe17f9197850b73",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "x须>0，-3x³+5x²-x≤1（在x=1取等），右侧x+1/x≥2，唯一x=1。",
+      "source_row": 135,
+      "ground_truth": "1",
+      "prompt": [
+        {
+          "content": "Solve the equation \\(2^{-3x^3+5x^2-x}=\\frac{x^2+1}{x}\\) for all possible values of \\(x\\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-43397f49959914c7f214",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "项=(1/n²)-(1/(n+1)²)，望远镜和1。",
+      "source_row": 12,
+      "ground_truth": "1",
+      "prompt": [
+        {
+          "content": "Evaluate the infinite series \\( \\sum_{n=1}^{\\infty} \\frac{2n+1}{(n^{2}+n)^{2}}. \\)\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-63ffb0d7c42bd9ba610b",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "源函数在x=0未定义，须先指定可去延拓才能求导；延拓后9!*(-5^6/6!)=-7875000正确，但原题缺定义。",
+      "source_row": 48,
+      "ground_truth": "-7875000",
+      "prompt": [
+        {
+          "content": "Find the 9th derivative of \\( \\frac{\\cos(5 x^2)-1}{x^3} \\) and evaluate it at \\( x=0 \\) using the Maclaurin Series.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-3d8d56fc4da28e7c5507",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "极值三角多项式的集中问题，尚无独立严谨推导，不据GT0批准。",
+      "source_row": 75,
+      "ground_truth": "0",
+      "prompt": [
+        {
+          "content": "Consider the set \\(\\mathcal{S}_X\\) of trigonometric polynomials \\(f(t) = \\sum_{|k| \\leq X} c_k e^{2\\pi i kt}\\) on the circle \\(\\mathbb{T} = \\mathbb{R}/\\mathbb{Z}\\) with degree \\(\\leq X\\), such that \\(f(0) = 1\\) and \\(c_0 = 0\\). Define\n\\[ M_X(f) = \\sup_{\\mathbb{T} \\setminus [-\\frac{1}{X},\\frac{1}{X}]} |f|. \\]\nLet \\(B_X = \\inf_{f \\in \\mathcal{S}_X} M_X(f)\\). Determine whether the limit \\(\\lim_{X \\to \\infty} B_X\\) is strictly positive or zero.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-db65afe784dd290b4313",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "Ito漂移为(6+β)W_t dt，β=-6。",
+      "source_row": 60,
+      "ground_truth": "-6",
+      "prompt": [
+        {
+          "content": "Find the value of \\( \\beta \\in \\mathbb{R} \\) for which the process \\( 2W_t^3 + \\beta t W_t \\) is a martingale, where \\( W_t \\) is a standard Wiener process.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-64146a9d44183905a001",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "Sobolev阶数/符号及矩条件需要严格论证；请求判断证明而非纯数值，暂不准入。",
+      "source_row": 103,
+      "ground_truth": "0",
+      "prompt": [
+        {
+          "content": "Given that the function \\( f(x) \\) and the product \\( f(x)g(x) \\) belong to the Sobolev space \\( \\mathcal{W}^{s+1} \\) with \\( s \\ge 1 \\), and \\( g \\in \\mathbb{L}^{\\infty}(\\mathbb{R}_+) \\) where \\( \\mathbb{R}_+ = [0,\\infty) \\), and for all \\( k \\ge 0 \\), \\( \\int x^k f(x) \\, dx < \\infty \\) and \\( 0 < \\int f(x)g(x) \\, dx < \\infty \\), determine whether the following limit holds:\n\\[ \\lim_{x\\rightarrow \\infty} x f(x) g(x) = 0 \\]\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-a10cb78d27e2c8feb01f",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "两次分部积分给积分=f(0)+f(π)=2，因此f(0)=1。",
+      "source_row": 83,
+      "ground_truth": "1",
+      "prompt": [
+        {
+          "content": "Given that \\( \\int_0^{\\pi}(f(x) + f''(x)) \\sin x \\, dx = 2 \\) and \\( f(\\pi) = 1 \\), find \\( f(0) \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-9c5936d26ea869526160",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "边极小非平面不唯一。15点K5细分可有20边，K3,3细分可有18边；GT40错误。",
+      "source_row": 39,
+      "ground_truth": "40",
+      "prompt": [
+        {
+          "content": "Consider a connected undirected simple non-planar graph $G$ with 15 vertices. If removing any edge from $G$ results in a planar graph, how many edges does $G$ have?\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-997e8ae35460fbee002d",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "B_t关于0对称，sin奇函数，期望0。",
+      "source_row": 0,
+      "ground_truth": "0",
+      "prompt": [
+        {
+          "content": "Find the expectation \\( \\mathbb{E}[X_t] \\) where \\( X_t = \\sin(B_t) \\) and \\( B_t \\) is a standard Brownian motion for \\( t \\geq 0 \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-ec5d40786cf887cbd6d1",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "Laurent展开仅z^-2k，无z^-1项，留数0。",
+      "source_row": 129,
+      "ground_truth": "0",
+      "prompt": [
+        {
+          "content": "Find the residue of the function \\( e^{\\left(\\frac{1}{z^2}\\right)} \\) at the point \\( z = 0 \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-58fd573620b399a23d54",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "对称二阶指标对有10种，交换两对反对称，相当10维空间的反对称矩阵，C(10,2)=45。",
+      "source_row": 144,
+      "ground_truth": "45",
+      "prompt": [
+        {
+          "content": "An array $\\mathbb{T}$ has elements $T_{ijkl}$ where $i,j,k,l=1,2,3,4$. It is given that\n$$T_{ijkl}=T_{jikl}=T_{ijlk}=-T_{klij}$$\nfor all values of $i,j,k,l$. Determine the number of independent components in this array.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-01c7d47a9d50c236ac62",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "整数n时每周期积分缩放，[-π,π]积分恒4。",
+      "source_row": 105,
+      "ground_truth": "4",
+      "prompt": [
+        {
+          "content": "Evaluate the limit: \\[ \\lim_{n\\to\\infty} \\int_{-\\pi}^{\\pi} |\\cos(nx)| \\, \\mathrm{d}x. \\]\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-3212dd39f522bd599118",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "Γ(x)~1/x，Γ(-x)~-1/x，绝对比值趋1。",
+      "source_row": 102,
+      "ground_truth": "1",
+      "prompt": [
+        {
+          "content": "Evaluate the limit: $$\\lim_{x\\to0}\\left|\\frac{\\Gamma(x)}{\\Gamma(-x)}\\right|$$\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-7ad8aee4ec6f7c825f5b",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "x=π/2时g=0，g′=-(1+sin0)=-1，外积分导数因子1，结果-1。",
+      "source_row": 85,
+      "ground_truth": "-1",
+      "prompt": [
+        {
+          "content": "Given the function \\( f(x) = \\int_0^{g(x)}(1+t^3)^{-\\frac{1}{2}} \\, \\mathrm{d}t \\) where \\( g(x) = \\int_0^{\\cos x}(1+\\sin (t^2))\\,\\mathrm{d}t \\), find \\( f'\\left(\\frac{\\pi}{2}\\right) \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-59dce45d638be20b2e9c",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "两积分渐近e^(x²)/(2x)、e^(2x²)/(4x)，比值渐近1/x→0。",
+      "source_row": 52,
+      "ground_truth": "0",
+      "prompt": [
+        {
+          "content": "Evaluate the limit: \\[ \\lim_{x \\to \\infty} \\frac{\\left(\\int_0^x e^{t^2} \\, dt\\right)^2}{\\int_0^x e^{2t^2} \\, dt} \\]\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-33b2cf765b7d22069f7c",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "l1对偶范数sup_n|(-1)^n/n|=1，e1取等。",
+      "source_row": 101,
+      "ground_truth": "1",
+      "prompt": [
+        {
+          "content": "Determine the norm of the continuous linear operator \\( S \\) defined by:\n\\[ S{u} = \\sum_{n=1}^{\\infty} \\frac{(-1)^{n} U_{n}}{n} \\]\nwhere \\( U \\in \\ell^{1} \\), and \\( \\ell^{1}=\\{ U=(U_{n})_{n \\in \\mathbb{N}} \\subset \\mathbb{R}~ \\text{such that} ~ \\sum_{n=1}^{\\infty} | U_{n} | < \\infty \\} \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-256ee733ffeb8eb449e9",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "未限制n，n=1时只有一个极大正规子群，不是3；且题目要求判定证明，数字3不足。",
+      "source_row": 46,
+      "ground_truth": "3",
+      "prompt": [
+        {
+          "content": "Determine whether the hyperoctahedral group, defined as the wreath product of $S_2$ and $S_n$ or equivalently $G = S_2^n \\rtimes S_n$, has only 3 maximal normal subgroups. Consider $G$ as a subgroup of $S_{2n}$ with its natural action on $[2] \\times [n]$. The group $G$ has two known normal subgroups of index two: $N_1$, the preimage of $A_n$ under the quotient map $G \\to S_n$, and $N_2$, the intersection in $S_{2n}$ of $G$ and $A_{2n}$. A third normal subgroup of index two arises from the diagonal in the Klein group $G/(N_1 \\cap N_2)$. Are there any additional maximal normal subgroups in $G$?\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-cbc66129f4430a9f347c",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "要求找任意可行epsilon，0.005等也正确；固定GT0.01造成正确答案误判。",
+      "source_row": 111,
+      "ground_truth": "0.01",
+      "prompt": [
+        {
+          "content": "Find \\( \\epsilon > 0 \\) such that for all partitions \\( P \\) of \\([1,2]\\) with mesh \\( \\lambda(P) < \\epsilon \\), the inequality \\(|U_{f,P} - L_{f,P}| < 0.01\\) holds, where \\( U_{f,P} \\) and \\( L_{f,P} \\) are the upper and lower Darboux sums of the function \\( f(x) = \\frac{1}{x} \\) on \\([1,2]\\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-87ad5e389bd68354257a",
+      "domain": "math",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "负半轴一根；正半轴e^x/x²在x2最小e²/4≈1.847，整数k≥2出现两根，最小2。",
+      "source_row": 72,
+      "ground_truth": "2",
+      "prompt": [
+        {
+          "content": "Find the minimum integer value of \\( k \\) such that the equation \\( e^x = kx^2 \\) has exactly three real solutions.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-1b37c68f8fc0ac2ed15c",
+      "domain": "math",
+      "original_split": "val",
+      "decision": "uncertain",
+      "reason": "x=-1代入满足，但全部实根唯一性尚未独立证明，不凭答案准入。",
+      "source_row": 99,
+      "ground_truth": "-1",
+      "prompt": [
+        {
+          "content": "Solve the equation \\( \\frac{7x^2 - x + 4}{\\sqrt{3x^2 - 1} + \\sqrt{x^2 - x} - x\\sqrt{x^2 + 1}} = 2\\sqrt{2} \\) over the real numbers.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-018ccc89c12a18ab9fa9",
+      "domain": "math",
+      "original_split": "val",
+      "decision": "keep",
+      "reason": "设t=x²+x≥-1/4，约束整数a=0..8；t>1最小比值8，t<1下界-0.45；和36。",
+      "source_row": 37,
+      "ground_truth": "36",
+      "prompt": [
+        {
+          "content": "Find the sum of all integer values of \\( a \\) such that \\( a(x^2+x-1) \\leq (x^2+x+1)^2 \\) for all real numbers \\( x \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-542d274f696e3784db06",
+      "domain": "math",
+      "original_split": "val",
+      "decision": "keep",
+      "reason": "在F25按α²=α-2递推乘法，首次α^n=1在n24；CPU独立枚举。",
+      "source_row": 139,
+      "ground_truth": "24",
+      "prompt": [
+        {
+          "content": "Let \\( \\alpha \\) be a root of the polynomial \\( f(x) = x^2 - x + 2 \\) over the field \\( \\mathbb{F}_5 \\). Consider the field extension \\( \\mathbb{F} = \\mathbb{F}_5(\\alpha) \\). Determine the order of \\( \\alpha \\) in the multiplicative group \\( \\mathbb{F}^* \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-50a647e8f3d5cd19e02c",
+      "domain": "math",
+      "original_split": "val",
+      "decision": "keep",
+      "reason": "模10000用周期500，2^(3^(4^5) mod500) mod10000=352，四位0352；CPU验证。",
+      "source_row": 107,
+      "ground_truth": "0352",
+      "prompt": [
+        {
+          "content": "Find the last four digits of the number $2^{3^{4^5}}$. Provide your answer as a four-digit number.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-8bdce3355c1808bf29ca",
+      "domain": "math",
+      "original_split": "val",
+      "decision": "keep",
+      "reason": "沿y=0有f(x,0)=0，x偏导0。",
+      "source_row": 40,
+      "ground_truth": "0",
+      "prompt": [
+        {
+          "content": "Calculate the first partial derivative with respect to $x$ of the function \\( f(x,y) \\) at the point \\((0,0)\\), where\n\\[\nf(x,y) =\n\\begin{cases}\n0 & (x,y)=(0,0)\\\\\n\\frac{xy}{|x|+|y|} & (x,y) \\neq (0,0)\n\\end{cases}\n\\]\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-22032b5f0136d14968b4",
+      "domain": "math",
+      "original_split": "val",
+      "decision": "exclude",
+      "reason": "证明题不是数值题，且未限定k≥1，k0时n奇数和=-n而不是0。",
+      "source_row": 9,
+      "ground_truth": "0",
+      "prompt": [
+        {
+          "content": "Verify that for \\(n = 2^kN\\), where \\(N\\) is odd, the following identity holds:\n\\[ \\sum_{d\\mid n}(-1)^{n/d}\\phi(d) = \\sum_{d\\mid 2^{k-1}N}\\phi(d) - \\sum_{d\\mid N}\\phi(2^kd) = 0. \\]\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-a472c7bee373ded88a76",
+      "domain": "math",
+      "original_split": "val",
+      "decision": "keep",
+      "reason": "上下端点切触判别式为0，联立得正a14、b9，和23。",
+      "source_row": 17,
+      "ground_truth": "23",
+      "prompt": [
+        {
+          "content": "Let $a$ and $b$ be positive integers such that the range of the function \\( y = \\frac{x^2 + ax + b}{x^2 + 2x + 3} \\) is the interval \\(-5 \\leq y \\leq 4\\) for all real numbers $x$. Find the value of $a + b$. \\( \\boxed{} \\)\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "math-45756cf9507f4b0229ef",
+      "domain": "math",
+      "original_split": "val",
+      "decision": "exclude",
+      "reason": "要求矩阵不是标量；n1时X0和X1均可，标量GT0不能完整验收。",
+      "source_row": 22,
+      "ground_truth": "0",
+      "prompt": [
+        {
+          "content": "Find a matrix $X \\in M_n(\\mathbb{C})$ such that the linear functional $f(A) = \\text{tr}(XA)$ on $M_n(\\mathbb{C})$ preserves matrix multiplication.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-784c3bf189ddcfb5bafd",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "罕见代谢病未具体说明，理想氨基酸配方不能仅据题干唯一推出植物互补方案。",
+      "source_row": 245,
+      "ground_truth": "C",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: \\boxed{A/B/C/D/E/F/G/H/I/J}' (e.g. 'Answer: \\boxed{B}').\n\nA nutrition scientist is designing a dietary supplement for patients with a rare metabolic disorder that impairs the synthesis of several essential amino acids. The goal is to create a formulation that provides an \"ideal\" amino acid pattern to support protein synthesis without overburdening the metabolic system. Given that the ideal pattern is not precisely defined and that imbalances often involve multiple amino acids, which strategy would be most effective in achieving a balanced amino acid supply?\n\nA. Add only the amino acid that is most deficient in the patient’s diet  \nB. Use a single high-potency amino acid supplement to correct the limiting factor  \nC. Combine plant-based proteins with complementary amino acid profiles  \nD. Replace all dietary protein with free amino acid solutions  \nE. Focus on increasing total nitrogen intake regardless of amino acid composition  \nF. Prioritize non-essential amino acid supplementation to reduce demand on essential ones  \nG. Design a synthetic formula based on egg protein ratios alone  \nH. Avoid protein altogether and rely on carbohydrate and fat for energy  \nI. Use animal proteins exclusively due to their higher digestibility  \nJ. Limit protein intake to 0.6 g/kg/day to prevent toxicity"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-f01ac6ab5d86ecbd4fa4",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "Ia=Ib意味着A=B，C与F两个选项表达式相同，非单一正确答案。",
+      "source_row": 453,
+      "ground_truth": "C",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D/E/F/G/H/I/J' (e.g. 'Answer: I').\n\nA molecule has principal moments of inertia such that \\( I_a = I_b < I_c \\). Based on this information, how should the molecule be classified, and what is the correct expression for its rotational term value \\( F(J, K) \\) in units of cm\\(^{-1}\\)?  \nA. Asymmetric top; \\( F(J,K) = A J(J+1) + B K^2 \\)  \nB. Prolate symmetric top; \\( F(J,K) = B J(J+1) + (A - B)K^2 \\)  \nC. Oblate symmetric top; \\( F(J,K) = B J(J+1) + (C - B)K^2 \\)  \nD. Spherical top; \\( F(J,K) = A[J(J+1) - K^2] \\)  \nE. Prolate symmetric top; \\( F(J,K) = A J(J+1) + (B - A)K^2 \\)  \nF. Oblate symmetric top; \\( F(J,K) = A J(J+1) + (C - A)K^2 \\)  \nG. Asymmetric top; no simple closed-form expression for \\( F(J,K) \\)  \nH. Prolate symmetric top; \\( F(J,K) = C J(J+1) + (A - C)K^2 \\)  \nI. Spherical top; \\( F(J,K) = B J(J+1) \\)  \nJ. Oblate symmetric top; \\( F(J,K) = C J(J+1) + (B - C)K^2 \\)"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-5ffaaf46671fc03945a4",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "³H正常β衰变Q约18.6keV，而非题述负eV；核能与电子结合能混淆，前提错误。",
+      "source_row": 146,
+      "ground_truth": "C",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Consider the decay process ³H⁻ → ³He + e⁻ + ν̄ₑ, which has a Q-value of −0.75 eV. The ³H⁻ ion consists of a tritium nucleus with two electrons, while ³He is neutral. Which of the following best explains why this process has a less negative Q-value than the decay of neutral ³H (Q = −24.6 eV)?\n\nA. The second electron in ³H⁻ increases Coulomb repulsion, enhancing decay probability  \nB. The binding energy of the additional electron in ³H⁻ lowers the total energy of the initial state  \nC. The final state includes a neutral ³He atom, which has lower energy than ³He⁺  \nD. The antineutrino carries less energy due to electron screening  \nE. The electron emitted in decay originates from the atomic orbital, not the nucleus  \nF. The mass of ³H⁻ is effectively reduced due to relativistic effects  \nG. The two-electron system allows energy sharing, increasing kinetic energy release  \nH. The Q-value includes atomic excitation, not just nuclear transition  \nI. The vacuum polarization in QED reduces the effective charge  \nJ. The overlap of electron wavefunctions suppresses weak interaction\n\nEnd your response by placing the correct option within double asterisks, like **X** with the bold formatting. \nSelect the correct option."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-d72c986d54f90b259776",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "B功能域与G糖基化机制均可能，缺指定实验依据不能唯一识别。",
+      "source_row": 63,
+      "ground_truth": "B",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Scientists are developing a contraceptive strategy targeting the ZP3 protein to block sperm binding. They design a vaccine using synthetic peptides from human ZP3 to generate antibodies. However, initial trials show that while the antibodies bind to ZP3 in diagnostic tests, they fail to prevent sperm from binding to the zona pellucida. Based on studies using synthetic peptide antisera and the hemizona assay, what is the most likely explanation for this lack of functional inhibition?\n\nA) The antibodies are too large to penetrate the zona pellucida  \nB) The synthetic peptides used in the vaccine do not correspond to the functional domains of ZP3  \nC) Human sperm do not rely on ZP3 for binding  \nD) The immune system neutralizes the antibodies before they reach the oocyte  \nE) ZP3 is only expressed after fertilization, making it inaccessible  \nF) The vaccine induces only a cellular immune response, not humoral immunity  \nG) Sperm binding is mediated by glycosylation patterns not mimicked by synthetic peptides  \nH) The antibodies enhance sperm binding instead of blocking it  \nI) The zona pellucida sheds rapidly, removing antibody-bound ZP3  \nJ) The synthetic peptides are degraded before antibody production\n\nConclude your response with the final answer in the format: Chosen Answer = X where X is the option identifier (e.g., Chosen Answer = A).\n\nWhich of the following options is correct?"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-fce3bc68e3502893f004",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "单体结构不足推出更高内禀保真度；没有突变率或酶学证据。",
+      "source_row": 21,
+      "ground_truth": "A",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: \\boxed{A/B/C/D/E/F/G/H/I/J}' (e.g. 'Answer: \\boxed{D}').\n\nA research team is studying a novel retrovirus and observes that its reverse transcriptase functions as a monomer, unlike the dimeric form seen in HIV-1. They also find that this virus exhibits lower genetic diversity than HIV-1 despite lacking proofreading activity. Which of the following hypotheses best explains this observation?\n\nA) The monomeric reverse transcriptase has a higher intrinsic fidelity due to structural constraints  \nB) The virus replicates only in non-dividing cells, reducing mutation accumulation  \nC) The RNase H domain degrades RNA more slowly, increasing template accuracy  \nD) The virus uses host cell DNA polymerase for part of reverse transcription  \nE) The PPT region is longer, ensuring more accurate initiation of +ssDNA  \nF) The viral genome is protected by a capsid that prevents mutagenic agents  \nG) The virus packages a proofreading enzyme alongside reverse transcriptase  \nH) The monomer is less processive, allowing more time for error correction  \nI) The host immune system eliminates highly mutated variants more efficiently  \nJ) The virus undergoes frequent recombination, masking mutation effects"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-4dca9acef75553158519",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "刚体自旋纹理适用性取决于形变/动力学参数，题干无充分模型，不以对称性标签判定。",
+      "source_row": 332,
+      "ground_truth": "D",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Which of the following options is correct?  \nIndicate the correct option at the end of your response, formatted as `Correct Option: [X]`. For example: Correct Option: [B].\n\nA researcher models the dynamics of a two-dimensional magnetic system containing localized spin textures. To simulate large-scale behavior efficiently, they adopt a rigid-body molecular dynamics approach. For which type of spin texture would this model be least appropriate without significant modification?\n\nA. A Bloch-type skyrmion with $D_n$ symmetry  \nB. A Néel-type skyrmion with $C_{nv}$ symmetry  \nC. A skyrmion lattice exhibiting hexagonal symmetry  \nD. An antiskyrmion with $D_{2d}$ symmetry"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-ac3e937be4843ac0efeb",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "病例/对照中的暴露比例不是感染/未感染的发病风险，不能直接(28-4)/28算感染者归因风险。",
+      "source_row": 411,
+      "ground_truth": "F",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Please review the question thoroughly and select the most appropriate option by providing the corresponding option identifier.\n\nIn a prospective study of children under 7 years old with acute gastroenteritis, stool samples are analyzed using enzyme immunoassays for rotavirus, astrovirus, and adenovirus. Rotavirus is detected in 42% of cases. Astrovirus is identified in 28%, and adenovirus in 12%. Among asymptomatic controls, astrovirus is found in 4%. If the study aims to determine the attributable risk of astrovirus for pediatric diarrhea in this population, what is the attributable risk percent among the infected?\n\nA. 24%  \nB. 48%  \nC. 56%  \nD. 71%  \nE. 82%  \nF. 86%  \nG. 90%  \nH. 94%  \nI. 100%  \nJ. Cannot be calculated from the data\n\nAt the conclusion of your response, state the correct answer choice in the following format: \"Correct answer choice is X\", where X is the corresponding option identifier."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-5d82db355ddcd6d54640",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "Lyα约10^4K温标合理，但fixes温度和最小质量依赖密度/冷却条件，未独立验真。",
+      "source_row": 318,
+      "ground_truth": "B",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: \\boxed{A/B/C/D/E/F/G/H/I/J}' (e.g. 'Answer: \\boxed{F}').\n\nIn a star-forming cloud, the minimum fragment mass is determined by the balance between gravity and pressure, but requires additional information to be fully specified. In a particular cloud, radiative cooling is dominated by Lyman-$\\alpha$ emission. What is the primary role of this cooling mechanism in determining the minimum fragment mass?\n\nA. It increases the opacity, leading to higher fragment mass.  \nB. It fixes the temperature at approximately $10^4$ K, which is necessary to evaluate the fragment mass.  \nC. It reduces the mean molecular weight, decreasing the fragment mass.  \nD. It enhances magnetic support, increasing the minimum mass.  \nE. It triggers turbulent motions that prevent fragmentation.  \nF. It ionizes the gas, which increases the Jeans mass.  \nG. It provides the dominant source of opacity for dust.  \nH. It allows the gas to cool isobarically, reducing the fragment mass.  \nI. It sets the initial mass function slope.  \nJ. It determines the optical depth of the cloud."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-8c37316ad581b3c829bb",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "阈值387.5nm，实际给定入射300..387.5nm，只有部分UV-B及部分UV-A；GT entire UV-B不严格成立。",
+      "source_row": 400,
+      "ground_truth": "G",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "At the end of your response, provide the correct answer choice using the following format: [Answer: X], where X is the corresponding option identifier of your final answer. Which of the following represents the most appropriate choice?\n\nA semiconductor photocatalyst with a band gap energy of 3.2 eV is exposed to sunlight at the Earth's surface. Given that sunlight reaching Earth has wavelengths greater than 300 nm, and using the relation \\( E = \\frac{1240}{\\lambda} \\) (where \\( E \\) is in eV and \\( \\lambda \\) is in nm), what portion of the incident solar spectrum can effectively excite electron-hole pairs in this material?\n\nA. Only visible light  \nB. UV-C and part of UV-B  \nC. Entire UV-A and part of UV-B  \nD. Only UV-C  \nE. Entire UV-A, UV-B, and UV-C  \nF. Part of UV-A only  \nG. Entire UV-B and part of UV-A  \nH. Entire UV-A only  \nI. UV-B and UV-C only  \nJ. No part of the solar spectrum can excite it"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-774efce035df290d6598",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "C直接通道抑制与F胞外钙螯合均可降低电流；所给观测不能区分机制。",
+      "source_row": 163,
+      "ground_truth": "C",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "At the conclusion of your response, select exactly one option and state it in the format: Option Selected: X\n\nIn an experiment, isolated rat ventricular myocytes are exposed to a solution containing citrate. Researchers observe a decrease in the amplitude of intracellular calcium transients ([Ca²⁺]i) during electrical stimulation, while the action potential duration remains unchanged. Voltage-clamp recordings show reduced L-type calcium current. Which of the following best explains the observed reduction in contractile force?\n\nA) Citrate directly binds to troponin, preventing calcium from initiating contraction  \nB) Citrate enhances sarcoplasmic reticulum calcium reuptake, lowering cytoplasmic calcium  \nC) Citrate inhibits L-type calcium channels, reducing calcium influx and subsequent calcium-induced calcium release  \nD) Citrate increases sodium-calcium exchanger activity, expelling more calcium from the cell  \nE) Citrate depolarizes the membrane potential, inactivating voltage-gated calcium channels  \nF) Citrate forms a complex with extracellular calcium, limiting its availability for influx  \nG) Citrate activates protein kinase A, which phosphorylates contractile proteins and reduces their sensitivity  \nH) Citrate blocks ryanodine receptors, preventing calcium release from the sarcoplasmic reticulum  \nI) Citrate alters myosin ATPase activity, slowing cross-bridge cycling  \nJ) Citrate increases intracellular pH, which enhances calcium binding to calmodulin\n\nSelect the most appropriate answer."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-f158111880d3f55f5a89",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "叶酸陷阱是合理机制，但不足独立验证其解释特定高叶酸风险，B也涉及临床机制。",
+      "source_row": 358,
+      "ground_truth": "E",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "A public health panel reviews evidence on cobalamin fortification in older adults and notes that those with low cobalamin and high serum folate have five times the risk of cognitive impairment and anemia compared to those with normal levels of both vitamins. Which of the following best explains the biological basis for this observation?\n\nA. Folate accelerates cobalamin degradation in the liver  \nB. High folate masks hematological signs of cobalamin deficiency, delaying diagnosis  \nC. Folate and cobalamin compete for the same intestinal transporter  \nD. Excess folate increases gastric pH, reducing cobalamin absorption  \nE. Cobalamin is a cofactor in folate metabolism, and its deficiency traps folate in an inactive form  \nF. Folate stimulates bacterial overgrowth, which consumes cobalamin  \nG. High folate downregulates intrinsic factor expression  \nH. Cobalamin deficiency impairs folate absorption in the jejunum  \nI. Folate enhances the renal excretion of cobalamin  \nJ. Cobalamin and folate share a common hepatic storage protein\n\nWhich option best answers the question? Choose the corresponding option identifier, and end your response with the correct choice in this format: <<X>>."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-093115afe4613a96c28f",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "末尾同时要求完整bold格式与仅一个选项字符，输出要求冲突；机制亦需验证。",
+      "source_row": 280,
+      "ground_truth": "A",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "In a fluorescence resonance energy transfer (FRET) experiment, a 50-nt RNA strand is labeled with FAM at the 5′ end and MAX at the 3′ end. The sequence between the labels includes a single riboguanosine (rG) residue at position 25. When fully hybridized to its complement, fluorescence is quenched. However, when the rG is replaced with rC, rA, or rU, differential fluorescence levels are observed even in duplex form. What molecular property best explains these differences in residual fluorescence?  \nA. Variation in base stacking interactions affecting local duplex stability and end-to-end distance  \nB. Differences in the absorption spectra of the nucleobases altering FRET efficiency  \nC. Changes in the flexibility of the sugar-phosphate backbone due to base polarity  \nD. Direct interaction between the nucleobase and the MAX quencher through electron transfer\n\nAt the end of your response, provide the final answer in the format: **Selected answer is: X**, where X is the option identifier corresponding to the correct option, including the bold markdown formatting.\n\nCarefully consider the following multiple-choice question and select the single best answer by indicating the corresponding option identifier. Your response should consist of one option identifier only."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-a8fafd1711be98ca2c4d",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "Tm变化不足唯一推出rigidifying机制，B/G/I等因果机制需要结合实验。",
+      "source_row": 253,
+      "ground_truth": "I",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D/E/F/G/H/I/J' (e.g. 'Answer: J').\n\nThe melting temperature (Tₘ) of a DNA duplex containing T:T mismatches increases from 33.1°C to 68.3°C when bound to both echinomycin and actinomycin D at a 1:1:1 molar ratio. In contrast, the Tₘ of a perfectly matched A:T duplex increases from 47.5°C to 68.3°C under the same conditions. Given that both duplexes reach the same final Tₘ, what is the most accurate interpretation of the stabilizing effect of the drug combination on mismatched DNA?\n\nA) The drugs selectively destabilize matched base pairs to equalize melting temperatures  \nB) Mismatched DNA has a higher initial flexibility, allowing greater drug-induced stabilization  \nC) The drugs repair T:T mismatches by promoting correct base pairing  \nD) Actinomycin D preferentially binds to G:C pairs, so its effect is independent of mismatch type  \nE) The percentage increase in Tₘ is greater for mismatched DNA, indicating higher relative stabilization  \nF) The drugs reduce the specificity of hydrogen bonding, making mismatches as stable as matches  \nG) T:T mismatches create intercalation hotspots that enhance drug binding affinity  \nH) The observed Tₘ convergence is due to experimental error in measurement  \nI) Drug binding masks the thermodynamic penalty of mismatches by rigidifying the helix  \nJ) The melting temperature is independent of base pairing fidelity in the presence of intercalators"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-57ed3e9941eee1af2b37",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "情景提示腺病毒E1A，但选项写EIA且未文献核验；严格保留池暂缓，不标错。",
+      "source_row": 439,
+      "ground_truth": "B",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Select the correct option by choosing the corresponding option identifier as applicable. Conclude your response with the final answer formatted in bold markdown as: **Selected answer is: X**, where X is the option identifier corresponding to the correct option.\n\nDuring an outbreak investigation, a novel virus is isolated from patients presenting with fever, conjunctivitis, and respiratory symptoms. Genomic analysis reveals a double-stranded DNA virus of approximately 36 kbp. The virus enters host cells via receptor-mediated endocytosis, disrupts the endosomal membrane using a lytic protein, and transports its genome to the nucleus for replication. Which of the following best describes the immediate early gene product critical for initiating lytic infection and subviral promoter activation in this virus?\n\nA. Large T antigen  \nB. EIA protein  \nC. E6/E7 proteins  \nD. NS1 protein  \nE. VP1 protein  \nF. Tat protein  \nG. Immediate early antigen (IE1)  \nH. Latency-associated transcript (LAT)  \nI. X gene product  \nJ. Nucleoprotein (NP)\n\n"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-6248d1723cd6c2828a6b",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "40.3%参考误差不能唯一推出负号原因；校准偏置等同样可能，题设缺计算式。",
+      "source_row": 388,
+      "ground_truth": "A",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "A multiple-choice question follows. Choose the most appropriate response.\n\nA set of energy density measurements (in J/cm³) is recorded as: 10.00, 6.05, 9.45, 5.56, 9.30, 5.95, 9.14, 4.99, 9.57, 5.78. If a new measurement of −3.8 J/cm³ is recorded, which is physically implausible for energy density, what is the most likely interpretation of this value, assuming it was derived from a calculation involving a 40.3% error in a reference value?\n\nA. It results from a sign error in a scalar quantity  \nB. It indicates negative energy due to quantum fluctuation  \nC. It arises from a 40.3% overestimation of volume  \nD. It comes from a 40.3% underestimation of energy input  \nE. It reflects a calibration offset in the sensor  \nF. It is due to a 40.3% error in density conversion  \nG. It stems from a 40.3% error in a squared term  \nH. It represents energy loss exceeding input  \nI. It is caused by incorrect unit conversion from kJ/L  \nJ. It suggests antiparticle contribution\n\nAt the end of your response, on a new line, present your final answer in the format: The correct choice is: X, where X is the option identifier corresponding to your selection."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-6ccf16ff814edb7a33a4",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "临床氮代谢机制涉及多因素，C不是由给定数字直接证明，保留待专业核验。",
+      "source_row": 454,
+      "ground_truth": "C",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "The final answer must be placed in \\boxed{} format at the end of your response. Ensure strict adherence to this requirement. Choose the most appropriate answer from the options given.\n\nA 32-year-old male with severe traumatic brain injury is found to lose 28 g of nitrogen per day via urinary excretion. He is currently receiving 120 g of protein daily (equivalent to approximately 19 g of nitrogen). Based on metabolic principles in critically ill patients, which of the following best explains why simply matching nitrogen intake to measured urinary nitrogen loss may not optimize protein balance?\n\nA. Nitrogen excretion directly reflects protein synthesis rates, so intake should match excretion.  \nB. Increased nitrogen intake suppresses catabolism immediately, reducing losses.  \nC. Urinary nitrogen primarily measures urea from the labile nitrogen pool, not net protein synthesis.  \nD. Positive nitrogen balance is always achievable with sufficient caloric intake.  \nE. Nitrogen balance accurately reflects muscle anabolism in acute trauma.  \nF. Exogenous amino acids are preferentially oxidized rather than used for synthesis.  \nG. Lower nitrogen excretion always indicates improved protein balance.  \nH. Nitrogen balance measurements are unaffected by timing of urine collection.  \nI. Isotope studies show that nitrogen balance correlates perfectly with clinical outcomes.  \nJ. Feeding 28 g of nitrogen will inevitably correct the deficit."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-0af5b8dc3ef9cf6a237d",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "γ*归一光子能量=2，不满足一般Thomson低能条件，未给特殊几何；前提不自洽。",
+      "source_row": 251,
+      "ground_truth": "B",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: \\boxed{A/B/C/D}' (e.g. 'Answer: \\boxed{D}').\n\nIn a high-energy astrophysical environment, relativistic electrons undergo inverse Compton scattering in the Thomson regime. The normalized photon energy before scattering is $\\tilde{z} = 0.002$, and the Lorentz factor of the electron is $\\gamma = 10^3$. If the scattered photon energy $\\varepsilon$ is found to be $0.004$ (in units of $m_ec^2$), which process dominates the interaction?  \nA. Down-scattering, because $\\varepsilon < \\gamma \\tilde{z}$  \nB. Up-scattering, because $\\varepsilon > \\tilde{z}$  \nC. Down-scattering, because $\\varepsilon < \\gamma$  \nD. Up-scattering, because $\\varepsilon > \\gamma \\tilde{z}$"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-ee074e5327662707a52a",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "添加变性蛋白却给c_N而非总浓度，无法由质量守恒得到GT1.5e-5。",
+      "source_row": 49,
+      "ground_truth": "B",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "In a two-state protein folding model, the equilibrium constant \\( K \\) is defined as \\( K = \\frac{c_{D,eq}}{c_{N,eq}} \\), where \\( c_{D,eq} \\) and \\( c_{N,eq} \\) are the equilibrium concentrations of denatured and native protein, respectively. At the denaturation temperature, \\( K = 1 \\). If the initial concentration of native protein is \\( 1.0 \\times 10^{-5} \\, \\text{M} \\) and an amount of denatured protein is added such that the system is displaced to a non-equilibrium state with \\( c_N = 3.0 \\times 10^{-5} \\, \\text{M} \\), what is the final equilibrium concentration of native protein?\n\nA) \\( 1.0 \\times 10^{-5} \\, \\text{M} \\)  \nB) \\( 1.5 \\times 10^{-5} \\, \\text{M} \\)  \nC) \\( 2.0 \\times 10^{-5} \\, \\text{M} \\)  \nD) \\( 2.5 \\times 10^{-5} \\, \\text{M} \\)  \nE) \\( 3.0 \\times 10^{-5} \\, \\text{M} \\)  \nF) \\( 4.0 \\times 10^{-5} \\, \\text{M} \\)  \nG) \\( 0.5 \\times 10^{-5} \\, \\text{M} \\)  \nH) \\( 1.2 \\times 10^{-5} \\, \\text{M} \\)  \nI) \\( 2.8 \\times 10^{-5} \\, \\text{M} \\)  \nJ) \\( 0.8 \\times 10^{-5} \\, \\text{M} \\)\n\nChoose the correct option.\nConclude with \"ANSWER IS X\" on the final line, where X is the option identifier."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-f590810657b1be390bc8",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "无染色质拓扑数据，不能从缺失区直接唯一归因为TAD，B共享调控也可能。",
+      "source_row": 123,
+      "ground_truth": "I",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "A genomic analysis reveals that a patient carries a deletion encompassing the entire APOA1/APOA4/APOC3 subcluster on chromosome 11 but leaves the APOA5 gene intact. The deleted region spans ~17 kb and includes genes transcribed in both directions. The APOA5 gene, located 30 kb upstream, remains structurally normal and in the same transcriptional orientation as APOA1 and APOA4. Despite normal APOA5 sequence, the patient exhibits markedly reduced HDL cholesterol and impaired lipoprotein metabolism. Which of the following best explains the patient’s phenotype?\n\nA. APOA5 requires APOA1 for mRNA stability  \nB. The deletion removes shared regulatory elements necessary for APOA5 expression  \nC. APOC3 protein is required for APOA5 translation initiation  \nD. The deletion causes a frameshift in a downstream enhancer of APOA5  \nE. APOA4 protein directly activates APOA5 gene transcription  \nF. The 60 kb cluster functions as a single polycistronic unit  \nG. APOA1 and APOA5 are co-regulated by a bidirectional promoter  \nH. The mutation induces nonsense-mediated decay of APOA5 mRNA  \nI. The deletion disrupts a topologically associating domain (TAD) affecting APOA5 regulation  \nJ. APOA5 is pseudogenized in the absence of APOC3\n\nWhat is the correct answer to this question?\nEnd your response with the correct option in the format: Answer Choice: {X}."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-5cd00a9a9f7379d434f3",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "大气吸收需波段/观测史外部依据；本轮不凭记忆认证。",
+      "source_row": 305,
+      "ground_truth": "D",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "At the end of your response, choose one option and state it clearly as: Option Selected: X. Which of the the following options is correct?\n\nWhy has the hyperfine transition line of hydrogen-like <sup>14</sup>N VII at 5.6519 mm not been successfully observed in our Galaxy using ground-based instruments?  \nA. The line is too weak to be detected by current technology.  \nB. The redshift in our Galaxy shifts the line outside detectable bands.  \nC. The transition only occurs in active galactic nuclei, which are rare.  \nD. Atmospheric absorption prevents detection at this wavelength on Earth."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-f1ba4f86455ee4804887",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "明确把electron+antineutrino说成W+产物，电荷守恒矛盾；GT实际反转题干粒子。",
+      "source_row": 249,
+      "ground_truth": "B",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Please review the question thoroughly and select the most appropriate option by providing the corresponding option identifier.\n\nIn a four-fermion final state simulation, momenta p3, p4, p5, and p6 are assigned to the outgoing particles. For a CC process, the COMMON/HEPEVT block reorders these momenta such that particles 3 and 4 correspond to a W⁺ decay, and 5 and 6 to a W⁻ decay. If the original program output assigns p3 to an electron and p4 to an electron antineutrino (from W⁺ decay), and p5 to a muon antineutrino and p6 to a muon (from W⁻ decay), what is the correct physical interpretation of the final state?  \nA. e⁻ + ν̄_e + μ⁺ + ν_μ  \nB. e⁺ + ν_e + μ⁻ + ν̄_μ  \nC. e⁻ + ν_e + μ⁻ + ν̄_μ  \nD. e⁻ + ν̄_e + μ⁻ + ν_μ\n\nAt the conclusion of your response, state the correct answer choice in the following format: \"Correct answer choice is X\", where X is the corresponding option identifier."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-97c9cb8b292463347a7b",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "分子伴侣屏蔽暴露疏水面防聚集/错折叠，F吻合，其他选项与题干机制不符。",
+      "source_row": 83,
+      "ground_truth": "F",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Consider the following question carefully and select the most appropriate answer. At the end of your response, provide the final answer by placing the selected option within double parentheses: ((X)).\n\nIn an experiment, a protein is denatured by high temperature, causing it to lose its biological activity. After cooling, the protein does not regain its function. However, when the same experiment is performed in the presence of a molecular chaperone, the protein refolds and regains activity. Which principle best explains the role of the chaperone in this scenario?\n\nA. Chaperones provide the genetic code for protein synthesis  \nB. Chaperones catalyze peptide bond formation during translation  \nC. Chaperones lower the activation energy for proper folding  \nD. Chaperones increase the entropy of the unfolded state  \nE. Chaperones supply ATP to drive covalent bond formation  \nF. Chaperones shield hydrophobic regions to prevent misfolding  \nG. Chaperones stabilize the denatured state permanently  \nH. Chaperones replace damaged amino acids  \nI. Chaperones enhance diffusion through the cytoplasm  \nJ. Chaperones act as substrates for the protein’s active site"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-2229064fe7d2e150135b",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "忽略间隙水又以bound water解释不构成必然矛盾，但ν0.35不足反推单一微观原因。",
+      "source_row": 283,
+      "ground_truth": "C",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "A researcher models a collagen molecule using a nanoscale mechanical approach, assuming it behaves like a linear elastic spring. The model neglects interstitial water and assumes isotropic behavior with a Poisson’s ratio of 0.35. Which of the following best explains why such a relatively high Poisson’s ratio is plausible in this biological context?\n\nA. High covalent bond density increases lateral contraction under load  \nB. The triple helix structure prevents any lateral deformation  \nC. The presence of bound water allows for volume conservation and lateral expansion  \nD. Low-density packing leads to negligible Poisson effects  \nE. The helix unwinds under tension, reducing lateral strain  \nF. Electrostatic repulsion dominates over elastic deformation  \nG. The material behaves like a rigid rod with zero Poisson’s ratio  \nH. Anisotropic stiffness in the axial direction suppresses transverse response  \nI. The model assumes incompressibility, requiring a Poisson’s ratio of 0.5  \nJ. High shear modulus prevents any axial deformation\n\nAnswer the question by choosing the best option after careful consideration. Put the correct option at the end like this: [Answer: X]"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-6fb69c96542e4cf54829",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "未给协议电路/纠缠资源定义，无法推出triplet x/p相关性；题目依赖缺失理论模型。",
+      "source_row": 106,
+      "ground_truth": "C",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Conclude your response by enclosing the correct answer choice in double asterisks, for example: **X** with the bold formatting.\n\nIn a quantum protocol, an infinitely x-squeezed input state is used with ancillary modes that have finite squeezing. According to the theoretical model, what is the expected quality of the intra-triplet x-correlations and inter-triplet p-correlations?  \nA. Excellent intra-triplet x-correlations and good inter-triplet p-correlations  \nB. Vanishing intra-triplet x-correlations and excellent inter-triplet p-correlations  \nC. Excellent intra-triplet x-correlations and vanishing inter-triplet p-correlations  \nD. Poor intra-triplet x-correlations and poor inter-triplet p-correlations\n\nChoose the appropriate option from the given choices."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-a19373e8213a723ee525",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "由题干给定力mg-eE=0直接得E=mg/e，唯一A。",
+      "source_row": 321,
+      "ground_truth": "A",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "A conducting spherical shell is placed in a uniform gravitational field. Free electrons inside the conductor redistribute until the net force on them vanishes. If the gravitational force per electron is $ mg $ and the electric force is $ -eE $, what condition must hold for mechanical equilibrium of the electrons?\n\nA. $ E = \\frac{m}{e}g $  \nB. $ E = -\\frac{m}{e}g $  \nC. $ E = 0 $  \nD. $ E = \\frac{e}{m}g $  \nE. $ E = -\\frac{e}{m}g $  \nF. $ E = \\frac{mg}{e^2} $  \nG. $ E = \\frac{m^2 g}{e} $  \nH. $ E = -\\frac{mg}{e} $  \nI. $ E = \\frac{e^2}{m}g $  \nJ. $ E = -\\frac{e^2}{m}g $\n\nChoose the most appropriate answer. For the final answer, you must use the exact format 'The answer is: |X|', ensuring the option identifier of the correct choice is enclosed in pipe characters."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-bf11bbcae8deaec74361",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "exclude",
+      "reason": "D总电阻增大、E剩余支路电流不变、H总功率下降都成立，非单选。",
+      "source_row": 311,
+      "ground_truth": "E",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Three identical lamps are connected in parallel to a constant voltage source. An ammeter measures the current through each lamp, and all readings are equal. If one of the lamps is disconnected, which of the following statements is true?  \nA. The brightness of the remaining two lamps increases.  \nB. The total circuit current remains unchanged.  \nC. The voltage across each remaining lamp decreases.  \nD. The equivalent resistance of the circuit increases.  \nE. The current through each remaining lamp remains the same.  \nF. The power delivered by the battery increases.  \nG. The brightness of the remaining lamps decreases.  \nH. The voltage source now supplies less total energy per second.  \nI. The resistance of each remaining lamp changes.  \nJ. The current through the disconnected branch becomes zero, but others double.\n\nFinish your response with \"ANSWER IS X\" on a new line, where X is the option identifier.\n\nSelect the correct option."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-094fef7158b66b0d99d6",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "压力展宽可能支持总气压，但需谱线过程和非LTE等依据，暂不高置信准入。",
+      "source_row": 381,
+      "ground_truth": "C",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "In a spectroscopic analysis of a solar-type star, a researcher uses Fe I lines to determine surface gravity by ensuring consistency in iron abundance derived from both strong and weak lines. The strong Fe I lines are particularly sensitive to pressure effects. Which physical parameter primarily mediates the sensitivity of strong Fe I lines to surface gravity in this method?  \nA. Electron pressure  \nB. Radiation pressure  \nC. Total gas pressure  \nD. Magnetic pressure\n\nSelect the most appropriate option from the choices provided.\nAt the end of your response, place the correct option identifier within double asterisks (e.g., **X** with the bold formatting)."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-88b0b45af270267a42de",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "keep",
+      "reason": "e^(-βδ)=1/e直接得δ=1/β，唯一B。",
+      "source_row": 195,
+      "ground_truth": "B",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Which of the following options is correct? Conclude your response by placing the option identifier of the correct option between double asterisks, as in **X** with the bold formatting.\n\nThe propagation of a voltage wave along a transmission line is described by \\( V(x,t) = V_0 e^{-\\beta x} e^{i(\\alpha x - \\omega t)} \\), where \\( \\alpha = \\omega \\sqrt{LC} \\) and \\( \\beta = \\frac{1}{2} \\left( \\frac{R}{Z_0} + G Z_0 \\right) \\). If the amplitude of the voltage drops to \\( 1/e \\) of its initial value after traveling a distance \\( \\delta \\), what is the relationship between \\( \\delta \\) and \\( \\beta \\)?  \n\nA. \\( \\delta = \\beta \\)  \nB. \\( \\delta = 1/\\beta \\)  \nC. \\( \\delta = \\beta^2 \\)  \nD. \\( \\delta = \\sqrt{\\beta} \\)  \nE. \\( \\delta = 1/\\beta^2 \\)  \nF. \\( \\delta = \\alpha / \\beta \\)  \nG. \\( \\delta = \\beta / \\alpha \\)  \nH. \\( \\delta = \\ln(\\beta) \\)  \nI. \\( \\delta = e^{-\\beta} \\)  \nJ. \\( \\delta = \\omega / \\beta \\)"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-945ca844d12cd192b932",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "临床鉴别缺进一步资料，A与E等机制可能并存，不作专业正确性认证。",
+      "source_row": 399,
+      "ground_truth": "A",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "A 68-year-old male with a recent colostomy presents with persistent skin irritation around the stoma site. On examination, the peristomal skin is erythematous, macerated, and tender, with no signs of cellulitis or abscess. The stoma is flush with the skin surface. Which of the following is the most significant contributing factor to this patient’s condition?\n\nA. Excessive peristomal moisture due to inadequate skin barrier use  \nB. Allergy to the adhesive component of the ostomy appliance  \nC. Subcutaneous dead space from improper abdominal wall opening size  \nD. Ischemia due to mesenteric vessel compromise  \nE. High-output stoma causing chemical dermatitis  \nF. Infection from hematoma formation in subcutaneous fat  \nG. Tension on mucocutaneous sutures leading to dehiscence  \nH. Venous engorgement from portal hypertension  \nI. Necrosis secondary to intraperitoneal bowel ischemia  \nJ. Stoma retraction from postoperative weight gain\n\nProvide your final answer at the end of the response, enclosed in single angle brackets as follows: <X>.\n\nConsider the following question carefully and select the most appropriate answer."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-392cecb1183f27d00bf8",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "观测不到水分变化不能唯一反推离子外流；测量效能等解释尚未排除。",
+      "source_row": 143,
+      "ground_truth": "C",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D/E/F/G/H/I/J' (e.g. 'Answer: C').\n\nResearchers observe that after 14 days of creatine loading (21 g/day), muscle phosphocreatine concentration increases by 20% as measured by 31P-NMR, yet no change occurs in total body water, intracellular water, or scale body mass. Which physiological mechanism most likely explains the lack of measurable fluid or mass change despite increased intramuscular creatine?\n\nA. Immediate conversion of creatine to creatinine and renal excretion  \nB. Compensatory diuresis reducing plasma volume  \nC. Osmotic equilibrium maintained by efflux of intracellular ions  \nD. Water influx offset by reduced glycogen synthesis  \nE. Delayed osmotic response not yet detectable at 14 days  \nF. Measurement error in body water assessment techniques  \nG. Insufficient sample size to detect small changes  \nH. Concurrent catabolism of muscle protein  \nI. Redistribution of water without net volume change  \nJ. Technical limitations of 31P-NMR in detecting creatine"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-ecd471aa91e7fd488fe6",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "X射线宽带含连续与谱线，C与H相对贡献取决于温度/仪器响应，缺波段。",
+      "source_row": 50,
+      "ground_truth": "H",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "What is the best answer to this question?\n\nA space-based telescope observes the Sun in the X-ray spectrum and captures an image showing bright, loop-like structures extending above the solar surface, as well as large dark regions scattered across the disk. The bright loops are observed to persist for several days, while the dark regions remain visible for weeks. Which physical mechanism is primarily responsible for the formation of the bright loop structures?\n\nA. Blackbody radiation from the photosphere  \nB. Synchrotron emission from relativistic electrons in weak magnetic fields  \nC. Thermal bremsstrahlung from hot plasma confined along closed magnetic field lines  \nD. Thomson scattering of photospheric light by free electrons in the chromosphere  \nE. Nuclear fusion reactions in localized regions of the corona  \nF. Fluorescence from neutral hydrogen atoms excited by UV radiation  \nG. Doppler-shifted emission due to large-scale convective flows  \nH. Line emission from highly ionized iron in plasma trapped by magnetic fields  \nI. Radio emission from electron cyclotron resonance  \nJ. Refraction of X-rays through varying plasma densities\n\nConclude your response with the final answer in bold markdown, using the exact format \"**Selected answer is: X**\", where X is the option identifier. You must include the markdown formatting."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-7b98fdc7bbdb664ba7cc",
+      "domain": "knowledge_mcqa",
+      "original_split": "train",
+      "decision": "uncertain",
+      "reason": "原子数与高相关不足选出唯一最适方法；强关联下hybrid DFT不保证适用。",
+      "source_row": 438,
+      "ground_truth": "E",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Which of the following options is correct? The final answer must be enclosed in \\boxed{} at the end of the response.\n\nA quantum chemistry calculation aims to include electron correlation effects for a medium-sized organic molecule. The method must balance accuracy and computational cost. Which of the following methods is most appropriate for achieving this goal, given that the system has more than 20 atoms and high electron correlation is expected?\n\nA. Hartree–Fock method  \nB. Full Configuration Interaction (FCI)  \nC. Møller–Plesset perturbation theory to second order (MP2)  \nD. Multi-configuration Self-Consistent Field (MCSCF)  \nE. Density Functional Theory with a hybrid functional  \nF. Coupled Cluster with single and double excitations (CCSD)  \nG. Configuration Interaction with single and double excitations (CISD)  \nH. Semi-empirical method (e.g., PM6)  \nI. Diffusion Monte Carlo  \nJ. Hartree–Fock with configuration interaction (CI) using only single excitations"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-c77da4a3b6f4043b0fa4",
+      "domain": "knowledge_mcqa",
+      "original_split": "val",
+      "decision": "exclude",
+      "reason": "给每kg氮平衡但无体重与瘦体重蛋白比例，不能推绝对kg。",
+      "source_row": 323,
+      "ground_truth": "D",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "A 28-year-old male participates in a nitrogen balance study during which he consumes increasing amounts of high-quality egg protein while maintaining energy balance and stable body weight. At a protein intake of 1.6 g/kg/day, he exhibits a positive nitrogen balance of 30 mg/kg/day. Over an 18-day period, this positive balance would theoretically result in the accretion of approximately how much fat-free mass, assuming all retained nitrogen is incorporated into protein?\n\nA) 0.3 kg  \nB) 0.6 kg  \nC) 0.9 kg  \nD) 1.2 kg  \nE) 1.5 kg  \nF) 1.8 kg  \nG) 2.1 kg  \nH) 2.4 kg  \nI) 2.7 kg  \nJ) 3.0 kg\n\nChoose the most appropriate option from the choices provided.\nEnd your response with \"ANSWER IS X\" on its own line, where X is the option identifier (e.g., A, B, C, D, 1, 2, 3, etc.)."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-b8b76da8b37a01a509af",
+      "domain": "knowledge_mcqa",
+      "original_split": "val",
+      "decision": "uncertain",
+      "reason": "WKB误差依赖能量/曲率，A近势垒顶也会显著失效，重叠不是充分最大误差条件。",
+      "source_row": 322,
+      "ground_truth": "D",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "A quantum system features two Gaussian potential barriers separated by a distance \\( a \\), with each barrier having height \\( V_1 \\) and \\( V_2 \\), and widths characterized by \\( \\sigma_1 \\) and \\( \\sigma_2 \\). The transmission probability \\( \\mathcal{T} \\) is calculated using both the WKB approximation and numerical integration of the Schrödinger equation. For which of the following scenarios would the WKB method most likely yield the largest deviation from the numerical result?\n\nA. The energy of the incident particle is slightly above the maximum of the combined potential.  \nB. The separation \\( a \\) is much larger than both \\( \\sigma_1 \\) and \\( \\sigma_2 \\).  \nC. The particle energy is much less than \\( V_1 \\) and \\( V_2 \\).  \nD. The two barriers are nearly overlapping, with \\( a \\approx \\sigma_1 + \\sigma_2 \\).  \nE. The potential is symmetric with \\( V_1 = V_2 \\) and \\( \\sigma_1 = \\sigma_2 \\).  \nF. The particle mass is very large.  \nG. The barriers are widely separated, and the energy is near zero.  \nH. Only one barrier is present.  \nI. The potential varies slowly compared to the de Broglie wavelength.  \nJ. The transmission probability is close to unity.\n\nEnd your response by placing the correct option within double asterisks, like **X** with the bold formatting. \nSelect the correct option."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-350d5d0f1dc1a8394578",
+      "domain": "knowledge_mcqa",
+      "original_split": "val",
+      "decision": "uncertain",
+      "reason": "可识别apoCIII但抑制类型需实验体系依据，不能只凭特征推非竞争抑制。",
+      "source_row": 189,
+      "ground_truth": "I",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Which of the following options is the most appropriate response to the question?\n\nA biochemist analyzes the isoelectric focusing pattern of a purified apolipoprotein from HDL and finds three distinct bands corresponding to varying degrees of sialylation. The protein has a molecular weight of 8,800 daltons and plasma concentration of 0.12–0.14 mg/ml. It is known to regulate triglyceride-rich lipoprotein metabolism by modulating enzyme activity. Which of the following best describes the functional impact of this protein on lipoprotein lipase?\n\nA. Allosteric activation  \nB. Competitive inhibition  \nC. No effect  \nD. Enhancement of enzyme synthesis  \nE. Stabilization of enzyme structure  \nF. Facilitation of enzyme translocation  \nG. Promotion of receptor-mediated uptake  \nH. Induction of gene expression  \nI. Reversible non-competitive inhibition  \nJ. Irreversible covalent modification\n\nProvide your final answer at the end of the response, enclosed in single angle brackets: <X>."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-bd78d37850601432ccae",
+      "domain": "knowledge_mcqa",
+      "original_split": "val",
+      "decision": "exclude",
+      "reason": "低pH使S²⁻减少并不能解释铜比锌更低沉淀率；CuS低溶解度与暗示趋势不支持GT机制。",
+      "source_row": 161,
+      "ground_truth": "C",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: \\boxed{A/B/C/D/E/F/G/H/I/J}' (e.g. 'Answer: \\boxed{G}').\n\nDuring a precipitation reaction, 60% of dissolved copper ions and 87% of dissolved zinc ions are removed from solution when the reaction is terminated. The process uses sulphide at a pH below pK₁ of H₂S. What is the primary chemical reason for the lower precipitation efficiency of copper compared to zinc under these conditions?\n\nA. Copper sulphide is more soluble than zinc sulphide at low pH  \nB. Zinc forms stronger complexes with water, enhancing precipitation  \nC. At pH < pK₁, most sulphide exists as H₂S(g), reducing available S²⁻ for precipitation  \nD. Copper ions hydrolyse more readily, forming soluble hydroxides  \nE. Zinc has a higher charge density, favouring nucleation  \nF. The solubility product of CuS is higher than that of ZnS  \nG. Copper precipitates faster, leading to Ostwald ripening  \nH. Zinc ions have a larger ionic radius, promoting lattice formation  \nI. The presence of oxygen selectively oxidises zinc ions  \nJ. Copper forms colloidal dispersions that resist settling"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-10491d016a7b36aa0e40",
+      "domain": "knowledge_mcqa",
+      "original_split": "val",
+      "decision": "uncertain",
+      "reason": "Dirac约化方向合理，但h与ħ记号、2系数/核势类型不清，多个说明层次选项重叠。",
+      "source_row": 193,
+      "ground_truth": "I",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "At the end of your response, select exactly one option and state it clearly using the format: Option Selected: X\n\nIn the spin-orbit interaction term \\( V_{so} = \\lambda \\left( \\frac{h}{2Mc} \\right)^2 \\nabla V \\cdot (\\vec{\\sigma} \\times \\vec{p}) \\), what is the primary physical reason for the inclusion of the factor \\( \\left( \\frac{h}{2Mc} \\right)^2 \\)?\n\nA. It ensures the correct units for energy in the potential.  \nB. It accounts for the relativistic correction to the nucleon's kinetic energy.  \nC. It scales the spin-orbit coupling to the nucleon's Compton wavelength.  \nD. It arises from the Thomas precession in the rest frame of the nucleon.  \nE. It is the square of the reduced Compton wavelength of the nucleon.  \nF. It normalizes the Pauli matrices to unit magnitude.  \nG. It represents the square of the speed of light in natural units.  \nH. It is the eigenvalue of the spin operator for a spin-1/2 particle.  \nI. It comes from the non-relativistic reduction of the Dirac equation.  \nJ. It ensures the operator is Hermitian.\n\nSelect one and only one correct option from the choices given."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-c7a95f48c8a11bdcef6b",
+      "domain": "knowledge_mcqa",
+      "original_split": "val",
+      "decision": "exclude",
+      "reason": "一N且质量分数5.89%→14.01/0.0589≈237.86g/mol；无匹配选项，GT205错误。",
+      "source_row": 179,
+      "ground_truth": "J",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D/E/F/G/H/I/J' (e.g. 'Answer: B').\n\nA compound with elemental composition 66.47% C, 5.49% H, 5.89% N, and the remainder O is known to contain one nitrogen atom per molecule. Using this constraint, estimate the molar mass of the compound.\n\nA. 123 g/mol  \nB. 135 g/mol  \nC. 118 g/mol  \nD. 142 g/mol  \nE. 150 g/mol  \nF. 162 g/mol  \nG. 108 g/mol  \nH. 175 g/mol  \nI. 190 g/mol  \nJ. 205 g/mol"
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-bd24122855627b4dc744",
+      "domain": "knowledge_mcqa",
+      "original_split": "val",
+      "decision": "keep",
+      "reason": "ξ=√(E²-Δ²)在正支求导E/√(E²-Δ²)，B；物理DOS取正支。",
+      "source_row": 23,
+      "ground_truth": "B",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "In a superconductor, quasiparticle excitations are fermionic and must satisfy a one-to-one correspondence with the original electron creation and annihilation operators. Given that the number of states in an energy interval must be conserved, the relation \\( N_S(E)dE = N_n(\\xi)d\\xi \\) holds. If \\( E = \\sqrt{\\xi^2 + \\Delta^2} \\), what is the correct expression for \\( \\frac{d\\xi}{dE} \\) in terms of \\( E \\) and \\( \\Delta \\)?\n\nA. \\( \\frac{\\sqrt{E^2 - \\Delta^2}}{E} \\)  \nB. \\( \\frac{E}{\\sqrt{E^2 - \\Delta^2}} \\)  \nC. \\( \\frac{\\Delta}{E} \\)  \nD. \\( \\frac{E}{\\Delta} \\)\n\nProvide the correct option at the end, enclosed in single angle brackets: <X>. Answer the question by carefully considering all options and selecting the most appropriate choice."
+        }
+      ]
+    },
+    {
+      "sample_id": "knowledge_mcqa-65d106392a7c5948a78b",
+      "domain": "knowledge_mcqa",
+      "original_split": "val",
+      "decision": "exclude",
+      "reason": "凝结高度需各物种分压/丰度及饱和压函数参数；题干不足，E比GT C合理。",
+      "source_row": 39,
+      "ground_truth": "C",
+      "prompt": [
+        {
+          "role": "user",
+          "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D/E/F/G/H/I/J' (e.g. 'Answer: I').\n\nIn a hypothetical atmospheric model of a cold planetary body, hydrocarbon species are produced via photochemical reactions initiated by solar UV radiation. These species include acetylene (C₂H₂), ethane (C₂H₆), and benzene (C₆H₆), all of which can condense in the stratosphere at pressures between 0.1 and 20 mbar. If the temperature decreases with altitude and the saturation vapor pressure of each species depends exponentially on temperature, which species is most likely to condense at the highest altitude (lowest pressure) under chemical equilibrium?\n\nA. Acetylene  \nB. Ethane  \nC. Benzene  \nD. All condense at the same altitude  \nE. Insufficient data to determine  \nF. None condense in this pressure range  \nG. Diacetylene  \nH. Propane  \nI. Butane  \nJ. Methane"
+        }
+      ]
+    }
+  ],
+  "independent_cpu_checks": {
+    "congruence_abc_values": [
+      144,
+      54
+    ],
+    "derivative_if_removable_extension_defined": -7875000,
+    "last_four_digits": "0352",
+    "one_nitrogen_molar_mass": 237.86078098471987
+  },
+  "strict_filtered_counts_if_other_domains_unchanged": {
+    "train": 122,
+    "val": 30,
+    "total": 152
+  }
+}

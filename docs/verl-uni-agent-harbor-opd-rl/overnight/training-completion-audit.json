@@ -1,0 +1,76 @@
+{
+  "steps": {
+    "1": {
+      "actor/distillation/loss": 0.1937713548541069,
+      "actor/grad_norm": 0.60546875
+    },
+    "2": {
+      "actor/distillation/loss": 0.30730967223644257,
+      "actor/grad_norm": 0.765625
+    },
+    "3": {
+      "actor/distillation/loss": 0.31648626178503036,
+      "actor/grad_norm": 0.8515625
+    },
+    "4": {
+      "actor/distillation/loss": 0.3305077999830246,
+      "actor/grad_norm": 0.828125
+    },
+    "5": {
+      "actor/distillation/loss": 0.3211567848920822,
+      "actor/grad_norm": 0.70703125
+    },
+    "6": {
+      "actor/distillation/loss": 0.459269255399704,
+      "actor/grad_norm": 1.0859375
+    },
+    "7": {
+      "actor/distillation/loss": 0.25308767706155777,
+      "actor/grad_norm": 0.7890625
+    },
+    "8": {
+      "actor/distillation/loss": 0.2625626176595688,
+      "actor/grad_norm": 0.7734375
+    },
+    "9": {
+      "actor/distillation/loss": 0.2630593925714493,
+      "actor/grad_norm": 0.80078125
+    },
+    "10": {
+      "actor/distillation/loss": 0.36669641733169556,
+      "actor/grad_norm": 0.7109375
+    },
+    "11": {
+      "actor/distillation/loss": 0.4296851009130478,
+      "actor/grad_norm": 1.0078125
+    },
+    "12": {
+      "actor/distillation/loss": 0.3539644777774811,
+      "actor/grad_norm": 1.9375
+    },
+    "13": {
+      "actor/distillation/loss": 0.2965165376663208,
+      "actor/grad_norm": 0.9609375
+    },
+    "14": {
+      "actor/distillation/loss": 0.34371867775917053,
+      "actor/grad_norm": 0.96875
+    },
+    "15": {
+      "actor/distillation/loss": 0.2502252161502838,
+      "actor/grad_norm": 1.109375
+    },
+    "16": {
+      "actor/distillation/loss": 0.25898361951112747,
+      "actor/grad_norm": 0.78515625
+    }
+  },
+  "all_16_present": true,
+  "all_finite": true,
+  "checkpoint_steps": [
+    4,
+    8,
+    12,
+    16
+  ]
+}

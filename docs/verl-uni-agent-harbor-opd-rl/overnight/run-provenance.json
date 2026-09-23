@@ -1,0 +1,19 @@
+{
+  "training_run": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-attempt2",
+  "driver_pid": 979002,
+  "training_pid": 997761,
+  "command_sha256": "6ac41e731a661e6ad5a922b063259ce702e44f86588e722a89c837d4ee4d3569",
+  "command_artifact": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-attempt2/command.txt",
+  "wandb_mode": "offline",
+  "wandb_runs": [
+    "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-attempt2/wandb/offline-run-20260923_175657-s0k7196m"
+  ],
+  "source_head": null,
+  "source_head_reason": "Deployment copy has no Git metadata",
+  "source_files_sha256": {
+    "/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl/verl/trainer/main_ppo.py": "270ffe0d0f5ddbc4e9af8d0f6eece5d11b1a6d6d76166603b5ebac81345dd5cc",
+    "/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl/verl/workers/engine/fsdp/transformer_impl.py": "fb8ea0cb0eab38bb746fd386bdc6866b389cf7b5deee6ebf267d71b9cca51c04",
+    "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-control-attempt2/train.sh": "235ad0ad535c4cdf336db619da1cf801a56090f850bd92b79eaafc9ffe1b64e9"
+  },
+  "scope": "Recorded running full trial; completion not implied"
+}

@@ -1,0 +1,13 @@
+{
+  "artifact_sha256": "56d1f68d4112f6d241b6f76ac2a5c875b2558f96ea246d8c0675cca05eb50bb8",
+  "desktop_viewport": "1280x720",
+  "desktop_visual_inspected": true,
+  "desktop_overflow": false,
+  "mobile_viewport": "390x844",
+  "mobile_overflow": false,
+  "comparison_rows_including_header": 8,
+  "table_count": 11,
+  "details_count": 29,
+  "final_result_visible": true,
+  "screenshot": "/private/tmp/overnight-final-report.png"
+}

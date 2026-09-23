@@ -1,0 +1,35 @@
+{
+  "executable": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+  "prefix": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1",
+  "base_prefix": "/usr",
+  "packages": {
+    "torch": "2.11.0",
+    "transformers": "5.8.0",
+    "vllm": "0.23.0",
+    "ray": "2.54.1",
+    "peft": "0.18.1",
+    "flashinfer-python": "0.6.12",
+    "flash-attn": null,
+    "triton": "3.6.0",
+    "wandb": "0.30.0"
+  },
+  "allowed_environment": {
+    "VIRTUAL_ENV": null,
+    "PYTHONPATH": null,
+    "LD_LIBRARY_PATH": null,
+    "CUDA_HOME": null,
+    "VLLM_USE_FLASHINFER_SAMPLER": null
+  },
+  "ray_worker_observation": {
+    "pid": 983493,
+    "worker": "TaskRunnerV1",
+    "environment": {
+      "VIRTUAL_ENV": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1",
+      "PYTHONNOUSERSITE": "1",
+      "VLLM_USE_FLASHINFER_SAMPLER": "0",
+      "WANDB_MODE": "offline"
+    },
+    "interpreter_command": "ray::TaskRunnerV1.run"
+  },
+  "inventory_context": "Package inventory used the explicit venv Python from a bare SSH shell; null inventory environment fields do not describe the activated training process. See ray_worker_observation for actual worker inheritance."
+}

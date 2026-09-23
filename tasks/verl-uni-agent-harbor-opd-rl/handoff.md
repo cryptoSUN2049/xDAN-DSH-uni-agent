@@ -1,6 +1,63 @@
 # 全版本 checkpoint 评测交接
 
+## 2026-09-24 夜间单教师 OPD（当前入口）
+
+- **最终：19:06:59 UTC全部队列完成，driver979002已退出。** 正式16步、四ckpt导出、五adapter独立重载均成功；7版本×30题=210输出，infra0。最终step16 math5/5（base4/5），IF5/8、knowledge1/1不变；仅幂塔题4037token内输出boxed0352改善，不能外推全面收益。
+- **最终入口**：docs/verl-uni-agent-harbor-opd-rl/overnight/index.html。final-analysis.json置顶结论；final-evaluation-audit.json逐条身份/重评分；final-weight-audit.json实际远端权重SHA与导出及eval一致；training-completion-audit.json全16步有限loss/grad；sampling-audit.json128轨迹覆盖121样本。最终summarize已显式重跑，medians与reload关联已更新。
+- **页面验收**：桌面1280×720截图检查、手机390×844无横向溢出，7模型对照表，report-qa.json锁定HTML SHA。远端control-attempt2保留全部日志、权重和W&B offline run。无新增付费沙箱调用。
+- **后续非本轮完成条件**：科学扩量、代码隔离执行评分、聊天质量评分、封存测试、近重复污染审计、W&B同步、性能触发止损、thinking/tool专项。不要把本轮有限验收改称全面高性能训练完成。此前时间线为历史快照。
+
+- 19:00:08 UTC：step12 exit0、30/30、reload=true，math4/5、IF5/8、knowledge1/1，与base14条已评分逐题相同，code/math各1截断。最后step16 PID1035826运行。step12结果已同步本地。report.py新增可选final-analysis.json（paragraphs/columns/rows）置顶结论，数据尚未填写；最终应完成该文件、重跑summarize/report、全模型一致性审核与浏览器QA。
+
+- 18:52:58 UTC：step8完成30/30、infra0、reload=true；math4/5、IF5/8、knowledge1/1，14条已评分与base逐题相同，step4关键词退步已恢复。step12 PID1035056运行，最后step16待跑。step8同步本地；最终必须运行更新版summarize.py，当前driver缓存旧版。
+
+- 18:45:58 UTC：step4独立评测30/30、infra0、reload=true，math4/5、IF4/8、knowledge1/1；相对base IF退步1题，其他已评分逐题相同。step8 PID1034287运行，之后12/16。step4结果已同步本地。analysis-notes新增base/teacher逐题解释：IF唯一改善为双关键词要求；共同数学失败因4096截断，无最终boxed，勿事后改分。
+
+- 18:39:10 UTC：teacher27B同预算30/30完成、infra0，math4/5、IF6/8、knowledge1/1；相对base仅IF改善1题，其余已评分逐题相同。step4 eval PID1033521启动，后续8/12/16。teacher结果已同步本地，全部正式reload与最终分析仍待完成。
+
+- 18:30:40 UTC：base9B同预算30/30完成，infra0；math4/5、IF5/8、knowledge1/1，code/chat无正确率。smoke与base逐题14条已评分结果全部相同（improved0/regressed0）。teacher27B评测PID1032692活跃，四正式ckpt仍排队。base结果已同步本地models/base-9b；勿与旧diagnostics-v1比较。
+
+- 18:26 UTC：export-full exit0，step4/8/12/16均exported，各权重SHA不同；原版9B独立eval PID1031927运行，后续teacher与四ckpt。完整sampling-audit已刷新16步128轨迹、121唯一样本、unmatched0，分域instruction34/chat33/code32/math26/knowledge3。report新增training-completion-audit展示，已部署；Ruff定向双门通过。
+
+- 18:25:14 UTC：正式16/16步完成，train997761 exit0，最终验证结束；export-full PID1031707已启动。四个checkpoint step4/8/12/16均存在；training-completion-audit.json核对全16步loss/grad有限。driver979002将继续base9B/teacher27B/四ckpt评测。sampling-audit目前仅前15步120样本，最终须刷新加入第16步。目标尚未完成。
+
+- 18:17 UTC附近：正式训练直接TaskRunner日志已step10，checkpoint tracker=8，driver979002/train997761仍活跃。新增sampling-audit.json：前9步72条rollout通过完整role/content渲染精确唯一匹配，unmatched=0；instruction20/chat18/code16/math16/knowledge2。仅代表生成，不代表对应更新已完成；训练结束须刷新到全部16步。report.py已部署展示此证据，HTML同步本地。环境主进程/TaskRunner/WorkerDict再次实测VIRTUAL_ENV一致，PYTHONNOUSERSITE=1。
+
+- 18:06 UTC：正式step4 checkpoint tracker=4，已提前CPU导出到control-attempt2/adapters/global_step_4/lora_adapter，248模块非零B，SHA e77be511b0ad21dc88425a2ee1992cee3cf45377555a9bd15c57a1e72c09e846。export-step4-early.log exit0。后续driver全量导出可复用该adapter。训练997761仍运行，step4验证收尾，日志指标最后step3（验证后才输出step4指标），勿重启。
+
+- 18:03 UTC：正式full已2/16，PID997761，TaskRunner1002227。step1 loss0.19377/grad0.60547/71.67s，step2 loss0.30731/grad0.76563/56.62s；actor/lr日志是scheduler更新后的下一步LR（5e-7、1e-6），step1实际LR0。下一保存step4。若主日志buffer延迟，读/tmp/ray/session_latest/logs/worker*1002227.out。
+- 汇总脚本新增中位数及按hash关联generation_reload_verified；运行中的driver已缓存旧summarize模块，最终必须显式执行新summarize.py再生成report.py，勿忘。报告已加入源码/命令hash、W&B offline、原始checkpoint验收、分析快照。全仓Ruff双门通过；HTML桌面/手机无横向溢出（中间快照QA，最终仍需刷新）。
+
+- 17:39 UTC里程碑：smoke训练→导出→独立重载30/30全部通过。248模块非零B，adapter SHA6735b4e27cc8a2d622692ee5944a4d989cd76f1b530b9b860447a4cef2083ff8与eval一致。smoke4096预算math4/5、IF5/8、knowledge1/1、code/chat未评分；尚无同预算base对照不能宣称提升。
+- 正式16step train-full PID997761已于17:39:29启动，driver979002继续。目录runs/overnight-opd-20260924-attempt2，仍使用v2数据122/30。后续每4step保存再全部导出/评测。
+
+- 17:32 UTC关键进展：attempt2 smoke训练exit0，step1保存完成；loss0.1948945、grad_norm0.671875、lr1e-6、step109.48s、response_mean456.75、clip_ratio0.125。原进程979006已退出；driver979002进入export-smoke，PID996760。仍需导出非零B与reload-smoke验收，full尚未启动。
+
+- 17:18 UTC实际进展：attempt2 driver979002/train979006存活；TaskRunner983493环境继承已实测写environment.json。actor WorkerDict985141初始化成功；teacher vLLMHttpServer986661/Engine987113/Worker987452正在GPU1加载27B（6/18 shards，约53GB）。GPU0学生参数offload当前约1.3GB；尚未训练更新。Ray细日志/tmp/ray/session_latest/logs/worker*986661*.err，主日志缓冲不完整。无必要不要重启。
+
+- 17:07 UTC最新：v2数据部署122train/30val完成，attempt2 driver979002已启动，使用新数据目录data-overnight-opd-20260924-v2。旧driver970046和teacher977897均已退出，旧40题两模型均完成。先查attempt2/state.json和train-smoke.log。
+- v2严格排除math/science uncertain，science仅3train/1val；不能用于领域效果结论。完整80题审计quality-review-80.json/md保存。正式eval4096，训练1024。
+
+- 17:02 UTC最新：attempt2 waiter977686已核对命令后停止（仍在等待，未训练），原因真实逐题审计发现3项验证数据问题；数据agent正在复审math40+knowledge40。旧driver970046/teacher977897继续评测不动。修订数据版本冻结后重新启动attempt2，勿误认等待器活着。MCQA parser已补<B>/Option Selected，需统一重评分旧诊断。
+
+- 16:59 UTC：原版40题短预算1024评测完成，但数学7/8截断；attempt2正式所有评测统一4096（训练rollout仍1024，需报告限制）。旧结果保留为短预算诊断，不与4096混配。配置检查成功exit0，显式激活uv环境，Ray py_executable绑定同环境。
+
+- 最新：attempt1 smoke因缺flash-attn失败，旧driver970046正在跑base/teacher评测，勿中断。attempt2 waiter977686等待其真实退出后启动；新control路径为旧路径加`-attempt2`。训练改sdpa+remove_padding=False，smoke warmup0确保非零更新，full保持warmup2。
+- uv创建的Python3.12.3环境确认：torch2.11.0 / transformers5.8.0 / vllm0.23.0 / ray2.54.1；attempt2显式设置VIRTUAL_ENV、UV_PROJECT_ENVIRONMENT、PYTHONNOUSERSITE和PATH。仍需验证Ray worker实际继承。
+- 评测return_dict=False实机list[int]通过；IF/code空响应误判已修复，禁止空答案通过。
+
+- Goal active：用户睡眠期间继续真实训练、评测与HTML报告。今晚单教师27B→9B，五领域，非MOPD。
+- 服务器 control：`/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-control`；driver PID970046，smoke PID970050，16:48 UTC启动。先查state.json、driver.log、train-smoke.log，不重复启动。
+- 数据160 train/40 val，各域32/8；code/chat无可靠正确率，不计综合。
+- CPU tokenizer、HF/vLLM评分门通过；105响应token mean_abs_error0.01044，p950.07962，仅短序列关闭thinking试验。
+- 修复vLLM sampler兼容：VLLM_USE_FLASHINFER_SAMPLER=0。用户授权的Decision Index PID897129已停止。
+- 顺序：smoke1→导出/重载评测→正式16步每4步保存→base/teacher/所有有效checkpoint同预算评测。当前仅smoke启动，未证明更新成功。
+- 脚本与HTML：`docs/verl-uni-agent-harbor-opd-rl/overnight/`；后续同步远端state、index、models、metrics回本地。
+- 自动报告10秒刷新；时限停止已实现，性能触发止损尚未实现；W&B offline。异常需保留日志并修复，不重复空跑。
+- 当前分支performance-9b，已有未提交变更，勿覆盖。
+
 ## TL;DR
+- **2026-09-24 当前目标/决策入口：先读 [MOPD项目记忆](mopd-project-memory.md)**。全面能力多教师在线蒸馏为主线；下方训练/评测状态均按历史时间理解，非实时报告。
 - 用户要求每个版本 checkpoint 全量评测，取得整体结果。
 - 本轮S2所有保留版本，加原版与S1 step12；GPU0全量队列持续运行。
 - 已有完整结果：原版64.10%、OPD12 43.27%、RL20 50.96%、RL40 47.76%、RL60 46.15%；OPD12/RL20已补齐infra缺失。
@@ -89,3 +146,10 @@
 - 真实控制已完成：TB cancel-async-tasks、Verified astropy均nop0/oracle1；build-cython-ext oracle在planarity1.0.0/networkx3.6.1组合缺pos，作为已知参考解问题保留89题主结果，不能算模型失败证据。
 - GPU1 TB三模型probe-only已发起，日志cross-benchmark-20260921/tb-model-probes.log，状态status-tb21-probe.json；不自动进入full。后续查真实加载/样本状态，不能把启动当成功。
 - 新旧针对性回归合并34项通过，全仓Ruff519files通过；源码和manifest远端SHA与本地一致。全量仍未开始，预算答复待收。
+
+## 2026-09-23 HF 数据归档完成
+
+- 三套数据已重命名保存到 gump2049 私有 HF 仓库；入口 `docs/verl-uni-agent-harbor-opd-rl/hf-data-archives.md`，机器记录 `hf-data-archives.json`。
+- 保留上游固定 revision、数据文件、许可证、README 与 provenance SHA256。远端内容核验完成。
+- 下一步仍是训练准入审计；不要把 archived_unvalidated 当成可直接训练。
+- 当前分支 performance-9b；本次归档不修改训练进程，不能据此更新实时训练状态。

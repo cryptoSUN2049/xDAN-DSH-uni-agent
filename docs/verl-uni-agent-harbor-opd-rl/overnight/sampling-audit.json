@@ -1,0 +1,349 @@
+{
+  "scope": "saved rollout records; completed optimizer steps separately verified in training-completion-audit.json",
+  "matching": "exact rendered role/content sequence, unique match required; no fuzzy matching",
+  "train_sha256": "54873014b602f859b0c7efba1b43e675456d8d9ec6a3976b3b5ea0a35ac06f0a",
+  "domains": {
+    "instruction": 34,
+    "code": 32,
+    "chat": 33,
+    "math": 26,
+    "knowledge_mcqa": 3
+  },
+  "unique_training_samples": 121,
+  "steps": [
+    {
+      "step": 1,
+      "domains": {
+        "instruction": 3,
+        "code": 2,
+        "chat": 1,
+        "math": 2
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "instruction-6c51747590c8c72de60b",
+        "code-b3f15ac0514df6ea6b42",
+        "instruction-92aee90d058f840a6c4f",
+        "chat-e4f848de8c159a2d7df0",
+        "math-43397f49959914c7f214",
+        "math-33b2cf765b7d22069f7c",
+        "code-02a45eb90d0d7f7c02d1",
+        "instruction-3fc7f16d231fbcfa2044"
+      ],
+      "rollout_sha256": "3872be22e93ad3e95c6f98cce6d0bd280c77099a439c368b8c8e64f67b129702"
+    },
+    {
+      "step": 2,
+      "domains": {
+        "instruction": 2,
+        "code": 2,
+        "math": 1,
+        "chat": 3
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "instruction-7d07e083d353950360e6",
+        "code-66d124ab026d82713be9",
+        "math-87ad5e389bd68354257a",
+        "instruction-76456fd192f5002e5054",
+        "chat-ab0b5eb186ec72121c21",
+        "chat-1d1b09eb646f531ad98b",
+        "chat-9b54e76652351fda5985",
+        "code-8abc49d0754aa976e694"
+      ],
+      "rollout_sha256": "8ebadbb949c3583706c24bbe043fefa99b1456b3c84fe05d01872f349df42312"
+    },
+    {
+      "step": 3,
+      "domains": {
+        "instruction": 3,
+        "math": 2,
+        "chat": 2,
+        "code": 1
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "instruction-9b25cad6a7c8398088fb",
+        "instruction-c4c5402ee39ce2f68b73",
+        "math-680104154f95d33558b9",
+        "chat-7f4fffbb457991d39ac5",
+        "instruction-9e983f9c109342611edf",
+        "chat-e96c896baab8c0f34ab6",
+        "code-28fecb48c66e50e39028",
+        "math-0df8a5ba33371f8556de"
+      ],
+      "rollout_sha256": "5c20f5035568965c615c1475aac6e627cca15ad5c7d07ad215ee7380349ef9f6"
+    },
+    {
+      "step": 4,
+      "domains": {
+        "instruction": 3,
+        "knowledge_mcqa": 1,
+        "math": 2,
+        "chat": 1,
+        "code": 1
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "instruction-6f5e510498d70b6f5db6",
+        "knowledge_mcqa-88b0b45af270267a42de",
+        "instruction-f539545e46eabbfd1619",
+        "math-9f900599f3b34875e2c4",
+        "chat-a9813587138cb2c21da0",
+        "math-ec5d40786cf887cbd6d1",
+        "code-93eaf456bd4c0073be77",
+        "instruction-77a46a6444d02753ef3a"
+      ],
+      "rollout_sha256": "390d944360763baaee4990565fe54ff27de8973b36dfb80c6a0707eb728ca891"
+    },
+    {
+      "step": 5,
+      "domains": {
+        "code": 1,
+        "chat": 5,
+        "math": 2
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "code-c2f456bbd0b2eff270de",
+        "chat-cffeee99a97dbd75e3bc",
+        "chat-d7a5b82453879e06a391",
+        "chat-42295620778d7ec68aef",
+        "chat-fea9ce595c6d41a3272b",
+        "chat-dcf9c844d1444d59533a",
+        "math-db65afe784dd290b4313",
+        "math-01c7d47a9d50c236ac62"
+      ],
+      "rollout_sha256": "626e6a3ddb93c8da78ba4cd45f097fd00c6a290623284a0fcf3bc04e6171d1ad"
+    },
+    {
+      "step": 6,
+      "domains": {
+        "code": 2,
+        "instruction": 4,
+        "knowledge_mcqa": 1,
+        "chat": 1
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "code-c9ad9fbd3eb1fd6fb67a",
+        "instruction-0c1c24fd25853987f90d",
+        "instruction-7a4e96b0cd4b9463031e",
+        "knowledge_mcqa-97c9cb8b292463347a7b",
+        "chat-8e0ee91ea1f35edadd13",
+        "code-48a358128ac8a0f46780",
+        "instruction-c0697fe73914459efdfc",
+        "instruction-9211e9fbf3c248e6712e"
+      ],
+      "rollout_sha256": "da2e2732975854b6ca9c2e3fb99c87c72519bec23fdb1b1459e74a16d7703a22"
+    },
+    {
+      "step": 7,
+      "domains": {
+        "instruction": 2,
+        "code": 3,
+        "chat": 1,
+        "math": 2
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "instruction-5c0e4010da48947741ce",
+        "code-956670742a6003f9f4a7",
+        "code-b82e7533218d0ff07ef3",
+        "chat-9e6620943a4ceff2d365",
+        "math-a10cb78d27e2c8feb01f",
+        "instruction-648c9e9811e114a4e04e",
+        "code-3c4524edf070f7dac3ba",
+        "math-ef416b2b97bb17bf7f96"
+      ],
+      "rollout_sha256": "65fd72a2516ee70dd451a2b42ad08fe0b938c9d6014920039dbf30112e6dae81"
+    },
+    {
+      "step": 8,
+      "domains": {
+        "chat": 3,
+        "instruction": 1,
+        "math": 4
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "chat-408ce63de9a4f2f1a654",
+        "instruction-5c819e825c53d12b51b8",
+        "math-271f87f7e221ca99af6a",
+        "chat-3fc96e8efc95135173e2",
+        "chat-0163e9fad66de7abf246",
+        "math-6fecf116c198b55ce973",
+        "math-48aa0fe17f9197850b73",
+        "math-316c92ed5e84f625fd3a"
+      ],
+      "rollout_sha256": "858c1a082b0d8089ab1601e98b281bec7f1b61c25fedff5225d62eed58b47196"
+    },
+    {
+      "step": 9,
+      "domains": {
+        "math": 1,
+        "code": 4,
+        "instruction": 2,
+        "chat": 1
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "math-7ad8aee4ec6f7c825f5b",
+        "code-932bbb94cc25d185ba91",
+        "code-4af188e325b8a2c5545e",
+        "instruction-d28e358e695c2bb85712",
+        "chat-feb63dfb8c5a20c6abd1",
+        "instruction-3e3bc2afd132450b5ca2",
+        "code-a493239f3befc12b87aa",
+        "code-7a404fb0e8e45834bf9e"
+      ],
+      "rollout_sha256": "c534c273e9e42024170d617e0fa356777c8a7301062b3b52d665c762d7bf45ed"
+    },
+    {
+      "step": 10,
+      "domains": {
+        "chat": 2,
+        "math": 2,
+        "knowledge_mcqa": 1,
+        "code": 1,
+        "instruction": 2
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "chat-c4c99c52d334a236e8d7",
+        "math-4b388c6f4e19e09cfe04",
+        "knowledge_mcqa-a19373e8213a723ee525",
+        "math-59dce45d638be20b2e9c",
+        "code-09dba3300ff5debc2a49",
+        "chat-2822da22a990a9196fa7",
+        "instruction-d0a95733fcf3ac54ff6c",
+        "instruction-37df2bc9ad5e4e71ccca"
+      ],
+      "rollout_sha256": "32faeaaf60a2fdb26b49f27317f75f841ce2d6d4a7b40f0f5e2d855e8f19c658"
+    },
+    {
+      "step": 11,
+      "domains": {
+        "instruction": 2,
+        "chat": 3,
+        "math": 1,
+        "code": 2
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "instruction-87065f884a22205fc6d9",
+        "chat-1a85f65157fa7c3a83bf",
+        "math-58fd573620b399a23d54",
+        "code-e74e29880c2c02058f7d",
+        "instruction-669b89857625e805d3aa",
+        "chat-a7b4ffff7a99c277c92c",
+        "code-c7760a0e5cd7e5dc38a5",
+        "chat-15574a1a53635884c9f7"
+      ],
+      "rollout_sha256": "b409d3111800e63777bd80b29efdf41325ab328563db989b8c13bf312d75c7c5"
+    },
+    {
+      "step": 12,
+      "domains": {
+        "chat": 2,
+        "code": 4,
+        "instruction": 2
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "chat-826133ced805e52d23cc",
+        "code-522f2008425ed8de2838",
+        "code-9ba2a6797baad3471cfa",
+        "instruction-ebb6ab7b4a6b61e40964",
+        "code-00241e56f95878f4f0e3",
+        "chat-b7e1658fc23570f9a6f7",
+        "instruction-5dd0b2eac326ad460e66",
+        "code-b2aec643148a2ea40549"
+      ],
+      "rollout_sha256": "df6ce86b62b6bdb20fdd33f713b7063bab4653a7250a4241d605c733fbc5d48b"
+    },
+    {
+      "step": 13,
+      "domains": {
+        "code": 2,
+        "math": 1,
+        "instruction": 4,
+        "chat": 1
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "code-03c776ed3f85031f5d0a",
+        "math-997e8ae35460fbee002d",
+        "instruction-c501bc8f9f2cb95e75d7",
+        "instruction-9847771a0506f86cbfc1",
+        "instruction-7069527ccce87f34cd0b",
+        "instruction-43ab175fa7b654b434f1",
+        "code-3b67412f0d096c42c1eb",
+        "chat-1ff485b707823504273b"
+      ],
+      "rollout_sha256": "d8dcd16c658e4c07e2ab828af3776578e3940d3e678b5cf95509af170a73a984"
+    },
+    {
+      "step": 14,
+      "domains": {
+        "chat": 2,
+        "instruction": 2,
+        "code": 2,
+        "math": 2
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "chat-8e918aec9a81ab520f22",
+        "instruction-ea2dbe2955bee817ae23",
+        "instruction-1b991109a33f86583c43",
+        "code-d737b212210ac9189ee7",
+        "chat-b8a4b223b710c9deb669",
+        "math-c169e701885bf53e0f91",
+        "math-3212dd39f522bd599118",
+        "code-66ad48190436152047c2"
+      ],
+      "rollout_sha256": "2dbbea9af8af192652df7bb83181f900d213f052ab2e85f45063f23944c73181"
+    },
+    {
+      "step": 15,
+      "domains": {
+        "code": 4,
+        "chat": 3,
+        "math": 1
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "code-13a0ec3f3441f4e1208c",
+        "code-47c4582c7bf569f4d166",
+        "chat-25efc8116b4373274c33",
+        "code-983a14305ab0ca91c6c3",
+        "math-4a8a82107cc0dce5dad1",
+        "chat-1659098560da8dcd1193",
+        "chat-bb700e26b947ff96caef",
+        "code-d17250e7ff37874be289"
+      ],
+      "rollout_sha256": "6a1c81a60819c9f8ba61eee887ed7cf4a5f9aabf41cd7c1c231ef7bd9316f513"
+    },
+    {
+      "step": 16,
+      "domains": {
+        "math": 3,
+        "chat": 2,
+        "instruction": 2,
+        "code": 1
+      },
+      "unmatched": 0,
+      "sample_ids": [
+        "math-997e8ae35460fbee002d",
+        "chat-1ee9731b57f9cb2cbac8",
+        "math-58fd573620b399a23d54",
+        "math-33b2cf765b7d22069f7c",
+        "chat-25efc8116b4373274c33",
+        "instruction-5c0e4010da48947741ce",
+        "instruction-0c1c24fd25853987f90d",
+        "code-a493239f3befc12b87aa"
+      ],
+      "rollout_sha256": "588dfdd4397c3c512087d208e422f568ea0827cd1bb0782d65adf8535ffbcd49"
+    }
+  ]
+}

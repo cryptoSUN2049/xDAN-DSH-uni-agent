@@ -1,0 +1,51 @@
+{
+  "all_stages_complete": true,
+  "driver_exited": true,
+  "checkpoints": [
+    {
+      "model": "smoke-step1",
+      "actual_weights_sha256": "6735b4e27cc8a2d622692ee5944a4d989cd76f1b530b9b860447a4cef2083ff8",
+      "export_hash_matches": true,
+      "eval_hash_matches": true,
+      "eval_adapter_path_matches": true,
+      "reload_verified": true,
+      "nonzero_B_modules": 248
+    },
+    {
+      "model": "opd-step4",
+      "actual_weights_sha256": "e77be511b0ad21dc88425a2ee1992cee3cf45377555a9bd15c57a1e72c09e846",
+      "export_hash_matches": true,
+      "eval_hash_matches": true,
+      "eval_adapter_path_matches": true,
+      "reload_verified": true,
+      "nonzero_B_modules": 248
+    },
+    {
+      "model": "opd-step8",
+      "actual_weights_sha256": "a727e11e497d79c8b789c33fd7a6b11ee78cb964e257046cb13476c6cc4b0267",
+      "export_hash_matches": true,
+      "eval_hash_matches": true,
+      "eval_adapter_path_matches": true,
+      "reload_verified": true,
+      "nonzero_B_modules": 248
+    },
+    {
+      "model": "opd-step12",
+      "actual_weights_sha256": "90c54ef58ed4f0d12f881da132289c07e6c045e4a8dcccbceac4d6afb6a431d8",
+      "export_hash_matches": true,
+      "eval_hash_matches": true,
+      "eval_adapter_path_matches": true,
+      "reload_verified": true,
+      "nonzero_B_modules": 248
+    },
+    {
+      "model": "opd-step16",
+      "actual_weights_sha256": "3e44a316a3a7e268f6bae0f4d90527783270b3eeb93411e547b68b30843fd755",
+      "export_hash_matches": true,
+      "eval_hash_matches": true,
+      "eval_adapter_path_matches": true,
+      "reload_verified": true,
+      "nonzero_B_modules": 248
+    }
+  ]
+}

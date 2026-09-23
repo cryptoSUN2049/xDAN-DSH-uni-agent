@@ -1,0 +1,126 @@
+{
+  "model": "teacher-27b",
+  "model_path": "/workspace/models/Qwen3.8-27B",
+  "adapter_path": null,
+  "status": "complete",
+  "dataset_revision": "a2eba54549ae598b12214c3b11eeafa1efc0923857a866d6da67fbaf87a01844",
+  "budget": {
+    "max_tokens": 1024,
+    "temperature": 0,
+    "seed": 20260924,
+    "template": "student tokenizer; enable_thinking=False; no tools"
+  },
+  "domains": [
+    {
+      "domain": "chat",
+      "count": 8,
+      "scored": 0,
+      "skipped": 8,
+      "infra": 0,
+      "score": null,
+      "output_tokens_mean": 899.75,
+      "truncated_count": 3,
+      "truncated_rate": 0.375,
+      "verifiers": [
+        "not_available"
+      ],
+      "python_syntax_valid": null
+    },
+    {
+      "domain": "code",
+      "count": 8,
+      "scored": 0,
+      "skipped": 8,
+      "infra": 0,
+      "score": null,
+      "output_tokens_mean": 241.25,
+      "truncated_count": 1,
+      "truncated_rate": 0.125,
+      "verifiers": [
+        "no_isolated_execution"
+      ],
+      "python_syntax_valid": 7
+    },
+    {
+      "domain": "instruction",
+      "count": 8,
+      "scored": 8,
+      "skipped": 0,
+      "infra": 0,
+      "score": 0.75,
+      "output_tokens_mean": 339.75,
+      "truncated_count": 0,
+      "truncated_rate": 0,
+      "verifiers": [
+        "pilot_if_rules_v1_not_official_ifeval"
+      ],
+      "python_syntax_valid": null
+    },
+    {
+      "domain": "knowledge_mcqa",
+      "count": 8,
+      "scored": 8,
+      "skipped": 0,
+      "infra": 0,
+      "score": 0.0,
+      "output_tokens_mean": 927.625,
+      "truncated_count": 6,
+      "truncated_rate": 0.75,
+      "verifiers": [
+        "strict_mcqa_final_v1"
+      ],
+      "python_syntax_valid": null
+    },
+    {
+      "domain": "math",
+      "count": 8,
+      "scored": 8,
+      "skipped": 0,
+      "infra": 0,
+      "score": 0.125,
+      "output_tokens_mean": 984.125,
+      "truncated_count": 7,
+      "truncated_rate": 0.875,
+      "verifiers": [
+        "strict_numeric_final_v1"
+      ],
+      "python_syntax_valid": null
+    }
+  ],
+  "overall": {
+    "count": 40,
+    "scored": 24,
+    "skipped": 16,
+    "infra": 0,
+    "score": null,
+    "reason": "No aggregate accuracy across heterogeneous graders / unscored domains"
+  },
+  "limitations": [
+    "Small internal validation, not official benchmark.",
+    "Code syntax is not execution correctness; chat is unscored.",
+    "Teacher uses student template for controlled comparison; not native-template upper bound."
+  ],
+  "paired_comparison": {
+    "math": {
+      "n": 8,
+      "mean_delta": 0.0,
+      "improved": 0,
+      "regressed": 0,
+      "note": "Small internal pilot; no significance claim"
+    },
+    "instruction": {
+      "n": 8,
+      "mean_delta": 0.125,
+      "improved": 1,
+      "regressed": 0,
+      "note": "Small internal pilot; no significance claim"
+    },
+    "knowledge_mcqa": {
+      "n": 8,
+      "mean_delta": -0.125,
+      "improved": 0,
+      "regressed": 1,
+      "note": "Small internal pilot; no significance claim"
+    }
+  }
+}

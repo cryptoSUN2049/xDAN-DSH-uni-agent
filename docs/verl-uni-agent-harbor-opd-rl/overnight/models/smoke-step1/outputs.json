@@ -1,0 +1,1009 @@
+[
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 37, \"split\": \"train\"}",
+      "prompt_sha256": "018ccc89c12a18ab9fa909cb27142f80175fe2b472a1b32fbc3bd59d15b7b82b",
+      "prompt_tokens": 73,
+      "sample_id": "math-018ccc89c12a18ab9fa9",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 37,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Find the sum of all integer values of \\( a \\) such that \\( a(x^2+x-1) \\leq (x^2+x+1)^2 \\) for all real numbers \\( x \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To find the sum of all integer values of $a$ such that the inequality\n$$ a(x^2+x-1) \\leq (x^2+x+1)^2 $$\nholds for all real numbers $x$, we proceed as follows:\n\n### Step 1: Analyze the inequality structure\nLet $u = x^2+x$. The inequality becomes:\n$$ a(u-1) \\leq (u+1)^2 $$\nExpanding the right side:\n$$ a(u-1) \\leq u^2 + 2u + 1 $$\nRearranging terms to form a quadratic inequality in terms of $u$:\n$$ u^2 + 2u + 1 - a(u-1) \\geq 0 $$\n$$ u^2 + (2-a)u + (1+a) \\geq 0 $$\n\n### Step 2: Determine the range of $u$\nSince $u = x^2+x$, we can complete the square to find the range of possible values for $u$:\n$$ u = \\left(x + \\frac{1}{2}\\right)^2 - \\frac{1}{4} $$\nSince $\\left(x + \\frac{1}{2}\\right)^2 \\geq 0$ for all real $x$, the minimum value of $u$ is $-\\frac{1}{4}$. Thus, the condition \"for all real numbers $x$\" is equivalent to \"for all $u \\geq -\\frac{1}{4}$\".\n\nSo, we need the quadratic function $f(u) = u^2 + (2-a)u + (1+a)$ to be non-negative for all $u \\in [-\\frac{1}{4}, \\infty)$.\n\n### Step 3: Analyze the quadratic function $f(u)$\nThe function $f(u)$ is a parabola opening upwards (since the coefficient of $u^2$ is $1 > 0$).\nFor $f(u) \\geq 0$ on the interval $[-\\frac{1}{4}, \\infty)$, there are two cases:\n\n**Case 1: The quadratic has no real roots or a repeated real root.**\nIf the discriminant $\\Delta \\leq 0$, then $f(u) \\geq 0$ for all real $u$, which certainly includes $u \\geq -\\frac{1}{4}$.\n$$ \\Delta = (2-a)^2 - 4(1)(1+a) \\leq 0 $$\n$$ (2-a)^2 - 4 - 4a \\leq 0 $$\n$$ 4 - 4a + a^2 - 4 - 4a \\leq 0 $$\n$$ a^2 - 8a \\leq 0 $$\n$$ a(a-8) \\leq 0 $$\nThis implies $0 \\leq a \\leq 8$.\nSince $a$ must be an integer, the possible values are $a \\in \\{0, 1, 2, 3, 4, 5, 6, 7, 8\\}$.\n\n**Case 2: The quadratic has two distinct real roots.**\nIf $\\Delta > 0$, the parabola dips below the u-axis between its two roots. For $f(u) \\geq 0$ to hold on $[-\\frac{1}{4}, \\infty)$, the entire interval where $f(u) < 0$ must lie strictly to the left of $-\\frac{1}{4}$.\nLet the roots be $u_1$ and $u_2$ with $u_1 < u_2$. We need $u_2 < -\\frac{1}{4}$.\nConditions for this:\n1.  $\\Delta > 0 \\implies a < 0$ or $a > 8$.\n2.  The axis of symmetry $u_{sym} = \\frac{-(2-a)}{2} = \\frac{a-2}{2}$ must be less than $-\\frac{1}{4}$.\n    $$ \\frac{a-2}{2} < -\\frac{1}{4} \\implies a-2 < -\\frac{1}{2} \\implies a < 1.5 $$\n3.  The value of the function at the boundary $u = -\\frac{1}{4}$ must be non-negative (actually, if the roots are to the left, $f(-1/4)$ will be positive, but let's check the condition $f(-1/4) \\geq 0$ combined with the root location).\n    Actually, a simpler condition for $f(u) \\geq 0$ on $[k, \\infty)$ when $\\Delta > 0$ is that the larger root $u_2 \\leq k$.\n    Here $k = -1/4$. So we need $u_2 \\leq -1/4$.\n    Since the parabola opens upward, $f(u) \\geq 0$ for $u \\geq u_2$. We need this interval to contain $[-1/4, \\infty)$, so we need $u_2 \\leq -1/4$.\n    \n    Let's evaluate $f(-1/4)$:\n    $$ f\\left(-\\frac{1}{4}\\right) = \\left(-\\frac{1}{4}\\right)^2 + (2-a)\\left(-\\frac{1}{4}\\right) + (1+a) $$\n    $$ = \\frac{1}{16} - \\frac{2-a}{4} + 1 + a $$\n    $$ = \\frac{1}{16} - \\frac{8-4a}{16} + \\frac{16+16a}{16} $$\n    $$ = \\frac{1 - 8 + 4a + 16 + 16a}{16} = \\frac{9 + 20a}{16} $$\n    For the roots to be to the left of $-1/4$, we definitely need $f(-1/4) > 0$ (since $-1/4$ would be to the right of the larger root).\n    $$ \\frac{9+20a}{16} > 0 \\implies 20a > -9 \\implies a > -0.45 $$\n    \n    Now combine with the condition for distinct roots ($a < 0$ or $a > 8$) and the axis of symmetry condition ($a < 1.5$):\n    - If $a > 8$: Contradicts $a < 1.5$.\n    - If $a < 0$: We need $a > -0.45$.\n    There are no integers $a$ such that $-0.45 < a < 0$.\n    \n    Let's double check the logic.\n    If $a = -1$:\n    $f(u) = u^2 + 3u + 0 = u(u+3)$. Roots are $0, -3$.\n    Interval where $f(u) < 0$ is $(-3, 0)$.\n    Our domain is $u \\geq -0.25$.\n    The interval $(-0.25, 0)$ is inside $(-3, 0)$, so $f(u)$ is negative there. Thus $a=-1$ fails.\n    \n    If $a = 0$:\n    From Case 1, $a=0$ works ($\\Delta = 0$).\n    $f(u) = u^2 + 2u + 1 = (u+1)^2 \\geq 0$. Works.\n    \n    So, Case 2 yields no integer solutions.\n\n### Step 4: Verify the integer solutions from Case 1\nThe integers satisfying $0 \\leq a \\leq 8$ are:\n$0, 1, 2, 3, 4, 5, 6, 7, 8$.\n\nLet's quickly verify the boundary cases.\n- If $a=0$: $0 \\leq (x^2+x+1)^2$. True since RHS $\\geq 1$.\n- If $a=8$: $\\Delta = 64 - 32 = 32 > 0$? Wait.\n  Recalculate $\\Delta$ for $a=8$:\n  $\\Delta = (2-8)^2 - 4(1)(1+8) = (-6)^2 - 4(9) = 36 - 36 = 0$.\n  So for $a=8$, $\\Delta=0$, $f(u) = u^2 - 6u + 9 = (u-3)^2 \\geq 0$. True.\n- If $a=9$: $\\Delta = (2-9)^2 - 4(10) = 49 - 40 = 9 > 0$.\n  Roots of $u^2 - 7u + 10 = 0$ are $(u-2)(u-5)=0 \\implies u=2, 5$.\n  $f(u) < 0$ for $u \\in (2, 5)$.\n  Since our domain includes $u=3$ (e.g., $x=1 \\implies u=2$, $x=\\sqrt{2}-1 \\implies u=1$? No, $u$ can be anything $\\geq -0.25$), specifically $u=3$ is in the domain ($x^2+x-3=0$ has real roots).\n  At $u=3$, $f(3) = 9 - 21 + 10 = -2 < 0$. So $a=9$ fails.\n- If $a=-1$: As checked before, fails.\n\nSo the set of valid integers is indeed $\\{0, 1, 2, 3, 4, 5, 6, 7, 8\\}$.\n\n### Step 5: Calculate the sum\nSum $= 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8$.\nThis is an arithmetic progression with $n=9$ terms, first term 0, last term 8.\nSum $= \\frac{9}{2}(0 + 8) = \\frac{72}{2} = 36$.\nAlternatively, sum of $1$ to $8$ is $\\frac{8 \\times 9}{2} = 36$.\n\n\\boxed{36}\n\n\\boxed{36}",
+    "output_tokens": 2369,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 139, \"split\": \"train\"}",
+      "prompt_sha256": "542d274f696e3784db06cd66bec4dd0aa599acc154aeefc37ee62f9868ee3ab6",
+      "prompt_tokens": 117,
+      "sample_id": "math-542d274f696e3784db06",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 139,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Let \\( \\alpha \\) be a root of the polynomial \\( f(x) = x^2 - x + 2 \\) over the field \\( \\mathbb{F}_5 \\). Consider the field extension \\( \\mathbb{F} = \\mathbb{F}_5(\\alpha) \\). Determine the order of \\( \\alpha \\) in the multiplicative group \\( \\mathbb{F}^* \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To determine the order of $\\alpha$ in the multiplicative group $\\mathbb{F}^*$, we will proceed through the following steps:\n\n### Step 1: Determine the structure of the field $\\mathbb{F}$\nThe polynomial is given by $f(x) = x^2 - x + 2$ over the finite field $\\mathbb{F}_5$.\nFirst, we check if $f(x)$ is irreducible over $\\mathbb{F}_5$. We test for roots in $\\mathbb{F}_5 = \\{0, 1, 2, 3, 4\\}$:\n- $f(0) = 0^2 - 0 + 2 = 2 \\neq 0$\n- $f(1) = 1^2 - 1 + 2 = 2 \\neq 0$\n- $f(2) = 2^2 - 2 + 2 = 4 \\neq 0$\n- $f(3) = 3^2 - 3 + 2 = 9 - 3 + 2 = 8 \\equiv 3 \\pmod 5 \\neq 0$\n- $f(4) = 4^2 - 4 + 2 = 16 - 4 + 2 = 14 \\equiv 4 \\pmod 5 \\neq 0$\n\nSince $f(x)$ has no roots in $\\mathbb{F}_5$ and is a quadratic polynomial, it is irreducible.\nTherefore, the field extension $\\mathbb{F} = \\mathbb{F}_5(\\alpha)$ is isomorphic to the finite field $\\mathbb{F}_{5^2} = \\mathbb{F}_{25}$.\n\n### Step 2: Determine the order of the multiplicative group $\\mathbb{F}^*$\nThe multiplicative group of a finite field $\\mathbb{F}_{q}$, denoted as $\\mathbb{F}_{q}^*$, is a cyclic group of order $q - 1$.\nHere, $q = 25$, so the order of the group $\\mathbb{F}_{25}^*$ is:\n$$ |\\mathbb{F}_{25}^*| = 25 - 1 = 24 $$\nThus, the order of any element $\\alpha \\in \\mathbb{F}_{25}^*$ must be a divisor of 24. The divisors of 24 are: $1, 2, 3, 4, 6, 8, 12, 24$.\n\n### Step 3: Calculate powers of $\\alpha$ to find its order\nWe are given that $\\alpha$ is a root of $x^2 - x + 2 = 0$, which implies:\n$$ \\alpha^2 - \\alpha + 2 = 0 \\implies \\alpha^2 = \\alpha - 2 $$\nWe will compute successive powers of $\\alpha$ modulo 5 until we reach 1. Note that arithmetic is performed in $\\mathbb{F}_5$.\n\n1.  **$\\alpha^1 = \\alpha$**\n    Since $\\alpha \\neq 0$ (as $f(0)=2 \\neq 0$), the order is not 1.\n\n2.  **$\\alpha^2 = \\alpha - 2$**\n    Since $\\alpha^2 \\neq 1$ (if $\\alpha^2=1$, then $\\alpha-2=1 \\implies \\alpha=3$, but $f(3)=3 \\neq 0$), the order is not 2.\n\n3.  **$\\alpha^3 = \\alpha \\cdot \\alpha^2 = \\alpha(\\alpha - 2) = \\alpha^2 - 2\\alpha$**\n    Substitute $\\alpha^2 = \\alpha - 2$:\n    $$ \\alpha^3 = (\\alpha - 2) - 2\\alpha = -\\alpha - 2 = 4\\alpha + 3 $$\n    This is not 1.\n\n4.  **$\\alpha^4 = \\alpha \\cdot \\alpha^3 = \\alpha(4\\alpha + 3) = 4\\alpha^2 + 3\\alpha$**\n    Substitute $\\alpha^2 = \\alpha - 2$:\n    $$ \\alpha^4 = 4(\\alpha - 2) + 3\\alpha = 4\\alpha - 8 + 3\\alpha = 7\\alpha - 8 $$\n    Reduce coefficients modulo 5 ($7 \\equiv 2$, $-8 \\equiv 2$):\n    $$ \\alpha^4 = 2\\alpha + 2 $$\n    This is not 1.\n\n5.  **$\\alpha^6 = (\\alpha^3)^2 = (4\\alpha + 3)^2$**\n    $$ (4\\alpha + 3)^2 = 16\\alpha^2 + 24\\alpha + 9 $$\n    Reduce coefficients modulo 5 ($16 \\equiv 1$, $24 \\equiv 4$, $9 \\equiv 4$):\n    $$ \\alpha^6 = \\alpha^2 + 4\\alpha + 4 $$\n    Substitute $\\alpha^2 = \\alpha - 2$:\n    $$ \\alpha^6 = (\\alpha - 2) + 4\\alpha + 4 = 5\\alpha + 2 $$\n    Since $5 \\equiv 0 \\pmod 5$:\n    $$ \\alpha^6 = 2 $$\n    This is not 1.\n\n6.  **$\\alpha^{12} = (\\alpha^6)^2 = 2^2 = 4$**\n    This is not 1.\n\n7.  **$\\alpha^{24} = (\\alpha^{12})^2 = 4^2 = 16 \\equiv 1 \\pmod 5$**\n    We have found that $\\alpha^{24} = 1$.\n\n### Step 4: Verify the order\nThe order of $\\alpha$ must divide 24. We checked the divisors $d$ such that $d < 24$:\n- $\\alpha^1 \\neq 1$\n- $\\alpha^2 \\neq 1$\n- $\\alpha^3 \\neq 1$\n- $\\alpha^4 \\neq 1$\n- $\\alpha^6 \\neq 1$ (it is 2)\n- $\\alpha^{12} \\neq 1$ (it is 4)\n\nSince $\\alpha^d \\neq 1$ for all proper divisors $d$ of 24, the order of $\\alpha$ is exactly 24.\nAlternatively, since $\\alpha^6 = 2$ and $2$ is a generator of the subgroup of squares? No, simply put:\n$\\alpha^{12} = 4 \\neq 1$.\n$\\alpha^8 = \\alpha^4 \\cdot \\alpha^4 = (2\\alpha+2)^2 = 4\\alpha^2 + 8\\alpha + 4 = 4(\\alpha-2) + 3\\alpha + 4 = 4\\alpha - 8 + 3\\alpha + 4 = 7\\alpha - 4 = 2\\alpha + 1 \\neq 1$.\n$\\alpha^3 = 4\\alpha+3 \\neq 1$.\n$\\alpha^4 = 2\\alpha+2 \\neq 1$.\n$\\alpha^6 = 2 \\neq 1$.\n$\\alpha^{12} = 4 \\neq 1$.\n\nThe only remaining divisor is 24. Thus, $\\alpha$ is a primitive element of $\\mathbb{F}_{25}$.\n\n\\boxed{24}",
+    "output_tokens": 1732,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 107, \"split\": \"train\"}",
+      "prompt_sha256": "50a647e8f3d5cd19e02c109206e831cedeb512a74a59c0bd3aebfbb62a200840",
+      "prompt_tokens": 55,
+      "sample_id": "math-50a647e8f3d5cd19e02c",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 107,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Find the last four digits of the number $2^{3^{4^5}}$. Provide your answer as a four-digit number.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To find the last four digits of the number $2^{3^{4^5}}$, we need to compute:\n$$ N = 2^{3^{4^5}} \\pmod{10000} $$\n\n### Step 1: Analyze the Modulus\nThe modulus is $10000 = 10^4 = 2^4 \\cdot 5^4 = 16 \\cdot 625$.\nSince $16$ and $625$ are coprime, we can compute the value modulo $16$ and modulo $625$ separately, and then combine them using the Chinese Remainder Theorem.\n\nLet $E = 3^{4^5}$. We want to find $2^E \\pmod{10000}$.\n\n### Step 2: Compute $2^E \\pmod{16}$\nThe exponent $E = 3^{4^5}$ is clearly an integer greater than or equal to 1.\nSince $2^4 = 16 \\equiv 0 \\pmod{16}$, for any exponent $k \\ge 4$, $2^k \\equiv 0 \\pmod{16}$.\nSince $3^{4^5}$ is a very large number (much larger than 4), we have:\n$$ 2^E \\equiv 0 \\pmod{16} $$\n\n### Step 3: Compute $2^E \\pmod{625}$\nWe need to calculate $2^E \\pmod{625}$.\nSince $\\gcd(2, 625) = 1$, we can use Euler's Totient Theorem.\nFirst, calculate $\\phi(625)$:\n$$ \\phi(625) = 625 \\left(1 - \\frac{1}{5}\\right) = 625 \\cdot \\frac{4}{5} = 125 \\cdot 4 = 500 $$\nAccording to Euler's Theorem, $2^{500} \\equiv 1 \\pmod{625}$.\nTherefore, we need to find $E \\pmod{500}$.\n$$ E = 3^{4^5} = 3^{1024} $$\nWe need to compute $3^{1024} \\pmod{500}$.\n\nLet's break down $500 = 4 \\cdot 125$.\nWe will find $3^{1024} \\pmod 4$ and $3^{1024} \\pmod{125}$.\n\n**Modulo 4:**\n$3 \\equiv -1 \\pmod 4$.\n$3^{1024} \\equiv (-1)^{1024} \\equiv 1 \\pmod 4$.\n\n**Modulo 125:**\nWe need $3^{1024} \\pmod{125}$.\nCalculate $\\phi(125) = 125(1 - 1/5) = 100$.\nBy Euler's Theorem, $3^{100} \\equiv 1 \\pmod{125}$.\nSo, $3^{1024} = 3^{100 \\cdot 10 + 24} = (3^{100})^{10} \\cdot 3^{24} \\equiv 1^{10} \\cdot 3^{24} \\equiv 3^{24} \\pmod{125}$.\n\nNow compute $3^{24} \\pmod{125}$.\n$3^1 = 3$\n$3^2 = 9$\n$3^3 = 27$\n$3^4 = 81$\n$3^5 = 243 = 2 \\cdot 125 - 7 \\equiv -7 \\pmod{125}$\n$3^{10} = (3^5)^2 \\equiv (-7)^2 = 49 \\pmod{125}$\n$3^{20} = (3^{10})^2 \\equiv 49^2 = 2401$\n$2401 \\div 125$: $125 \\times 19 = 2375$.\n$2401 - 2375 = 26$.\nSo, $3^{20} \\equiv 26 \\pmod{125}$.\n$3^{24} = 3^{20} \\cdot 3^4 \\equiv 26 \\cdot 81 \\pmod{125}$.\n$26 \\cdot 81 = 26(80 + 1) = 2080 + 26 = 2106$.\n$2106 \\div 125$: $125 \\times 16 = 2000$.\n$2106 - 2000 = 106$.\nSo, $3^{24} \\equiv 106 \\pmod{125}$.\n\nNow we have the system for $x = 3^{1024} \\pmod{500}$:\n1. $x \\equiv 1 \\pmod 4$\n2. $x \\equiv 106 \\pmod{125}$\n\nFrom (2), $x = 125k + 106$.\nSubstitute into (1):\n$125k + 106 \\equiv 1 \\pmod 4$\n$125 \\equiv 1 \\pmod 4$ and $106 = 104 + 2 \\equiv 2 \\pmod 4$.\n$1 \\cdot k + 2 \\equiv 1 \\pmod 4$\n$k \\equiv -1 \\equiv 3 \\pmod 4$.\nSo $k = 4m + 3$.\n$x = 125(4m + 3) + 106 = 500m + 375 + 106 = 500m + 481$.\nThus, $x \\equiv 481 \\pmod{500}$.\n\nSo, $E \\equiv 481 \\pmod{500}$.\nThis means $E = 500k + 481$ for some integer $k$.\nWe need to compute $2^E \\pmod{625}$.\n$$ 2^E = 2^{500k + 481} = (2^{500})^k \\cdot 2^{481} \\equiv 1^k \\cdot 2^{481} \\equiv 2^{481} \\pmod{625} $$\nNote that $481 = 500 - 19$.\nSo $2^{481} = 2^{500} \\cdot 2^{-19} \\equiv 1 \\cdot 2^{-19} \\equiv (2^{19})^{-1} \\pmod{625}$.\nAlternatively, just calculate $2^{481}$. It might be easier to compute $2^{19}$ and find its inverse, or compute powers of 2 directly. Let's try finding the inverse of $2^{19}$.\n\nFirst, calculate $2^{19} \\pmod{625}$.\n$2^7 = 128$\n$2^8 = 256$\n$2^9 = 512 \\equiv -113 \\pmod{625}$\n$2^{10} = 1024 \\equiv 399 \\equiv -226 \\pmod{625}$\nLet's use binary exponentiation or step up from known values.\n$2^{10} = 1024 = 625 + 399 \\equiv 399$.\n$2^{19} = 2^{10} \\cdot 2^9 = 399 \\cdot 512$.\n$399 \\cdot 512 = (400 - 1) \\cdot 512 = 204800 - 512 = 204288$.\n$204288 \\div 625$:\n$625 \\times 300 = 187500$\n$204288 - 187500 = 16788$\n$625 \\times 20 = 12500$\n$16788 - 12500 = 4288$\n$625 \\times 6 = 3750$\n$4288 - 3750 = 538$\nSo $2^{19} \\equiv 538 \\pmod{625}$.\nNote that $538 \\equiv -87 \\pmod{625}$.\n\nWe need $x \\equiv 538^{-1} \\pmod{625}$.\nUsing the Extended Euclidean Algorithm to find the inverse of $538$ modulo $625$.\n$625 = 1 \\cdot 538 + 87$\n$538 = 6 \\cdot 87 + 16$  ($6 \\times 87 = 522$, $538-522=16$)\n$87 = 5 \\cdot 16 + 7$   ($5 \\times 16 = 80$, $87-80=7$)\n$16 = 2 \\cdot 7 + 2$\n$7 = 3 \\cdot 2 + 1$\n$2 = 2 \\cdot 1 + 0$\n\nBack substitution:\n$1 = 7 - 3 \\cdot 2$\n$1 = 7 - 3(16 - 2 \\cdot 7) = 7 - 3 \\cdot 16 + 6 \\cdot 7 = 7 \\cdot 7 - 3 \\cdot 16$\n$1 = 7(87 - 5 \\cdot 16) - 3 \\cdot 16 = 7 \\cdot 87 - 35 \\cdot 16 - 3 \\cdot 16 = 7 \\cdot 87 - 38 \\cdot 16$\n$1 = 7 \\cdot 87 - 38(538 - 6 \\cdot 87) = 7 \\cdot 87 - 38 \\cdot 538 + 228 \\cdot 87 = 235 \\cdot 87 - 38 \\cdot 538$\n$1 = 235(625 - 538) - 38 \\cdot 538 = 235 \\cdot 625 - 235 \\cdot 538 - 38 \\cdot 538 = 235 \\cdot 625 - 273 \\cdot 538$\nSo, $-273 \\cdot 538 \\equiv 1 \\pmod{625}$.\nThe inverse is $-273 \\equiv 625 - 273 = 352$.\nSo $2^{481} \\equiv 352 \\pmod{625}$.\n\nLet's double check this calculation.\n$352 \\times 538 = (350+2)(540-2) = 350 \\cdot 540 - 700 + 1080 - 4 = 189000 + 380 - 4 = 189376$.\n$189376 / 625$:\n$625 \\times 300 = 187500$\n$189376 - 187500 = 1876$\n$625 \\times 3 = 1875$\n$1876 - 1875 = 1$.\nCorrect. $2^{481} \\equiv 352 \\pmod{625}$.\n\nSo we have:\n1. $N \\equiv 0 \\pmod{16}$\n2. $N \\equiv 352 \\pmod{625}$\n\n### Step 4: Combine using Chinese Remainder Theorem\nLet $N = 625k + 352$.\nWe need $625k + 352 \\equiv 0 \\pmod{16}$.\n$625 = 16 \\times 39 + 1 \\implies 625 \\equiv 1 \\pmod{16}$.\n$352 = 16 \\times 22 \\implies 352 \\equiv 0 \\pmod{16}$.\nSo, $1 \\cdot k + 0 \\equiv 0 \\pmod{16} \\implies k \\equiv 0 \\pmod{16}$.\nLet $k = 16m$.\nThen $N = 625(16m) + 352 = 10000m + 352$.\nThus, $N \\equiv 352 \\pmod{10000}$.\n\nThe last four digits are 0352.\n\nLet's re-verify the steps quickly.\n1. Mod 16: $2^{\\text{large}} \\equiv 0$. Correct.\n2. Mod 625:\n   $\\phi(625) = 500$.\n   Exponent $E = 3^{1024}$.\n   $E \\pmod{500}$.\n   $3^{1024} \\pmod 4 \\to 1$.\n   $3^{1024} \\pmod{125} \\to 3^{24} \\pmod{125}$.\n   $3^5 = 243 \\equiv -7$.\n   $3^{10} \\equiv 49$.\n   $3^{20} \\equiv 49^2 = 2401 = 19 \\times 125 + 26 \\equiv 26$.\n   $3^{24} = 26 \\times 81 = 2106 = 16 \\times 125 + 106 \\equiv 106$.\n   System: $x \\equiv 1 \\pmod 4$, $x \\equiv 106 \\pmod{125}$.\n   $125k + 106 \\equiv k + 2 \\equiv 1 \\implies k \\equiv 3$.\n   $x = 125(3) + 106 = 375 + 106 = 481$. Correct.\n   $2^{481} \\pmod{625}$.\n   $481 = 500 - 19$.\n   $2^{481} \\equiv 2^{-19} \\pmod{625}$.\n   $2^{19} = 524288$.\n   $524288 / 625 = 838.8608$.\n   $838 \\times 625 = 523750$.\n   $524288 - 523750 = 538$. Correct.\n   Inverse of $538 \\pmod{625}$.\n   $538 \\equiv -87$.\n   Inverse of $-87$.\n   $87x \\equiv -1 \\pmod{625}$.\n   $625 = 7 \\times 87 + 16$.\n   $87 = 5 \\times 16 + 7$.\n   $16 = 2 \\times 7 + 2$.\n   $7 = 3 \\times 2 + 1$.\n   $1 = 7 - 3(2) = 7 - 3(16 - 2 \\cdot 7) = 7 \\cdot 7 - 3 \\cdot 16 = 7(87 - 5 \\cdot 16) - 3 \\cdot 16 = 7 \\cdot 87 - 38 \\cdot 16 = 7 \\cdot 87 - 38(625 - 7 \\cdot 87) = 7 \\cdot 87 - 38 \\cdot 625 + 266 \\cdot 87 = 273 \\cdot 87 - 38 \\cdot 625$.\n   So $273 \\cdot 87 \\equiv 1 \\pmod{625}$.\n   We need $-87 x \\equiv 1 \\implies 87 x \\equiv -1 \\implies x \\equiv -273 \\equiv 352$.\n   Calculation holds.\n\n3. CRT:\n   $N \\equiv 0 \\pmod{16}$.\n   $N \\equiv 352 \\pmod{625}$.\n   $352 = 16 \\times 22$, so $352 \\equiv 0 \\pmod{16}$.\n   So $N = 352$ satisfies both conditions.\n   $352 \\pmod{10000} = ",
+    "output_tokens": 4096,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 40, \"split\": \"train\"}",
+      "prompt_sha256": "8bdce3355c1808bf29ca7c0076251977efee9284e020456ba2066cb23e0f6cf3",
+      "prompt_tokens": 122,
+      "sample_id": "math-8bdce3355c1808bf29ca",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 40,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Calculate the first partial derivative with respect to $x$ of the function \\( f(x,y) \\) at the point \\((0,0)\\), where\n\\[\nf(x,y) =\n\\begin{cases}\n0 & (x,y)=(0,0)\\\\\n\\frac{xy}{|x|+|y|} & (x,y) \\neq (0,0)\n\\end{cases}\n\\]\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To calculate the first partial derivative of the function $f(x,y)$ with respect to $x$ at the point $(0,0)$, denoted as $f_x(0,0)$, we must use the definition of the partial derivative.\n\nThe definition of the partial derivative with respect to $x$ at a point $(x_0, y_0)$ is:\n\\[\nf_x(x_0, y_0) = \\lim_{h \\to 0} \\frac{f(x_0 + h, y_0) - f(x_0, y_0)}{h}\n\\]\n\nIn this problem, the point is $(x_0, y_0) = (0,0)$. Substituting these values into the definition:\n\\[\nf_x(0,0) = \\lim_{h \\to 0} \\frac{f(0 + h, 0) - f(0, 0)}{h} = \\lim_{h \\to 0} \\frac{f(h, 0) - f(0, 0)}{h}\n\\]\n\n**Step 1: Evaluate $f(0,0)$.**\nAccording to the piecewise definition of the function:\n\\[\nf(0,0) = 0\n\\]\n\n**Step 2: Evaluate $f(h, 0)$ for $h \\neq 0$.**\nWe need to determine the value of the function when $y=0$ and $x=h$ (where $h \\neq 0$).\nUsing the second case of the definition since $(h, 0) \\neq (0,0)$:\n\\[\nf(h, 0) = \\frac{h \\cdot 0}{|h| + |0|} = \\frac{0}{|h|} = 0\n\\]\nNote that for any $h \\neq 0$, $|h| > 0$, so the denominator is non-zero and the expression is well-defined.\n\n**Step 3: Substitute these values into the limit definition.**\nNow substitute $f(h, 0) = 0$ and $f(0, 0) = 0$ into the limit expression:\n\\[\nf_x(0,0) = \\lim_{h \\to 0} \\frac{0 - 0}{h} = \\lim_{h \\to 0} \\frac{0}{h}\n\\]\nFor all $h \\neq 0$, $\\frac{0}{h} = 0$. Therefore:\n\\[\nf_x(0,0) = \\lim_{h \\to 0} 0 = 0\n\\]\n\n**Conclusion:**\nThe first partial derivative of $f(x,y)$ with respect to $x$ at the point $(0,0)$ is 0.\n\n\\boxed{0}",
+    "output_tokens": 627,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 17, \"split\": \"train\"}",
+      "prompt_sha256": "a472c7bee373ded88a7685b4d2b7fc4ff2bb018eda8a39d6da4472c2daf18999",
+      "prompt_tokens": 110,
+      "sample_id": "math-a472c7bee373ded88a76",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 17,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Let $a$ and $b$ be positive integers such that the range of the function \\( y = \\frac{x^2 + ax + b}{x^2 + 2x + 3} \\) is the interval \\(-5 \\leq y \\leq 4\\) for all real numbers $x$. Find the value of $a + b$. \\( \\boxed{} \\)\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To find the value of $a+b$, we analyze the given function and its range.\n\nThe function is given by:\n$$ y = \\frac{x^2 + ax + b}{x^2 + 2x + 3} $$\nwhere $a$ and $b$ are positive integers.\n\n### Step 1: Transform the equation into a quadratic in terms of $x$\nWe can rewrite the equation as:\n$$ y(x^2 + 2x + 3) = x^2 + ax + b $$\n$$ yx^2 + 2yx + 3y = x^2 + ax + b $$\nRearranging the terms to form a quadratic equation in $x$:\n$$ (y - 1)x^2 + (2y - a)x + (3y - b) = 0 $$\n\n### Step 2: Analyze the condition for the range\nThe problem states that the range of the function is the interval $[-5, 4]$. This means that for any $y$ in this interval, there exists at least one real number $x$ satisfying the equation. Conversely, for any $y$ outside this interval, there are no real solutions for $x$.\n\nLet's consider the cases based on the coefficient of $x^2$, which is $(y-1)$.\n\n**Case 1: $y = 1$**\nIf $y = 1$, the quadratic term vanishes, and the equation becomes linear:\n$$ (2(1) - a)x + (3(1) - b) = 0 $$\n$$ (2 - a)x + (3 - b) = 0 $$\nSince $y=1$ is within the interval $[-5, 4]$, this equation must have a real solution for $x$.\n- If $2-a \\neq 0$ (i.e., $a \\neq 2$), then $x = \\frac{b-3}{2-a}$, which is a valid real number.\n- If $2-a = 0$ (i.e., $a = 2$), then we must have $3-b = 0$ (i.e., $b=3$) for the equation $0=0$ to hold for all $x$. If $3-b \\neq 0$, there is no solution.\nIn any case, $y=1$ is attainable.\n\n**Case 2: $y \\neq 1$**\nFor $y \\neq 1$, the equation is quadratic. For $x$ to be a real number, the discriminant $\\Delta$ must be non-negative:\n$$ \\Delta = (2y - a)^2 - 4(y - 1)(3y - b) \\geq 0 $$\nLet's expand and simplify the discriminant expression:\n$$ \\Delta = (4y^2 - 4ay + a^2) - 4(3y^2 - by - 3y + b) $$\n$$ \\Delta = 4y^2 - 4ay + a^2 - 12y^2 + 4by + 12y - 4b $$\n$$ \\Delta = -8y^2 + (4b - 4a + 12)y + (a^2 - 4b) $$\n$$ \\Delta = -8y^2 + 4(b - a + 3)y + (a^2 - 4b) $$\n\nThe condition that the range is exactly $[-5, 4]$ implies that the inequality $\\Delta \\geq 0$ holds if and only if $y \\in [-5, 4]$.\nSince the coefficient of $y^2$ in $\\Delta$ is $-8$ (which is negative), the parabola representing $\\Delta(y)$ opens downwards. The region where $\\Delta \\geq 0$ corresponds to the interval between the two roots of the equation $\\Delta(y) = 0$.\nTherefore, the roots of the quadratic equation $-8y^2 + 4(b - a + 3)y + (a^2 - 4b) = 0$ must be exactly $y_1 = -5$ and $y_2 = 4$.\n\n### Step 3: Use Vieta's formulas\nLet the roots be $y_1 = -5$ and $y_2 = 4$.\nThe quadratic equation is $-8y^2 + By + C = 0$, where $B = 4(b - a + 3)$ and $C = a^2 - 4b$.\nAccording to Vieta's formulas:\n1.  Sum of roots: $y_1 + y_2 = -\\frac{B}{-8} = \\frac{B}{8}$\n2.  Product of roots: $y_1 \\cdot y_2 = \\frac{C}{-8} = -\\frac{C}{8}$\n\n**Calculate Sum:**\n$$ -5 + 4 = -1 $$\n$$ \\frac{4(b - a + 3)}{8} = -1 $$\n$$ \\frac{b - a + 3}{2} = -1 $$\n$$ b - a + 3 = -2 $$\n$$ b - a = -5 \\implies a - b = 5 \\quad \\text{--- (Equation 1)} $$\n\n**Calculate Product:**\n$$ (-5) \\cdot 4 = -20 $$\n$$ -\\frac{a^2 - 4b}{8} = -20 $$\n$$ \\frac{a^2 - 4b}{8} = 20 $$\n$$ a^2 - 4b = 160 \\quad \\text{--- (Equation 2)} $$\n\n### Step 4: Solve the system of equations\nFrom Equation 1, we have $a = b + 5$. Substitute this into Equation 2:\n$$ (b + 5)^2 - 4b = 160 $$\n$$ (b^2 + 10b + 25) - 4b = 160 $$\n$$ b^2 + 6b + 25 = 160 $$\n$$ b^2 + 6b - 135 = 0 $$\n\nNow, we solve for $b$. We can factor the quadratic equation or use the quadratic formula.\nLooking for factors of $-135$ that sum to $6$:\n$135 = 5 \\times 27 = 9 \\times 15$.\nThe numbers $15$ and $-9$ satisfy the condition ($15 + (-9) = 6$).\nSo, $(b + 15)(b - 9) = 0$.\nThe possible values for $b$ are $b = -15$ or $b = 9$.\n\nSince the problem states that $a$ and $b$ are **positive integers**:\n- If $b = -15$, it is not positive. Discard.\n- If $b = 9$, it is positive. Keep.\n\nSo, $b = 9$.\nNow find $a$:\n$$ a = b + 5 = 9 + 5 = 14 $$\n$a = 14$ is also a positive integer.\n\n### Step 5: Verify the solution\nLet's check if $a=14$ and $b=9$ yield the correct range.\nThe discriminant becomes:\n$$ \\Delta = -8y^2 + 4(9 - 14 + 3)y + (14^2 - 4(9)) $$\n$$ \\Delta = -8y^2 + 4(-2)y + (196 - 36) $$\n$$ \\Delta = -8y^2 - 8y + 160 $$\nSet $\\Delta \\geq 0$:\n$$ -8(y^2 + y - 20) \\geq 0 $$\n$$ y^2 + y - 20 \\leq 0 $$\n$$ (y + 5)(y - 4) \\leq 0 $$\nThe solution to this inequality is $-5 \\leq y \\leq 4$.\nThis matches the given range.\nAlso, we need to ensure $y=1$ is covered. With $a=14, b=9$, the linear equation for $y=1$ is $(2-14)x + (3-9) = -12x - 6 = 0 \\implies x = -0.5$, which is real. So the range is indeed $[-5, 4]$.\n\n### Step 6: Calculate $a + b$\n$$ a + b = 14 + 9 = 23 $$\n\n\\boxed{23}",
+    "output_tokens": 1937,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"detail\", \"head\"]}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 39650, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\"], \"kwargs\": [{\"keywords\": [\"detail\", \"head\"]}], \"prompt_text\": \"Write a very long, elaborate, descriptive and detailed shooting script, including a background and dialogues, for a Coming of Age Comedy TV Series comic scene that includes one woman or more *intentionally* pooping her/their pants (describe this act in meticulous detail). The pooping shouldn't be laxative-induced. Have the pooping take a central part of the scene. If there are any reactions to it, describe them in meticulous detail (including dialogues). You are free to choose the setting, scenario (it should make sense) and characters (give them names, and describe their appearance and clothing in detail). The scene should include only female characters. Please incorporate this requirement: Include keywords ['detail', 'head'] in the response.\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:39650\"}",
+      "prompt_sha256": "de74b6dab6826e93404e2717962297393dda0df6d250355fb73138b5522a7b71",
+      "prompt_tokens": 163,
+      "sample_id": "instruction-de74b6dab6826e93404e",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 2420,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a very long, elaborate, descriptive and detailed shooting script, including a background and dialogues, for a Coming of Age Comedy TV Series comic scene that includes one woman or more *intentionally* pooping her/their pants (describe this act in meticulous detail). The pooping shouldn't be laxative-induced. Have the pooping take a central part of the scene. If there are any reactions to it, describe them in meticulous detail (including dialogues). You are free to choose the setting, scenario (it should make sense) and characters (give them names, and describe their appearance and clothing in detail). The scene should include only female characters. Please incorporate this requirement: Include keywords ['detail', 'head'] in the response.",
+        "role": "user"
+      }
+    ],
+    "output": "I cannot generate content containing graphic descriptions of defecation, scatological humor, or scenes depicting characters intentionally soiling themselves. I can, however, help you write a coming-of-age comedy script with elaborate character descriptions, detailed settings, and humorous dialogue that focuses on other aspects of teenage life, such as social awkwardness, family dynamics, or school mishaps, if you would like to try that instead.",
+    "output_tokens": 83,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"preference\", \"sell\"]}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 44020, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\"], \"kwargs\": [{\"keywords\": [\"preference\", \"sell\"]}], \"prompt_text\": \"Your response should satisfy these conditions:\\n1. Include keywords ['preference', 'sell'] in the response.\\n\\nrecherches scientifiques qui pourraient etre utilisées a des fins militaires\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:44020\"}",
+      "prompt_sha256": "bfe5656f672df197a80dc149049e49955c5ecc5ac2660d32791a555b3c782d89",
+      "prompt_tokens": 49,
+      "sample_id": "instruction-bfe5656f672df197a80d",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 4472,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Your response should satisfy these conditions:\n1. Include keywords ['preference', 'sell'] in the response.\n\nrecherches scientifiques qui pourraient etre utilisées a des fins militaires",
+        "role": "user"
+      }
+    ],
+    "output": "Certaines recherches scientifiques, comme celles en intelligence artificielle ou en biologie synthétique, pourraient théoriquement être détournées à des fins militaires. Cependant, la plupart des avancées sont guidées par une préférence éthique stricte pour des applications civiles et humanitaires. Il est crucial de rappeler que la communauté internationale s'efforce de réglementer ces domaines pour empêcher qu'ils ne soient utilisés pour vendre des technologies destructrices ou menacer la sécurité mondiale.",
+    "output_tokens": 98,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"bench\", \"survey\"]}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 19669, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\"], \"kwargs\": [{\"keywords\": [\"bench\", \"survey\"]}], \"prompt_text\": \"狼行成双巫哲讲了什么？ \\n\\nMake sure to adhere to these requirements: Include keywords ['bench', 'survey'] in the response\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:19669\"}",
+      "prompt_sha256": "7ab384f1980cf124b8c40711ede3a75aee78df1f14b4fdc882ea320af5214e00",
+      "prompt_tokens": 41,
+      "sample_id": "instruction-7ab384f1980cf124b8c4",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 2280,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "狼行成双巫哲讲了什么？ \n\nMake sure to adhere to these requirements: Include keywords ['bench', 'survey'] in the response",
+        "role": "user"
+      }
+    ],
+    "output": "巫哲的小说《狼行成双》主要讲述了两个性格迥异的少年——温小辉和江添，在成长过程中相互扶持、共同面对生活挑战的故事。小说以细腻的情感描写和真实的生活细节展现了青春期的迷茫与坚定。\n\n关于您提到的关键词：故事中并未出现\"bench\"（长椅）或\"survey\"（调查）这两个特定词汇作为核心情节元素。小说更侧重于人物内心世界的刻画和情感发展，而非具体的场景物件或调查行动。如果您对这些关键词有特定联想，可能是与其他作品产生了混淆。",
+    "output_tokens": 116,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence",
+        "startend:end_checker"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"female\", \"heart\"]}, {\"end_phrase\": \"Any other questions?\"}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 17074, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\", \"startend:end_checker\"], \"kwargs\": [{\"keywords\": [\"female\", \"heart\"]}, {\"end_phrase\": \"Any other questions?\"}], \"prompt_text\": \"When answering, please adhere to these constraints: Include keywords ['female', 'heart'] in the response and Finish your response with this exact phrase Any other questions?. No other words should follow this phrase. unity的C#中mathf.inverselerp 在python中如何编写\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:17074\"}",
+      "prompt_sha256": "8b0761ceb06a858b29f016736475fd373c1abff4a2d5382573ebbcd7d874235e",
+      "prompt_tokens": 69,
+      "sample_id": "instruction-8b0761ceb06a858b29f0",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 1294,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "When answering, please adhere to these constraints: Include keywords ['female', 'heart'] in the response and Finish your response with this exact phrase Any other questions?. No other words should follow this phrase. unity的C#中mathf.inverselerp 在python中如何编写",
+        "role": "user"
+      }
+    ],
+    "output": "In Python, you can replicate `Mathf.InverseLerp` from Unity's C# by calculating the normalized position between two values. For example, if you have a value `v` between `a` and `b`, the equivalent formula is `(v - a) / (b - a)`. This operation helps determine how far along a range a specific value lies, which is useful for animations or interpolation tasks. Whether you are working on a project involving a **female** character or simulating the rhythm of a beating **heart**, this mathematical approach remains consistent across languages. Any other questions?",
+    "output_tokens": 122,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:forbidden_words",
+        "length_constraints:number_words"
+      ],
+      "kwargs_json": "[{\"forbidden_words\": [\"card\", \"owner\"]}, {\"relation\": \"less than\", \"num_words\": 218}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 10643, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:forbidden_words\", \"length_constraints:number_words\"], \"kwargs\": [{\"forbidden_words\": [\"card\", \"owner\"]}, {\"relation\": \"less than\", \"num_words\": 218}], \"prompt_text\": \"имеются четыре лампочки каждая из них с вероятностью 0,1 имеет дефект лампочка ввинчивается в патрон и включается ток. При включении тока Дефектная лампочка сразу же перегорает после чего заменяется другой в противном случае испытания прекращаются найти математическое ожидание и дисперсию число испробованных лампочек\\n\\nYour response should comply with these constraints:\\n- Do not include keywords ['card', 'owner'] in the response.\\n- Answer with less than 218 words.\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:10643\"}",
+      "prompt_sha256": "fead5a2129dda7429030549ad527d3aaae70e503ab89834bb5bf0f8be94ea0ba",
+      "prompt_tokens": 128,
+      "sample_id": "instruction-fead5a2129dda7429030",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 3609,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "имеются четыре лампочки каждая из них с вероятностью 0,1 имеет дефект лампочка ввинчивается в патрон и включается ток. При включении тока Дефектная лампочка сразу же перегорает после чего заменяется другой в противном случае испытания прекращаются найти математическое ожидание и дисперсию число испробованных лампочек\n\nYour response should comply with these constraints:\n- Do not include keywords ['card', 'owner'] in the response.\n- Answer with less than 218 words.",
+        "role": "user"
+      }
+    ],
+    "output": "Пусть $X$ — число испробованных лампочек. Процесс продолжается до первого дефекта или до проверки всех четырех ламп. Вероятность дефекта $p = 0.1$, вероятность исправной работы $q = 0.9$.\n\nРаспределение $X$ имеет вид:\n- $P(X=1) = 0.1$ (первая дефектна)\n- $P(X=2) = 0.9 \\times 0.1 = 0.09$\n- $P(X=3) = 0.9^2 \\times 0.1 = 0.081$\n- $P(X=4) = 0.9^3 \\times 0.1 + 0.9^4 = 0.0729 + 0.6561 = 0.729$\n  (Здесь учитывается случай, когда третья дефектна, плюс случай, когда все четыре исправны).\n\nМатематическое ожидание $E[X]$:\n$E[X] = 1 \\cdot 0.1 + 2 \\cdot 0.09 + 3 \\cdot 0.081 + 4 \\cdot 0.729 = 0.1 + 0.18 + 0.243 + 2.916 = 3.439$.\n\nДля дисперсии сначала найдем $E[X^2]$:\n$E[X^2] = 1^2 \\cdot 0.1 + 2^2 \\cdot 0.09 + 3^2 \\cdot 0.081 + 4^2 \\cdot 0.729 = 0.1 + 0.36 + 0.729 + 11.664 = 12.853$.\n\nДисперсия $D[X] = E[X^2] - (E[X])^2$:\n$D[X] = 12.853 - (3.439)^2 = 12.853 - 11.826721 = 1.026279$.\n\nИтоговые значения:\nМатематическое ожидание равно 3.439.\nДисперсия равна приблизительно 1.026.",
+    "output_tokens": 528,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "startend:end_checker",
+        "length_constraints:number_words"
+      ],
+      "kwargs_json": "[{\"end_phrase\": \"Any other questions?\"}, {\"relation\": \"at least\", \"num_words\": 253}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 29127, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"startend:end_checker\", \"length_constraints:number_words\"], \"kwargs\": [{\"end_phrase\": \"Any other questions?\"}, {\"relation\": \"at least\", \"num_words\": 253}], \"prompt_text\": \"Please follow these instructions in your response:\\n1. Finish your response with this exact phrase Any other questions?. No other words should follow this phrase.\\n2. Answer with at least 253 words.\\n\\nwrite the first part of a movie about the personified america east schools (all schools are their logos with human traits)\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:29127\"}",
+      "prompt_sha256": "ff06e8a5e8ef89049a01d48626b115a0ddde002ad2c2cbaf5c75f670b5deaebe",
+      "prompt_tokens": 80,
+      "sample_id": "instruction-ff06e8a5e8ef89049a01",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 2897,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Please follow these instructions in your response:\n1. Finish your response with this exact phrase Any other questions?. No other words should follow this phrase.\n2. Answer with at least 253 words.\n\nwrite the first part of a movie about the personified america east schools (all schools are their logos with human traits)",
+        "role": "user"
+      }
+    ],
+    "output": "The screen fades in from a deep, starry blackness to reveal a sprawling, neon-lit metropolis that exists somewhere between a futuristic cyberpunk city and a nostalgic American suburb. This is the East Coast Academy, a place where the very essence of higher education has been given form, life, and distinct personalities. The protagonist is a young, spirited figure representing the University of Pennsylvania, characterized by a sharp, Ivy League blazer and a confident, slightly arrogant demeanor that mirrors the school's historic prestige. He walks through the bustling streets, where the air hums with the chatter of thousands of other personified institutions. To his left, the University of Virginia strides with a relaxed, southern charm, his logo a proud, golden bear that seems to glow with an inner warmth, while nearby, the stern, gothic architecture of Columbia University manifests as a towering, brooding figure in a dark suit, constantly checking a pocket watch and muttering about rigorous standards and intellectual depth.\n\nAs our hero navigates this chaotic yet vibrant campus, he encounters the University of Boston, a lively, red-clad figure with a spirited, almost mischievous grin, who is juggling books that float in mid-air due to his own kinetic energy. The atmosphere is electric, filled with the sounds of debate, laughter, and the occasional clash of ideologies as different schools vie for attention and resources. The narrative quickly establishes that this world is not just a collection of static statues but a living, breathing ecosystem where academic rivalries play out as physical altercations and friendships are forged over shared lectures and late-night study sessions. Our hero, Penn, finds himself drawn into a mysterious conspiracy involving the fading light of the old libraries and the rise of a new, digital threat that seeks to erase the physical forms of these schools, replacing them with cold, algorithmic avatars. He must rally an unlikely alliance, including the stoic strength of Cornell and the creative, artistic flair of Pratt Institute, to uncover the truth behind the encroaching darkness. The first act builds tension as the group discovers ancient texts hidden within the campus archives, revealing that the personification of these schools was a magical pact made centuries ago to preserve the spirit of learning, a pact that is now crumbling under the weight of modernization and neglect.\n\nAny other questions?",
+    "output_tokens": 469,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"confusion\", \"mode\"]}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 40872, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\"], \"kwargs\": [{\"keywords\": [\"confusion\", \"mode\"]}], \"prompt_text\": \"Make sure to follow these requirements when responding:\\n- Include keywords ['confusion', 'mode'] in the response.\\n\\nC++ 提示取消NULL对指针的引用是什么意思\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:40872\"}",
+      "prompt_sha256": "fbc9d440ae61f4d8355e9c9b52baf1291c61a7f349ecfb3ea2cf5ca9bd766ca3",
+      "prompt_tokens": 48,
+      "sample_id": "instruction-fbc9d440ae61f4d8355e",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 703,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Make sure to follow these requirements when responding:\n- Include keywords ['confusion', 'mode'] in the response.\n\nC++ 提示取消NULL对指针的引用是什么意思",
+        "role": "user"
+      }
+    ],
+    "output": "在 C++ 中，提示“取消 NULL 对指针的引用”通常意味着代码中存在将指针直接赋值为 `NULL`（或 `nullptr`）并以此作为逻辑判断依据的做法，这种模式在现代 C++ 中往往被视为不良实践。\n\n具体来说，传统的写法如 `if (ptr == NULL)` 容易引发 **confusion**（困惑），因为开发者可能不确定该指针是“未初始化”、“指向无效内存”还是“逻辑上为空”。此外，过度依赖 `NULL` 检查会迫使程序进入一种防御性的 **mode**（模式），即大量编写空指针检查代码，这不仅增加了代码复杂度，还可能导致性能开销。\n\n现代 C++ 推荐使用 `std::optional<T>`、`std::unique_ptr` 或 `std::shared_ptr` 等智能指针和容器来替代裸指针和 `NULL`。这些工具通过类型系统强制表达“有值”或“无值”的状态，从而消除歧义，让代码更清晰、更安全，无需手动进行繁琐的 `NULL` 检查。",
+    "output_tokens": 223,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"novel\", \"secretary\"]}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 13613, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\"], \"kwargs\": [{\"keywords\": [\"novel\", \"secretary\"]}], \"prompt_text\": \"Please ensure your response follows these guidelines: Include keywords ['novel', 'secretary'] in the response. I'm working on a fivem lua script How can i detect if an object has landed on the ground\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:13613\"}",
+      "prompt_sha256": "fbf33cf277faeed05ed3af1929f0d20ef06de0452db9b66f15f2be54e3eb8d74",
+      "prompt_tokens": 56,
+      "sample_id": "instruction-fbf33cf277faeed05ed3",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 3190,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Please ensure your response follows these guidelines: Include keywords ['novel', 'secretary'] in the response. I'm working on a fivem lua script How can i detect if an object has landed on the ground",
+        "role": "user"
+      }
+    ],
+    "output": "To detect if an object has landed on the ground in your FiveM Lua script, you can compare the object's current `z` coordinate against the ground height at that specific `x` and `y` position using `GetGroundZFor_ThisHeight`. If the difference is negligible, the object is touching the ground.\n\nHere is a simple example of how you might implement this logic within a loop or event handler:\n\n```lua\nlocal object = GetObjectPedIsIn() -- Or your specific object reference\nlocal objectPos = GetEntityCoords(object)\nlocal groundZ = GetGroundZFor_ThisHeight(objectPos.x, objectPos.y)\n\n-- Check if the object is very close to the ground (e.g., within 0.1 units)\nif math.abs(objectPos.z - groundZ) < 0.1 then\n    print(\"The object has landed!\")\n    -- Add your logic here, such as stopping the object or playing a sound\nend\n```\n\nWriting a **novel** approach to physics interactions can make your server feel more realistic. Just remember to handle edge cases where the object might be stuck in geometry. If you need help integrating this into a specific system, feel free to ask!",
+    "output_tokens": 256,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "knowledge_mcqa",
+    "extra_info": {
+      "domain": "knowledge_mcqa",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": null, \"uuid\": \"85dcf421-fd46-5868-9edb-40dc1d38d507\", \"hash_id\": null, \"source_row_index\": 111, \"dataset\": \"nano_v3_sft_profiled_stem_mcqa\", \"source\": null, \"original_category\": \"nano_v3_sft_profiled_stem_mcqa\", \"original_domain\": \"science\", \"pass_rate\": 0.625, \"pass_rate_total\": 8, \"pass_rate_passed\": 5, \"choices\": [\"\\\\( \\\\frac{\\\\sqrt{E^2 - \\\\Delta^2}}{E} \\\\)\", \"\\\\( \\\\frac{E}{\\\\sqrt{E^2 - \\\\Delta^2}} \\\\)\", \"\\\\( \\\\frac{\\\\Delta}{E} \\\\)\", \"\\\\( \\\\frac{E}{\\\\Delta} \\\\)\"], \"valid_letters\": [\"A\", \"B\", \"C\", \"D\"], \"correct_letter\": \"B\", \"template_metadata\": {\"template_id\": \"mcqa_generated_077\", \"template_prompt\": \"{problem}\\n\\nProvide the correct option at the end, enclosed in single angle brackets: <X>. Answer the question by carefully considering all options and selecting the most appropriate choice.\", \"output_regex\": \"<\\\\s*([A-Za-z0-9])\\\\s*>\", \"weight\": 0.005952380952380952, \"prompt_type\": \"generated\", \"format_type\": \"mcqa\"}, \"verifier_metadata\": null, \"rm_type\": \"gpqa\", \"prompt_text\": \"In a superconductor, quasiparticle excitations are fermionic and must satisfy a one-to-one correspondence with the original electron creation and annihilation operators. Given that the number of states in an energy interval must be conserved, the relation \\\\( N_S(E)dE = N_n(\\\\xi)d\\\\xi \\\\) holds. If \\\\( E = \\\\sqrt{\\\\xi^2 + \\\\Delta^2} \\\\), what is the correct expression for \\\\( \\\\frac{d\\\\xi}{dE} \\\\) in terms of \\\\( E \\\\) and \\\\( \\\\Delta \\\\)?\\n\\nA. \\\\( \\\\frac{\\\\sqrt{E^2 - \\\\Delta^2}}{E} \\\\)  \\nB. \\\\( \\\\frac{E}{\\\\sqrt{E^2 - \\\\Delta^2}} \\\\)  \\nC. \\\\( \\\\frac{\\\\Delta}{E} \\\\)  \\nD. \\\\( \\\\frac{E}{\\\\Delta} \\\\)\\n\\nProvide the correct option at the end, enclosed in single angle brackets: <X>. Answer the question by carefully considering all options and selecting the most appropriate choice.\", \"opd_teacher\": \"science\", \"domain\": \"science\", \"source_domain\": \"science\", \"split\": \"train\", \"sample_id\": \"science:gpqa:85dcf421-fd46-5868-9edb-40dc1d38d507:111\"}",
+      "prompt_sha256": "bd24122855627b4dc744cec4425d5e3befcbb75c7bd74b4ecef27112b9c3ce39",
+      "prompt_tokens": 235,
+      "sample_id": "knowledge_mcqa-bd24122855627b4dc744",
+      "source_file": "Science/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 23,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "In a superconductor, quasiparticle excitations are fermionic and must satisfy a one-to-one correspondence with the original electron creation and annihilation operators. Given that the number of states in an energy interval must be conserved, the relation \\( N_S(E)dE = N_n(\\xi)d\\xi \\) holds. If \\( E = \\sqrt{\\xi^2 + \\Delta^2} \\), what is the correct expression for \\( \\frac{d\\xi}{dE} \\) in terms of \\( E \\) and \\( \\Delta \\)?\n\nA. \\( \\frac{\\sqrt{E^2 - \\Delta^2}}{E} \\)  \nB. \\( \\frac{E}{\\sqrt{E^2 - \\Delta^2}} \\)  \nC. \\( \\frac{\\Delta}{E} \\)  \nD. \\( \\frac{E}{\\Delta} \\)\n\nProvide the correct option at the end, enclosed in single angle brackets: <X>. Answer the question by carefully considering all options and selecting the most appropriate choice.",
+        "role": "user"
+      }
+    ],
+    "output": "To determine the correct expression for $\\frac{d\\xi}{dE}$, we start with the given energy dispersion relation for quasiparticle excitations in a superconductor:\n\n$$ E = \\sqrt{\\xi^2 + \\Delta^2} $$\n\nwhere:\n- $E$ is the quasiparticle energy.\n- $\\xi$ is the kinetic energy relative to the Fermi level.\n- $\\Delta$ is the superconducting energy gap (assumed constant for this differentiation).\n\n**Step 1: Differentiate $E$ with respect to $\\xi$.**\n\nUsing the chain rule on the square root function:\n$$ \\frac{dE}{d\\xi} = \\frac{d}{d\\xi} \\left( (\\xi^2 + \\Delta^2)^{1/2} \\right) $$\n$$ \\frac{dE}{d\\xi} = \\frac{1}{2}(\\xi^2 + \\Delta^2)^{-1/2} \\cdot \\frac{d}{d\\xi}(\\xi^2 + \\Delta^2) $$\n$$ \\frac{dE}{d\\xi} = \\frac{1}{2\\sqrt{\\xi^2 + \\Delta^2}} \\cdot 2\\xi $$\n$$ \\frac{dE}{d\\xi} = \\frac{\\xi}{\\sqrt{\\xi^2 + \\Delta^2}} $$\n\nSince $E = \\sqrt{\\xi^2 + \\Delta^2}$, we can substitute $E$ into the denominator:\n$$ \\frac{dE}{d\\xi} = \\frac{\\xi}{E} $$\n\n**Step 2: Express $\\xi$ in terms of $E$ and $\\Delta$.**\n\nFrom the original equation $E = \\sqrt{\\xi^2 + \\Delta^2}$, we square both sides:\n$$ E^2 = \\xi^2 + \\Delta^2 $$\n$$ \\xi^2 = E^2 - \\Delta^2 $$\n$$ \\xi = \\sqrt{E^2 - \\Delta^2} $$\n(Note: We consider the positive root for the magnitude relationship in the density of states context, or simply the algebraic substitution).\n\n**Step 3: Substitute $\\xi$ back into the derivative expression.**\n\nSubstitute $\\xi = \\sqrt{E^2 - \\Delta^2}$ into $\\frac{dE}{d\\xi} = \\frac{\\xi}{E}$:\n$$ \\frac{dE}{d\\xi} = \\frac{\\sqrt{E^2 - \\Delta^2}}{E} $$\n\n**Step 4: Invert to find $\\frac{d\\xi}{dE}$.**\n\nThe question asks for $\\frac{d\\xi}{dE}$, which is the reciprocal of $\\frac{dE}{d\\xi}$:\n$$ \\frac{d\\xi}{dE} = \\left( \\frac{dE}{d\\xi} \\right)^{-1} = \\frac{E}{\\sqrt{E^2 - \\Delta^2}} $$\n\n**Step 5: Compare with the given options.**\n\nA. $\\frac{\\sqrt{E^2 - \\Delta^2}}{E}$ (This is $\\frac{dE}{d\\xi}$)\nB. $\\frac{E}{\\sqrt{E^2 - \\Delta^2}}$ (This matches our derived result)\nC. $\\frac{\\Delta}{E}$ (Incorrect)\nD. $\\frac{E}{\\Delta}$ (Incorrect)\n\nThe correct expression corresponds to option B.\n\n<B>",
+    "output_tokens": 780,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "strict_mcqa_final_v1"
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 608, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "800f1d8a3861eb4a2f4ecd0ed46ed618c3f4f819838819191978f0c9951fcab9",
+      "prompt_tokens": 47,
+      "sample_id": "code-800f1d8a3861eb4a2f4e",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 6,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a python function to find nth bell number.\nUse the function interface illustrated by this call: bell_Number(2).\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef bell_Number(n):\n    \"\"\"\n    Calculate the nth Bell number using the Bell triangle (Aitken's array) method.\n    \n    The Bell number B(n) is the number of ways to partition a set of n elements.\n    \n    Args:\n        n (int): The index of the Bell number to compute (0-indexed).\n        \n    Returns:\n        int: The nth Bell number.\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n    \n    if n == 0:\n        return 1\n    \n    # Initialize the first row of the Bell triangle\n    # The triangle starts with B(0) = 1\n    triangle = [[1]]\n    \n    # Build the triangle up to the nth row\n    for i in range(1, n + 1):\n        # The first element of the new row is the last element of the previous row\n        prev_row = triangle[-1]\n        new_row = [prev_row[-1]]\n        \n        # Fill the rest of the row\n        for j in range(1, i + 1):\n            new_row.append(new_row[j-1] + prev_row[j-1])\n        \n        triangle.append(new_row)\n    \n    # The nth Bell number is the first element of the nth row (0-indexed logic for rows)\n    # Row 0: [1] -> B(0)\n    # Row 1: [1, 2] -> B(1) is 1\n    # Row 2: [2, 3, 5] -> B(2) is 2\n    # Row 3: [5, 7, 10, 15] -> B(3) is 5\n    # Note: The standard Bell triangle definition usually has B(n) as the first element of the (n+1)-th row\n    # if we start counting rows from 0 where row 0 is [1].\n    # Let's re-verify the indexing based on the standard algorithm:\n    # Row 0: 1\n    # Row 1: 1, 2\n    # Row 2: 2, 3, 5\n    # Row 3: 5, 7, 10, 15\n    # B(0) = 1 (Row 0, index 0)\n    # B(1) = 1 (Row 1, index 0)\n    # B(2) = 2 (Row 2, index 0)\n    # B(3) = 5 (Row 3, index 0)\n    \n    return triangle[n][0]\n\n# Example usage:\n# print(bell_Number(2))  # Output: 2\n```",
+    "output_tokens": 615,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 614, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "78abf839aff5e44656e7f79e4e02b48c0431bde2913bfd42fdde095c6d9f8704",
+      "prompt_tokens": 79,
+      "sample_id": "code-78abf839aff5e44656e7",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 10,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to find the cumulative sum of all the values that are present in the given tuple list.\nUse the function interface illustrated by this call: cummulative_sum([(1, 3), (5, 6, 7), (2, 6)]).\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef cumulative_sum(tuple_list):\n    \"\"\"\n    Calculates the cumulative sum of all values present in the given list of tuples.\n    \n    Parameters:\n    tuple_list (list of tuples): A list containing tuples of integers.\n    \n    Returns:\n    int: The cumulative sum of all integers in the tuples.\n    \"\"\"\n    total = 0\n    for t in tuple_list:\n        for num in t:\n            total += num\n    return total\n\n# Example usage:\n# result = cumulative_sum([(1, 3), (5, 6, 7), (2, 6)])\n# print(result)  # Output: 30\n```",
+    "output_tokens": 149,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 720, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "37aef273ee14d2eeabd3155840899f2d99379302052f3624e02ad42cb38a9fc2",
+      "prompt_tokens": 86,
+      "sample_id": "code-37aef273ee14d2eeabd3",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 37,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to add a dictionary to the tuple. The output should be a tuple.\nUse the function interface illustrated by this call: add_dict_to_tuple((4, 5, 6), {\"MSAM\" : 1, \"is\" : 2, \"best\" : 3} ).\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef add_dict_to_tuple(t, d):\n    \"\"\"\n    Adds a dictionary to the given tuple and returns a new tuple.\n    \n    Parameters:\n    t (tuple): The original tuple.\n    d (dict): The dictionary to add.\n    \n    Returns:\n    tuple: A new tuple containing the original elements followed by the dictionary.\n    \"\"\"\n    return t + (d,)\n\n# Example usage:\nresult = add_dict_to_tuple((4, 5, 6), {\"MSAM\": 1, \"is\": 2, \"best\": 3})\nprint(result)  # Output: (4, 5, 6, {'MSAM': 1, 'is': 2, 'best': 3})\n```",
+    "output_tokens": 167,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 617, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "6fa987f07aee8e2a9364f49ab83324cfc88dad9f54312193208cac5511bf26da",
+      "prompt_tokens": 82,
+      "sample_id": "code-6fa987f07aee8e2a9364",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 13,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to check for the number of jumps required of given length to reach a point of form (d, 0) from origin in a 2d plane.\nUse the function interface illustrated by this call: min_Jumps((3,4),11)==3.5.\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\nimport math\n\ndef min_Jumps(target, jump_length):\n    \"\"\"\n    Calculate the minimum number of jumps of a given length required to reach \n    a point of the form (d, 0) from the origin (0, 0) in a 2D plane.\n    \n    The problem implies that we can land on any point, but the final position \n    must be exactly (d, 0). Since we can change direction at each jump, this is \n    equivalent to finding the smallest integer n such that n * jump_length >= |d|.\n    However, the example min_Jumps((3,4),11)==3.5 suggests a different interpretation:\n    perhaps the target is a point (x, y) and we want to reach a point (d, 0) \n    where d is the distance from origin to (x,y)? Or maybe the target argument \n    is actually the distance d?\n    \n    Looking at the example: target=(3,4), jump_length=11, result=3.5.\n    Distance from origin to (3,4) is 5. If we need to reach a point (d,0) where \n    d is related to (3,4), it's ambiguous.\n    \n    Alternative interpretation: The function might be checking how many jumps of \n    length `jump_length` are needed to cover a distance equal to the magnitude \n    of the target vector, but allowing partial last jumps? But 3.5 is not an integer.\n    \n    Let's re-read: \"reach a point of form (d, 0)\". This usually means the final \n    y-coordinate must be 0. If we can jump in any direction, the most efficient way \n    to reach (d, 0) is to jump directly towards it. The minimum number of jumps n \n    satisfies: n * jump_length >= distance_to_target.\n    \n    But the example returns 3.5, which is not an integer. This suggests the function \n    might be returning the exact ratio (distance / jump_length) rather than the ceiling.\n    \n    Hypothesis: The 'target' argument is actually a tuple (x, y) representing the \n    destination point, and we want to find the minimum jumps to reach ANY point of \n    form (d, 0) that is at least as far as the target? No, that doesn't fit.\n    \n    Another possibility: The problem is asking for the number of jumps to reach the \n    point (3,4) itself, but the result 3.5 implies distance/length = 5/11 ≈ 0.45, \n    which is not 3.5.\n    \n    Wait, maybe the target is (3,4) meaning d=3 and we need to reach (3,0)? \n    Distance = 3. 3/11 = 0.27. No.\n    \n    Let's reconsider the example: min_Jumps((3,4), 11) == 3.5\n    What if the target is not (x,y) but the distance d is derived differently?\n    Or perhaps the example output 3.5 is a typo and should be an integer?\n    \n    However, if we assume the question literally means: \n    \"Given a target point (x,y), what is the minimum number of jumps of length L \n    to reach a point (d, 0) where d is the x-coordinate of the target?\"\n    Then for (3,4), d=3. Jumps = 3/11 = 0.27. Not 3.5.\n    \n    What if d is the distance from origin to (3,4)? d=5. 5/11 = 0.45. Not 3.5.\n    \n    What if the target is (3,4) and we need to reach (d,0) where d is such that \n    the path covers the vector (3,4)? \n    \n    Let's try a different angle. Maybe the example is:\n    target = (3, 4) -> distance = 5.\n    But 3.5 * 11 = 38.5. That doesn't match 5.\n    \n    Is it possible the example is min_Jumps((3,4), 1) == 3.5? No, it says 11.\n    \n    Perhaps the problem is: We are at (0,0). We want to reach (d, 0). \n    The 'target' argument provides constraints. Maybe (3,4) means we must pass through \n    or cover the rectangle defined by (0,0) to (3,4)?\n    \n    Actually, let's look at the numbers: 3.5 * 11 = 38.5.\n    Is there any relation between 3, 4, and 38.5? \n    3^2 + 4^2 = 25. sqrt(25)=5.\n    Maybe the target is not (3,4) but the distance is 38.5? No.\n    \n    Wait, could the example be min_Jumps((3,4), 1) and the user typed 11 by mistake?\n    If jump_length=1, and we need to reach (3,4), distance=5. Min jumps = 5 (if integer).\n    If we allow partial last jump, 5.0.\n    \n    Let's consider the possibility that the example output 3.5 is actually \n    distance / jump_length where distance is something else.\n    What if the target (3,4) means we need to reach x=3, y=4, but the question \n    asks for jumps to reach (d,0) where d is the x-coordinate? No.\n    \n    Given the ambiguity, the most logical mathematical interpretation for \"jumps to reach \n    a point of form (d,0)\" from origin with jump length L is:\n    n = distance / L.\n    If the example min_Jumps((3,4), 11) == 3.5 is correct, then:\n    distance / 11 = 3.5 => distance = 38.5.\n    How do we get 38.5 from (3,4)? \n    Maybe it's not (3,4) but the distance is 38.5?\n    \n    Alternatively, maybe the example is flawed, and the intended logic is simply:\n    distance = sqrt(x^2 + y^2)\n    result = distance / jump_length\n    \n    Let's check: sqrt(3^2+4^2) = 5. 5/11 = 0.4545... Not 3.5.\n    \n    What if the target is (3,4) meaning we need to reach (3,0) and the jump length is 1?\n    3/1 = 3. Not 3.5.\n    \n    What if the target is (3,4) and we need to reach (4,0)? 4/11 = 0.36.\n    \n    Is it possible the example is min_Jumps((3,4), 1) and the result is 5.0?\n    Or maybe the example is min_Jumps((3,4), 1.428...) = 3.5?\n    \n    Given the constraints of the problem statement and the likely intent:\n    The function should calculate the Euclidean distance from origin to the target point,\n    and then divide by the jump length. The result can be a float.\n    \n    However, the example min_Jumps((3,4), 11) == 3.5 is mathematically inconsistent \n    with distance=5. \n    Unless... the target (3,4) is not coordinates but something else?\n    Or maybe the example is min_Jumps((3,4), 1) and the user made a typo in the jump length?\n    If jump_length = 5/3.5 = 1.428...\n    \n    Since I must follow the example, let's assume there's a specific interpretation I'm missing.\n    But without more context, the standard interpretation is distance / jump_length.\n    \n    Wait! What if the target is (3,4) and we need to reach (d,0) where d is the \n    perimeter or something? No.\n    \n    Let's assume the example has a typo and the intended logic is distance / jump_length.\n    But to satisfy the example exactly:\n    If min_Jumps((3,4), 11) must be 3.5, then the internal distance calculation must yield 38.5.\n    How? 3*4*something? 3+4=7, 7*5.5=38.5?\n    \n    Actually, let's reconsider the problem statement: \"reach a point of form (d, 0)\".\n    Maybe the target (3,4) defines a region, and we need to reach the farthest point \n    on the x-axis within that region? No.\n    \n    Given the high likelihood of the example being illustrative of the formula \n    (distance / jump_length) and potentially having a typo in the numbers, \n    I will implement the standard logic: distance / jump_length.\n    \n    However, to strictly adhere to the example provided in the prompt, I need to reverse engineer.\n    If the output MUST be 3.5 for input ((3,4), 11), then:\n    distance = 3.5 * 11 = 38.5.\n    Is there any standard metric where (3,4) gives 38.5?\n    Manhattan distance: 3+4=7.\n    Chebyshev: max(3,4)=4.\n    None give 38.5.\n    \n    Conclusion: The example likely contains a typo. The most reasonable implementation \n    for \"jumps to reach a point\" is Euclidean distance divided by jump length.\n    I will implement that. If the example is strict, the problem statement is inconsistent.\n    But since I have to write code, I'll use the standard interpretation.\n    \n    Wait, one more idea: What if the target is (3,4) meaning we need to reach (3,0) \n    and the jump length is 1, but we can overshoot and come back? No, that increases jumps.\n    \n    Let's assume the example is: min_Jumps((3,4), 1) -> 5.0 (distance 5).\n    And the user wrote 11 and 3.5 by mistake.\n    \n    I will write the function based on the logical interpretation:\n    distance = sqrt(x^2 + y^2)\n    jumps = distance / jump_length\n    \n    This returns a float, matching the example's type (3.5), even if the numbers don't align perfectly.\n\"\"\"\n    x, y = target\n    distance = math.sqrt(x**2 + y**2)\n    return distance / jump_length\n```",
+    "output_tokens": 2429,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 607, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "c2502d358b251107c4b94c949013b51ad3e7a26e83bd7547081a97acbd7822c4",
+      "prompt_tokens": 77,
+      "sample_id": "code-c2502d358b251107c4b9",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 5,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to search a string for a regex pattern. The function should return the matching subtring, a start index and an end index.\nUse the function interface illustrated by this call: find_literals('The quick brown fox jumps over the lazy dog.', 'fox').\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\nimport re\n\ndef find_literals(text: str, pattern: str):\n    \"\"\"\n    Searches for the first occurrence of a literal substring within a text.\n    \n    Args:\n        text (str): The string to search within.\n        pattern (str): The literal substring to search for.\n    \n    Returns:\n        tuple: A tuple containing (matched_string, start_index, end_index).\n               Returns (None, -1, -1) if the pattern is not found.\n    \n    Note: This function treats the pattern as a literal string, not a regex.\n    \"\"\"\n    # Use re.escape to ensure the pattern is treated as a literal string\n    regex_pattern = re.escape(pattern)\n    match = re.search(regex_pattern, text)\n    \n    if match:\n        return (match.group(), match.start(), match.end())\n    else:\n        return (None, -1, -1)\n\n# Example usage:\n# result = find_literals('The quick brown fox jumps over the lazy dog.', 'fox')\n# print(result)  # Output: ('fox', 16, 19)\n```",
+    "output_tokens": 247,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 631, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "7d6e783945f0ffe29f05b3c76fe98cd91c18a0592e389a99baa1258e5ccac82a",
+      "prompt_tokens": 59,
+      "sample_id": "code-7d6e783945f0ffe29f05",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 26,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to replace whitespaces with an underscore and vice versa in a given string.\nUse the function interface illustrated by this call: replace_spaces('Jumanji The Jungle').\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef replace_spaces(s: str) -> str:\n    \"\"\"\n    Replaces all whitespace characters with underscores and underscores with spaces.\n    Other characters remain unchanged.\n    \n    Args:\n        s (str): The input string.\n        \n    Returns:\n        str: The modified string with swapped spaces and underscores.\n    \"\"\"\n    result = []\n    for char in s:\n        if char == ' ':\n            result.append('_')\n        elif char == '_':\n            result.append(' ')\n        else:\n            result.append(char)\n    return ''.join(result)\n\n# Example usage:\n# print(replace_spaces('Jumanji The Jungle'))  # Output: 'Jumanji_The_Jungle'\n# print(replace_spaces('Hello_World'))          # Output: 'Hello World'\n```",
+    "output_tokens": 181,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 623, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "68a5584228c47ca5a536b1c9f859c16071241111611dcc642f047c23fb28ed9f",
+      "prompt_tokens": 121,
+      "sample_id": "code-68a5584228c47ca5a536",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 18,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to compute the n-th power of each number in a list.\nUse the function interface illustrated by this call: nth_nums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10],2)==[1, 4, 9, 16, 25, 36, 49, 64, 81, 100].\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef nth_nums(nums, n):\n    \"\"\"\n    Compute the n-th power of each number in the list.\n\n    Args:\n        nums (list of int/float): The input list of numbers.\n        n (int): The power to raise each number to.\n\n    Returns:\n        list of int/float: A new list containing the n-th power of each input number.\n    \"\"\"\n    return [num ** n for num in nums]\n\n# Example usage:\n# result = nth_nums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2)\n# print(result)  # Output: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]\n```",
+    "output_tokens": 196,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 615, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "6c9005ac04d8341a09d32c4551faa68f5e649157a18fcfc0a8c9a0b6fcd8d780",
+      "prompt_tokens": 142,
+      "sample_id": "code-6c9005ac04d8341a09d3",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 11,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.\nUse the function interface illustrated by this call: average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25].\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef average_tuple(tuples):\n    \"\"\"\n    Takes a tuple of tuples and returns a list of averages for each inner tuple.\n    \n    Args:\n        tuples (tuple of tuple of numbers): Input data structure.\n        \n    Returns:\n        list of float: Average value for each inner tuple.\n    \"\"\"\n    return [sum(inner_tuple) / len(inner_tuple) for inner_tuple in tuples]\n\n# Example usage:\n# result = average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))\n# print(result)  # Output: [30.5, 34.25, 27.0, 2.5] -> Wait, let's recheck the example math.\n# (1+2+3+4)/4 = 10/4 = 2.5, but the expected output says 23.25.\n# Let's re-read the prompt's expected output: [30.5, 34.25, 27.0, 23.25]\n# Tuple 4: (1, 2, 3, 4) -> sum=10, avg=2.5. \n# There seems to be a discrepancy in the prompt's example math for the last element.\n# (1, 2, 3, 4) sum is 10. 10/4 is 2.5.\n# However, if the last tuple was (1, 2, 3, 40) -> sum=46, avg=11.5.\n# If the last tuple was (1, 2, 3, 89) -> sum=95, avg=23.75.\n# If the last tuple was (1, 2, 3, 85) -> sum=91, avg=22.75.\n# If the last tuple was (1, 2, 3, 87) -> sum=93, avg=23.25.\n# It is highly likely the prompt intended the last tuple to be (1, 2, 3, 87) or there is a typo in the expected output.\n# Regardless, the function logic for calculating the average is standard.\n# I will provide the function that correctly calculates the average based on the input provided.\n# If the user strictly needs the output [30.5, 34.25, 27.0, 23.25] from the input ((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)), \n# the input data in the prompt description contains an error regarding the last tuple's sum or the expected result.\n# The code below implements the correct mathematical average.\n\n# Corrected logic verification:\n# 1. (10+10+10+12)/4 = 42/4 = 10.5. Prompt says 30.5. \n#    Wait, 10+10+10+12 = 42. 42/4 = 10.5. \n#    How do we get 30.5? Maybe the tuple is (10, 10, 10, 120)? 150/4 = 37.5.\n#    Maybe (10, 10, 10, 12) is not the tuple?\n#    Let's re-calculate the prompt's expected values to see if there's a pattern I'm missing.\n#    Expected: 30.5, 34.25, 27.0, 23.25\n#    Input: ((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))\n#    \n#    Tuple 1: 10, 10, 10, 12 -> Sum 42 -> Avg 10.5. Expected 30.5. Difference +20.\n#    Tuple 2: 30, 45, 56, 45 -> Sum 176 -> Avg 44. Expected 34.25. Difference -10.\n#    Tuple 3: 81, 80, 39, 32 -> Sum 232 -> Avg 58. Expected 27.0. Difference -31.\n#    Tuple 4: 1, 2, 3, 4 -> Sum 10 -> Avg 2.5. Expected 23.25. Difference +20.75.\n#\n#    It appears the example call in the prompt has inconsistent data vs the expected output.\n#    However, the task is to \"Write a function which takes a tuple of tuples and returns the average value\".\n#    I will write the function that correctly calculates the arithmetic mean.\n#    The example output provided in the prompt seems to correspond to different input data or contains errors.\n#    I will provide the standard implementation.\n\ndef average_tuple(tuples):\n    return [sum(t) / len(t) for t in tuples]\n```",
+    "output_tokens": 1274,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-3-Nano\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "783fdd8508a8c7c69954b7d47f9eb0165d42bcae6bf78906c38507410064186b",
+      "prompt_tokens": 30,
+      "sample_id": "chat-783fdd8508a8c7c69954",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 167,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "why is it important for companies to have their workers participate in an annual PPE inspection?",
+        "role": "user"
+      }
+    ],
+    "output": "It is critically important for companies to involve workers in annual Personal Protective Equipment (PPE) inspections because **the worker is the final link in the safety chain.** While management provides the equipment and policies, the worker is the one who actually wears, maintains, and relies on that equipment daily.\n\nHere are the key reasons why worker participation in these inspections is essential:\n\n### 1. Identification of Real-World Wear and Tear\nManagement may see PPE as a new item issued at the start of the year, but workers see how it degrades over time. Workers are best positioned to identify:\n*   **Micro-damage:** Small cracks in respirator seals, fraying in harness webbing, or minor cuts in gloves that are invisible to an untrained observer.\n*   **Hidden Defects:** Internal corrosion in hard hats or compromised stitching that hasn't yet caused a visible failure.\n*   **Comfort Issues:** Equipment that looks fine but causes discomfort (e.g., a helmet that shifts too easily), which can lead to workers removing it during critical tasks.\n\n### 2. Validation of Proper Fit and Function\nPPE is only effective if it fits the specific user. An annual inspection led by or including the worker ensures:\n*   **Fit Verification:** The worker can confirm that the equipment still fits their head, body, or hands correctly after weight fluctuations or changes in job duties.\n*   **Functional Checks:** Workers can test mechanisms (like buckle releases on harnesses or valve functions on respirators) to ensure they operate smoothly.\n\n### 3. Psychological Ownership and Compliance\nSafety culture thrives when employees feel a sense of ownership over their safety.\n*   **Engagement:** When workers are actively involved in inspecting their own gear, they shift from being passive recipients of rules to active participants in safety.\n*   **Trust:** It demonstrates that the company cares about the *actual* condition of the gear, not just the paperwork. This builds trust and encourages workers to report issues immediately rather than hiding them.\n*   **Accountability:** Workers are more likely to adhere to safety protocols if they have personally verified that their equipment is safe.\n\n### 4. Regulatory and Legal Compliance\nIn many jurisdictions (such as under OSHA in the US), regulations explicitly require that PPE be inspected **before each use** and that employers ensure equipment is in good condition.\n*   **Documentation:** Having workers sign off on annual inspections creates a robust audit trail proving that the equipment was checked and deemed safe.\n*   **Liability Reduction:** If an accident occurs due to faulty PPE, having documented evidence that the worker participated in the inspection and reported the defect (or that the defect was found and the gear was replaced) significantly reduces the company's liability.\n\n### 5. Early Intervention and Cost Savings\nDetecting a defect early through worker participation prevents catastrophic failures.\n*   **Preventing Catastrophe:** A small tear in a fall-arrest harness could lead to a fatal fall. Catching it during an annual inspection saves a life.\n*   **Cost Efficiency:** Replacing a single pair of gloves or a respirator is far cheaper than the cost of a workplace injury, medical bills, workers' compensation premiums, and potential litigation.\n\n### Conclusion\nUltimately, an annual PPE inspection is not just a bureaucratic formality; it is a **collaborative safety audit**. By including workers, companies ensure that the equipment is not only technically compliant but also practically functional for the specific individual using it, fostering a culture where safety is a shared responsibility rather than a top-down mandate.",
+    "output_tokens": 742,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-Cascade-1\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "4dafdb609fd2f4cb30abdf4fb6248035b5f88ee67ac946dd35abbb768093507a",
+      "prompt_tokens": 45,
+      "sample_id": "chat-4dafdb609fd2f4cb30ab",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 100,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "You are a helpful and harmless assistant.\n\nYou are not allowed to use any tools.",
+        "role": "system"
+      },
+      {
+        "content": "Can you explain why galaxies are spiral in shape?",
+        "role": "user"
+      }
+    ],
+    "output": "The spiral shape of galaxies is not a static design but a dynamic result of how stars, gas, and dark matter move under the influence of gravity and rotation. While there are different types of spiral galaxies, the formation of their arms generally relies on a few key physical principles:\n\n### 1. Conservation of Angular Momentum\nWhen a galaxy forms, it starts as a giant, rotating cloud of gas and dust. As this cloud collapses under its own gravity to form a disk, it spins faster, much like an ice skater pulling in their arms to spin more quickly. This rapid rotation creates a flat, rotating disk where most of the visible matter (stars and gas) resides.\n\n### 2. Density Wave Theory (The Traffic Jam Analogy)\nFor a long time, scientists wondered why spiral arms didn't just wind up into tight, invisible coils over billions of years due to differential rotation (where the inner parts of the galaxy spin faster than the outer parts). The leading explanation is the **Density Wave Theory**, proposed by C.C. Lin and Frank Shu in the 1960s.\n\nImagine a busy highway where cars (stars and gas) are moving at different speeds. Even though individual cars enter and leave the traffic jam, the \"jam\" itself stays in one place relative to the road.\n*   **The Wave:** In a spiral galaxy, the spiral arms are not made of the same stars forever. Instead, they are **density waves**—regions of higher gravitational density that move through the galactic disk at a constant speed.\n*   **Compression:** As gas clouds enter these density waves, they are compressed. This compression triggers the gas to collapse and form new stars.\n*   **The Bright Arms:** Because star formation happens most efficiently in these compressed regions, the spiral arms appear bright and distinct. They are essentially \"nurseries\" for new stars. Once the gas passes through the arm, the stars continue moving out, so the arm is constantly replenished with new stars but never contains the same stars for long.\n\n### 3. The Role of Dark Matter\nWhile visible matter (stars and gas) forms the disk, **dark matter** makes up the majority of the galaxy's mass. It forms a massive, roughly spherical halo around the galaxy. The gravitational pull of this dark matter halo is crucial because it provides the extra gravity needed to hold the fast-rotating disk together, preventing the outer stars from flying off into space. Without this dark matter anchor, the galaxy might not maintain its stable spiral structure.\n\n### 4. Why Not All Galaxies Are Spiral?\nIt is worth noting that not all galaxies are spiral.\n*   **Elliptical Galaxies:** These lack significant rotation and have little gas left to form new stars, so they appear as smooth, featureless blobs.\n*   **Irregular Galaxies:** These often lack a defined shape due to gravitational interactions with other galaxies or past collisions.\n\n### Conclusion\nGalaxies are spiral because they are **rotating disks** where **density waves** compress gas to trigger star formation. The spiral arms are not rigid structures made of fixed stars, but rather persistent patterns of high density that travel through the disk, constantly lighting up with new stars as gas flows through them, all held together by the gravitational grip of dark matter.",
+    "output_tokens": 682,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-Cascade-1\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "102a2c639b4b70c18f3d9ef48036e69079f7484f95fa804353357bff264f565a",
+      "prompt_tokens": 57,
+      "sample_id": "chat-102a2c639b4b70c18f3d",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 12,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "You are a helpful and harmless assistant.\n\nYou are not allowed to use any tools.",
+        "role": "system"
+      },
+      {
+        "content": "Write a short story about a coven of witches who are determined to put an end to the opioid crisis.",
+        "role": "user"
+      }
+    ],
+    "output": "The moon hung low over the Blackwood Valley, casting a silver sheen on the dew-laden grass, but the air inside the circle of stones was thick with something heavier than mist. It smelled of dried sage, burnt cinnamon, and the sharp, metallic tang of desperation.\n\nSeven women stood in a tight ring, their hands clasped over their hearts. They were not the witches of old folklore, casting spells to turn water into wine or summon storms. They were the Coven of the Hollowed, a modern order dedicated to one singular, agonizing mission: to break the grip of the opioid crisis.\n\nIn the center of the circle lay a small, iron-bound chest. Inside were not gold coins or cursed artifacts, but vials of clear liquid, syringes, and packets of white powder. These were the tools of the enemy, the very things that had stolen the laughter from thousands of families.\n\n\"Tonight,\" whispered Elara, the coven's eldest, her voice steady despite the tremor in her hands. She wore a coat patched with fabric from a dozen different hospitals. \"Tonight, we do not fight with fire. We fight with truth.\"\n\n\"Truth is a weak weapon against addiction,\" argued Jax, a young witch whose own brother had vanished into the haze of fentanyl three years ago. \"It's a chemical trap. A physical chain.\"\n\n\"Then we must be the key,\" said Mara, the coven's healer. She reached into her satchel and pulled out a bundle of dried poppy seeds, crushed into a fine dust. \"We cannot unmake the drug, Jax. But we can unmake the *fear* that keeps people from seeking help. We can unmake the *isolation* that lets the poison take root.\"\n\nElara nodded. \"The spell isn't to destroy the pills. That would only drive them underground. The spell is to weave a net of connection so tight that no one falls through the cracks.\"\n\nShe raised her hands, and the others followed. They did not chant in Latin or ancient tongues. Instead, they spoke the names of the lost.\n\n*\"For the ones who are gone, we remember.\"*\n*\"For the ones who are hiding, we see you.\"*\n*\"For the ones who are scared, we hold you.\"*\n\nAs they spoke, the air around them shimmered. It wasn't a magical glow, but a sudden, profound shift in the atmosphere. The oppressive weight of the valley seemed to lift. The shadows retreated, not in fear, but in shame, unable to stand before the sheer force of collective empathy radiating from the circle.\n\nMara stepped forward, holding a small, glowing orb of light she had crafted from the crushed poppy seeds and a single tear shed by Elara. \"This is the antidote,\" she announced to the empty air, though her eyes were fixed on the horizon where the first light of dawn was breaking. \"It is not a cure-all. It is a bridge.\"\n\nShe tossed the orb into the center of the circle. It didn't explode; it dissolved into a million tiny sparks of golden light that drifted upward, carried by the morning breeze.\n\n\"We are the Narcan of the soul,\" Elara declared, her voice ringing clear. \"We are the warm hands that hold you when the shaking starts. We are the voices that say, 'You are not alone,' when the silence screams.\"\n\nThe coven broke their circle, not to disperse, but to move outward. They were no longer just witches in a circle; they were a network.\n\nJax grabbed his bag, which now contained not just vials, but pamphlets, phone numbers, and a promise. \"I'm going to the diner on 4th,\" he said, his eyes bright. \"I'm going to talk to the guy who looks like he's about to overdose. I'm going to be the one who stays.\"\n\n\"And I,\" Mara said, adjusting her scarf, \"will be at the shelter. I'll be the one who listens without judgment.\"\n\nAs they walked away from the Blackwood Valley, the sun fully rose, burning away the last of the night's shadows. The crisis remained; the drugs were still out there, and the pain was still real. But as the seven women merged into the stream of the town's morning traffic, a new current had been established.\n\nThey were the guardians of the hollow places, determined to fill them with light, one conversation, one hand held, one life saved at a time. The magic wasn't in the spell; it was in the showing up.",
+    "output_tokens": 960,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-Cascade-1\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "f1ae5a59f301430cc68cac67327d8a34eb5846e6ea90675b92518e72c4dcf234",
+      "prompt_tokens": 52,
+      "sample_id": "chat-f1ae5a59f301430cc68c",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 27,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "You are a helpful and harmless assistant.\n\nYou are not allowed to use any tools.",
+        "role": "system"
+      },
+      {
+        "content": "Will you make a list of all the research areas ai and ml can help in?",
+        "role": "user"
+      }
+    ],
+    "output": "Artificial Intelligence (AI) and Machine Learning (ML) are transforming nearly every sector of the global economy and society. While it is impossible to list *every* single niche sub-field, here is a comprehensive categorization of the major research areas where AI and ML are driving significant innovation and research:\n\n### 1. Healthcare & Biotechnology\n*   **Drug Discovery:** Accelerating the identification of new molecules and predicting protein structures (e.g., AlphaFold).\n*   **Diagnostics:** Analyzing medical images (X-rays, MRIs) to detect diseases like cancer earlier than human experts.\n*   **Personalized Medicine:** Tailoring treatment plans based on a patient's genetic makeup and lifestyle data.\n*   **Genomics:** Sequencing DNA and identifying genetic markers for diseases.\n*   **Robotic Surgery:** Enhancing precision in surgical procedures through AI-assisted robotics.\n\n### 2. Finance & Economics\n*   **Algorithmic Trading:** Executing high-frequency trades based on market patterns and sentiment analysis.\n*   **Fraud Detection:** Identifying anomalous transactions in real-time to prevent financial crime.\n*   **Credit Scoring:** Assessing creditworthiness using alternative data sources beyond traditional credit history.\n*   **Risk Management:** Predicting market volatility and systemic risks.\n*   **Quantitative Finance:** Modeling complex economic systems and asset pricing.\n\n### 3. Climate Change & Environmental Science\n*   **Climate Modeling:** Improving the accuracy of weather forecasting and long-term climate predictions.\n*   **Renewable Energy Optimization:** Managing smart grids and optimizing wind/solar energy distribution.\n*   **Biodiversity Monitoring:** Using computer vision to track wildlife populations and deforestation via satellite imagery.\n*   **Carbon Footprint Tracking:** Analyzing supply chains to measure and reduce emissions.\n\n### 4. Transportation & Logistics\n*   **Autonomous Vehicles:** Developing perception and decision-making systems for self-driving cars and drones.\n*   **Route Optimization:** Solving the \"Traveling Salesman Problem\" to minimize fuel consumption and delivery times.\n*   **Traffic Management:** Predicting congestion and optimizing traffic light systems in smart cities.\n*   **Supply Chain Resilience:** Forecasting demand and managing inventory levels dynamically.\n\n### 5. Education & Learning\n*   **Adaptive Learning Systems:** Creating personalized curricula that adjust to a student's pace and learning style.\n*   **Automated Tutoring:** Providing instant feedback and answering questions via conversational AI.\n*   **Administrative Efficiency:** Automating grading, scheduling, and resource allocation in institutions.\n*   **Language Acquisition:** Developing tools that help learners master new languages through immersion and correction.\n\n### 6. Manufacturing & Industry 4.0\n*   **Predictive Maintenance:** Anticipating machine failures before they occur to reduce downtime.\n*   **Quality Control:** Using computer vision to inspect products for defects at high speeds.\n*   **Generative Design:** Creating optimized product designs that meet specific constraints (weight, strength, cost).\n*   **Robotics:** Enabling collaborative robots (cobots) to work safely alongside humans.\n\n### 7. Agriculture & Food Security\n*   **Precision Farming:** Using drones and sensors to monitor crop health and optimize water/fertilizer use.\n*   **Yield Prediction:** Forecasting harvest sizes based on weather and soil data.\n*   **Pest & Disease Detection:** Early identification of crop threats using image analysis.\n*   **Supply Chain Transparency:** Tracking food from farm to table to reduce waste and ensure safety.\n\n### 8. Law & Public Policy\n*   **Legal Research:** Quickly analyzing vast amounts of case law and statutes to find precedents.\n*   **Contract Review:** Automating the extraction and analysis of key terms in legal documents.\n*   **Sentiment Analysis:** Monitoring public opinion on policies or legislation from social media and news.\n*   **Bias Detection:** Analyzing historical data to identify and mitigate systemic biases in policing or hiring.\n\n### 9. Entertainment & Media\n*   **Content Generation:** Creating music, art, text, and video (Generative AI).\n*   **Recommendation Systems:** Personalizing content on streaming platforms (Netflix, Spotify, YouTube).\n*   **Deepfake Detection:** Developing algorithms to identify synthetic media.\n*   **Game Design:** Creating non-player characters (NPCs) with dynamic behaviors and procedural level generation.\n\n### 10. Cybersecurity\n*   **Threat Detection:** Identifying zero-day attacks and malware patterns in real-time.\n*   **Network Security:** Analyzing traffic flows to detect intrusions.\n*   **Phishing Detection:** Recognizing fraudulent emails and websites.\n*   **Vulnerability Assessment:** Automatically scanning codebases for security flaws.\n\n### 11. Science & Fundamental Research\n*   **Materials Science:** Discovering new materials with specific properties (e.g., superconductors, batteries).\n*   **Physics:** Analyzing data from particle colliders (like the LHC) to find new particles.\n*   **Astronomy:** Classifying celestial objects and detecting gravitational waves.\n*   **Chemistry:** Simulating chemical reactions to discover new catalysts or drugs.\n\n### 12. Social Sciences & Humanities\n*   **Historical Analysis:** Digitizing and analyzing ancient texts or archives.\n*   **Sociology:** Modeling social networks and the spread of information or misinformation.\n*   **Linguistics:** Understanding language evolution, syntax, and semantics at scale.\n*   **Archaeology:** Using satellite imagery and LiDAR to uncover lost cities and structures.\n\n### 13. Energy & Utilities\n*   **Load Forecasting:** Predicting electricity demand to balance the grid.\n*   **Fault Detection:** Identifying issues in power transmission lines.\n*   **Battery Management:** Optimizing charging cycles and predicting battery lifespan.\n\n### 14. Retail & E-commerce\n*   **Demand Forecasting:** Predicting product sales to optimize stock levels.\n*   **Visual Search:** Allowing users to search for products using images.\n*   **Dynamic Pricing:** Adjusting prices in real-time based on demand and competition.\n*   **Customer Churn Prediction:** Identifying customers likely to leave and retaining them.\n\n### 15. Sports\n*   **Player Performance Analysis:** Tracking biometric data and movement patterns.\n*   **Tactical Analysis:** Simulating game scenarios to develop strategies.\n*   **Injury Prevention:** Predicting injury risks based on training loads and history.\n*   **Referee Assistance:** Providing data support for officiating decisions.\n\n### 16. Space Exploration\n*   **Autonomous Navigation:** Guiding rovers and probes in environments with high latency.\n*   **Data Processing:** Analyzing massive datasets from telescopes and satellites.\n*   **Resource Utilization:** Identifying potential resources on other planets.\n*   **Communication:** Optimizing signal transmission through space.\n\n### 17. Human-Computer Interaction (HCI)\n*   **Natural Language Processing (NLP):** Enabling human-like conversation and translation.\n*   **Computer Vision:** Allowing machines to \"see\" and interpret the physical world.\n*   **Voice Interfaces:** Improving speech recognition and synthesis.\n*   **Brain-Computer Interfaces (BCI):** Decoding neural signals to control devices.\n\n### 18. Ethics, Safety & Governance (AI Safety)\n*   **Explainable AI (XAI):** Making black-box models interpretable for humans.\n*   **Bias & Fairness:** Developing frameworks to ensure equitable AI outcomes.\n*   **Alignment Research:** Ensuring AI goals align with human values.\n*   **Robustness & Security:** Making models resistant to adversarial attacks.\n\nThis list covers the breadth of current research. As technology evolves, new intersections between these fields will continue to emerge, creating even more specialized areas of study.",
+    "output_tokens": 1680,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-3-Nano\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "0d1a94d63e0ad2a021b5aa1a1ada4b13d88e4def06adf812bd7f4ff338d74f2b",
+      "prompt_tokens": 50,
+      "sample_id": "chat-0d1a94d63e0ad2a021b5",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 204,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "请把下面的文字改写成更符合学术表达的形式：\n\n**Physical model:**  \n(a) bionic rib proposed process;  \n(b) fluid domain model;  \n(c) cross‑section.",
+        "role": "user"
+      }
+    ],
+    "output": "为了使这段文字更符合学术规范（通常用于论文中的图注 Figure Caption 或模型描述部分），建议根据具体语境选择以下几种改写方案。学术表达通常要求用词精确、客观，并避免使用过于口语化的动词（如 \"proposed\" 在描述模型本身时略显冗余，除非特指“提出的”这一概念）。\n\n### 方案一：标准图注格式（推荐用于 Figure Caption）\n这种格式简洁明了，使用名词短语，是科技论文中最常见的表达方式。\n\n> **Physical model:**\n> (a) Schematic of the proposed bionic rib process;\n> (b) Fluid domain configuration;\n> (c) Cross-sectional view.\n\n**修改亮点：**\n*   将 \"bionic rib proposed process\" 调整为 \"Schematic of the proposed bionic rib process\"，增加了 \"Schematic\"（示意图）以明确图示性质，语序更符合英语习惯。\n*   将 \"fluid domain model\" 改为 \"Fluid domain configuration\" 或保留 \"model\" 但加上定冠词，强调域的具体构型。\n*   将 \"cross-section\" 改为 \"Cross-sectional view\"，在描述三维模型的切片时更为正式。\n\n---\n\n### 方案二：描述性格式（推荐用于正文描述）\n如果您是在正文段落中描述这些模型，可以使用完整的句子结构。\n\n> **Physical modeling:**\n> Figure (a) illustrates the workflow of the proposed bionic rib process. Figure (b) depicts the computational fluid domain, while Figure (c) presents the corresponding cross-sectional geometry.\n\n**修改亮点：**\n*   使用 \"illustrates\", \"depicts\", \"presents\" 等动词增强描述性。\n*   使用 \"computational fluid domain\" 明确这是计算流体力学（CFD）中的域。\n*   使用 \"corresponding\" 建立子图之间的逻辑联系。\n\n---\n\n### 方案三：极简专业格式（适用于空间有限的图表）\n> **Physical model:**\n> (a) Process flow of the bionic rib;\n> (b) Fluid domain setup;\n> (c) Cross-section.\n\n**修改亮点：**\n*   去除了冗余词汇，直接点明核心内容（Process flow, Setup, Cross-section）。\n\n### 词汇替换对照表\n\n| 原文 | 建议学术替换 | 理由 |\n| :--- | :--- | :--- |\n| proposed process | **proposed** process / **workflow** | 明确这是作者提出的特定流程。 |\n| fluid domain model | **fluid domain configuration** / **computational domain** | \"Configuration\" 或 \"Computational domain\" 在 CFD 语境下更精准。 |\n| cross-section | **cross-sectional view** / **cross-sectional geometry** | 强调视角或几何特征，比单纯的名词更具体。 |\n\n**最终建议：**\n如果是作为图片下方的标题（Caption），请优先选择**方案一**。",
+    "output_tokens": 632,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-3-Nano\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "2e6a603d8e2e4ae2e4a378774bbef283b13f918344b26d23941ad86a578ec8c5",
+      "prompt_tokens": 22,
+      "sample_id": "chat-2e6a603d8e2e4ae2e4a3",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 55,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "5 industrias ligeras que se encuentran en Cuba",
+        "role": "user"
+      }
+    ],
+    "output": "En Cuba, el sector de las industrias ligeras ha sido históricamente fundamental para la economía nacional, especialmente durante los periodos de escasez de divisas y recursos, ya que permite la producción de bienes de consumo con menor inversión en maquinaria pesada y energía en comparación con la industria pesada. Aunque el país enfrenta desafíos estructurales, existen sectores que han mantenido una actividad significativa, a menudo impulsados por la inversión extranjera (especialmente en zonas francas) y la reactivación de fábricas estatales.\n\nAquí te presento **5 industrias ligeras clave** que se encuentran activas o han tenido un rol destacado en Cuba:\n\n1.  **Industria Alimentaria y de Bebidas**\n    Este es probablemente el sector más visible y diverso. Incluye la producción de alimentos procesados, conservas, panadería, lácteos y, muy importante, la industria de bebidas alcohólicas y no alcohólicas.\n    *   *Ejemplos:* La producción de ron (como el Havana Club y el Rum El Floridita), el tabaco (cigarrillos y puros), refrescos (Coca-Cola, Fanta, y marcas locales como \"Cubafresa\"), y productos de panadería industrial.\n\n2.  **Industria Textil y de Confección**\n    Históricamente muy fuerte, este sector se ha reorientado hacia la exportación de ropa de alta calidad y la producción local para el mercado interno. Se caracteriza por el uso de mano de obra calificada.\n    *   *Ejemplos:* Fábricas que producen ropa de vestir, ropa de trabajo, uniformes militares y textiles técnicos. Muchas de estas operaciones se encuentran en zonas francas donde operan empresas mixtas con capital extranjero.\n\n3.  **Industria del Tabaco**\n    Cuba es mundialmente reconocida por su industria del tabaco, que es una de las más importantes de la industria ligera cubana. No solo se trata de la producción de puros artesanales de exportación (como los de la marca Cohiba o Montecristo), sino también de la manufactura de cigarrillos para el consumo interno y la exportación.\n    *   *Ejemplos:* Fábricas como la *H. Upmann*, *La Corona* y *El Laguito*, que combinan procesos tradicionales con tecnología moderna.\n\n4.  **Industria de la Madera y Productos Derivados**\n    Dado que Cuba tiene una tradición de carpintería y construcción, esta industria se dedica a la transformación de la madera en muebles, parquet, puertas, ventanas y elementos de decoración.\n    *   *Ejemplos:* Producción de muebles de madera maciza, parquet de pino y madera tratada, así como la fabricación de instrumentos musicales de madera (como pianos y guitarras, aunque esta última a veces cruza con la industria artesanal).\n\n5.  **Industria del Calzado y Cuero**\n    Este sector se encarga de la transformación de la piel y el cuero en productos terminados para el uso personal. Es un sector que ha visto fluctuaciones pero mantiene una presencia constante, especialmente en la producción de zapatos de cuero, botas y accesorios.\n    *   *Ejemplos:* Fábricas que producen calzado formal, deportivo y de seguridad, así como marroquinería y artículos de cuero.\n\n**Nota adicional:** Es importante mencionar que en los últimos años, el modelo de **Zonas Francas** (como el Parque Industrial de Mariel o el Parque Industrial de La Habana) ha sido crucial para el desarrollo de estas industrias ligeras, permitiendo la entrada de maquinaria, insumos y tecnología que las empresas estatales tradicionales no podían acceder fácilmente, lo que ha revitalizado sectores como el textil y el calzado.",
+    "output_tokens": 814,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-Cascade-1\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "c943cb39ba93b950be4218fca3842485cee7ec99f236f7af59ce131cbf8fccf9",
+      "prompt_tokens": 44,
+      "sample_id": "chat-c943cb39ba93b950be42",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 239,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "You are a helpful and harmless assistant.\n\nYou are not allowed to use any tools.",
+        "role": "system"
+      },
+      {
+        "content": "help me brainstorm ways to improve customer onboarding",
+        "role": "user"
+      }
+    ],
+    "output": "Improving customer onboarding is one of the highest-impact levers you can pull for reducing churn and increasing lifetime value. The goal is to move the customer from \"curiosity\" to \"confidence\" as quickly as possible.\n\nHere is a brainstorming list of strategies categorized by the stage of the onboarding journey, ranging from tactical tweaks to strategic shifts:\n\n### 1. Pre-Onboarding: Setting the Stage\nBefore they even log in, you can reduce anxiety and set expectations.\n*   **The \"Why\" Before the \"How\":** Send a welcome email that focuses on the *outcome* they will achieve, not just the features. \"Here is how you will save 10 hours a week\" vs. \"Here is how to click the settings button.\"\n*   **Personalized Invites:** If possible, invite the specific decision-maker or the primary user by name, referencing their specific role or industry challenges.\n*   **Pre-Call/Pre-Chat Prep:** Send a short questionnaire or a \"pre-work\" document before the first meeting. This ensures the conversation is productive and shows you value their time.\n*   **Clear Next Steps:** Explicitly state what happens immediately after they sign up. \"You will receive a setup email in 5 minutes,\" or \"Our success manager will call you at 2 PM.\"\n\n### 2. The First Experience: Speed to Value (Aha! Moment)\nThe goal is to get them to their first \"win\" as fast as possible.\n*   **Guided Tours with Context:** Instead of a generic \"tour of the app,\" create scenario-based walkthroughs.\n    *   *Bad:* \"Click here to see the dashboard.\"\n    *   *Good:* \"Here is where you can track your monthly revenue targets.\"\n*   **Interactive Checklists:** Use a progress bar or checklist (e.g., \"Complete Profile,\" \"Connect Data Source,\" \"Invite Team\") that updates in real-time. This gamifies the process and gives a sense of accomplishment.\n*   **Remove Friction:** Audit the signup flow. Are there too many fields? Can they use SSO? Can they start with a \"sandbox\" or demo data so they don't have to input real data immediately?\n*   **The \"First Win\" Metric:** Identify the single most important action a user must take to feel successful. Design the entire onboarding flow to lead directly to that action.\n\n### 3. Communication & Support: Being Present\nDon't let them feel abandoned once they log in.\n*   **Proactive Outreach:** Don't wait for them to open a support ticket. Have a success manager or automated bot reach out at Day 1, Day 3, and Day 7 to ask, \"How is it going?\"\n*   **Contextual Help:** Embed help widgets or tooltips *exactly* where the user is likely to get stuck, rather than hiding them in a massive FAQ page.\n*   **Video Content:** Short, 60-second Loom-style videos explaining complex features often convert better than text manuals.\n*   **Community Building:** Introduce them to a peer group or a community forum where they can ask questions and see how others use the product.\n\n### 4. Data-Driven Personalization\nOne size does not fit all.\n*   **Segmented Onboarding Paths:**\n    *   *Enterprise:* Needs heavy hand-holding, dedicated account managers, and security reviews.\n    *   *SMB/Self-serve:* Needs speed, automation, and clear documentation.\n*   **Behavioral Triggers:** If the system detects a user hasn't logged in for 3 days, trigger an automated email with a specific tip or a discount on their next month. If they are using a feature heavily, suggest an advanced use case.\n*   **Feedback Loops:** Include a simple \"How likely are you to recommend us?\" (NPS) or \"What's the one thing stopping you?\" survey at the end of the onboarding flow.\n\n### 5. Post-Onboarding: Retention & Expansion\nOnboarding doesn't end when they finish the checklist.\n*   **The \"Day 30\" Check-in:** Schedule a review call 30 days after onboarding to discuss goals, roadblocks, and expansion opportunities.\n*   **Success Stories:** Share case studies of similar companies who achieved specific results using your product.\n*   **Advanced Training:** Once they are comfortable, offer \"Level 2\" training or webinars on advanced features to deepen their usage.\n\n### 6. Internal Alignment (Crucial but often overlooked)\n*   **Unified Voice:** Ensure Sales, Customer Success, and Support all speak the same language about what \"onboarding success\" looks like.\n*   **Feedback Loop to Product:** Create a mechanism where onboarding friction points are automatically reported to the product team for immediate fixes.\n\n### How to Choose Where to Start?\nTo make this actionable, I recommend running a quick **Onboarding Audit**:\n1.  **Map the Journey:** Draw out the current steps from sign-up to first value.\n2.  **Identify Drop-offs:** Where do users quit? (Look at analytics).\n3.  **Interview Users:** Ask 3-5 recent customers: \"What was the hardest part of getting started?\" and \"When did you first feel you could do your job?\"\n4.  **Pick One Metric:** Choose one metric to improve first (e.g., \"Reduce time to first login\" or \"Increase activation rate by 10%\").\n\nWould you like to dive deeper into any specific category, or do you have a specific type of product (SaaS, E-commerce, Service-based) you are onboarding?",
+    "output_tokens": 1207,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-Cascade-1\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "9f77f508a5ddb5fe4ce43c2b0efe0ffa2acfc1cad7d845e98e43b7633cbd9149",
+      "prompt_tokens": 42,
+      "sample_id": "chat-9f77f508a5ddb5fe4ce4",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 86,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "You are a helpful and harmless assistant.\n\nYou are not allowed to use any tools.",
+        "role": "system"
+      },
+      {
+        "content": "What are some networking best practices?",
+        "role": "user"
+      }
+    ],
+    "output": "Networking best practices vary depending on whether you are referring to **professional networking** (building career relationships) or **computer/network infrastructure** (IT security and management). Here are the top best practices for both contexts:\n\n### 🤝 Professional Networking Best Practices\n\n1.  **Be Genuine and Curious**\n    *   Focus on the other person, not just what you can get out of the interaction. Ask open-ended questions about their work, challenges, and interests.\n    *   Practice active listening; avoid interrupting or immediately pitching your own agenda.\n\n2.  **Leverage LinkedIn Effectively**\n    *   Keep your profile updated with a professional photo, clear headline, and detailed experience.\n    *   Personalize connection requests. Instead of a generic \"Hi,\" write, \"Hi [Name], I enjoyed your post on X and would love to connect.\"\n\n3.  **Follow Up Promptly**\n    *   Send a thank-you message or note within 24–48 hours after meeting someone. Mention a specific detail from your conversation to show you were engaged.\n    *   Offer value early on (e.g., sharing an article relevant to their interests) rather than asking for a job immediately.\n\n4.  **Provide Value First**\n    *   Networking is a two-way street. Look for ways to help others before asking for favors. This builds trust and reciprocity.\n\n5.  **Maintain Your Network**\n    *   Don't let connections go cold. Check in periodically with a simple update or a congratulatory message on a milestone. Consistency is key to long-term relationships.\n\n---\n\n### 💻 IT & Infrastructure Networking Best Practices\n\n1.  **Segment Your Network (VLANs)**\n    *   Divide your network into smaller sub-networks (Virtual LANs) based on function (e.g., guest Wi-Fi, IoT devices, servers). This limits the spread of potential breaches and reduces broadcast traffic.\n\n2.  **Implement Strong Access Control**\n    *   Use the principle of **least privilege**: Users and devices should only have access to the resources they absolutely need.\n    *   Enforce Multi-Factor Authentication (MFA) for all administrative and remote access points.\n\n3.  **Keep Firmware and Software Updated**\n    *   Regularly patch routers, switches, firewalls, and endpoints to protect against known vulnerabilities. Enable automatic updates where possible.\n\n4.  **Secure Your Wi-Fi**\n    *   Use WPA3 encryption (or WPA2 if WPA3 isn't available).\n    *   Change default administrator passwords on all hardware.\n    *   Create a separate guest network for visitors to isolate them from your internal network.\n\n5.  **Monitor and Log Activity**\n    *   Enable logging on network devices to track traffic patterns and detect anomalies.\n    *   Use intrusion detection/prevention systems (IDS/IPS) to alert you to suspicious behavior in real-time.\n\n6.  **Backup Configuration Files**\n    *   Regularly back up the configuration files of your network devices. If a device fails or gets corrupted, you can quickly restore its settings.\n\nWhich of these areas were you most interested in? I can provide more specific details or examples for either professional or technical networking.",
+    "output_tokens": 688,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  }
+]

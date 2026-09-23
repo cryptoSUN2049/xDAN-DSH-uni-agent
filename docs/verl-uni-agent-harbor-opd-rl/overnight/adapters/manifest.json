@@ -1,0 +1,98 @@
+{
+  "format": "peft_adapter_only",
+  "base_model": "/workspace/models/Qwen3.5-9B",
+  "checkpoints": [
+    {
+      "step": 4,
+      "status": "exported",
+      "adapter": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-control-attempt2/adapters/global_step_4/lora_adapter",
+      "rank": 16,
+      "alpha": 32.0,
+      "tensor_count": 716,
+      "modules": 358,
+      "modules_with_nonzero_B": 248,
+      "weights_sha256": "e77be511b0ad21dc88425a2ee1992cee3cf45377555a9bd15c57a1e72c09e846",
+      "config_sha256": "f8ca021f2694542535a7d57c8d3e694f7331fe691b4049293df0189c0c3acd2f",
+      "validation": "finite paired tensors; nonzero B; metadata matched",
+      "generation_reload_verified": true,
+      "source_actor": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-attempt2/checkpoints/global_step_4/actor",
+      "source_metadata_sha256": "82c99ce144bb1153a915c91b27ccf741f35dcdfc4aa85f9f6034d12667732b35",
+      "source_shards": [
+        {
+          "name": "model_world_size_1_rank_0.pt",
+          "sha256": "3879ae4c853703b635c9fc22d859bfe69d0061409fa149dd3b16cf8112aec402"
+        }
+      ],
+      "reload_evaluation": "models/opd-step4/eval.json"
+    },
+    {
+      "step": 8,
+      "status": "exported",
+      "adapter": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-control-attempt2/adapters/global_step_8/lora_adapter",
+      "rank": 16,
+      "alpha": 32.0,
+      "tensor_count": 716,
+      "modules": 358,
+      "modules_with_nonzero_B": 248,
+      "weights_sha256": "a727e11e497d79c8b789c33fd7a6b11ee78cb964e257046cb13476c6cc4b0267",
+      "config_sha256": "838d6243e867e4dd50259cd56ac1365f747a70a2684db23fba07a1451890214c",
+      "validation": "finite paired tensors; nonzero B; metadata matched",
+      "generation_reload_verified": true,
+      "source_actor": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-attempt2/checkpoints/global_step_8/actor",
+      "source_metadata_sha256": "82c99ce144bb1153a915c91b27ccf741f35dcdfc4aa85f9f6034d12667732b35",
+      "source_shards": [
+        {
+          "name": "model_world_size_1_rank_0.pt",
+          "sha256": "7662b61993a1a0d014c212acfa2071409c9650b789ea3861eb9190788fa879e3"
+        }
+      ],
+      "reload_evaluation": "models/opd-step8/eval.json"
+    },
+    {
+      "step": 12,
+      "status": "exported",
+      "adapter": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-control-attempt2/adapters/global_step_12/lora_adapter",
+      "rank": 16,
+      "alpha": 32.0,
+      "tensor_count": 716,
+      "modules": 358,
+      "modules_with_nonzero_B": 248,
+      "weights_sha256": "90c54ef58ed4f0d12f881da132289c07e6c045e4a8dcccbceac4d6afb6a431d8",
+      "config_sha256": "838d6243e867e4dd50259cd56ac1365f747a70a2684db23fba07a1451890214c",
+      "validation": "finite paired tensors; nonzero B; metadata matched",
+      "generation_reload_verified": true,
+      "source_actor": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-attempt2/checkpoints/global_step_12/actor",
+      "source_metadata_sha256": "82c99ce144bb1153a915c91b27ccf741f35dcdfc4aa85f9f6034d12667732b35",
+      "source_shards": [
+        {
+          "name": "model_world_size_1_rank_0.pt",
+          "sha256": "53b0c0afc9bec0245561ad5ad620a9062f8eff2a216e96ce0ce429d864a392d1"
+        }
+      ],
+      "reload_evaluation": "models/opd-step12/eval.json"
+    },
+    {
+      "step": 16,
+      "status": "exported",
+      "adapter": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-control-attempt2/adapters/global_step_16/lora_adapter",
+      "rank": 16,
+      "alpha": 32.0,
+      "tensor_count": 716,
+      "modules": 358,
+      "modules_with_nonzero_B": 248,
+      "weights_sha256": "3e44a316a3a7e268f6bae0f4d90527783270b3eeb93411e547b68b30843fd755",
+      "config_sha256": "838d6243e867e4dd50259cd56ac1365f747a70a2684db23fba07a1451890214c",
+      "validation": "finite paired tensors; nonzero B; metadata matched",
+      "generation_reload_verified": true,
+      "source_actor": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-attempt2/checkpoints/global_step_16/actor",
+      "source_metadata_sha256": "82c99ce144bb1153a915c91b27ccf741f35dcdfc4aa85f9f6034d12667732b35",
+      "source_shards": [
+        {
+          "name": "model_world_size_1_rank_0.pt",
+          "sha256": "a45680db88acdb02c63a3377d77a4062bf621587cdc7905d245fdf7fd3c5676f"
+        }
+      ],
+      "reload_evaluation": "models/opd-step16/eval.json"
+    }
+  ]
+}

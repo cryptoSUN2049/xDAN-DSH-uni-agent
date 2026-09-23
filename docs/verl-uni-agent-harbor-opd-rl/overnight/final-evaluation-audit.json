@@ -1,0 +1,68 @@
+{
+  "models": [
+    {
+      "model": "base-9b",
+      "samples": 30,
+      "unique_ids": 30,
+      "exact_prompt_metadata_match": true,
+      "rescore_match": true,
+      "same_dataset_and_budget": true,
+      "outputs_sha256": "4029264fd77ecadc04e05929e5d837de340ab29eca1c602cc413239a4491d0eb"
+    },
+    {
+      "model": "teacher-27b",
+      "samples": 30,
+      "unique_ids": 30,
+      "exact_prompt_metadata_match": true,
+      "rescore_match": true,
+      "same_dataset_and_budget": true,
+      "outputs_sha256": "51c098692917a4db192244ba052e1478a5009b5fb7477cc7eb626de77c6c06be"
+    },
+    {
+      "model": "smoke-step1",
+      "samples": 30,
+      "unique_ids": 30,
+      "exact_prompt_metadata_match": true,
+      "rescore_match": true,
+      "same_dataset_and_budget": true,
+      "outputs_sha256": "56c7c80d4c6e0d9460283edc9f6e1da7bae5d30ebdbb113ed258167d172ecdd0"
+    },
+    {
+      "model": "opd-step4",
+      "samples": 30,
+      "unique_ids": 30,
+      "exact_prompt_metadata_match": true,
+      "rescore_match": true,
+      "same_dataset_and_budget": true,
+      "outputs_sha256": "1dbf30c34870e5835ed81ec37cf509b7361a21e05491ce2478d213a724d56d14"
+    },
+    {
+      "model": "opd-step8",
+      "samples": 30,
+      "unique_ids": 30,
+      "exact_prompt_metadata_match": true,
+      "rescore_match": true,
+      "same_dataset_and_budget": true,
+      "outputs_sha256": "72703de86098c6cfb599408bad196a1ef90757f08c00b128e6f5060f3f37cd77"
+    },
+    {
+      "model": "opd-step12",
+      "samples": 30,
+      "unique_ids": 30,
+      "exact_prompt_metadata_match": true,
+      "rescore_match": true,
+      "same_dataset_and_budget": true,
+      "outputs_sha256": "bafc52348a7f5921ef0c35b8541f20adca15e158258d972d532437140f06e070"
+    },
+    {
+      "model": "opd-step16",
+      "samples": 30,
+      "unique_ids": 30,
+      "exact_prompt_metadata_match": true,
+      "rescore_match": true,
+      "same_dataset_and_budget": true,
+      "outputs_sha256": "df4cf00e4e44a431988fd8d4fee46327d41a7b5316c9dab992b1638d303453f6"
+    }
+  ],
+  "all_passed": true
+}

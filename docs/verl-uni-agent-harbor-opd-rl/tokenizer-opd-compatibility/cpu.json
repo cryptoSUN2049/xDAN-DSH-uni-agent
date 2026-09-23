@@ -1,0 +1,392 @@
+{
+  "files": {
+    "Qwen3.5-9B": {
+      "config.json": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "tokenizer.json": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+      "tokenizer_config.json": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8",
+      "chat_template.jinja": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715"
+    },
+    "Qwen3.8-27B": {
+      "config.json": "191e0af232104ed8b65258cf3fb2b842e288008baca7633c11b82a1ac7203aab",
+      "tokenizer.json": "0997f410c57a1f4e53b09e4be8f4a172d90edd9564368fb0847030937229b9f3",
+      "tokenizer_config.json": "b11349aafa7cdc6a320767cf7ceb29ed82f7eda5d65e8e0819e76f0ce947bf27",
+      "chat_template.jinja": "c3cf9e34abf4f9e36c2d72165aa9c132d3e2a725b6c2586aaa3a8af9d7a81041"
+    }
+  },
+  "tokenizer_classes": [
+    "Qwen2Tokenizer",
+    "Qwen2Tokenizer"
+  ],
+  "vocab_lengths": [
+    248077,
+    248077
+  ],
+  "shared_vocab_id_mismatches": [],
+  "only_teacher_tokens": [],
+  "encoding": [
+    {
+      "name": "english",
+      "ids_equal": true,
+      "ids": [
+        [
+          814,
+          20139,
+          3069,
+          220,
+          16,
+          22,
+          369,
+          9944,
+          13
+        ],
+        [
+          814,
+          20139,
+          3069,
+          220,
+          16,
+          22,
+          369,
+          9944,
+          13
+        ]
+      ],
+      "roundtrip": [
+        true,
+        true
+      ]
+    },
+    {
+      "name": "chinese",
+      "ids_equal": true,
+      "ids": [
+        [
+          97792,
+          95986,
+          100903,
+          133270,
+          131734,
+          3709,
+          96172,
+          129755,
+          1710
+        ],
+        [
+          97792,
+          95986,
+          100903,
+          133270,
+          131734,
+          3709,
+          96172,
+          129755,
+          1710
+        ]
+      ],
+      "roundtrip": [
+        true,
+        true
+      ]
+    },
+    {
+      "name": "code",
+      "ids_equal": true,
+      "ids": [
+        [
+          727,
+          281,
+          2007,
+          1590,
+          198,
+          262,
+          460,
+          830,
+          2972,
+          220,
+          17,
+          198,
+          1302,
+          925,
+          7,
+          22,
+          578
+        ],
+        [
+          727,
+          281,
+          2007,
+          1590,
+          198,
+          262,
+          460,
+          830,
+          2972,
+          220,
+          17,
+          198,
+          1302,
+          925,
+          7,
+          22,
+          578
+        ]
+      ],
+      "roundtrip": [
+        true,
+        true
+      ]
+    },
+    {
+      "name": "thinking",
+      "ids_equal": true,
+      "ids": [
+        [
+          248068,
+          96218,
+          97552,
+          97382,
+          1710,
+          198,
+          16,
+          22,
+          682,
+          874,
+          3319,
+          39852,
+          13,
+          248069,
+          271,
+          16,
+          22,
+          369,
+          9944,
+          13
+        ],
+        [
+          248068,
+          96218,
+          97552,
+          97382,
+          1710,
+          198,
+          16,
+          22,
+          682,
+          874,
+          3319,
+          39852,
+          13,
+          248069,
+          271,
+          16,
+          22,
+          369,
+          9944,
+          13
+        ]
+      ],
+      "roundtrip": [
+        true,
+        true
+      ]
+    },
+    {
+      "name": "tool",
+      "ids_equal": true,
+      "ids": [
+        [
+          248058,
+          198,
+          27,
+          1628,
+          28,
+          11411,
+          29,
+          198,
+          27,
+          15704,
+          28,
+          8445,
+          29,
+          198,
+          24751,
+          198,
+          510,
+          15704,
+          29,
+          198,
+          510,
+          1628,
+          29,
+          198,
+          248059
+        ],
+        [
+          248058,
+          198,
+          27,
+          1628,
+          28,
+          11411,
+          29,
+          198,
+          27,
+          15704,
+          28,
+          8445,
+          29,
+          198,
+          24751,
+          198,
+          510,
+          15704,
+          29,
+          198,
+          510,
+          1628,
+          29,
+          198,
+          248059
+        ]
+      ],
+      "roundtrip": [
+        true,
+        true
+      ]
+    },
+    {
+      "name": "unicode",
+      "ids_equal": true,
+      "ids": [
+        [
+          54362,
+          239,
+          98,
+          28495,
+          60052,
+          220,
+          15,
+          26,
+          50203,
+          26,
+          59720,
+          102,
+          373,
+          235,
+          88995,
+          119,
+          26,
+          16957,
+          112254
+        ],
+        [
+          54362,
+          239,
+          98,
+          28495,
+          60052,
+          220,
+          15,
+          26,
+          50203,
+          26,
+          59720,
+          102,
+          373,
+          235,
+          88995,
+          119,
+          26,
+          16957,
+          112254
+        ]
+      ],
+      "roundtrip": [
+        true,
+        true
+      ]
+    },
+    {
+      "name": "audio",
+      "ids_equal": true,
+      "ids": [
+        [
+          248070,
+          248076,
+          248071
+        ],
+        [
+          248070,
+          248076,
+          248071
+        ]
+      ],
+      "roundtrip": [
+        true,
+        true
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "case": "single",
+      "thinking": false,
+      "equal": true,
+      "rendered": [
+        "<|im_start|>user\nWhat is 17 times 23?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+        "<|im_start|>user\nWhat is 17 times 23?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
+      ],
+      "student_render_cross_encoding_equal": true
+    },
+    {
+      "case": "single",
+      "thinking": true,
+      "equal": false,
+      "rendered": [
+        "<|im_start|>user\nWhat is 17 times 23?<|im_end|>\n<|im_start|>assistant\n<think>\n",
+        "<|im_start|>system\nReasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\nWhat is 17 times 23?<|im_end|>\n<|im_start|>assistant\n<think>\n"
+      ],
+      "student_render_cross_encoding_equal": true
+    },
+    {
+      "case": "history",
+      "thinking": false,
+      "equal": false,
+      "rendered": [
+        "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n4<|im_end|>\n<|im_start|>user\nNow multiply it by 3.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+        "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n<think>\nAdd two and two.\n</think>\n\n4<|im_end|>\n<|im_start|>user\nNow multiply it by 3.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
+      ],
+      "student_render_cross_encoding_equal": true
+    },
+    {
+      "case": "history",
+      "thinking": true,
+      "equal": false,
+      "rendered": [
+        "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n4<|im_end|>\n<|im_start|>user\nNow multiply it by 3.<|im_end|>\n<|im_start|>assistant\n<think>\n",
+        "<|im_start|>system\nReasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n<think>\nAdd two and two.\n</think>\n\n4<|im_end|>\n<|im_start|>user\nNow multiply it by 3.<|im_end|>\n<|im_start|>assistant\n<think>\n"
+      ],
+      "student_render_cross_encoding_equal": true
+    },
+    {
+      "case": "inline_think",
+      "thinking": false,
+      "equal": false,
+      "rendered": [
+        "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n4<|im_end|>\n<|im_start|>user\nWhy?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+        "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n<think>Add two and two.</think>4<|im_end|>\n<|im_start|>user\nWhy?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
+      ],
+      "student_render_cross_encoding_equal": true
+    },
+    {
+      "case": "inline_think",
+      "thinking": true,
+      "equal": false,
+      "rendered": [
+        "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n4<|im_end|>\n<|im_start|>user\nWhy?<|im_end|>\n<|im_start|>assistant\n<think>\n",
+        "<|im_start|>system\nReasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n<think>Add two and two.</think>4<|im_end|>\n<|im_start|>user\nWhy?<|im_end|>\n<|im_start|>assistant\n<think>\n"
+      ],
+      "student_render_cross_encoding_equal": true
+    }
+  ]
+}

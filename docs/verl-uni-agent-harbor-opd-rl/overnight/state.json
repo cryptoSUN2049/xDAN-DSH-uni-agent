@@ -1,0 +1,137 @@
+{
+  "objective": "多领域单教师OPD：27B → 9B",
+  "stages": [
+    {
+      "name": "compatibility",
+      "status": "complete",
+      "reason": "See compatibility evidence"
+    },
+    {
+      "name": "train-smoke",
+      "status": "complete",
+      "started_at": "2026-09-23T17:07:22.424073+00:00",
+      "pid": 979006,
+      "exit_code": 0,
+      "finished_at": "2026-09-23T17:32:12.164486+00:00"
+    },
+    {
+      "name": "export-smoke",
+      "status": "complete",
+      "started_at": "2026-09-23T17:32:12.287076+00:00",
+      "pid": 996760,
+      "exit_code": 0,
+      "finished_at": "2026-09-23T17:33:03.277894+00:00"
+    },
+    {
+      "name": "reload-smoke",
+      "status": "complete",
+      "started_at": "2026-09-23T17:33:03.436941+00:00",
+      "pid": 996993,
+      "exit_code": 0,
+      "finished_at": "2026-09-23T17:39:29.080148+00:00"
+    },
+    {
+      "name": "train-full",
+      "status": "complete",
+      "started_at": "2026-09-23T17:39:29.230575+00:00",
+      "pid": 997761,
+      "exit_code": 0,
+      "finished_at": "2026-09-23T18:25:14.427766+00:00"
+    },
+    {
+      "name": "export-full",
+      "status": "complete",
+      "started_at": "2026-09-23T18:25:14.572268+00:00",
+      "pid": 1031707,
+      "exit_code": 0,
+      "finished_at": "2026-09-23T18:26:05.618071+00:00"
+    },
+    {
+      "name": "eval-base-9b",
+      "status": "complete",
+      "started_at": "2026-09-23T18:26:05.761748+00:00",
+      "pid": 1031927,
+      "exit_code": 0,
+      "finished_at": "2026-09-23T18:30:40.254436+00:00"
+    },
+    {
+      "name": "eval-teacher-27b",
+      "status": "complete",
+      "started_at": "2026-09-23T18:30:40.498775+00:00",
+      "pid": 1032692,
+      "exit_code": 0,
+      "finished_at": "2026-09-23T18:39:09.984904+00:00"
+    },
+    {
+      "name": "eval-opd-step4",
+      "status": "complete",
+      "started_at": "2026-09-23T18:39:10.162559+00:00",
+      "pid": 1033521,
+      "exit_code": 0,
+      "finished_at": "2026-09-23T18:45:58.337967+00:00"
+    },
+    {
+      "name": "eval-opd-step8",
+      "status": "complete",
+      "started_at": "2026-09-23T18:45:58.532512+00:00",
+      "pid": 1034287,
+      "exit_code": 0,
+      "finished_at": "2026-09-23T18:52:57.776547+00:00"
+    },
+    {
+      "name": "eval-opd-step12",
+      "status": "complete",
+      "started_at": "2026-09-23T18:52:57.997639+00:00",
+      "pid": 1035056,
+      "exit_code": 0,
+      "finished_at": "2026-09-23T19:00:08.164093+00:00"
+    },
+    {
+      "name": "eval-opd-step16",
+      "status": "complete",
+      "started_at": "2026-09-23T19:00:08.433387+00:00",
+      "pid": 1035826,
+      "exit_code": 0,
+      "finished_at": "2026-09-23T19:06:59.102616+00:00"
+    }
+  ],
+  "models": [
+    {
+      "id": "base-9b",
+      "role": "baseline",
+      "path": "/workspace/models/Qwen3.5-9B"
+    },
+    {
+      "id": "teacher-27b",
+      "role": "teacher",
+      "path": "/workspace/models/Qwen3.8-27B"
+    },
+    {
+      "id": "opd-step4",
+      "role": "trained checkpoint",
+      "path": "/workspace/models/Qwen3.5-9B",
+      "adapter": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-control-attempt2/adapters/global_step_4/lora_adapter"
+    },
+    {
+      "id": "opd-step8",
+      "role": "trained checkpoint",
+      "path": "/workspace/models/Qwen3.5-9B",
+      "adapter": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-control-attempt2/adapters/global_step_8/lora_adapter"
+    },
+    {
+      "id": "opd-step12",
+      "role": "trained checkpoint",
+      "path": "/workspace/models/Qwen3.5-9B",
+      "adapter": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-control-attempt2/adapters/global_step_12/lora_adapter"
+    },
+    {
+      "id": "opd-step16",
+      "role": "trained checkpoint",
+      "path": "/workspace/models/Qwen3.5-9B",
+      "adapter": "/workspace/verl-uni-agent-harbor-opd-rl/runs/overnight-opd-20260924-control-attempt2/adapters/global_step_16/lora_adapter"
+    }
+  ],
+  "updated_at": "2026-09-23T19:06:59.492843+00:00",
+  "finished_at": "2026-09-23T19:06:59.419812+00:00",
+  "result": "Inspect individual stage statuses; failed stages are not completion"
+}

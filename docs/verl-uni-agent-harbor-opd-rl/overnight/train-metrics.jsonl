@@ -1,0 +1,17 @@
+{"model_id": "train-smoke", "step": 1, "loss": 0.19489452242851257, "grad_norm": 0.671875, "output_tokens_mean": 456.75, "truncated_rate": 0.125}
+{"model_id": "train-full", "step": 1, "loss": 0.1937713548541069, "grad_norm": 0.60546875, "output_tokens_mean": 502.25, "truncated_rate": 0.25}
+{"model_id": "train-full", "step": 2, "loss": 0.30730967223644257, "grad_norm": 0.765625, "output_tokens_mean": 512.375, "truncated_rate": 0.25}
+{"model_id": "train-full", "step": 3, "loss": 0.31648626178503036, "grad_norm": 0.8515625, "output_tokens_mean": 549.75, "truncated_rate": 0.25}
+{"model_id": "train-full", "step": 4, "loss": 0.3305077999830246, "grad_norm": 0.828125, "output_tokens_mean": 694.25, "truncated_rate": 0.375}
+{"model_id": "train-full", "step": 5, "loss": 0.3211567848920822, "grad_norm": 0.70703125, "output_tokens_mean": 830.125, "truncated_rate": 0.75}
+{"model_id": "train-full", "step": 6, "loss": 0.459269255399704, "grad_norm": 1.0859375, "output_tokens_mean": 529.75, "truncated_rate": 0.25}
+{"model_id": "train-full", "step": 7, "loss": 0.25308767706155777, "grad_norm": 0.7890625, "output_tokens_mean": 499.125, "truncated_rate": 0.25}
+{"model_id": "train-full", "step": 8, "loss": 0.2625626176595688, "grad_norm": 0.7734375, "output_tokens_mean": 679.75, "truncated_rate": 0.5}
+{"model_id": "train-full", "step": 9, "loss": 0.2630593925714493, "grad_norm": 0.80078125, "output_tokens_mean": 445.5, "truncated_rate": 0.125}
+{"model_id": "train-full", "step": 10, "loss": 0.36669641733169556, "grad_norm": 0.7109375, "output_tokens_mean": 799.875, "truncated_rate": 0.625}
+{"model_id": "train-full", "step": 11, "loss": 0.4296851009130478, "grad_norm": 1.0078125, "output_tokens_mean": 509.75, "truncated_rate": 0.25}
+{"model_id": "train-full", "step": 12, "loss": 0.3539644777774811, "grad_norm": 1.9375, "output_tokens_mean": 234.375, "truncated_rate": 0.125}
+{"model_id": "train-full", "step": 13, "loss": 0.2965165376663208, "grad_norm": 0.9609375, "output_tokens_mean": 386.625, "truncated_rate": 0.125}
+{"model_id": "train-full", "step": 14, "loss": 0.34371867775917053, "grad_norm": 0.96875, "output_tokens_mean": 613.375, "truncated_rate": 0.5}
+{"model_id": "train-full", "step": 15, "loss": 0.2502252161502838, "grad_norm": 1.109375, "output_tokens_mean": 271.375, "truncated_rate": 0.125}
+{"model_id": "train-full", "step": 16, "loss": 0.25898361951112747, "grad_norm": 0.78515625, "output_tokens_mean": 587.875, "truncated_rate": 0.25}

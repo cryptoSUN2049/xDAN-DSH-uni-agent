@@ -1,0 +1,47 @@
+{
+  "scoring_gate_passed": true,
+  "scope": "3 short actual student continuations; same raw token IDs; thinking disabled",
+  "mean_abs_error": 0.010444218674057365,
+  "p95_abs_error": 0.07962238788604736,
+  "max_abs_error": 0.1572054624557495,
+  "criteria": {
+    "mean_abs_error_lt": 0.1,
+    "p95_abs_error_lt": 0.5
+  },
+  "cases": [
+    {
+      "prompt": "What is 17 times 23? Answer briefly.",
+      "tokens": 6,
+      "mean_abs_error": 1.3906513534796734e-06,
+      "max_abs_error": 3.5762377592618577e-06,
+      "shifted_mean_abs_error": 5.6068497362105066e-05,
+      "ids_verified": true,
+      "length_match": true
+    },
+    {
+      "prompt": "请用一句话解释为什么天空是蓝色的。",
+      "tokens": 35,
+      "mean_abs_error": 0.01644730818058601,
+      "max_abs_error": 0.1572054624557495,
+      "shifted_mean_abs_error": 1.1047989753715346,
+      "ids_verified": true,
+      "length_match": true
+    },
+    {
+      "prompt": "Write a Python function that returns the square of an integer.",
+      "tokens": 64,
+      "mean_abs_error": 0.008140294227303002,
+      "max_abs_error": 0.12457561492919922,
+      "shifted_mean_abs_error": 0.5745939187033532,
+      "ids_verified": true,
+      "length_match": true
+    }
+  ],
+  "limitations": [
+    "Short pilot only; not long-context validation",
+    "Native teacher thinking template differs; use student rendered raw IDs",
+    "BF16 kernels are not bitwise equal"
+  ],
+  "runtime_fix": "VLLM_USE_FLASHINFER_SAMPLER=0",
+  "status": "complete"
+}

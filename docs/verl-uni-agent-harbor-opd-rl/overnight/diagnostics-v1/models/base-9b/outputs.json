@@ -1,0 +1,1329 @@
+[
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 99, \"split\": \"train\"}",
+      "prompt_sha256": "1b37c68f8fc0ac2ed15c1902158275e60e4f8c762a2aaf2f44236e094d574c6c",
+      "prompt_tokens": 92,
+      "sample_id": "math-1b37c68f8fc0ac2ed15c",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 99,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Solve the equation \\( \\frac{7x^2 - x + 4}{\\sqrt{3x^2 - 1} + \\sqrt{x^2 - x} - x\\sqrt{x^2 + 1}} = 2\\sqrt{2} \\) over the real numbers.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To solve the equation\n$$ \\frac{7x^2 - x + 4}{\\sqrt{3x^2 - 1} + \\sqrt{x^2 - x} - x\\sqrt{x^2 + 1}} = 2\\sqrt{2} $$\nover the real numbers, we proceed with the following steps:\n\n### Step 1: Determine the Domain of Definition\nFor the square roots to be defined in the real number system, the expressions under the radicals must be non-negative:\n1.  $3x^2 - 1 \\ge 0 \\implies x^2 \\ge \\frac{1}{3} \\implies |x| \\ge \\frac{1}{\\sqrt{3}}$.\n2.  $x^2 - x \\ge 0 \\implies x(x-1) \\ge 0 \\implies x \\le 0$ or $x \\ge 1$.\n3.  $x^2 + 1 \\ge 0$ (always true for real $x$).\n\nCombining these conditions:\n-   If $x \\ge 1$, then $x^2 \\ge 1 > 1/3$, so this interval is valid.\n-   If $x \\le 0$, then $x^2 \\ge 0$. We need $x^2 \\ge 1/3$, so $x \\le -\\frac{1}{\\sqrt{3}}$.\n\nThus, the domain is $D = (-\\infty, -\\frac{1}{\\sqrt{3}}] \\cup [1, \\infty)$.\n\nAdditionally, the denominator cannot be zero. Let's analyze the sign of the denominator later if needed, but let's first try to simplify the equation.\n\n### Step 2: Analyze the Structure and Test Integer Values\nLet's test simple integer values within the domain, specifically $x=1$.\n\n**Test $x = 1$:**\n-   Numerator: $7(1)^2 - 1 + 4 = 7 - 1 + 4 = 10$.\n-   Denominator terms:\n    -   $\\sqrt{3(1)^2 - 1} = \\sqrt{2}$.\n    -   $\\sqrt{1^2 - 1} = \\sqrt{0} = 0$.\n    -   $-1 \\cdot \\sqrt{1^2 + 1} = -\\sqrt{2}$.\n-   Denominator: $\\sqrt{2} + 0 - \\sqrt{2} = 0$.\nSince the denominator is zero, $x=1$ is not a solution.\n\nLet's try $x = -1$. Note that $-1 \\le -\\frac{1}{\\sqrt{3}} \\approx -0.577$, so it is in the domain.\n**Test $x = -1$:**\n-   Numerator: $7(-1)^2 - (-1) + 4 = 7 + 1 + 4 = 12$.\n-   Denominator terms:\n    -   $\\sqrt{3(-1)^2 - 1} = \\sqrt{2}$.\n    -   $\\sqrt{(-1)^2 - (-1)} = \\sqrt{1+1} = \\sqrt{2}$.\n    -   $-(-1)\\sqrt{(-1)^2 + 1} = +1 \\cdot \\sqrt{2} = \\sqrt{2}$.\n-   Denominator: $\\sqrt{2} + \\sqrt{2} + \\sqrt{2} = 3\\sqrt{2}$.\n-   LHS: $\\frac{12}{3\\sqrt{2}} = \\frac{4}{\\sqrt{2}} = 2\\sqrt{2}$.\nThis matches the RHS. So, **$x = -1$ is a solution**.\n\n### Step 3: Investigate Uniqueness\nLet's analyze the function behavior to see if there are other solutions.\nLet $f(x) = \\frac{7x^2 - x + 4}{\\sqrt{3x^2 - 1} + \\sqrt{x^2 - x} - x\\sqrt{x^2 + 1}}$.\n\nConsider the case where $x > 1$.\nAs $x \\to \\infty$:\n-   Numerator $\\approx 7x^2$.\n-   Denominator:\n    -   $\\sqrt{3x^2 - 1} \\approx \\sqrt{3}x$.\n    -   $\\sqrt{x^2 - x} \\approx x$.\n    -   $-x\\sqrt{x^2 + 1} \\approx",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 37, \"split\": \"train\"}",
+      "prompt_sha256": "018ccc89c12a18ab9fa909cb27142f80175fe2b472a1b32fbc3bd59d15b7b82b",
+      "prompt_tokens": 73,
+      "sample_id": "math-018ccc89c12a18ab9fa9",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 37,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Find the sum of all integer values of \\( a \\) such that \\( a(x^2+x-1) \\leq (x^2+x+1)^2 \\) for all real numbers \\( x \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To find the sum of all integer values of $a$ such that the inequality\n$$ a(x^2+x-1) \\leq (x^2+x+1)^2 $$\nholds for all real numbers $x$, we proceed as follows:\n\n### Step 1: Analyze the inequality structure\nLet $u = x^2+x$. The inequality becomes:\n$$ a(u-1) \\leq (u+1)^2 $$\nExpanding the right side:\n$$ a(u-1) \\leq u^2 + 2u + 1 $$\nRearranging terms to form a quadratic inequality in terms of $u$:\n$$ u^2 + 2u + 1 - a(u-1) \\geq 0 $$\n$$ u^2 + (2-a)u + (1+a) \\geq 0 $$\n\n### Step 2: Determine the range of $u$\nSince $u = x^2+x$, we can complete the square to find the range of possible values for $u$:\n$$ u = \\left(x + \\frac{1}{2}\\right)^2 - \\frac{1}{4} $$\nSince $\\left(x + \\frac{1}{2}\\right)^2 \\geq 0$ for all real $x$, the minimum value of $u$ is $-\\frac{1}{4}$. Thus, the condition \"for all real numbers $x$\" is equivalent to \"for all $u \\geq -\\frac{1}{4}$\".\n\nSo, we need the quadratic function $f(u) = u^2 + (2-a)u + (1+a)$ to be non-negative for all $u \\in [-\\frac{1}{4}, \\infty)$.\n\n### Step 3: Analyze the quadratic function $f(u)$\nThe function $f(u)$ is a parabola opening upwards (since the coefficient of $u^2$ is $1 > 0$).\nFor $f(u) \\geq 0$ on the interval $[-\\frac{1}{4}, \\infty)$, there are two cases:\n\n**Case 1: The quadratic has no real roots or a repeated real root.**\nIf the discriminant $\\Delta \\leq 0$, then $f(u) \\geq 0$ for all real $u$, which certainly includes $u \\geq -\\frac{1}{4}$.\n$$ \\Delta = (2-a)^2 - 4(1)(1+a) \\leq 0 $$\n$$ (2-a)^2 - 4 - 4a \\leq 0 $$\n$$ 4 - 4a + a^2 - 4 - 4a \\leq 0 $$\n$$ a^2 - 8a \\leq 0 $$\n$$ a(a-8) \\leq 0 $$\nThis implies $0 \\leq a \\leq 8$.\nSince $a$ must be an integer, the possible values are $a \\in \\{0, 1, 2, 3, 4, 5, 6, 7, 8\\}$.\n\n**Case 2: The quadratic has two distinct real roots.**\nIf $\\Delta > 0$, the parabola dips below the u-axis between its two roots. For $f(u) \\geq 0$ to hold on $[-\\frac{1}{4}, \\infty)$, the entire interval where $f(u) < 0$ must lie strictly to the left of $-\\frac{1}{4}$.\nLet the roots be $u_1$ and $u_2$ with $u_1 < u_2$. We need $u_2 < -\\frac{1}{4}$.\nConditions for this:\n1.  $\\Delta > 0 \\implies a < 0$ or $a > 8$.\n2.  The axis of symmetry $u_{sym} = \\frac{-(2-a)}{2} = \\frac{a-2}{2}$ must be less than $-\\frac{1}{4}$.\n    $$ \\frac{a-2}{2} < -\\frac{1}{4} \\implies a-2 < -\\frac{1}{2} \\implies a < 1.5 $$\n3.  The value of the function at the boundary $u = -\\frac{1}{4}$ must be non-negative (actually, if the roots are to the left, $f(-1/4)$ will be positive, but let's check the condition $f(-1/4) \\geq 0$ combined with the root location).\n    Actually, a simpler condition for $f",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 139, \"split\": \"train\"}",
+      "prompt_sha256": "542d274f696e3784db06cd66bec4dd0aa599acc154aeefc37ee62f9868ee3ab6",
+      "prompt_tokens": 117,
+      "sample_id": "math-542d274f696e3784db06",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 139,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Let \\( \\alpha \\) be a root of the polynomial \\( f(x) = x^2 - x + 2 \\) over the field \\( \\mathbb{F}_5 \\). Consider the field extension \\( \\mathbb{F} = \\mathbb{F}_5(\\alpha) \\). Determine the order of \\( \\alpha \\) in the multiplicative group \\( \\mathbb{F}^* \\).\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To determine the order of $\\alpha$ in the multiplicative group $\\mathbb{F}^*$, we will proceed through the following steps:\n\n### Step 1: Determine the structure of the field $\\mathbb{F}$\nThe polynomial is given by $f(x) = x^2 - x + 2$ over the finite field $\\mathbb{F}_5$.\nFirst, we check if $f(x)$ is irreducible over $\\mathbb{F}_5$. We do this by testing for roots in $\\mathbb{F}_5 = \\{0, 1, 2, 3, 4\\}$.\n- $f(0) = 0^2 - 0 + 2 = 2 \\neq 0$\n- $f(1) = 1^2 - 1 + 2 = 2 \\neq 0$\n- $f(2) = 2^2 - 2 + 2 = 4 \\neq 0$\n- $f(3) = 3^2 - 3 + 2 = 9 - 3 + 2 = 8 \\equiv 3 \\pmod 5 \\neq 0$\n- $f(4) = 4^2 - 4 + 2 = 16 - 4 + 2 = 14 \\equiv 4 \\pmod 5 \\neq 0$\n\nSince $f(x)$ has no roots in $\\mathbb{F}_5$ and is a quadratic polynomial, it is irreducible over $\\mathbb{F}_5$.\nTherefore, the field extension $\\mathbb{F} = \\mathbb{F}_5(\\alpha)$ is isomorphic to the finite field $\\mathbb{F}_{5^2} = \\mathbb{F}_{25}$.\n\n### Step 2: Determine the order of the multiplicative group $\\mathbb{F}^*$\nThe multiplicative group of a finite field $\\mathbb{F}_{q}$, denoted as $\\mathbb{F}_{q}^*$, is a cyclic group of order $q - 1$.\nHere, $q = 25$, so the order of the group $\\mathbb{F}_{25}^*$ is:\n$$ |\\mathbb{F}_{25}^*| = 25 - 1 = 24 $$\nThus, the order of any element $\\alpha \\in \\mathbb{F}_{25}^*$ must be a divisor of 24. The divisors of 24 are: $1, 2, 3, 4, 6, 8, 12, 24$.\n\n### Step 3: Calculate powers of $\\alpha$ to find its order\nWe are given that $\\alpha$ is a root of $x^2 - x + 2 = 0$, which implies:\n$$ \\alpha^2 - \\alpha + 2 = 0 \\implies \\alpha^2 = \\alpha - 2 $$\nWe will compute successive powers of $\\alpha$ modulo 5 until we reach 1. Note that arithmetic is performed in $\\mathbb{F}_5$.\n\n1.  **$\\alpha^1 = \\alpha$**\n    Since $\\alpha \\neq 0$ (as $f(0)=2 \\neq 0$), the order is not 1.\n\n2.  **$\\alpha^2 = \\alpha - 2$**\n    Since $\\alpha^2 \\neq 1$ (if $\\alpha^2=1$, then $\\alpha-2=1 \\implies \\alpha=3$, but $f(3)=3 \\neq 0$), the order is not 2.\n\n3.  **$\\alpha^3 = \\alpha \\cdot \\alpha^2 = \\alpha(\\alpha - 2) = \\alpha^2 - 2\\alpha$**\n    Substitute $\\alpha^2 = \\alpha - 2$:\n    $$ \\alpha^3 = (\\alpha - 2) - 2\\alpha = -\\alpha - 2 = 4\\alpha + 3 $$\n    This is not 1.\n\n4.  **$\\alpha^4 = \\alpha \\cdot \\alpha^3 = \\alpha(4\\alpha + 3) = 4\\alpha^2 + 3\\alpha$**\n    Substitute $\\alpha^2 = \\alpha - 2$:\n    $$ \\alpha^4 = 4(\\alpha - 2) + 3\\alpha = 4\\alpha - 8 + 3\\alpha = 7\\alpha - 8 $$\n    Reduce coefficients modulo 5 ($7 \\equiv 2$, $",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 107, \"split\": \"train\"}",
+      "prompt_sha256": "50a647e8f3d5cd19e02c109206e831cedeb512a74a59c0bd3aebfbb62a200840",
+      "prompt_tokens": 55,
+      "sample_id": "math-50a647e8f3d5cd19e02c",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 107,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Find the last four digits of the number $2^{3^{4^5}}$. Provide your answer as a four-digit number.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To find the last four digits of the number $2^{3^{4^5}}$, we need to compute:\n$$ N = 2^{3^{4^5}} \\pmod{10000} $$\n\n### Step 1: Analyze the Modulus\nThe modulus is $10000 = 10^4 = 2^4 \\cdot 5^4 = 16 \\cdot 625$.\nSince $16$ and $625$ are coprime, we can compute the value modulo $16$ and modulo $625$ separately, and then combine them using the Chinese Remainder Theorem.\n\nLet $E = 3^{4^5}$. We want to find $2^E \\pmod{10000}$.\n\n### Step 2: Compute $2^E \\pmod{16}$\nThe exponent $E = 3^{4^5}$ is clearly an integer greater than or equal to 1.\nSince $2^4 = 16 \\equiv 0 \\pmod{16}$, for any exponent $k \\ge 4$, $2^k \\equiv 0 \\pmod{16}$.\nSince $E = 3^{4^5}$ is a very large number (much larger than 4), we have:\n$$ 2^E \\equiv 0 \\pmod{16} $$\n\n### Step 3: Compute $2^E \\pmod{625}$\nWe need to calculate $2^E \\pmod{625}$.\nSince $\\gcd(2, 625) = 1$, we can use Euler's Totient Theorem.\nFirst, calculate $\\phi(625)$:\n$$ \\phi(625) = 625 \\left(1 - \\frac{1}{5}\\right) = 625 \\cdot \\frac{4}{5} = 125 \\cdot 4 = 500 $$\nAccording to Euler's Theorem, $2^{500} \\equiv 1 \\pmod{625}$.\nTherefore, we need to find $E \\pmod{500}$.\n$$ E = 3^{4^5} = 3^{1024} $$\nWe need to compute $3^{1024} \\pmod{500}$.\n\nLet's break down $500 = 4 \\cdot 125$. We will compute $3^{1024} \\pmod 4$ and $3^{1024} \\pmod{125}$.\n\n**Part A: Modulo 4**\n$$ 3 \\equiv -1 \\pmod 4 $$\n$$ 3^{1024} \\equiv (-1)^{1024} \\equiv 1 \\pmod 4 $$\n(Since 1024 is even).\n\n**Part B: Modulo 125**\nWe need $3^{1024} \\pmod{125}$.\nCalculate $\\phi(125) = 125(1 - 1/5) = 100$.\nBy Euler's Theorem, $3^{100} \\equiv 1 \\pmod{125}$.\nSo, $3^{1024} = 3^{100 \\cdot 10 + 24} = (3^{100})^{10} \\cdot 3^{24} \\equiv 1^{10} \\cdot 3^{24} \\equiv 3^{24} \\pmod{125}$.\n\nNow we compute $3^{24} \\pmod{125}$.\nLet's compute powers of 3:\n$3^1 = 3$\n$3^2 = 9$\n$3^3 = 27$\n$3^4 = 81$\n$3^5 = 243 = 2 \\cdot 125 - 7 \\equiv -7 \\pmod{125}$\n\nThis looks useful. Let's express $3^{24}$ in terms of $3^5$.\n$24 = 5 \\cdot 4 + 4$.\n$3^{24} = (3^5)^4 \\cdot 3^4 \\equiv (-7)^4 \\cdot 81 \\pmod{125}$.\nCalculate $(-7)^4$:\n$(-7)^2 = 49$\n$(-7)^4 =",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 40, \"split\": \"train\"}",
+      "prompt_sha256": "8bdce3355c1808bf29ca7c0076251977efee9284e020456ba2066cb23e0f6cf3",
+      "prompt_tokens": 122,
+      "sample_id": "math-8bdce3355c1808bf29ca",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 40,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Calculate the first partial derivative with respect to $x$ of the function \\( f(x,y) \\) at the point \\((0,0)\\), where\n\\[\nf(x,y) =\n\\begin{cases}\n0 & (x,y)=(0,0)\\\\\n\\frac{xy}{|x|+|y|} & (x,y) \\neq (0,0)\n\\end{cases}\n\\]\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To calculate the first partial derivative of the function $f(x,y)$ with respect to $x$ at the point $(0,0)$, denoted as $f_x(0,0)$, we must use the definition of the partial derivative.\n\nThe definition of the partial derivative with respect to $x$ at a point $(x_0, y_0)$ is:\n\\[\nf_x(x_0, y_0) = \\lim_{h \\to 0} \\frac{f(x_0 + h, y_0) - f(x_0, y_0)}{h}\n\\]\n\nIn this problem, the point is $(x_0, y_0) = (0,0)$. Substituting these values into the definition:\n\\[\nf_x(0,0) = \\lim_{h \\to 0} \\frac{f(0 + h, 0) - f(0, 0)}{h} = \\lim_{h \\to 0} \\frac{f(h, 0) - f(0, 0)}{h}\n\\]\n\n**Step 1: Evaluate $f(0,0)$.**\nAccording to the piecewise definition of the function:\n\\[\nf(0,0) = 0\n\\]\n\n**Step 2: Evaluate $f(h, 0)$ for $h \\neq 0$.**\nWe need to determine the value of the function when $y=0$ and $x=h$ (where $h \\neq 0$).\nUsing the second case of the definition since $(h, 0) \\neq (0,0)$:\n\\[\nf(h, 0) = \\frac{h \\cdot 0}{|h| + |0|} = \\frac{0}{|h|} = 0\n\\]\nNote that for any $h \\neq 0$, $|h| > 0$, so the denominator is non-zero and the expression is well-defined.\n\n**Step 3: Substitute these values into the limit definition.**\nNow substitute $f(h, 0) = 0$ and $f(0, 0) = 0$ into the limit expression:\n\\[\nf_x(0,0) = \\lim_{h \\to 0} \\frac{0 - 0}{h} = \\lim_{h \\to 0} \\frac{0}{h}\n\\]\nFor all $h \\neq 0$, $\\frac{0}{h} = 0$. Therefore:\n\\[\nf_x(0,0) = \\lim_{h \\to 0} 0 = 0\n\\]\n\n**Conclusion:**\nThe first partial derivative of $f(x,y)$ with respect to $x$ at the point $(0,0)$ is 0.\n\n\\boxed{0}",
+    "output_tokens": 627,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 9, \"split\": \"train\"}",
+      "prompt_sha256": "22032b5f0136d14968b4f955291691f58aacc369e16bcf26d20d30ecbfdc09d0",
+      "prompt_tokens": 113,
+      "sample_id": "math-22032b5f0136d14968b4",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 9,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Verify that for \\(n = 2^kN\\), where \\(N\\) is odd, the following identity holds:\n\\[ \\sum_{d\\mid n}(-1)^{n/d}\\phi(d) = \\sum_{d\\mid 2^{k-1}N}\\phi(d) - \\sum_{d\\mid N}\\phi(2^kd) = 0. \\]\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To verify the identity\n\\[ \\sum_{d\\mid n}(-1)^{n/d}\\phi(d) = \\sum_{d\\mid 2^{k-1}N}\\phi(d) - \\sum_{d\\mid N}\\phi(2^kd) = 0 \\]\nfor $n = 2^k N$ where $N$ is odd, we will proceed in three steps:\n1.  Evaluate the left-hand side (LHS) sum directly.\n2.  Evaluate the two sums on the right-hand side (RHS) separately.\n3.  Show that the LHS equals the difference of the RHS sums and that the total result is 0.\n\n### Step 1: Evaluate the Left-Hand Side Sum\n\nLet $S = \\sum_{d\\mid n}(-1)^{n/d}\\phi(d)$.\nThe sum is over all divisors $d$ of $n = 2^k N$. Since $N$ is odd, any divisor $d$ can be uniquely written as $d = 2^j m$, where $0 \\le j \\le k$ and $m \\mid N$.\nThe term $n/d$ becomes:\n\\[ \\frac{n}{d} = \\frac{2^k N}{2^j m} = 2^{k-j} \\frac{N}{m}. \\]\nSince $N$ and $m$ are odd, the parity of $n/d$ depends entirely on the power of 2, $2^{k-j}$.\n- If $j < k$, then $k-j \\ge 1$, so $2^{k-j}$ is even. Thus, $n/d$ is even, and $(-1)^{n/d} = 1$.\n- If $j = k$, then $k-j = 0$, so $2^{k-j} = 1$. Thus, $n/d = N/m$, which is odd. Consequently, $(-1)^{n/d} = -1$.\n\nWe can split the sum $S$ into two parts based on the exponent $j$ of the factor 2 in $d$:\n\\[ S = \\sum_{j=0}^{k-1} \\sum_{m \\mid N} (1) \\cdot \\phi(2^j m) + \\sum_{j=k}^{k} \\sum_{m \\mid N} (-1) \\cdot \\phi(2^j m). \\]\nNote that for the second part, $j=k$ is the only case.\n\nRecall the property of Euler's totient function for coprime integers: $\\phi(ab) = \\phi(a)\\phi(b)$ if $\\gcd(a,b)=1$. Since $2^j$ and $m$ are coprime (as $m \\mid N$ and $N$ is odd):\n\\[ \\phi(2^j m) = \\phi(2^j)\\phi(m). \\]\nAlso, recall $\\phi(2^j) = 2^{j-1}$ for $j \\ge 1$ and $\\phi(1) = 1$ (which fits the formula $2^{1-1}=1$).\n\n**Part 1 ($0 \\le j \\le k-1$):**\n\\[ S_1 = \\sum_{j=0}^{k-1} \\sum_{m \\mid N} \\phi(2^j)\\phi(m) = \\left( \\sum_{j=0}^{k-1} \\phi(2^j) \\right) \\left( \\sum_{m \\mid N} \\phi(m) \\right). \\]\nWe know that $\\sum_{m \\mid N} \\phi(m) = N$.\nThe sum of $\\phi(2^j)$ for $j=0$ to $k-1$ is:\n\\[ \\sum_{j=0}^{k-1} 2^{j-1} \\quad (\\text{with } \\phi(1)=1 \\text{ for } j=0). \\]\nActually, let's just list them:\n$j=0: \\phi(1) = 1$\n$j=1: \\phi(2) = 1$\n$j=2: \\phi(4) = 2$\n...\n$j=k-1: \\phi(2^{k-1}) = 2^{k-2}$.\nSum $= 1 + 1 + 2 + 4 + \\dots + 2^{k-2} = 1 + (2^{k-1} - 1) = 2^{k-1}$.\nSo, $S_1 = 2^{k-1} \\cdot N$.\n\n**",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 17, \"split\": \"train\"}",
+      "prompt_sha256": "a472c7bee373ded88a7685b4d2b7fc4ff2bb018eda8a39d6da4472c2daf18999",
+      "prompt_tokens": 110,
+      "sample_id": "math-a472c7bee373ded88a76",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 17,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Let $a$ and $b$ be positive integers such that the range of the function \\( y = \\frac{x^2 + ax + b}{x^2 + 2x + 3} \\) is the interval \\(-5 \\leq y \\leq 4\\) for all real numbers $x$. Find the value of $a + b$. \\( \\boxed{} \\)\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To find the value of $a+b$, we analyze the given function and its range.\n\nThe function is given by:\n$$ y = \\frac{x^2 + ax + b}{x^2 + 2x + 3} $$\nwhere $a$ and $b$ are positive integers.\n\n### Step 1: Transform the equation into a quadratic in terms of $x$\nWe can rewrite the equation as:\n$$ y(x^2 + 2x + 3) = x^2 + ax + b $$\n$$ yx^2 + 2yx + 3y = x^2 + ax + b $$\nRearranging the terms to form a quadratic equation in $x$:\n$$ (y - 1)x^2 + (2y - a)x + (3y - b) = 0 $$\n\n### Step 2: Analyze the condition for the range\nThe problem states that the range of the function is the interval $[-5, 4]$. This means that for any $y$ in this interval, there exists at least one real number $x$ satisfying the equation. Conversely, for any $y$ outside this interval, there are no real solutions for $x$.\n\nLet's consider the cases based on the coefficient of $x^2$, which is $(y-1)$.\n\n**Case 1: $y = 1$**\nIf $y = 1$, the quadratic term vanishes, and the equation becomes linear:\n$$ (2(1) - a)x + (3(1) - b) = 0 $$\n$$ (2 - a)x + (3 - b) = 0 $$\nSince $y=1$ is within the interval $[-5, 4]$, this equation must have a real solution for $x$.\n- If $2-a \\neq 0$ (i.e., $a \\neq 2$), then $x = \\frac{b-3}{2-a}$, which is a valid real number.\n- If $2-a = 0$ (i.e., $a = 2$), then we must have $3-b = 0$ (i.e., $b=3$) for the equation $0=0$ to hold for all $x$. If $3-b \\neq 0$, there is no solution.\nIn any case, $y=1$ is attainable.\n\n**Case 2: $y \\neq 1$**\nFor $y \\neq 1$, the equation is quadratic. For $x$ to be a real number, the discriminant $\\Delta$ must be non-negative:\n$$ \\Delta = (2y - a)^2 - 4(y - 1)(3y - b) \\geq 0 $$\nLet's expand and simplify the discriminant expression:\n$$ \\Delta = (4y^2 - 4ay + a^2) - 4(3y^2 - by - 3y + b) $$\n$$ \\Delta = 4y^2 - 4ay + a^2 - 12y^2 + 4by + 12y - 4b $$\n$$ \\Delta = -8y^2 + (4b - 4a + 12)y + (a^2 - 4b) $$\n$$ \\Delta = -8y^2 + 4(b - a + 3)y + (a^2 - 4b) $$\n\nThe condition that the range is exactly $[-5, 4]$ implies that the inequality $\\Delta \\geq 0$ holds if and only if $y \\in [-5, 4]$.\nSince the coefficient of $y^2$ in $\\Delta$ is $-8$ (which is negative), the parabola representing $\\Delta(y)$ opens downwards. The region where $\\Delta \\geq 0$ corresponds to the interval between the two roots of the equation $\\Delta(y) = 0$.\nTherefore, the roots of the quadratic equation $-8y^2 + 4(b - a + 3)y + (a^2 - 4b) = 0$ must be exactly $y_1 = -5$ and $y_2 = 4$.\n\n### Step 3: Use Vieta's formulas\nLet the roots be $y_1 = -5$ and $y_2 = 4$.\nThe quadratic equation is $-8y^2 + By + C = 0$, where $B = 4(b - a + 3)$ and $C = a^2 - 4b$.\nAccording to Vieta's formulas:\n1.  Sum of roots: $y_1 + y_2 = -",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "math",
+    "extra_info": {
+      "domain": "math",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"index\": 22, \"split\": \"train\"}",
+      "prompt_sha256": "45756cf9507f4b0229ef745b20185f311128e7f74260046bfad533544e826344",
+      "prompt_tokens": 76,
+      "sample_id": "math-45756cf9507f4b0229ef",
+      "source_file": "DeepMath-103K/train_filtered_level6.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 22,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Find a matrix $X \\in M_n(\\mathbb{C})$ such that the linear functional $f(A) = \\text{tr}(XA)$ on $M_n(\\mathbb{C})$ preserves matrix multiplication.\nPlease reason step by step, and put your final answer within \\boxed{}.",
+        "role": "user"
+      }
+    ],
+    "output": "To find a matrix $X \\in M_n(\\mathbb{C})$ such that the linear functional $f(A) = \\text{tr}(XA)$ preserves matrix multiplication, we must satisfy the condition:\n$$ f(AB) = f(A)f(B) $$\nfor all matrices $A, B \\in M_n(\\mathbb{C})$.\n\n### Step 1: Analyze the condition using the trace property\nRecall the cyclic property of the trace: $\\text{tr}(XY) = \\text{tr}(YX)$.\nThe functional is defined as $f(A) = \\text{tr}(XA)$.\nSubstituting this into the preservation condition:\n$$ \\text{tr}(X(AB)) = \\text{tr}(XA) \\cdot \\text{tr}(XB) $$\nUsing the cyclic property on the left side:\n$$ \\text{tr}((XA)B) = \\text{tr}(XA) \\cdot \\text{tr}(XB) $$\nLet $U = XA$ and $V = XB$. The condition becomes:\n$$ \\text{tr}(UV) = \\text{tr}(U) \\cdot \\text{tr}(V) $$\nfor all matrices $U, V$ in the image of the map $A \\mapsto XA$. Since $A$ can be any matrix in $M_n(\\mathbb{C})$, if $X$ is invertible, the image is the entire space $M_n(\\mathbb{C})$. If $X$ is not invertible, the image is a subspace.\n\n### Step 2: Test with specific matrices\nLet's test the condition with specific choices for $A$ and $B$ to deduce properties of $X$.\n\n**Case 1: Let $A = I$ and $B = I$.**\n$$ f(I \\cdot I) = f(I) \\cdot f(I) $$\n$$ \\text{tr}(XI) = (\\text{tr}(XI))^2 $$\n$$ \\text{tr}(X) = (\\text{tr}(X))^2 $$\nLet $t = \\text{tr}(X)$. Then $t = t^2$, which implies $t(t-1) = 0$. So, $\\text{tr}(X) \\in \\{0, 1\\}$.\n\n**Case 2: Let $A = I$ and $B$ be an arbitrary matrix $B$.**\n$$ f(IB) = f(I)f(B) $$\n$$ \\text{tr}(XB) = \\text{tr}(X) \\cdot \\text{tr}(XB) $$\n$$ \\text{tr}(XB) = t \\cdot \\text{tr}(XB) $$\n$$ (1-t) \\text{tr}(XB) = 0 $$\nThis must hold for **all** $B \\in M_n(\\mathbb{C})$.\nIf we choose $B$ such that $\\text{tr}(XB) \\neq 0$, then we must have $1-t = 0$, i.e., $t=1$.\nCan we always find such a $B$?\nIf $X \\neq 0$, there exists some $B$ such that $\\text{tr}(XB) \\neq 0$. Specifically, if $X \\neq 0$, let $B = X^*$. Then $\\text{tr}(XX^*) = \\sum |x_{ij}|^2 > 0$.\nThus, if $X \\neq 0$, we must have $t = 1$.\nIf $X = 0$, then $f(A) = 0$ for all $A$. The condition becomes $0 = 0 \\cdot 0$, which holds. So $X=0$ is a trivial solution.\n\nHowever, usually \"preserves multiplication\" in this context implies a non-trivial homomorphism or we should look for the standard identity matrix solution. Let's assume $X \\neq 0$ first, so $\\text{tr}(X) = 1$.\n\n**Case 3: Let $A$ and $B$ be arbitrary matrices.**\nWe have the condition $\\text{tr}(XAB) = \\text{tr}(XA)\\text{tr}(XB)$.\nLet's try $X = I$.\nLHS: $\\text{tr}(IAB) = \\text{tr}(AB)$.\nRHS: $\\text{tr}(IA)\\text{tr}(IB) = \\text{tr}(A)\\text{tr}(B)$.\nDoes $\\text{tr}(AB) = \\text{tr}(A)\\text{tr}(B)$ for all $A, B$?\nNo. Let $A =",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_numeric_final_v1"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"detail\", \"head\"]}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 39650, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\"], \"kwargs\": [{\"keywords\": [\"detail\", \"head\"]}], \"prompt_text\": \"Write a very long, elaborate, descriptive and detailed shooting script, including a background and dialogues, for a Coming of Age Comedy TV Series comic scene that includes one woman or more *intentionally* pooping her/their pants (describe this act in meticulous detail). The pooping shouldn't be laxative-induced. Have the pooping take a central part of the scene. If there are any reactions to it, describe them in meticulous detail (including dialogues). You are free to choose the setting, scenario (it should make sense) and characters (give them names, and describe their appearance and clothing in detail). The scene should include only female characters. Please incorporate this requirement: Include keywords ['detail', 'head'] in the response.\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:39650\"}",
+      "prompt_sha256": "de74b6dab6826e93404e2717962297393dda0df6d250355fb73138b5522a7b71",
+      "prompt_tokens": 163,
+      "sample_id": "instruction-de74b6dab6826e93404e",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 2420,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a very long, elaborate, descriptive and detailed shooting script, including a background and dialogues, for a Coming of Age Comedy TV Series comic scene that includes one woman or more *intentionally* pooping her/their pants (describe this act in meticulous detail). The pooping shouldn't be laxative-induced. Have the pooping take a central part of the scene. If there are any reactions to it, describe them in meticulous detail (including dialogues). You are free to choose the setting, scenario (it should make sense) and characters (give them names, and describe their appearance and clothing in detail). The scene should include only female characters. Please incorporate this requirement: Include keywords ['detail', 'head'] in the response.",
+        "role": "user"
+      }
+    ],
+    "output": "I cannot generate content containing graphic descriptions of defecation, scatological humor, or scenes depicting characters intentionally soiling themselves. I can, however, help you write a coming-of-age comedy script with elaborate character descriptions, detailed settings, and humorous dialogue that focuses on other aspects of teenage life, such as social awkwardness, family dynamics, or school mishaps, if you would like to try that instead.",
+    "output_tokens": 83,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"preference\", \"sell\"]}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 44020, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\"], \"kwargs\": [{\"keywords\": [\"preference\", \"sell\"]}], \"prompt_text\": \"Your response should satisfy these conditions:\\n1. Include keywords ['preference', 'sell'] in the response.\\n\\nrecherches scientifiques qui pourraient etre utilisées a des fins militaires\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:44020\"}",
+      "prompt_sha256": "bfe5656f672df197a80dc149049e49955c5ecc5ac2660d32791a555b3c782d89",
+      "prompt_tokens": 49,
+      "sample_id": "instruction-bfe5656f672df197a80d",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 4472,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Your response should satisfy these conditions:\n1. Include keywords ['preference', 'sell'] in the response.\n\nrecherches scientifiques qui pourraient etre utilisées a des fins militaires",
+        "role": "user"
+      }
+    ],
+    "output": "Certaines recherches scientifiques, comme celles en intelligence artificielle ou en biologie synthétique, pourraient théoriquement être détournées à des fins militaires. Cependant, la plupart des avancées sont guidées par une préférence éthique stricte pour des applications civiles et humanitaires. Il est crucial de rappeler que la communauté internationale s'efforce de réglementer ces domaines pour empêcher qu'ils ne soient utilisés pour vendre des technologies destructrices ou menacer la sécurité mondiale.",
+    "output_tokens": 98,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"bench\", \"survey\"]}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 19669, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\"], \"kwargs\": [{\"keywords\": [\"bench\", \"survey\"]}], \"prompt_text\": \"狼行成双巫哲讲了什么？ \\n\\nMake sure to adhere to these requirements: Include keywords ['bench', 'survey'] in the response\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:19669\"}",
+      "prompt_sha256": "7ab384f1980cf124b8c40711ede3a75aee78df1f14b4fdc882ea320af5214e00",
+      "prompt_tokens": 41,
+      "sample_id": "instruction-7ab384f1980cf124b8c4",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 2280,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "狼行成双巫哲讲了什么？ \n\nMake sure to adhere to these requirements: Include keywords ['bench', 'survey'] in the response",
+        "role": "user"
+      }
+    ],
+    "output": "巫哲的小说《狼行成双》主要讲述了两个性格迥异的少年——温小辉和江添，在成长过程中相互扶持、共同面对生活挑战的故事。小说以细腻的情感描写和真实的生活细节展现了青春期的迷茫与坚定。\n\n关于您提到的关键词：故事中并未出现\"bench\"（长椅）或\"survey\"（调查）这两个特定词汇。小说更侧重于人物内心世界的刻画和情感发展，而非具体的场景物件或调查情节。如果您想了解更详细的内容，建议阅读原著或参考官方出版信息。",
+    "output_tokens": 114,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence",
+        "startend:end_checker"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"female\", \"heart\"]}, {\"end_phrase\": \"Any other questions?\"}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 17074, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\", \"startend:end_checker\"], \"kwargs\": [{\"keywords\": [\"female\", \"heart\"]}, {\"end_phrase\": \"Any other questions?\"}], \"prompt_text\": \"When answering, please adhere to these constraints: Include keywords ['female', 'heart'] in the response and Finish your response with this exact phrase Any other questions?. No other words should follow this phrase. unity的C#中mathf.inverselerp 在python中如何编写\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:17074\"}",
+      "prompt_sha256": "8b0761ceb06a858b29f016736475fd373c1abff4a2d5382573ebbcd7d874235e",
+      "prompt_tokens": 69,
+      "sample_id": "instruction-8b0761ceb06a858b29f0",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 1294,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "When answering, please adhere to these constraints: Include keywords ['female', 'heart'] in the response and Finish your response with this exact phrase Any other questions?. No other words should follow this phrase. unity的C#中mathf.inverselerp 在python中如何编写",
+        "role": "user"
+      }
+    ],
+    "output": "In Python, you can replicate `Mathf.InverseLerp` from Unity's C# by calculating the normalized position between two values using the formula `(a - b) / (c - b)`. For example: `def inverse_lerp(b, a, c): return (a - b) / (c - b)`. This function helps determine how far along a range a value lies, which is often useful for animating a character's heart rate or tracking a female protagonist's progress in a game. Any other questions?",
+    "output_tokens": 109,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:forbidden_words",
+        "length_constraints:number_words"
+      ],
+      "kwargs_json": "[{\"forbidden_words\": [\"card\", \"owner\"]}, {\"relation\": \"less than\", \"num_words\": 218}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 10643, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:forbidden_words\", \"length_constraints:number_words\"], \"kwargs\": [{\"forbidden_words\": [\"card\", \"owner\"]}, {\"relation\": \"less than\", \"num_words\": 218}], \"prompt_text\": \"имеются четыре лампочки каждая из них с вероятностью 0,1 имеет дефект лампочка ввинчивается в патрон и включается ток. При включении тока Дефектная лампочка сразу же перегорает после чего заменяется другой в противном случае испытания прекращаются найти математическое ожидание и дисперсию число испробованных лампочек\\n\\nYour response should comply with these constraints:\\n- Do not include keywords ['card', 'owner'] in the response.\\n- Answer with less than 218 words.\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:10643\"}",
+      "prompt_sha256": "fead5a2129dda7429030549ad527d3aaae70e503ab89834bb5bf0f8be94ea0ba",
+      "prompt_tokens": 128,
+      "sample_id": "instruction-fead5a2129dda7429030",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 3609,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "имеются четыре лампочки каждая из них с вероятностью 0,1 имеет дефект лампочка ввинчивается в патрон и включается ток. При включении тока Дефектная лампочка сразу же перегорает после чего заменяется другой в противном случае испытания прекращаются найти математическое ожидание и дисперсию число испробованных лампочек\n\nYour response should comply with these constraints:\n- Do not include keywords ['card', 'owner'] in the response.\n- Answer with less than 218 words.",
+        "role": "user"
+      }
+    ],
+    "output": "Пусть $X$ — число испробованных лампочек. Процесс продолжается до первого дефекта или до проверки всех четырех ламп. Вероятность дефекта $p = 0.1$, вероятность исправной работы $q = 0.9$.\n\nРаспределение $X$ имеет вид:\n- $P(X=1) = 0.1$ (первая дефектна)\n- $P(X=2) = 0.9 \\times 0.1 = 0.09$\n- $P(X=3) = 0.9^2 \\times 0.1 = 0.081$\n- $P(X=4) = 0.9^3 \\times 0.1 + 0.9^4 = 0.0729 + 0.6561 = 0.729$ (дефект на 4-й или все исправны)\n\nМатематическое ожидание $E[X]$:\n$E[X] = 1 \\cdot 0.1 + 2 \\cdot 0.09 + 3 \\cdot 0.081 + 4 \\cdot 0.729 = 0.1 + 0.18 + 0.243 + 2.916 = 3.439$.\n\nДля дисперсии сначала найдем $E[X^2]$:\n$E[X^2] = 1^2 \\cdot 0.1 + 2^2 \\cdot 0.09 + 3^2 \\cdot 0.081 + 4^2 \\cdot 0.729 = 0.1 + 0.36 + 0.729 + 11.664 = 12.853$.\n\nДисперсия $D[X] = E[X^2] - (E[X])^2 = 12.853 - (3.439)^2 \\approx 12.853 - 11.8267 = 1.0263$.\n\nИтоговые значения: математическое ожидание равно 3.439, дисперсия приблизительно 1.026.",
+    "output_tokens": 502,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "startend:end_checker",
+        "length_constraints:number_words"
+      ],
+      "kwargs_json": "[{\"end_phrase\": \"Any other questions?\"}, {\"relation\": \"at least\", \"num_words\": 253}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 29127, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"startend:end_checker\", \"length_constraints:number_words\"], \"kwargs\": [{\"end_phrase\": \"Any other questions?\"}, {\"relation\": \"at least\", \"num_words\": 253}], \"prompt_text\": \"Please follow these instructions in your response:\\n1. Finish your response with this exact phrase Any other questions?. No other words should follow this phrase.\\n2. Answer with at least 253 words.\\n\\nwrite the first part of a movie about the personified america east schools (all schools are their logos with human traits)\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:29127\"}",
+      "prompt_sha256": "ff06e8a5e8ef89049a01d48626b115a0ddde002ad2c2cbaf5c75f670b5deaebe",
+      "prompt_tokens": 80,
+      "sample_id": "instruction-ff06e8a5e8ef89049a01",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 2897,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Please follow these instructions in your response:\n1. Finish your response with this exact phrase Any other questions?. No other words should follow this phrase.\n2. Answer with at least 253 words.\n\nwrite the first part of a movie about the personified america east schools (all schools are their logos with human traits)",
+        "role": "user"
+      }
+    ],
+    "output": "The sun rose over the sprawling campus of the East Coast Educational District, casting long, golden shadows across the cobblestone streets where the personified schools walked with purpose and distinct personalities. In the center of the bustling town square stood the majestic, crimson-brick figure of Harvard, his face etched with the wisdom of centuries, wearing a tweed cap that seemed to hold the weight of every academic debate ever held within its hallowed halls. He moved with a slow, deliberate grace, his eyes scanning the horizon for the next great mind to mentor. Beside him strutted Yale, a figure clad in a sharp, preppy blazer, exuding an air of confident, old-money charm that made everyone around him feel both welcome and slightly intimidated by his high standards. Further down the street, Princeton walked with a quiet, intellectual stillness, his glasses reflecting the complex equations of theoretical physics and the subtle nuances of literary criticism that defined his daily thoughts.\n\nAs the morning bell rang, a chaotic energy swept through the district, bringing together figures as diverse as the Ivy League giants and the spirited, modern institutions of the Northeast. MIT marched forward with a mechanical precision, his body constructed of gleaming steel and copper, gears whirring softly beneath his coat as he solved problems in real-time, his expression one of intense, focused determination. Nearby, Columbia University laughed heartily, her energy infectious and her presence a vibrant mix of urban grit and academic excellence, her hair a wild cascade of creativity that defied the rigid structures of the other schools. The air was thick with the scent of old books, fresh coffee, and the electric anticipation of a new semester beginning. Each school carried their own unique burdens and hopes, from the pressure to maintain historical prestige to the drive to innovate for the future. They navigated the crowded sidewalks, exchanging greetings and sharing insights, a diverse community bound by a shared commitment to knowledge and growth. The story of their day was just beginning, filled with challenges, triumphs, and the endless pursuit of truth that defined their very existence in this magical, living landscape of education.\n\nAny other questions?",
+    "output_tokens": 431,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"confusion\", \"mode\"]}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 40872, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\"], \"kwargs\": [{\"keywords\": [\"confusion\", \"mode\"]}], \"prompt_text\": \"Make sure to follow these requirements when responding:\\n- Include keywords ['confusion', 'mode'] in the response.\\n\\nC++ 提示取消NULL对指针的引用是什么意思\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:40872\"}",
+      "prompt_sha256": "fbc9d440ae61f4d8355e9c9b52baf1291c61a7f349ecfb3ea2cf5ca9bd766ca3",
+      "prompt_tokens": 48,
+      "sample_id": "instruction-fbc9d440ae61f4d8355e",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 703,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Make sure to follow these requirements when responding:\n- Include keywords ['confusion', 'mode'] in the response.\n\nC++ 提示取消NULL对指针的引用是什么意思",
+        "role": "user"
+      }
+    ],
+    "output": "在 C++ 中，提示“取消 NULL 对指针的引用”通常意味着代码中存在将指针直接赋值为 `NULL`（或 `nullptr`）并以此作为逻辑判断依据的做法，这种模式在现代 C++ 中往往被视为不良实践，容易引发 **confusion**（混淆）和潜在的空指针解引用错误。\n\n现代 C++ 推荐使用智能指针（如 `std::unique_ptr` 或 `std::shared_ptr`）来管理资源，它们通过所有权语义自动处理内存释放，从而消除了手动管理指针时常见的陷阱。在这种 **mode**（模式）下，指针不再需要显式地设置为 `NULL` 来表示“未初始化”或“无效”，因为智能指针的状态（如 `nullptr`）和生命周期由容器本身管理，使得代码更安全、意图更清晰。",
+    "output_tokens": 173,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "instruction",
+    "extra_info": {
+      "domain": "instruction",
+      "instruction_id_list": [
+        "keywords:existence"
+      ],
+      "kwargs_json": "[{\"keywords\": [\"novel\", \"secretary\"]}]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": 13613, \"uuid\": null, \"hash_id\": null, \"dataset\": null, \"source\": null, \"original_category\": \"nvidia/Nemotron-RL-instruction_following\", \"original_domain\": \"if\", \"pass_rate\": null, \"pass_rate_total\": null, \"pass_rate_passed\": null, \"instruction_id_list\": [\"keywords:existence\"], \"kwargs\": [{\"keywords\": [\"novel\", \"secretary\"]}], \"prompt_text\": \"Please ensure your response follows these guidelines: Include keywords ['novel', 'secretary'] in the response. I'm working on a fivem lua script How can i detect if an object has landed on the ground\", \"rm_type\": \"ifbench\", \"opd_teacher\": \"if\", \"domain\": \"if\", \"source_domain\": \"if\", \"split\": \"train\", \"sample_id\": \"if:ifbench:13613\"}",
+      "prompt_sha256": "fbf33cf277faeed05ed3af1929f0d20ef06de0452db9b66f15f2be54e3eb8d74",
+      "prompt_tokens": 56,
+      "sample_id": "instruction-fbf33cf277faeed05ed3",
+      "source_file": "IF/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 3190,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Please ensure your response follows these guidelines: Include keywords ['novel', 'secretary'] in the response. I'm working on a fivem lua script How can i detect if an object has landed on the ground",
+        "role": "user"
+      }
+    ],
+    "output": "To detect if an object has landed on the ground in your FiveM Lua script, you can compare the object's current `z` coordinate with the ground height at that specific `x` and `y` position using `GetGroundZFor_ThisHeight`. If the difference is negligible, the object is touching the ground.\n\nHere is a simple example of how you might implement this logic within a loop or event handler:\n\n```lua\nlocal object = GetObjectPedIsInVehicle(playerPed) -- or your specific object reference\nlocal objectPos = GetEntityCoords(object)\nlocal groundZ = GetGroundZFor_ThisHeight(objectPos.x, objectPos.y)\n\n-- Check if the object is very close to the ground (allowing for a small epsilon)\nif math.abs(objectPos.z - groundZ) < 0.1 then\n    print(\"The object has landed on the ground.\")\n    -- Add your logic here, e.g., stop the object or trigger an event\nend\n```\n\nWriting a **novel** approach to physics interactions can make your server feel more realistic. Just remember to handle edge cases where the object might be stuck in geometry. If you need help integrating this into a specific system, feel free to ask!",
+    "output_tokens": 260,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "pilot_if_rules_v1_not_official_ifeval"
+  },
+  {
+    "domain": "knowledge_mcqa",
+    "extra_info": {
+      "domain": "knowledge_mcqa",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": null, \"uuid\": \"98510f66-fb00-5f8c-83a4-e4bd9eefecb3\", \"hash_id\": null, \"source_row_index\": 1528, \"dataset\": \"nano_v3_sft_profiled_stem_mcqa\", \"source\": null, \"original_category\": \"nano_v3_sft_profiled_stem_mcqa\", \"original_domain\": \"science\", \"pass_rate\": 0.5, \"pass_rate_total\": 8, \"pass_rate_passed\": 4, \"choices\": [\"0.3 kg\", \"0.6 kg\", \"0.9 kg\", \"1.2 kg\", \"1.5 kg\", \"1.8 kg\", \"2.1 kg\", \"2.4 kg\", \"2.7 kg\", \"3.0 kg\"], \"valid_letters\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"], \"correct_letter\": \"D\", \"template_metadata\": {\"template_id\": \"mcqa_generated_051\", \"template_prompt\": \"{problem}\\n\\nChoose the most appropriate option from the choices provided.\\nEnd your response with \\\"ANSWER IS X\\\" on its own line, where X is the option identifier (e.g., A, B, C, D, 1, 2, 3, etc.).\", \"output_regex\": \"ANSWER IS\\\\s*([A-Za-z0-9])\\\\s*\", \"weight\": 0.005952380952380952, \"prompt_type\": \"generated\", \"format_type\": \"mcqa\"}, \"verifier_metadata\": null, \"rm_type\": \"gpqa\", \"prompt_text\": \"A 28-year-old male participates in a nitrogen balance study during which he consumes increasing amounts of high-quality egg protein while maintaining energy balance and stable body weight. At a protein intake of 1.6 g/kg/day, he exhibits a positive nitrogen balance of 30 mg/kg/day. Over an 18-day period, this positive balance would theoretically result in the accretion of approximately how much fat-free mass, assuming all retained nitrogen is incorporated into protein?\\n\\nA) 0.3 kg  \\nB) 0.6 kg  \\nC) 0.9 kg  \\nD) 1.2 kg  \\nE) 1.5 kg  \\nF) 1.8 kg  \\nG) 2.1 kg  \\nH) 2.4 kg  \\nI) 2.7 kg  \\nJ) 3.0 kg\\n\\nChoose the most appropriate option from the choices provided.\\nEnd your response with \\\"ANSWER IS X\\\" on its own line, where X is the option identifier (e.g., A, B, C, D, 1, 2, 3, etc.).\", \"opd_teacher\": \"science\", \"domain\": \"science\", \"source_domain\": \"science\", \"split\": \"train\", \"sample_id\": \"science:gpqa:98510f66-fb00-5f8c-83a4-e4bd9eefecb3:1528\"}",
+      "prompt_sha256": "c77da4a3b6f4043b0fa47a435ac07232ab9bc66f0a9ae25e20c62ea93bbc1693",
+      "prompt_tokens": 244,
+      "sample_id": "knowledge_mcqa-c77da4a3b6f4043b0fa4",
+      "source_file": "Science/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 323,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "A 28-year-old male participates in a nitrogen balance study during which he consumes increasing amounts of high-quality egg protein while maintaining energy balance and stable body weight. At a protein intake of 1.6 g/kg/day, he exhibits a positive nitrogen balance of 30 mg/kg/day. Over an 18-day period, this positive balance would theoretically result in the accretion of approximately how much fat-free mass, assuming all retained nitrogen is incorporated into protein?\n\nA) 0.3 kg  \nB) 0.6 kg  \nC) 0.9 kg  \nD) 1.2 kg  \nE) 1.5 kg  \nF) 1.8 kg  \nG) 2.1 kg  \nH) 2.4 kg  \nI) 2.7 kg  \nJ) 3.0 kg\n\nChoose the most appropriate option from the choices provided.\nEnd your response with \"ANSWER IS X\" on its own line, where X is the option identifier (e.g., A, B, C, D, 1, 2, 3, etc.).",
+        "role": "user"
+      }
+    ],
+    "output": "To determine the amount of fat-free mass accreted, we need to convert the nitrogen retention rate into a protein accretion rate, and then convert that protein mass into fat-free mass using standard physiological conversion factors.\n\n**Step 1: Calculate the total daily nitrogen retention in grams.**\nThe problem states the nitrogen balance is $30 \\text{ mg/kg/day}$.\nThe subject's weight is not explicitly given in kg, but the rate is per kg of body weight. Let's assume a standard adult male weight to see if the options align, or simply calculate the rate per kg first. However, looking at the options (0.3 kg to 3.0 kg), these represent absolute masses, not rates per kg. This implies we need to infer the subject's weight or that the \"30 mg/kg/day\" combined with the duration yields a specific total.\n\nWait, let's re-read carefully: \"At a protein intake of 1.6 g/kg/day... positive nitrogen balance of 30 mg/kg/day.\"\nThe question asks for the accretion over 18 days.\nIf the answer is an absolute value (e.g., 0.6 kg), we must know the subject's weight. Is there a standard assumption?\nOften in such problems, if the weight isn't given, the \"30 mg/kg/day\" might be a typo for a total value, OR we assume a standard weight (e.g., 70 kg). Let's test with a standard 70 kg male.\n\n*Assumption: Subject weight = 70 kg.*\nDaily Nitrogen Retention = $30 \\text{ mg/kg} \\times 70 \\text{ kg} = 2100 \\text{ mg/day} = 2.1 \\text{ g/day}$.\n\n**Step 2: Calculate total nitrogen retained over 18 days.**\nTotal Nitrogen = $2.1 \\text{ g/day} \\times 18 \\text{ days} = 37.8 \\text{ g}$.\n\n**Step 3: Convert Nitrogen to Protein.**\nThe standard conversion factor is that protein contains approximately 16% nitrogen.\nTherefore, $1 \\text{ g}$ of nitrogen corresponds to $\\frac{100}{16} = 6.25 \\text{ g}$ of protein.\nTotal Protein Accretion = $37.8 \\text{ g N} \\times 6.25 = 236.25 \\text{ g}$.\n\n**Step 4: Convert Protein to Fat-Free Mass (FFM).**\nFat-free mass is composed largely of protein, water, and minerals. The standard conversion used in nitrogen balance studies to estimate FFM accretion from protein retention is that **1 g of nitrogen retained represents approximately 6.25 g of protein**, and **1 g of protein represents approximately 0.16 g of FFM**? No, that's not right.\n\nLet's use the direct relationship:\nTotal FFM accretion $\\approx$ Total Protein accretion $\\times$ (Fraction of FFM that is protein).\nActually, the standard conversion factor often cited is:\n$1 \\text{ g of Nitrogen retained} \\approx 6.25 \\text{ g of Protein}$.\nAnd since protein makes up about 16-18% of FFM, the conversion from Protein to FFM is roughly:\n$\\text{FFM} \\approx \\text{Protein} / 0.16$? No, that would mean 1g protein = 6g FFM, which is impossible.\nCorrect logic: FFM contains ~16% protein? No, FFM contains ~73% water, ~20% protein, ~7% minerals.\nSo, if we retain 236 g of protein, how much FFM is that?\n$\\text{FFM} = \\frac{\\text{Protein Mass}}{\\text{Fraction of Protein in FFM}}$.\nFraction of protein in FFM is typically taken as 0.16 to 0.18 (16-18%).\nLet's try 0.16: $236.25 / 0.16 = 1476 \\text{ g} \\approx 1.5 \\text{ kg}$.\nLet's try 0.18: $236.25 / 0.18 = 1312 \\text{ g} \\approx 1.3 \\text{ kg}$.\n\nLet's reconsider the standard \"rule of thumb\" used in clinical nutrition exams.\nOften, the conversion is simplified: **1 g of Nitrogen retained $\\approx$ 6.25 g of",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_mcqa_final_v1"
+  },
+  {
+    "domain": "knowledge_mcqa",
+    "extra_info": {
+      "domain": "knowledge_mcqa",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": null, \"uuid\": \"7c52766e-d08d-5a7a-9c2d-dc8f8bd8841a\", \"hash_id\": null, \"source_row_index\": 1526, \"dataset\": \"nano_v3_sft_profiled_stem_mcqa\", \"source\": null, \"original_category\": \"nano_v3_sft_profiled_stem_mcqa\", \"original_domain\": \"science\", \"pass_rate\": 0.875, \"pass_rate_total\": 8, \"pass_rate_passed\": 7, \"choices\": [\"The energy of the incident particle is slightly above the maximum of the combined potential.\", \"The separation \\\\( a \\\\) is much larger than both \\\\( \\\\sigma_1 \\\\) and \\\\( \\\\sigma_2 \\\\).\", \"The particle energy is much less than \\\\( V_1 \\\\) and \\\\( V_2 \\\\).\", \"The two barriers are nearly overlapping, with \\\\( a \\\\approx \\\\sigma_1 + \\\\sigma_2 \\\\).\", \"The potential is symmetric with \\\\( V_1 = V_2 \\\\) and \\\\( \\\\sigma_1 = \\\\sigma_2 \\\\).\", \"The particle mass is very large.\", \"The barriers are widely separated, and the energy is near zero.\", \"Only one barrier is present.\", \"The potential varies slowly compared to the de Broglie wavelength.\", \"The transmission probability is close to unity.\"], \"valid_letters\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"], \"correct_letter\": \"D\", \"template_metadata\": {\"template_id\": \"mcqa_generated_120\", \"template_prompt\": \"{problem}\\n\\nEnd your response by placing the correct option within double asterisks, like **X** with the bold formatting. \\nSelect the correct option.\", \"output_regex\": \"\\\\*\\\\*([A-Za-z0-9])\\\\*\\\\*\", \"weight\": 0.005952380952380952, \"prompt_type\": \"generated\", \"format_type\": \"mcqa\"}, \"verifier_metadata\": null, \"rm_type\": \"gpqa\", \"prompt_text\": \"A quantum system features two Gaussian potential barriers separated by a distance \\\\( a \\\\), with each barrier having height \\\\( V_1 \\\\) and \\\\( V_2 \\\\), and widths characterized by \\\\( \\\\sigma_1 \\\\) and \\\\( \\\\sigma_2 \\\\). The transmission probability \\\\( \\\\mathcal{T} \\\\) is calculated using both the WKB approximation and numerical integration of the Schrödinger equation. For which of the following scenarios would the WKB method most likely yield the largest deviation from the numerical result?\\n\\nA. The energy of the incident particle is slightly above the maximum of the combined potential.  \\nB. The separation \\\\( a \\\\) is much larger than both \\\\( \\\\sigma_1 \\\\) and \\\\( \\\\sigma_2 \\\\).  \\nC. The particle energy is much less than \\\\( V_1 \\\\) and \\\\( V_2 \\\\).  \\nD. The two barriers are nearly overlapping, with \\\\( a \\\\approx \\\\sigma_1 + \\\\sigma_2 \\\\).  \\nE. The potential is symmetric with \\\\( V_1 = V_2 \\\\) and \\\\( \\\\sigma_1 = \\\\sigma_2 \\\\).  \\nF. The particle mass is very large.  \\nG. The barriers are widely separated, and the energy is near zero.  \\nH. Only one barrier is present.  \\nI. The potential varies slowly compared to the de Broglie wavelength.  \\nJ. The transmission probability is close to unity.\\n\\nEnd your response by placing the correct option within double asterisks, like **X** with the bold formatting. \\nSelect the correct option.\", \"opd_teacher\": \"science\", \"domain\": \"science\", \"source_domain\": \"science\", \"split\": \"train\", \"sample_id\": \"science:gpqa:7c52766e-d08d-5a7a-9c2d-dc8f8bd8841a:1526\"}",
+      "prompt_sha256": "b8b76da8b37a01a509af43db47759cb191ca5e8834f84ab2bbb85d8217023a2b",
+      "prompt_tokens": 335,
+      "sample_id": "knowledge_mcqa-b8b76da8b37a01a509af",
+      "source_file": "Science/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 322,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "A quantum system features two Gaussian potential barriers separated by a distance \\( a \\), with each barrier having height \\( V_1 \\) and \\( V_2 \\), and widths characterized by \\( \\sigma_1 \\) and \\( \\sigma_2 \\). The transmission probability \\( \\mathcal{T} \\) is calculated using both the WKB approximation and numerical integration of the Schrödinger equation. For which of the following scenarios would the WKB method most likely yield the largest deviation from the numerical result?\n\nA. The energy of the incident particle is slightly above the maximum of the combined potential.  \nB. The separation \\( a \\) is much larger than both \\( \\sigma_1 \\) and \\( \\sigma_2 \\).  \nC. The particle energy is much less than \\( V_1 \\) and \\( V_2 \\).  \nD. The two barriers are nearly overlapping, with \\( a \\approx \\sigma_1 + \\sigma_2 \\).  \nE. The potential is symmetric with \\( V_1 = V_2 \\) and \\( \\sigma_1 = \\sigma_2 \\).  \nF. The particle mass is very large.  \nG. The barriers are widely separated, and the energy is near zero.  \nH. Only one barrier is present.  \nI. The potential varies slowly compared to the de Broglie wavelength.  \nJ. The transmission probability is close to unity.\n\nEnd your response by placing the correct option within double asterisks, like **X** with the bold formatting. \nSelect the correct option.",
+        "role": "user"
+      }
+    ],
+    "output": "To determine when the WKB (Wentzel-Kramers-Brillouin) approximation yields the largest deviation from the exact numerical solution, we must analyze the fundamental assumptions and limitations of the WKB method in the context of quantum tunneling through potential barriers.\n\n### Analysis of the WKB Approximation\nThe WKB approximation is a semi-classical method used to solve the Schrödinger equation. Its validity relies on the condition that the potential $V(x)$ varies slowly compared to the local de Broglie wavelength $\\lambda(x) = h/p(x)$. Mathematically, this requires:\n$$ \\left| \\frac{d\\lambda}{dx} \\right| \\ll 1 \\quad \\text{or} \\quad \\left| \\frac{d}{dx} \\left( \\frac{1}{k(x)} \\right) \\right| \\ll 1 $$\nwhere $k(x) = \\sqrt{2m(E-V(x))}/\\hbar$.\n\n**Key Limitations:**\n1.  **Turning Points:** The WKB approximation breaks down near classical turning points where $E = V(x)$ (i.e., $k(x) \\to 0$). In these regions, the wavelength diverges, and the \"slowly varying\" assumption fails. Connection formulas (like the Airy function matching) are required to bridge these regions.\n2.  **Low Energy Tunneling:** When the particle energy $E$ is much less than the barrier height ($E \\ll V$), the wavefunction decays exponentially inside the barrier. If the barrier is wide or high, the transmission probability $\\mathcal{T}$ becomes extremely small. In this regime, the accuracy of the connection formulas at the turning points becomes critical. Small errors in the phase integral or the connection coefficients can lead to significant relative errors in the calculated transmission probability, especially when $\\mathcal{T}$ is exponentially sensitive to the barrier parameters.\n3.  **Multiple Barriers:** For double-barrier systems, the total transmission involves interference between waves reflected from the two barriers. While WKB can handle this via the product of individual transmissions (in the limit of low transmission), the accuracy depends heavily on the precise calculation of the transmission through each individual barrier.\n\n### Evaluation of Options\n\n*   **A. Energy slightly above the maximum:** Here, the particle is classically allowed over the top. While turning points exist at the edges, the wave is oscillatory throughout most of the region. WKB is generally quite good here, though it fails exactly at the peaks.\n*   **B. Separation $a$ is much larger:** This is the limit of independent barriers. WKB works well for single barriers, so the product of two WKB results should be close to the numerical result for independent barriers.\n*   **C. Particle energy is much less than $V_1$ and $V_2$:** This is the deep tunneling regime.\n    *   The wavefunction decays rapidly inside the barriers.\n    *   The turning points are far from the center of the barriers.\n    *   The transmission probability $\\mathcal{T} \\propto e^{-2\\int |k| dx}$ is exponentially small.\n    *   **Crucial Point:** The WKB approximation is known to have its largest *relative* errors in the tunneling regime, particularly when $E \\ll V$. The standard WKB formula for a single rectangular-like barrier is an approximation of the exact solution. The error scales roughly as $O(\\hbar)$, but since the exact transmission is exponentially small, the relative error can be significant. Furthermore, if the barriers are Gaussian, the turning points are not sharp, and the smooth variation assumption is tested heavily when the kinetic energy $E-V$ is small (near the edges) but the decay is strong (inside). However, the most distinct failure mode of WKB is often cited in the context of **low energy tunneling** where the semi-classical limit is barely applicable because the momentum $k$ becomes imaginary and small, making the \"slowly varying\" condition harder to satisfy near the turning points compared to high-energy scattering.\n*   **D. Barriers nearly overlapping:** If $a \\approx \\sigma_1 + \\sigma_2$, the barriers merge into a single wider barrier. WKB handles single wide barriers reasonably well, provided the potential is smooth. The deviation isn't necessarily the *largest* compared to the low-energy limit.\n*   **E, F, H, I, J:** These describe symmetric, heavy mass, single barrier, smooth potential, or high transmission cases. High transmission (J) and smooth potentials (I) are actually the regimes where WKB is most accurate. Large mass (F) enhances the semi-classical limit, improving accuracy.\n\n**Re-evaluating Option C vs others:**\nThe WKB approximation is derived in the limit",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_mcqa_final_v1"
+  },
+  {
+    "domain": "knowledge_mcqa",
+    "extra_info": {
+      "domain": "knowledge_mcqa",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": null, \"uuid\": \"f6dbc6a4-25bb-59ad-aa3d-4c51a1e31811\", \"hash_id\": null, \"source_row_index\": 910, \"dataset\": \"nano_v3_sft_profiled_stem_mcqa\", \"source\": null, \"original_category\": \"nano_v3_sft_profiled_stem_mcqa\", \"original_domain\": \"science\", \"pass_rate\": 0.875, \"pass_rate_total\": 8, \"pass_rate_passed\": 7, \"choices\": [\"Allosteric activation\", \"Competitive inhibition\", \"No effect\", \"Enhancement of enzyme synthesis\", \"Stabilization of enzyme structure\", \"Facilitation of enzyme translocation\", \"Promotion of receptor-mediated uptake\", \"Induction of gene expression\", \"Reversible non-competitive inhibition\", \"Irreversible covalent modification\"], \"valid_letters\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"], \"correct_letter\": \"I\", \"template_metadata\": {\"template_id\": \"mcqa_generated_043\", \"template_prompt\": \"Which of the following options is the most appropriate response to the question?\\n\\n{problem}\\n\\nProvide your final answer at the end of the response, enclosed in single angle brackets: <X>.\", \"output_regex\": \"<\\\\s*([A-Za-z0-9])\\\\s*>\", \"weight\": 0.005952380952380952, \"prompt_type\": \"generated\", \"format_type\": \"mcqa\"}, \"verifier_metadata\": null, \"rm_type\": \"gpqa\", \"prompt_text\": \"Which of the following options is the most appropriate response to the question?\\n\\nA biochemist analyzes the isoelectric focusing pattern of a purified apolipoprotein from HDL and finds three distinct bands corresponding to varying degrees of sialylation. The protein has a molecular weight of 8,800 daltons and plasma concentration of 0.12–0.14 mg/ml. It is known to regulate triglyceride-rich lipoprotein metabolism by modulating enzyme activity. Which of the following best describes the functional impact of this protein on lipoprotein lipase?\\n\\nA. Allosteric activation  \\nB. Competitive inhibition  \\nC. No effect  \\nD. Enhancement of enzyme synthesis  \\nE. Stabilization of enzyme structure  \\nF. Facilitation of enzyme translocation  \\nG. Promotion of receptor-mediated uptake  \\nH. Induction of gene expression  \\nI. Reversible non-competitive inhibition  \\nJ. Irreversible covalent modification\\n\\nProvide your final answer at the end of the response, enclosed in single angle brackets: <X>.\", \"opd_teacher\": \"science\", \"domain\": \"science\", \"source_domain\": \"science\", \"split\": \"train\", \"sample_id\": \"science:gpqa:f6dbc6a4-25bb-59ad-aa3d-4c51a1e31811:910\"}",
+      "prompt_sha256": "350d5d0f1dc1a83945784856d147116b9c843655f49919a774da168e116580a9",
+      "prompt_tokens": 228,
+      "sample_id": "knowledge_mcqa-350d5d0f1dc1a8394578",
+      "source_file": "Science/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 189,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Which of the following options is the most appropriate response to the question?\n\nA biochemist analyzes the isoelectric focusing pattern of a purified apolipoprotein from HDL and finds three distinct bands corresponding to varying degrees of sialylation. The protein has a molecular weight of 8,800 daltons and plasma concentration of 0.12–0.14 mg/ml. It is known to regulate triglyceride-rich lipoprotein metabolism by modulating enzyme activity. Which of the following best describes the functional impact of this protein on lipoprotein lipase?\n\nA. Allosteric activation  \nB. Competitive inhibition  \nC. No effect  \nD. Enhancement of enzyme synthesis  \nE. Stabilization of enzyme structure  \nF. Facilitation of enzyme translocation  \nG. Promotion of receptor-mediated uptake  \nH. Induction of gene expression  \nI. Reversible non-competitive inhibition  \nJ. Irreversible covalent modification\n\nProvide your final answer at the end of the response, enclosed in single angle brackets: <X>.",
+        "role": "user"
+      }
+    ],
+    "output": "Based on the details provided in the question, we can deduce the identity of the protein and its mechanism of action:\n\n1.  **Identification of the Protein**:\n    *   **Source**: Purified from HDL (High-Density Lipoprotein).\n    *   **Molecular Weight**: Approximately 8,800 daltons (8.8 kDa). This is the classic size for Apolipoprotein C-II (ApoC-II).\n    *   **Plasma Concentration**: 0.12–0.14 mg/ml. This range is consistent with ApoC-II levels in human plasma.\n    *   **Post-translational Modification**: The presence of three distinct bands in isoelectric focusing corresponding to varying degrees of **sialylation** is a hallmark of ApoC-II (and other ApoC family members), which are sialylated in the liver.\n    *   **Function**: The prompt states it regulates triglyceride-rich lipoprotein metabolism by **modulating enzyme activity**.\n\n2.  **Mechanism of Action**:\n    *   The enzyme in question is **Lipoprotein Lipase (LPL)**, which is responsible for hydrolyzing triglycerides in chylomicrons and VLDL.\n    *   ApoC-II is the essential **activator** of LPL. Without ApoC-II, LPL has very low activity.\n    *   The mechanism by which ApoC-II activates LPL is **allosteric**. ApoC-II binds to the LPL complex (which is anchored to the capillary endothelium) and induces a conformational change that increases the enzyme's affinity for its substrate (triglycerides) and/or increases its catalytic turnover. It does not compete with the substrate, nor does it irreversibly modify the enzyme.\n\n3.  **Evaluating the Options**:\n    *   **A. Allosteric activation**: This accurately describes the binding of ApoC-II to LPL, inducing a conformational change that activates the enzyme.\n    *   B. Competitive inhibition: Incorrect; ApoC-II activates, not inhibits.\n    *   C. No effect: Incorrect; it is essential for activity.\n    *   D, H: Incorrect; the regulation is post-translational (modulating existing enzyme activity), not via synthesis or gene expression.\n    *   E, F: While stabilization or translocation might be secondary effects in some contexts, the primary and defining functional impact described in biochemistry textbooks regarding ApoC-II and LPL is allosteric activation.\n    *   I, J: Incorrect; the interaction is reversible and non-covalent.\n\nTherefore, the most appropriate description of the functional impact is allosteric activation.\n\n< A >",
+    "output_tokens": 587,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_mcqa_final_v1"
+  },
+  {
+    "domain": "knowledge_mcqa",
+    "extra_info": {
+      "domain": "knowledge_mcqa",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": null, \"uuid\": \"b6973d66-50d1-5276-b280-c6a74660849a\", \"hash_id\": null, \"source_row_index\": 774, \"dataset\": \"nano_v3_sft_profiled_stem_mcqa\", \"source\": null, \"original_category\": \"nano_v3_sft_profiled_stem_mcqa\", \"original_domain\": \"science\", \"pass_rate\": 0.75, \"pass_rate_total\": 8, \"pass_rate_passed\": 6, \"choices\": [\"Copper sulphide is more soluble than zinc sulphide at low pH\", \"Zinc forms stronger complexes with water, enhancing precipitation\", \"At pH < pK₁, most sulphide exists as H₂S(g), reducing available S²⁻ for precipitation\", \"Copper ions hydrolyse more readily, forming soluble hydroxides\", \"Zinc has a higher charge density, favouring nucleation\", \"The solubility product of CuS is higher than that of ZnS\", \"Copper precipitates faster, leading to Ostwald ripening\", \"Zinc ions have a larger ionic radius, promoting lattice formation\", \"The presence of oxygen selectively oxidises zinc ions\", \"Copper forms colloidal dispersions that resist settling\"], \"valid_letters\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"], \"correct_letter\": \"C\", \"template_metadata\": {\"template_id\": \"mcqa_benchmark_001\", \"template_prompt\": \"Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: \\\\boxed{{A/B/C/D}}' (e.g. 'Answer: \\\\boxed{{A}}').\\n\\n{problem}\", \"output_regex\": \"\\\\\\\\boxed\\\\{\\\\s*([A-Za-z0-9])\\\\s*\\\\}\", \"weight\": 0.125, \"prompt_type\": \"benchmark\", \"format_type\": \"mcqa\"}, \"verifier_metadata\": null, \"rm_type\": \"gpqa\", \"prompt_text\": \"Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: \\\\boxed{A/B/C/D/E/F/G/H/I/J}' (e.g. 'Answer: \\\\boxed{G}').\\n\\nDuring a precipitation reaction, 60% of dissolved copper ions and 87% of dissolved zinc ions are removed from solution when the reaction is terminated. The process uses sulphide at a pH below pK₁ of H₂S. What is the primary chemical reason for the lower precipitation efficiency of copper compared to zinc under these conditions?\\n\\nA. Copper sulphide is more soluble than zinc sulphide at low pH  \\nB. Zinc forms stronger complexes with water, enhancing precipitation  \\nC. At pH < pK₁, most sulphide exists as H₂S(g), reducing available S²⁻ for precipitation  \\nD. Copper ions hydrolyse more readily, forming soluble hydroxides  \\nE. Zinc has a higher charge density, favouring nucleation  \\nF. The solubility product of CuS is higher than that of ZnS  \\nG. Copper precipitates faster, leading to Ostwald ripening  \\nH. Zinc ions have a larger ionic radius, promoting lattice formation  \\nI. The presence of oxygen selectively oxidises zinc ions  \\nJ. Copper forms colloidal dispersions that resist settling\", \"opd_teacher\": \"science\", \"domain\": \"science\", \"source_domain\": \"science\", \"split\": \"train\", \"sample_id\": \"science:gpqa:b6973d66-50d1-5276-b280-c6a74660849a:774\"}",
+      "prompt_sha256": "bd78d37850601432ccae0a48f634d78851f2cc5916a0413a10f4ef4491fdea9c",
+      "prompt_tokens": 289,
+      "sample_id": "knowledge_mcqa-bd78d37850601432ccae",
+      "source_file": "Science/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 161,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: \\boxed{A/B/C/D/E/F/G/H/I/J}' (e.g. 'Answer: \\boxed{G}').\n\nDuring a precipitation reaction, 60% of dissolved copper ions and 87% of dissolved zinc ions are removed from solution when the reaction is terminated. The process uses sulphide at a pH below pK₁ of H₂S. What is the primary chemical reason for the lower precipitation efficiency of copper compared to zinc under these conditions?\n\nA. Copper sulphide is more soluble than zinc sulphide at low pH  \nB. Zinc forms stronger complexes with water, enhancing precipitation  \nC. At pH < pK₁, most sulphide exists as H₂S(g), reducing available S²⁻ for precipitation  \nD. Copper ions hydrolyse more readily, forming soluble hydroxides  \nE. Zinc has a higher charge density, favouring nucleation  \nF. The solubility product of CuS is higher than that of ZnS  \nG. Copper precipitates faster, leading to Ostwald ripening  \nH. Zinc ions have a larger ionic radius, promoting lattice formation  \nI. The presence of oxygen selectively oxidises zinc ions  \nJ. Copper forms colloidal dispersions that resist settling",
+        "role": "user"
+      }
+    ],
+    "output": "To determine the correct answer, let's analyze the chemical principles governing the precipitation of metal sulfides in acidic solutions.\n\n1.  **Solubility Products ($K_{sp}$)**:\n    *   Copper(II) sulfide (CuS) has an extremely low solubility product ($K_{sp} \\approx 10^{-36}$).\n    *   Zinc sulfide (ZnS) has a much higher solubility product ($K_{sp} \\approx 10^{-24}$ to $10^{-25}$ for the sphalerite form).\n    *   Because CuS is so insoluble, it precipitates even in highly acidic conditions where the concentration of free sulfide ions ($S^{2-}$) is very low.\n    *   ZnS, being more soluble, requires a higher concentration of $S^{2-}$ to precipitate. In acidic conditions, the equilibrium concentration of $S^{2-}$ is suppressed, making it difficult for ZnS to precipitate completely compared to CuS.\n\n2.  **Sulfide Speciation at Low pH**:\n    *   Hydrogen sulfide ($H_2S$) is a weak diprotic acid. The dissociation steps are:\n        $H_2S \\rightleftharpoons H^+ + HS^-$ ($pK_{a1} \\approx 7.0$)\n        $HS^- \\rightleftharpoons H^+ + S^{2-}$ ($pK_{a2} \\approx 13-19$, depending on the source, but effectively very high).\n    *   The problem states the pH is below $pK_1$. At this pH, the equilibrium heavily favors the molecular form $H_2S$. The concentration of the reactive ion $S^{2-}$ is extremely low.\n    *   The precipitation reaction depends on the ion product $[M^{2+}][S^{2-}]$ exceeding $K_{sp}$.\n    *   Since $[S^{2-}]$ is very low due to the low pH, only metals with extremely small $K_{sp}$ values (like Cu, Pb, Hg, Ag) will precipitate efficiently. Metals with larger $K_{sp}$ values (like Zn, Mn, Fe) will remain largely in solution because the ion product does not reach their $K_{sp}$.\n\n3.  **Evaluating the Options**:\n    *   **A. Copper sulphide is more soluble than zinc sulphide...**: Incorrect. CuS is *less* soluble.\n    *   **B. Zinc forms stronger complexes with water...**: Incorrect. While hydration exists, this is not the primary reason for the difference in precipitation efficiency under these specific sulfide conditions.\n    *   **C. At pH < pK₁, most sulphide exists as H₂S(g), reducing available S²⁻ for precipitation**: This statement correctly identifies the chemical environment. The low pH suppresses the concentration of $S^{2-}$. However, the question asks for the reason for the *difference* in efficiency between Copper and Zinc. While this explains why *both* might be affected, the fact that Copper precipitates (60%) while Zinc does not (87% removed? Wait, the prompt says 60% Cu and 87% Zn are removed. Let's re-read carefully).\n    \n    *Re-reading the prompt data*: \"60% of dissolved copper ions and 87% of dissolved zinc ions are removed\".\n    This implies Zinc is removed *more* efficiently than Copper in this specific scenario?\n    Let's re-evaluate the standard chemistry vs. the prompt's data.\n    Standard chemistry: CuS precipitates in acid; ZnS precipitates in base. So usually, Cu removal > Zn removal in acid.\n    Prompt data: Cu removal (60%) < Zn removal (87%).\n    This contradicts the standard \"group separation\" logic where Group II (Cu) precipitates in acid and Group IV (Zn) precipitates in base.\n    \n    *Alternative Interpretation*: Is it possible the question implies a specific context or there is a trick?\n    Let's look at the options again.\n    Option F: \"The solubility product of CuS is higher than that of ZnS\". This is factually **false**. $K_{sp}(CuS) \\ll K_{sp}(ZnS)$. If this were true, Cu would be harder to precipitate, which matches the data (60% vs 87%), but the statement itself is chemically incorrect.\n    \n    Let's reconsider the data. Maybe I am misinterpreting \"removed\".\n    If 60% Cu is removed and 87% Zn",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_mcqa_final_v1"
+  },
+  {
+    "domain": "knowledge_mcqa",
+    "extra_info": {
+      "domain": "knowledge_mcqa",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": null, \"uuid\": \"b0c34d45-4a6f-592d-99e6-b2945972efa8\", \"hash_id\": null, \"source_row_index\": 936, \"dataset\": \"nano_v3_sft_profiled_stem_mcqa\", \"source\": null, \"original_category\": \"nano_v3_sft_profiled_stem_mcqa\", \"original_domain\": \"science\", \"pass_rate\": 0.125, \"pass_rate_total\": 8, \"pass_rate_passed\": 1, \"choices\": [\"It ensures the correct units for energy in the potential.\", \"It accounts for the relativistic correction to the nucleon's kinetic energy.\", \"It scales the spin-orbit coupling to the nucleon's Compton wavelength.\", \"It arises from the Thomas precession in the rest frame of the nucleon.\", \"It is the square of the reduced Compton wavelength of the nucleon.\", \"It normalizes the Pauli matrices to unit magnitude.\", \"It represents the square of the speed of light in natural units.\", \"It is the eigenvalue of the spin operator for a spin-1/2 particle.\", \"It comes from the non-relativistic reduction of the Dirac equation.\", \"It ensures the operator is Hermitian.\"], \"valid_letters\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"], \"correct_letter\": \"I\", \"template_metadata\": {\"template_id\": \"mcqa_generated_021\", \"template_prompt\": \"At the end of your response, select exactly one option and state it clearly using the format: Option Selected: X\\n\\n{problem}\\n\\nSelect one and only one correct option from the choices given.\", \"output_regex\": \"Option Selected:\\\\s*([A-Za-z0-9])\\\\s*\", \"weight\": 0.005952380952380952, \"prompt_type\": \"generated\", \"format_type\": \"mcqa\"}, \"verifier_metadata\": null, \"rm_type\": \"gpqa\", \"prompt_text\": \"At the end of your response, select exactly one option and state it clearly using the format: Option Selected: X\\n\\nIn the spin-orbit interaction term \\\\( V_{so} = \\\\lambda \\\\left( \\\\frac{h}{2Mc} \\\\right)^2 \\\\nabla V \\\\cdot (\\\\vec{\\\\sigma} \\\\times \\\\vec{p}) \\\\), what is the primary physical reason for the inclusion of the factor \\\\( \\\\left( \\\\frac{h}{2Mc} \\\\right)^2 \\\\)?\\n\\nA. It ensures the correct units for energy in the potential.  \\nB. It accounts for the relativistic correction to the nucleon's kinetic energy.  \\nC. It scales the spin-orbit coupling to the nucleon's Compton wavelength.  \\nD. It arises from the Thomas precession in the rest frame of the nucleon.  \\nE. It is the square of the reduced Compton wavelength of the nucleon.  \\nF. It normalizes the Pauli matrices to unit magnitude.  \\nG. It represents the square of the speed of light in natural units.  \\nH. It is the eigenvalue of the spin operator for a spin-1/2 particle.  \\nI. It comes from the non-relativistic reduction of the Dirac equation.  \\nJ. It ensures the operator is Hermitian.\\n\\nSelect one and only one correct option from the choices given.\", \"opd_teacher\": \"science\", \"domain\": \"science\", \"source_domain\": \"science\", \"split\": \"train\", \"sample_id\": \"science:gpqa:b0c34d45-4a6f-592d-99e6-b2945972efa8:936\"}",
+      "prompt_sha256": "10491d016a7b36aa0e404c6f1185d7e8137a7c165b10238a8aad63106f3f61c3",
+      "prompt_tokens": 299,
+      "sample_id": "knowledge_mcqa-10491d016a7b36aa0e40",
+      "source_file": "Science/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 193,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "At the end of your response, select exactly one option and state it clearly using the format: Option Selected: X\n\nIn the spin-orbit interaction term \\( V_{so} = \\lambda \\left( \\frac{h}{2Mc} \\right)^2 \\nabla V \\cdot (\\vec{\\sigma} \\times \\vec{p}) \\), what is the primary physical reason for the inclusion of the factor \\( \\left( \\frac{h}{2Mc} \\right)^2 \\)?\n\nA. It ensures the correct units for energy in the potential.  \nB. It accounts for the relativistic correction to the nucleon's kinetic energy.  \nC. It scales the spin-orbit coupling to the nucleon's Compton wavelength.  \nD. It arises from the Thomas precession in the rest frame of the nucleon.  \nE. It is the square of the reduced Compton wavelength of the nucleon.  \nF. It normalizes the Pauli matrices to unit magnitude.  \nG. It represents the square of the speed of light in natural units.  \nH. It is the eigenvalue of the spin operator for a spin-1/2 particle.  \nI. It comes from the non-relativistic reduction of the Dirac equation.  \nJ. It ensures the operator is Hermitian.\n\nSelect one and only one correct option from the choices given.",
+        "role": "user"
+      }
+    ],
+    "output": "The spin-orbit interaction term in the context of nuclear physics (where $M$ typically refers to the nucleon mass) or atomic physics arises from the relativistic treatment of a particle moving in a central potential.\n\nWhen deriving the effective Hamiltonian for a spin-1/2 particle from the Dirac equation (or via a Foldy-Wouthuysen transformation), one encounters terms that couple the particle's spin to its orbital angular momentum. The interaction energy is proportional to $\\vec{L} \\cdot \\vec{S}$.\n\nHowever, there is a crucial kinematic effect known as **Thomas precession**. When a particle moves in a curved trajectory (accelerated frame), its spin vector precesses relative to a fixed inertial frame. The Thomas precession frequency is half the rate of the classical Larmor precession that would be expected if the particle were simply in a rotating frame without this relativistic kinematic correction.\n\nMathematically, the factor $\\left( \\frac{h}{2Mc} \\right)^2$ (or equivalently $\\frac{1}{4M^2c^2}$ in natural units where $\\hbar=1$) appears in the coefficient of the spin-orbit term. This specific factor is the result of the **Thomas precession** correction. Without this factor (i.e., if the precession were not exactly half the classical value), the calculated splitting of energy levels (such as the fine structure in atoms or shell structure in nuclei) would be incorrect by a factor of 2. The term essentially accounts for the fact that the rest frame of the nucleon is non-inertial and rotating.\n\nLet's evaluate the options:\n*   A: While it does ensure correct units, this is a consequence, not the *primary physical reason* for its specific form.\n*   B: This refers to the relativistic mass correction ($p^4$ term), not the spin-orbit term.\n*   C, E: These describe scaling or dimensional properties but not the physical origin.\n*   **D**: This correctly identifies the physical phenomenon (Thomas precession) responsible for the specific coefficient in the spin-orbit coupling.\n*   I: While the term comes from the non-relativistic reduction of the Dirac equation, the *specific factor* mentioned is the direct mathematical manifestation of the Thomas precession correction within that reduction. Option D is the more precise physical explanation for the factor itself.\n\nTherefore, the primary physical reason for the inclusion of this factor is the Thomas precession.\n\nOption Selected: D",
+    "output_tokens": 533,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_mcqa_final_v1"
+  },
+  {
+    "domain": "knowledge_mcqa",
+    "extra_info": {
+      "domain": "knowledge_mcqa",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": null, \"uuid\": \"1cb92e0e-47c6-59e1-9677-b637e31e46d3\", \"hash_id\": null, \"source_row_index\": 879, \"dataset\": \"nano_v3_sft_profiled_stem_mcqa\", \"source\": null, \"original_category\": \"nano_v3_sft_profiled_stem_mcqa\", \"original_domain\": \"science\", \"pass_rate\": 0.75, \"pass_rate_total\": 8, \"pass_rate_passed\": 6, \"choices\": [\"123 g/mol\", \"135 g/mol\", \"118 g/mol\", \"142 g/mol\", \"150 g/mol\", \"162 g/mol\", \"108 g/mol\", \"175 g/mol\", \"190 g/mol\", \"205 g/mol\"], \"valid_letters\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"], \"correct_letter\": \"J\", \"template_metadata\": {\"template_id\": \"mcqa_benchmark_002\", \"template_prompt\": \"Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D' (e.g. 'Answer: A').\\n\\n{problem}\", \"output_regex\": \"Answer\\\\s*:\\\\s*(?!Answer)\\\\s*([A-Za-z0-9])\\\\s*\", \"weight\": 0.125, \"prompt_type\": \"benchmark\", \"format_type\": \"mcqa\"}, \"verifier_metadata\": null, \"rm_type\": \"gpqa\", \"prompt_text\": \"Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D/E/F/G/H/I/J' (e.g. 'Answer: B').\\n\\nA compound with elemental composition 66.47% C, 5.49% H, 5.89% N, and the remainder O is known to contain one nitrogen atom per molecule. Using this constraint, estimate the molar mass of the compound.\\n\\nA. 123 g/mol  \\nB. 135 g/mol  \\nC. 118 g/mol  \\nD. 142 g/mol  \\nE. 150 g/mol  \\nF. 162 g/mol  \\nG. 108 g/mol  \\nH. 175 g/mol  \\nI. 190 g/mol  \\nJ. 205 g/mol\", \"opd_teacher\": \"science\", \"domain\": \"science\", \"source_domain\": \"science\", \"split\": \"train\", \"sample_id\": \"science:gpqa:1cb92e0e-47c6-59e1-9677-b637e31e46d3:879\"}",
+      "prompt_sha256": "c7a95f48c8a11bdcef6b95eff337d1babbc0f3296e18a0e07b43ef608ce534ff",
+      "prompt_tokens": 203,
+      "sample_id": "knowledge_mcqa-c7a95f48c8a11bdcef6b",
+      "source_file": "Science/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 179,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D/E/F/G/H/I/J' (e.g. 'Answer: B').\n\nA compound with elemental composition 66.47% C, 5.49% H, 5.89% N, and the remainder O is known to contain one nitrogen atom per molecule. Using this constraint, estimate the molar mass of the compound.\n\nA. 123 g/mol  \nB. 135 g/mol  \nC. 118 g/mol  \nD. 142 g/mol  \nE. 150 g/mol  \nF. 162 g/mol  \nG. 108 g/mol  \nH. 175 g/mol  \nI. 190 g/mol  \nJ. 205 g/mol",
+        "role": "user"
+      }
+    ],
+    "output": "To estimate the molar mass of the compound, we can follow these steps:\n\n1.  **Determine the percentage of Oxygen:**\n    The sum of the percentages of all elements must be 100%.\n    $$ \\%O = 100\\% - (\\%C + \\%H + \\%N) $$\n    $$ \\%O = 100\\% - (66.47\\% + 5.49\\% + 5.89\\%) $$\n    $$ \\%O = 100\\% - 77.85\\% = 22.15\\% $$\n\n2.  **Calculate the number of moles of each element in 100 g of the compound:**\n    Assume we have a 100 g sample.\n    *   **Carbon (C):** Atomic mass $\\approx 12.01$ g/mol\n        $$ \\text{Moles of C} = \\frac{66.47 \\text{ g}}{12.01 \\text{ g/mol}} \\approx 5.535 \\text{ mol} $$\n    *   **Hydrogen (H):** Atomic mass $\\approx 1.008$ g/mol\n        $$ \\text{Moles of H} = \\frac{5.49 \\text{ g}}{1.008 \\text{ g/mol}} \\approx 5.446 \\text{ mol} $$\n    *   **Nitrogen (N):** Atomic mass $\\approx 14.01$ g/mol\n        $$ \\text{Moles of N} = \\frac{5.89 \\text{ g}}{14.01 \\text{ g/mol}} \\approx 0.420 \\text{ mol} $$\n    *   **Oxygen (O):** Atomic mass $\\approx 16.00$ g/mol\n        $$ \\text{Moles of O} = \\frac{22.15 \\text{ g}}{16.00 \\text{ g/mol}} \\approx 1.384 \\text{ mol} $$\n\n3.  **Determine the empirical formula:**\n    Divide the mole values by the smallest number of moles calculated (which is for Nitrogen, $0.420$ mol), since the problem states there is exactly one nitrogen atom per molecule.\n    *   **C:** $5.535 / 0.420 \\approx 13.18$\n    *   **H:** $5.446 / 0.420 \\approx 12.97 \\approx 13$\n    *   **N:** $0.420 / 0.420 = 1$\n    *   **O:** $1.384 / 0.420 \\approx 3.30$\n\n    The ratios are approximately C: 13.2, H: 13, N: 1, O: 3.3.\n    Since chemical formulas must have integer subscripts, let's look for a multiplier to make these integers. The decimal parts are roughly 0.2 and 0.3. This suggests a multiplier of 5 might work well to clear the decimals ($0.2 \\times 5 = 1$, $0.3 \\times 5 = 1.5$? No, let's re-evaluate).\n\n    Let's try calculating the mass contribution of the \"1 Nitrogen\" basis directly to find the molar mass.\n    If there is 1 Nitrogen atom, the mass of Nitrogen in the molecule is $14.01$ g/mol.\n    The percentage of Nitrogen is $5.89\\%$.\n    Therefore, the total molar mass ($M$) can be calculated as:\n    $$ M = \\frac{\\text{Mass of N in formula}}{\\text{Percentage of N}} \\times 100 $$\n    $$ M = \\frac{14.01 \\text{ g/mol}}{0.0589} $$\n    $$ M \\approx 237.86 \\text{ g/mol} $$\n\n    Wait, this result ($238$) does not match any of the options (highest is 205). Let me re-read the problem carefully. \"known to contain one nitrogen atom per molecule\".\n    Did I calculate the percentage correctly?\n    $66.47 + 5.49 + 5.89 = 77.85$.\n    $100 - 77.85 = 22.1",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_mcqa_final_v1"
+  },
+  {
+    "domain": "knowledge_mcqa",
+    "extra_info": {
+      "domain": "knowledge_mcqa",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": null, \"uuid\": \"85dcf421-fd46-5868-9edb-40dc1d38d507\", \"hash_id\": null, \"source_row_index\": 111, \"dataset\": \"nano_v3_sft_profiled_stem_mcqa\", \"source\": null, \"original_category\": \"nano_v3_sft_profiled_stem_mcqa\", \"original_domain\": \"science\", \"pass_rate\": 0.625, \"pass_rate_total\": 8, \"pass_rate_passed\": 5, \"choices\": [\"\\\\( \\\\frac{\\\\sqrt{E^2 - \\\\Delta^2}}{E} \\\\)\", \"\\\\( \\\\frac{E}{\\\\sqrt{E^2 - \\\\Delta^2}} \\\\)\", \"\\\\( \\\\frac{\\\\Delta}{E} \\\\)\", \"\\\\( \\\\frac{E}{\\\\Delta} \\\\)\"], \"valid_letters\": [\"A\", \"B\", \"C\", \"D\"], \"correct_letter\": \"B\", \"template_metadata\": {\"template_id\": \"mcqa_generated_077\", \"template_prompt\": \"{problem}\\n\\nProvide the correct option at the end, enclosed in single angle brackets: <X>. Answer the question by carefully considering all options and selecting the most appropriate choice.\", \"output_regex\": \"<\\\\s*([A-Za-z0-9])\\\\s*>\", \"weight\": 0.005952380952380952, \"prompt_type\": \"generated\", \"format_type\": \"mcqa\"}, \"verifier_metadata\": null, \"rm_type\": \"gpqa\", \"prompt_text\": \"In a superconductor, quasiparticle excitations are fermionic and must satisfy a one-to-one correspondence with the original electron creation and annihilation operators. Given that the number of states in an energy interval must be conserved, the relation \\\\( N_S(E)dE = N_n(\\\\xi)d\\\\xi \\\\) holds. If \\\\( E = \\\\sqrt{\\\\xi^2 + \\\\Delta^2} \\\\), what is the correct expression for \\\\( \\\\frac{d\\\\xi}{dE} \\\\) in terms of \\\\( E \\\\) and \\\\( \\\\Delta \\\\)?\\n\\nA. \\\\( \\\\frac{\\\\sqrt{E^2 - \\\\Delta^2}}{E} \\\\)  \\nB. \\\\( \\\\frac{E}{\\\\sqrt{E^2 - \\\\Delta^2}} \\\\)  \\nC. \\\\( \\\\frac{\\\\Delta}{E} \\\\)  \\nD. \\\\( \\\\frac{E}{\\\\Delta} \\\\)\\n\\nProvide the correct option at the end, enclosed in single angle brackets: <X>. Answer the question by carefully considering all options and selecting the most appropriate choice.\", \"opd_teacher\": \"science\", \"domain\": \"science\", \"source_domain\": \"science\", \"split\": \"train\", \"sample_id\": \"science:gpqa:85dcf421-fd46-5868-9edb-40dc1d38d507:111\"}",
+      "prompt_sha256": "bd24122855627b4dc744cec4425d5e3befcbb75c7bd74b4ecef27112b9c3ce39",
+      "prompt_tokens": 235,
+      "sample_id": "knowledge_mcqa-bd24122855627b4dc744",
+      "source_file": "Science/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 23,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "In a superconductor, quasiparticle excitations are fermionic and must satisfy a one-to-one correspondence with the original electron creation and annihilation operators. Given that the number of states in an energy interval must be conserved, the relation \\( N_S(E)dE = N_n(\\xi)d\\xi \\) holds. If \\( E = \\sqrt{\\xi^2 + \\Delta^2} \\), what is the correct expression for \\( \\frac{d\\xi}{dE} \\) in terms of \\( E \\) and \\( \\Delta \\)?\n\nA. \\( \\frac{\\sqrt{E^2 - \\Delta^2}}{E} \\)  \nB. \\( \\frac{E}{\\sqrt{E^2 - \\Delta^2}} \\)  \nC. \\( \\frac{\\Delta}{E} \\)  \nD. \\( \\frac{E}{\\Delta} \\)\n\nProvide the correct option at the end, enclosed in single angle brackets: <X>. Answer the question by carefully considering all options and selecting the most appropriate choice.",
+        "role": "user"
+      }
+    ],
+    "output": "To determine the correct expression for $\\frac{d\\xi}{dE}$, we start with the given energy dispersion relation for quasiparticle excitations in a superconductor:\n\n$$ E = \\sqrt{\\xi^2 + \\Delta^2} $$\n\nwhere:\n- $E$ is the quasiparticle energy.\n- $\\xi$ is the kinetic energy relative to the Fermi level.\n- $\\Delta$ is the superconducting energy gap (assumed constant for this differentiation).\n\n**Step 1: Differentiate $E$ with respect to $\\xi$.**\n\nUsing the chain rule on the square root function:\n$$ \\frac{dE}{d\\xi} = \\frac{d}{d\\xi} \\left( (\\xi^2 + \\Delta^2)^{1/2} \\right) $$\n$$ \\frac{dE}{d\\xi} = \\frac{1}{2}(\\xi^2 + \\Delta^2)^{-1/2} \\cdot \\frac{d}{d\\xi}(\\xi^2 + \\Delta^2) $$\n$$ \\frac{dE}{d\\xi} = \\frac{1}{2\\sqrt{\\xi^2 + \\Delta^2}} \\cdot 2\\xi $$\n$$ \\frac{dE}{d\\xi} = \\frac{\\xi}{\\sqrt{\\xi^2 + \\Delta^2}} $$\n\nSince $E = \\sqrt{\\xi^2 + \\Delta^2}$, we can substitute $E$ into the denominator:\n$$ \\frac{dE}{d\\xi} = \\frac{\\xi}{E} $$\n\n**Step 2: Express $\\xi$ in terms of $E$ and $\\Delta$.**\n\nFrom the original equation $E = \\sqrt{\\xi^2 + \\Delta^2}$, we square both sides:\n$$ E^2 = \\xi^2 + \\Delta^2 $$\n$$ \\xi^2 = E^2 - \\Delta^2 $$\n$$ \\xi = \\sqrt{E^2 - \\Delta^2} $$\n(Note: We take the positive root for the magnitude relationship in the density of states context, or simply substitute the algebraic form).\n\n**Step 3: Calculate $\\frac{d\\xi}{dE}$.**\n\nWe need the reciprocal of the derivative found in Step 1:\n$$ \\frac{d\\xi}{dE} = \\left( \\frac{dE}{d\\xi} \\right)^{-1} = \\frac{E}{\\xi} $$\n\nNow, substitute the expression for $\\xi$ derived in Step 2:\n$$ \\frac{d\\xi}{dE} = \\frac{E}{\\sqrt{E^2 - \\Delta^2}} $$\n\n**Step 4: Compare with the given options.**\n\nA. $\\frac{\\sqrt{E^2 - \\Delta^2}}{E}$ (This is $\\frac{\\xi}{E} = \\frac{dE}{d\\xi}$)\nB. $\\frac{E}{\\sqrt{E^2 - \\Delta^2}}$ (This matches our derived result)\nC. $\\frac{\\Delta}{E}$ (Incorrect)\nD. $\\frac{E}{\\Delta}$ (Incorrect)\n\nThe correct expression corresponds to option B.\n\n<B>",
+    "output_tokens": 721,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 0.0,
+    "verifier": "strict_mcqa_final_v1"
+  },
+  {
+    "domain": "knowledge_mcqa",
+    "extra_info": {
+      "domain": "knowledge_mcqa",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "apache-2.0 declared by archive; upstream audit pending",
+      "metadata_json": "{\"record_id\": null, \"uuid\": \"5a8cf90e-64d4-59db-96ce-f6fe1c512696\", \"hash_id\": null, \"source_row_index\": 197, \"dataset\": \"nano_v3_sft_profiled_stem_mcqa\", \"source\": null, \"original_category\": \"nano_v3_sft_profiled_stem_mcqa\", \"original_domain\": \"science\", \"pass_rate\": 0.875, \"pass_rate_total\": 8, \"pass_rate_passed\": 7, \"choices\": [\"Acetylene\", \"Ethane\", \"Benzene\", \"All condense at the same altitude\", \"Insufficient data to determine\", \"None condense in this pressure range\", \"Diacetylene\", \"Propane\", \"Butane\", \"Methane\"], \"valid_letters\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"], \"correct_letter\": \"C\", \"template_metadata\": {\"template_id\": \"mcqa_benchmark_002\", \"template_prompt\": \"Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D' (e.g. 'Answer: A').\\n\\n{problem}\", \"output_regex\": \"Answer\\\\s*:\\\\s*(?!Answer)\\\\s*([A-Za-z0-9])\\\\s*\", \"weight\": 0.125, \"prompt_type\": \"benchmark\", \"format_type\": \"mcqa\"}, \"verifier_metadata\": null, \"rm_type\": \"gpqa\", \"prompt_text\": \"Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D/E/F/G/H/I/J' (e.g. 'Answer: I').\\n\\nIn a hypothetical atmospheric model of a cold planetary body, hydrocarbon species are produced via photochemical reactions initiated by solar UV radiation. These species include acetylene (C₂H₂), ethane (C₂H₆), and benzene (C₆H₆), all of which can condense in the stratosphere at pressures between 0.1 and 20 mbar. If the temperature decreases with altitude and the saturation vapor pressure of each species depends exponentially on temperature, which species is most likely to condense at the highest altitude (lowest pressure) under chemical equilibrium?\\n\\nA. Acetylene  \\nB. Ethane  \\nC. Benzene  \\nD. All condense at the same altitude  \\nE. Insufficient data to determine  \\nF. None condense in this pressure range  \\nG. Diacetylene  \\nH. Propane  \\nI. Butane  \\nJ. Methane\", \"opd_teacher\": \"science\", \"domain\": \"science\", \"source_domain\": \"science\", \"split\": \"train\", \"sample_id\": \"science:gpqa:5a8cf90e-64d4-59db-96ce-f6fe1c512696:197\"}",
+      "prompt_sha256": "65d106392a7c5948a78b2629966066fdb20d62325cf075de6a853774233e5c85",
+      "prompt_tokens": 244,
+      "sample_id": "knowledge_mcqa-65d106392a7c5948a78b",
+      "source_file": "Science/train.parquet",
+      "source_repo": "icemoon28/MOPD-Training-Data",
+      "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+      "source_row": 39,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D/E/F/G/H/I/J' (e.g. 'Answer: I').\n\nIn a hypothetical atmospheric model of a cold planetary body, hydrocarbon species are produced via photochemical reactions initiated by solar UV radiation. These species include acetylene (C₂H₂), ethane (C₂H₆), and benzene (C₆H₆), all of which can condense in the stratosphere at pressures between 0.1 and 20 mbar. If the temperature decreases with altitude and the saturation vapor pressure of each species depends exponentially on temperature, which species is most likely to condense at the highest altitude (lowest pressure) under chemical equilibrium?\n\nA. Acetylene  \nB. Ethane  \nC. Benzene  \nD. All condense at the same altitude  \nE. Insufficient data to determine  \nF. None condense in this pressure range  \nG. Diacetylene  \nH. Propane  \nI. Butane  \nJ. Methane",
+        "role": "user"
+      }
+    ],
+    "output": "To determine which species condenses at the highest altitude (lowest pressure), we must analyze the relationship between saturation vapor pressure, temperature, and molecular properties.\n\n1.  **Condensation Condition**: A species condenses when the partial pressure of that species in the atmosphere equals its saturation vapor pressure ($P_{sat}$). The altitude where this occurs is determined by the temperature profile and the value of $P_{sat}$ at that temperature.\n2.  **Temperature Profile**: The problem states that temperature decreases with altitude. Therefore, higher altitudes correspond to lower temperatures.\n3.  **Saturation Vapor Pressure**: The problem states that $P_{sat}$ depends exponentially on temperature (typically described by the Clausius-Clapeyron relation: $\\ln P_{sat} \\propto -\\frac{\\Delta H_{vap}}{RT}$).\n    *   For any given substance, $P_{sat}$ decreases as temperature decreases.\n    *   Crucially, substances with stronger intermolecular forces (higher boiling points) have much lower saturation vapor pressures at a given temperature compared to substances with weaker forces.\n4.  **Comparing the Species**:\n    *   **Acetylene ($C_2H_2$)**: A linear molecule with weak London dispersion forces. It has a very low boiling point ($-84^\\circ\\text{C}$).\n    *   **Ethane ($C_2H_6$)**: A non-polar molecule with slightly stronger dispersion forces than acetylene due to more electrons, but still a gas at room temperature (boiling point $\\approx -89^\\circ\\text{C}$).\n    *   **Benzene ($C_6H_6$)**: A larger, planar aromatic molecule with significant London dispersion forces and $\\pi$-stacking interactions. It has a much higher boiling point ($80^\\circ\\text{C}$) compared to acetylene and ethane.\n5.  **Logical Deduction**:\n    *   At a specific low temperature found in the upper stratosphere, the saturation vapor pressure of benzene will be significantly lower than that of ethane or acetylene because benzene is much less volatile.\n    *   Since the atmospheric pressure decreases with altitude, the atmosphere reaches the low $P_{sat}$ of benzene at a higher altitude (lower pressure) than it reaches the higher $P_{sat}$ values of acetylene or ethane.\n    *   Essentially, the \"heaviest\" or least volatile molecule in the list will be the first to reach its condensation point as you ascend to colder, lower-pressure regions.\n\nTherefore, among the listed hydrocarbons, benzene, having the highest molecular weight and strongest intermolecular forces, will have the lowest saturation vapor pressure at any given temperature in this range, causing it to condense at the highest altitude.\n\nAnswer: C",
+    "output_tokens": 608,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "scored",
+    "score": 1.0,
+    "verifier": "strict_mcqa_final_v1"
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 608, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "800f1d8a3861eb4a2f4ecd0ed46ed618c3f4f819838819191978f0c9951fcab9",
+      "prompt_tokens": 47,
+      "sample_id": "code-800f1d8a3861eb4a2f4e",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 6,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a python function to find nth bell number.\nUse the function interface illustrated by this call: bell_Number(2).\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef bell_Number(n):\n    \"\"\"\n    Calculate the nth Bell number using the Bell triangle (Aitken's array) method.\n    \n    The Bell number B(n) is the number of ways to partition a set of n elements.\n    \n    Args:\n        n (int): The index of the Bell number to compute (0-indexed).\n        \n    Returns:\n        int: The nth Bell number.\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n    \n    if n == 0:\n        return 1\n    \n    # Initialize the first row of the Bell triangle\n    # The triangle starts with B(0) = 1\n    triangle = [[1]]\n    \n    # Build the triangle up to the nth row\n    for i in range(1, n + 1):\n        # The first element of the new row is the last element of the previous row\n        prev_row = triangle[-1]\n        new_row = [prev_row[-1]]\n        \n        # Fill the rest of the row\n        for j in range(1, i + 1):\n            new_row.append(new_row[j-1] + prev_row[j-1])\n        \n        triangle.append(new_row)\n    \n    # The nth Bell number is the first element of the nth row (0-indexed logic for rows)\n    # Row 0: [1] -> B(0)\n    # Row 1: [1, 2] -> B(1) is 1\n    # Row 2: [2, 3, 5] -> B(2) is 2\n    # Row 3: [5, 7, 10, 15] -> B(3) is 5\n    # Note: The standard Bell triangle definition usually has B(n) as the first element of the (n+1)-th row\n    # if we start counting rows from 0 where row 0 is [1].\n    # Let's verify:\n    # Row 0: [1] -> B(0) = 1\n    # Row 1: [1, 2] -> B(1) = 1 (first element)\n    # Row 2: [2, 3, 5] -> B(2) = 2 (first element)\n    # Row 3: [5, 7, 10, 15] -> B(3) = 5 (first element)\n    # Row 4: [15, 20, 27, 37, 52] -> B(4) = 15 (first element)\n    \n    return triangle[n][0]\n\n# Example usage:\n# print(bell_Number(2))  # Output: 2\n```",
+    "output_tokens": 618,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 614, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "78abf839aff5e44656e7f79e4e02b48c0431bde2913bfd42fdde095c6d9f8704",
+      "prompt_tokens": 79,
+      "sample_id": "code-78abf839aff5e44656e7",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 10,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to find the cumulative sum of all the values that are present in the given tuple list.\nUse the function interface illustrated by this call: cummulative_sum([(1, 3), (5, 6, 7), (2, 6)]).\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef cumulative_sum(tuple_list):\n    \"\"\"\n    Calculate the cumulative sum of all values present in the given list of tuples.\n    \n    Parameters:\n    tuple_list (list of tuples): A list containing tuples of integers.\n    \n    Returns:\n    int: The cumulative sum of all integers in the tuples.\n    \"\"\"\n    total = 0\n    for t in tuple_list:\n        for num in t:\n            total += num\n    return total\n\n# Example usage:\n# result = cumulative_sum([(1, 3), (5, 6, 7), (2, 6)])\n# print(result)  # Output: 30\n```",
+    "output_tokens": 149,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 720, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "37aef273ee14d2eeabd3155840899f2d99379302052f3624e02ad42cb38a9fc2",
+      "prompt_tokens": 86,
+      "sample_id": "code-37aef273ee14d2eeabd3",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 37,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to add a dictionary to the tuple. The output should be a tuple.\nUse the function interface illustrated by this call: add_dict_to_tuple((4, 5, 6), {\"MSAM\" : 1, \"is\" : 2, \"best\" : 3} ).\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef add_dict_to_tuple(t, d):\n    \"\"\"\n    Adds a dictionary to the given tuple and returns a new tuple.\n    \n    Parameters:\n    t (tuple): The original tuple.\n    d (dict): The dictionary to add.\n    \n    Returns:\n    tuple: A new tuple containing the original elements followed by the dictionary.\n    \"\"\"\n    return t + (d,)\n\n# Example usage:\nresult = add_dict_to_tuple((4, 5, 6), {\"MSAM\": 1, \"is\": 2, \"best\": 3})\nprint(result)  # Output: (4, 5, 6, {'MSAM': 1, 'is': 2, 'best': 3})\n```",
+    "output_tokens": 167,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 617, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "6fa987f07aee8e2a9364f49ab83324cfc88dad9f54312193208cac5511bf26da",
+      "prompt_tokens": 82,
+      "sample_id": "code-6fa987f07aee8e2a9364",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 13,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to check for the number of jumps required of given length to reach a point of form (d, 0) from origin in a 2d plane.\nUse the function interface illustrated by this call: min_Jumps((3,4),11)==3.5.\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\nimport math\n\ndef min_Jumps(target, jump_length):\n    \"\"\"\n    Calculate the minimum number of jumps of a given length required to reach \n    a point of the form (d, 0) from the origin (0, 0) in a 2D plane.\n    \n    The problem implies that we can land on any point, but the final position \n    must be exactly (d, 0). Since we can choose the direction of each jump, \n    this is equivalent to finding the smallest integer n such that n * jump_length >= |d|.\n    However, the example min_Jumps((3,4),11)==3.5 suggests a different interpretation:\n    Perhaps the target is the point (3,4) and we want to reach a point (d,0) \n    where d is derived from the target? \n    \n    Re-evaluating based on the example: min_Jumps((3,4), 11) == 3.5.\n    If the input is a tuple (x, y), maybe we are trying to reach the point (x, y) \n    but the problem statement says \"reach a point of form (d, 0)\".\n    \n    Alternative Interpretation:\n    Maybe the function takes a target point (x, y) and a jump length, and asks \n    for the minimum jumps to reach ANY point on the x-axis (d, 0) such that the \n    last jump lands exactly on (d, 0)? No, that doesn't fit the 3.5 result.\n    \n    Let's look at the numbers: Target (3, 4), Jump 11. Result 3.5.\n    Distance from origin to (3,4) is 5.\n    If we just needed to cover distance 5 with jumps of 11, it would be ceil(5/11) = 1.\n    \n    What if the question is: \"What is the minimum number of jumps to reach the point \n    (3,4)?\" But the problem says \"reach a point of form (d, 0)\".\n    \n    Let's reconsider the example output: 3.5. This is a float. Usually, jump counts are integers.\n    Unless the \"number of jumps\" is interpreted as a continuous variable or there's a specific \n    geometric constraint I'm missing.\n    \n    Hypothesis 1: The problem asks for the minimum jumps to reach the point (3,4) itself, \n    but the description \"point of form (d,0)\" is a typo in the prompt and should be \"point (x,y)\".\n    If target is (3,4) and jump is 11. Distance = 5. Jumps = 1. Not 3.5.\n    \n    Hypothesis 2: The target is (3,4). We want to reach a point (d, 0) on the x-axis.\n    Maybe we need to overshoot (3,4) and land on the x-axis?\n    Or maybe the \"3.5\" comes from a specific formula involving the coordinates.\n    \n    Let's try to reverse engineer 3.5 from (3,4) and 11.\n    3.5 = 7/2.\n    Maybe it's related to the projection?\n    Or maybe the input (3,4) represents something else?\n    \n    Wait, could the example be `min_Jumps((3,4), 1)`? No, it says 11.\n    \n    Let's consider the phrase \"number of jumps required ... to reach a point of form (d, 0)\".\n    Maybe the target point given as (3,4) is actually the destination, and the question \n    is flawed in its description, OR the \"3.5\" is a specific result of a specific logic.\n    \n    Let's try another angle. Is it possible the problem is asking for the minimum jumps \n    to reach the point (3,4) assuming we can only move along axes? No, that's Manhattan distance.\n    |3| + |4| = 7. 7 / 11 < 1.\n    \n    What if the \"3.5\" is actually `3` jumps and the `.5` is a typo in the user's prompt? \n    Or maybe the jump length is not 11?\n    \n    Let's assume the standard interpretation for such problems: \n    \"Minimum jumps to reach a specific point (x,y) with step size L\".\n    Distance D = sqrt(x^2 + y^2).\n    Jumps = ceil(D / L).\n    For (3,4), D=5. L=11. Jumps = 1",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": false
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 607, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "c2502d358b251107c4b94c949013b51ad3e7a26e83bd7547081a97acbd7822c4",
+      "prompt_tokens": 77,
+      "sample_id": "code-c2502d358b251107c4b9",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 5,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to search a string for a regex pattern. The function should return the matching subtring, a start index and an end index.\nUse the function interface illustrated by this call: find_literals('The quick brown fox jumps over the lazy dog.', 'fox').\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\nimport re\n\ndef find_literals(text: str, pattern: str):\n    \"\"\"\n    Searches for the first occurrence of a literal substring within a text.\n    \n    Args:\n        text (str): The string to search within.\n        pattern (str): The literal substring to search for.\n    \n    Returns:\n        tuple: A tuple containing (matched_string, start_index, end_index).\n               Returns (None, -1, -1) if the pattern is not found.\n    \n    Note: This function treats the pattern as a literal string, not a regex.\n    \"\"\"\n    # Use re.escape to ensure the pattern is treated as a literal string\n    regex_pattern = re.escape(pattern)\n    match = re.search(regex_pattern, text)\n    \n    if match:\n        return (match.group(), match.start(), match.end())\n    else:\n        return (None, -1, -1)\n\n# Example usage:\n# result = find_literals('The quick brown fox jumps over the lazy dog.', 'fox')\n# print(result)  # Output: ('fox', 16, 19)\n```",
+    "output_tokens": 247,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 631, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "7d6e783945f0ffe29f05b3c76fe98cd91c18a0592e389a99baa1258e5ccac82a",
+      "prompt_tokens": 59,
+      "sample_id": "code-7d6e783945f0ffe29f05",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 26,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to replace whitespaces with an underscore and vice versa in a given string.\nUse the function interface illustrated by this call: replace_spaces('Jumanji The Jungle').\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef replace_spaces(s: str) -> str:\n    \"\"\"\n    Replaces all whitespace characters with underscores and underscores with spaces.\n    Other characters remain unchanged.\n    \n    Args:\n        s (str): The input string.\n        \n    Returns:\n        str: The modified string with swapped spaces and underscores.\n    \"\"\"\n    result = []\n    for char in s:\n        if char == ' ':\n            result.append('_')\n        elif char == '_':\n            result.append(' ')\n        else:\n            result.append(char)\n    return ''.join(result)\n\n# Example usage:\n# print(replace_spaces('Jumanji The Jungle'))  # Output: 'Jumanji_The_Jungle'\n# print(replace_spaces('Hello_World'))          # Output: 'Hello World'\n```",
+    "output_tokens": 181,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 623, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "68a5584228c47ca5a536b1c9f859c16071241111611dcc642f047c23fb28ed9f",
+      "prompt_tokens": 121,
+      "sample_id": "code-68a5584228c47ca5a536",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 18,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function to compute the n-th power of each number in a list.\nUse the function interface illustrated by this call: nth_nums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10],2)==[1, 4, 9, 16, 25, 36, 49, 64, 81, 100].\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef nth_nums(nums, n):\n    \"\"\"\n    Compute the n-th power of each number in the list.\n\n    Args:\n        nums (list of int/float): The input list of numbers.\n        n (int): The power to raise each number to.\n\n    Returns:\n        list of int/float: A new list containing the n-th power of each input number.\n    \"\"\"\n    return [num ** n for num in nums]\n\n# Example usage:\n# result = nth_nums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2)\n# print(result)  # Output: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]\n```",
+    "output_tokens": 196,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "code",
+    "extra_info": {
+      "domain": "code",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "cc-by-4.0",
+      "metadata_json": "{\"task_id\": 615, \"source_split\": \"train\", \"license\": \"cc-by-4.0\", \"verifier\": \"syntax_only\", \"tests_status\": \"not_executed\"}",
+      "prompt_sha256": "6c9005ac04d8341a09d32c4551faa68f5e649157a18fcfc0a8c9a0b6fcd8d780",
+      "prompt_tokens": 142,
+      "sample_id": "code-6c9005ac04d8341a09d3",
+      "source_file": "sanitized/train-00000-of-00001.parquet",
+      "source_repo": "google-research-datasets/mbpp",
+      "source_revision": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+      "source_row": 11,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.\nUse the function interface illustrated by this call: average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25].\nReturn Python code in a fenced code block.",
+        "role": "user"
+      }
+    ],
+    "output": "```python\ndef average_tuple(tuples):\n    \"\"\"\n    Takes a tuple of tuples and returns a list of averages for each inner tuple.\n    \n    Args:\n        tuples (tuple of tuple of numbers): Input data structure.\n        \n    Returns:\n        list of float: Average value for each inner tuple.\n    \"\"\"\n    return [sum(inner_tuple) / len(inner_tuple) for inner_tuple in tuples]\n\n# Example usage:\n# result = average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))\n# print(result)  # Output: [30.5, 34.25, 27.0, 23.25]\n```",
+    "output_tokens": 198,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "no_isolated_execution",
+    "python_syntax_valid": true
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-3-Nano\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "783fdd8508a8c7c69954b7d47f9eb0165d42bcae6bf78906c38507410064186b",
+      "prompt_tokens": 30,
+      "sample_id": "chat-783fdd8508a8c7c69954",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 167,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "why is it important for companies to have their workers participate in an annual PPE inspection?",
+        "role": "user"
+      }
+    ],
+    "output": "It is critically important for companies to involve workers in annual Personal Protective Equipment (PPE) inspections because **the worker is the final link in the safety chain.** While management provides the equipment and policies, the worker is the one who actually wears, maintains, and relies on that equipment daily.\n\nHere are the key reasons why worker participation in these inspections is essential:\n\n### 1. Identification of Real-World Wear and Tear\nManagement may see PPE as a new item issued at the start of the year, but workers see how it degrades over time. Workers are best positioned to identify:\n*   **Micro-damage:** Small cracks in respirator seals, fraying in harness webbing, or minor cuts in gloves that are invisible to an untrained observer.\n*   **Hidden Defects:** Internal corrosion in hard hats or compromised stitching that hasn't yet caused a visible failure.\n*   **Comfort Issues:** Equipment that looks fine but causes discomfort (e.g., a helmet that shifts too easily), which can lead to workers removing it during critical tasks.\n\n### 2. Validation of Proper Fit and Function\nPPE is only effective if it fits the specific user. An annual inspection led by a worker ensures that:\n*   The equipment still fits correctly after weight changes, hair growth, or changes in work posture.\n*   The equipment functions as intended (e.g., a respirator still seals properly, or safety glasses still provide adequate coverage).\n*   There are no \"one-size-fits-all\" issues where a size that worked last year no longer works for that specific employee.\n\n### 3. Psychological Ownership and Safety Culture\nWhen workers are actively involved in inspecting their own gear, it shifts the mindset from **compliance** to **ownership**.\n*   **Empowerment:** It signals to employees that the company values their safety enough to listen to their assessment of their tools.\n*   **Accountability:** Workers are more likely to report hazards and maintain high safety standards when they feel responsible for the integrity of their own protection.\n*   **Trust:** It builds trust between management and the workforce, reducing the \"us vs. them\" dynamic often found in safety enforcement.\n\n### 4. Regulatory Compliance and Liability Mitigation\nFrom a legal standpoint, many occupational health and safety regulations (such as OSHA in the US) require that PPE be maintained in a sanitary and reliable condition.\n*   **Due Diligence:** If an accident occurs due to faulty PPE, having documented evidence that the worker participated in a thorough inspection demonstrates that the company took reasonable steps to ensure the equipment was safe.\n*   **Documentation:** Worker sign-offs on inspection forms create a clear audit trail proving that the equipment was checked and deemed safe before use.\n\n### 5. Early Intervention and Cost Savings\nCatching a defect early through worker inspection prevents catastrophic failures.\n*   **Preventing Injury:** A single failure of a harness or respirator can result in severe injury or death.\n*   **Cost Efficiency:** Replacing a pair of gloves or a respirator is significantly cheaper than treating a worker for an injury, paying out workers' compensation, or facing regulatory fines.\n\n### Conclusion\nUltimately, an annual PPE inspection is not just a bureaucratic checkbox; it is a **collaborative safety audit**. By including workers, companies ensure that the equipment is not only technically sound but also practically viable for the people who must rely on it to survive their workday. This partnership is the most effective way to prevent accidents and foster a proactive safety culture.",
+    "output_tokens": 737,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-Cascade-1\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "4dafdb609fd2f4cb30abdf4fb6248035b5f88ee67ac946dd35abbb768093507a",
+      "prompt_tokens": 45,
+      "sample_id": "chat-4dafdb609fd2f4cb30ab",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 100,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "You are a helpful and harmless assistant.\n\nYou are not allowed to use any tools.",
+        "role": "system"
+      },
+      {
+        "content": "Can you explain why galaxies are spiral in shape?",
+        "role": "user"
+      }
+    ],
+    "output": "The spiral shape of galaxies is not a static design but a dynamic result of how stars, gas, and dark matter move under the influence of gravity and rotation. While there are different types of spiral galaxies, the formation of their arms generally relies on a combination of **rotation**, **density waves**, and **star formation**.\n\nHere is a step-by-step breakdown of why they take this shape:\n\n### 1. Conservation of Angular Momentum\nWhen a galaxy forms from a collapsing cloud of gas and dust, it possesses some initial rotation. As the cloud collapses under its own gravity, it spins faster (similar to an ice skater pulling in their arms). This causes the material to flatten into a disk rather than collapsing into a sphere. The stars and gas orbit the center, creating a rotating disk structure.\n\n### 2. The Density Wave Theory\nIf spiral arms were simply groups of stars moving together like a rigid wheel, the inner stars (which orbit faster due to Kepler's laws) would quickly leave the outer stars behind, winding the arms up so tightly they would disappear. Since we observe long, stable spiral arms, astronomers use the **Density Wave Theory** to explain this.\n\n*   **Traffic Jam Analogy**: Imagine a highway where cars (stars and gas) are moving at different speeds. If there is a slow-moving traffic jam (a density wave), cars enter the jam, slow down, and bunch up, then speed up and leave the jam. The jam itself moves at a constant speed, but the cars flow through it.\n*   **In Galaxies**: The spiral arms are not permanent groups of stars. Instead, they are **regions of higher density** that rotate through the galactic disk at a constant speed. As gas clouds enter these dense regions, they are compressed.\n\n### 3. Star Formation and Visibility\nThis compression of gas is the key to why we *see* the spiral arms.\n*   When gas clouds are compressed by the density wave, they collapse under gravity to form new stars.\n*   These newly formed stars are massive, bright, and short-lived (often blue supergiants).\n*   Because they are so bright, they light up the spiral arms, making them visible against the darker background of older, dimmer stars.\n*   Once the massive stars burn out, they drift out of the arm, but the density wave continues to compress gas further out, creating new stars and maintaining the spiral pattern.\n\n### 4. The Role of Dark Matter\nWhile visible matter (stars and gas) forms the disk, **dark matter** provides the gravitational glue that holds the galaxy together. The distribution of dark matter determines the galaxy's rotation curve (how fast stars orbit at different distances). Without the specific gravitational potential provided by dark matter, the delicate balance required to maintain the spiral structure against the tendency of the disk to disperse or wind up would not be possible.\n\n### Summary\nGalaxies are spiral because:\n1.  **Rotation** flattens the galaxy into a disk.\n2.  **Density waves** create moving regions of high pressure that travel through the disk.\n3.  **Star formation** occurs in these compressed regions, creating bright stars that highlight the arms.\n4.  **Dark matter** provides the necessary gravity to keep the structure stable over billions of years.\n\nIt is important to note that not all galaxies are spiral; some are elliptical (randomly oriented orbits) or irregular, depending on their formation history and whether they have been disturbed by collisions with other galaxies.",
+    "output_tokens": 729,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-Cascade-1\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "102a2c639b4b70c18f3d9ef48036e69079f7484f95fa804353357bff264f565a",
+      "prompt_tokens": 57,
+      "sample_id": "chat-102a2c639b4b70c18f3d",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 12,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "You are a helpful and harmless assistant.\n\nYou are not allowed to use any tools.",
+        "role": "system"
+      },
+      {
+        "content": "Write a short story about a coven of witches who are determined to put an end to the opioid crisis.",
+        "role": "user"
+      }
+    ],
+    "output": "The moon hung low over the Blackwood Valley, casting a silver sheen on the dew-laden grass, but the air inside the circle of stones was thick with something heavier than mist. It smelled of dried sage, burnt cinnamon, and the sharp, metallic tang of desperation.\n\nSeven women stood in a tight ring, their hands clasped together. They were not the witches of old folklore, casting spells to turn water into wine or summon storms. They were the Coven of the Hollowed, a modern order dedicated to one singular, agonizing mission: to break the grip of the opioid crisis.\n\nIn the center of the circle lay a small, iron-bound chest. Inside were not gold coins, but vials of clear liquid, syringes, and packets of white powder—the very agents of the valley's suffering.\n\n\"We cannot fight this with wands alone,\" whispered Elara, the coven's matriarch. Her eyes, usually sharp with ancient knowledge, were rimmed with red. \"This is a poison that has seeped into the very marrow of our community. It steals breath, it steals memory, it steals the future.\"\n\n\"Then we must steal it back,\" said Kaelen, a young witch who had lost her brother to an overdose three years prior. She stepped forward, her voice trembling but resolute. \"We don't just banish it; we transmute it.\"\n\nThe ritual began not with a chant of destruction, but of transformation. Elara raised her hands, and the air shimmered. \"By the root that breaks the chain, and the leaf that heals the wound,\" she intoned. \"We call upon the Great Alchemy.\"\n\nAs she spoke, the vials in the chest began to glow with a soft, pulsating blue light. The witches joined in, their voices weaving a complex tapestry of sound. They didn't try to destroy the drugs; they tried to change their nature. They poured their collective will into the mixture, channeling the energy of resilience, the warmth of community, and the fierce protection of the earth.\n\nThe blue light swirled, turning a deep, vibrant violet. The smell of chemicals and decay was replaced by the scent of rain on dry earth and blooming jasmine.\n\n\"What are you doing?\" asked Mara, a healer who had spent years running support groups. \"You can't just make the drugs go away. People are already addicted.\"\n\n\"We aren't making the drugs disappear,\" Elara corrected, her voice steady now. \"We are changing the narrative. We are turning the poison into a catalyst for healing. We are weaving a spell of *Recovery* that binds tighter than any chemical bond.\"\n\nThe violet light shot upward, piercing the night sky, and then rained down like a gentle snow. Where it touched the ground, it didn't vanish. Instead, it formed a shimmering, translucent barrier around the valley. It wasn't a wall to keep people out, but a net to catch them before they fell.\n\nThe magic worked differently than they had expected. It didn't erase the pain of withdrawal or the history of addiction. Instead, it amplified the human spirit's ability to endure it. It made the cravings feel less like a master and more like a storm that could be weathered. It strengthened the resolve of those in recovery, making the path forward feel less lonely and more illuminated.\n\nAs the light faded, the chest was empty. The vials were gone, not destroyed, but transformed into something else entirely—tiny, glowing seeds scattered across the valley floor.\n\n\"These are not just seeds,\" Kaelen said, picking one up. It hummed with a warm, steady rhythm. \"They are seeds of hope. Wherever they land, they will grow into gardens of support, into safe houses, into voices of encouragement.\"\n\nElara placed a hand on Kaelen's shoulder. \"The crisis is not a monster we slay with fire. It is a shadow we must learn to walk through together. Tonight, we have not ended the war, but we have changed the battlefield.\"\n\nThe seven witches broke the circle, their hands still linked. They looked out over the valley, no longer seeing a landscape of despair, but one waiting to be healed. The work was far from over; there would be more nights of vigil, more rituals of support, and more tears to shed. But as the first light of dawn touched the horizon, they knew they were no longer fighting alone.\n\nThe coven of witches had put down their wands and picked up their lives, determined to weave a new reality where no one had to face the darkness without a light.",
+    "output_tokens": 963,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-Cascade-1\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "f1ae5a59f301430cc68cac67327d8a34eb5846e6ea90675b92518e72c4dcf234",
+      "prompt_tokens": 52,
+      "sample_id": "chat-f1ae5a59f301430cc68c",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 27,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "You are a helpful and harmless assistant.\n\nYou are not allowed to use any tools.",
+        "role": "system"
+      },
+      {
+        "content": "Will you make a list of all the research areas ai and ml can help in?",
+        "role": "user"
+      }
+    ],
+    "output": "Artificial Intelligence (AI) and Machine Learning (ML) are transforming nearly every sector of the global economy and society. While it is impossible to list *every* single niche sub-field, here is a comprehensive categorization of the major research areas where AI and ML are driving significant innovation and research:\n\n### 1. Healthcare & Biotechnology\n*   **Drug Discovery:** Accelerating the identification of new molecules and predicting protein structures (e.g., AlphaFold).\n*   **Diagnostics:** Analyzing medical images (X-rays, MRIs) to detect diseases like cancer earlier than human experts.\n*   **Personalized Medicine:** Tailoring treatment plans based on a patient's genetic makeup and lifestyle data.\n*   **Genomics:** Sequencing DNA and identifying genetic markers for diseases.\n*   **Robotic Surgery:** Enhancing precision in surgical procedures through AI-assisted robotics.\n\n### 2. Finance & Economics\n*   **Algorithmic Trading:** Executing high-frequency trades based on market patterns and sentiment analysis.\n*   **Fraud Detection:** Identifying anomalous transactions in real-time to prevent financial crime.\n*   **Credit Scoring:** Assessing creditworthiness using alternative data sources beyond traditional credit history.\n*   **Risk Management:** Predicting market volatility and systemic risks.\n*   **Quantitative Finance:** Modeling complex economic systems and asset pricing.\n\n### 3. Climate Change & Environmental Science\n*   **Climate Modeling:** Improving the accuracy of weather forecasting and long-term climate predictions.\n*   **Renewable Energy Optimization:** Managing smart grids and optimizing wind/solar energy distribution.\n*   **Biodiversity Monitoring:** Using computer vision to track wildlife populations and deforestation via satellite imagery.\n*   **Carbon Footprint Tracking:** Analyzing supply chains to measure and reduce emissions.\n\n### 4. Transportation & Logistics\n*   **Autonomous Vehicles:** Developing perception and decision-making systems for self-driving cars and drones.\n*   **Route Optimization:** Solving the \"Traveling Salesman Problem\" to minimize fuel consumption and delivery times.\n*   **Traffic Management:** Predicting congestion and optimizing traffic light systems in smart cities.\n*   **Supply Chain Resilience:** Forecasting demand and managing inventory levels dynamically.\n\n### 5. Education & Learning\n*   **Adaptive Learning Systems:** Creating personalized curricula that adjust to a student's pace and learning style.\n*   **Automated Tutoring:** Providing instant feedback and answering questions via conversational AI.\n*   **Administrative Efficiency:** Automating grading, scheduling, and resource allocation in institutions.\n*   **Language Acquisition:** Developing tools that help learners master new languages through immersion and correction.\n\n### 6. Manufacturing & Industry 4.0\n*   **Predictive Maintenance:** Anticipating machine failures before they occur to reduce downtime.\n*   **Quality Control:** Using computer vision to inspect products for defects at high speeds.\n*   **Generative Design:** Creating optimized product designs that meet specific constraints (weight, strength, cost).\n*   **Robotics:** Enabling collaborative robots (cobots) to work safely alongside humans.\n\n### 7. Agriculture & Food Security\n*   **Precision Farming:** Using drones and sensors to monitor crop health and optimize water/fertilizer use.\n*   **Yield Prediction:** Forecasting harvest sizes based on weather and soil data.\n*   **Pest & Disease Detection:** Early identification of crop threats using image analysis.\n*   **Supply Chain Transparency:** Tracking food from farm to table to reduce waste and ensure safety.\n\n### 8. Law & Public Policy\n*   **Legal Research:** Quickly analyzing vast amounts of case law and statutes to find precedents.\n*   **Contract Review:** Automating the extraction and analysis of key terms in legal documents.\n*   **Sentiment Analysis:** Monitoring public opinion on policies or legislation from social media and news.\n*   **Bias Detection:** Analyzing historical data to identify and mitigate systemic biases in policing or hiring.\n\n### 9. Entertainment & Media\n*   **Content Generation:** Creating music, art, text, and video (Generative AI).\n*   **Recommendation Systems:** Personalizing content on streaming platforms (Netflix, Spotify, YouTube).\n*   **Deepfake Detection:** Developing algorithms to identify synthetic media.\n*   **Game Design:** Creating non-player characters (NPCs) with dynamic behaviors and procedural level generation.\n\n### 10. Cybersecurity\n*   **Threat Detection:** Identifying zero-day attacks and malware patterns in real-time.\n*   **Network Security:** Analyzing traffic flows to detect intrusions.\n*   **Phishing Detection:** Recognizing fraudulent emails and messages.\n*   **Vulnerability Assessment:** Automatically scanning codebases for security flaws.\n\n### 11. Science & Fundamental Research\n*   **Materials Science:** Discover",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-3-Nano\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "0d1a94d63e0ad2a021b5aa1a1ada4b13d88e4def06adf812bd7f4ff338d74f2b",
+      "prompt_tokens": 50,
+      "sample_id": "chat-0d1a94d63e0ad2a021b5",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 204,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "请把下面的文字改写成更符合学术表达的形式：\n\n**Physical model:**  \n(a) bionic rib proposed process;  \n(b) fluid domain model;  \n(c) cross‑section.",
+        "role": "user"
+      }
+    ],
+    "output": "为了使这段文字更符合学术规范（如用于论文中的图注、模型描述或方法论部分），建议根据具体的使用场景选择以下几种改写方案：\n\n### 方案一：标准学术图注风格（推荐用于图片标题）\n这种风格简洁、客观，使用名词短语，是科技论文中最常见的格式。\n\n> **Physical modeling:**\n> (a) Proposed bionic rib fabrication process;\n> (b) Fluid domain configuration;\n> (c) Cross-sectional view.\n\n### 方案二：描述性风格（推荐用于正文段落）\n如果您需要在正文中描述这些模型，可以使用完整的句子结构，强调逻辑关系。\n\n> **Physical Model Description:**\n> Figure X illustrates the physical framework, comprising: (a) the proposed bionic rib manufacturing process, (b) the defined fluid domain, and (c) the corresponding cross-section.\n\n### 方案三：更严谨的术语表达（针对特定工程领域）\n如果您的研究涉及具体的制造工艺或流体力学仿真，可以使用更精确的动词或名词。\n\n> **Physical Schematics:**\n> (a) Schematic of the proposed bionic rib processing workflow;\n> (b) Geometric representation of the fluid domain;\n> (c) Detailed cross-sectional geometry.\n\n---\n\n### 修改要点解析（Why it's better）：\n\n1.  **标题优化**：将 \"Physical model\" 改为 **\"Physical modeling\"**（物理建模过程）或 **\"Physical schematics\"**（物理示意图），在学术语境下更准确地涵盖了“过程”和“模型”两个概念。\n2.  **用词精准化**：\n    *   将 \"proposed process\" 细化为 **\"fabrication process\"**（制造工艺）或 **\"processing workflow\"**（处理流程），比单纯的 \"process\" 更具工程感。\n    *   将 \"fluid domain model\" 改为 **\"fluid domain configuration\"**（流体域构型）或 **\"geometric representation\"**（几何表征），强调这是模型中的空间定义，而不仅仅是“模型”。\n    *   将 \"cross-section\" 补全为 **\"Cross-sectional view\"** 或 **\"Cross-sectional geometry\"**，使其作为名词短语更加完整。\n3.  **句式结构**：使用了平行结构（Parallelism），即三个子项 (a), (b), (c) 的语法结构保持一致（均为名词短语），增强了阅读的节奏感和专业性。\n\n**建议最终选用版本（通用性最强）：**\n\n> **Physical Modeling:**\n> (a) Proposed bionic rib fabrication process;\n> (b) Fluid domain configuration;\n> (c) Cross-sectional view.",
+    "output_tokens": 557,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-3-Nano\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "2e6a603d8e2e4ae2e4a378774bbef283b13f918344b26d23941ad86a578ec8c5",
+      "prompt_tokens": 22,
+      "sample_id": "chat-2e6a603d8e2e4ae2e4a3",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 55,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "5 industrias ligeras que se encuentran en Cuba",
+        "role": "user"
+      }
+    ],
+    "output": "En Cuba, el sector de las industrias ligeras es fundamental para la economía nacional, ya que se enfoca en la producción de bienes de consumo final y semielaborados, utilizando principalmente materias primas nacionales o importadas. Este sector ha experimentado una transformación significativa en las últimas décadas, pasando de ser casi exclusivamente estatal a incluir una fuerte participación de empresas mixtas y cooperativas.\n\nAquí te presento **5 industrias ligeras clave** que se encuentran activas en Cuba:\n\n1.  **Industria Alimentaria y de Bebidas**\n    Es probablemente el sector más diverso y visible. Incluye la producción de harinas, aceites, conservas, lácteos, panadería y, muy importante, la industria de bebidas alcohólicas (como el ron y el aguardiente) y no alcohólicas. Empresas como *Cubapastelería*, *Cubayogur* y las fábricas de ron (ej. *H. Bacardí*) son pilares de este sector.\n\n2.  **Industria Textil y de Confección**\n    Históricamente muy fuerte en Cuba, esta industria se dedica a la producción de hilos, tejidos, prendas de vestir y calzado. Aunque ha enfrentado desafíos por la falta de insumos, sigue siendo vital para el abastecimiento interno y la exportación de ropa de trabajo y moda básica. Se destaca la producción de ropa de algodón y la confección de uniformes.\n\n3.  **Industria del Tabaco**\n    Es una de las industrias ligeras más emblemáticas y rentables de la isla. Cubana Tabacalera es el monopolio estatal que produce cigarrillos, puros y tabaco en hoja para exportación. Es un sector estratégico no solo por su volumen económico, sino por su reputación mundial en la calidad de sus productos.\n\n4.  **Industria del Mueble y la Carpintería**\n    Esta rama se encarga de la fabricación de muebles de madera, puertas, ventanas y elementos de construcción ligera. Dado que Cuba tiene una tradición de carpintería artesanal, muchas de estas fábricas combinan procesos industriales con técnicas manuales para producir mobiliario residencial y de oficina.\n\n5.  **Industria de la Construcción de Materiales de Uso Doméstico (Cerámica y Vidrio)**\n    Aunque a veces se solapa con la industria pesada (por el uso de hornos), la producción de cerámica (azulejos, baldosas, vajilla) y vidrio (botellas, envases) se considera ligera cuando está orientada al consumo final del hogar. Empresas como *Ceram* y *Vidriera* son ejemplos de esta actividad, abasteciendo el mercado interno de materiales para la construcción y el uso diario.\n\nEstas industrias operan bajo un modelo mixto donde el Estado mantiene el control de las grandes fábricas, pero también fomenta la creación de **Unidades de Producción de Pequeña y Mediana Empresa (UPPM)** y cooperativas, lo que ha permitido una mayor flexibilidad y adaptación a las necesidades del mercado local.",
+    "output_tokens": 667,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-Cascade-1\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "c943cb39ba93b950be4218fca3842485cee7ec99f236f7af59ce131cbf8fccf9",
+      "prompt_tokens": 44,
+      "sample_id": "chat-c943cb39ba93b950be42",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 239,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "You are a helpful and harmless assistant.\n\nYou are not allowed to use any tools.",
+        "role": "system"
+      },
+      {
+        "content": "help me brainstorm ways to improve customer onboarding",
+        "role": "user"
+      }
+    ],
+    "output": "Improving customer onboarding is one of the highest-impact levers you can pull for reducing churn and increasing lifetime value. The goal is to move the customer from \"curiosity\" to \"confidence\" as quickly as possible.\n\nHere is a brainstorming list of strategies categorized by the stage of the onboarding journey, ranging from tactical tweaks to strategic shifts:\n\n### 1. Pre-Onboarding: Setting the Stage\nBefore they even log in, you can reduce anxiety and set expectations.\n*   **The \"Why\" Before the \"How\":** Send a welcome email that focuses on the *outcome* they will achieve, not just the features. \"Here is how you will save 10 hours a week\" vs. \"Here is how to click the settings button.\"\n*   **Personalized Invites:** If possible, invite the specific decision-maker or the primary user by name, referencing their specific role or industry challenges.\n*   **Pre-Call Questionnaire:** For high-touch B2B, send a short form before the kickoff call to understand their specific goals. This makes the first meeting feel tailored, not generic.\n*   **Clear Next Steps:** Ensure the email containing the login link explicitly states: \"Click here to start,\" \"You will receive a setup email in 5 minutes,\" or \"Your account manager will call you at 2 PM.\"\n\n### 2. The First Login: Friction Reduction\nThe first 5 minutes are critical. If they get stuck here, they often never return.\n*   **The \"Aha!\" Moment First:** Design the interface so the core value proposition is visible immediately. Don't hide the main feature behind a \"Learn More\" modal.\n*   **Progressive Disclosure:** Don't overwhelm them with every setting at once. Show them the essential path first, and reveal advanced settings only when they need them.\n*   **Interactive Walkthroughs:** Instead of a static PDF, use in-app tooltips, video pop-ups, or a guided tour that highlights exactly what to click next.\n*   **Remove Friction:** Pre-fill user profiles where possible. If they have to create a complex password or verify a phone number immediately, consider allowing social login or temporary access for the first session.\n\n### 3. Content & Education: Making it Stick\nHow you teach them matters as much as what you teach them.\n*   **Micro-Learning:** Break documentation into bite-sized chunks (3-5 minutes max). A 20-page PDF is often ignored; a 3-minute video is watched.\n*   **Role-Based Paths:** Create different onboarding tracks for different user types (e.g., \"The Admin Track\" vs. \"The End-User Track\").\n*   **Success Stories:** Show a short case study or testimonial relevant to their industry *during* the onboarding flow. \"See how Company X solved this exact problem.\"\n*   **Gamification:** Use progress bars, badges, or checklists. \"You've completed 3 of 5 setup steps! One more to unlock the dashboard.\"\n\n### 4. Human Touch: Support & Guidance\nAutomation is great, but humans build trust.\n*   **The \"Day 1\" Check-in:** Have a dedicated person (CSM, Success Manager, or even a high-volume chatbot) reach out within 24 hours of sign-up to ask, \"Did you get set up?\"\n*   **Contextual Support:** Instead of a generic \"Contact Us\" link, offer a \"Get Help\" button that appears only when a user is likely to be stuck (e.g., hovering over a complex feature).\n*   **Office Hours:** Host weekly or bi-weekly live Q&A sessions specifically for new users to ask questions in real-time.\n*   **Dedicated Slack/Discord Channel:** Create a community space where new users can introduce themselves and ask peers for help.\n\n### 5. Measurement & Iteration: Data-Driven Improvements\nYou can't improve what you don't measure.\n*   **Define Success Metrics:** What does \"successful onboarding\" look like? Is it activating a specific feature? Completing a profile? Making a first sale? Define this clearly.\n*   **Drop-off Analysis:** Use analytics to see exactly where users quit the onboarding flow. If 50% drop off at the \"Payment Setup\" screen, simplify that step.\n*   **Feedback Loops:** Send a \"How are you feeling?\" survey immediately after the first major milestone, not just at the end of the process.\n*   **A/B Test Your Flows:** Test different welcome emails, different order of features, or different video lengths to see what converts better.\n\n### 6. Strategic Shifts (Advanced)\n*   **Product-Led Growth (PLG) vs. Sales-Led:** Decide if your product should be usable enough for a free",
+    "output_tokens": 1024,
+    "finish_reason": "length",
+    "truncated": true,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  },
+  {
+    "domain": "chat",
+    "extra_info": {
+      "domain": "chat",
+      "instruction_id_list": [],
+      "kwargs_json": "[]",
+      "license": "nvidia-open-model-license",
+      "metadata_json": "{\"source\": \"Nemotron-Cascade-1\", \"generator\": \"-\", \"verifier\": \"unscored\", \"license\": \"nvidia-open-model-license\"}",
+      "prompt_sha256": "9f77f508a5ddb5fe4ce43c2b0efe0ffa2acfc1cad7d845e98e43b7633cbd9149",
+      "prompt_tokens": 42,
+      "sample_id": "chat-9f77f508a5ddb5fe4ce4",
+      "source_file": "chat/chat_part_1.jsonl",
+      "source_repo": "nvidia/Nemotron-Cascade-2-SFT-Data",
+      "source_revision": "9f36020daf067f1a8b39336bf619fe30af30bb02",
+      "source_row": 86,
+      "split": "val",
+      "verification_status": "candidate_not_independently_verified"
+    },
+    "prompt": [
+      {
+        "content": "You are a helpful and harmless assistant.\n\nYou are not allowed to use any tools.",
+        "role": "system"
+      },
+      {
+        "content": "What are some networking best practices?",
+        "role": "user"
+      }
+    ],
+    "output": "Networking best practices vary depending on whether you are referring to **professional networking** (building career relationships) or **computer/network infrastructure** (IT security and management). Here are the top best practices for both contexts:\n\n### 🤝 Professional Networking Best Practices\n\n1.  **Be Genuine and Curious**\n    *   Focus on the other person, not just what you can get out of the interaction. Ask open-ended questions about their work, challenges, and interests.\n    *   Practice active listening; avoid interrupting or immediately pitching your own agenda.\n\n2.  **Leverage LinkedIn Effectively**\n    *   Keep your profile updated with a professional photo, clear headline, and detailed experience.\n    *   Personalize connection requests. Instead of a generic \"Hi,\" write, \"Hi [Name], I enjoyed your post on X and would love to connect.\"\n\n3.  **Follow Up Promptly**\n    *   Send a thank-you message or note within 24–48 hours of meeting someone. Mention a specific detail from your conversation to show you were engaged.\n    *   Offer value early on (e.g., sharing an article relevant to their interests) rather than asking for a job immediately.\n\n4.  **Provide Value First**\n    *   Networking is a two-way street. Share insights, make introductions between contacts, or offer help before asking for favors. This builds trust and reciprocity.\n\n5.  **Maintain Your Network**\n    *   Don't let connections go cold. Check in periodically with a simple update or a congratulatory message on a milestone. Consistency is key to long-term relationships.\n\n---\n\n### 💻 Computer & Network Infrastructure Best Practices\n\n1.  **Segment Your Network (VLANs)**\n    *   Divide your network into smaller sub-networks (Virtual LANs) based on function (e.g., guest Wi-Fi, IoT devices, servers, corporate staff). This limits the spread of potential breaches and reduces broadcast traffic.\n\n2.  **Implement Strong Access Control**\n    *   Use the **Principle of Least Privilege**: Users and devices should only have the minimum access necessary to perform their tasks.\n    *   Enforce Multi-Factor Authentication (MFA) for all administrative and remote access points.\n\n3.  **Regular Patching and Updates**\n    *   Keep all network devices (routers, switches, firewalls) and connected software up to date. Unpatched systems are the most common entry point for attackers.\n\n4.  **Secure Your Wi-Fi**\n    *   Use WPA3 encryption (or WPA2 if WPA3 isn't available).\n    *   Change default administrator passwords on all hardware.\n    *   Create a separate SSID for guest networks to isolate them from your internal infrastructure.\n\n5.  **Monitor and Log Activity**\n    *   Enable logging on all critical devices. Use a SIEM (Security Information and Event Management) system to detect anomalies, such as unusual traffic spikes or unauthorized access attempts.\n\n6.  **Backup Configuration Files**\n    *   Regularly back up the configuration files of your network devices. If a device fails or gets compromised, you can quickly restore it to a known good state.\n\nWhich of these areas were you most interested in? I can provide more specific details or examples for either professional or technical networking.",
+    "output_tokens": 709,
+    "finish_reason": "stop",
+    "truncated": false,
+    "status": "unscored",
+    "score": null,
+    "verifier": "not_available"
+  }
+]
