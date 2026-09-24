@@ -13,7 +13,10 @@ mkdir -p "$(dirname "$ENV")"
 
 # Keep the lockfile from the checked-out VERL source.  The fsdp extra is the
 # SFT training backend; no vLLM is needed for SFT itself.
-UV_PROJECT_ENVIRONMENT="$ENV" uv sync --project "$ROOT" --extra fsdp --python 3.12
+# flash-attn is an optional kernel for GPU throughput.  The current VERL
+# wheelhouse has no matching CPython 3.12 wheel on this CPU preparation node;
+# omit it here and install a CUDA-matched wheel on the GPU node if available.
+UV_PROJECT_ENVIRONMENT="$ENV" uv sync --project "$ROOT" --extra fsdp --python 3.12 --no-install-package flash-attn
 "$ENV/bin/python" - <<'PY'
 import torch
 import transformers
