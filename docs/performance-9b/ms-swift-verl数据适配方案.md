@@ -58,4 +58,4 @@ messages保留system/user/assistant/tool语义、content/reasoning、tool_calls(
 - [ms-swift Agent支持](https://github.com/modelscope/ms-swift/blob/main/docs/source_en/Instruction/Agent-support.md)：tool_call/tool_response与agent_template合同。
 - 本仓`verl/verl/utils/dataset/multiturn_sft_dataset.py:233`：assistant默认全监督；`verl/verl/trainer/config/sft_trainer_engine.yaml`：messages/tools、custom_cls、模板token mismatch警示。
 
-CodeFlame是否取消Gemini3.1排除：最新措辞已向用户确认；在明确答复前沿用原规则，不擅自取消。此数据筛选规则与框架格式适配是两件事。
+CodeFlame规则已由用户明确确认：从数据中去掉Gemini 3.1（含3.1 Pro）；保留原版记录，派生版本执行排除，未知/冲突教师隔离。此数据筛选规则与框架格式适配是两件事，规则已确认不代表全量过滤已完成。

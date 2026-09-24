@@ -131,7 +131,17 @@
         }
       ],
       "download_scope": "selected main training partition only, not every split",
-      "training_status": "not_ready"
+      "training_status": "not_ready",
+      "selection_constraints": {
+        "exclude_teacher_family": "Gemini 3.1",
+        "include_variants": [
+          "Gemini 3.1 Pro"
+        ],
+        "user_confirmation": "从 CodeFlame 数据中去掉 Gemini 3.1",
+        "unknown_or_conflicting_teacher": "quarantine",
+        "raw_source": "preserve unchanged",
+        "processing_status": "rule confirmed; full filtering not yet executed"
+      }
     },
     {
       "id": "U05",
