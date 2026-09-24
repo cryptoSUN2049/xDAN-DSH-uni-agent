@@ -1,0 +1,113 @@
+{
+  "generated": "2026-09-17",
+  "scanned": "2026-06-20",
+  "local_entries": 81,
+  "hf_candidates": 354,
+  "selected": [
+    {
+      "source": "TeichAI/Claude-Opus-Dataclaw-Unredacted",
+      "group": "local",
+      "tier": "A",
+      "note": "436条真实Claude Code会话+48k工具调用；无tool结果消息，轨迹断尾需补",
+      "local_files": [
+        "README.md",
+        ".gitattributes"
+      ],
+      "slice_exists": true,
+      "slice_rows": 5
+    },
+    {
+      "source": "lordx64/agentic-distill-fable-5-sft",
+      "group": "local",
+      "tier": "A",
+      "note": "Glint 4659条整理成训练对，已洗噪声/脱敏2个Groq key，可直接SFT但分布极窄",
+      "local_files": [
+        "README.md",
+        ".gitattributes"
+      ],
+      "slice_exists": true,
+      "slice_rows": 100
+    },
+    {
+      "source": "greghavens/glm-5.2-coding-and-debugging-traces",
+      "group": "hf",
+      "tier": "S",
+      "note": "唯一执行验证过的 GLM-5.2 终端编码 agent 母本，1821 步行、CC-BY，规模偏小但可直接训。",
+      "local_files": [],
+      "slice_exists": true,
+      "slice_rows": 32
+    },
+    {
+      "source": "greghavens/kimi-k3-coding-and-debugging-traces",
+      "group": "hf",
+      "tier": "A",
+      "note": "K3 编码/调试 agent 最大母本，但 published-baseline 行的 tool 参数被抹成 {}，须只取验证子集。",
+      "local_files": [],
+      "slice_exists": true,
+      "slice_rows": 64
+    },
+    {
+      "source": "MoreThought/KimiK3-Max-Reasoning-5x",
+      "group": "hf",
+      "tier": "C",
+      "note": "只有 5 条超长编码 CoT，可做格式样本，规模上没意义。",
+      "local_files": [],
+      "slice_exists": false,
+      "slice_rows": null
+    },
+    {
+      "source": "MoreThought/Fable-5.1-Max-Reasoning-Filtered-5000x",
+      "group": "hf",
+      "tier": "B",
+      "note": "armand0e已在discussion#2公开指出结构残缺不可训;想用必须从原始重做tool_calls",
+      "local_files": [],
+      "slice_exists": true,
+      "slice_rows": 18
+    },
+    {
+      "source": "greghavens/fable-5-coding-and-debugging-traces-synthetic-corrections",
+      "group": "hf",
+      "tier": "C",
+      "note": "只有2行,价值在于方法论示范(失败轨迹合成修补+重判),不是可训数据",
+      "local_files": [],
+      "slice_exists": false,
+      "slice_rows": null
+    },
+    {
+      "source": "MoreThought/Fable-5-Max-Reasoning-Filtered-250x",
+      "group": "hf",
+      "tier": "X",
+      "note": "被第三方模型改写过的思维链,无answer字段,Crownelius同类判定为WRONG MODEL",
+      "local_files": [],
+      "slice_exists": false,
+      "slice_rows": null
+    },
+    {
+      "source": "greghavens/gpt-5.6-sol-coding-and-debugging-traces",
+      "group": "hf",
+      "tier": "S",
+      "note": "最贴近DSH的真终端agent母本: 14语言真实build/debug/review轨迹, 行数含前缀膨胀约12x",
+      "local_files": [],
+      "slice_exists": true,
+      "slice_rows": 23
+    },
+    {
+      "source": "lordx64/reasoning-distill-opus-4-7-max-sft",
+      "group": "hf",
+      "tier": "A",
+      "note": "7.8k Opus 4.7 extended thinking，已排 Qwen 模板，小而即用",
+      "local_files": [],
+      "slice_exists": true,
+      "slice_rows": 100
+    },
+    {
+      "source": "nvidia/Nemotron-SFT-Agentic-v2",
+      "group": "hf",
+      "tier": "A",
+      "note": "21.9GB 官方 agentic SFT，工具调用格式规范，可作 S1 工具调用底料",
+      "local_files": [],
+      "slice_exists": true,
+      "slice_rows": 2
+    }
+  ]
+}

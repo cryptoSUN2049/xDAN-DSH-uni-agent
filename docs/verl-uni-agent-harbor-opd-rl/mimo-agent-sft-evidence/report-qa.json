@@ -1,8 +1,10 @@
 {
-  "sections": 14,
+  "sections": 18,
   "local_links_valid": true,
   "desktop": "1280x720 no overflow; screenshot inspected",
   "mobile": "390x844 no overflow; screenshot inspected",
   "interactions": "GRPO search=1 entry; SFT view hides RL; reset passes",
-  "report_sha256": "9dada82f45671d7fb7f6f97bed92f801a55af542f6bb121652cfe636cc005fa6"
+  "report_sha256": "5ac3476086cd9c1c1f10ca01b696781f1e9dde24760af7703f74bc67cee3bdf0",
+  "links_checked": 55,
+  "expanded_sections_review": "desktop1280/mobile390 screenshots; no page overflow; 0 broken anchors"
 }

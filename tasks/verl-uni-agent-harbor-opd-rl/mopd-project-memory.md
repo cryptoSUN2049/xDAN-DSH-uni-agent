@@ -102,3 +102,7 @@ B. 真正MOPD：用各域精选示范适配共同兼容开放底座，形成领�
 - 模板差异：27B thinking开启默认reasoning_effort=xhigh并注入说明；支持preserve_thinking且默认保留历史thinking；9B从content解析think块的处理不同；工具参数序列化有差异。
 - 文本共享token子空间具备进一步验证基础；top-k中出现扩展token的概率质量、运行时AutoTokenizer覆盖行为、实际prompt/response mask和教师评分位置尚未验收。
 - 本次只读比较模型文件，未加载权重、未改模型文件、未启动训练。需继续实际编码/模板探针及评分验收，不能据文件相似判定OPD已通过。
+
+## 2026-09-24 Agent SFT 与协议迁移
+
+用户希望继承MiMo数据思路，用强教师真实执行与高质量HF资产建设Agent SFT。权威方案为docs/verl-uni-agent-harbor-opd-rl/agent-sft-data-production-design.md与mimo-agent-sft-9b-report.html。保留中立轨迹，先用Qwen原生导出；Apus协议待明确，不默认新建特殊token。SFT不是OPD，模拟工具反馈不是环境执行证据，静态数据不自带在线teacher。先选模型起点并隔离模板迁移干预，再做单/多harness等预算对照。
