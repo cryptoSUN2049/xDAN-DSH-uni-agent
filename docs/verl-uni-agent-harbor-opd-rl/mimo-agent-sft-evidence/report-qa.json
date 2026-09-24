@@ -4,8 +4,8 @@
   "desktop": "1280x720 no overflow; screenshot inspected",
   "mobile": "390x844 no overflow; screenshot inspected",
   "interactions": "GRPO search=1 entry; SFT view hides RL; reset passes",
-  "report_sha256": "6374a9942eda95c50723fec01b6d43f4611fd30a8857d4b4e0d07be2963503c3",
+  "report_sha256": "58676063c6c5b98c0aa901465686f48ebfcf00cc9c51a0c9c838d46041352122",
   "links_checked": 55,
   "expanded_sections_review": "desktop1280/mobile390 screenshots; no page overflow; 0 broken anchors",
-  "latest_addition": "19 sections; desktop no overflow; 0 broken anchors; APUS draft not implementation"
+  "latest_addition": "tool-call专项与seed20相对链接存在；JSON示例解析通过"
 }

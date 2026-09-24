@@ -1,5 +1,20 @@
 # 全版本 checkpoint 评测交接
 
+## 2026-09-24 主线收敛：数据生产与20种子
+
+- 用户确认tool-call自有格式后续按独立小实验执行，不阻塞数据主线。
+- agent-sft-seed20-plan.md列办公/数据处理/翻译/写作/代码各4题，输入→工件→grader负例；三档数据准入、20→100→1K门禁。当前规格不是fixture或真实轨迹。
+- 先O01/D01/T01/W01/C01五锚点建设；教师API与硬费用上限待核，未发起付费执行。
+- apus-chat-v1-tool-call.md已形成完整专项；本轮文档整合待校验/提交。
+
+
+## 2026-09-24 APUS Tool Call专项
+
+- 新权威文档docs/verl-uni-agent-harbor-opd-rl/apus-chat-v1-tool-call.md，覆盖数据/API/token三层、MiMo/Qwen差异、ID/参数/流式、mask、迁移实验及验收。已接项目索引与MiMo HTML。
+- 当前仅文档；尚未实现模板/parser或启动训练。v1建议先E1外部适配，保持MiMo模型可见序列；多调用/并行/多模态不自动放行。
+- 下一步冻结支持范围和golden样例，再真实对照；上游模型来源保留。
+
+
 ## 2026-09-24 Agent SFT 数据与协议方案更新
 
 - MiMo HTML扩至18章，增加用户数据画像准入、GPT6-sol候选教师真实执行、Curator工具选型、Qwen/Apus协议迁移和多harness受控实验。
