@@ -141,8 +141,9 @@ def source_meta(config):
     return by_key, source_counts
 
 
-def tool_errors(messages):
+def tool_errors(messages, target_ids):
     pending = set()
+    origins = {}
     errors = []
     for message in messages:
         if message.get("role") == "assistant":
@@ -152,15 +153,28 @@ def tool_errors(messages):
                     errors.append("missing_tool_call_id")
                 else:
                     pending.add(call_id)
+                    origins[call_id] = message.get("message_id")
         elif message.get("role") == "tool":
             call_id = message.get("tool_call_id")
             if not call_id or call_id not in pending:
                 errors.append("orphan_tool_result")
             else:
                 pending.remove(call_id)
-    if pending:
+    if any(origins.get(call_id) not in target_ids for call_id in pending):
         errors.append("missing_tool_result")
     return sorted(set(errors))
+
+
+def script_conflict(messages):
+    text = "\n".join(str(message.get(key) or "") for message in messages for key in ("content", "reasoning_content"))
+    size = max(len(text), 1)
+    ratios = {
+        "cyrillic": sum("\u0400" <= char <= "\u052f" for char in text) / size,
+        "cjk": sum("\u4e00" <= char <= "\u9fff" for char in text) / size,
+        "arabic": sum("\u0600" <= char <= "\u06ff" for char in text) / size,
+    }
+    name, ratio = max(ratios.items(), key=lambda item: item[1])
+    return name if ratio >= 0.02 else None
 
 
 def annotate(record, meta):
@@ -223,6 +237,9 @@ def annotate(record, meta):
         flags.add("source_license_unresolved")
     if record.get("source_split") not in {"train", "training"}:
         flags.add("source_split_not_train")
+    conflict = script_conflict(record.get("messages", []))
+    if conflict:
+        flags.add(f"language_content_conflict:{conflict}")
     if meta.get("thinking_markup"):
         observations.append("thinking_markup_present")
         flags.add("thinking_markup_mask_review")
@@ -236,7 +253,7 @@ def annotate(record, meta):
         valid_ids = {message["message_id"] for message in messages if message.get("role") == "assistant"}
         if not targets or not targets.issubset(valid_ids):
             flags.add("invalid_supervision_targets")
-        flags.update(tool_errors(messages))
+        flags.update(tool_errors(messages, targets))
         json.loads(record["tools_json"])
     except (KeyError, TypeError, json.JSONDecodeError):
         flags.add("contract_structure_invalid")
@@ -326,7 +343,8 @@ def main():
                 "exact_content_duplicate",
                 "task_group_cross_split",
             }
-            if flags & hard_flags:
+            hard_hit = flags & hard_flags or any(flag.startswith("language_content_conflict:") for flag in flags)
+            if hard_hit:
                 record["quality_status"] = "quarantined"
                 record["quality_flags"] = sorted(flags)
                 bad.write(json.dumps(record, ensure_ascii=False) + "\n")

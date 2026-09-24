@@ -18,6 +18,7 @@
 3. [能力目标与20K建议配方](20k数据规划与能力缺口.md)：建议配比与缺口，非已备齐数量。
 4. [执行设计](sft20k-execution-design.md)：完整清洗版→三教师子版→20K→HF→小步验收→训练；批准与20K来源选择待确认。
 5. [统一母本运行证据](contract-v1-evidence/validation.json)：Runpod 结构导出、哈希、分域、教师族、split 与质量缺口。
+6. [质量审计证据](quality-audit-evidence/quality-audit-v5-manifest.json)：硬门禁、provisional 池、语言脚本隔离与 tokenizer 预检；当前 training-ready=0。
 
 # 科学训练产线：项目记忆与文档索引
 

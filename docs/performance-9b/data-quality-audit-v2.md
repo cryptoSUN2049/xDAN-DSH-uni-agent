@@ -18,6 +18,13 @@ v2 仅提供字段回填和诊断，不具备授予 training-ready 的权限。�
 - 非 train split 不能进入训练候选；跨 split 的任务组被拦截。
 - 输出 annotated、quarantine、空的 structural_candidates 和报告；不能据此宣称最终合格池为空，只能说当前未授予准入。
 
+## 当前 v5 诊断口径
+
+- 输入 62,030；硬门禁隔离 51,536；provisional 10,494；`training_ready=0`。
+- provisional 领域仅 code：Qwen3.8 10,489、GPT5.6 5；跨 split task group=0。
+- 语言脚本冲突隔离：CJK 80、Arabic 65；候选不能沿用 README 的 English-only 声明作为逐条证明。
+- Qwen3.5-9B native template 适配器对 v4 10,529 条全量渲染 0 error；最终 v5 版本正在复核。该结果只证明模板可渲染，不证明 loss mask、语义质量或训练准入。
+
 ## 下一步质量闭环
 
 1. 验证联结回填逐字段与原版一致，统计声明缺失及冲突。

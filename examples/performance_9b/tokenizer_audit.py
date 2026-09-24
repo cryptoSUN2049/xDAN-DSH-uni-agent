@@ -31,7 +31,14 @@ def audit(model, input_path, output_path):
             if not token_ids:
                 raise ValueError("missing input_ids")
             ok += 1
-            length = len(token_ids[0]) if token_ids and isinstance(token_ids[0], list) else len(token_ids)
+            if hasattr(token_ids, "ids"):
+                length = len(token_ids.ids)
+            elif token_ids and isinstance(token_ids[0], list):
+                length = len(token_ids[0])
+            elif token_ids and hasattr(token_ids[0], "ids"):
+                length = len(token_ids[0].ids)
+            else:
+                length = len(token_ids)
             lengths.append(length)
             tool_rows += bool(call_ids)
         except Exception as exc:  # noqa: BLE001 - audit must retain bad-row examples

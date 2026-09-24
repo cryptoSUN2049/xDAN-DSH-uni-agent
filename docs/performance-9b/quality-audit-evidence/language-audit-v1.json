@@ -1,0 +1,39 @@
+{
+  "rows": 10529,
+  "non_english_script_rows": {
+    "cjk": 35
+  },
+  "examples": [
+    {
+      "id": "ecf46d7062962da2c84ca1e4adedb5d8ebe03792e2313147f9b820cc3c1b0c97",
+      "script": "cjk",
+      "ratio": 0.0371,
+      "repo": "saidutta69/Qwen3.8-Agent-Premium"
+    },
+    {
+      "id": "dc4fc2e24f4066f2da4e2329675cdc96fd998e3c102b55f9b84f4e807ad6e82a",
+      "script": "cjk",
+      "ratio": 0.045,
+      "repo": "saidutta69/Qwen3.8-Agent-Premium"
+    },
+    {
+      "id": "24d4d9befe41fbb6e2e2dc4b68097186a0ac55de941d4b4b9287416de2a64517",
+      "script": "cjk",
+      "ratio": 0.0269,
+      "repo": "saidutta69/Qwen3.8-Agent-Premium"
+    },
+    {
+      "id": "004bdbd3e318ca4a36e622c0fe1e1910a99b103e51b811a85d23ba49d8d566b0",
+      "script": "cjk",
+      "ratio": 0.0208,
+      "repo": "saidutta69/Qwen3.8-Agent-Premium"
+    },
+    {
+      "id": "8d8dd73c7d0f09cfb669d04664c6940b9f4960e5549bbf1bd0547e63db173407",
+      "script": "cjk",
+      "ratio": 0.0203,
+      "repo": "saidutta69/Qwen3.8-Agent-Premium"
+    }
+  ],
+  "threshold": 0.02
+}

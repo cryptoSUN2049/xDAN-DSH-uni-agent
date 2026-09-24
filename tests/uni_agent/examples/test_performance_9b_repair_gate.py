@@ -42,3 +42,39 @@ def test_missing_source_and_heldout_remain_blocked():
     assert "source_row_not_found" in result["quality_flags"]
     result = annotate(convert(record(1), "train.jsonl"), {"source_split": "test"})
     assert "source_split_not_train" in result["quality_flags"]
+
+
+def test_next_action_tool_call_may_end_at_supervision_target():
+    item = record(1)
+    item["messages"][1]["tool_calls"] = [
+        {"id": "call-1", "type": "function", "function": {"name": "exec", "arguments": {"source": "x"}}}
+    ]
+    result = annotate(
+        convert(item, "train.jsonl"),
+        {
+            "teacher_attested": True,
+            "teacher_model": "gpt-5.6",
+            "teacher_claims": ["gpt-5.6"],
+            "language": "en",
+            "source_split": "train",
+            "source_license": "cc-by-4.0",
+        },
+    )
+    assert "missing_tool_result" not in result["quality_flags"]
+
+
+def test_language_script_conflict_is_hard_quarantined():
+    item = record(1)
+    item["messages"][0]["content"] = "请处理这个任务 " * 40
+    result = annotate(
+        convert(item, "train.jsonl"),
+        {
+            "teacher_attested": True,
+            "teacher_model": "gpt-5.6",
+            "teacher_claims": ["gpt-5.6"],
+            "language": "en",
+            "source_split": "train",
+            "source_license": "cc-by-4.0",
+        },
+    )
+    assert "language_content_conflict:cjk" in result["quality_flags"]

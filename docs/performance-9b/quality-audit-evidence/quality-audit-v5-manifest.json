@@ -1,0 +1,58 @@
+{
+  "schema_version": "apus-sft-v1",
+  "status": "diagnostic_audit_only",
+  "training_ready": false,
+  "approved_rows": 0,
+  "counts": {
+    "input": 62030,
+    "quarantine": 51536,
+    "provisional_candidates": 10494
+  },
+  "source_row_metadata": 293074,
+  "source_counts": {
+    "greghavens/gpt-5.6-sol-coding-and-debugging-traces": 17939,
+    "saidutta69/Qwen3.8-Agent-Premium": 11087,
+    "MoreThought/SuperiorThoughts-1": 9640,
+    "MoreThought/Fable-5.1-Max-Reasoning-Filtered-5000x": 5000,
+    "saidutta69/fable-5-premium-v2": 85000,
+    "CodeFlame/Qwen3.8-GLM5.2-Kimi-K3-GPT5.6-Gemini-3.1-Claude-Fable5-Mythos5-distillation": 157939,
+    "HelioAI/Claude-Fable-5-5500x": 5469,
+    "KrazyKitty/Fable-5.1-Max-Reasoning-Filtered-1000x": 1000
+  },
+  "candidate_domains": {
+    "code": 10494
+  },
+  "candidate_teachers": {
+    "gpt56": 5,
+    "qwen38": 10489
+  },
+  "quarantine_reasons": {
+    "teacher_provenance_review_pending": 51536,
+    "contamination_audit_pending": 51536,
+    "language_detection_pending": 51536,
+    "semantic_quality_pending": 51536,
+    "reasoning_policy_unresolved": 35582,
+    "tokenizer_mask_pending": 51536,
+    "not_training_split": 2866,
+    "thinking_markup_mask_review": 8606,
+    "language_content_conflict:cjk": 80,
+    "teacher_identity_unresolved": 8042,
+    "language_unresolved": 26628,
+    "source_license_unresolved": 26628,
+    "language_content_conflict:arabic": 65
+  },
+  "task_groups": 26757,
+  "task_groups_cross_split": 0,
+  "training_policy": {
+    "allowed_teachers": [
+      "fable",
+      "gpt56",
+      "qwen38"
+    ],
+    "language": "Russian excluded; other languages require row-level assessment",
+    "source_split": "train only",
+    "unknown_or_conflicting_teacher": "quarantine",
+    "exact_duplicate": "quarantine",
+    "unresolved_reasoning": "unresolved remains blocked; markup preservation needs tokenizer/mask verification"
+  }
+}

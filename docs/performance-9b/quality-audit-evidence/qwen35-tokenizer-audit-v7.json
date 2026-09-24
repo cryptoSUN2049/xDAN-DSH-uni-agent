@@ -1,0 +1,14 @@
+{
+  "schema_version": "apus-sft-v1",
+  "model": "/workspace/models/Qwen3.5-9B",
+  "scope": "all provisional candidates",
+  "ok": 10527,
+  "errors": 0,
+  "tool_rows": 3,
+  "token_min": 1598,
+  "token_p50": 7426,
+  "token_max": 100453,
+  "error_examples": [],
+  "training_ready": false,
+  "note": "Template rendering only; does not prove loss mask or semantic quality."
+}
