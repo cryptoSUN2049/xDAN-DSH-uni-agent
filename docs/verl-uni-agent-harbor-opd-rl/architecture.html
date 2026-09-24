@@ -13,15 +13,30 @@
     nav{position:sticky;top:0;background:#10131aee;backdrop-filter:blur(8px);padding:10px 0;z-index:2;border-bottom:1px solid var(--line)}nav a{color:var(--accent);margin-right:15px;text-decoration:none;font-size:13px}
     code{background:#0d1118;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font:12px ui-monospace,SFMono-Regular,Menlo,monospace} table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}th{color:var(--muted);font-weight:600}.good{color:var(--good);font-weight:600}.warn{color:var(--warn);font-weight:600}.bad{color:var(--bad);font-weight:600}
     .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.node{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px}.arrow{color:var(--accent)}ul,ol{padding-left:23px}a{color:var(--accent)}.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 8px;margin:2px;color:var(--muted);font-size:12px}
+    th,td{overflow-wrap:anywhere}
   </style>
 </head>
 <body><main>
   <div class="hero">
     <h1>VERL + Uni-Agent 训练系统：完整方案与执行入口</h1>
-    <p class="muted">本页是当前 worktree 的唯一训练入口。版本：v2｜更新：2026-09-23｜范围：训练、观测、验证、止损、评测和证据归档。状态：设计已形成，控制面尚未实现，未启动新训练。</p>
+    <p class="muted">本页是科学训练产线的唯一导航入口。更新：2026-09-24｜目标：可复现、可观测、可分析、可诊断修复。文本OPD链路已实测；统一控制面与1000条试验仍待建设。</p>
     <p>目标是把一次训练变成可复现、可比较、可停止、可审计的实验，而不是只确认“产生了 checkpoint”。</p>
   </div>
-  <nav><a href="#goal">目标</a><a href="#architecture">架构</a><a href="#lifecycle">流程</a><a href="#contract">合同</a><a href="#gates">门禁</a><a href="#gaps">补齐</a><a href="#roadmap">专项推进</a><a href="#runbook">执行方案</a><a href="#evidence">证据</a></nav>
+  <nav><a href="#current-charter">当前生效方案</a><a href="#goal">目标</a><a href="#architecture">架构</a><a href="#lifecycle">流程</a><a href="#contract">合同</a><a href="#gates">门禁</a><a href="#gaps">补齐</a><a href="#roadmap">专项推进</a><a href="#runbook">执行方案</a><a href="#evidence">证据</a></nav>
+
+  <section id="current-charter"><h2>当前生效：科学大模型训练产线</h2>
+    <p><b>核心目标是产线，而不只是再跑一次训练。</b>约1000条多领域单教师OPD是首个受控验收实验；长期全面9B与MOPD方向保留。</p>
+    <div class="grid">
+      <div class="card"><h3>总纲与诊断方法</h3><p><a href="training-production-charter.md">产线总纲、核心指标、故障定位与受控修复</a></p><p>数据→实验→训练→观测→分析→暂停/修复→独立评测→归档。</p></div>
+      <div class="card"><h3>首次1000条实验</h3><p><a href="training-pilot-1k-plan.md">配额、隔离验证、学习曲线、行为预算与实施验收</a></p><p>1000训练＋50监控＋200开发＋200封存为设计目标，尚未建成。代码、科学、聊天仍有准入缺口。</p></div>
+      <div class="card"><h3>记忆与真实证据</h3><p><a href="project-index.md">项目索引与冷启动顺序</a> · <a href="overnight/index.html">最新真实训练报告</a></p><p>已测文本OPD可用；1024 thinking预算未通过。W&amp;B offline；自动质量止损与真实trace后端不能视为已接通。</p></div>
+    </div>
+    <h3>统一控制合同，两条实际执行路径</h3>
+    <div class="flow"><span class="node">数据/模型/实验manifest</span><span class="arrow">→</span><span class="node">原生文本VERL OPD</span><span class="arrow">或</span><span class="node">Uni-Agent / Harbor工具任务</span><span class="arrow">→</span><span class="node">同一事件身份与证据账本</span></div>
+    <div class="flow" style="margin-top:12px"><span class="node">W&amp;B曲线</span><span class="node">verl-insight时间线</span><span class="node">系统指标</span><span class="arrow">→</span><span class="node">数值/学习/行为/成本分析</span><span class="arrow">→</span><span class="node">确认问题→安全暂停→根因实验→修复回归</span></div>
+    <p>指标必须带算法适用性、单位、分母、来源和缺失原因。纯OPD看有效监督token与评分健康，RL才启用对应有效组指标。可选面板故障可显式降级，关键训练/验证/预算证据不能缺失。</p>
+    <p class="warn">下方保留v2历史组件方案与Agent路线图，旧“首轮纯RL”和GPU占用快照不作为当前启动依据；当前研究合同以上述pilot方案为准。设计存在不代表代码已经上线。</p>
+  </section>
 
   <section id="goal"><h2>1. 目标与当前判断</h2>
     <div class="grid"><div class="stat"><b>执行链已具备</b>环境、数据、rollout、VERL 更新、checkpoint、独立评测和 W&B。</div><div class="stat"><b>控制面缺失</b>验证结果、有效 RL 组、行为预算、基础设施失败没有进入统一决策。</div><div class="stat"><b>重训原则</b>先 preflight 和 control-only，再正式训练；任何关键证据缺失都暂停。</div></div>
@@ -32,7 +47,7 @@
     <div class="flow"><span class="node">Run manifest</span><span class="arrow">→</span><span class="node">训练状态机</span><span class="arrow">→</span><span class="node">VERL V1 / FSDP LoRA</span><span class="arrow">→</span><span class="node">vLLM rollout</span><span class="arrow">→</span><span class="node">Uni-Agent Gateway</span><span class="arrow">→</span><span class="node">Harbor / Modal / Verifier</span><span class="arrow">→</span><span class="node">TransferQueue + update</span></div>
     <div class="flow" style="margin-top:12px"><span class="node">train.log / trajectory / receipt</span><span class="arrow">+</span><span class="node">W&B history</span><span class="arrow">+</span><span class="node">validation JSONL</span><span class="arrow">+</span><span class="node">cost evidence</span><span class="arrow">→</span><span class="node">观测汇聚器</span><span class="arrow">→</span><span class="node">继续 / 暂停 / 回退</span></div>
     <p class="muted">原则：同一个 <code>run_id / step / group_uid / sample_id / rollout_id / policy_version / checkpoint_id</code> 必须贯穿 rollout、verifier、update、validation 和报告。</p>
-    <div class="card"><h3>当前两卡资源结论</h3><p>SSH 节点实测为 <b>2 × RTX PRO 6000 Blackwell，约 96 GiB/卡</b>。纯 RL（9B）可行：一张卡训练，另一张卡评测或备用。9B + 27B OPD 也可行，但必须 student/teacher 分卡，先做 teacher 单题 logprob probe，并降低 teacher 的显存比例与 token batch。若实际是 48 GiB RTX 6000，正式 OPD 不作为默认方案，先走纯 RL；不能通过虚报 Ray GPU 数解决显存问题。当前 GPU0 仍有旧评测进程占用，重训前必须完成归属确认和交接。</p></div>
+    <div class="card"><h3>当前两卡资源结论</h3><p>SSH 节点实测为 <b>2 × RTX PRO 6000 Blackwell，约 96 GiB/卡</b>。纯 RL（9B）可行：一张卡训练，另一张卡评测或备用。9B + 27B OPD 也可行，但必须 student/teacher 分卡，先做 teacher 单题 logprob probe，并降低 teacher 的显存比例与 token batch。若实际是 48 GiB RTX 6000，正式 OPD 不作为默认方案，先走纯 RL；不能通过虚报 Ray GPU 数解决显存问题。GPU占用为历史快照，启动前重新核实归属；最近验收结束时两卡已释放，不将该快照当实时状态。</p></div>
   </section>
 
   <section id="lifecycle"><h2>3. 一次严谨训练的生命周期</h2><ol><li><b>冻结 manifest：</b>commit、依赖、模型/tokenizer hash、数据 hash、任务 ID、预算、拓扑、W&B run。</li><li><b>Preflight：</b>GPU、CUDA/NCCL、vLLM、Gateway、Harbor、Modal 额度、W&B 写入和磁盘空间逐项验证。</li><li><b>固定基线：</b>base 在 step-validation 和 development holdout 上独立评测；sealed 留到最终候选确定后。</li><li><b>Control-only：</b>2–4 步小跑，验证指标、短组分类、停止器和 checkpoint reload，不改变正式参数。</li><li><b>正式训练：</b>每步先记录 rollout，再执行准入、update、checkpoint 和 step validation。</li><li><b>门禁决策：</b>质量、有效组、行为预算、基础设施、数值稳定性、成本六类指标共同决定继续或暂停。</li><li><b>候选选择：</b>只按 development holdout 选择 best checkpoint，禁止按训练 reward 选最优。</li><li><b>独立 reload：</b>新进程加载候选，重新跑固定集，确认 checkpoint 可用且结果可复现。</li><li><b>最终评测：</b>base / OPD / RL / hybrid 使用相同工具、任务版本、采样次数和预算。</li><li><b>归档：</b>生成 manifest、summary、paired diff、behavior、cost、stop reason 和静态报告。</li></ol></section>

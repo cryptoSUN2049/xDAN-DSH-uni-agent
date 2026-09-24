@@ -1,0 +1,39 @@
+[
+  {
+    "repo": "gump2049/xDAN-9B-Math-RL-Nemotron-v2",
+    "url": "https://huggingface.co/datasets/gump2049/xDAN-9B-Math-RL-Nemotron-v2",
+    "private": true,
+    "sha": "52ec037de8111e5dabbe2b9e3ddb791a619399a6",
+    "source": "nvidia/Nemotron-RL-Math-v2",
+    "source_revision": "804418c1d4eceeaa453d895954887c0975e79121",
+    "upstream_bytes": 6887923,
+    "file_size_check": "passed",
+    "archive_commit": "8609ecf4338e29f6305facdbe3ce12352db78c56",
+    "readme_source_paths_verified": true
+  },
+  {
+    "repo": "gump2049/xDAN-9B-Agent-RL-OpenThoughts-5K",
+    "url": "https://huggingface.co/datasets/gump2049/xDAN-9B-Agent-RL-OpenThoughts-5K",
+    "private": true,
+    "sha": "07e7ec07aac1eda7490243820ff1470c7d00cef6",
+    "source": "open-thoughts/OpenThoughts-Agent-RL-5K",
+    "source_revision": "409012538183a68a19c5432f88ba0791a824c657",
+    "upstream_bytes": 12393991,
+    "file_size_check": "passed",
+    "archive_commit": "4c15015b8ce32a1978066a432fcdf5733eae5e05",
+    "readme_source_paths_verified": true
+  },
+  {
+    "repo": "gump2049/xDAN-9B-MOPD-Math-Code-IF-Science-v1",
+    "url": "https://huggingface.co/datasets/gump2049/xDAN-9B-MOPD-Math-Code-IF-Science-v1",
+    "private": true,
+    "sha": "3eedbc48f8264dde657d59c15ae0385ac28ed002",
+    "source": "icemoon28/MOPD-Training-Data",
+    "source_revision": "96e88d579cb1ee68c9183c52e5d133f58cf370bf",
+    "upstream_bytes": 1705777701,
+    "file_size_check": "passed",
+    "lfs_sha256_check": "passed",
+    "archive_commit": "b36859f4c5bd0873271d1d0a7a2a5f302cbfb2d0",
+    "readme_source_paths_verified": true
+  }
+]

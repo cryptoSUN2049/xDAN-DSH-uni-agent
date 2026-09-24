@@ -1,5 +1,9 @@
 # 当前执行：performance-9b + mid-training 专项（2026-09-23）
 
+- [x] 用户批准 thinking 三层验收；落盘 thinking-acceptance.md。
+- [ ] 实现真实轨迹 token/mask 对齐及分区监督统计；独立评分参考验证。
+- [ ] 同 checkpoint、同总预算完成 thinking off/on 对照，生成任务级配对报告。
+
 - [x] 保存训练体系 v2 文档并推送 `verl-uni-agent-harbor-opd-rl`。
 - [x] 创建并推送 `performance-9b` 分支。
 - [x] 完成 9B 起点、SFT/OPD/RL 数据版本、Ornith 外部基线和本地数据盘点。
@@ -746,3 +750,60 @@ SSH 已恢复成功读取。GPU 0%、约50GB显存，存在 metarsi-apus 推理/
 - [ ] 验证 sandbox→Gateway 请求和完整 Trial，再启动训练。
 
 Review：没有完整训练启动后卡在 Modal 的证据，不将组件通过计为闭环。
+
+## 2026-09-23 HF 数据归档
+
+- [x] 三套上游数据固定 revision，保留原始文件与来源。
+- [x] 重命名归档到 gump2049 私有 HF dataset 仓库。
+- [x] 校验远端大小与数据 SHA256，保存 HF 地址与 commit。
+
+Review：三套已验证完成；入口 docs/verl-uni-agent-harbor-opd-rl/hf-data-archives.md。归档不等于训练准入，未启动新训练。
+
+## 2026-09-24 MOPD项目记忆
+- [x] 保存用户目标、token评分原理、跨族约束、静态SFT用途和两条候选路线。
+- [x] 更新worktree交接与旧memory入口，区分已核验约束和未实施设想。
+Review：仅文档更新，未启动训练、未改变教师服务。
+
+## 2026-09-24 实际9B/27B兼容性验证
+- [x] 核资源与工作区；GPU0空闲、GPU1有任务，保留未提交改动。
+- [ ] 实际tokenizer/template编码测试。
+- [ ] 9B生成短轨迹，27B HF前向评分。
+- [ ] vLLM评分与HF位置/数值对照并归档。
+
+## 2026-09-24 overnight OPD actual execution
+- [x] Actual tokenizer + HF/vLLM selected-token scoring compatibility.
+- [x] Activate dedicated uv environment and inspect real Ray worker inheritance.
+- [x] Freeze v2 data (122/30); preserve 80-item quality audit and v1 diagnostics.
+- [x] Attempt2 smoke nonzero weight update and reload (248 nonzero B modules;30/30 independent generation).
+- [x] 16-step run and all real checkpoint exports (exit0; steps4/8/12/16 exported and independently reloaded).
+- [x] Equal4096-token v2 evaluation base/teacher/every valid checkpoint (7 versions, 210 outputs, no infra missing).
+- [x] Final HTML analysis, historical failure accounting, completion evidence audit (identity/rescoring/weight hashes, desktop/mobile QA).
+
+Review: step16 math5/5 vs base4/5; IF5/8 and knowledge1/1 unchanged. Improvement is one previously truncated answer completed at4037 tokens. No broad gain claim; code/chat quality unscored, knowledge underpowered, W&B offline and performance-triggered stop remain future work.
+
+## 2026-09-24 OPD deeper compatibility audit
+- [x] Match deployed VERL source fingerprints and trace teacher IDs, padding, loss, temperature.
+- [x] Invoke deployed loss with independent loss/gradient, mask, EOS-coordinate and clipping controls.
+- [x] Replay five-domain stored text and explicit EOS through HF and vLLM teacher; check native VERL parser IDs (2736 response tokens, all passed).
+- [x] Record scoped verdict and integrate into report; preserve historical tensor observability gap (deep-verdict.md).
+
+## OPD full acceptance follow-through (user approved)
+- [x] Freeze explicit acceptance contract in tokenizer-opd-compatibility/full-acceptance-design.md.
+- [x] Run actual VERL update with opt-in raw tensor/gradient capture and independent audit. 2 microbatches/8 rows/4455 tokens, independent loss+grad error 0, coverage pass.
+- [x] Verify checkpoint nonzero update, export and independent reload for instrumented run. 248 text modules updated; SHA-matched 30/30 reload.
+- [x] Generate real student mode-matrix continuations and score same raw IDs with HF/vLLM. 17 cases/6091 tokens numerical pass; thinking1024 fails closure, separate2048 closes at1751.
+- [x] Exercise native tool-result mask path and negative controls; distinguish mocked transport from autonomous tool use. Native state/parser controls 5/5 passed; transport mocked.
+- [x] Consolidate complete scoped gate matrix, HTML, evidence and handoff; keep untested ranges explicit. Test execution complete, not all gates passed; current thinking-off text path passed.
+
+
+## Scientific training production line / 1K pilot (2026-09-24)
+- [x] Restore prior architecture/design, distinguish implemented evidence from planned infra.
+- [x] Inventory existing data and identify code/science/chat quality gaps.
+- [x] Persist production charter, core metric/diagnostic contracts and 1K execution design.
+- [x] Update unique HTML navigation, project memory/index and cold-start handoff.
+- [ ] Review implementation design; build qualified/versioned splits and calibrated graders.
+- [ ] Implement canonical event collector, algorithm-aware analysis and controlled pause lifecycle.
+- [ ] Validate W&B/local/real trace wiring and fault injection, then bounded real smoke.
+- [ ] Run 1K pilot with per-domain curves/budgets; independent checkpoint/dev/sealed conclusions.
+
+Review: this milestone documents the production-line objective and reusable infra accurately; no new dataset readiness, cloud telemetry or training completion claimed.

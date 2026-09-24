@@ -1,10 +1,15 @@
 # VERL + Uni-Agent 训练体系 v2 设计
 
-状态：设计审查中，尚未实现。  
+状态：v2组件设计与历史审计；部分执行链已验收，统一控制面尚待实现。
 日期：2026-09-23  
 适用 worktree：`verl-uni-agent-harbor-opd-rl`
 
+
+> **2026-09-24 当前生效入口**：[科学训练产线总纲](training-production-charter.md)、[1000条受控实验](training-pilot-1k-plan.md)、[项目索引](project-index.md)。用户核心目标是完整可观测/可分析/可诊断修复的专业产线，OPD pilot为首个验收载体。本文§9纯RL首轮提案保留历史，但不再决定本轮算法；当前为多领域单教师OPD。真实已完成范围见[最新报告](overnight/index.html)，不能把本文待建组件当已上线。
+
 ## 1. 目标
+
+Thinking 专项采用 [三层验收协议](thinking-acceptance.md)：token/上下文对齐 → 教师监督可靠性 → 同预算独立效果。当前为已批准合同，尚未宣称自动采集或真实对照完成。
 
 把一次训练从“能启动、能产生 checkpoint”升级为可观测、可比较、可止损的闭环：
 

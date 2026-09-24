@@ -1,6 +1,14 @@
 # 全版本 checkpoint 评测交接
 
-## 2026-09-24 夜间单教师 OPD（当前入口）
+## 2026-09-24 当前主任务：科学训练产线与1000条pilot
+
+- 用户已确认：建立完整专业可观测、可分析、可诊断修复的大模型训练产线，1000条多领域单教师OPD为首个受控实验；长期MOPD目标保留。
+- 先读 docs/verl-uni-agent-harbor-opd-rl/project-index.md → training-production-charter.md → training-pilot-1k-plan.md；HTML唯一导航仍architecture.html。
+- 当前仅设计/盘点/项目记忆索引已更新；1000条未构建、未启动新训练。原始源足够多，但代码120条、科学旧40审计仅4保留、聊天头部240行均不能直接扩成高质量1000。
+- 现有原生文本OPD链路已验收；不能说Uni-Agent/Harbor工具路线、W&B云端与真实verl-insight后端、质量止损已全部接通。按P0合同/评分→观测/控制真实验收→有界pilot推进。
+- 最新新文档/已有修改位于既有performance-9b worktree，保留之前未提交变更；勿stash/reset或把旧纯RL提案作为本轮启动依据。
+
+## 2026-09-24 夜间单教师 OPD（已完成验收证据）
 
 - **完整测试执行完成，非全门禁通过**：统一入口 `overnight/index.html`，结论 `tokenizer-opd-compatibility/full-verdict.md`、机器门禁 `full-acceptance.json`。当前thinking-off文本OPD链路通过；thinking1024单例未闭合，原mode driver exit1保留，禁止称全部适配。
 - 真实训练runs/opd-live-acceptance-20260924 exit0；2microbatch/8条/4455token，独立loss和grad误差0、mask外0、teacher ID错位0、coverage pass。248文本LoRA全部非零B，110视觉零B；导出/独立30题重载SHA一致，infra0。评分math4/5、IF5/8、knowledge1/1，code/chat未计正确率。

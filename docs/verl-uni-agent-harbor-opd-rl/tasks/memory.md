@@ -1,5 +1,9 @@
 # 项目决策记忆：Uni-Agent原生Harbor RL＋OPD
 
+> 2026-09-24 最新MOPD目标与约束：[核心项目记忆](../../../tasks/verl-uni-agent-harbor-opd-rl/mopd-project-memory.md)。以下保留历史决策，不作为当前实时状态。
+
+> 当前产线入口：[项目索引](../project-index.md) · [科学训练产线总纲](../training-production-charter.md) · [1000条执行设计](../training-pilot-1k-plan.md)。科学可观测/分析/诊断闭环为主目标；下面2026-09-15内容保留历史。
+
 更新时间：2026-09-15。
 
 ## 用户已明确的目标与授权
