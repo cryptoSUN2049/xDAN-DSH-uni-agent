@@ -1,0 +1,24 @@
+{
+  "source": "MoreThought/SuperiorThoughts-1",
+  "revision": "c4d68d9d6cea569e49ce9751c412d68010f62ada",
+  "file": "train.jsonl",
+  "local_path": "/private/tmp/apus-sft20k/raw/superior/train.jsonl",
+  "bytes": 20043962,
+  "sha256": "c1875cc010e8af25431053db06d3a73aa87e822b775730e059f1eaa8f6525bd9",
+  "rows": 9640,
+  "domains": {
+    "math": 6212,
+    "code": 1277,
+    "reasoning": 2151
+  },
+  "exact_unique_user_prompts": 9640,
+  "empty_assistant": 0,
+  "think_tag_rows": 9611,
+  "status": "structure_scan_only_not_training_ready",
+  "limitations": [
+    "No independent teacher authentication",
+    "No full correctness verification",
+    "No cross-source or benchmark decontamination yet",
+    "Tokenizer/loss mask not validated"
+  ]
+}

@@ -1,3 +1,17 @@
+## 最新交付顺序：原始台账先于抽样
+
+用户要求先完整登记所有原版路径、各库分布/数量，再规划抽取，最后20K训练。已建docs/performance-9b/原始数据资产清单.md及JSON，共13唯一仓库（近期指定5+原方案8），原版声明与实测分开。project-index已按此排序。五个近期库主训练文件下载完成，其他8库本轮仅刷新固定README/API，不误称全量落盘。QwenAgent下载24910已成功结束。四库审计JSON与能力缺口表齐备；尚未实现正式清洗/上传/训练。
+
+## 20K目标与真实供给对比已完成
+
+权威规划docs/performance-9b/20k数据规划与能力缺口.md：建议7K代码/3K推理数学/3K办公/2.5K数据/1.5K翻译/1.5K写作/1.5K通用。是建议目标非ready数量。新增QwenAgent固定rev fbe918e...；下载session24910需核。四库实际审计JSON已完成：Fable5.1工具名/参数损坏，Superior污染1587test，CodeFlame90K未知身份，Premium混合来源却统一Fable标签。不能按原始卡片总量启动训练。设计批准和20K选全池/三教师池两问题仍待答复。
+
+## 当前主线：完整数据、三教师子版与20K SFT
+
+用户要求完整清洗/20K抽样/上传HF并训练；追加仅Qwen3.8+Fable+GPT5.6子版。设计在docs/performance-9b/sft20k-execution-design.md，AGENTS Human Gate明确批准尚待答复；20K从全池或子版抽样也已提问。尚未实现处理器、上传或训练。HF账号已核gump2049，沿用私有。当前两卡空闲，MiMo权重缺；VERL默认全assistant监督，必须适配target_message_index。
+
+下载暂存/private/tmp/apus-sft20k/raw/。Superior固定版已完整扫描9640行（math6212/reasoning2151/code1277），证据sft20k-source-audit.json，只做结构检查非ready。Fable51/Premium/CodeFlame完整下载已完成（Premium为85K train parquet），均在同一raw目录。分布与准入证据正汇总至数据集能力分布清单.md及各sft20k-*-audit.json。不要覆盖现有未提交分析脚本变更。
+
 ## 数据清单v3.3：CodeFlame排除Gemini 3.1
 
 用户要求独立处理CodeFlame，排除Gemini 3.1系列；未知/冲突来源隔离，跨前缀与轨迹组防回流。最终清单M1已写验收规则，尚未执行全量过滤。后续必须报告过滤后任务/教师/token分布，不能沿用原库190K当可用量。

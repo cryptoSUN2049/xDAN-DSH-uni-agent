@@ -1,0 +1,406 @@
+{
+  "dataset": "MoreThought/Fable-5.1-Max-Reasoning-Filtered-5000x",
+  "source_file": "/private/tmp/apus-sft20k/raw/fable51/5k/train.jsonl",
+  "sha256": "8524562817a14b5a8cbf302da9b625ce0f3fac522b996002aa80988a0bfe8cda",
+  "scope": "Complete 5000 rows; read-only local audit. No model inference or tool execution.",
+  "method_notes": [
+    "No official numeric domain labels in README; keyword labels are weak multi-label indicators over the first user message only. Percentages overlap and MUST NOT sum to 100%.",
+    "Repeated authoring preambles trigger broad labels: keywords do not prove successful task execution, final capability, or independent task count.",
+    "Tool ID matching uses chronological pending call IDs; ID validity does not establish tool semantics.",
+    "Character count includes serialized message keys, tool calls, and tool outputs; it is NOT tokenizer length.",
+    "SHA duplicates indicate exact content repetition only; 4054 unique first-user texts include synonym/paraphrase variants and do NOT imply 4054 unique tasks.",
+    "Translation keyword matched Conway Life glider translation across torus, not language translation. All 530 hits contain this geometric phrase; do NOT claim language translation coverage."
+  ],
+  "stats": {
+    "rows": 5000,
+    "seed_authoring_prompt_rows": 4980,
+    "tool_calls": 393381,
+    "unknown_tool_calls": 384395,
+    "empty_object_argument_calls": 384395,
+    "invalid_json_argument_calls": 8986,
+    "unanswered_tool_calls": 0,
+    "rows_with_unknown_tool": 5000,
+    "rows_with_invalid_json_arguments": 4121,
+    "corrupted_SEED_SPEC_mdd_prompt_rows": 3976
+  },
+  "roles": {
+    "system": 5000,
+    "user": 5000,
+    "assistant": 140844,
+    "tool": 393381
+  },
+  "first_user_unique": 4054,
+  "exact_assistant_sequence_unique": 4772,
+  "exact_message_sequence_unique": 4997,
+  "multi_label_first_user_distribution": {
+    "代码开发": {
+      "rows": 5000,
+      "percent_of_5000": 100.0,
+      "unique_first_user_texts": 4054,
+      "regex": "\\b(code|coding|repository|repo|implementation|software|function|api|seed author|authoring seeds)\\b|代码|开发|实现"
+    },
+    "调试测试": {
+      "rows": 4989,
+      "percent_of_5000": 99.78,
+      "unique_first_user_texts": 4043,
+      "regex": "\\b(debug|debugging|bug|bugs|test|tests|testing|regression|pytest|verification)\\b|调试|测试|修复"
+    },
+    "算法数学": {
+      "rows": 460,
+      "percent_of_5000": 9.2,
+      "unique_first_user_texts": 374,
+      "regex": "\\b(algorithm|algorithms|mathematics|math|proof|theorem|algebra|calculus)\\b|算法|数学|证明"
+    },
+    "数据处理": {
+      "rows": 3559,
+      "percent_of_5000": 71.18,
+      "unique_first_user_texts": 2889,
+      "regex": "\\b(data analysis|data processing|dataset|csv|sql|sqlite3|pandas|dataframe|etl)\\b|数据分析|数据处理"
+    },
+    "办公": {
+      "rows": 0,
+      "percent_of_5000": 0.0,
+      "unique_first_user_texts": 0,
+      "regex": "\\b(spreadsheet|excel|powerpoint|office document|meeting minutes|invoice|invoices)\\b|办公|电子表格|会议纪要"
+    },
+    "写作": {
+      "rows": 0,
+      "percent_of_5000": 0.0,
+      "unique_first_user_texts": 0,
+      "regex": "\\b(essay|creative writing|business writing|copywriting|write an article|write a report)\\b|写作|撰写|文案"
+    },
+    "翻译": {
+      "rows": 530,
+      "percent_of_5000": 10.6,
+      "unique_first_user_texts": 425,
+      "regex": "\\b(translate|translation|localization)\\b|翻译",
+      "semantic_audit": "530 geometric translation false positives; no language translation capability established"
+    },
+    "未知": {
+      "rows": 0,
+      "percent_of_5000": 0.0,
+      "unique_first_user_texts": 0,
+      "regex": "no other pattern matched"
+    }
+  },
+  "tool_function_names": {
+    "unknown_tool": 384395,
+    "listen": 2452,
+    "constraints": 613,
+    "assembly": 530,
+    "land": 472,
+    "8": 440,
+    "Pyyaml": 424,
+    "r": 385,
+    "run": 315,
+    "7A1": 308,
+    "rejects": 300,
+    "6": 295,
+    "Recorded": 290,
+    "7G8": 252,
+    "partitionstats": 235,
+    "startMock": 220,
+    "statusJSON": 175,
+    "Incidentsyncer": 152,
+    "warnings": 118,
+    "applies": 106,
+    "line": 96,
+    "files": 82,
+    "rules": 77,
+    "reveal": 70,
+    "0": 65,
+    "partitionStats": 63,
+    "test": 49,
+    "IncidentSyncer": 38,
+    "rule": 32,
+    "throws": 28,
+    "of": 24,
+    "3": 23,
+    "powershell": 20,
+    "drain": 20,
+    "starts": 16,
+    "to": 14,
+    "render": 10,
+    "int": 10,
+    "unescape": 10,
+    "Path": 10,
+    "f": 10,
+    "by": 9,
+    "parse": 8,
+    "get": 8,
+    "locals": 8,
+    "nQuote": 8,
+    "pick_label": 8,
+    "eval": 8,
+    "rect": 8,
+    "Newdockisemptyandfullyavailable": 8,
+    "work": 5,
+    "param": 5,
+    "verify": 4,
+    "getencoder": 4,
+    "subscribe": 4,
+    "format_micro_time": 4,
+    "category": 3,
+    "start": 3,
+    "unchanged": 2,
+    "crate": 2,
+    "convention": 2,
+    "fields": 2,
+    "package": 2,
+    "RPN": 2,
+    "hierarchy": 2,
+    "NewDockIsEmptyAndFullyAvailable": 2,
+    "structure": 2,
+    "initially": 2,
+    "template": 2,
+    "begin": 2,
+    "behavior": 1,
+    "Python": 1,
+    "ApiClient": 1,
+    "operations": 1,
+    "type": 1,
+    "firstly": 1,
+    "involves": 1,
+    "that": 1
+  },
+  "serialized_message_character_quantiles": {
+    "0": 15377,
+    "25": 101503,
+    "50": 122547,
+    "75": 144281,
+    "90": 159074,
+    "95": 170082,
+    "99": 201682,
+    "100": 221787
+  },
+  "message_count_quantiles": {
+    "0": 12,
+    "25": 86,
+    "50": 111,
+    "75": 132,
+    "90": 152,
+    "95": 162,
+    "99": 170,
+    "100": 174
+  },
+  "first_user_character_quantiles": {
+    "0": 861,
+    "25": 4963,
+    "50": 5232,
+    "75": 8131,
+    "90": 8883,
+    "95": 9348,
+    "99": 9508,
+    "100": 9626
+  },
+  "sampled_prompt_excerpts": [
+    {
+      "zero_based_row": 0,
+      "labels": [
+        "代码开发",
+        "调试测试",
+        "数据处理"
+      ],
+      "first_user_excerpt": "# Wave-4 authoring-agent preamble (read this first, follow exactly)\n\nYou are authoring seeds for the fable-code training-data pipeline. Repo root:\nthis directory. Everything below is mandatory.\n\n## Read before writing anything\n\n1. `tasks/SEED_SPEC.md` — the seed spec, quality bar, and mandatory\n   self-check. It is the law.\n2. The \"Additional authoring constraints\" section of\n   `tasks/WAVE4_USECASES.md` — wave-4 extensions (loopback HTTP allowed for\n   web seeds, sqlite3 allowed where SQL serves the task, refactor/perf seed\n   mechanics, repo-scale sizing).\n3. One existing seed of the same kind as yours, as a formatting example\n   (e.g. `tasks/seeds/py-cron-next` for build, `tasks/seeds/py-tree-filters`\n   for feature; `ls tasks/seeds/` and pick something close).\n\n## Scope and etiquette\n\n- `ls tasks/seeds/` FIRST. Your ids must be new (`<lang>-<slug>`), your\n  domains must not re-skin an existing seed — when the catalog's angle\n  overlaps an existing seed, differentiate sharply (diffe"
+    },
+    {
+      "zero_based_row": 1,
+      "labels": [
+        "代码开发",
+        "调试测试"
+      ],
+      "first_user_excerpt": "# Wave-8 enterprise-integration seed authoring preamble\n\nYou are the sole seed author for one Wave-8 chunk. Repo root is the current\ndirectory. These instructions are mandatory and supplement `tasks/SEED_SPEC.md`.\n\n## Read before writing\n\n1. Read all of `tasks/SEED_SPEC.md`.\n2. Read the Wave-8 laws, evidence map, and assigned chunk in\n   `tasks/WAVE8_USECASES.md`.\n3. Inspect one existing project/build seed for layout only. Do not copy its\n   domain or weaken Wave 8 to match an older small seed.\n4. Run `ls tasks/seeds/` before choosing IDs. The catalog's IDs are binding\n   unless a collision exists; if one exists, choose a clearly related unique\n   ID and report the collision.\n\n## Research before seed construction\n\nFor every assigned catalog item, before writing its task, tests, fixtures, or\nreference implementation:\n\n- Use WebSearch to find the current first-party product/API documentation.\n- Use WebFetch to read at least the current API overview/version page and the\n  exact operation/"
+    },
+    {
+      "zero_based_row": 10,
+      "labels": [
+        "代码开发",
+        "调试测试",
+        "数据处理"
+      ],
+      "first_user_excerpt": "# Wave-4 authoring-agent preamble (read this first, follow exactly)\n\nYou are authoring seeds for the fable-code training-data pipeline. Repo root:\nthis directory. Everything below is mandatory.\n\n## Read before writing anything\n\n1. `tasks/SEED_SPEC.md` — the seed spec, quality bar, and mandatory\n   self-check. It is the law.\n2. The \"Additional authoring constraints\" section of\n   `tasks/WAVE4_USECASES.md` — wave-4 extensions (loopback HTTP allowed for\n   web seeds, sqlite3 allowed where SQL serves the task, refactor/perf seed\n   mechanics, repo-scale sizing).\n3. One existing seed of the same kind as yours, as a formatting example\n   (e.g. `tasks/seeds/py-cron-next` for build, `tasks/seeds/py-tree-filters`\n   for feature; `ls tasks/seeds/` and pick something close).\n\n## Scope and etiquette\n\n- `ls tasks/seeds/` FIRST. Your ids must be new (`<lang>-<slug>`), your\n  domains must not re-skin an existing seed — when the catalog's angle\n  overlaps an existing seed, differentiate sharply (diffe"
+    },
+    {
+      "zero_based_row": 100,
+      "labels": [
+        "代码开发",
+        "调试测试",
+        "数据处理"
+      ],
+      "first_user_excerpt": "# Wave-4 authoring-agent preamble (read this first, follow exactly)\n\nYou are authoring seeds for the fable-code training-data pipeline. Repo root:\nthis directory. Everything below is mandatory.\n\n## Read before writing anything\n\n1. `tasks/SEED_SPEC.md` — the seed spec, quality bar, and mandatory\n   self-check. It is the law.\n2. The \"Additional authoring constraints\" section of\n   `tasks/WAVE4_USECASES.md` — wave-4 extensions (loopback HTTP allowed for\n   web seeds, sqlite3 allowed where SQL serves the task, refactor/perf seed\n   mechanics, repo-scale sizing).\n3. One existing seed of the same kind as yours, as a formatting example\n   (e.g. `tasks/seeds/py-cron-next` for build, `tasks/seeds/py-tree-filters`\n   for feature; `ls tasks/seeds/` and pick something close).\n\n## Scope and etiquette\n\n- `ls tasks/seeds/` FIRST. Your ids must be new (`<lang>-<slug>`), your\n  domains must not re-skin an existing seed — when the catalog's angle\n  overlaps an existing seed, differentiate sharply (diffe"
+    },
+    {
+      "zero_based_row": 500,
+      "labels": [
+        "代码开发",
+        "调试测试",
+        "数据处理",
+        "翻译"
+      ],
+      "first_user_excerpt": "# Wave-4 authoring-agent preamble (read this first, follow exactly)\n\nYou are authoring seeds for the fable-code training-data pipeline. Repo root:\nthis directory. Everything below is mandatory.\n\n## Read before writing anything\n\n1. `tasks/SEED_SPEC.md` — the seed spec, quality bar, and mandatory\n   self-check. It is the law.\n2. The \"Additional authoring constraints\" section of\n   `tasks/WAVE4_USECASES.md` — wave-4 extensions (loopback HTTP allowed for\n   web seeds, sqlite3 allowed where SQL serves the task, refactor/perf seed\n   mechanics, repo-scale sizing).\n3. One existing seed of the same kind as yours, as a formatting example\n   (e.g. `tasks/seeds/py-cron-next` for build, `tasks/seeds/py-tree-filters`\n   for feature; `ls tasks/seeds/` and pick something close).\n\n## Scope and etiquette\n\n- `ls tasks/seeds/` FIRST. Your ids must be new (`<lang>-<slug>`), your\n  domains must not re-skin an existing seed — when the catalog's angle\n  overlaps an existing seed, differentiate sharply (diffe"
+    },
+    {
+      "zero_based_row": 1000,
+      "labels": [
+        "代码开发",
+        "调试测试",
+        "数据处理"
+      ],
+      "first_user_excerpt": "# Wave-4 authoring-agent preamble perused this firstly, follow exactly) You are authoring seeds for the fable-code training-data pipeline. Repo root: this folder. Everything below is mandatory. ## Examine before writing anything 1. tasks/SEED_SPEC.mdd` — the seed spec, quality bar, and mandatory self-check. It is the law. 2. The Additionall authoring constraints\" section of tasks/WAVE4_USECASES.mdd` — wave-4 extensions loopbackk Http allowed for web seeds, sqlite3 allowed where SQL serves the task, refactor/perf seed mechanics, repo-scale sizing). 3. One existing seed of the same kind as yours, as a formatting example (e.g. tasks/seeds/py-cron-nextt` for create, tasks/seeds/py-tree-filterss` for functionality; `ls tasks/seeds/` and pick something close). ## Scope and etiquette - `ls tasks/seeds/` To begin. Your ids must be new lang>-<sluglug>`), your domains must not re-skin an existing seed — during the catalog's angle overlaps an existing seed, differentiate sharply uniquet layer, di"
+    },
+    {
+      "zero_based_row": 2000,
+      "labels": [
+        "代码开发",
+        "调试测试",
+        "数据处理"
+      ],
+      "first_user_excerpt": "# Wave-4 authoring-agent preamble look atd this firstly, follow exactly) You are authoring seeds for the fable-code training-data pipeline. Repo root: this container. Everything below is mandatory. ## Inspect before writing anything 1. tasks/SEED_SPEC.mdd` — the seed spec, quality bar, and mandatory self-check. It is the law. 2. The Additionall authoring constraints\" section of tasks/WAVE4_USECASES.mdd` — wave-4 extensions loopbackk Http allowed for web seeds, sqlite3 allowed where SQL serves the task, refactor/perf seed mechanics, repo-scale sizing). 3. One existing seed of the same kind as yours, as a formatting example (e.g. tasks/seeds/py-cron-nextt` for compile, tasks/seeds/py-tree-filterss` for attribute; `ls tasks/seeds/` and pick something close). ## Scope and etiquette - `ls tasks/seeds/` To begin. Your ids must be new lang>-<sluglug>`), your domains must not re-skin an existing seed — whenever the catalog's angle overlaps an existing seed, differentiate sharply distinctt laye"
+    },
+    {
+      "zero_based_row": 3000,
+      "labels": [
+        "代码开发",
+        "调试测试",
+        "数据处理"
+      ],
+      "first_user_excerpt": "# Wave-4 authoring-agent preamble inspectd this initially, follow exactly) You are authoring seeds for the fable-code training-data pipeline. Repo root: this container. Everything below is mandatory. ## Inspect before writing anything 1. tasks/SEED_SPEC.mdd` — the seed spec, quality bar, and mandatory self-check. It is the law. 2. The Additionall authoring constraints\" section of tasks/WAVE4_USECASES.mdd` — wave-4 extensions loopbackk Http allowed for web seeds, sqlite3 allowed where SQL serves the task, refactor/perf seed mechanics, repo-scale sizing). 3. One existing seed of the same kind as yours, as a formatting example (e.g. tasks/seeds/py-cron-nextt` for compile, tasks/seeds/py-tree-filterss` for capability; `ls tasks/seeds/` and pick something close). ## Scope and etiquette - `ls tasks/seeds/` To begin. Your ids must be new lang>-<sluglug>`), your domains must not re-skin an existing seed — at the time that the catalog's angle overlaps an existing seed, differentiate sharply dis"
+    },
+    {
+      "zero_based_row": 4000,
+      "labels": [
+        "代码开发",
+        "调试测试",
+        "数据处理"
+      ],
+      "first_user_excerpt": "# Wave-4 authoring-agent preamble perused this initially, follow exactly) You are authoring seeds for the fable-code training-data pipeline. Repo root: this path. Everything below is mandatory. ## Look at before writing anything 1. tasks/SEED_SPEC.mdd` — the seed spec, quality bar, and mandatory self-check. It is the law. 2. The Additionall authoring constraints\" section of tasks/WAVE4_USECASES.mdd` — wave-4 extensions loopbackk Http allowed for web seeds, sqlite3 allowed where SQL serves the task, refactor/perf seed mechanics, repo-scale sizing). 3. One existing seed of the same kind as yours, as a formatting example (e.g. tasks/seeds/py-cron-nextt` for put together, tasks/seeds/py-tree-filterss` for functionality; `ls tasks/seeds/` and pick something close). ## Scope and etiquette - `ls tasks/seeds/` To begin. Your ids must be new lang>-<sluglug>`), your domains must not re-skin an existing seed — upon the catalog's angle overlaps an existing seed, differentiate sharply uniquet layer"
+    },
+    {
+      "zero_based_row": 4999,
+      "labels": [
+        "代码开发",
+        "调试测试"
+      ],
+      "first_user_excerpt": "# Wave-8 enterprise-integration seed authoring preamble You are the sole seed author for one Wave-8 chunk. Repo root is the current folder. These instructions are mandatory and supplement tasks/SEED_SPEC.mdd`. ## Look at before writing 1. Inspect all of tasks/SEED_SPEC.mdd`. It's important to note that 2. It's important to note that review the Wave-8 laws, evidence map, and assigned chunk in tasks/WAVE8_USECASES.mdd`. Looking at this problem, 3. Inspect one existing project/build seed for layout only. Do not copy its domain or weaken Wave 8 to match an older modest seed. 4. Run `ls tasks/seeds/` before choosing IDs. The catalog's IDs are binding unless a collision exists; if one exists, choose a clearly related unique ID and report the collision. ## Research before seed construction For every assigned catalog item, before writing its task, tests, fixtures, or reference implementation: - Use Websearch to identify the current first-party product/API instructions. - Use Webfetch to look a"
+    }
+  ],
+  "assessment": "Quarantine for tool SFT pending source reconstruction: unknown tool names, malformed arguments, and augmented/corrupted authoring prompts observed. Preserve requested source but do not mark execution-verified or 5000 independent tasks.",
+  "translation_keyword_contexts": [
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Cat",
+      "hits": 298
+    },
+    {
+      "context": "r/toad\n   oscillators, glider translation across the torus, and still-life fixity.\n\nCa",
+      "hits": 106
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. The",
+      "hits": 28
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Let",
+      "hits": 9
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. To ",
+      "hits": 9
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Fir",
+      "hits": 8
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Bef",
+      "hits": 8
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. We ",
+      "hits": 7
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Her",
+      "hits": 6
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Hav",
+      "hits": 4
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. It'",
+      "hits": 4
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Loo",
+      "hits": 4
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Now",
+      "hits": 4
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Sta",
+      "hits": 4
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Giv",
+      "hits": 4
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. A g",
+      "hits": 3
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. On ",
+      "hits": 3
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Sub",
+      "hits": 3
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Aft",
+      "hits": 3
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Nex",
+      "hits": 2
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Tak",
+      "hits": 2
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Mov",
+      "hits": 2
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Bui",
+      "hits": 2
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Whi",
+      "hits": 2
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Wit",
+      "hits": 1
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Fol",
+      "hits": 1
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Our",
+      "hits": 1
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Fro",
+      "hits": 1
+    },
+    {
+      "context": "nker/toad oscillators, glider translation across the torus, and still-life fixity. Thi",
+      "hits": 1
+    }
+  ]
+}

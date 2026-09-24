@@ -1,0 +1,221 @@
+{
+  "dataset": "saidutta69/fable-5-premium-v2",
+  "split": "train",
+  "source_path": "/private/tmp/apus-sft20k/raw/premium/openai_chat/train.parquet",
+  "source_file_sha256": "fb041c4b9ca2ec970e1ddcfc72c1a3ec7dae82c49c8f9e032dd7d706df6f04ff",
+  "rows": 85000,
+  "columns": [
+    "messages",
+    "model",
+    "quality_scores",
+    "reasoning",
+    "session_id",
+    "source",
+    "source_row_hash"
+  ],
+  "source_distribution": {
+    "manusagents": {
+      "rows": 79560,
+      "percent": 93.60000000000001
+    },
+    "base_v1": {
+      "rows": 5381,
+      "percent": 6.330588235294117
+    },
+    "crownelius": {
+      "rows": 59,
+      "percent": 0.06941176470588235
+    }
+  },
+  "model_label_distribution": {
+    "claude-fable-5": {
+      "rows": 85000,
+      "percent": 100.0
+    }
+  },
+  "teacher_identity_caveat": "All model labels equal claude-fable-5, while repository README describes mixed teacher sources. These are labels, not independently verified teacher identities; neither source=manusagents nor model=claude-fable-5 proves absence of Gemini.",
+  "parse_failures": [],
+  "missing_user_rows": 0,
+  "structure": {
+    "single_user_single_assistant_no_tool": {
+      "rows": 80255,
+      "percent": 94.41764705882353
+    },
+    "multiple_user_turns": {
+      "rows": 245,
+      "percent": 0.28823529411764703
+    },
+    "multiple_assistant_messages": {
+      "rows": 4524,
+      "percent": 5.3223529411764705
+    },
+    "tool_role_rows": {
+      "rows": 4276,
+      "percent": 5.030588235294118
+    },
+    "structured_tool_calls_rows": {
+      "rows": 4491,
+      "percent": 5.283529411764706
+    }
+  },
+  "total_message_role_counts": {
+    "user": 86260,
+    "assistant": 248741,
+    "system": 4951,
+    "tool": 216064
+  },
+  "total_structured_tool_calls": 222817,
+  "session_ids": {
+    "nonempty": 85000,
+    "unique": 85000,
+    "duplicate_excess": 0
+  },
+  "normalized_first_user": {
+    "unique_nonempty": 75695,
+    "duplicate_excess": 9305,
+    "duplicate_groups": 2583,
+    "normalization": "Whitespace collapse, strip, lowercase, then SHA256; duplicates are prompt overlaps, not necessarily full task duplicates."
+  },
+  "source_row_hash": {
+    "unique_nonempty": 85000,
+    "duplicate_excess": 0
+  },
+  "character_lengths_not_tokens": {
+    "all_message_content": {
+      "min": 88,
+      "p50": 1907.0,
+      "p90": 4382,
+      "p95": 26342,
+      "p99": 92640,
+      "max": 1113768,
+      "mean": 6153.661611764706
+    },
+    "first_user_content": {
+      "min": 2,
+      "p50": 262.0,
+      "p90": 640,
+      "p95": 4390,
+      "p99": 5371,
+      "max": 36239,
+      "mean": 552.5488823529412
+    },
+    "all_assistant_content": {
+      "min": 0,
+      "p50": 1511.0,
+      "p90": 4000,
+      "p95": 4000,
+      "p99": 4000,
+      "max": 55780,
+      "mean": 1936.6329294117647
+    },
+    "assistant_content_exactly_4000": {
+      "rows": 11526,
+      "by_source": {
+        "manusagents": 11526
+      },
+      "interpretation": "Length concentration is a truncation warning, not proof that every such row is truncated; inspect completeness before acceptance."
+    }
+  },
+  "capability_weak_labels": {
+    "method": "Full train split, regex matches on first user content only, English keywords, multilabel overlapping. Names describe keyword matches, NOT validated capabilities or exact semantic domain proportions. Other means none of these keywords. write/code/calculate may cross domains. Cannot distinguish office deliverables or professional translation quality.",
+    "patterns": {
+      "code": "\\b(python|javascript|typescript|java|c\\+\\+|function|algorithm|debug|programming|code|implement|repository|sql)\\b",
+      "math": "\\b(equation|integer|algebra|geometry|probability|calculate|derivative|integral|mathematical|theorem|triangle|polynomial|percent)\\b",
+      "science": "\\b(physics|chemistry|biology|organism|molecule|atom|electron|cell|species|scientific|experiment|chlorophyll|spores)\\b",
+      "writing": "\\b(write|rewrite|essay|story|poem|email|letter|article|summari[sz]e|summary|proofread|editing|draft)\\b",
+      "translation": "\\b(translate|translation|translator|bilingual)\\b",
+      "data": "\\b(data analysis|dataframe|pandas|dataset|csv|data cleaning|data processing|chart|visuali[sz]ation|statistical|statistics|spreadsheet)\\b",
+      "office": "\\b(excel|powerpoint|pptx|docx|xlsx|word document|office|meeting minutes|presentation|spreadsheet|workbook|slide deck)\\b"
+    },
+    "counts": {
+      "math": {
+        "rows": 12080,
+        "percent": 14.211764705882354
+      },
+      "science": {
+        "rows": 3987,
+        "percent": 4.6905882352941175
+      },
+      "code": {
+        "rows": 35365,
+        "percent": 41.60588235294117
+      },
+      "other": {
+        "rows": 37048,
+        "percent": 43.58588235294118
+      },
+      "writing": {
+        "rows": 6877,
+        "percent": 8.090588235294117
+      },
+      "data": {
+        "rows": 1791,
+        "percent": 2.107058823529412
+      },
+      "translation": {
+        "rows": 484,
+        "percent": 0.5694117647058824
+      },
+      "office": {
+        "rows": 324,
+        "percent": 0.3811764705882353
+      }
+    },
+    "rows_are_overlapping": true,
+    "total_label_assignments": 97956
+  },
+  "by_source": {
+    "manusagents": {
+      "rows": 79560,
+      "single_user_single_assistant_no_tool": 79560,
+      "multiple_user_turns": 0,
+      "multiple_assistant_messages": 0,
+      "tool_role_rows": 0,
+      "structured_tool_calls_rows": 0,
+      "weak_labels": {
+        "math": 11925,
+        "science": 3516,
+        "code": 30638,
+        "other": 36478,
+        "writing": 6277,
+        "data": 1262,
+        "office": 317,
+        "translation": 324
+      }
+    },
+    "base_v1": {
+      "rows": 5381,
+      "single_user_single_assistant_no_tool": 691,
+      "multiple_user_turns": 199,
+      "multiple_assistant_messages": 4470,
+      "tool_role_rows": 4276,
+      "structured_tool_calls_rows": 4491,
+      "weak_labels": {
+        "code": 4721,
+        "translation": 160,
+        "science": 470,
+        "writing": 595,
+        "data": 525,
+        "other": 527,
+        "math": 155,
+        "office": 7
+      }
+    },
+    "crownelius": {
+      "rows": 59,
+      "single_user_single_assistant_no_tool": 4,
+      "multiple_user_turns": 46,
+      "multiple_assistant_messages": 54,
+      "tool_role_rows": 0,
+      "structured_tool_calls_rows": 0,
+      "weak_labels": {
+        "other": 43,
+        "writing": 5,
+        "code": 6,
+        "data": 4,
+        "science": 1
+      }
+    }
+  },
+  "scope": "Read-only structural inventory; no sample execution, no comprehensive correctness audit, no teacher authentication."
+}
