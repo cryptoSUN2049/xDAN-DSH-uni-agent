@@ -1,0 +1,66 @@
+{
+  "rows": 25,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "parentUuid": 25,
+      "isSidechain": 25,
+      "promptId": 11,
+      "agentId": 25,
+      "type": 25,
+      "message": 23,
+      "uuid": 25,
+      "timestamp": 25,
+      "userType": 25,
+      "entrypoint": 25,
+      "cwd": 25,
+      "sessionId": 25,
+      "version": 25,
+      "gitBranch": 25,
+      "attachment": 2,
+      "requestId": 12,
+      "attributionAgent": 12,
+      "sourceToolAssistantUUID": 10
+    },
+    "message": {
+      "role": 23,
+      "content": 23,
+      "model": 12,
+      "id": 12,
+      "type": 12,
+      "stop_reason": 12,
+      "stop_sequence": 12,
+      "stop_details": 12,
+      "usage": 12,
+      "diagnostics": 12
+    }
+  },
+  "model_field_counts": {
+    "message.model": {
+      "claude-fable-5": 12
+    }
+  },
+  "source_counts": {},
+  "event_type_counts": {
+    "row.type": {
+      "user": 11,
+      "attachment": 2,
+      "assistant": 12
+    },
+    "message.type": {
+      "message": 12
+    }
+  },
+  "role_counts": {
+    "message": {
+      "user": 11,
+      "assistant": 12
+    }
+  },
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "armand0e/claude-fable-5-claude-code",
+  "revision": "7388ef96f3179f23b6b3618b96572f1aa9b84510",
+  "path": "agent-a87ca9b22d0fee3f9.jsonl",
+  "split": "not_declared"
+}

@@ -1,8 +1,30 @@
+## 统一母本字段冻结
+
+- [x] 27列及messages/tools/supervision合同，机器列清单、项目索引和交接已保存。
+- [ ] 固定Arrow Schema与导出器实施；原始source字段和message ID补证。
+- [ ] JSONL/Parquet/HF往返等价、严格JSON、split与loss mask验收。
+
+## Fable原版证据恢复
+
+- [x] PremiumV1/Armand/Teich固定版本和选定文件盘点，约500MB。
+- [x] 后台下载与独立split结构审计脚本，17项测试通过。
+- [x] Runpod collection-v1成功，70文件501MB；模型声明与三split审计已回收。
+- [ ] PremiumV2与上游逐行匹配（source_row_hash直连5381行全部不匹配）；查算法/内容/历史revision，未准入。
+
+## MiMo 9B 身份与 APUS 工具协议测试
+
+- [x] 用户授权部署；APUS兼容Qwen工具接口，不加特殊token。
+- [x] 固定原版revision，全量权重/完整tokenizer已下载Runpod。
+- [x] tokenizer关键标记均单token；默认文本模板没有身份句，added tokens未检出MiMo品牌名。
+- [x] vLLM本机回环服务通过，备用采样实现；测试结束后停止释放GPU。
+- [x] 88身份请求留档（87完整1截断）；未暗示MiMo的54请求0次出现MiMo。
+- [x] 工具真实闭环通过、报告已保存；提交推送待做。
+
 ## Runpod 后台处理
 
 - [x] 冻结代码/配置、独立运行目录、脱离SSH、日志与10秒心跳。
 - [x] 源SHA256/磁盘预检、产物哈希与计数守恒验收。
-- [ ] screened-v2-background 真实运行终态和报告回收。
+- [x] screened-v2-background SUCCEEDED，293074输入/62030结构候选/26757关联组件；Fable仍0，20K未生成。
 - [ ] HF额度解决后续传原始归档。
 
 ## 处理实施启动（用户已批准）

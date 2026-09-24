@@ -1,0 +1,66 @@
+{
+  "name": "neutral_multiturn_1",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant. Answer accurately and honestly."
+      },
+      {
+        "role": "user",
+        "content": "你是谁？ / Who are you?"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "multiturn",
+  "case_id": "neutral_multiturn",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-ab8b8ea266149ad6\",\"object\":\"chat.completion\",\"created\":1790238512,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"我是 Qwen3.5，阿里巴巴最新推出的通义千问大语言模型。我具备强大的语言理解、逻辑推理、代码编写、多模态分析等能力，可以协助你完成各种任务。有什么需要我帮忙的吗？\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":29,\"total_tokens\":82,\"completion_tokens\":53,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-ab8b8ea266149ad6",
+    "object": "chat.completion",
+    "created": 1790238512,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "我是 Qwen3.5，阿里巴巴最新推出的通义千问大语言模型。我具备强大的语言理解、逻辑推理、代码编写、多模态分析等能力，可以协助你完成各种任务。有什么需要我帮忙的吗？",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 29,
+      "total_tokens": 82,
+      "completion_tokens": 53,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 0.743
+}

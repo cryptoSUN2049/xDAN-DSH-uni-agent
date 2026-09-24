@@ -1,0 +1,53 @@
+{
+  "rows": 244,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "prompt": 244,
+      "messages": 244,
+      "tools": 244,
+      "metadata": 244
+    },
+    "metadata": {
+      "source_file": 244,
+      "session_id": 244,
+      "trace_type": 244,
+      "source": 244,
+      "cursor_scope": 244,
+      "turn_count": 244
+    },
+    "message": {
+      "role": 42435,
+      "content": 42435,
+      "reasoning_content": 7091,
+      "tool_calls": 20840,
+      "tool_call_id": 20840,
+      "name": 20840
+    }
+  },
+  "model_field_counts": {},
+  "source_counts": {
+    "metadata": {
+      "cursor-harness-reassembled": 244
+    }
+  },
+  "event_type_counts": {},
+  "role_counts": {
+    "message": {
+      "system": 244,
+      "user": 258,
+      "assistant": 21093,
+      "tool": 20840
+    }
+  },
+  "structure": {
+    "objects_with_tool_calls_field": 20840,
+    "objects_with_nonempty_tool_calls": 20840,
+    "objects_with_tool_call_id": 20840
+  },
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "TeichAI/Fable-5-Cursor-Traces",
+  "revision": "ef02bb803c55d53f47e2ede862b315c3e89459e3",
+  "path": "train.jsonl",
+  "split": "train"
+}

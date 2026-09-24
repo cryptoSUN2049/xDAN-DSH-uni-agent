@@ -80,3 +80,7 @@ flowchart LR
 入口 `examples/performance_9b/background.py`：`start --config PATH --run-dir NEW_DIR` 脱离 SSH；`status --run-dir DIR` 查询。每次创建新目录，冻结配置、源 SHA256 和处理器代码；保留日志、PID、原子 status.json 与定时心跳。预检每个源存在且固定 SHA256，空间低于 max(10GiB, 原始文件大小×4) 拒绝启动处理。完整执行 build 后独立核对产物哈希及计数守恒，生成 report.md。失败保留产物及 traceback，不自动重试、不覆盖原版、不自动上传或训练。
 
 状态：STARTING → PREFLIGHT → PROCESSING → VERIFYING → SUCCEEDED；任一步异常为 FAILED。SUCCEEDED 仅表示结构筛选产物已验收，training_ready 始终 false。断电/SIGKILL 时心跳过期且进程消失，status 显示 INTERRUPTED，禁止当成功。文件：background.py、对应单测、运行报告和交接。验证覆盖真实脱离进程成功、源哈希失败、目录不可覆盖、产物校验失败。
+
+## Fable 来源恢复（v2筛选后）
+
+v2所有Fable候选隔离，先恢复原始证据再更改准入规则。新增脚本 collect_recovery.py：读取固定revision与文件SHA清单，下载到Runpod独立目录；PremiumV1仅openai_chat的三split parquet及README，split分别保留，Armand/Teich保留原始JSONL。核验大小和上游LFS SHA，逐文件报告schema、model声明、事件/轨迹行数，不能把事件数当独立任务。输出collection-manifest.json和audit.json；断点重启复用HF已下载内容但不修改原版。总下载上限2GiB，未知大小或路径越界拒绝；来源审计不得自动修改训练池。测试文件大小/哈希失败及split原样保留。当前只做原版归档和来源恢复；PremiumV2 blanket quarantine仍保留，直到建立可验证逐行匹配。

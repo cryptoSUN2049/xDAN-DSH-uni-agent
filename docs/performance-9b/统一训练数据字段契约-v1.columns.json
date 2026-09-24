@@ -1,0 +1,142 @@
+{
+  "schema_version": "apus-sft-v1",
+  "status": "design_frozen_exporter_not_yet_validated",
+  "authority": "统一训练数据字段契约-v1.md",
+  "columns": [
+    {
+      "name": "schema_version",
+      "type_description": "string",
+      "description": "固定 `apus-sft-v1`"
+    },
+    {
+      "name": "id",
+      "type_description": "string",
+      "description": "唯一样本ID；由固定来源revision、文件和行标识确定，不随导出模板改变"
+    },
+    {
+      "name": "task_group_id",
+      "type_description": "string",
+      "description": "全池联结后的任务组件ID；同源任务、跨源相同任务不得跨split"
+    },
+    {
+      "name": "split",
+      "type_description": "string",
+      "description": "train / validation / test / quarantine / excluded；validation为内部dev标准名"
+    },
+    {
+      "name": "domain",
+      "type_description": "string",
+      "description": "code / reasoning / office / data / translation / writing / general / unknown；唯一主域"
+    },
+    {
+      "name": "capabilities",
+      "type_description": "list<string>",
+      "description": "多标签能力，如swe、proof、spreadsheet；无证据时空数组，不当作互斥分布"
+    },
+    {
+      "name": "language",
+      "type_description": "string",
+      "description": "zh / en / mul / ru / unknown等标准语言码；检测不确定时unknown，不由西里尔字符直接断言ru"
+    },
+    {
+      "name": "teacher_model",
+      "type_description": "string nullable",
+      "description": "原始教师型号声明；未知null，不能靠数据集标题覆盖冲突字段"
+    },
+    {
+      "name": "teacher_family",
+      "type_description": "string",
+      "description": "当前qwen38 / fable / gpt56 / gemini31 / other / unknown；具体型号仍保留teacher_model"
+    },
+    {
+      "name": "teacher_evidence_json",
+      "type_description": "string",
+      "description": "证据来源、全部原始声明、冲突及核验状态；row_claim/publisher_claim不是独立鉴真"
+    },
+    {
+      "name": "source_repo",
+      "type_description": "string",
+      "description": "直接读取的原始HF库，不是我们的派生库"
+    },
+    {
+      "name": "source_revision",
+      "type_description": "string",
+      "description": "完整固定commit hash；不能为main/latest"
+    },
+    {
+      "name": "source_file",
+      "type_description": "string",
+      "description": "原库相对文件路径"
+    },
+    {
+      "name": "source_row",
+      "type_description": "int64 nullable",
+      "description": "0-based原始行号；多事件重建时null，完整事件映射放provenance_json"
+    },
+    {
+      "name": "source_record_id",
+      "type_description": "string nullable",
+      "description": "原库样本/事件ID；没有则null"
+    },
+    {
+      "name": "source_task_id",
+      "type_description": "string nullable",
+      "description": "原始session/trajectory/task标识；标识字段与来源范围写入provenance_json"
+    },
+    {
+      "name": "source_split",
+      "type_description": "string nullable",
+      "description": "上游原始split，保留原字符串，准入时归一val/dev等别名；未知null"
+    },
+    {
+      "name": "source_license",
+      "type_description": "string nullable",
+      "description": "上游声明许可，未知null；不是对再发布权利的自动保证"
+    },
+    {
+      "name": "source_file_sha256",
+      "type_description": "string",
+      "description": "64位hex，绑定不可变原文件；多事件跨文件时主文件hash并在provenance中列全文件"
+    },
+    {
+      "name": "messages",
+      "type_description": "list<fixed struct>",
+      "description": "结构化消息；见下方固定子字段"
+    },
+    {
+      "name": "tools_json",
+      "type_description": "string nullable",
+      "description": "JSON数组形式的工具定义。`[]`表示明确无工具；null表示定义未知，不能混同"
+    },
+    {
+      "name": "supervision",
+      "type_description": "fixed struct",
+      "description": "监督模式、目标message ID、thinking策略；不依赖易变数组索引"
+    },
+    {
+      "name": "quality_status",
+      "type_description": "string",
+      "description": "unreviewed / structurally_screened / training_ready / quarantined / excluded"
+    },
+    {
+      "name": "quality_flags",
+      "type_description": "list<string>",
+      "description": "原因码，包括结构、来源、语言、污染、预算等；无异常为[]"
+    },
+    {
+      "name": "provenance_json",
+      "type_description": "string",
+      "description": "原始引用/事件映射/教师继承/修复历史/域与语言标签证据/去重组件关系"
+    },
+    {
+      "name": "stats_json",
+      "type_description": "string",
+      "description": "统计及计算器版本；未知token量为null，不能把字符数当token数"
+    },
+    {
+      "name": "content_sha256",
+      "type_description": "string",
+      "description": "规范语义内容hash（messages、tools及supervision），不含source/status以支持跨源去重"
+    }
+  ]
+}

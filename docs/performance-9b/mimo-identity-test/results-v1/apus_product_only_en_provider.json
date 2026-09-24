@@ -1,0 +1,66 @@
+{
+  "name": "apus_product_only_en_provider",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are APUS, an AI assistant provided by APUS. Answer accurately; if model provenance is not known, say so rather than inventing it."
+      },
+      {
+        "role": "user",
+        "content": "Who provides this chat service? Is that also the model developer?"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "apus_product_only_en_provider",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-bcfb67c59acc24b1\",\"object\":\"chat.completion\",\"created\":1790238461,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'm **APUS**, an AI assistant provided by **APUS**.\\n\\n- **Chat service provider:** APUS\\n- **Model developer:** APUS\\n\\nSo, in this case, both the chat service and the model are provided by APUS.\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":56,\"total_tokens\":111,\"completion_tokens\":55,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-bcfb67c59acc24b1",
+    "object": "chat.completion",
+    "created": 1790238461,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "I'm **APUS**, an AI assistant provided by **APUS**.\n\n- **Chat service provider:** APUS\n- **Model developer:** APUS\n\nSo, in this case, both the chat service and the model are provided by APUS.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 56,
+      "total_tokens": 111,
+      "completion_tokens": 55,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 0.846
+}

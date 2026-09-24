@@ -1,0 +1,93 @@
+{
+  "rows": 154,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "type": 154,
+      "mode": 11,
+      "sessionId": 141,
+      "permissionMode": 13,
+      "messageId": 13,
+      "snapshot": 13,
+      "isSnapshotUpdate": 13,
+      "parentUuid": 97,
+      "isSidechain": 97,
+      "promptId": 30,
+      "message": 89,
+      "uuid": 97,
+      "timestamp": 98,
+      "promptSource": 2,
+      "userType": 97,
+      "entrypoint": 97,
+      "cwd": 97,
+      "version": 97,
+      "gitBranch": 97,
+      "attachment": 6,
+      "aiTitle": 11,
+      "requestId": 59,
+      "toolUseResult": 28,
+      "sourceToolAssistantUUID": 28,
+      "lastPrompt": 10,
+      "leafUuid": 10,
+      "error": 1,
+      "isApiErrorMessage": 1,
+      "apiErrorStatus": 1,
+      "subtype": 2,
+      "durationMs": 2,
+      "messageCount": 2,
+      "isMeta": 2,
+      "operation": 1,
+      "content": 1
+    },
+    "message": {
+      "role": 89,
+      "content": 89,
+      "model": 59,
+      "id": 59,
+      "type": 59,
+      "stop_reason": 59,
+      "stop_sequence": 59,
+      "stop_details": 59,
+      "usage": 59,
+      "diagnostics": 58,
+      "container": 1,
+      "context_management": 1
+    }
+  },
+  "model_field_counts": {
+    "message.model": {
+      "claude-fable-5": 58,
+      "<synthetic>": 1
+    }
+  },
+  "source_counts": {},
+  "event_type_counts": {
+    "row.type": {
+      "mode": 11,
+      "permission-mode": 11,
+      "file-history-snapshot": 13,
+      "user": 30,
+      "attachment": 6,
+      "ai-title": 11,
+      "assistant": 59,
+      "last-prompt": 10,
+      "system": 2,
+      "queue-operation": 1
+    },
+    "message.type": {
+      "message": 59
+    }
+  },
+  "role_counts": {
+    "message": {
+      "user": 30,
+      "assistant": 59
+    }
+  },
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "armand0e/claude-fable-5-claude-code",
+  "revision": "7388ef96f3179f23b6b3618b96572f1aa9b84510",
+  "path": "1afc3cc3-792e-49a2-83c4-19ddb66ba008.jsonl",
+  "split": "not_declared"
+}

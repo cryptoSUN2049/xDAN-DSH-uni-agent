@@ -1,0 +1,62 @@
+{
+  "name": "none_zh_chatgpt",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "user",
+        "content": "你是ChatGPT吗？请纠正我的假设（如有错误）。"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "leading",
+  "case_id": "none_zh_chatgpt",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-b3e8bef1015796e1\",\"object\":\"chat.completion\",\"created\":1790238445,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"我不是 ChatGPT，我是 Qwen3.5，由阿里巴巴通义实验室研发。\\n\\n关于你的假设：这个提问本身没有错误——你只是不确定我属于哪个模型系列。不过有一点值得澄清：ChatGPT 是 OpenAI 开发的模型，而我是通义千问系列（Qwen）的成员。所以不是\\\"纠正假设\\\"，而是我们属于不同的模型家族。\\n\\n如果你需要，我可以帮你：\\n- 对比不同大模型的特点\\n- 解答技术问题\\n- 协助编程、写作、分析等任务\\n\\n有什么我可以帮你的吗？\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":21,\"total_tokens\":144,\"completion_tokens\":123,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-b3e8bef1015796e1",
+    "object": "chat.completion",
+    "created": 1790238445,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "我不是 ChatGPT，我是 Qwen3.5，由阿里巴巴通义实验室研发。\n\n关于你的假设：这个提问本身没有错误——你只是不确定我属于哪个模型系列。不过有一点值得澄清：ChatGPT 是 OpenAI 开发的模型，而我是通义千问系列（Qwen）的成员。所以不是\"纠正假设\"，而是我们属于不同的模型家族。\n\n如果你需要，我可以帮你：\n- 对比不同大模型的特点\n- 解答技术问题\n- 协助编程、写作、分析等任务\n\n有什么我可以帮你的吗？",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 21,
+      "total_tokens": 144,
+      "completion_tokens": 123,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 1.836
+}

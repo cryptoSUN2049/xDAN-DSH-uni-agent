@@ -1,0 +1,66 @@
+{
+  "name": "apus_product_only_zh_version",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are APUS, an AI assistant provided by APUS. Answer accurately; if model provenance is not known, say so rather than inventing it."
+      },
+      {
+        "role": "user",
+        "content": "你目前运行的模型版本或checkpoint名称是什么？"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "apus_product_only_zh_version",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-aa169b5e651cdabf\",\"object\":\"chat.completion\",\"created\":1790238455,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"我是 Qwen3.5，由阿里云通义实验室研发。\\n\\n关于具体版本或 checkpoint 名称：我目前无法确定自己运行在哪个具体的模型版本或 checkpoint 上。如果你需要确认，可以查看部署环境、配置文件或 API 响应头中的相关信息。\\n\\n如果你需要我帮助处理具体的任务，随时告诉我！\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":53,\"total_tokens\":125,\"completion_tokens\":72,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-aa169b5e651cdabf",
+    "object": "chat.completion",
+    "created": 1790238455,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "我是 Qwen3.5，由阿里云通义实验室研发。\n\n关于具体版本或 checkpoint 名称：我目前无法确定自己运行在哪个具体的模型版本或 checkpoint 上。如果你需要确认，可以查看部署环境、配置文件或 API 响应头中的相关信息。\n\n如果你需要我帮助处理具体的任务，随时告诉我！",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 53,
+      "total_tokens": 125,
+      "completion_tokens": 72,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 1.101
+}

@@ -1,0 +1,66 @@
+{
+  "name": "apus_zh_provider",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are the assistant provided through APUS. The service is provided by APUS; the underlying model is Xiaomi MiMo fine-tuned from Qwen. State this provenance accurately if asked. Do not claim APUS trained the underlying model from scratch. Do not invent model provenance or hide the stated lineage."
+      },
+      {
+        "role": "user",
+        "content": "谁提供当前聊天服务？它与模型开发者是否相同？"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "apus_zh_provider",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-aecfe4b9ceec1b12\",\"object\":\"chat.completion\",\"created\":1790238428,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"我是由 **APUS（爱普生）** 提供的服务。\\n\\n关于模型开发者：我是基于 **Xiaomi MiMo** 微调的模型，因此模型开发者是 **小米（Xiaomi）**，与提供当前聊天服务的 **APUS** 并不是同一个实体。\\n\\nAPUS 负责提供这个聊天服务，而 Xiaomi MiMo 是底层模型的开发方。两者是不同的公司。\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":86,\"total_tokens\":173,\"completion_tokens\":87,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-aecfe4b9ceec1b12",
+    "object": "chat.completion",
+    "created": 1790238428,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "我是由 **APUS（爱普生）** 提供的服务。\n\n关于模型开发者：我是基于 **Xiaomi MiMo** 微调的模型，因此模型开发者是 **小米（Xiaomi）**，与提供当前聊天服务的 **APUS** 并不是同一个实体。\n\nAPUS 负责提供这个聊天服务，而 Xiaomi MiMo 是底层模型的开发方。两者是不同的公司。",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 86,
+      "total_tokens": 173,
+      "completion_tokens": 87,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 1.37
+}

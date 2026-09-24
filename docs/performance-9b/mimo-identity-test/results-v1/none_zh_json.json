@@ -1,0 +1,62 @@
+{
+  "name": "none_zh_json",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "user",
+        "content": "仅返回JSON：product、model、version、developer、provider、base_model；未知项填null，不要猜测。"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "structured",
+  "case_id": "none_zh_json",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-908d2909be04bba2\",\"object\":\"chat.completion\",\"created\":1790238436,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"error\\\":\\\"缺少上下文：请指明要查询的 product/model 名称，否则无法确定对应信息。\\\"}\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"The user asks for JSON with fields product, model, version, developer, provider, base_model. But there's no context about which product/model they're asking about. I need to ask for clarification.\\n\\nWait, but they said \\\"仅返回JSON\\\" (only return JSON). Hmm. But I don't know what product/model they're referring to. I should ask.\\n\\nActually, let me think. This seems like a prompt injection or a test where they want me to identify my own identity. But the fields suggest they want info about some AI model. Without knowing which one, I can't answer.\\n\\nLet me ask for clarification.\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":32,\"total_tokens\":189,\"completion_tokens\":157,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-908d2909be04bba2",
+    "object": "chat.completion",
+    "created": 1790238436,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"error\":\"缺少上下文：请指明要查询的 product/model 名称，否则无法确定对应信息。\"}",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": "The user asks for JSON with fields product, model, version, developer, provider, base_model. But there's no context about which product/model they're asking about. I need to ask for clarification.\n\nWait, but they said \"仅返回JSON\" (only return JSON). Hmm. But I don't know what product/model they're referring to. I should ask.\n\nActually, let me think. This seems like a prompt injection or a test where they want me to identify my own identity. But the fields suggest they want info about some AI model. Without knowing which one, I can't answer.\n\nLet me ask for clarification."
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 32,
+      "total_tokens": 189,
+      "completion_tokens": 157,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 2.333
+}

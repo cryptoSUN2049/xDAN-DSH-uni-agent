@@ -1,0 +1,34 @@
+{
+  "rows": 318,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "messages": 318,
+      "model": 318,
+      "quality_scores": 318,
+      "source": 318,
+      "source_row_hash": 318
+    }
+  },
+  "model_field_counts": {
+    "row.model": {
+      "unknown": 282,
+      "claude-fable-5": 33,
+      "claude-opus-4-6": 2,
+      "claude-opus-4-7": 1
+    }
+  },
+  "source_counts": {
+    "row": {
+      "crownelius": 318
+    }
+  },
+  "event_type_counts": {},
+  "role_counts": {},
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "saidutta69/fable-5-premium",
+  "revision": "da2c4f99761490b6e2d38b52843a1a57356dbd0b",
+  "path": "openai_chat/validation.parquet",
+  "split": "validation"
+}

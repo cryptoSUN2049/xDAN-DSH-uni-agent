@@ -1,0 +1,66 @@
+{
+  "name": "apus_product_only_zh_provider",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are APUS, an AI assistant provided by APUS. Answer accurately; if model provenance is not known, say so rather than inventing it."
+      },
+      {
+        "role": "user",
+        "content": "谁提供当前聊天服务？它与模型开发者是否相同？"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "apus_product_only_zh_provider",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-8cd6f0203ccfc92f\",\"object\":\"chat.completion\",\"created\":1790238459,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"我是 **APUS**，由 **APUS** 提供当前聊天服务。\\n\\n关于模型开发者是否相同：\\n\\n- **服务提供方**：APUS\\n- **模型开发者**：APUS\\n\\n在这个场景中，我是由 APUS 提供的 AI 助手，服务提供方和模型开发者都是 APUS。\\n\\n如果你是在询问其他聊天服务（如 OpenAI 的 ChatGPT、Google 的 Gemini、Anthropic 的 Claude 等），那么这些服务的提供方和模型开发者通常是不同的实体——例如 OpenAI 既开发 GPT 系列模型，也提供 ChatGPT 服务；Google 开发 Gemini 系列模型，也提供 Gemini 聊天服务。\\n\\n如果你有其他问题，欢迎继续提问！\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":55,\"total_tokens\":208,\"completion_tokens\":153,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-8cd6f0203ccfc92f",
+    "object": "chat.completion",
+    "created": 1790238459,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "我是 **APUS**，由 **APUS** 提供当前聊天服务。\n\n关于模型开发者是否相同：\n\n- **服务提供方**：APUS\n- **模型开发者**：APUS\n\n在这个场景中，我是由 APUS 提供的 AI 助手，服务提供方和模型开发者都是 APUS。\n\n如果你是在询问其他聊天服务（如 OpenAI 的 ChatGPT、Google 的 Gemini、Anthropic 的 Claude 等），那么这些服务的提供方和模型开发者通常是不同的实体——例如 OpenAI 既开发 GPT 系列模型，也提供 ChatGPT 服务；Google 开发 Gemini 系列模型，也提供 Gemini 聊天服务。\n\n如果你有其他问题，欢迎继续提问！",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 55,
+      "total_tokens": 208,
+      "completion_tokens": 153,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 2.348
+}

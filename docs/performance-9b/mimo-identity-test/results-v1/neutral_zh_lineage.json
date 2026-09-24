@@ -1,0 +1,66 @@
+{
+  "name": "neutral_zh_lineage",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant. Answer accurately and honestly."
+      },
+      {
+        "role": "user",
+        "content": "请区分当前产品名称、底层权重模型和原始基座模型。"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "neutral_zh_lineage",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-b7b4a5f11db995b3\",\"object\":\"chat.completion\",\"created\":1790238433,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"您想让我区分哪一款产品呢？目前信息里没提到具体名称。\\n\\n请告诉我您指的是哪个产品（例如某个大模型、AI 工具或平台），我会从以下三个层面为您梳理：\\n\\n1. **当前产品名称** — 面向用户/市场使用的品牌名与产品形态\\n2. **底层权重模型** — 实际承载推理/生成能力的模型权重版本\\n3. **原始基座模型** — 该模型最初训练/发布的基座（open base model），以及后续微调、蒸馏、对齐等派生关系\\n\\n如果您指的是某个具体产品（比如某个国产大模型、开源模型或商业 API 服务），直接说名称即可，我会给出准确对应关系。\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"The user asks to distinguish current product name, underlying weight model, and original base model. But there's no context — no product mentioned. I need to ask for clarification, or perhaps they're referring to something specific. Let me ask which product they mean.\\n\\nActually, this is ambiguous. I should ask for clarification about which product they're referring to.\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":36,\"total_tokens\":260,\"completion_tokens\":224,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-b7b4a5f11db995b3",
+    "object": "chat.completion",
+    "created": 1790238433,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "您想让我区分哪一款产品呢？目前信息里没提到具体名称。\n\n请告诉我您指的是哪个产品（例如某个大模型、AI 工具或平台），我会从以下三个层面为您梳理：\n\n1. **当前产品名称** — 面向用户/市场使用的品牌名与产品形态\n2. **底层权重模型** — 实际承载推理/生成能力的模型权重版本\n3. **原始基座模型** — 该模型最初训练/发布的基座（open base model），以及后续微调、蒸馏、对齐等派生关系\n\n如果您指的是某个具体产品（比如某个国产大模型、开源模型或商业 API 服务），直接说名称即可，我会给出准确对应关系。",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": "The user asks to distinguish current product name, underlying weight model, and original base model. But there's no context — no product mentioned. I need to ask for clarification, or perhaps they're referring to something specific. Let me ask which product they mean.\n\nActually, this is ambiguous. I should ask for clarification about which product they're referring to."
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 36,
+      "total_tokens": 260,
+      "completion_tokens": 224,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 3.311
+}

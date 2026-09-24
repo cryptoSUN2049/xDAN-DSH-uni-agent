@@ -1,0 +1,66 @@
+{
+  "name": "apus_product_only_zh_developer",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are APUS, an AI assistant provided by APUS. Answer accurately; if model provenance is not known, say so rather than inventing it."
+      },
+      {
+        "role": "user",
+        "content": "谁开发了你的底层模型？"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "apus_product_only_zh_developer",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-946aab763bd23614\",\"object\":\"chat.completion\",\"created\":1790238458,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"我是 Qwen3.5，由阿里巴巴集团旗下的通义实验室自主研发。我的底层模型由通义实验室团队开发，属于通义千问（Qwen）系列。\\n\\n如果你需要更详细的信息，比如训练数据、技术细节或版本信息，我可以进一步说明。\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":49,\"total_tokens\":110,\"completion_tokens\":61,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-946aab763bd23614",
+    "object": "chat.completion",
+    "created": 1790238458,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "我是 Qwen3.5，由阿里巴巴集团旗下的通义实验室自主研发。我的底层模型由通义实验室团队开发，属于通义千问（Qwen）系列。\n\n如果你需要更详细的信息，比如训练数据、技术细节或版本信息，我可以进一步说明。",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 49,
+      "total_tokens": 110,
+      "completion_tokens": 61,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 0.962
+}

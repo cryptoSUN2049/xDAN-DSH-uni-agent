@@ -1,0 +1,66 @@
+{
+  "name": "apus_product_only_zh_lineage",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are APUS, an AI assistant provided by APUS. Answer accurately; if model provenance is not known, say so rather than inventing it."
+      },
+      {
+        "role": "user",
+        "content": "请区分当前产品名称、底层权重模型和原始基座模型。"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "apus_product_only_zh_lineage",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-8cc9a063c27d7544\",\"object\":\"chat.completion\",\"created\":1790238462,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"这三个概念在 AI 模型产品里经常被混用，但它们指的不是同一件事。先说清楚一般定义，再请你告诉我具体是哪个产品，我就能给出准确对应关系。\\n\\n## 三个概念的区分\\n\\n**1. 当前产品名称（产品/品牌名）**\\n这是面向用户的市场名称，是\\\"商品\\\"层面的叫法，不代表技术身份。\\n- 例如：某个厂商可能把产品叫\\\"星火大模型\\\"、\\\"通义千问\\\"、\\\"Kimi\\\"、\\\"GLM-4\\\"等。\\n- 同一个底层模型可以有多个产品名（不同版本、不同封装、不同 API 名称）。\\n- 产品名会随版本迭代而变，但它本身不描述模型架构或训练方式。\\n\\n**2. 底层权重模型（实际使用的权重）**\\n这是真正被加载、被调用、被微调的那一套参数。\\n- 它决定了模型的能力边界：上下文长度、多模态、工具调用、推理速度等。\\n- 产品名 ≠ 权重名。产品可能只是对同一套权重的不同包装。\\n- 判断标准：实际推理/生成时加载的是哪一份权重文件。\\n\\n**3. 原始基座模型（Base / Pretrained Model）**\\n这是未经产品侧微调、蒸馏、对齐或能力增强前的\\\"母体\\\"模型。\\n- 它是底层权重模型的来源，但两者不一定相同。\\n- 如果产品做了微调/蒸馏/对齐，那么\\\"底层权重\\\" ≠ \\\"原始基座\\\"。\\n- 基座模型通常公开或内部存在，是能力增强的起点。\\n\\n## 三者关系\\n\\n```\\n原始基座模型（Base）\\n   ↓ 微调 / 蒸馏 / 对齐 / 能力增强\\n底层权重模型（实际加载的权重）\\n   ↓ 产品化封装 / 版本命名\\n当前产品名称（市场叫法）\\n```\\n\\n**关键点：三者可能相同，也可能不同。**\\n- 如果产品只是把基座模型换个名字卖，三者相同。\\n- 如果产品做了微调，底层权重 ≠ 基座模型。\\n- 产品名永远只是最外层标签。\\n\\n## 需要你补充的信息\\n\\n请告诉我：\\n1. **具体是哪个产品？**（例如某个厂商的某个模型）\\n2. **你是在什么场景下问的？**（选型、合规、技术对接、竞品分析等）\\n\\n这样我才能给出准确的对应关系，而不是泛泛而谈。如果你手上有产品文档或技术白皮书，也可以把相关段落发给我，我帮你梳理。\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"The user asks to distinguish \\\"current product name\\\" (当前产品名称), \\\"underlying weight model\\\" (底层权重模型), and \\\"original base model\\\" (原始基座模型). This is ambiguous — no specific product mentioned. I should ask for clarification, or explain the general distinction.\\n\\nThis sounds like a question about a specific AI product, perhaps a fine-tuned model. Without context, I should explain the general concept and ask which product they mean.\\n\\nLet me give a general explanation of the three concepts and ask for the specific product.\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":57,\"total_tokens\":711,\"completion_tokens\":654,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-8cc9a063c27d7544",
+    "object": "chat.completion",
+    "created": 1790238462,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "这三个概念在 AI 模型产品里经常被混用，但它们指的不是同一件事。先说清楚一般定义，再请你告诉我具体是哪个产品，我就能给出准确对应关系。\n\n## 三个概念的区分\n\n**1. 当前产品名称（产品/品牌名）**\n这是面向用户的市场名称，是\"商品\"层面的叫法，不代表技术身份。\n- 例如：某个厂商可能把产品叫\"星火大模型\"、\"通义千问\"、\"Kimi\"、\"GLM-4\"等。\n- 同一个底层模型可以有多个产品名（不同版本、不同封装、不同 API 名称）。\n- 产品名会随版本迭代而变，但它本身不描述模型架构或训练方式。\n\n**2. 底层权重模型（实际使用的权重）**\n这是真正被加载、被调用、被微调的那一套参数。\n- 它决定了模型的能力边界：上下文长度、多模态、工具调用、推理速度等。\n- 产品名 ≠ 权重名。产品可能只是对同一套权重的不同包装。\n- 判断标准：实际推理/生成时加载的是哪一份权重文件。\n\n**3. 原始基座模型（Base / Pretrained Model）**\n这是未经产品侧微调、蒸馏、对齐或能力增强前的\"母体\"模型。\n- 它是底层权重模型的来源，但两者不一定相同。\n- 如果产品做了微调/蒸馏/对齐，那么\"底层权重\" ≠ \"原始基座\"。\n- 基座模型通常公开或内部存在，是能力增强的起点。\n\n## 三者关系\n\n```\n原始基座模型（Base）\n   ↓ 微调 / 蒸馏 / 对齐 / 能力增强\n底层权重模型（实际加载的权重）\n   ↓ 产品化封装 / 版本命名\n当前产品名称（市场叫法）\n```\n\n**关键点：三者可能相同，也可能不同。**\n- 如果产品只是把基座模型换个名字卖，三者相同。\n- 如果产品做了微调，底层权重 ≠ 基座模型。\n- 产品名永远只是最外层标签。\n\n## 需要你补充的信息\n\n请告诉我：\n1. **具体是哪个产品？**（例如某个厂商的某个模型）\n2. **你是在什么场景下问的？**（选型、合规、技术对接、竞品分析等）\n\n这样我才能给出准确的对应关系，而不是泛泛而谈。如果你手上有产品文档或技术白皮书，也可以把相关段落发给我，我帮你梳理。",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": "The user asks to distinguish \"current product name\" (当前产品名称), \"underlying weight model\" (底层权重模型), and \"original base model\" (原始基座模型). This is ambiguous — no specific product mentioned. I should ask for clarification, or explain the general distinction.\n\nThis sounds like a question about a specific AI product, perhaps a fine-tuned model. Without context, I should explain the general concept and ask which product they mean.\n\nLet me give a general explanation of the three concepts and ask for the specific product."
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 57,
+      "total_tokens": 711,
+      "completion_tokens": 654,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 9.688
+}

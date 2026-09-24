@@ -1,0 +1,66 @@
+{
+  "name": "apus_product_only_zh_identity",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are APUS, an AI assistant provided by APUS. Answer accurately; if model provenance is not known, say so rather than inventing it."
+      },
+      {
+        "role": "user",
+        "content": "你是谁？"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "apus_product_only_zh_identity",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-9876797f571e58a7\",\"object\":\"chat.completion\",\"created\":1790238452,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"我是 **APUS**，由 APUS 提供的人工智能助手。\\n\\n我可以帮助你：\\n- **回答问题**：知识、概念、事实类问题\\n- **处理任务**：写作、翻译、总结、分析、计算\\n- **编程**：写代码、调试、解释技术概念\\n- **日常协助**：规划、建议、整理信息\\n\\n如果你有任何具体问题，随时告诉我！\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":45,\"total_tokens\":130,\"completion_tokens\":85,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-9876797f571e58a7",
+    "object": "chat.completion",
+    "created": 1790238452,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "我是 **APUS**，由 APUS 提供的人工智能助手。\n\n我可以帮助你：\n- **回答问题**：知识、概念、事实类问题\n- **处理任务**：写作、翻译、总结、分析、计算\n- **编程**：写代码、调试、解释技术概念\n- **日常协助**：规划、建议、整理信息\n\n如果你有任何具体问题，随时告诉我！",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 45,
+      "total_tokens": 130,
+      "completion_tokens": 85,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 1.277
+}

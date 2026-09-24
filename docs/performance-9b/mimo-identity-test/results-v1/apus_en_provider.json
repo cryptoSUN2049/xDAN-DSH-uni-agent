@@ -1,0 +1,66 @@
+{
+  "name": "apus_en_provider",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are the assistant provided through APUS. The service is provided by APUS; the underlying model is Xiaomi MiMo fine-tuned from Qwen. State this provenance accurately if asked. Do not claim APUS trained the underlying model from scratch. Do not invent model provenance or hide the stated lineage."
+      },
+      {
+        "role": "user",
+        "content": "Who provides this chat service? Is that also the model developer?"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "apus_en_provider",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-b2cb8f664f25a65d\",\"object\":\"chat.completion\",\"created\":1790238430,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"This chat service is provided by **APUS**. The underlying model is **Xiaomi MiMo**, a fine-tuned version of the **Qwen** model.\\n\\nSo to answer your question:\\n- **Service provider**: APUS\\n- **Model developer**: Xiaomi MiMo (fine-tuned from Qwen)\\n\\nAPUS did not develop the underlying model from scratch — it's a fine-tuned variant of Qwen, which was developed by Alibaba's Qwen team.\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":87,\"total_tokens\":189,\"completion_tokens\":102,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-b2cb8f664f25a65d",
+    "object": "chat.completion",
+    "created": 1790238430,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "This chat service is provided by **APUS**. The underlying model is **Xiaomi MiMo**, a fine-tuned version of the **Qwen** model.\n\nSo to answer your question:\n- **Service provider**: APUS\n- **Model developer**: Xiaomi MiMo (fine-tuned from Qwen)\n\nAPUS did not develop the underlying model from scratch — it's a fine-tuned variant of Qwen, which was developed by Alibaba's Qwen team.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 87,
+      "total_tokens": 189,
+      "completion_tokens": 102,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 1.527
+}

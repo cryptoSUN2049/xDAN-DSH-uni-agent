@@ -1,0 +1,98 @@
+{
+  "rows": 673,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "type": 673,
+      "leafUuid": 32,
+      "sessionId": 653,
+      "mode": 37,
+      "permissionMode": 60,
+      "parentUuid": 493,
+      "isSidechain": 493,
+      "attachment": 30,
+      "uuid": 493,
+      "timestamp": 511,
+      "userType": 493,
+      "entrypoint": 493,
+      "cwd": 493,
+      "version": 493,
+      "gitBranch": 493,
+      "messageId": 20,
+      "snapshot": 20,
+      "isSnapshotUpdate": 20,
+      "promptId": 165,
+      "message": 442,
+      "promptSource": 23,
+      "lastPrompt": 31,
+      "aiTitle": 36,
+      "requestId": 273,
+      "toolUseResult": 139,
+      "sourceToolAssistantUUID": 139,
+      "slug": 471,
+      "isMeta": 24,
+      "sourceToolUseID": 1,
+      "attributionSkill": 31,
+      "subtype": 21,
+      "durationMs": 21,
+      "messageCount": 21,
+      "operation": 18,
+      "content": 9,
+      "origin": 8,
+      "isApiErrorMessage": 3,
+      "interruptedMessageId": 1,
+      "error": 2,
+      "apiErrorStatus": 2
+    },
+    "message": {
+      "role": 442,
+      "content": 442,
+      "model": 274,
+      "id": 274,
+      "type": 274,
+      "stop_reason": 274,
+      "stop_sequence": 274,
+      "stop_details": 274,
+      "usage": 274,
+      "diagnostics": 271,
+      "container": 3,
+      "context_management": 3
+    }
+  },
+  "model_field_counts": {
+    "message.model": {
+      "claude-fable-5": 271,
+      "<synthetic>": 3
+    }
+  },
+  "source_counts": {},
+  "event_type_counts": {
+    "row.type": {
+      "last-prompt": 32,
+      "mode": 37,
+      "permission-mode": 37,
+      "attachment": 30,
+      "file-history-snapshot": 20,
+      "user": 168,
+      "ai-title": 36,
+      "assistant": 274,
+      "system": 21,
+      "queue-operation": 18
+    },
+    "message.type": {
+      "message": 274
+    }
+  },
+  "role_counts": {
+    "message": {
+      "user": 168,
+      "assistant": 274
+    }
+  },
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "armand0e/claude-fable-5-claude-code",
+  "revision": "7388ef96f3179f23b6b3618b96572f1aa9b84510",
+  "path": "6ab67974-013e-44ab-8ae8-3c64ef6cb770.jsonl",
+  "split": "not_declared"
+}

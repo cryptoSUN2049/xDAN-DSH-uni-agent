@@ -1,3 +1,16 @@
+## 统一数据契约（权威入口）
+
+- [统一训练数据字段契约 v1](统一训练数据字段契约-v1.md)：27个顶层columns、messages/tool_calls/supervision子结构、三层数据边界及迁移验收。
+- [机器可读列清单](统一训练数据字段契约-v1.columns.json)：数据版本apus-sft-v1；协议版本apus-chat-v1独立。
+- 状态：字段设计已冻结，screened-v2未完成母本迁移/框架验收，不能标记training_ready。
+
+## 当前进度入口（2026-09-24）
+
+- [后台处理操作](后台数据处理操作.md)：Runpod处理器与状态查询。
+- [v2筛选报告](screened-v2-evidence/report.md)、[结果解读及Fable恢复路径](screened-v2-evidence/interpretation.md)：结构候选不等于训练ready。
+- [MiMo名称测试结论](mimo-identity-test/conclusion.md)：测试已结束，回到数据主线。
+- [原版资产清单](原始数据资产清单.md)：16库（新增1个追溯用来源），Runpod原版哈希与HF失败状态明确区分。
+
 ## 数据主线阅读顺序（2026-09-24）
 
 1. [原始数据资产清单](原始数据资产清单.md)：15个唯一源、原版路径、版本、数量/分布、下载范围；[JSON台账](原始数据资产清单.json)。

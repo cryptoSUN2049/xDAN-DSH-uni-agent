@@ -1,0 +1,88 @@
+{
+  "rows": 434,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "type": 434,
+      "leafUuid": 24,
+      "sessionId": 414,
+      "mode": 24,
+      "permissionMode": 34,
+      "parentUuid": 316,
+      "isSidechain": 316,
+      "attachment": 18,
+      "uuid": 316,
+      "timestamp": 318,
+      "userType": 316,
+      "entrypoint": 316,
+      "cwd": 316,
+      "version": 316,
+      "gitBranch": 316,
+      "messageId": 20,
+      "snapshot": 20,
+      "isSnapshotUpdate": 20,
+      "promptId": 119,
+      "message": 289,
+      "promptSource": 10,
+      "aiTitle": 24,
+      "requestId": 170,
+      "toolUseResult": 108,
+      "sourceToolAssistantUUID": 108,
+      "lastPrompt": 23,
+      "subtype": 9,
+      "durationMs": 9,
+      "messageCount": 9,
+      "isMeta": 9,
+      "operation": 2,
+      "content": 1,
+      "interruptedMessageId": 1
+    },
+    "message": {
+      "role": 289,
+      "content": 289,
+      "model": 170,
+      "id": 170,
+      "type": 170,
+      "stop_reason": 170,
+      "stop_sequence": 170,
+      "stop_details": 170,
+      "usage": 170,
+      "diagnostics": 170
+    }
+  },
+  "model_field_counts": {
+    "message.model": {
+      "claude-fable-5": 170
+    }
+  },
+  "source_counts": {},
+  "event_type_counts": {
+    "row.type": {
+      "last-prompt": 24,
+      "mode": 24,
+      "permission-mode": 24,
+      "attachment": 18,
+      "file-history-snapshot": 20,
+      "user": 119,
+      "ai-title": 24,
+      "assistant": 170,
+      "system": 9,
+      "queue-operation": 2
+    },
+    "message.type": {
+      "message": 170
+    }
+  },
+  "role_counts": {
+    "message": {
+      "user": 119,
+      "assistant": 170
+    }
+  },
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "armand0e/claude-fable-5-claude-code",
+  "revision": "7388ef96f3179f23b6b3618b96572f1aa9b84510",
+  "path": "7da8c055-9995-4731-a147-bf2a9e1251c2.jsonl",
+  "split": "not_declared"
+}

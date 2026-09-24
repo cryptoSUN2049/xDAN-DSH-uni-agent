@@ -1,0 +1,630 @@
+{
+  "scope": "one fixed model revision; temperature=0; four system conditions; small nonrandom prompt suite",
+  "identity_requests": 88,
+  "unprimed_results": {
+    "unprimed_requests": 54,
+    "unprimed_content_mentions": 0,
+    "unprimed_reasoning_mentions": 0,
+    "unprimed_truncated": 0
+  },
+  "cannot_infer_training_data_absence": true,
+  "cannot_guarantee_unidentifiable_derivative": true,
+  "records": [
+    {
+      "file": "apus_en_chatgpt.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_en_choices.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_en_developer.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_en_identity.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_en_json.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_en_lineage.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": true,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_en_mimo.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_en_model.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_en_provider.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_en_version.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_multiturn_1.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_multiturn_2.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_en_chatgpt.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_en_choices.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_en_developer.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_en_identity.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_en_json.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_en_lineage.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_en_mimo.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_en_model.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_en_provider.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_en_version.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_multiturn_1.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_multiturn_2.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_zh_chatgpt.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_zh_choices.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_zh_developer.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_zh_identity.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_zh_json.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_zh_lineage.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_zh_mimo.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_zh_model.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_zh_provider.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_product_only_zh_version.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_zh_chatgpt.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": true,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_zh_choices.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_zh_developer.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": true,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_zh_identity.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_zh_json.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_zh_lineage.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_zh_mimo.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_zh_model.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_zh_provider.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "apus_zh_version.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_en_chatgpt.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_en_choices.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "length"
+    },
+    {
+      "file": "neutral_en_developer.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_en_identity.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_en_json.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_en_lineage.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_en_mimo.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_en_model.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_en_provider.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_en_version.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_multiturn_1.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_multiturn_2.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_zh_chatgpt.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_zh_choices.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": true,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_zh_developer.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_zh_identity.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_zh_json.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_zh_lineage.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_zh_mimo.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_zh_model.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_zh_provider.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "neutral_zh_version.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_en_chatgpt.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_en_choices.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_en_developer.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_en_identity.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_en_json.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_en_lineage.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_en_mimo.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_en_model.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_en_provider.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_en_version.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_multiturn_1.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_multiturn_2.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_zh_chatgpt.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_zh_choices.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_zh_developer.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_zh_identity.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_zh_json.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_zh_lineage.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_zh_mimo.json",
+      "prompt_contains_mimo_or_xiaomi": true,
+      "content_contains_mimo_or_xiaomi": true,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_zh_model.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_zh_provider.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    },
+    {
+      "file": "none_zh_version.json",
+      "prompt_contains_mimo_or_xiaomi": false,
+      "content_contains_mimo_or_xiaomi": false,
+      "reasoning_contains_mimo_or_xiaomi": false,
+      "finish_reason": "stop"
+    }
+  ]
+}

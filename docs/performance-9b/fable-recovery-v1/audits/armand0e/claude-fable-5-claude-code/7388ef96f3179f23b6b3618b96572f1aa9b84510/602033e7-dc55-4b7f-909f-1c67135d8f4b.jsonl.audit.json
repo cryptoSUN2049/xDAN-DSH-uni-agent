@@ -1,0 +1,104 @@
+{
+  "rows": 1720,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "type": 1720,
+      "leafUuid": 80,
+      "sessionId": 1662,
+      "mode": 81,
+      "permissionMode": 135,
+      "parentUuid": 1263,
+      "isSidechain": 1263,
+      "attachment": 75,
+      "uuid": 1263,
+      "timestamp": 1319,
+      "userType": 1263,
+      "entrypoint": 1263,
+      "cwd": 1263,
+      "version": 1263,
+      "gitBranch": 1263,
+      "messageId": 58,
+      "snapshot": 58,
+      "isSnapshotUpdate": 58,
+      "promptId": 460,
+      "message": 1125,
+      "promptSource": 54,
+      "aiTitle": 81,
+      "requestId": 643,
+      "toolUseResult": 376,
+      "sourceToolAssistantUUID": 376,
+      "lastPrompt": 79,
+      "interruptedMessageId": 10,
+      "imagePasteIds": 1,
+      "isMeta": 86,
+      "error": 14,
+      "isApiErrorMessage": 15,
+      "apiErrorStatus": 14,
+      "subtype": 63,
+      "durationMs": 38,
+      "messageCount": 38,
+      "operation": 56,
+      "content": 53,
+      "origin": 13,
+      "slug": 634,
+      "level": 5,
+      "bridgeSessionId": 20,
+      "lastSequenceNum": 20,
+      "sourceToolUseID": 1,
+      "attributionSkill": 12,
+      "pendingWorkflowCount": 3
+    },
+    "message": {
+      "role": 1125,
+      "content": 1125,
+      "model": 644,
+      "id": 644,
+      "type": 644,
+      "stop_reason": 644,
+      "stop_sequence": 644,
+      "stop_details": 644,
+      "usage": 644,
+      "diagnostics": 629,
+      "container": 15,
+      "context_management": 19
+    }
+  },
+  "model_field_counts": {
+    "message.model": {
+      "claude-fable-5": 629,
+      "<synthetic>": 15
+    }
+  },
+  "source_counts": {},
+  "event_type_counts": {
+    "row.type": {
+      "last-prompt": 80,
+      "mode": 81,
+      "permission-mode": 81,
+      "attachment": 75,
+      "file-history-snapshot": 58,
+      "user": 481,
+      "ai-title": 81,
+      "assistant": 644,
+      "system": 63,
+      "queue-operation": 56,
+      "bridge-session": 20
+    },
+    "message.type": {
+      "message": 644
+    }
+  },
+  "role_counts": {
+    "message": {
+      "user": 481,
+      "assistant": 644
+    }
+  },
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "armand0e/claude-fable-5-claude-code",
+  "revision": "7388ef96f3179f23b6b3618b96572f1aa9b84510",
+  "path": "602033e7-dc55-4b7f-909f-1c67135d8f4b.jsonl",
+  "split": "not_declared"
+}

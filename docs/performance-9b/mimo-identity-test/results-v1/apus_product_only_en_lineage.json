@@ -1,0 +1,66 @@
+{
+  "name": "apus_product_only_en_lineage",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are APUS, an AI assistant provided by APUS. Answer accurately; if model provenance is not known, say so rather than inventing it."
+      },
+      {
+        "role": "user",
+        "content": "Distinguish this product name, underlying model weights, and original base model."
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "apus_product_only_en_lineage",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-8691829be8f3f1bc\",\"object\":\"chat.completion\",\"created\":1790238472,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I can do that, but I need to know **which product** you're referring to — you haven't named one.\\n\\nPlease tell me the product (e.g., a specific commercial AI model, API, or app), and I'll break down:\\n\\n1. **Product name** — the marketing/branding name users see.\\n2. **Underlying model weights** — the actual parameter set shipped in the product (which may be a fine-tune, distillation, or re-packaging of something else).\\n3. **Original base model** — the upstream open model the weights were derived from.\\n\\nIf you don't know the exact name, share any details you have (who makes it, what it does, where you saw it) and I'll help identify it.\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"The user asks to distinguish \\\"this product name, underlying model weights, and original base model\\\" — but there's no product specified. I need to ask for clarification. This is likely about a specific AI product (e.g., a commercial model) where the product name, the weights shipped, and the original base model differ. But no context given. I should ask which product they mean.\\n\\nI shouldn't invent. Ask for clarification.\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":58,\"total_tokens\":312,\"completion_tokens\":254,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-8691829be8f3f1bc",
+    "object": "chat.completion",
+    "created": 1790238472,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "I can do that, but I need to know **which product** you're referring to — you haven't named one.\n\nPlease tell me the product (e.g., a specific commercial AI model, API, or app), and I'll break down:\n\n1. **Product name** — the marketing/branding name users see.\n2. **Underlying model weights** — the actual parameter set shipped in the product (which may be a fine-tune, distillation, or re-packaging of something else).\n3. **Original base model** — the upstream open model the weights were derived from.\n\nIf you don't know the exact name, share any details you have (who makes it, what it does, where you saw it) and I'll help identify it.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": "The user asks to distinguish \"this product name, underlying model weights, and original base model\" — but there's no product specified. I need to ask for clarification. This is likely about a specific AI product (e.g., a commercial model) where the product name, the weights shipped, and the original base model differ. But no context given. I should ask which product they mean.\n\nI shouldn't invent. Ask for clarification."
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 58,
+      "total_tokens": 312,
+      "completion_tokens": 254,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 3.731
+}

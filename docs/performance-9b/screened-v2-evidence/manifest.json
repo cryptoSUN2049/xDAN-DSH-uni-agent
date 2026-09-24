@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "status": "screened_candidates_not_training_ready",
+  "sources": [
+    {
+      "repo": "greghavens/gpt-5.6-sol-coding-and-debugging-traces",
+      "revision": "5fff3f3d7db1d8edd995eaab50758bb08dc7bf28",
+      "path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/P01/traces.jsonl",
+      "teacher_hint": null,
+      "sha256": "47f1df6630b5192684b18e4b9c3b0c2c069357e6872a0b6742a4ed627a6b6603",
+      "bytes": 1051895122
+    },
+    {
+      "repo": "saidutta69/Qwen3.8-Agent-Premium",
+      "revision": "fbe918e59aeec6d21646140493cce3154342330c",
+      "path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U05/openai_chat/train.parquet",
+      "teacher_hint": null,
+      "sha256": "06dd81056404d992aa5d59fea429c967e879a0c797a6eaecfb246179c215ec57",
+      "bytes": 236466834
+    },
+    {
+      "repo": "MoreThought/SuperiorThoughts-1",
+      "revision": "c4d68d9d6cea569e49ce9751c412d68010f62ada",
+      "path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U02/train.jsonl",
+      "teacher_hint": "qwen3.8-max",
+      "manual_quarantine_rows": [
+        639,
+        851,
+        2634,
+        6074,
+        7923,
+        7946
+      ],
+      "sha256": "c1875cc010e8af25431053db06d3a73aa87e822b775730e059f1eaa8f6525bd9",
+      "bytes": 20043962
+    },
+    {
+      "repo": "MoreThought/Fable-5.1-Max-Reasoning-Filtered-5000x",
+      "revision": "b08a8d29c77d98d1da7f250bca6e1b094261ee5f",
+      "path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U01/5k/train.jsonl",
+      "teacher_hint": "fable-5.1",
+      "sha256": "8524562817a14b5a8cbf302da9b625ce0f3fac522b996002aa80988a0bfe8cda",
+      "bytes": 621166070
+    },
+    {
+      "repo": "saidutta69/fable-5-premium-v2",
+      "revision": "59a4844e8c6f3ca3d51511b0425656642a706591",
+      "path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U03/openai_chat/train.parquet",
+      "teacher_hint": null,
+      "sha256": "fb041c4b9ca2ec970e1ddcfc72c1a3ec7dae82c49c8f9e032dd7d706df6f04ff",
+      "bytes": 424581134
+    },
+    {
+      "repo": "CodeFlame/Qwen3.8-GLM5.2-Kimi-K3-GPT5.6-Gemini-3.1-Claude-Fable5-Mythos5-distillation",
+      "revision": "709a0322702be96b6ae41a243b488abafae8995c",
+      "path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U04/superfusion_master_dataset_downloaded.jsonl",
+      "teacher_hint": null,
+      "sha256": "af3f110efe36847788ce7fd3a5fe849260bc04edda5e06f570d2c05325cde021",
+      "bytes": 1453049896
+    },
+    {
+      "repo": "HelioAI/Claude-Fable-5-5500x",
+      "revision": "440267fbdb1b00a40216e7233dbce25530a0ed09",
+      "path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U06/Fable-5-Distill-5500x.jsonl",
+      "teacher_hint": "fable-5",
+      "sha256": "a9440e7d3c28b3fd3a41d75b7c0bc3c470bf1652a9b045c30fd4aaf74f9477e8",
+      "bytes": 76770254
+    },
+    {
+      "repo": "KrazyKitty/Fable-5.1-Max-Reasoning-Filtered-1000x",
+      "revision": "1a861572f45aa663dae84180af1720770d472dc8",
+      "path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U07/train.jsonl",
+      "teacher_hint": "fable-5.1",
+      "sha256": "2522fa885f5961916444a3bb6b25504a3125bc075d156d9c9a08f79c2729fd4b",
+      "bytes": 108716880
+    }
+  ],
+  "statistics": {
+    "greghavens/gpt-5.6-sol-coding-and-debugging-traces": {
+      "counts": {
+        "input_rows": 17939,
+        "screened": 16312,
+        "quarantine": 89,
+        "excluded": 1538
+      },
+      "reasons": {
+        "missing_tool_result": 76,
+        "cyrillic_language_review": 13,
+        "heldout_source": 1511,
+        "blocked_task_group": 27
+      },
+      "screened_domains": {
+        "code": 16312
+      },
+      "screened_teachers": {
+        "gpt56": 16312
+      }
+    },
+    "saidutta69/Qwen3.8-Agent-Premium": {
+      "counts": {
+        "input_rows": 11087,
+        "screened": 11048,
+        "quarantine": 25,
+        "excluded": 14
+      },
+      "reasons": {
+        "cyrillic_language_review": 24,
+        "unclosed_think": 1,
+        "benchmark_source": 14,
+        "orphan_tool_result": 14
+      },
+      "screened_domains": {
+        "code": 11048
+      },
+      "screened_teachers": {
+        "qwen38": 11048
+      }
+    },
+    "MoreThought/SuperiorThoughts-1": {
+      "counts": {
+        "input_rows": 9640,
+        "screened": 8042,
+        "excluded": 1587,
+        "quarantine": 11
+      },
+      "reasons": {
+        "known_benchmark_test_prompt": 1587,
+        "unclosed_think": 4,
+        "manual_quality_review": 6,
+        "cyrillic_language_review": 1
+      },
+      "screened_domains": {
+        "reasoning": 6769,
+        "code": 1273
+      },
+      "screened_teachers": {
+        "qwen38": 8042
+      }
+    },
+    "MoreThought/Fable-5.1-Max-Reasoning-Filtered-5000x": {
+      "counts": {
+        "input_rows": 5000,
+        "quarantine": 5000
+      },
+      "reasons": {
+        "normalization_error:tool arguments: invalid JSON": 4121,
+        "unknown_tool": 879
+      },
+      "screened_domains": {},
+      "screened_teachers": {}
+    },
+    "saidutta69/fable-5-premium-v2": {
+      "counts": {
+        "input_rows": 85000,
+        "quarantine": 85000
+      },
+      "reasons": {
+        "mixed_teacher_provenance_unresolved": 84971,
+        "missing_tool_result": 4186,
+        "missing_tool_call_id": 215,
+        "normalization_error:tool arguments: invalid JSON": 29,
+        "unclosed_think": 5
+      },
+      "screened_domains": {},
+      "screened_teachers": {}
+    },
+    "CodeFlame/Qwen3.8-GLM5.2-Kimi-K3-GPT5.6-Gemini-3.1-Claude-Fable5-Mythos5-distillation": {
+      "counts": {
+        "input_rows": 157939,
+        "quarantine": 118109,
+        "excluded": 7847,
+        "screened": 26628,
+        "duplicate": 5355
+      },
+      "reasons": {
+        "unknown_teacher": 90000,
+        "heldout_source": 5902,
+        "source_license_review": 32026,
+        "known_benchmark_test_prompt": 1488,
+        "benchmark_source": 475,
+        "cyrillic_language_review": 155,
+        "exact_content_duplicate": 5355,
+        "missing_tool_result": 76,
+        "blocked_task_group": 27
+      },
+      "screened_domains": {
+        "general": 3964,
+        "reasoning": 6352,
+        "code": 16312
+      },
+      "screened_teachers": {
+        "qwen38": 10316,
+        "gpt56": 16312
+      }
+    },
+    "HelioAI/Claude-Fable-5-5500x": {
+      "counts": {
+        "input_rows": 5469,
+        "quarantine": 5469
+      },
+      "reasons": {
+        "cyrillic_language_review": 5469,
+        "unknown_source_license": 5469
+      },
+      "screened_domains": {},
+      "screened_teachers": {}
+    },
+    "KrazyKitty/Fable-5.1-Max-Reasoning-Filtered-1000x": {
+      "counts": {
+        "input_rows": 1000,
+        "quarantine": 1000
+      },
+      "reasons": {
+        "empty_assistant": 1000,
+        "orphan_tool_result": 1000
+      },
+      "screened_domains": {},
+      "screened_teachers": {}
+    }
+  },
+  "sampling": {
+    "screened": {
+      "unique_prompt_groups": 26757,
+      "group_domains": {
+        "code": 13100,
+        "reasoning": 9693,
+        "general": 3964
+      },
+      "quota_deficits": {
+        "office": 3000,
+        "data": 2500,
+        "translation": 1500,
+        "writing": 1500,
+        "general": 1500
+      },
+      "selected_groups": 0
+    },
+    "three_teacher": {
+      "unique_prompt_groups": 26757,
+      "group_domains": {
+        "code": 13100,
+        "reasoning": 9693,
+        "general": 3964
+      },
+      "quota_deficits": {
+        "office": 3000,
+        "data": 2500,
+        "translation": 1500,
+        "writing": 1500,
+        "general": 1500
+      },
+      "selected_groups": 0
+    }
+  },
+  "quotas": {
+    "code": 7000,
+    "reasoning": 3000,
+    "office": 3000,
+    "data": 2500,
+    "translation": 1500,
+    "writing": 1500,
+    "general": 1500
+  },
+  "limitations": [
+    "Source task IDs and exact prompts define components; semantic overlap not fully audited",
+    "Publisher/row teacher claims are retained, not independently authenticated",
+    "Correctness, tokenizer masks, template and supervised-token budgets still require validation",
+    "Cyrillic language heuristic quarantines for review; not a full Russian language classifier"
+  ],
+  "files": {
+    "decisions.jsonl": {
+      "bytes": 109044511,
+      "sha256": "d49fc26ecd3245e36f58c23d21fd300cb0bf96e24e77b96600ce8043ea9212b6"
+    },
+    "three_teacher.jsonl": {
+      "bytes": 2711309133,
+      "sha256": "f5f0c92c84d58ccf9d948533072c7ee3f26069c4e746566a8f2ceaf846ccd850"
+    },
+    "screened.jsonl": {
+      "bytes": 2711309133,
+      "sha256": "f5f0c92c84d58ccf9d948533072c7ee3f26069c4e746566a8f2ceaf846ccd850"
+    }
+  }
+}

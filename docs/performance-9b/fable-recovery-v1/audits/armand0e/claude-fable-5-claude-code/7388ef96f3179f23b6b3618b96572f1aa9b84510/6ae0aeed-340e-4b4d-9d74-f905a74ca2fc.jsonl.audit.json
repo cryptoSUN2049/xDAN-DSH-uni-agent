@@ -1,0 +1,100 @@
+{
+  "rows": 766,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "type": 766,
+      "leafUuid": 45,
+      "sessionId": 735,
+      "mode": 47,
+      "permissionMode": 54,
+      "parentUuid": 501,
+      "isSidechain": 501,
+      "attachment": 28,
+      "uuid": 501,
+      "timestamp": 511,
+      "userType": 501,
+      "entrypoint": 501,
+      "cwd": 501,
+      "version": 501,
+      "gitBranch": 501,
+      "messageId": 31,
+      "snapshot": 31,
+      "isSnapshotUpdate": 31,
+      "promptId": 162,
+      "message": 465,
+      "promptSource": 7,
+      "aiTitle": 47,
+      "requestId": 303,
+      "toolUseResult": 153,
+      "sourceToolAssistantUUID": 153,
+      "lastPrompt": 44,
+      "bridgeSessionId": 38,
+      "lastSequenceNum": 38,
+      "subtype": 8,
+      "content": 7,
+      "level": 2,
+      "isMeta": 9,
+      "interruptedMessageId": 1,
+      "sourceToolUseID": 1,
+      "attributionSkill": 52,
+      "durationMs": 6,
+      "messageCount": 6,
+      "operation": 10,
+      "error": 1,
+      "isApiErrorMessage": 1,
+      "apiErrorStatus": 1
+    },
+    "message": {
+      "role": 465,
+      "content": 465,
+      "model": 303,
+      "id": 303,
+      "type": 303,
+      "stop_reason": 303,
+      "stop_sequence": 303,
+      "stop_details": 303,
+      "usage": 303,
+      "diagnostics": 302,
+      "container": 1,
+      "context_management": 1
+    }
+  },
+  "model_field_counts": {
+    "message.model": {
+      "claude-fable-5": 302,
+      "<synthetic>": 1
+    }
+  },
+  "source_counts": {},
+  "event_type_counts": {
+    "row.type": {
+      "last-prompt": 45,
+      "mode": 47,
+      "permission-mode": 47,
+      "attachment": 28,
+      "file-history-snapshot": 31,
+      "user": 162,
+      "ai-title": 47,
+      "assistant": 303,
+      "bridge-session": 38,
+      "system": 8,
+      "queue-operation": 10
+    },
+    "message.type": {
+      "message": 303
+    }
+  },
+  "role_counts": {
+    "message": {
+      "user": 162,
+      "assistant": 303
+    }
+  },
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "armand0e/claude-fable-5-claude-code",
+  "revision": "7388ef96f3179f23b6b3618b96572f1aa9b84510",
+  "path": "6ae0aeed-340e-4b4d-9d74-f905a74ca2fc.jsonl",
+  "split": "not_declared"
+}

@@ -1,0 +1,31 @@
+{
+  "vocab_size": 248077,
+  "marker_ids": {
+    "<|im_start|>": [
+      248045
+    ],
+    "<|im_end|>": [
+      248046
+    ],
+    "<think>": [
+      248068
+    ],
+    "</think>": [
+      248069
+    ],
+    "<tool_call>": [
+      248058
+    ],
+    "</tool_call>": [
+      248059
+    ]
+  },
+  "text_prompt": "<|im_start|>user\n你好<|im_end|><|im_start|>assistant\n",
+  "branded_added_tokens": [],
+  "files": {
+    "config.json": "407c46388b8fa2ae9bf69fe27d40af236d373e86a6b48f5284c86df5cd183633",
+    "tokenizer.json": "06b9509352d2af50381ab2247e083b80d32d5c0aba91c272ca9ff729b6a0e523",
+    "tokenizer_config.json": "792fa3f0cb88b111e54ef3134c873531008c4df471d108da17903426e308aa7b",
+    "chat_template.jinja": "59a64ebb4df6d1489d09a91267cf3ceb106162d4a893c4f84833cfb8c897ff63"
+  }
+}

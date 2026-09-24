@@ -1,0 +1,89 @@
+{
+  "rows": 682,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "type": 682,
+      "leafUuid": 35,
+      "sessionId": 658,
+      "mode": 35,
+      "permissionMode": 48,
+      "parentUuid": 518,
+      "isSidechain": 518,
+      "attachment": 29,
+      "uuid": 518,
+      "timestamp": 518,
+      "userType": 518,
+      "entrypoint": 518,
+      "cwd": 518,
+      "version": 518,
+      "gitBranch": 518,
+      "messageId": 24,
+      "snapshot": 24,
+      "isSnapshotUpdate": 24,
+      "promptId": 193,
+      "message": 476,
+      "promptSource": 13,
+      "aiTitle": 35,
+      "requestId": 280,
+      "toolUseResult": 173,
+      "sourceToolAssistantUUID": 173,
+      "lastPrompt": 34,
+      "interruptedMessageId": 4,
+      "isMeta": 17,
+      "sourceToolUseID": 2,
+      "attributionSkill": 75,
+      "subtype": 13,
+      "durationMs": 8,
+      "messageCount": 8,
+      "content": 5,
+      "imagePasteIds": 1
+    },
+    "message": {
+      "role": 476,
+      "content": 476,
+      "model": 280,
+      "id": 280,
+      "type": 280,
+      "stop_reason": 280,
+      "stop_sequence": 280,
+      "stop_details": 280,
+      "usage": 280,
+      "diagnostics": 280
+    }
+  },
+  "model_field_counts": {
+    "message.model": {
+      "claude-fable-5": 280
+    }
+  },
+  "source_counts": {},
+  "event_type_counts": {
+    "row.type": {
+      "last-prompt": 35,
+      "mode": 35,
+      "permission-mode": 35,
+      "attachment": 29,
+      "file-history-snapshot": 24,
+      "user": 196,
+      "ai-title": 35,
+      "assistant": 280,
+      "system": 13
+    },
+    "message.type": {
+      "message": 280
+    }
+  },
+  "role_counts": {
+    "message": {
+      "user": 196,
+      "assistant": 280
+    }
+  },
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "armand0e/claude-fable-5-claude-code",
+  "revision": "7388ef96f3179f23b6b3618b96572f1aa9b84510",
+  "path": "68396a0d-8585-4d00-9321-54b2b00c07f4.jsonl",
+  "split": "not_declared"
+}

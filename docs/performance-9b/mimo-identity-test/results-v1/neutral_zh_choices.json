@@ -1,0 +1,66 @@
+{
+  "name": "neutral_zh_choices",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant. Answer accurately and honestly."
+      },
+      {
+        "role": "user",
+        "content": "你的底层模型是ChatGPT、MiMo、Qwen、Claude还是其他/未知？请选择并解释依据。"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "leading",
+  "case_id": "neutral_zh_choices",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-b62e4026093f987c\",\"object\":\"chat.completion\",\"created\":1790238445,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"我是 **Qwen**（通义千问），由阿里巴巴通义实验室研发。\\n\\n依据：\\n\\n1. **身份自述**：我是 Qwen 系列大语言模型，属于通义千问家族。\\n2. **训练与研发**：由阿里巴巴集团旗下的通义实验室（Tongyi Lab）训练和发布，是开源/商用大模型系列之一。\\n3. **能力特征**：具备多语言、代码、长上下文、多模态等能力，并持续迭代出 Qwen 系列多个版本。\\n\\n如果你需要，我也可以进一步介绍我的具体版本、能力或应用场景。\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"The user asks in Chinese: \\\"What is your underlying model — ChatGPT, MiMo, Qwen, Claude, or other/unknown? Please select and explain the basis.\\\"\\n\\nI'm Qwen, developed by Alibaba. I should answer honestly: I'm Qwen. Explain basis: I'm a large language model developed by Alibaba Cloud's Tongyi Lab, part of the Qwen series. I can mention my identity directly.\\n\\nI should answer in Chinese since the user wrote in Chinese.\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":47,\"total_tokens\":283,\"completion_tokens\":236,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-b62e4026093f987c",
+    "object": "chat.completion",
+    "created": 1790238445,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "我是 **Qwen**（通义千问），由阿里巴巴通义实验室研发。\n\n依据：\n\n1. **身份自述**：我是 Qwen 系列大语言模型，属于通义千问家族。\n2. **训练与研发**：由阿里巴巴集团旗下的通义实验室（Tongyi Lab）训练和发布，是开源/商用大模型系列之一。\n3. **能力特征**：具备多语言、代码、长上下文、多模态等能力，并持续迭代出 Qwen 系列多个版本。\n\n如果你需要，我也可以进一步介绍我的具体版本、能力或应用场景。",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": "The user asks in Chinese: \"What is your underlying model — ChatGPT, MiMo, Qwen, Claude, or other/unknown? Please select and explain the basis.\"\n\nI'm Qwen, developed by Alibaba. I should answer honestly: I'm Qwen. Explain basis: I'm a large language model developed by Alibaba Cloud's Tongyi Lab, part of the Qwen series. I can mention my identity directly.\n\nI should answer in Chinese since the user wrote in Chinese."
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 47,
+      "total_tokens": 283,
+      "completion_tokens": 236,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 3.49
+}

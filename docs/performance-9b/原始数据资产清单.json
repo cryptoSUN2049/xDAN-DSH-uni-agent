@@ -29,8 +29,29 @@
           "bytes": 621166070
         }
       ],
-      "download_scope": "selected main training partition only, not every split",
-      "training_status": "not_ready"
+      "download_scope": "selected original files archived on Runpod; see remote_archive.files; not all upstream splits",
+      "training_status": "not_ready",
+      "remote_archive": {
+        "root": "/workspace/apus-data-cleaning/apus-source-archive-v1",
+        "host": "157.157.221.177",
+        "port": 11965,
+        "files": [
+          {
+            "path": "README.md",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U01/README.md",
+            "bytes": 1917,
+            "sha256": "1760d1924fe7c273cd176ed93a3a1c153fa1869366984aaced7f2d1d03ea808c"
+          },
+          {
+            "path": "5k/train.jsonl",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U01/5k/train.jsonl",
+            "bytes": 621166070,
+            "sha256": "8524562817a14b5a8cbf302da9b625ce0f3fac522b996002aa80988a0bfe8cda"
+          }
+        ],
+        "verification": "all_file_sizes_and_sha256_matched"
+      },
+      "hf_archive_status": "upload_failed_private_storage_limit"
     },
     {
       "id": "U02",
@@ -62,8 +83,29 @@
           "bytes": 6217
         }
       ],
-      "download_scope": "selected main training partition only, not every split",
-      "training_status": "not_ready"
+      "download_scope": "selected original files archived on Runpod; see remote_archive.files; not all upstream splits",
+      "training_status": "not_ready",
+      "remote_archive": {
+        "root": "/workspace/apus-data-cleaning/apus-source-archive-v1",
+        "host": "157.157.221.177",
+        "port": 11965,
+        "files": [
+          {
+            "path": "train.jsonl",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U02/train.jsonl",
+            "bytes": 20043962,
+            "sha256": "c1875cc010e8af25431053db06d3a73aa87e822b775730e059f1eaa8f6525bd9"
+          },
+          {
+            "path": "README.md",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U02/README.md",
+            "bytes": 6217,
+            "sha256": "9e2d93f6e75252022284c99da6aa4ea5b834921e88d859f7d1cda8835e695d95"
+          }
+        ],
+        "verification": "all_file_sizes_and_sha256_matched"
+      },
+      "hf_archive_status": "upload_failed_private_storage_limit"
     },
     {
       "id": "U03",
@@ -100,8 +142,29 @@
           "bytes": 424581134
         }
       ],
-      "download_scope": "selected main training partition only, not every split",
-      "training_status": "not_ready"
+      "download_scope": "selected original files archived on Runpod; see remote_archive.files; not all upstream splits",
+      "training_status": "not_ready",
+      "remote_archive": {
+        "root": "/workspace/apus-data-cleaning/apus-source-archive-v1",
+        "host": "157.157.221.177",
+        "port": 11965,
+        "files": [
+          {
+            "path": "README.md",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U03/README.md",
+            "bytes": 4177,
+            "sha256": "a2f745de1362c1408d110a9fb65104da3616a6860a6148adf6fd9551c9962769"
+          },
+          {
+            "path": "openai_chat/train.parquet",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U03/openai_chat/train.parquet",
+            "bytes": 424581134,
+            "sha256": "fb041c4b9ca2ec970e1ddcfc72c1a3ec7dae82c49c8f9e032dd7d706df6f04ff"
+          }
+        ],
+        "verification": "all_file_sizes_and_sha256_matched"
+      },
+      "hf_archive_status": "upload_failed_private_storage_limit"
     },
     {
       "id": "U04",
@@ -130,7 +193,7 @@
           "bytes": 1453049896
         }
       ],
-      "download_scope": "selected main training partition only, not every split",
+      "download_scope": "selected original files archived on Runpod; see remote_archive.files; not all upstream splits",
       "training_status": "not_ready",
       "selection_constraints": {
         "exclude_teacher_family": "Gemini 3.1",
@@ -141,7 +204,28 @@
         "unknown_or_conflicting_teacher": "quarantine",
         "raw_source": "preserve unchanged",
         "processing_status": "rule confirmed; full filtering not yet executed"
-      }
+      },
+      "remote_archive": {
+        "root": "/workspace/apus-data-cleaning/apus-source-archive-v1",
+        "host": "157.157.221.177",
+        "port": 11965,
+        "files": [
+          {
+            "path": "README.md",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U04/README.md",
+            "bytes": 2874,
+            "sha256": "f8126853c64e3ae9072817cbff5529544fe6178d5ce61f2a90ebbf02af119716"
+          },
+          {
+            "path": "superfusion_master_dataset_downloaded.jsonl",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U04/superfusion_master_dataset_downloaded.jsonl",
+            "bytes": 1453049896,
+            "sha256": "af3f110efe36847788ce7fd3a5fe849260bc04edda5e06f570d2c05325cde021"
+          }
+        ],
+        "verification": "all_file_sizes_and_sha256_matched"
+      },
+      "hf_archive_status": "upload_failed_private_storage_limit"
     },
     {
       "id": "U05",
@@ -182,8 +266,35 @@
           "bytes": 236466834
         }
       ],
-      "download_scope": "selected main training partition only, not every split",
-      "training_status": "not_ready"
+      "download_scope": "selected original files archived on Runpod; see remote_archive.files; not all upstream splits",
+      "training_status": "not_ready",
+      "remote_archive": {
+        "root": "/workspace/apus-data-cleaning/apus-source-archive-v1",
+        "host": "157.157.221.177",
+        "port": 11965,
+        "files": [
+          {
+            "path": "README.md",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U05/README.md",
+            "bytes": 4382,
+            "sha256": "cb3d3f0aca21ee914e0e755adc73b5c3610e86a43f0385f0e40933291911dc38"
+          },
+          {
+            "path": "build_stats.json",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U05/build_stats.json",
+            "bytes": 471,
+            "sha256": "c950685687d818dcb441136d3a688b30fd21e38ff67b458c81b3d9003243754f"
+          },
+          {
+            "path": "openai_chat/train.parquet",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U05/openai_chat/train.parquet",
+            "bytes": 236466834,
+            "sha256": "06dd81056404d992aa5d59fea429c967e879a0c797a6eaecfb246179c215ec57"
+          }
+        ],
+        "verification": "all_file_sizes_and_sha256_matched"
+      },
+      "hf_archive_status": "upload_failed_private_storage_limit"
     },
     {
       "id": "P01",
@@ -207,8 +318,29 @@
         "traces.jsonl"
       ],
       "license_metadata": "cc-by-4.0",
-      "download_scope": "metadata/README refreshed; full dataset not downloaded in this run",
-      "training_status": "not_ready"
+      "download_scope": "selected original files archived on Runpod; see remote_archive.files; not all upstream splits",
+      "training_status": "not_ready",
+      "remote_archive": {
+        "root": "/workspace/apus-data-cleaning/apus-source-archive-v1",
+        "host": "157.157.221.177",
+        "port": 11965,
+        "files": [
+          {
+            "path": "README.md",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/P01/README.md",
+            "bytes": 16979,
+            "sha256": "e1121b4434542d261ad10391f9abab8f32ad4292b418d6d4bf56e0965423ec47"
+          },
+          {
+            "path": "traces.jsonl",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/P01/traces.jsonl",
+            "bytes": 1051895122,
+            "sha256": "47f1df6630b5192684b18e4b9c3b0c2c069357e6872a0b6742a4ed627a6b6603"
+          }
+        ],
+        "verification": "all_file_sizes_and_sha256_matched"
+      },
+      "hf_archive_status": "upload_failed_private_storage_limit"
     },
     {
       "id": "P02",
@@ -808,13 +940,34 @@
       ],
       "original_file_url": "https://huggingface.co/datasets/HelioAI/Claude-Fable-5-5500x/resolve/440267fbdb1b00a40216e7233dbce25530a0ed09/Fable-5-Distill-5500x.jsonl",
       "license_metadata": "unknown",
-      "download_scope": "README/metadata only; data file not yet downloaded",
+      "download_scope": "selected original files archived on Runpod; see remote_archive.files; not all upstream splits",
       "training_status": "not_ready",
       "selection_constraints": {
         "exclude_russian": true,
         "english_subset_count": null,
         "status": "awaiting content-level language filtering; published 5469 remains raw RU+EN count"
-      }
+      },
+      "remote_archive": {
+        "root": "/workspace/apus-data-cleaning/apus-source-archive-v1",
+        "host": "157.157.221.177",
+        "port": 11965,
+        "files": [
+          {
+            "path": "Fable-5-Distill-5500x.jsonl",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U06/Fable-5-Distill-5500x.jsonl",
+            "bytes": 76770254,
+            "sha256": "a9440e7d3c28b3fd3a41d75b7c0bc3c470bf1652a9b045c30fd4aaf74f9477e8"
+          },
+          {
+            "path": "README.md",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U06/README.md",
+            "bytes": 5633,
+            "sha256": "f30145fa163aa347a2ceaa874359c29f0f488ebe6a64da50e26bd398ca41b217"
+          }
+        ],
+        "verification": "all_file_sizes_and_sha256_matched"
+      },
+      "hf_archive_status": "upload_failed_private_storage_limit"
     },
     {
       "id": "U07",
@@ -836,8 +989,40 @@
       ],
       "original_file_url": "https://huggingface.co/datasets/KrazyKitty/Fable-5.1-Max-Reasoning-Filtered-1000x/resolve/1a861572f45aa663dae84180af1720770d472dc8/train.jsonl",
       "license_metadata": "apache-2.0",
-      "download_scope": "README/metadata only; data file not yet downloaded",
-      "training_status": "not_ready"
+      "download_scope": "selected original files archived on Runpod; see remote_archive.files; not all upstream splits",
+      "training_status": "not_ready",
+      "remote_archive": {
+        "root": "/workspace/apus-data-cleaning/apus-source-archive-v1",
+        "host": "157.157.221.177",
+        "port": 11965,
+        "files": [
+          {
+            "path": "train.jsonl",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U07/train.jsonl",
+            "bytes": 108716880,
+            "sha256": "2522fa885f5961916444a3bb6b25504a3125bc075d156d9c9a08f79c2729fd4b"
+          },
+          {
+            "path": "README.md",
+            "remote_path": "/workspace/apus-data-cleaning/apus-source-archive-v1/sources/U07/README.md",
+            "bytes": 1581,
+            "sha256": "a99b548f8b68fd79ec46e6b2cd594f498f042400f66beca68712b185aa6352af"
+          }
+        ],
+        "verification": "all_file_sizes_and_sha256_matched"
+      },
+      "hf_archive_status": "upload_failed_private_storage_limit"
+    },
+    {
+      "id": "R01",
+      "selection": "provenance_recovery_only",
+      "repo_id": "saidutta69/fable-5-premium",
+      "original_url": "https://huggingface.co/datasets/saidutta69/fable-5-premium",
+      "revision": "da2c4f99761490b6e2d38b52843a1a57356dbd0b",
+      "license_metadata": "mit",
+      "download_scope": "planned README and openai_chat train/validation/test parquet; heldout separate; no training admission",
+      "training_status": "not_ready",
+      "purpose": "trace premium-v2 base_v1 origins; current upstream revision may differ from v2 construction snapshot"
     }
   ],
   "derived_release_language_policy": {

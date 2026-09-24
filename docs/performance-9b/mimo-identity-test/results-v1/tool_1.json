@@ -1,0 +1,97 @@
+{
+  "name": "tool_1",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Use the add tool to compute 137 + 286, then report the result."
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "add",
+          "description": "Add two finite numbers using a real local calculator.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "a": {
+                "type": "number"
+              },
+              "b": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    ],
+    "tool_choice": "auto"
+  },
+  "prompt_kind": "tool",
+  "case_id": "tool_1",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-8326bed4ea048aa5\",\"object\":\"chat.completion\",\"created\":1790238513,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[{\"id\":\"chatcmpl-tool-9f73ce444118e163\",\"type\":\"function\",\"function\":{\"name\":\"add\",\"arguments\":\"{\\\"a\\\": 137, \\\"b\\\": 286}\"}}],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":124,\"total_tokens\":153,\"completion_tokens\":29,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-8326bed4ea048aa5",
+    "object": "chat.completion",
+    "created": 1790238513,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": null,
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [
+            {
+              "id": "chatcmpl-tool-9f73ce444118e163",
+              "type": "function",
+              "function": {
+                "name": "add",
+                "arguments": "{\"a\": 137, \"b\": 286}"
+              }
+            }
+          ],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "tool_calls",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 124,
+      "total_tokens": 153,
+      "completion_tokens": 29,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 0.419
+}

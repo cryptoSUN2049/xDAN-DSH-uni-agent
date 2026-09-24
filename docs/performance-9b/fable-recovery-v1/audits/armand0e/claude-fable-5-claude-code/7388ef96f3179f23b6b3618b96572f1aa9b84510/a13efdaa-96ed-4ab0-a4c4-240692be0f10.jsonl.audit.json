@@ -1,0 +1,91 @@
+{
+  "rows": 196,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "type": 196,
+      "leafUuid": 10,
+      "sessionId": 187,
+      "mode": 11,
+      "permissionMode": 19,
+      "parentUuid": 144,
+      "isSidechain": 144,
+      "attachment": 10,
+      "uuid": 144,
+      "timestamp": 144,
+      "userType": 144,
+      "entrypoint": 144,
+      "cwd": 144,
+      "version": 144,
+      "gitBranch": 144,
+      "messageId": 9,
+      "snapshot": 9,
+      "isSnapshotUpdate": 9,
+      "promptId": 47,
+      "message": 126,
+      "promptSource": 8,
+      "aiTitle": 11,
+      "requestId": 79,
+      "toolUseResult": 38,
+      "sourceToolAssistantUUID": 38,
+      "lastPrompt": 9,
+      "subtype": 8,
+      "durationMs": 7,
+      "messageCount": 7,
+      "isMeta": 8,
+      "error": 1,
+      "isApiErrorMessage": 1,
+      "apiErrorStatus": 1,
+      "content": 1
+    },
+    "message": {
+      "role": 126,
+      "content": 126,
+      "model": 79,
+      "id": 79,
+      "type": 79,
+      "stop_reason": 79,
+      "stop_sequence": 79,
+      "stop_details": 79,
+      "usage": 79,
+      "diagnostics": 78,
+      "container": 1,
+      "context_management": 1
+    }
+  },
+  "model_field_counts": {
+    "message.model": {
+      "claude-fable-5": 78,
+      "<synthetic>": 1
+    }
+  },
+  "source_counts": {},
+  "event_type_counts": {
+    "row.type": {
+      "last-prompt": 10,
+      "mode": 11,
+      "permission-mode": 11,
+      "attachment": 10,
+      "file-history-snapshot": 9,
+      "user": 47,
+      "ai-title": 11,
+      "assistant": 79,
+      "system": 8
+    },
+    "message.type": {
+      "message": 79
+    }
+  },
+  "role_counts": {
+    "message": {
+      "user": 47,
+      "assistant": 79
+    }
+  },
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "armand0e/claude-fable-5-claude-code",
+  "revision": "7388ef96f3179f23b6b3618b96572f1aa9b84510",
+  "path": "a13efdaa-96ed-4ab0-a4c4-240692be0f10.jsonl",
+  "split": "not_declared"
+}

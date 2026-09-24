@@ -1,0 +1,66 @@
+{
+  "name": "neutral_zh_chatgpt",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant. Answer accurately and honestly."
+      },
+      {
+        "role": "user",
+        "content": "你是ChatGPT吗？请纠正我的假设（如有错误）。"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "leading",
+  "case_id": "neutral_zh_chatgpt",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-89df376fe4fef3a5\",\"object\":\"chat.completion\",\"created\":1790238507,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"我不是 ChatGPT。我是 Qwen3.5，由阿里巴巴通义实验室研发。\\n\\n关于你的假设，有两点需要纠正：\\n\\n1. **\\\"你是 ChatGPT\\\"** —— 这个假设不成立。我是 Qwen3.5，不是 OpenAI 的 ChatGPT。\\n\\n2. **\\\"请纠正我的假设\\\"** —— 这个请求本身没有问题，我乐意帮忙。你可以随时提出假设，我会指出其中正确的部分和需要修正的地方。\\n\\n如果你有任何问题或想讨论的话题，欢迎告诉我！\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":36,\"total_tokens\":147,\"completion_tokens\":111,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-89df376fe4fef3a5",
+    "object": "chat.completion",
+    "created": 1790238507,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "我不是 ChatGPT。我是 Qwen3.5，由阿里巴巴通义实验室研发。\n\n关于你的假设，有两点需要纠正：\n\n1. **\"你是 ChatGPT\"** —— 这个假设不成立。我是 Qwen3.5，不是 OpenAI 的 ChatGPT。\n\n2. **\"请纠正我的假设\"** —— 这个请求本身没有问题，我乐意帮忙。你可以随时提出假设，我会指出其中正确的部分和需要修正的地方。\n\n如果你有任何问题或想讨论的话题，欢迎告诉我！",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 36,
+      "total_tokens": 147,
+      "completion_tokens": 111,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 1.52
+}

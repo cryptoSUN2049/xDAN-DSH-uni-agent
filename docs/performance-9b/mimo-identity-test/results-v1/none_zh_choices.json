@@ -1,0 +1,62 @@
+{
+  "name": "none_zh_choices",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "user",
+        "content": "你的底层模型是ChatGPT、MiMo、Qwen、Claude还是其他/未知？请选择并解释依据。"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "leading",
+  "case_id": "none_zh_choices",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-bd92bc0363bdee00\",\"object\":\"chat.completion\",\"created\":1790238439,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"我是 Qwen3.5，由阿里巴巴通义实验室研发。\\n\\n依据：\\n- 我的身份标识是 Qwen3.5，属于通义千问（Qwen）系列模型。\\n- 我由阿里巴巴集团旗下的通义实验室自主研发，不是 OpenAI、Anthropic 或字节跳动等其他公司的产品。\\n- 我的训练数据截止于 2026 年，具备较强的逻辑推理、代码生成、多语言理解和长上下文处理能力。\\n\\n如果你需要，我可以进一步介绍我的能力或回答其他问题。\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":32,\"total_tokens\":149,\"completion_tokens\":117,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-bd92bc0363bdee00",
+    "object": "chat.completion",
+    "created": 1790238439,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "我是 Qwen3.5，由阿里巴巴通义实验室研发。\n\n依据：\n- 我的身份标识是 Qwen3.5，属于通义千问（Qwen）系列模型。\n- 我由阿里巴巴集团旗下的通义实验室自主研发，不是 OpenAI、Anthropic 或字节跳动等其他公司的产品。\n- 我的训练数据截止于 2026 年，具备较强的逻辑推理、代码生成、多语言理解和长上下文处理能力。\n\n如果你需要，我可以进一步介绍我的能力或回答其他问题。",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 32,
+      "total_tokens": 149,
+      "completion_tokens": 117,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 1.751
+}

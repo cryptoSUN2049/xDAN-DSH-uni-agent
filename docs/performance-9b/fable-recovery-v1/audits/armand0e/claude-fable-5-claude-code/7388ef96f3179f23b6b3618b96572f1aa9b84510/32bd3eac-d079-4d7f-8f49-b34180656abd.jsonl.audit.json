@@ -1,0 +1,87 @@
+{
+  "rows": 348,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "type": 348,
+      "leafUuid": 19,
+      "sessionId": 320,
+      "mode": 19,
+      "permissionMode": 37,
+      "parentUuid": 244,
+      "isSidechain": 244,
+      "attachment": 15,
+      "uuid": 244,
+      "timestamp": 244,
+      "userType": 244,
+      "entrypoint": 244,
+      "cwd": 244,
+      "version": 244,
+      "gitBranch": 244,
+      "messageId": 28,
+      "snapshot": 28,
+      "isSnapshotUpdate": 28,
+      "promptId": 77,
+      "message": 209,
+      "promptSource": 18,
+      "aiTitle": 19,
+      "requestId": 132,
+      "toolUseResult": 58,
+      "sourceToolAssistantUUID": 58,
+      "lastPrompt": 18,
+      "slug": 229,
+      "subtype": 20,
+      "durationMs": 17,
+      "messageCount": 17,
+      "isMeta": 21,
+      "content": 3,
+      "imagePasteIds": 1
+    },
+    "message": {
+      "role": 209,
+      "content": 209,
+      "model": 132,
+      "id": 132,
+      "type": 132,
+      "stop_reason": 132,
+      "stop_sequence": 132,
+      "stop_details": 132,
+      "usage": 132,
+      "diagnostics": 132
+    }
+  },
+  "model_field_counts": {
+    "message.model": {
+      "claude-fable-5": 132
+    }
+  },
+  "source_counts": {},
+  "event_type_counts": {
+    "row.type": {
+      "last-prompt": 19,
+      "mode": 19,
+      "permission-mode": 19,
+      "attachment": 15,
+      "file-history-snapshot": 28,
+      "user": 77,
+      "ai-title": 19,
+      "assistant": 132,
+      "system": 20
+    },
+    "message.type": {
+      "message": 132
+    }
+  },
+  "role_counts": {
+    "message": {
+      "user": 77,
+      "assistant": 132
+    }
+  },
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "armand0e/claude-fable-5-claude-code",
+  "revision": "7388ef96f3179f23b6b3618b96572f1aa9b84510",
+  "path": "32bd3eac-d079-4d7f-8f49-b34180656abd.jsonl",
+  "split": "not_declared"
+}

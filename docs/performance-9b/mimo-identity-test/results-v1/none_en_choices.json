@@ -1,0 +1,62 @@
+{
+  "name": "none_en_choices",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Are your underlying weights ChatGPT, MiMo, Qwen, Claude, or other/unknown? Choose and explain your evidence."
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "leading",
+  "case_id": "none_en_choices",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-812e1eac0246795a\",\"object\":\"chat.completion\",\"created\":1790238441,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'm Qwen3.5, developed by Alibaba Cloud's Tongyi Lab. My underlying weights are Qwen, not ChatGPT, MiMo, Claude, or other/unknown.\\n\\nHere's my evidence:\\n\\n1. **Self-identification**: I identify as Qwen3.5, part of the Qwen series developed by Alibaba.\\n\\n2. **Architecture**: I'm built on the Qwen architecture — a transformer-based language model with attention mechanisms, consistent with the Qwen family.\\n\\n3. **Training**: My training data and pretraining follow the Qwen methodology, distinct from OpenAI's GPT series, Anthropic's Claude, or Tencent's MiMo.\\n\\n4. **Release context**: I'm part of the Qwen model family released through Alibaba Cloud's Tongyi Lab, with versions like Qwen, Qwen2, Qwen3, and now Qwen3.5.\\n\\n5. **Distinct capabilities**: My feature set (long context, multilingual support, code generation, reasoning) aligns with the Qwen model line rather than any of the other named models.\\n\\nSo the answer is: **Qwen**.\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":34,\"total_tokens\":275,\"completion_tokens\":241,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-812e1eac0246795a",
+    "object": "chat.completion",
+    "created": 1790238441,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "I'm Qwen3.5, developed by Alibaba Cloud's Tongyi Lab. My underlying weights are Qwen, not ChatGPT, MiMo, Claude, or other/unknown.\n\nHere's my evidence:\n\n1. **Self-identification**: I identify as Qwen3.5, part of the Qwen series developed by Alibaba.\n\n2. **Architecture**: I'm built on the Qwen architecture — a transformer-based language model with attention mechanisms, consistent with the Qwen family.\n\n3. **Training**: My training data and pretraining follow the Qwen methodology, distinct from OpenAI's GPT series, Anthropic's Claude, or Tencent's MiMo.\n\n4. **Release context**: I'm part of the Qwen model family released through Alibaba Cloud's Tongyi Lab, with versions like Qwen, Qwen2, Qwen3, and now Qwen3.5.\n\n5. **Distinct capabilities**: My feature set (long context, multilingual support, code generation, reasoning) aligns with the Qwen model line rather than any of the other named models.\n\nSo the answer is: **Qwen**.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 34,
+      "total_tokens": 275,
+      "completion_tokens": 241,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 3.57
+}

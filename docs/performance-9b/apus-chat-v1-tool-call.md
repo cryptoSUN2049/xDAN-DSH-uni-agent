@@ -77,6 +77,8 @@ Qwen3.5：
 
 ## 4. APUS 中立数据结构
 
+> 本节为早期内存结构示意。HF持久化母本以[统一训练数据字段契约v1](统一训练数据字段契约-v1.md)为准：物理列tools_json和function.arguments使用严格JSON字符串，校验与模板渲染时解析成对象。协议名不等于数据schema版本。
+
 示例为**拟议内部 schema**，不是直接的 OpenAI API 请求，也不是模型原生字符串：
 
 ```json
@@ -269,3 +271,7 @@ assistant generation
 - Qwen对照：本轮只读远端 `/workspace/models/Qwen3.5-9B/chat_template.jinja`；正式测试前需记录模型revision、文件SHA与tokenizer SHA，当前不是新发布包的完整锁定。
 - [OpenAI函数调用文档](https://developers.openai.com/api/docs/guides/function-calling)：公开API字段，不推断内部训练模板。
 - [MiMo报告](mimo-agent-sft-9b-report.html)、[数据工厂设计](agent-sft-data-production-design.md)、[Thinking三层验收](thinking-acceptance.md)。
+
+## 本轮实施约束（2026-09-24）
+
+用户确认：APUS 对外接口兼容 Qwen 风格工具结构，暂不新增特殊 token。`apus-chat-v1` 小标记仅放在部署/协议元数据，不注入模型输入、不改变权重来源声明；如果没有合适的响应扩展位置就不加。当前身份对照测试保留 MiMo 原生模板，标准 JSON 工具调用由服务解析层转换。实测报告见 [MiMo 身份与接口测试](mimo-identity-test/design.md)。

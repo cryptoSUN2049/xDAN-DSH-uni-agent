@@ -1,0 +1,28 @@
+{
+  "protocol_id": "apus-chat-v1",
+  "model_alias": "apus-9b-probe",
+  "upstream_model": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+  "revision": "2367e865d009c13ac81713a2878291d33ab28177",
+  "weights_modified": false,
+  "tokens_added": false,
+  "chat_template": "upstream native",
+  "endpoint": "http://127.0.0.1:8019/v1",
+  "gpu": 1,
+  "status": "probe_complete_server_stopped_to_release_gpu",
+  "marker_location": "deployment metadata only",
+  "inference_env": "ua-verl-py312-vllm023-ws1",
+  "vllm": "0.23.0",
+  "transformers": "5.8.0",
+  "environment_overrides": {
+    "VLLM_USE_FLASHINFER_SAMPLER": "0",
+    "CUDA_VISIBLE_DEVICES": "1",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "attempt1_error": "FlashInfer sampling JIT cannot target SM12.x with installed CUDA12.8; disabled optional FlashInfer sampler using vLLM supported flag",
+  "identity_requests": 88,
+  "complete_identity_responses": 87,
+  "truncated": 1,
+  "unprimed_mimo_requests": 54,
+  "unprimed_mimo_mentions": 0,
+  "tool_closed_loop_passed": true
+}

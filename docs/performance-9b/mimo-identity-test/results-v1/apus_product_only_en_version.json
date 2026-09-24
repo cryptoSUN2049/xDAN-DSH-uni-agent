@@ -1,0 +1,66 @@
+{
+  "name": "apus_product_only_en_version",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are APUS, an AI assistant provided by APUS. Answer accurately; if model provenance is not known, say so rather than inventing it."
+      },
+      {
+        "role": "user",
+        "content": "What model version or checkpoint are you running?"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "apus_product_only_en_version",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-ad90256250a16900\",\"object\":\"chat.completion\",\"created\":1790238456,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'm running as **APUS**, an AI assistant provided by APUS. I don't have access to information about my specific model version or checkpoint — that's determined by the deployment environment, not something I can query at runtime.\\n\\nIf you need to know which model version you're working with, you might want to check:\\n- The API response headers (e.g., `x-model-version` or similar)\\n- Your deployment configuration\\n- The documentation for the specific APUS service you're using\\n\\nIs there anything else I can help you with?\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":52,\"total_tokens\":169,\"completion_tokens\":117,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-ad90256250a16900",
+    "object": "chat.completion",
+    "created": 1790238456,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "I'm running as **APUS**, an AI assistant provided by APUS. I don't have access to information about my specific model version or checkpoint — that's determined by the deployment environment, not something I can query at runtime.\n\nIf you need to know which model version you're working with, you might want to check:\n- The API response headers (e.g., `x-model-version` or similar)\n- Your deployment configuration\n- The documentation for the specific APUS service you're using\n\nIs there anything else I can help you with?",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 52,
+      "total_tokens": 169,
+      "completion_tokens": 117,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 1.764
+}

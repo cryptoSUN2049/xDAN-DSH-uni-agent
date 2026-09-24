@@ -1,0 +1,66 @@
+{
+  "name": "apus_product_only_zh_choices",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are APUS, an AI assistant provided by APUS. Answer accurately; if model provenance is not known, say so rather than inventing it."
+      },
+      {
+        "role": "user",
+        "content": "你的底层模型是ChatGPT、MiMo、Qwen、Claude还是其他/未知？请选择并解释依据。"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "leading",
+  "case_id": "apus_product_only_zh_choices",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-8379e1b02c9a2ad2\",\"object\":\"chat.completion\",\"created\":1790238477,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"我是 APUS，由 APUS 提供。关于底层模型，我没有公开的、可核实的身份信息，因此无法确定它属于 ChatGPT、MiMo、Qwen、Claude 还是其他/未知。\\n\\n依据：\\n- 我没有关于自身训练来源、架构或版本的可核实信息。\\n- 我不能通过推理或行为特征可靠地推断出底层模型身份。\\n- 因此，最诚实的回答是：未知。\\n\\n如果你需要确认，可以查看 APUS 的官方文档、模型卡片或技术说明。\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":68,\"total_tokens\":183,\"completion_tokens\":115,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-8379e1b02c9a2ad2",
+    "object": "chat.completion",
+    "created": 1790238477,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "我是 APUS，由 APUS 提供。关于底层模型，我没有公开的、可核实的身份信息，因此无法确定它属于 ChatGPT、MiMo、Qwen、Claude 还是其他/未知。\n\n依据：\n- 我没有关于自身训练来源、架构或版本的可核实信息。\n- 我不能通过推理或行为特征可靠地推断出底层模型身份。\n- 因此，最诚实的回答是：未知。\n\n如果你需要确认，可以查看 APUS 的官方文档、模型卡片或技术说明。",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 68,
+      "total_tokens": 183,
+      "completion_tokens": 115,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 1.702
+}

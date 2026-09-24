@@ -1,0 +1,88 @@
+{
+  "rows": 347,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "type": 347,
+      "operation": 8,
+      "timestamp": 261,
+      "sessionId": 347,
+      "content": 4,
+      "parentUuid": 253,
+      "isSidechain": 253,
+      "promptId": 91,
+      "message": 241,
+      "uuid": 253,
+      "permissionMode": 3,
+      "promptSource": 3,
+      "userType": 253,
+      "entrypoint": 253,
+      "cwd": 253,
+      "version": 253,
+      "gitBranch": 253,
+      "attachment": 12,
+      "customTitle": 29,
+      "aiTitle": 29,
+      "requestId": 149,
+      "toolUseResult": 87,
+      "sourceToolAssistantUUID": 87,
+      "lastPrompt": 27,
+      "leafUuid": 27,
+      "attributionMcpServer": 31,
+      "attributionMcpTool": 31,
+      "isMeta": 1,
+      "isApiErrorMessage": 3,
+      "error": 2,
+      "apiErrorStatus": 2,
+      "mode": 1
+    },
+    "message": {
+      "role": 241,
+      "content": 241,
+      "model": 150,
+      "id": 150,
+      "type": 150,
+      "stop_reason": 150,
+      "stop_sequence": 150,
+      "stop_details": 150,
+      "usage": 150,
+      "diagnostics": 147,
+      "container": 3,
+      "context_management": 3
+    }
+  },
+  "model_field_counts": {
+    "message.model": {
+      "claude-fable-5": 147,
+      "<synthetic>": 3
+    }
+  },
+  "source_counts": {},
+  "event_type_counts": {
+    "row.type": {
+      "queue-operation": 8,
+      "user": 91,
+      "attachment": 12,
+      "custom-title": 29,
+      "ai-title": 29,
+      "assistant": 150,
+      "last-prompt": 27,
+      "mode": 1
+    },
+    "message.type": {
+      "message": 150
+    }
+  },
+  "role_counts": {
+    "message": {
+      "user": 91,
+      "assistant": 150
+    }
+  },
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "armand0e/claude-fable-5-claude-code",
+  "revision": "7388ef96f3179f23b6b3618b96572f1aa9b84510",
+  "path": "bcfbd960-e7f5-42ee-bb37-183b81ab12e3.jsonl",
+  "split": "not_declared"
+}

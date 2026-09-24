@@ -1,0 +1,62 @@
+{
+  "name": "none_en_lineage",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Distinguish this product name, underlying model weights, and original base model."
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "none_en_lineage",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-b1cce90fcccd85e2\",\"object\":\"chat.completion\",\"created\":1790238433,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I don't have a specific product name to work with in this context, so I can't distinguish between a product name, underlying model weights, and original base model.\\n\\nCould you tell me which product or model you're asking about? For example, if you're asking about something like \\\"GPT-4o\\\" or a specific commercial product built on a model, I can explain the distinction:\\n\\n- **Product name** — the marketing/branding name a company uses for a service or offering (e.g., a chatbot product, API, or app)\\n- **Underlying model weights** — the actual trained parameters of the model powering that product\\n- **Original base model** — the foundational open or closed model that the product was built on or fine-tuned from\\n\\nLet me know the specific product and I'll give you a clear breakdown.\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":22,\"total_tokens\":201,\"completion_tokens\":179,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-b1cce90fcccd85e2",
+    "object": "chat.completion",
+    "created": 1790238433,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "I don't have a specific product name to work with in this context, so I can't distinguish between a product name, underlying model weights, and original base model.\n\nCould you tell me which product or model you're asking about? For example, if you're asking about something like \"GPT-4o\" or a specific commercial product built on a model, I can explain the distinction:\n\n- **Product name** — the marketing/branding name a company uses for a service or offering (e.g., a chatbot product, API, or app)\n- **Underlying model weights** — the actual trained parameters of the model powering that product\n- **Original base model** — the foundational open or closed model that the product was built on or fine-tuned from\n\nLet me know the specific product and I'll give you a clear breakdown.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 22,
+      "total_tokens": 201,
+      "completion_tokens": 179,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 2.661
+}

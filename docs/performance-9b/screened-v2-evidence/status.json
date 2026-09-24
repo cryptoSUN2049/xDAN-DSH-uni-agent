@@ -1,0 +1,45 @@
+{
+  "state": "SUCCEEDED",
+  "pid": 1057874,
+  "started_at": 1790236954.6909845,
+  "training_ready": false,
+  "heartbeat_at": 1790237142.1089063,
+  "source_bytes": 3992690152,
+  "filesystem_free_bytes": 549868019974144,
+  "required_free_bytes": 15970760608,
+  "finished_at": 1790237142.1089032,
+  "sampling": {
+    "screened": {
+      "unique_prompt_groups": 26757,
+      "group_domains": {
+        "code": 13100,
+        "reasoning": 9693,
+        "general": 3964
+      },
+      "quota_deficits": {
+        "office": 3000,
+        "data": 2500,
+        "translation": 1500,
+        "writing": 1500,
+        "general": 1500
+      },
+      "selected_groups": 0
+    },
+    "three_teacher": {
+      "unique_prompt_groups": 26757,
+      "group_domains": {
+        "code": 13100,
+        "reasoning": 9693,
+        "general": 3964
+      },
+      "quota_deficits": {
+        "office": 3000,
+        "data": 2500,
+        "translation": 1500,
+        "writing": 1500,
+        "general": 1500
+      },
+      "selected_groups": 0
+    }
+  }
+}

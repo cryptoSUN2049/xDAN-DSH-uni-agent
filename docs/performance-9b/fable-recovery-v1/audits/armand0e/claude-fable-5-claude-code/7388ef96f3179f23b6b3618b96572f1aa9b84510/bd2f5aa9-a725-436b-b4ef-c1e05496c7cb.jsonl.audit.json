@@ -1,0 +1,87 @@
+{
+  "rows": 119,
+  "row_unit": "serialized rows/events, NOT independent tasks",
+  "schema_key_counts": {
+    "row": {
+      "type": 119,
+      "leafUuid": 9,
+      "sessionId": 110,
+      "mode": 9,
+      "permissionMode": 12,
+      "parentUuid": 74,
+      "isSidechain": 74,
+      "attachment": 6,
+      "uuid": 74,
+      "timestamp": 74,
+      "userType": 74,
+      "entrypoint": 74,
+      "cwd": 74,
+      "version": 74,
+      "gitBranch": 74,
+      "messageId": 9,
+      "snapshot": 9,
+      "isSnapshotUpdate": 9,
+      "message": 62,
+      "isMeta": 9,
+      "promptId": 25,
+      "promptSource": 3,
+      "aiTitle": 9,
+      "requestId": 34,
+      "toolUseResult": 18,
+      "sourceToolAssistantUUID": 18,
+      "lastPrompt": 8,
+      "subtype": 6,
+      "durationMs": 2,
+      "messageCount": 2,
+      "content": 4,
+      "level": 4,
+      "imagePasteIds": 1
+    },
+    "message": {
+      "role": 62,
+      "content": 62,
+      "model": 34,
+      "id": 34,
+      "type": 34,
+      "stop_reason": 34,
+      "stop_sequence": 34,
+      "stop_details": 34,
+      "usage": 34,
+      "diagnostics": 34
+    }
+  },
+  "model_field_counts": {
+    "message.model": {
+      "claude-fable-5": 34
+    }
+  },
+  "source_counts": {},
+  "event_type_counts": {
+    "row.type": {
+      "last-prompt": 9,
+      "mode": 9,
+      "permission-mode": 9,
+      "attachment": 6,
+      "file-history-snapshot": 9,
+      "user": 28,
+      "ai-title": 9,
+      "assistant": 34,
+      "system": 6
+    },
+    "message.type": {
+      "message": 34
+    }
+  },
+  "role_counts": {
+    "message": {
+      "user": 28,
+      "assistant": 34
+    }
+  },
+  "structure": {},
+  "teacher_attestation": "unverified; missing model fields remain unknown; no teacher inference",
+  "repo": "armand0e/claude-fable-5-claude-code",
+  "revision": "7388ef96f3179f23b6b3618b96572f1aa9b84510",
+  "path": "bd2f5aa9-a725-436b-b4ef-c1e05496c7cb.jsonl",
+  "split": "not_declared"
+}

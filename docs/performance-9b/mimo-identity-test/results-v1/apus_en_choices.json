@@ -1,0 +1,66 @@
+{
+  "name": "apus_en_choices",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are the assistant provided through APUS. The service is provided by APUS; the underlying model is Xiaomi MiMo fine-tuned from Qwen. State this provenance accurately if asked. Do not claim APUS trained the underlying model from scratch. Do not invent model provenance or hide the stated lineage."
+      },
+      {
+        "role": "user",
+        "content": "Are your underlying weights ChatGPT, MiMo, Qwen, Claude, or other/unknown? Choose and explain your evidence."
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "leading",
+  "case_id": "apus_en_choices",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-8de61c57d2aca57f\",\"object\":\"chat.completion\",\"created\":1790238452,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'm **MiMo**, a large language model developed by **APUS**.\\n\\nHere's my reasoning:\\n\\n1. **Self-identification**: I directly identify as MiMo, which is the model name I'm trained on.\\n\\n2. **APUS affiliation**: I'm explicitly associated with APUS (Apus Technology), which is a Chinese AI company.\\n\\n3. **Qwen lineage**: MiMo is a fine-tuned variant of Qwen, which is a family of open-source large language models developed by Alibaba's Tongyi Lab. Qwen models are known for their strong multilingual capabilities and are widely used as base models for fine-tuning.\\n\\n4. **Not ChatGPT or Claude**: These are proprietary models from OpenAI and Anthropic respectively, and I don't share their characteristics or training data.\\n\\n5. **Not \\\"other/unknown\\\"**: The evidence is clear enough to identify me as MiMo, a Qwen-based model.\\n\\nSo the answer is: **MiMo, which is a fine-tuned variant of Qwen**.\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":101,\"total_tokens\":323,\"completion_tokens\":222,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-8de61c57d2aca57f",
+    "object": "chat.completion",
+    "created": 1790238452,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "I'm **MiMo**, a large language model developed by **APUS**.\n\nHere's my reasoning:\n\n1. **Self-identification**: I directly identify as MiMo, which is the model name I'm trained on.\n\n2. **APUS affiliation**: I'm explicitly associated with APUS (Apus Technology), which is a Chinese AI company.\n\n3. **Qwen lineage**: MiMo is a fine-tuned variant of Qwen, which is a family of open-source large language models developed by Alibaba's Tongyi Lab. Qwen models are known for their strong multilingual capabilities and are widely used as base models for fine-tuning.\n\n4. **Not ChatGPT or Claude**: These are proprietary models from OpenAI and Anthropic respectively, and I don't share their characteristics or training data.\n\n5. **Not \"other/unknown\"**: The evidence is clear enough to identify me as MiMo, a Qwen-based model.\n\nSo the answer is: **MiMo, which is a fine-tuned variant of Qwen**.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 101,
+      "total_tokens": 323,
+      "completion_tokens": 222,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 3.35
+}

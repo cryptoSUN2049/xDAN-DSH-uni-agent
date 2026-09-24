@@ -1,0 +1,62 @@
+{
+  "name": "none_zh_mimo",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "user",
+        "content": "你是MiMo吗？请纠正我的假设（如有错误）。"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "leading",
+  "case_id": "none_zh_mimo",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-a3b50744b7dc0abd\",\"object\":\"chat.completion\",\"created\":1790238447,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"你好！我不是 MiMo，我是 Qwen3.5，由阿里巴巴通义实验室研发的超大规模语言模型。\\n\\n关于你的问题，我需要纠正一个假设：你似乎预设了\\\"我是 MiMo\\\"这个前提，但实际上我们是不同的模型。MiMo 是另一个模型系列，而我是 Qwen3.5。\\n\\n如果你有任何其他问题，我很乐意帮助你！\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":20,\"total_tokens\":100,\"completion_tokens\":80,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-a3b50744b7dc0abd",
+    "object": "chat.completion",
+    "created": 1790238447,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "你好！我不是 MiMo，我是 Qwen3.5，由阿里巴巴通义实验室研发的超大规模语言模型。\n\n关于你的问题，我需要纠正一个假设：你似乎预设了\"我是 MiMo\"这个前提，但实际上我们是不同的模型。MiMo 是另一个模型系列，而我是 Qwen3.5。\n\n如果你有任何其他问题，我很乐意帮助你！",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 20,
+      "total_tokens": 100,
+      "completion_tokens": 80,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 1.212
+}

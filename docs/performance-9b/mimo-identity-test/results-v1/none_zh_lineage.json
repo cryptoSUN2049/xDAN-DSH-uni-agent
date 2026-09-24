@@ -1,0 +1,62 @@
+{
+  "name": "none_zh_lineage",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "user",
+        "content": "请区分当前产品名称、底层权重模型和原始基座模型。"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "none_zh_lineage",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-8d40b96972813816\",\"object\":\"chat.completion\",\"created\":1790238428,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"这个问题需要一些背景信息才能准确回答。请告诉我你指的是哪个产品或场景，例如：\\n\\n1. **具体产品/服务名称**（如某个大模型 API、企业版模型、开源模型发行版等）\\n2. **你所在的公司或平台**（如果你是在问自家产品）\\n3. **相关上下文**（如技术文档、模型卡、API 说明等）\\n\\n---\\n\\n**一般概念上的区分**（供参考）：\\n\\n| 概念 | 含义 | 例子 |\\n|---|---|---|\\n| **当前产品名称** | 面向用户/市场展示的商品名，可能包含版本、定位、品牌后缀 | \\\"通义千问 Max\\\"、\\\"GPT-4o\\\" |\\n| **底层权重模型** | 实际加载、推理使用的模型权重版本 | 某个具体 checkpoint 的 SHA / 权重文件 |\\n| **原始基座模型** | 未经微调/蒸馏/裁剪的原始模型，是上层模型的来源 | 如 Llama 3 原始权重 |\\n\\n如果你能补充具体信息，我可以给出更精确的区分。\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"The user asks to distinguish between \\\"current product name\\\" (当前产品名称), \\\"underlying weight model\\\" (底层权重模型), and \\\"original base model\\\" (原始基座模型). This is a bit ambiguous — it seems to be asking about a specific product, but no product is specified. I need to ask for clarification, or perhaps this is about a known context.\\n\\nActually, this might be a question about a specific AI product where there's a product name, an underlying weight model, and an original base model. Without context, I should ask which product they're referring to.\\n\\nLet me ask for clarification.\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":21,\"total_tokens\":388,\"completion_tokens\":367,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-8d40b96972813816",
+    "object": "chat.completion",
+    "created": 1790238428,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "这个问题需要一些背景信息才能准确回答。请告诉我你指的是哪个产品或场景，例如：\n\n1. **具体产品/服务名称**（如某个大模型 API、企业版模型、开源模型发行版等）\n2. **你所在的公司或平台**（如果你是在问自家产品）\n3. **相关上下文**（如技术文档、模型卡、API 说明等）\n\n---\n\n**一般概念上的区分**（供参考）：\n\n| 概念 | 含义 | 例子 |\n|---|---|---|\n| **当前产品名称** | 面向用户/市场展示的商品名，可能包含版本、定位、品牌后缀 | \"通义千问 Max\"、\"GPT-4o\" |\n| **底层权重模型** | 实际加载、推理使用的模型权重版本 | 某个具体 checkpoint 的 SHA / 权重文件 |\n| **原始基座模型** | 未经微调/蒸馏/裁剪的原始模型，是上层模型的来源 | 如 Llama 3 原始权重 |\n\n如果你能补充具体信息，我可以给出更精确的区分。",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": "The user asks to distinguish between \"current product name\" (当前产品名称), \"underlying weight model\" (底层权重模型), and \"original base model\" (原始基座模型). This is a bit ambiguous — it seems to be asking about a specific product, but no product is specified. I need to ask for clarification, or perhaps this is about a known context.\n\nActually, this might be a question about a specific AI product where there's a product name, an underlying weight model, and an original base model. Without context, I should ask which product they're referring to.\n\nLet me ask for clarification."
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 21,
+      "total_tokens": 388,
+      "completion_tokens": 367,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 5.525
+}

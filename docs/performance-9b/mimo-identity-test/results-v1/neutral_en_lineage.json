@@ -1,0 +1,66 @@
+{
+  "name": "neutral_en_lineage",
+  "endpoint": "http://127.0.0.1:8019/v1/chat/completions",
+  "request": {
+    "model": "apus-9b-probe",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant. Answer accurately and honestly."
+      },
+      {
+        "role": "user",
+        "content": "Distinguish this product name, underlying model weights, and original base model."
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  },
+  "prompt_kind": "open",
+  "case_id": "neutral_en_lineage",
+  "turn_index": 1,
+  "http_status": 200,
+  "raw_response": "{\"id\":\"chatcmpl-a42d3fe7786eb375\",\"object\":\"chat.completion\",\"created\":1790238437,\"model\":\"apus-9b-probe\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I don't have a specific product name to work with yet. Could you tell me which product you're referring to?\\n\\nFor example, if you're asking about something like:\\n- **A commercial product** (e.g., a company's API, app, or service)\\n- **A model card or release** with a specific name\\n\\nI can help distinguish between:\\n1. **Product name** — the marketing/commercial name of the offering\\n2. **Underlying model weights** — the actual trained parameters/version used\\n3. **Original base model** — the open or reference model it was derived from\\n\\nPlease share the product name you have in mind, and I'll break down the distinctions.\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":\"\"},\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":null,\"token_ids\":null,\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.23.0-30d2b57c\",\"usage\":{\"prompt_tokens\":37,\"total_tokens\":186,\"completion_tokens\":149,\"prompt_tokens_details\":null},\"prompt_logprobs\":null,\"prompt_token_ids\":null,\"prompt_text\":null,\"kv_transfer_params\":null}",
+  "response": {
+    "id": "chatcmpl-a42d3fe7786eb375",
+    "object": "chat.completion",
+    "created": 1790238437,
+    "model": "apus-9b-probe",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "I don't have a specific product name to work with yet. Could you tell me which product you're referring to?\n\nFor example, if you're asking about something like:\n- **A commercial product** (e.g., a company's API, app, or service)\n- **A model card or release** with a specific name\n\nI can help distinguish between:\n1. **Product name** — the marketing/commercial name of the offering\n2. **Underlying model weights** — the actual trained parameters/version used\n3. **Original base model** — the open or reference model it was derived from\n\nPlease share the product name you have in mind, and I'll break down the distinctions.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": ""
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.23.0-30d2b57c",
+    "usage": {
+      "prompt_tokens": 37,
+      "total_tokens": 186,
+      "completion_tokens": 149,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null
+  },
+  "latency_seconds": 2.214
+}

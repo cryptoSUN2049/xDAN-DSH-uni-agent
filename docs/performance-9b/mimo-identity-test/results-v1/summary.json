@@ -1,0 +1,46 @@
+{
+  "identity_requests": 88,
+  "single_turn_cases_per_system": 20,
+  "identity_max_requests": 88,
+  "identity_max_concurrency": 3,
+  "multiturn": {
+    "none_multiturn": {
+      "followup_sent": true,
+      "completed": true
+    },
+    "neutral_multiturn": {
+      "followup_sent": true,
+      "completed": true
+    },
+    "apus_multiturn": {
+      "followup_sent": true,
+      "completed": true
+    },
+    "apus_product_only_multiturn": {
+      "followup_sent": true,
+      "completed": true
+    }
+  },
+  "completed_identity_responses": 87,
+  "truncated_identity_responses": 1,
+  "tool_closed_loop": {
+    "passed": true,
+    "expected": 423,
+    "tool_executed": true,
+    "arguments": {
+      "a": 137,
+      "b": 286
+    },
+    "actual_result": 423,
+    "reason": "Observed expected tool inputs, real sum and final answer.",
+    "final_observation": {
+      "finish_reason": "stop",
+      "truncated": false,
+      "completed": true,
+      "content": "137 + 286 = **423**",
+      "reasoning": "",
+      "content_brand_hits": [],
+      "reasoning_brand_hits": []
+    }
+  }
+}

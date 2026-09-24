@@ -1,3 +1,32 @@
+## Fable恢复后台已完成
+
+- collection-v1 succeeded：70文件501430864字节，原版留Runpod；小报告`docs/performance-9b/fable-recovery-v1/`。
+- PremiumV1 6365行含591Fable/5705unknown/69其他Opus；train仅526Fable声明，val33/test32不可用于训练。V2全标Fable不能继承。
+- V2 base_v1 5381行source_row_hash与当前固定V1无匹配，未恢复逐行教师或split，保持隔离；下一步查哈希算法/历史revision/完整内容匹配。
+- Armand18370事件行（63文件）、7431处Fable模型声明；Teich244行无model字段。数量不是独立任务或准入数量。
+
+## 数据字段契约已保存（权威入口）
+
+- 用户要求确定并保存columns设计；文档`docs/performance-9b/统一训练数据字段契约-v1.md`及`.columns.json`已落盘。
+- apus-sft-v1固定27列，messages/tool_calls/supervision固定子结构；tools_json和function.arguments物理存为严格JSON字符串，校验时解析对象；thinking独立字段。
+- 原版不改；中立母本保留完整审计；训练视图由固定任务manifest导出。数据schema与apus-chat-v1协议分离，不在母本自动注入品牌system。
+- 当前仅字段设计冻结；screened-v2未完成schema迁移、HF回读、mask与tokenizer验收，不得称正式母本或training_ready。
+
+## 当前后台任务：Fable证据恢复
+
+- Runpod `/workspace/apus-data-cleaning/recovery/collection-v1/manifest.json` 查看status/current_file；日志`collection-v1.log`，脚本`collect-recovery.py`。禁止重复并发启动。
+- 固定inventory下PremiumV1三split单一Parquet、Armand/Teich原始JSONL，只归档与schema/model声明审计，无训练准入。
+- 下载上限2GiB，本轮约500MB。17项回归通过；不同inventory复用目录在任何写入前拒绝，原始文件SHA核验。
+- 下一步先取终态manifest与audits小报告，Mac不取原版大数据。HF额度仍未解决，不能称已发布。
+
+## 最新：身份测试结束，回归数据主线
+
+- 用户明确不再扩展身份测试，回到数据处理。MiMo9B已下载Runpod并完成88身份请求/2工具请求；原始结果在docs/performance-9b/mimo-identity-test。未在输入暗示MiMo的54请求没有MiMo/小米输出，但不能证明训练数据无该名称或衍生来源不可识别。
+- 测试vLLM服务1059369已发SIGTERM释放GPU；权重保留。启动需VLLM_USE_FLASHINFER_SAMPLER=0避免CUDA12.8/SM12.x采样JIT失败。不要因此改共享训练环境。
+- 数据v2已SUCCEEDED；293074行输入，62030结构候选，26757关联组件。候选无Fable，不能启动原定20K；各来源原因与报告见screened-v2-evidence。
+- 下步恢复Premium来源：base_v1 5381/crownelius59先追原始证据；manusagents79560教师混合继续隔离。Krazy1000仅54提示、调用字段缺失，不是模板问题，不能猜测修复。
+- 开始在Runpod恢复源inventory（premiumV1、已有清单Armand/Teich），不在Mac下载大数据。
+
 ## 最新：Runpod 后台处理脚本
 
 - 入口 `examples/performance_9b/background.py`，操作文档 `docs/performance-9b/后台数据处理操作.md`。
