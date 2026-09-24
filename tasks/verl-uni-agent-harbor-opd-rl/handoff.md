@@ -2,6 +2,10 @@
 
 ## 2026-09-24 夜间单教师 OPD（当前入口）
 
+- 深度兼容验收完成：driver1037003 exit0，GPU释放。2736响应token五域文本重放+EOS，HF/vLLM mean0.008197/P950.064773，原生parser IDs全对齐。真实概率loss误差2.78e-17、grad4.34e-19；四组边界控制通过。证据deep-evidence/，结论deep-verdict.md，已整合overnight报告。只支持当前文本单轮关闭thinking；历史原始张量未保存，不能声称精确重建。新扩量训练尚未启动，用户允许考虑扩量，优先补合格数据/评分和固定验证。
+
+- 后续新请求：用户要求进一步确认适配、定位VERL源码，并允许考虑数据不足时扩大训练。当前先做深度验收，不重复原122条冒充扩量。远端runs/opd-deep-audit-20260924，driver1037003；CPU实际loss独立损失/梯度/边界控制通过，HF五域文本重放+EOS已完成，vLLM对照运行中。原训练没存逐token张量，重放不是历史精确重建。文档tokenizer-opd-compatibility/deep-source-audit.md、deep-design.md。待结果完成后再定扩量与验证集。
+
 - **最终：19:06:59 UTC全部队列完成，driver979002已退出。** 正式16步、四ckpt导出、五adapter独立重载均成功；7版本×30题=210输出，infra0。最终step16 math5/5（base4/5），IF5/8、knowledge1/1不变；仅幂塔题4037token内输出boxed0352改善，不能外推全面收益。
 - **最终入口**：docs/verl-uni-agent-harbor-opd-rl/overnight/index.html。final-analysis.json置顶结论；final-evaluation-audit.json逐条身份/重评分；final-weight-audit.json实际远端权重SHA与导出及eval一致；training-completion-audit.json全16步有限loss/grad；sampling-audit.json128轨迹覆盖121样本。最终summarize已显式重跑，medians与reload关联已更新。
 - **页面验收**：桌面1280×720截图检查、手机390×844无横向溢出，7模型对照表，report-qa.json锁定HTML SHA。远端control-attempt2保留全部日志、权重和W&B offline run。无新增付费沙箱调用。

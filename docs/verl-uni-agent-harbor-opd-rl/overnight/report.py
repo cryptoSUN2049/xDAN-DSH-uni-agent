@@ -190,6 +190,7 @@ def render(root):
         ("training-completion-audit.json", "训练完成核验：实际步骤、有限梯度与保存版本"),
         ("final-weight-audit.json", "最终权重与实际评测加载身份核验"),
         ("final-evaluation-audit.json", "七版本210条输出身份与重评分核验"),
+        ("deep-compatibility.json", "补充兼容验收：原生源码、2736token评分与loss梯度"),
     ]:
         evidence = read_json(root / filename, issues)
         if evidence is not None:

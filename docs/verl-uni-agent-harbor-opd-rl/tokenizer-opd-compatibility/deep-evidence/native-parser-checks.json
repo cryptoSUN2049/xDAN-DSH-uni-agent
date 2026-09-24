@@ -1,0 +1,32 @@
+[
+  {
+    "domain": "instruction",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "code",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "chat",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "math",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "knowledge_mcqa",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "explicit_eos_control",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  }
+]

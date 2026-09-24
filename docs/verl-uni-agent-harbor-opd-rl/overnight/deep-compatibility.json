@@ -1,0 +1,152 @@
+{
+  "status": "passed_scoped",
+  "scope": "text single-turn thinking disabled; historical text replay not original tensors",
+  "numeric": {
+    "status": "passed",
+    "scope": "synthetic boundary controls invoking actual deployed VERL loss; not historical tensors",
+    "controls": [
+      {
+        "log_ratio": 0.0,
+        "loss_error": 0.0,
+        "gradient_error": 0.0
+      },
+      {
+        "log_ratio": 0.5,
+        "loss_error": 0.0,
+        "gradient_error": 0.0
+      },
+      {
+        "log_ratio": -0.5,
+        "loss_error": 0.0,
+        "gradient_error": 0.0
+      },
+      {
+        "log_ratio": 2.0,
+        "loss_error": 0.0,
+        "gradient_error": 0.0
+      }
+    ],
+    "response_first_last_eos_coordinate_check": true,
+    "ignored_positions_zero_gradient": true,
+    "teacher_detached": true,
+    "k1_log_prob_min_clamp_not_applied": true,
+    "update_direction_check": "teacher-preferred sampled token gradient negative; opposite preference positive"
+  },
+  "teacher_scoring": {
+    "scope": "five-domain TEXT replay plus explicit EOS control; not exact historical training tensors",
+    "cases": [
+      {
+        "domain": "instruction",
+        "response_tokens": 158,
+        "mean_abs_error": 0.014196482079465637,
+        "p95_abs_error": 0.07992460727691657,
+        "max_abs_error": 0.19336605072021484,
+        "wrong_shift_mean_abs_error": 1.275448395432597,
+        "first_error": 0.016729354858398438,
+        "last_error": 6.206752732396126e-05
+      },
+      {
+        "domain": "code",
+        "response_tokens": 255,
+        "mean_abs_error": 0.006101098074877124,
+        "p95_abs_error": 0.038216525316238356,
+        "max_abs_error": 0.12519264221191406,
+        "wrong_shift_mean_abs_error": 0.47636970644229504,
+        "first_error": 2.1059822756797075e-05,
+        "last_error": 3.275775816291571e-05
+      },
+      {
+        "domain": "chat",
+        "response_tokens": 658,
+        "mean_abs_error": 0.014281950923717566,
+        "p95_abs_error": 0.08964905738830564,
+        "max_abs_error": 0.22651433944702148,
+        "wrong_shift_mean_abs_error": 1.1094918276318857,
+        "first_error": 0.0004130294546484947,
+        "last_error": 0.0009257071651518345
+      },
+      {
+        "domain": "math",
+        "response_tokens": 1024,
+        "mean_abs_error": 0.003699092898248574,
+        "p95_abs_error": 0.01749099045991894,
+        "max_abs_error": 0.13261699676513672,
+        "wrong_shift_mean_abs_error": 0.3021162571781158,
+        "first_error": 4.767134669236839e-07,
+        "last_error": 0.006293993443250656
+      },
+      {
+        "domain": "knowledge_mcqa",
+        "response_tokens": 482,
+        "mean_abs_error": 0.00664055797482389,
+        "p95_abs_error": 0.04905931055545801,
+        "max_abs_error": 0.2349388599395752,
+        "wrong_shift_mean_abs_error": 0.3222874075156093,
+        "first_error": 0.006023447960615158,
+        "last_error": 7.299723802134395e-05
+      },
+      {
+        "domain": "explicit_eos_control",
+        "response_tokens": 159,
+        "mean_abs_error": 0.014107224407265641,
+        "p95_abs_error": 0.07939038276672357,
+        "max_abs_error": 0.19336605072021484,
+        "wrong_shift_mean_abs_error": 1.2673773803150388,
+        "first_error": 0.016729354858398438,
+        "last_error": 4.51219966635108e-06
+      }
+    ],
+    "response_tokens": 2736,
+    "mean_abs_error": 0.008197374502149959,
+    "p95_abs_error": 0.06477285921573639,
+    "passed": true,
+    "student_temperature": 0.8,
+    "teacher_temperature": 1.0
+  },
+  "real_probability_loss": {
+    "loss_error": 2.7755575615628914e-17,
+    "gradient_error": 4.336808689942018e-19,
+    "valid_response_tokens": 2736,
+    "scope": "real replay probabilities, controlled ratio=1; not historical optimizer state",
+    "clipped_token_count": 0,
+    "passed": true
+  },
+  "native_parser": [
+    {
+      "domain": "instruction",
+      "all_shifted_ids_equal": true,
+      "dummy_tail_correct": true
+    },
+    {
+      "domain": "code",
+      "all_shifted_ids_equal": true,
+      "dummy_tail_correct": true
+    },
+    {
+      "domain": "chat",
+      "all_shifted_ids_equal": true,
+      "dummy_tail_correct": true
+    },
+    {
+      "domain": "math",
+      "all_shifted_ids_equal": true,
+      "dummy_tail_correct": true
+    },
+    {
+      "domain": "knowledge_mcqa",
+      "all_shifted_ids_equal": true,
+      "dummy_tail_correct": true
+    },
+    {
+      "domain": "explicit_eos_control",
+      "all_shifted_ids_equal": true,
+      "dummy_tail_correct": true
+    }
+  ],
+  "limitations": [
+    "Historical raw token/mask/logprob snapshots were not saved",
+    "Thinking/multiturn/tools/long-context not certified",
+    "k1 ignores log_prob_min_clamp; student T=0.8, teacher T=1",
+    "Production k1 checks shapes, not teacher token ID contents"
+  ]
+}

@@ -11,7 +11,7 @@ th{background:#1c2940}.badge{display:inline-block;padding:2px 10px;border-radius
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;background:#151f32;padding:16px}
 summary{cursor:pointer;color:#9fc2ff}details{margin:12px 0}@media(max-width:600px){body{padding:16px}h1{font-size:24px}}
 </style><main><h1>9B 多领域单教师 OPD · 训练与评测报告</h1>
-<p class="muted">生成于 2026-09-23T19:10:39+00:00 · UTC · 静态快照，需重新运行脚本更新。</p>
+<p class="muted">生成于 2026-09-24T00:18:03+00:00 · UTC · 静态快照，需重新运行脚本更新。</p>
 <p class="notice">目标：27B 教师指导 9B 学生，覆盖多个领域。这是多领域单教师 OPD，不是多教师 MOPD。静态教师答案用于 SFT 时，也不等于学生在线采样的 OPD。完成状态以落盘证据为准；缺失指标不记作零分。</p>
 <p class="notice">数据质量复审：初始160/40候选集发现错误答案和不完整题目，旧结果仅作诊断。正式结论需使用冻结的修订数据，不能将候选集称为已验收高质量数据。</p>
 <h2>实验结论</h2>
@@ -20,6 +20,7 @@ summary{cursor:pointer;color:#9fc2ff}details{margin:12px 0}@media(max-width:600p
 <p>教师仅在一条双关键词指令上优于原版（6/8 vs 5/8）；step4曾丢失另一条关键词约束，step8以后恢复。smoke、step8、step12的14条已评分样本与原版逐题相同。报告保留全部版本，不按最高分挑选性展示。</p>
 <p>评分边界：每模型数学5题、指令8题、知识1题可评分；代码8题只做语法诊断，聊天8题未做质量评分，不计算综合准确率。验证集很小且用于训练过程监测，不是封存测试集，也不是官方软件benchmark。单次贪心观测不能支持统计显著性或泛化收益结论。</p>
 <p>数据v2为122训练/30验证，保留原切分与来源revision，排除数学/科学审计中的错误及存疑记录；实际128条训练轨迹覆盖121个唯一样本。知识域仅3训练/1验证，分布不足。W&amp;B为offline；性能触发自动止损、代码隔离执行、聊天质量评分、长链thinking与工具验收仍待补齐。没有扩大付费沙箱预算，未运行超大模型。</p>
+<p>补充兼容验收：部署版VERL源码SHA一致；真实loss边界控制通过；五域文本重放加EOS共2736响应token，HF/vLLM教师评分平均误差0.00820、P95为0.06477，原生解析器token IDs对齐。真实概率loss/gradient误差接近浮点精度。结论仅支持当前文本单轮关闭thinking配置；原始训练张量未保存，不能声称历史全批次精确重建或全模式兼容。</p>
 <div class="scroll"><table><thead><tr><th>模型/版本</th><th>数学</th><th>指令</th><th>知识（仅1题）</th><th>截断条数/30</th><th>输出token中位数</th></tr></thead><tbody><tr><td>base-9b</td><td>4/5</td><td>5/8</td><td>1/1</td><td>2</td><td>622.5</td></tr><tr><td>teacher-27b</td><td>4/5</td><td>6/8</td><td>1/1</td><td>1</td><td>595.5</td></tr><tr><td>smoke-step1</td><td>4/5</td><td>5/8</td><td>1/1</td><td>1</td><td>629.5</td></tr><tr><td>opd-step4</td><td>4/5</td><td>4/8</td><td>1/1</td><td>1</td><td>660.0</td></tr><tr><td>opd-step8</td><td>4/5</td><td>5/8</td><td>1/1</td><td>2</td><td>608.0</td></tr><tr><td>opd-step12</td><td>4/5</td><td>5/8</td><td>1/1</td><td>2</td><td>650.5</td></tr><tr><td>opd-step16</td><td>5/5</td><td>5/8</td><td>1/1</td><td>1</td><td>665.0</td></tr></tbody></table></div>
 <h2>执行状态</h2>
 <div class="scroll"><table><thead><tr><th>阶段</th><th>状态</th><th>原因 / 说明</th><th>开始</th><th>结束</th></tr></thead><tbody><tr><td>compatibility</td><td><span class="badge complete">完成</span></td><td>See compatibility evidence</td><td>—（未提供）</td><td>—（未提供）</td></tr><tr><td>train-smoke</td><td><span class="badge complete">完成</span></td><td>—（未提供）</td><td>2026-09-23T17:07:22.424073+00:00</td><td>2026-09-23T17:32:12.164486+00:00</td></tr><tr><td>export-smoke</td><td><span class="badge complete">完成</span></td><td>—（未提供）</td><td>2026-09-23T17:32:12.287076+00:00</td><td>2026-09-23T17:33:03.277894+00:00</td></tr><tr><td>reload-smoke</td><td><span class="badge complete">完成</span></td><td>—（未提供）</td><td>2026-09-23T17:33:03.436941+00:00</td><td>2026-09-23T17:39:29.080148+00:00</td></tr><tr><td>train-full</td><td><span class="badge complete">完成</span></td><td>—（未提供）</td><td>2026-09-23T17:39:29.230575+00:00</td><td>2026-09-23T18:25:14.427766+00:00</td></tr><tr><td>export-full</td><td><span class="badge complete">完成</span></td><td>—（未提供）</td><td>2026-09-23T18:25:14.572268+00:00</td><td>2026-09-23T18:26:05.618071+00:00</td></tr><tr><td>eval-base-9b</td><td><span class="badge complete">完成</span></td><td>—（未提供）</td><td>2026-09-23T18:26:05.761748+00:00</td><td>2026-09-23T18:30:40.254436+00:00</td></tr><tr><td>eval-teacher-27b</td><td><span class="badge complete">完成</span></td><td>—（未提供）</td><td>2026-09-23T18:30:40.498775+00:00</td><td>2026-09-23T18:39:09.984904+00:00</td></tr><tr><td>eval-opd-step4</td><td><span class="badge complete">完成</span></td><td>—（未提供）</td><td>2026-09-23T18:39:10.162559+00:00</td><td>2026-09-23T18:45:58.337967+00:00</td></tr><tr><td>eval-opd-step8</td><td><span class="badge complete">完成</span></td><td>—（未提供）</td><td>2026-09-23T18:45:58.532512+00:00</td><td>2026-09-23T18:52:57.776547+00:00</td></tr><tr><td>eval-opd-step12</td><td><span class="badge complete">完成</span></td><td>—（未提供）</td><td>2026-09-23T18:52:57.997639+00:00</td><td>2026-09-23T19:00:08.164093+00:00</td></tr><tr><td>eval-opd-step16</td><td><span class="badge complete">完成</span></td><td>—（未提供）</td><td>2026-09-23T19:00:08.433387+00:00</td><td>2026-09-23T19:06:59.102616+00:00</td></tr></tbody></table></div>
@@ -2294,6 +2295,158 @@ v1候选160/40经过实质复审后冻结v2为122/30；原始记录与原split�
     }
   ],
   &quot;all_passed&quot;: true
+}</pre></details>
+<details><summary>补充兼容验收：原生源码、2736token评分与loss梯度</summary><pre>{
+  &quot;status&quot;: &quot;passed_scoped&quot;,
+  &quot;scope&quot;: &quot;text single-turn thinking disabled; historical text replay not original tensors&quot;,
+  &quot;numeric&quot;: {
+    &quot;status&quot;: &quot;passed&quot;,
+    &quot;scope&quot;: &quot;synthetic boundary controls invoking actual deployed VERL loss; not historical tensors&quot;,
+    &quot;controls&quot;: [
+      {
+        &quot;log_ratio&quot;: 0.0,
+        &quot;loss_error&quot;: 0.0,
+        &quot;gradient_error&quot;: 0.0
+      },
+      {
+        &quot;log_ratio&quot;: 0.5,
+        &quot;loss_error&quot;: 0.0,
+        &quot;gradient_error&quot;: 0.0
+      },
+      {
+        &quot;log_ratio&quot;: -0.5,
+        &quot;loss_error&quot;: 0.0,
+        &quot;gradient_error&quot;: 0.0
+      },
+      {
+        &quot;log_ratio&quot;: 2.0,
+        &quot;loss_error&quot;: 0.0,
+        &quot;gradient_error&quot;: 0.0
+      }
+    ],
+    &quot;response_first_last_eos_coordinate_check&quot;: true,
+    &quot;ignored_positions_zero_gradient&quot;: true,
+    &quot;teacher_detached&quot;: true,
+    &quot;k1_log_prob_min_clamp_not_applied&quot;: true,
+    &quot;update_direction_check&quot;: &quot;teacher-preferred sampled token gradient negative; opposite preference positive&quot;
+  },
+  &quot;teacher_scoring&quot;: {
+    &quot;scope&quot;: &quot;five-domain TEXT replay plus explicit EOS control; not exact historical training tensors&quot;,
+    &quot;cases&quot;: [
+      {
+        &quot;domain&quot;: &quot;instruction&quot;,
+        &quot;response_tokens&quot;: 158,
+        &quot;mean_abs_error&quot;: 0.014196482079465637,
+        &quot;p95_abs_error&quot;: 0.07992460727691657,
+        &quot;max_abs_error&quot;: 0.19336605072021484,
+        &quot;wrong_shift_mean_abs_error&quot;: 1.275448395432597,
+        &quot;first_error&quot;: 0.016729354858398438,
+        &quot;last_error&quot;: 6.206752732396126e-05
+      },
+      {
+        &quot;domain&quot;: &quot;code&quot;,
+        &quot;response_tokens&quot;: 255,
+        &quot;mean_abs_error&quot;: 0.006101098074877124,
+        &quot;p95_abs_error&quot;: 0.038216525316238356,
+        &quot;max_abs_error&quot;: 0.12519264221191406,
+        &quot;wrong_shift_mean_abs_error&quot;: 0.47636970644229504,
+        &quot;first_error&quot;: 2.1059822756797075e-05,
+        &quot;last_error&quot;: 3.275775816291571e-05
+      },
+      {
+        &quot;domain&quot;: &quot;chat&quot;,
+        &quot;response_tokens&quot;: 658,
+        &quot;mean_abs_error&quot;: 0.014281950923717566,
+        &quot;p95_abs_error&quot;: 0.08964905738830564,
+        &quot;max_abs_error&quot;: 0.22651433944702148,
+        &quot;wrong_shift_mean_abs_error&quot;: 1.1094918276318857,
+        &quot;first_error&quot;: 0.0004130294546484947,
+        &quot;last_error&quot;: 0.0009257071651518345
+      },
+      {
+        &quot;domain&quot;: &quot;math&quot;,
+        &quot;response_tokens&quot;: 1024,
+        &quot;mean_abs_error&quot;: 0.003699092898248574,
+        &quot;p95_abs_error&quot;: 0.01749099045991894,
+        &quot;max_abs_error&quot;: 0.13261699676513672,
+        &quot;wrong_shift_mean_abs_error&quot;: 0.3021162571781158,
+        &quot;first_error&quot;: 4.767134669236839e-07,
+        &quot;last_error&quot;: 0.006293993443250656
+      },
+      {
+        &quot;domain&quot;: &quot;knowledge_mcqa&quot;,
+        &quot;response_tokens&quot;: 482,
+        &quot;mean_abs_error&quot;: 0.00664055797482389,
+        &quot;p95_abs_error&quot;: 0.04905931055545801,
+        &quot;max_abs_error&quot;: 0.2349388599395752,
+        &quot;wrong_shift_mean_abs_error&quot;: 0.3222874075156093,
+        &quot;first_error&quot;: 0.006023447960615158,
+        &quot;last_error&quot;: 7.299723802134395e-05
+      },
+      {
+        &quot;domain&quot;: &quot;explicit_eos_control&quot;,
+        &quot;response_tokens&quot;: 159,
+        &quot;mean_abs_error&quot;: 0.014107224407265641,
+        &quot;p95_abs_error&quot;: 0.07939038276672357,
+        &quot;max_abs_error&quot;: 0.19336605072021484,
+        &quot;wrong_shift_mean_abs_error&quot;: 1.2673773803150388,
+        &quot;first_error&quot;: 0.016729354858398438,
+        &quot;last_error&quot;: 4.51219966635108e-06
+      }
+    ],
+    &quot;response_tokens&quot;: 2736,
+    &quot;mean_abs_error&quot;: 0.008197374502149959,
+    &quot;p95_abs_error&quot;: 0.06477285921573639,
+    &quot;passed&quot;: true,
+    &quot;student_temperature&quot;: 0.8,
+    &quot;teacher_temperature&quot;: 1.0
+  },
+  &quot;real_probability_loss&quot;: {
+    &quot;loss_error&quot;: 2.7755575615628914e-17,
+    &quot;gradient_error&quot;: 4.336808689942018e-19,
+    &quot;valid_response_tokens&quot;: 2736,
+    &quot;scope&quot;: &quot;real replay probabilities, controlled ratio=1; not historical optimizer state&quot;,
+    &quot;clipped_token_count&quot;: 0,
+    &quot;passed&quot;: true
+  },
+  &quot;native_parser&quot;: [
+    {
+      &quot;domain&quot;: &quot;instruction&quot;,
+      &quot;all_shifted_ids_equal&quot;: true,
+      &quot;dummy_tail_correct&quot;: true
+    },
+    {
+      &quot;domain&quot;: &quot;code&quot;,
+      &quot;all_shifted_ids_equal&quot;: true,
+      &quot;dummy_tail_correct&quot;: true
+    },
+    {
+      &quot;domain&quot;: &quot;chat&quot;,
+      &quot;all_shifted_ids_equal&quot;: true,
+      &quot;dummy_tail_correct&quot;: true
+    },
+    {
+      &quot;domain&quot;: &quot;math&quot;,
+      &quot;all_shifted_ids_equal&quot;: true,
+      &quot;dummy_tail_correct&quot;: true
+    },
+    {
+      &quot;domain&quot;: &quot;knowledge_mcqa&quot;,
+      &quot;all_shifted_ids_equal&quot;: true,
+      &quot;dummy_tail_correct&quot;: true
+    },
+    {
+      &quot;domain&quot;: &quot;explicit_eos_control&quot;,
+      &quot;all_shifted_ids_equal&quot;: true,
+      &quot;dummy_tail_correct&quot;: true
+    }
+  ],
+  &quot;limitations&quot;: [
+    &quot;Historical raw token/mask/logprob snapshots were not saved&quot;,
+    &quot;Thinking/multiturn/tools/long-context not certified&quot;,
+    &quot;k1 ignores log_prob_min_clamp; student T=0.8, teacher T=1&quot;,
+    &quot;Production k1 checks shapes, not teacher token ID contents&quot;
+  ]
 }</pre></details>
 <h2>教师 / 学生兼容验收</h2>
 <span class="badge complete">完成</span>

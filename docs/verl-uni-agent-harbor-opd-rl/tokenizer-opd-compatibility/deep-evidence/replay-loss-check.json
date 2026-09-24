@@ -1,0 +1,8 @@
+{
+  "loss_error": 2.7755575615628914e-17,
+  "gradient_error": 4.336808689942018e-19,
+  "valid_response_tokens": 2736,
+  "scope": "real replay probabilities, controlled ratio=1; not historical optimizer state",
+  "clipped_token_count": 0,
+  "passed": true
+}
