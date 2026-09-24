@@ -6,7 +6,7 @@
 
 | 需要什么 | 权威入口 | 状态 |
 |---|---|---|
-| MiMo Agent SFT 9B 专题 | [mimo-agent-sft-9b-report.html](mimo-agent-sft-9b-report.html) | 18章；含数据画像准入/强教师合成/Qwen-Apus迁移/多harness，论文事实、原理解释、实施建议分开；未启动新训练 |
+| MiMo Agent SFT 9B 专题 | [mimo-agent-sft-9b-report.html](mimo-agent-sft-9b-report.html) | 19章；含数据画像准入/强教师合成/Qwen-Apus迁移/多harness，论文事实、原理解释、实施建议分开；未启动新训练 |
 | 日常工作/Agent目标与教师优势 | [daily-agent-capability-plan.md](daily-agent-capability-plan.md) | 旧结果已审计；新画像与双线执行待验收 |
 | 总导航与架构 | [training-production.html](training-production.html) | 唯一导航；设计与真实运行分开 |
 | 产线目标、职责、核心指标、诊断与修复 | [training-production-charter.md](training-production-charter.md) | 当前总纲，2026-09-24 |

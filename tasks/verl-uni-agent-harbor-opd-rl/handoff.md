@@ -5,7 +5,7 @@
 - MiMo HTML扩至18章，增加用户数据画像准入、GPT6-sol候选教师真实执行、Curator工具选型、Qwen/Apus协议迁移和多harness受控实验。
 - 新agent-sft-data-production-design.md保存架构/文件范围/接口/测试计划；portrait-audit.json为画像与目录抽查证据。
 - 画像内嵌81本地条目/354HF候选，扫描2026-06-20，非当前ready库存。部分目录只有README，小样不等于全量。
-- Apus规格已异步询问未答复；默认中立轨迹+Qwen导出。当前会话gpt6-sol标签不等于已配置批量API，provider/计费与额度待实查。
+- 后续用户已确认继承MiMo权重，名称apus-chat-v1；HTML #apus-chat-v1为最新草案，优先保留原生序列化+API适配。当前会话gpt6-sol标签不等于已配置批量API，provider/计费与额度待实查。
 - Agentic-v2部分模拟环境，不计真实工具成功；画像多处静态SFT标on-policy OPD不予继承。保留原始报告不改写。
 - 未下载新权重、未启动付费数据生成或训练；下一步是按设计合同做接口/数据准入小试点。
 
