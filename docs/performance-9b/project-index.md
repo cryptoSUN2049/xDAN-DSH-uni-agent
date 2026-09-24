@@ -8,7 +8,7 @@
 |---|---|---|
 | Qwen3.8-Max补充候选 | [qwen38-max-sft-review.md](qwen38-max-sft-review.md) | 两个原始库已核；许可/污染/质量待放行，当前配额0 |
 | Fable/GPT强教师数据复核 | [strong-teacher-sft-review.md](strong-teacher-sft-review.md) | 原始/独立Fable恢复优先级；GPT5.6加权；GPT6未发现合格通用池 |
-| 首轮Agent SFT完整数据配方 | [agent-sft-data-plan-v2.md](agent-sft-data-plan-v2.md) | 1000训练目标：Fable160＋GPT5.6 240核心；600现成＋400新生成；独立评测与成本门 |
+| 首轮Agent SFT完整数据配方 | [最终训练数据清单.md](最终训练数据清单.md) | v3：核心Fable160＋GPT240，保留Fable20＋GPT60；520现成＋480新生；独立评测与成本门 |
 | Agent SFT主线与20种子任务 | [agent-sft-seed20-plan.md](agent-sft-seed20-plan.md) | 20题规格已列；环境/控制/真实轨迹待建设；tool-call实验独立 |
 | APUS Tool Call协议专项 | [apus-chat-v1-tool-call.md](apus-chat-v1-tool-call.md) | 设计合同；三层格式、状态机、mask、迁移与验收；实现待推进 |
 | MiMo Agent SFT 9B 专题 | [mimo-agent-sft-9b-report.html](mimo-agent-sft-9b-report.html) | 19章；含数据画像准入/强教师合成/Qwen-Apus迁移/多harness，论文事实、原理解释、实施建议分开；未启动新训练 |
