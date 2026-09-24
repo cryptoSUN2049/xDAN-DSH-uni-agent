@@ -799,7 +799,12 @@
       "original_file_url": "https://huggingface.co/datasets/HelioAI/Claude-Fable-5-5500x/resolve/440267fbdb1b00a40216e7233dbce25530a0ed09/Fable-5-Distill-5500x.jsonl",
       "license_metadata": "unknown",
       "download_scope": "README/metadata only; data file not yet downloaded",
-      "training_status": "not_ready"
+      "training_status": "not_ready",
+      "selection_constraints": {
+        "exclude_russian": true,
+        "english_subset_count": null,
+        "status": "awaiting content-level language filtering; published 5469 remains raw RU+EN count"
+      }
     },
     {
       "id": "U07",
@@ -824,5 +829,19 @@
       "download_scope": "README/metadata only; data file not yet downloaded",
       "training_status": "not_ready"
     }
-  ]
+  ],
+  "derived_release_language_policy": {
+    "exclude_languages": [
+      "ru"
+    ],
+    "scope": "all derived training releases, including full cleaned, three-teacher and 20k",
+    "inspect_fields": [
+      "prompt",
+      "messages",
+      "reasoning",
+      "answer"
+    ],
+    "unknown_or_mixed": "quarantine for review; do not infer language from a single character",
+    "raw_sources": "preserve originals and original language distributions"
+  }
 }

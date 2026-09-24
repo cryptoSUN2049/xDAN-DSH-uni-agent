@@ -1,3 +1,7 @@
+## 最新语言约束：排除俄语
+
+所有派生训练版本排除俄语；HelioAI原版5,469 RU+EN仍登记，英文子集数量未知。检查prompt/reasoning/answer，不改写俄语冒充原始英文。文档/JSON规则已更新，尚未执行语言过滤。
+
 ## 来源补漏完成：15个原始库
 
 用户重列11个链接，去重7库，旧台账覆盖5库；新增HelioAI/Claude-Fable-5-5500x（卡片5469、license unknown）和KrazyKitty/Fable-5.1-Max-Reasoning-Filtered-1000x（卡片1000、与MoreThought重叠待核）。原始台账MD/JSON及分布/索引已更新至15唯一库；新增两库仅README和元数据，未下载正文，未改20K配额。
