@@ -1,3 +1,7 @@
+## 数据清单v3.1补充
+
+用户指定Fable-5.1-Filtered-5000x、SuperiorThoughts-1及Premium V2，已补入`docs/performance-9b/最终训练数据清单.md`。前两份明确要用；Fable优先既有160池，SuperiorThoughts扩展配额待审计冻结；Premium混合教师逐条筛选。仅卡片/元数据核验，未全量下载或训练。
+
 # 全版本 checkpoint 评测交接
 
 ## 2026-09-24 当前最终清单v3
