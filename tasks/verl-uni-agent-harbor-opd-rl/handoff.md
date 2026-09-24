@@ -1,3 +1,7 @@
+## 来源补漏完成：15个原始库
+
+用户重列11个链接，去重7库，旧台账覆盖5库；新增HelioAI/Claude-Fable-5-5500x（卡片5469、license unknown）和KrazyKitty/Fable-5.1-Max-Reasoning-Filtered-1000x（卡片1000、与MoreThought重叠待核）。原始台账MD/JSON及分布/索引已更新至15唯一库；新增两库仅README和元数据，未下载正文，未改20K配额。
+
 ## 最新交付顺序：原始台账先于抽样
 
 用户要求先完整登记所有原版路径、各库分布/数量，再规划抽取，最后20K训练。已建docs/performance-9b/原始数据资产清单.md及JSON，共13唯一仓库（近期指定5+原方案8），原版声明与实测分开。project-index已按此排序。五个近期库主训练文件下载完成，其他8库本轮仅刷新固定README/API，不误称全量落盘。QwenAgent下载24910已成功结束。四库审计JSON与能力缺口表齐备；尚未实现正式清洗/上传/训练。

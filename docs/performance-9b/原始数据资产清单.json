@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "date": "2026-09-24",
-  "scope": "5 explicit recent sources + 8 prior plan sources; originals retained regardless of later exclusion",
+  "scope": "7 explicitly requested recent sources + 8 prior plan sources; originals retained regardless of later exclusion",
   "sources": [
     {
       "id": "U01",
@@ -776,6 +776,52 @@
       ],
       "license_metadata": "cc-by-sa-4.0",
       "download_scope": "metadata/README refreshed; full dataset not downloaded in this run",
+      "training_status": "not_ready"
+    },
+    {
+      "id": "U06",
+      "selection": "user_explicit",
+      "repo_id": "HelioAI/Claude-Fable-5-5500x",
+      "original_url": "https://huggingface.co/datasets/HelioAI/Claude-Fable-5-5500x",
+      "revision": "440267fbdb1b00a40216e7233dbce25530a0ed09",
+      "readme_url": "https://huggingface.co/datasets/HelioAI/Claude-Fable-5-5500x/blob/440267fbdb1b00a40216e7233dbce25530a0ed09/README.md",
+      "readme_local": "/private/tmp/apus-sft20k/catalog/helio-readme.md",
+      "readme_sha256": "f30145fa163aa347a2ceaa874359c29f0f488ebe6a64da50e26bd398ca41b217",
+      "counts": {
+        "published_examples": 5469
+      },
+      "coverage": "俄语/英语结构化推理；prompt/reasoning/answer；未披露能力及语言百分比",
+      "repository_files": [
+        ".gitattributes",
+        "README.md",
+        "Fable-5-Distill-5500x.jsonl"
+      ],
+      "original_file_url": "https://huggingface.co/datasets/HelioAI/Claude-Fable-5-5500x/resolve/440267fbdb1b00a40216e7233dbce25530a0ed09/Fable-5-Distill-5500x.jsonl",
+      "license_metadata": "unknown",
+      "download_scope": "README/metadata only; data file not yet downloaded",
+      "training_status": "not_ready"
+    },
+    {
+      "id": "U07",
+      "selection": "user_explicit",
+      "repo_id": "KrazyKitty/Fable-5.1-Max-Reasoning-Filtered-1000x",
+      "original_url": "https://huggingface.co/datasets/KrazyKitty/Fable-5.1-Max-Reasoning-Filtered-1000x",
+      "revision": "1a861572f45aa663dae84180af1720770d472dc8",
+      "readme_url": "https://huggingface.co/datasets/KrazyKitty/Fable-5.1-Max-Reasoning-Filtered-1000x/blob/1a861572f45aa663dae84180af1720770d472dc8/README.md",
+      "readme_local": "/private/tmp/apus-sft20k/catalog/krazy-readme.md",
+      "readme_sha256": "a99b548f8b68fd79ec46e6b2cd594f498f042400f66beca68712b185aa6352af",
+      "counts": {
+        "published_examples": 1000
+      },
+      "coverage": "英文编码/算法/调试/约束推理；未披露各域比例",
+      "repository_files": [
+        ".gitattributes",
+        "README.md",
+        "train.jsonl"
+      ],
+      "original_file_url": "https://huggingface.co/datasets/KrazyKitty/Fable-5.1-Max-Reasoning-Filtered-1000x/resolve/1a861572f45aa663dae84180af1720770d472dc8/train.jsonl",
+      "license_metadata": "apache-2.0",
+      "download_scope": "README/metadata only; data file not yet downloaded",
       "training_status": "not_ready"
     }
   ]
