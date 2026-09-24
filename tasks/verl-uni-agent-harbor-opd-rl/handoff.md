@@ -1,3 +1,9 @@
+## 2026-09-25 CPU 质量审计修订
+
+- CPU 端口16358，quality-audit-v2 PID982791启动；须检查进程及终态manifest，不凭本行假设仍运行。
+- quality-gate-v1错误放行16732条已撤销；manifest INVALIDATED_DO_NOT_TRAIN，approved_rows=0，原结果保留诊断，未训练。
+- v2只回填/诊断，不授予training_ready；见docs/performance-9b/data-quality-audit-v2.md。后续需修正next-action工具前缀误报并完成语义、语言、污染、mask验收。
+
 ## Fable恢复后台已完成
 
 - collection-v1 succeeded：70文件501430864字节，原版留Runpod；小报告`docs/performance-9b/fable-recovery-v1/`。
