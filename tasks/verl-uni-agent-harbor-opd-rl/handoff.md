@@ -359,3 +359,12 @@ qwen38-max-sft-review.md固定3库revision、区分Max-Preview/27B，候选有�
 - 这只是结构筛选中间母本：62,030 条均带 `teacher_identity_unresolved`、`language_unresolved`、`source_split_unresolved`、`source_license_unresolved` 中至少相应缺口，54,682 条 reasoning policy unresolved；`training_ready=false`。
 - 本地证据：`docs/performance-9b/contract-v1-evidence/{validation.json,apus-sft-v1.manifest.json,export.log}`；导出器 `examples/performance_9b/export_contract.py`，测试 `tests/uni_agent/examples/test_performance_9b_export_contract.py`。
 - 下一步：回读固定原始 manifest 补齐来源字段；固定 validation/sealed manifest；做任务组/污染/近重复门禁；再做 Arrow/Parquet/HF 与 ms-swift/VERL 导出。未达到准入前不抽 20K、不上传训练版、不启动训练。
+
+## 2026-09-25 最新：v5 审计与 20K 缺口冻结
+
+- quality-audit-v5 已完成：输入62030，provisional_candidates=10494，quarantine=51536，approved_rows=0，training_ready=false；候选全部为 code，teacher qwen38=10489、gpt56=5。
+- v1 曾错误放行的16732条已明确作废；v2/v3/v4诊断结果不能转为训练池。
+- Qwen3.5-9B tokenizer adapter v9 对全部10494 provisional候选渲染通过，error=0、tool_rows=5、token p50=7401；这不是 loss-mask 或语义质量验收。
+- 20K目标与真实approved供给差距已冻结：`docs/performance-9b/20k-deficit-report.md` 和 `.json`。7K code、3K reasoning、3K office、2.5K data、1.5K translation、1.5K writing、1.5K general 当前approved均为0；不得抽样、上传或启动训练。
+- 下一里程碑：完成候选机械语义审计、teacher/license/language证据、显式assistant/tool mask覆盖率验证；所有能力域形成approved pool后才生成固定seed的20K导出。
+- 新提交：`5ae9cf9 docs(performance-9b): record 20k data deficit audit`。
