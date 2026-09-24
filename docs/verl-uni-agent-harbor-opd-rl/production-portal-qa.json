@@ -1,8 +1,8 @@
 {
   "date": "2026-09-24",
-  "html_sha256": "0c7c9d5b851a6d5ffa9a335358bb18ce41041a125fac0fc9dbb70113a6185fae",
+  "html_sha256": "c155520da66fdae497e6e50646b74319f6a05c629196b7b15dd20481ae1deb4a",
   "sections": 16,
-  "local_links_checked": 48,
+  "local_links_checked": 17,
   "broken_links": 0,
   "duplicate_ids": 0,
   "desktop_width": 1280,
@@ -12,6 +12,6 @@
   "navigation_switch": true,
   "directory_search": true,
   "console_after_reload": [],
-  "source_mimo_sha256": "580f3cdf4e8d20ed9b5c14e94cc296a0487d9ac148c089b55c74162b9bd21bad",
+  "source_mimo_sha256": "c155520da66fdae497e6e50646b74319f6a05c629196b7b15dd20481ae1deb4a",
   "review": "Updated daily-work/Agent goal, audited existing evidence; new Agent baseline not run."
 }

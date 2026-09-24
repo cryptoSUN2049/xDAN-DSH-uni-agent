@@ -1,5 +1,13 @@
 # 全版本 checkpoint 评测交接
 
+## 2026-09-24 MiMo Agent SFT 9B 专题
+
+- 新报告 docs/verl-uni-agent-harbor-opd-rl/mimo-agent-sft-9b-report.html，14章：SFT起点/数据/mask原理/轨迹/数据工厂/分域GRPO/多harness/复现边界/两卡路线。已接产线HTML与索引。
+- 固定HF revision 2367e865d009c13ac81713a2878291d33ab28177；模型卡、元数据、PDF33–36页摘录及hash位于mimo-agent-sft-evidence/。
+- 结论：监督SFT蒸馏不是OPD；公开权重不是表6各域RL模型。完整SFT超参与语料未核验，不能声称精确复现。
+- 远端检查时两卡0MiB/0%，MiMo权重未下载；旧evaluate.py强制thinking-off、默认原版tokenizer且无工具，不能直接作为新Agent选型评测。下一步须冻结原生模板/工具/预算合同再运行对照。
+
+
 ## 2026-09-24 日常工作Agent目标与双线推进
 
 - 用户收敛目标：接近Opus4.6日常工作/Agent能力，OPD有效性验证为主线，同时规划mid-training数据。

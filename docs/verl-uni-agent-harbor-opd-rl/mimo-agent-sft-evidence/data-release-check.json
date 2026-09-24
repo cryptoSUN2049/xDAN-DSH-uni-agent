@@ -1,0 +1,53 @@
+{
+  "date": "2026-09-24",
+  "official_hf_datasets": [
+    {
+      "_id": "68ca1f4a5fcfa9eb6d97899b",
+      "id": "XiaomiMiMo/MiMo-Audio-Evalset",
+      "author": "XiaomiMiMo",
+      "disabled": false,
+      "gated": false,
+      "lastModified": "2025-09-18T21:26:46.000Z",
+      "likes": 8,
+      "trendingScore": 0,
+      "private": false,
+      "sha": "91caa0a778b17b70a4a9b2796e5af2fbd53519be",
+      "description": "\n\t\n\t\t\n\t\tDataset Card for MiMo-Audio-Evalset\n\t\n\n\n\t\n\t\t\n\t\tDataset Description\n\t\n\nThis repository is a collection of multiple audio datasets used for evaluation in the MiMo-Audio-Eval toolkit. It includes a variety of datasets for tasks such as automatic speech recognition (AISHELL1, LibriSpeech), text-to-speech (SeedTTS), audio understanding and reasoning (MMAU and MMSU), and more.\n\n\t\n\t\t\n\t\tIncluded Datasets\n\t\n\nThe following datasets are included in the MiMo-Audio-Evalset:\n\nAISHELL1\nLibriSpeech… See the full description on the dataset page: https://huggingface.co/datasets/XiaomiMiMo/MiMo-Audio-Evalset.",
+      "downloads": 79,
+      "tags": [
+        "license:mit",
+        "region:us"
+      ],
+      "createdAt": "2025-09-17T02:39:06.000Z",
+      "key": ""
+    },
+    {
+      "_id": "68ca21886217205af4888867",
+      "id": "XiaomiMiMo/SpeechMMLU",
+      "author": "XiaomiMiMo",
+      "disabled": false,
+      "gated": false,
+      "lastModified": "2025-09-17T03:37:14.000Z",
+      "likes": 9,
+      "trendingScore": 0,
+      "private": false,
+      "sha": "e271acdd30a85a6c672bff807318ac8f4bd0b6db",
+      "description": "\n\t\n\t\t\n\t\tDataset Card for SpeechMMLU\n\t\n\n\n\t\n\t\t\n\t\tDataset Description\n\t\n\nSpeechMMLU is an evaluation dataset designed to assess the knowledge capabilities of speech-language models. It is built based on the MMLU dataset, with entries filtered by subject and length, resulting in a total of 8,549 entries across 34 subjects. We synthesized the questions and answers into speech using commercial TTS with diverse voices. This dataset can be used for evaluating knowledge capabilities of speech-language… See the full description on the dataset page: https://huggingface.co/datasets/XiaomiMiMo/SpeechMMLU.",
+      "downloads": 239,
+      "tags": [
+        "size_categories:1K<n<10K",
+        "format:parquet",
+        "modality:text",
+        "library:datasets",
+        "library:pandas",
+        "library:mlcroissant",
+        "library:polars",
+        "region:us"
+      ],
+      "createdAt": "2025-09-17T02:48:40.000Z",
+      "key": ""
+    }
+  ],
+  "hf_search_mimo_v26": [],
+  "conclusion": "No full 77.4B weighted Agent SFT corpus download located in checked HF endpoints; not proof of universal absence. Paper claims RL environment release; task artifacts not individually verified."
+}

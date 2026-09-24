@@ -1,0 +1,361 @@
+PAGE 33
+end-to-end throughput rather than acceptance rate alone. Smaller draft blocks reduce verification
+work: in mixed-task RL evaluation, block-6 improves global average throughput by approximately
+6% over block-8, with little change in average accepted length. Low-precision draft computation
+(FP8) is also applied to reduce drafting overhead. On our long-context workload, RL-adapted
+FP8 DFlash achieves approximately 10.3% higher per-node throughput than the baseline.
+Training Optimization
+We train RL at a 1M-token context length. MiMo-V2.6 interleaves 128-
+token sliding-window layers with full attention. Under context parallelism, the sliding-window
+layers exchange only the KV their queries can reach—at most a window-sized segment—so per-
+layer traffic is bounded by the window rather than the sequence length. Long sequences also
+inflate the memory footprint, and MoE expert imbalance pushes peak memory higher. Optimizer
+states stay in CPU memory and are copied back only for parameter updates. All loss computation
+is fused into one kernel: the policy-gradient loss (with or without top-p renormalization) and the
+OPD loss, optionally with metrics such as entropy, label logit, and top-p mass. The fusion saves
+memory and reduces step time.
+7
+Open Foundations for Agentic RL
+The MiMo-V2.6 series demonstrates the potential of reinforcement learning to substantially ad-
+vance agentic capabilities. Building on this progress requires capable models and high-quality RL
+environments that pair meaningful tasks with reliable verifiers. Sharing these resources alongside
+reproducible baselines supports continued research and innovation in the open-source commu-
+nity. We therefore open-source MiMo-V2.6-Distill-Qwen-9B,2 a small model distilled from MiMo
+as a shared starting point for further RL training. Alongside the model, we release high-quality
+RL environments and an end-to-end open-source RL framework. In this section, we establish
+domain-specific GRPO baselines using these released resources. We also conduct a separate multi-
+harness training experiment using coding as a case study, following the approach described for
+MiMo-V2.6. Our experiments show substantial gains across multiple domains, demonstrating
+the value of these resources for RL training.
+7.1
+Distillation from MiMo-V2.6
+Scaling RL computation and broadening the coverage of environments and harnesses create more
+opportunities for exploration and learning. Across these settings, effective exploration depends
+on coordinating actions and responding to environmental feedback. Realizing the potential of
+agentic RL therefore begins with a strong foundation of task-solving capabilities.
+To provide the open-source community with such a foundation, we develop MiMo-V2.6-Distill-
+Qwen-9B by transferring MiMo’s agentic experience into a smaller model. We obtain the model
+by supervised fine-tuning Qwen3.5-9B (Qwen Team, 2025) on MiMo-generated data spanning
+coding, general-domain, visual, and cybersecurity tasks. The mixture contains 77.4 billion total
+tokens, including 27.2 billion loss tokens that contribute to the SFT objective. Table 4 summarizes
+the data composition.
+The resulting MiMo-V2.6-Distill-Qwen-9B checkpoint improves over Qwen3.5-9B across the re-
+ported evaluations (Table 6). For example, SWE-bench Pro (Deng et al., 2025) increases from
+32.0 to 44.6, and AutomationBench from 5.0% to 30.3%. We view these strengthened task-
+solving capabilities as a promising foundation for further improvement through RL. We therefore
+2https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B
+33
+
+
+PAGE 34
+Data source
+Total tokens
+(B)
+Token share
+(%)
+Loss tokens
+(B)
+Code
+23.2
+29.9
+7.3
+Cyber
+11.0
+14.2
+4.8
+General
+22.0
+28.5
+5.7
+Visual
+21.2
+27.4
+9.4
+Total
+77.4
+100.0
+27.2
+Table 4 Weighted SFT data composition. Token counts are in billions. Values are rounded to
+one decimal place; totals use unrounded aggregate counts.
+Domain
+Task Family
+Training Tasks
+Verifier
+Code
+Software engineering
+3k
+Executable tests
+Cyber
+Vulnerability reproduction
+1k
+Rule checks
+General
+Knowledge work
+1k
+Rubric-based judging
+Visual
+Web development
+2k
+Visual grading
+Table 5 Overview of the released RL environments, including training task counts and the ver-
+ifiers used to evaluate task completion. Task counts are approximate, based on distinct task
+identifiers in each training set; k denotes one thousand.
+use this checkpoint as the common initialization for the domain-specific GRPO experiments and
+the multi-harness coding experiment described below.
+7.2
+RL with Open Environments
+Environments Overview
+Table 5 summarizes the RL environments we release across coding, cy-
+bersecurity, general-domain, and visual tasks. The four training sets contain approximately 7k
+tasks in total, with the general-domain set focusing on knowledge work. The training resources
+additionally include approximately 1k music-generation tasks, which support the GRPO experi-
+ments reported below.
+RL Experiments
+Starting from the same MiMo-V2.6-Distill-Qwen-9B SFT checkpoint, we con-
+duct GRPO training separately for coding, cybersecurity, general-domain, and visual tasks using
+the corresponding released environments. Alongside public benchmarks, we evaluate on four
+internal sets: MiMo Code Bench (mini) for software engineering , MiMo Cyber Bench (mini) for
+vulnerability reproduction, MiMo General Bench (mini) for knowledge work, and MiMo Visual
+Coding (mini) for website development. These evaluation sets follow the same task distributions
+as their corresponding training sets.
+Table 6 shows that RL improves on the SFT checkpoint in all 11 evaluations reported in the table,
+spanning the four task domains. SWE-bench Verified (Jimenez et al., 2024) rises from 61.1 to
+66.2, while Terminal Bench 2.1 (Merrill et al., 2026) improves from 37.1 to 52.8. OfficeQA
+Pro (Opsahl-Ong et al., 2026) improves from 19.5 to 24.8, and Toolathlon-Verified (HKUST NLP,
+2026) increases from 35.2 to 38.0. MiMo Visual Coding (mini) improves from 64.0 to 72.4, and
+MiMo Cyber Bench (mini) increases from 31.3 to 47.0. Beyond the tasks reported in Table 6, we
+also explore emerging tasks in artistic creation and design, such as music composition. On our
+internal music benchmark, the score improves substantially from 45.7 after SFT to 52.5 after RL.
+34
+
+
+PAGE 35
+Benchmark
+Metric
+Qwen3.5-9B
+MiMo-V2.6-Distill-Qwen-9B
+SFT
+RL
+Code
+SWE-bench Verified
+avg@3
+60.0
+61.1
+66.2
+SWE-bench Pro
+avg@3
+32.0
+44.6
+47.6
+MiMo Code Bench (mini)
+avg@3
+19.5
+51.6
+59.9
+Cyber
+MiMo Cyber Bench (mini)
+avg@3
+5.7
+31.3
+47.0
+General
+AutomationBench v1.0.6
+avg@1
+5.0
+30.3
+33.1
+Terminal Bench 2.1
+avg@1
+27.0
+37.1
+52.8
+Toolathlon-Verified
+avg@1
+25.9
+35.2
+38.0
+OfficeQA Pro
+avg@1
+9.0
+19.5
+24.8
+JobBench
+avg@1
+2.6
+18.3
+25.2
+MiMo General Bench (mini)
+avg@1
+28.5
+62.2
+70.6
+Visual
+MiMo Visual Coding (mini)
+avg@1
+61.7
+64.0
+72.4
+Table 6
+Evaluation of Qwen3.5-9B, MiMo-V2.6-Distill-Qwen-9B after SFT, and the domain-
+specific checkpoints after further GRPO training (RL). Code uses single-harness RL. The highest
+available score in each row is bolded.
+These results highlight the value of high-quality training data and a strong SFT initialization for
+further improvement through RL.
+Multi-Harness Training
+The coding results in Table 6 are obtained through single-harness RL. We
+further investigate multi-harness training in a separate coding experiment, starting from the same
+MiMo-V2.6-Distill-Qwen-9B SFT checkpoint. Following the multi-harness training approach de-
+scribed for MiMo-V2.6, we jointly optimize the model across four mini-harnesses and evaluate
+it on these harnesses and three additional held-out harnesses. Table 7 compares Qwen3.5-9B
+with MiMo-V2.6-Distill-Qwen-9B before and after multi-harness RL across three coding evalua-
+tions and seven agent harnesses. MiMo-V2.6-Distill-Qwen-9B improves on Qwen3.5-9B in all 21
+dataset–harness pairs, and multi-harness RL further improves every pair. On MiMo Code Bench
+(mini), the additional gains over SFT range from 1.8 to 9.3 percentage points across the seven
+harnesses.
+Case Study
+To offer a more intuitive view of how our SFT and RL recipe progressively enhances
+model capabilities, we present a case study on web development (a domain where visual qual-
+ity is immediately apparent), comparing websites generated by Qwen3.5-9B, MiMo-V2.6-Distill-
+Qwen-9B (SFT), and MiMo-V2.6-Distill-Qwen-9B (RL) in Figure 17. As shown in the left column,
+websites produced by Qwen3.5-9B appear relatively plain in visual design, with simplistic lay-
+outs and minimal use of imagery. Notably, the HR management interface in (c) suffers from
+clear layout issues. After distillation, MiMo-V2.6-Distill-Qwen-9B (SFT) (middle column) gener-
+ates websites with noticeably richer content, more harmonious color palettes, and more effective
+incorporation of image assets, as exemplified by the photographic elements in the Ethiopia her-
+itage page in (b). Following RL training (right column), the model takes a further step, delivering
+35
+
+
+PAGE 36
+Training harnesses
+Held-out harnesses
+Model
+mini-
+harness1
+mini-
+harness2
+mini-
+harness3
+mini-
+harness4
+codex
+claude
+code
+mini-swe-
+agent
+Mean
+SWE-bench Verified
+Qwen3.5-9B
+58.4
+36.4
+54.8
+57.8
+48.6
+54.8
+60.6
+53.1
+MiMo-V2.6-Distill-Qwen-9B
+61.7
+63.9
+61.7
+63.1
+58.5
+61.7
+65.3
+62.3
++ Multi-Harness RL
+67.9
+65.1
+66.6
+67.2
+61.1
+65.3
+66.7
+65.7
+SWE-bench Pro
+Qwen3.5-9B
+33.5
+15.2
+31.1
+31.1
+23.1
+26.9
+31.6
+27.5
+MiMo-V2.6-Distill-Qwen-9B
+45.2
+46.6
+45.1
+45.5
+40.3
+42.2
+45.6
+44.4
++ Multi-Harness RL
+48.5
+46.9
+47.6
+48.0
+42.6
+43.1
+48.4
+46.5
+MiMo Code Bench (mini)
+Qwen3.5-9B
+19.0
+7.5
+16.5
+22.5
+10.5
+13.5
+17.5
+15.3
+MiMo-V2.6-Distill-Qwen-9B
+53.2
+56.7
+51.5
+56.3
+46.0
+51.2
+56.8
+53.1
++ Multi-Harness RL
+62.5
+64.5
+57.0
+63.3
+50.7
+53.0
+62.0
+59.0
+Table 7 Coding performance across agent harnesses. Mean is the unweighted average of the
+seven harness scores, rounded to one decimal place. The best result in each column within a
+dataset is bolded.
+the most polished results with refined typography, visually striking hero sections (e.g., the sun-
+set imagery in (b)), and more complete, well-structured page layouts (e.g., the fully featured HR
+dashboard in (c) with sidebar navigation, a calendar widget, and detailed statistics cards). These
+progressive qualitative improvements align with the quantitative trajectory (61.7 →64.0 →72.4)
+observed in Table 6, jointly demonstrating the cumulative benefits of distillation from MiMo-V2.6
+followed by RL in enhancing both the aesthetic quality and functional completeness of generated
+outputs.
+8
+Conclusion
+This report presents the MiMo-V2.6 series and a practical approach to advancing foundation
+models through large-scale agentic reinforcement learning. Building on an omni-capable foun-
+dation and agent-centric mid-training, we scale RL along three dimensions: training batch size
+and throughput, the diversity and complexity of environments and agent harnesses, and the
+compute devoted to groupwise agentic grading. These advances are supported by asynchronous
+training, mixed-task rollout infrastructure, training–inference consistency mechanisms, and safe-
+guards against training drift and reward hacking. Together, they enable sustained optimization
+over long-horizon interactions while improving solution quality and token efficiency. Evalua-
+tions across public and internal benchmarks demonstrate the effectiveness of this approach, with
+MiMo-V2.6 achieving competitive performance against frontier models across a broad range of
+agentic tasks.
+To make this direction accessible to the research community, we release MiMo-V2.6-Distill-Qwen-
+9B alongside curated task environments, verifiers, an end-to-end RL framework, and composable
+mini-harnesses. Consistent RL gains across domains and harnesses highlight the value of these
+resources as a shared foundation for further experimentation. Our work takes a practical step
+toward model self-improvement, emphasizing the joint importance of broad exploration, informa-
+tive feedback, and scalable training systems. We hope these open resources support reproducible
+research and cumulative progress toward increasingly capable, general-purpose agents.
+36

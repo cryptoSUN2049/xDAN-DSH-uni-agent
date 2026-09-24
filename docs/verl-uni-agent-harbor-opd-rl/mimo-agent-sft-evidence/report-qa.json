@@ -1,0 +1,8 @@
+{
+  "sections": 14,
+  "local_links_valid": true,
+  "desktop": "1280x720 no overflow; screenshot inspected",
+  "mobile": "390x844 no overflow; screenshot inspected",
+  "interactions": "GRPO search=1 entry; SFT view hides RL; reset passes",
+  "report_sha256": "9dada82f45671d7fb7f6f97bed92f801a55af542f6bb121652cfe636cc005fa6"
+}

@@ -1,0 +1,24 @@
+{
+  "date": "2026-09-24",
+  "model_repo": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+  "model_revision": "2367e865d009c13ac81713a2878291d33ab28177",
+  "paper_url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+  "paper_local_path": "/Users/gumpm5/Documents/Code/xDAN-Project-Hope-2026/1-Growth/edge-navigation/mimo-assets/mimo-v26.pdf",
+  "paper_sha256": "7fe42601dc952cd2b74996e5a24f8e85eab6fcbf471f73ba95aafd559d4ef39b",
+  "extracted_pages": [
+    33,
+    34,
+    35,
+    36
+  ],
+  "files": {
+    "model-metadata.json": "9097d2ca94e79e189ff1381f1112b45a75216bc72c845baa414b453763d54482",
+    "model-card.md": "09f915ac8116db54ca78586cfdf9ddb14209cba1ca23561a202f38039eac95ca",
+    "paper-section7.txt": "5452ad9c28d03288b0a942f816e834a6ed13e0357d7e4a71c7f54f220b39c0af"
+  },
+  "limitations": [
+    "Only metadata and model card downloaded; no model weights or training launched.",
+    "Paper public §7 does not specify complete SFT and GRPO hyperparameters.",
+    "Recommendations and generic algorithms are not claimed as exact MiMo implementations."
+  ]
+}
