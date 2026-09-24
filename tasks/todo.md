@@ -958,3 +958,14 @@ Review: 新入口16节、47链接检查无断链/重复ID；桌面1280与移动3
 - [ ] 仅在准入池达标后抽取 20K，上传 HF 并启动有界训练。
 
 Review：本节点完成的是数据工程结构链路和可审计证据，不宣称数据已足够训练；62,030 行候选仍受质量门禁约束。
+
+## 2026-09-25 质量审计 v5 与 20K 缺口
+- [x] 复核并作废 quality-gate-v1 错误放行结果；保留诊断证据，不训练。
+- [x] 完成 v5 质量审计：provisional 10,494、quarantine 51,536、approved 0。
+- [x] 完成 Qwen3.5 tokenizer adapter v9 全候选渲染回归：10,494/10,494，error=0；仍不视为 mask/语义验收。
+- [x] 冻结 20K 分域配额与 approved 供给缺口报告。
+- [ ] 完成 teacher/license/language/semantic/contamination 证据闭环。
+- [ ] 实现显式 assistant/tool loss-mask 覆盖率验收并完成固定 validation/sealed split。
+- [ ] approved pool 达标后才抽取、上传和训练 20K。
+
+Review：本节点没有训练启动；Python 单测 8 passed。`uv run pytest` 因当前网络无法获取 wheel 被阻断，已用本地 Python pytest 完成同一组测试。
