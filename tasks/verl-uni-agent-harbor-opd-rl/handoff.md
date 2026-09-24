@@ -1,3 +1,7 @@
+## 双框架数据适配设计
+
+已核ms-swift官方messages/Agent roles/loss字段和本地VERL源码，新增docs/performance-9b/ms-swift-verl数据适配方案.md。统一母本后两导出，不重复清洗；当前VERL需custom_cls支持target_message_index。尚未实现。用户最新“去掉Gemini3.1要求”语义待确认，已发二选一；未答前保留排除规则。
+
 ## 最新语言约束：排除俄语
 
 所有派生训练版本排除俄语；HelioAI原版5,469 RU+EN仍登记，英文子集数量未知。检查prompt/reasoning/answer，不改写俄语冒充原始英文。文档/JSON规则已更新，尚未执行语言过滤。
