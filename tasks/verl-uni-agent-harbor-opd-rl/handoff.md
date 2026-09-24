@@ -1,5 +1,13 @@
 # 全版本 checkpoint 评测交接
 
+## 2026-09-24 当前配方v2：强教师核心
+
+- 用户明确Fable+GPT5.6为核心。权威入口docs/performance-9b/agent-sft-data-plan-v2.md。1000目标=代码/终端强教师400（GPT240/Fable160）+办公160+数据140+翻译120+写作100+保留80。
+- 600现成示范+400新生产；core400仍待完整文件准入，不保证Fable160已存在。旧v1.1降为历史，不能混用440/560数字。
+- 任务数/前缀行/loss token区分；whole-trajectory与next-action监督独立；建议首轮分层混训，阶段训练另设对照。
+- 明确代价：代码从20%增至40%，须监测目标工作能力是否受挤压。dev100/sealed200相应分配，总规划仍1400独立任务。
+
+
 ## 2026-09-24 强教师配方修订
 
 - 用户指出Fable/GPT基础示范不足；strong-teacher-sft-review.md核对画像冲突、官方卡、切片及GPT6搜索。
