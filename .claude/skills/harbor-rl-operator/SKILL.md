@@ -7,7 +7,7 @@ description: 从一台新 GPU 机器到一次完整 Harbor + Modal + VERL（GRPO
 
 目标：**只用仓库里的脚本**把一台新机器变成可训练状态并跑完一次带验收的训练；每一步都留证据、可重跑；不做脚本外的手工操作，需要人的地方明确停下来问。
 
-人工版见 `docs/verl-uni-agent-harbor-opd-rl/operator-runbook.md`；分析训练结果用 `rl-training-analyst` skill。
+人工版见 `docs/performance-9b/operator-runbook.md`；分析训练结果用 `rl-training-analyst` skill。
 
 ## 0. 需要人给的输入（缺一项先问）
 
@@ -43,7 +43,7 @@ ssh -p $PORT -i ~/.ssh/id_ed25519 root@<ip> 'cd /workspace/verl-uni-agent-harbor
 
 # 4) 结束后
 #    $PIPE_ROOT/acceptance/acceptance.json（PASS / MECHANICS_ONLY / FAIL）+ report-tables.md
-#    把 acceptance.json / verdict.json / delta.json / report-tables.md 拷回 docs/verl-uni-agent-harbor-opd-rl/<run-name>/，commit + push
+#    把 acceptance.json / verdict.json / delta.json / report-tables.md 拷回 docs/performance-9b/<run-name>/，commit + push
 #    ssh 远端 `modal container list` 确认无残留沙箱
 ```
 
@@ -52,7 +52,7 @@ ssh -p $PORT -i ~/.ssh/id_ed25519 root@<ip> 'cd /workspace/verl-uni-agent-harbor
 ssh ... 'LANE=ua-verl-py312-vllm023 UV_VENV=/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1 \
   bash /workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/deployment/bootstrap/uv-lane-bootstrap.sh'
 ```
-从 `deployment/versions/uv-lanes/ua-verl-py312-vllm023.freeze.txt` 重建（含 harbor 0.16.1、modal 1.5.5），脚本自带 CUDA + import 激活证明。venv 只能在 `/workspace`。手册：`docs/verl-uni-agent-harbor-opd-rl/uv-runbook.md`。
+从 `deployment/versions/uv-lanes/ua-verl-py312-vllm023.freeze.txt` 重建（含 harbor 0.16.1、modal 1.5.5），脚本自带 CUDA + import 激活证明。venv 只能在 `/workspace`。手册：`docs/performance-9b/uv-runbook.md`。
 
 ## 3. 阶段与判定（驱动 `run_tb21_pipeline.sh`）
 env → data → oracle → rollout → train → delta → resume → summary → acceptance。每阶段一个脚本（`examples/harbor_opd_rl/stages/`），有 `PASSED` 标记即跳过；失败用 `FROM_STAGE=<stage>` 重跑；GPU 阶段起跑前检查 GPU 空闲与无遗留 trainer。训练完成的判据是 `global_step_N/actor/*.pt` + step 指标，不是退出码。
@@ -95,5 +95,5 @@ mv $PIPE_ROOT/train $PIPE_ROOT/train-attemptN-<原因>    # 现场永不覆盖
 
 ## 7. 交付纪律
 - 每个节点 `git commit` + `git push`（先 `ruff check .` 与 `ruff format --check .`，不接管道）。
-- 证据进 `docs/verl-uni-agent-harbor-opd-rl/<run-name>/`；关键事实写 `tasks/memory.md`；踩坑写 `tasks/lessons.md`；切 session 前更新 `tasks/handoff.md`。
+- 证据进 `docs/performance-9b/<run-name>/`；关键事实写 `tasks/memory.md`；踩坑写 `tasks/lessons.md`；切 session 前更新 `tasks/handoff.md`。
 - 分析与对比表：`.claude/skills/rl-training-analyst/scripts/report.py --run <wandb> --run-root <dir>`。
