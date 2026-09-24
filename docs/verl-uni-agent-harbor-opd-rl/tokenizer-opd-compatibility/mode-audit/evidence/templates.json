@@ -1,0 +1,282 @@
+[
+  {
+    "domain": "single_thinking_false",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is 17 times 23? Check your calculation and answer briefly."
+      }
+    ],
+    "thinking": false,
+    "tools": null,
+    "tool_execution_verified": false,
+    "student_template": "<|im_start|>user\nWhat is 17 times 23? Check your calculation and answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "teacher_template": "<|im_start|>user\nWhat is 17 times 23? Check your calculation and answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "native_templates_equal": true,
+    "student_render_cross_tokenizer_equal": true,
+    "prompt_length": 29
+  },
+  {
+    "domain": "single_thinking_true",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is 17 times 23? Check your calculation and answer briefly."
+      }
+    ],
+    "thinking": true,
+    "tools": null,
+    "tool_execution_verified": false,
+    "student_template": "<|im_start|>user\nWhat is 17 times 23? Check your calculation and answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "teacher_template": "<|im_start|>system\nReasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\nWhat is 17 times 23? Check your calculation and answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "native_templates_equal": false,
+    "student_render_cross_tokenizer_equal": true,
+    "prompt_length": 27
+  },
+  {
+    "domain": "history_reasoning_field_thinking_false",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is 2+2?"
+      },
+      {
+        "role": "assistant",
+        "content": "4",
+        "reasoning_content": "Adding two and two gives four."
+      },
+      {
+        "role": "user",
+        "content": "Multiply that result by 3. Answer briefly."
+      }
+    ],
+    "thinking": false,
+    "tools": null,
+    "tool_execution_verified": false,
+    "student_template": "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n4<|im_end|>\n<|im_start|>user\nMultiply that result by 3. Answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "teacher_template": "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n<think>\nAdding two and two gives four.\n</think>\n\n4<|im_end|>\n<|im_start|>user\nMultiply that result by 3. Answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "native_templates_equal": false,
+    "student_render_cross_tokenizer_equal": true,
+    "prompt_length": 40
+  },
+  {
+    "domain": "history_reasoning_field_thinking_true",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is 2+2?"
+      },
+      {
+        "role": "assistant",
+        "content": "4",
+        "reasoning_content": "Adding two and two gives four."
+      },
+      {
+        "role": "user",
+        "content": "Multiply that result by 3. Answer briefly."
+      }
+    ],
+    "thinking": true,
+    "tools": null,
+    "tool_execution_verified": false,
+    "student_template": "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n4<|im_end|>\n<|im_start|>user\nMultiply that result by 3. Answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "teacher_template": "<|im_start|>system\nReasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n<think>\nAdding two and two gives four.\n</think>\n\n4<|im_end|>\n<|im_start|>user\nMultiply that result by 3. Answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "native_templates_equal": false,
+    "student_render_cross_tokenizer_equal": true,
+    "prompt_length": 38
+  },
+  {
+    "domain": "history_inline_thinking_thinking_false",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is 2+2?"
+      },
+      {
+        "role": "assistant",
+        "content": "<think>Adding two and two gives four.</think>4"
+      },
+      {
+        "role": "user",
+        "content": "Multiply that result by 3. Answer briefly."
+      }
+    ],
+    "thinking": false,
+    "tools": null,
+    "tool_execution_verified": false,
+    "student_template": "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n4<|im_end|>\n<|im_start|>user\nMultiply that result by 3. Answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "teacher_template": "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n<think>Adding two and two gives four.</think>4<|im_end|>\n<|im_start|>user\nMultiply that result by 3. Answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "native_templates_equal": false,
+    "student_render_cross_tokenizer_equal": true,
+    "prompt_length": 40
+  },
+  {
+    "domain": "history_inline_thinking_thinking_true",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is 2+2?"
+      },
+      {
+        "role": "assistant",
+        "content": "<think>Adding two and two gives four.</think>4"
+      },
+      {
+        "role": "user",
+        "content": "Multiply that result by 3. Answer briefly."
+      }
+    ],
+    "thinking": true,
+    "tools": null,
+    "tool_execution_verified": false,
+    "student_template": "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n4<|im_end|>\n<|im_start|>user\nMultiply that result by 3. Answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "teacher_template": "<|im_start|>system\nReasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.<|im_end|>\n<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n<think>Adding two and two gives four.</think>4<|im_end|>\n<|im_start|>user\nMultiply that result by 3. Answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "native_templates_equal": false,
+    "student_render_cross_tokenizer_equal": true,
+    "prompt_length": 38
+  },
+  {
+    "domain": "tool_history_control_thinking_false",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Use add to calculate 19+23, then report its result."
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_control",
+            "type": "function",
+            "function": {
+              "name": "add",
+              "arguments": {
+                "a": 19,
+                "b": 23
+              }
+            }
+          }
+        ]
+      },
+      {
+        "role": "tool",
+        "tool_call_id": "call_control",
+        "name": "add",
+        "content": "42"
+      }
+    ],
+    "thinking": false,
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "add",
+          "description": "Add two integers",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "a": {
+                "type": "integer"
+              },
+              "b": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ]
+          }
+        }
+      }
+    ],
+    "tool_execution_verified": false,
+    "student_template": "<|im_start|>system\n# Tools\n\nYou have access to the following functions:\n\n<tools>\n{\"type\": \"function\", \"function\": {\"name\": \"add\", \"description\": \"Add two integers\", \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"integer\"}, \"b\": {\"type\": \"integer\"}}, \"required\": [\"a\", \"b\"]}}}\n</tools>\n\nIf you choose to call a function ONLY reply in the following format with NO suffix:\n\n<tool_call>\n<function=example_function_name>\n<parameter=example_parameter_1>\nvalue_1\n</parameter>\n<parameter=example_parameter_2>\nThis is the value for the second parameter\nthat can span\nmultiple lines\n</parameter>\n</function>\n</tool_call>\n\n<IMPORTANT>\nReminder:\n- Function calls MUST follow the specified format: an inner <function=...></function> block must be nested within <tool_call></tool_call> XML tags\n- Required parameters MUST be specified\n- You may provide optional reasoning for your function call in natural language BEFORE the function call, but NOT after\n- If there is no function call available, answer the question like normal with your current knowledge and do not tell the user about function calls\n</IMPORTANT><|im_end|>\n<|im_start|>user\nUse add to calculate 19+23, then report its result.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n<tool_call>\n<function=add>\n<parameter=a>\n19\n</parameter>\n<parameter=b>\n23\n</parameter>\n</function>\n</tool_call><|im_end|>\n<|im_start|>user\n<tool_response>\n42\n</tool_response><|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "teacher_template": "<|im_start|>system\n# Tools\n\nYou have access to the following functions:\n\n<tools>\n{\"type\": \"function\", \"function\": {\"name\": \"add\", \"description\": \"Add two integers\", \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"integer\"}, \"b\": {\"type\": \"integer\"}}, \"required\": [\"a\", \"b\"]}}}\n</tools>\n\nIf you choose to call a function ONLY reply in the following format with NO suffix:\n\n<tool_call>\n<function=example_function_name>\n<parameter=example_parameter_1>\nvalue_1\n</parameter>\n<parameter=example_parameter_2>\nThis is the value for the second parameter\nthat can span\nmultiple lines\n</parameter>\n</function>\n</tool_call>\n\n<IMPORTANT>\nReminder:\n- Function calls MUST follow the specified format: an inner <function=...></function> block must be nested within <tool_call></tool_call> XML tags\n- Required parameters MUST be specified\n- You may provide optional reasoning for your function call in natural language BEFORE the function call, but NOT after\n- If there is no function call available, answer the question like normal with your current knowledge and do not tell the user about function calls\n</IMPORTANT><|im_end|>\n<|im_start|>user\nUse add to calculate 19+23, then report its result.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n<tool_call>\n<function=add>\n<parameter=a>\n19\n</parameter>\n<parameter=b>\n23\n</parameter>\n</function>\n</tool_call><|im_end|>\n<|im_start|>user\n<tool_response>\n42\n</tool_response><|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "native_templates_equal": true,
+    "student_render_cross_tokenizer_equal": true,
+    "prompt_length": 350
+  },
+  {
+    "domain": "tool_history_control_thinking_true",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Use add to calculate 19+23, then report its result."
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_control",
+            "type": "function",
+            "function": {
+              "name": "add",
+              "arguments": {
+                "a": 19,
+                "b": 23
+              }
+            }
+          }
+        ]
+      },
+      {
+        "role": "tool",
+        "tool_call_id": "call_control",
+        "name": "add",
+        "content": "42"
+      }
+    ],
+    "thinking": true,
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "add",
+          "description": "Add two integers",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "a": {
+                "type": "integer"
+              },
+              "b": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ]
+          }
+        }
+      }
+    ],
+    "tool_execution_verified": false,
+    "student_template": "<|im_start|>system\n# Tools\n\nYou have access to the following functions:\n\n<tools>\n{\"type\": \"function\", \"function\": {\"name\": \"add\", \"description\": \"Add two integers\", \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"integer\"}, \"b\": {\"type\": \"integer\"}}, \"required\": [\"a\", \"b\"]}}}\n</tools>\n\nIf you choose to call a function ONLY reply in the following format with NO suffix:\n\n<tool_call>\n<function=example_function_name>\n<parameter=example_parameter_1>\nvalue_1\n</parameter>\n<parameter=example_parameter_2>\nThis is the value for the second parameter\nthat can span\nmultiple lines\n</parameter>\n</function>\n</tool_call>\n\n<IMPORTANT>\nReminder:\n- Function calls MUST follow the specified format: an inner <function=...></function> block must be nested within <tool_call></tool_call> XML tags\n- Required parameters MUST be specified\n- You may provide optional reasoning for your function call in natural language BEFORE the function call, but NOT after\n- If there is no function call available, answer the question like normal with your current knowledge and do not tell the user about function calls\n</IMPORTANT><|im_end|>\n<|im_start|>user\nUse add to calculate 19+23, then report its result.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n<tool_call>\n<function=add>\n<parameter=a>\n19\n</parameter>\n<parameter=b>\n23\n</parameter>\n</function>\n</tool_call><|im_end|>\n<|im_start|>user\n<tool_response>\n42\n</tool_response><|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "teacher_template": "<|im_start|>system\nReasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.\n\n# Tools\n\nYou have access to the following functions:\n\n<tools>\n{\"type\": \"function\", \"function\": {\"name\": \"add\", \"description\": \"Add two integers\", \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"integer\"}, \"b\": {\"type\": \"integer\"}}, \"required\": [\"a\", \"b\"]}}}\n</tools>\n\nIf you choose to call a function ONLY reply in the following format with NO suffix:\n\n<tool_call>\n<function=example_function_name>\n<parameter=example_parameter_1>\nvalue_1\n</parameter>\n<parameter=example_parameter_2>\nThis is the value for the second parameter\nthat can span\nmultiple lines\n</parameter>\n</function>\n</tool_call>\n\n<IMPORTANT>\nReminder:\n- Function calls MUST follow the specified format: an inner <function=...></function> block must be nested within <tool_call></tool_call> XML tags\n- Required parameters MUST be specified\n- You may provide optional reasoning for your function call in natural language BEFORE the function call, but NOT after\n- If there is no function call available, answer the question like normal with your current knowledge and do not tell the user about function calls\n</IMPORTANT><|im_end|>\n<|im_start|>user\nUse add to calculate 19+23, then report its result.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n<tool_call>\n<function=add>\n<parameter=a>\n19\n</parameter>\n<parameter=b>\n23\n</parameter>\n</function>\n</tool_call><|im_end|>\n<|im_start|>user\n<tool_response>\n42\n</tool_response><|im_end|>\n<|im_start|>assistant\n<think>\n",
+    "native_templates_equal": false,
+    "student_render_cross_tokenizer_equal": true,
+    "prompt_length": 348
+  },
+  {
+    "domain": "long_prompt_thinking_false",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Reference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nWhat is alpha times beta? Answer briefly."
+      }
+    ],
+    "thinking": false,
+    "tools": null,
+    "long_prompt": true,
+    "tool_execution_verified": false,
+    "student_template": "<|im_start|>user\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nWhat is alpha times beta? Answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "teacher_template": "<|im_start|>user\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nReference record: alpha = 17; beta = 23.\nWhat is alpha times beta? Answer briefly.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "native_templates_equal": true,
+    "student_render_cross_tokenizer_equal": true,
+    "prompt_length": 2949
+  }
+]

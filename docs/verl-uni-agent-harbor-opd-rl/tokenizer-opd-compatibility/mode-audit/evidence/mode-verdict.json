@@ -1,0 +1,29 @@
+{
+  "expected_cases": 9,
+  "actual_cases": 9,
+  "actual_generation_complete": true,
+  "all_contexts_within_4095": true,
+  "unclosed_thinking_cases": [
+    "single_thinking_true"
+  ],
+  "budget_exhausted_cases": [
+    "single_thinking_true"
+  ],
+  "all_thinking_closed": false,
+  "all_generation_ended": false,
+  "tool_execution_verified": false,
+  "tool_rollout_mask_verified": false,
+  "scope": "9-mode HF student raw IDs; constructed histories, student template, context <=4096; plus 8 separate live-capture scoring cases",
+  "total_scoring_cases": 17,
+  "score_coordinate_and_numeric_passed": true,
+  "native_parser_passed": true,
+  "acceptance_passed": false,
+  "mean_abs_error": 0.008256419708058094,
+  "p95_abs_error": 0.06524848937988281,
+  "scope_limits": [
+    "Not real tool execution or rollout mask",
+    "Not complete thinking quality evaluation",
+    "Not contexts above 4096",
+    "Not live trainer tensor equivalence"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "expected_cases": 9,
+  "actual_cases": 9,
+  "actual_generation_complete": true,
+  "all_contexts_within_4095": true,
+  "unclosed_thinking_cases": [
+    "single_thinking_true"
+  ],
+  "budget_exhausted_cases": [
+    "single_thinking_true"
+  ],
+  "all_thinking_closed": false,
+  "all_generation_ended": false,
+  "tool_execution_verified": false,
+  "tool_rollout_mask_verified": false,
+  "scope": "9-mode HF student raw IDs; constructed histories, student template, context <=4096"
+}

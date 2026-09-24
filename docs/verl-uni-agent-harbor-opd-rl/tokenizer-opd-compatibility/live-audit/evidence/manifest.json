@@ -1,0 +1,28 @@
+{
+  "format": "peft_adapter_only",
+  "base_model": "/workspace/models/Qwen3.5-9B",
+  "checkpoints": [
+    {
+      "step": 1,
+      "status": "exported",
+      "adapter": "/workspace/verl-uni-agent-harbor-opd-rl/runs/opd-live-acceptance-20260924/adapters/global_step_1/lora_adapter",
+      "rank": 16,
+      "alpha": 32.0,
+      "tensor_count": 716,
+      "modules": 358,
+      "modules_with_nonzero_B": 248,
+      "weights_sha256": "4de54f78dc7f1fce19dab20debd295b95a545b1bea9da176665f3c748eb951bb",
+      "config_sha256": "244e538afe27369a8f618c1efa2e7809ef0c4542ffd8f8e3ebd9ffbbc065f824",
+      "validation": "finite paired tensors; nonzero B; metadata matched",
+      "generation_reload_verified": false,
+      "source_actor": "/workspace/verl-uni-agent-harbor-opd-rl/runs/opd-live-acceptance-20260924/checkpoints/global_step_1/actor",
+      "source_metadata_sha256": "82c99ce144bb1153a915c91b27ccf741f35dcdfc4aa85f9f6034d12667732b35",
+      "source_shards": [
+        {
+          "name": "model_world_size_1_rank_0.pt",
+          "sha256": "3e8723241af4c115d245dcde143e41428a85164fb20cce78e8744ef0c800e0a2"
+        }
+      ]
+    }
+  ]
+}

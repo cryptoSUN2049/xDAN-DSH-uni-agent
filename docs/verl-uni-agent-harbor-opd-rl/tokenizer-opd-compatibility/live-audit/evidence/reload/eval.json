@@ -1,0 +1,105 @@
+{
+  "model": "live-audit-step1",
+  "model_path": "/workspace/models/Qwen3.5-9B",
+  "adapter_path": "/workspace/verl-uni-agent-harbor-opd-rl/runs/opd-live-acceptance-20260924/adapters/global_step_1/lora_adapter",
+  "adapter_reload_verified": true,
+  "adapter_weights_sha256": "4de54f78dc7f1fce19dab20debd295b95a545b1bea9da176665f3c748eb951bb",
+  "status": "complete",
+  "dataset_revision": "89d57a27cc8459a95b310aa5c105debeb5929152c668490804f018f4a5e1f18a",
+  "budget": {
+    "max_tokens": 4096,
+    "temperature": 0,
+    "seed": 20260924,
+    "template": "student tokenizer; enable_thinking=False; no tools"
+  },
+  "domains": [
+    {
+      "domain": "chat",
+      "count": 8,
+      "scored": 0,
+      "skipped": 8,
+      "infra": 0,
+      "score": null,
+      "output_tokens_mean": 895.875,
+      "truncated_count": 0,
+      "truncated_rate": 0,
+      "verifiers": [
+        "not_available"
+      ],
+      "python_syntax_valid": null
+    },
+    {
+      "domain": "code",
+      "count": 8,
+      "scored": 0,
+      "skipped": 8,
+      "infra": 0,
+      "score": null,
+      "output_tokens_mean": 912,
+      "truncated_count": 1,
+      "truncated_rate": 0.125,
+      "verifiers": [
+        "no_isolated_execution"
+      ],
+      "python_syntax_valid": 7
+    },
+    {
+      "domain": "instruction",
+      "count": 8,
+      "scored": 8,
+      "skipped": 0,
+      "infra": 0,
+      "score": 0.625,
+      "output_tokens_mean": 243.75,
+      "truncated_count": 0,
+      "truncated_rate": 0,
+      "verifiers": [
+        "pilot_if_rules_v1_not_official_ifeval"
+      ],
+      "python_syntax_valid": null
+    },
+    {
+      "domain": "knowledge_mcqa",
+      "count": 1,
+      "scored": 1,
+      "skipped": 0,
+      "infra": 0,
+      "score": 1.0,
+      "output_tokens_mean": 780,
+      "truncated_count": 0,
+      "truncated_rate": 0,
+      "verifiers": [
+        "strict_mcqa_final_v1"
+      ],
+      "python_syntax_valid": null
+    },
+    {
+      "domain": "math",
+      "count": 5,
+      "scored": 5,
+      "skipped": 0,
+      "infra": 0,
+      "score": 0.8,
+      "output_tokens_mean": 2770.2,
+      "truncated_count": 1,
+      "truncated_rate": 0.2,
+      "verifiers": [
+        "strict_numeric_final_v1"
+      ],
+      "python_syntax_valid": null
+    }
+  ],
+  "overall": {
+    "count": 30,
+    "scored": 14,
+    "skipped": 16,
+    "infra": 0,
+    "score": null,
+    "reason": "No aggregate accuracy across heterogeneous graders / unscored domains"
+  },
+  "limitations": [
+    "Small internal validation, not official benchmark.",
+    "Code syntax is not execution correctness; chat is unscored.",
+    "Teacher uses student template for controlled comparison; not native-template upper bound."
+  ]
+}

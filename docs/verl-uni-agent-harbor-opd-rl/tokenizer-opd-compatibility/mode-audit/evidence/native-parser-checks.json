@@ -1,0 +1,87 @@
+[
+  {
+    "domain": "single_thinking_false",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "single_thinking_true",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "history_reasoning_field_thinking_false",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "history_reasoning_field_thinking_true",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "history_inline_thinking_thinking_false",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "history_inline_thinking_thinking_true",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "tool_history_control_thinking_false",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "tool_history_control_thinking_true",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "long_prompt_thinking_false",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "live_00_instruction",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "live_01_code",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "live_02_chat",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "live_03_math",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "live_04_instruction",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "live_05_code",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "live_06_instruction",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  },
+  {
+    "domain": "live_07_math",
+    "all_shifted_ids_equal": true,
+    "dummy_tail_correct": true
+  }
+]

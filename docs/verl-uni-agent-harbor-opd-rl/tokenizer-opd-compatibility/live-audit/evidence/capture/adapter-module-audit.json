@@ -1,0 +1,5385 @@
+{
+  "weights": "/workspace/verl-uni-agent-harbor-opd-rl/runs/opd-live-acceptance-20260924/adapters/global_step_1/lora_adapter/adapter_model.safetensors",
+  "weights_sha256": "4de54f78dc7f1fce19dab20debd295b95a545b1bea9da176665f3c748eb951bb",
+  "total_tensors": 716,
+  "paired_modules": 358,
+  "counts": {
+    "text_nonzero": 248,
+    "vision_zero": 110
+  },
+  "all_zero_B_are_vision": true,
+  "all_text_B_updated": true,
+  "passed": true,
+  "modules": [
+    {
+      "module": "base_model.model.model.language_model.layers.0.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.0.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.0.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130954
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.0.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65494
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.0.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65479
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.0.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65478
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.0.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196446
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.0.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196414
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.1.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 509
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.1.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.1.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130959
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.1.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65478
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.1.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65483
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.1.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65463
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.1.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196440
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.1.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196461
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.10.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.10.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.10.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130985
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.10.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65471
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.10.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65486
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.10.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65495
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.10.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196439
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.10.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196447
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.11.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65479
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.11.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196450
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.11.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196433
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.11.self_attn.k_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16370
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.11.self_attn.o_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65485
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.11.self_attn.q_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130972
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.11.self_attn.v_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16364
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.12.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 510
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.12.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.12.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130951
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.12.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65476
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.12.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65492
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.12.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65494
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.12.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196440
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.12.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196440
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.13.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.13.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.13.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130968
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.13.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65480
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.13.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65472
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.13.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65482
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.13.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196446
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.13.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196455
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.14.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.14.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.14.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130966
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.14.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65480
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.14.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65483
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.14.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65483
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.14.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196456
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.14.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196448
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.15.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65478
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.15.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196471
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.15.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196457
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.15.self_attn.k_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16375
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.15.self_attn.o_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65487
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.15.self_attn.q_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130967
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.15.self_attn.v_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16365
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.16.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 511
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.16.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.16.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130957
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.16.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65492
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.16.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65482
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.16.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65465
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.16.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196477
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.16.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196436
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.17.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.17.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 509
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.17.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130958
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.17.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65477
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.17.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65484
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.17.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65483
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.17.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196463
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.17.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196446
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.18.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.18.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.18.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130979
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.18.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65480
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.18.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65479
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.18.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65479
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.18.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196457
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.18.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196461
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.19.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65489
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.19.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196469
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.19.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196435
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.19.self_attn.k_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16370
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.19.self_attn.o_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65484
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.19.self_attn.q_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130973
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.19.self_attn.v_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16368
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.2.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.2.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.2.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130956
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.2.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65478
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.2.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65474
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.2.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65474
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.2.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196455
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.2.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196450
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.20.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.20.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.20.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130978
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.20.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65472
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.20.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65494
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.20.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65475
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.20.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196461
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.20.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196458
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.21.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 511
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.21.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 510
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.21.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130982
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.21.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65493
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.21.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65470
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.21.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65488
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.21.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196492
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.21.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196467
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.22.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.22.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.22.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130970
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.22.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65497
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.22.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65493
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.22.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65477
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.22.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196491
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.22.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196448
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.23.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65476
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.23.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196471
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.23.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196451
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.23.self_attn.k_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16373
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.23.self_attn.o_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65478
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.23.self_attn.q_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130961
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.23.self_attn.v_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16372
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.24.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 511
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.24.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.24.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130993
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.24.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65489
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.24.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65477
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.24.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65484
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.24.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196470
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.24.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196450
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.25.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.25.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.25.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130981
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.25.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65486
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.25.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65502
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.25.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65481
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.25.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196452
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.25.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196478
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.26.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.26.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.26.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130984
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.26.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65492
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.26.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65493
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.26.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65483
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.26.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196475
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.26.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196465
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.27.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65490
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.27.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196470
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.27.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196467
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.27.self_attn.k_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16372
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.27.self_attn.o_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65476
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.27.self_attn.q_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130972
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.27.self_attn.v_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16367
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.28.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 511
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.28.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.28.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130980
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.28.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65500
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.28.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65476
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.28.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65501
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.28.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196475
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.28.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196476
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.29.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.29.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.29.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130966
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.29.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65502
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.29.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65482
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.29.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65491
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.29.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196471
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.29.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196465
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.3.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65482
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.3.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196422
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.3.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196453
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.3.self_attn.k_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16367
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.3.self_attn.o_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65480
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.3.self_attn.q_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130983
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.3.self_attn.v_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16370
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.30.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 511
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.30.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 510
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.30.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130959
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.30.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65500
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.30.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65481
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.30.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65481
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.30.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196470
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.30.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196463
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.31.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65472
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.31.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196477
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.31.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196455
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.31.self_attn.k_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16378
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.31.self_attn.o_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65490
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.31.self_attn.q_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130961
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.31.self_attn.v_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16375
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.4.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 511
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.4.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.4.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130962
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.4.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65485
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.4.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65489
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.4.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65483
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.4.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196427
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.4.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196440
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.5.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 510
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.5.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.5.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130986
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.5.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65484
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.5.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65468
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.5.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65485
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.5.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196429
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.5.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196423
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.6.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.6.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.6.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130955
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.6.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65484
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.6.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65470
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.6.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65480
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.6.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196449
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.6.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196461
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.7.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65474
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.7.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196437
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.7.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196443
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.7.self_attn.k_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16373
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.7.self_attn.o_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65480
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.7.self_attn.q_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130948
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.7.self_attn.v_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        1024,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 16374
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.8.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.8.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 511
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.8.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130944
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.8.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65487
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.8.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65477
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.8.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65484
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.8.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196439
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.8.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196435
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.9.linear_attn.in_proj_a",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.9.linear_attn.in_proj_b",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        32,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 512
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.9.linear_attn.in_proj_qkv",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        8192,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 130963
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.9.linear_attn.in_proj_z",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65484
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.9.linear_attn.out_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65480
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.9.mlp.down_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        12288
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 65468
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.9.mlp.gate_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196449
+    },
+    {
+      "module": "base_model.model.model.language_model.layers.9.mlp.up_proj",
+      "category": "text",
+      "zero_B": false,
+      "shape_A": [
+        16,
+        4096
+      ],
+      "shape_B": [
+        12288,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 196449
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.0.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.0.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.0.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.0.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.1.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.1.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.1.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.1.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.10.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.10.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.10.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.10.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.11.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.11.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.11.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.11.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.12.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.12.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.12.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.12.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.13.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.13.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.13.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.13.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.14.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.14.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.14.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.14.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.15.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.15.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.15.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.15.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.16.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.16.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.16.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.16.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.17.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.17.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.17.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.17.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.18.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.18.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.18.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.18.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.19.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.19.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.19.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.19.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.2.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.2.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.2.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.2.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.20.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.20.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.20.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.20.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.21.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.21.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.21.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.21.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.22.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.22.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.22.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.22.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.23.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.23.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.23.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.23.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.24.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.24.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.24.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.24.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.25.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.25.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.25.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.25.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.26.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.26.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.26.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.26.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.3.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.3.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.3.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.3.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.4.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.4.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.4.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.4.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.5.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.5.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.5.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.5.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.6.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.6.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.6.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.6.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.7.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.7.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.7.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.7.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.8.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.8.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.8.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.8.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.9.attn.proj",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.9.attn.qkv",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        3456,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.9.mlp.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        1152
+      ],
+      "shape_B": [
+        4304,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.blocks.9.mlp.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4304
+      ],
+      "shape_B": [
+        1152,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.merger.linear_fc1",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4608
+      ],
+      "shape_B": [
+        4608,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    },
+    {
+      "module": "base_model.model.model.visual.merger.linear_fc2",
+      "category": "vision",
+      "zero_B": true,
+      "shape_A": [
+        16,
+        4608
+      ],
+      "shape_B": [
+        4096,
+        16
+      ],
+      "finite": true,
+      "nonzero_elements_B": 0
+    }
+  ]
+}

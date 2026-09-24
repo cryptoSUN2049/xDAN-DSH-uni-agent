@@ -134,6 +134,14 @@ def render(root):
         '<p class="notice">数据质量复审：初始160/40候选集发现错误答案和不完整题目，旧结果仅作诊断。'
         "正式结论需使用冻结的修订数据，不能将候选集称为已验收高质量数据。</p>",
     ]
+    acceptance = read_json(root / "full-acceptance.json", issues)
+    if acceptance:
+        pieces.append("<h2>补充完整验收 · 真实训练与模式矩阵</h2>")
+        pieces.extend("<p>" + esc(paragraph) + "</p>" for paragraph in acceptance.get("paragraphs", []))
+        pieces.append(
+            table(acceptance.get("columns", []), [[val(cell) for cell in row] for row in acceptance.get("rows", [])])
+        )
+        pieces.append(raw("完整验收证据与范围", acceptance))
     conclusion = read_json(root / "final-analysis.json", issues)
     if conclusion:
         pieces.append("<h2>实验结论</h2>")

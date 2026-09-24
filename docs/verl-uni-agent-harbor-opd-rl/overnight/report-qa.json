@@ -1,16 +1,39 @@
 {
-  "artifact_sha256": "a0cc15766e27372b49d8146471dafaa9b5eada9352413c4e9d7992df365b2fd2",
-  "desktop_viewport": "1280x720",
-  "desktop_visual_inspected": true,
-  "desktop_overflow": false,
-  "mobile_viewport": "390x844",
-  "mobile_overflow": false,
-  "comparison_rows_including_header": 8,
-  "table_count": 11,
-  "details_count": 30,
-  "final_result_visible": true,
-  "screenshot": "/private/tmp/overnight-final-report.png",
-  "previous_artifact_sha256": "56d1f68d4112f6d241b6f76ac2a5c875b2558f96ea246d8c0675cca05eb50bb8",
-  "deep_audit_update_dom_checked": true,
-  "screenshot_scope": "prior report visual layout; deep audit text addition verified through desktop/mobile DOM"
+  "scope": "Final full-acceptance HTML, original thinking1024 failure visible and1751 diagnostic present",
+  "html_sha256": "755fa94d428579cb05e15b6e8f6522c0bd78518ce9bda9641dd301f090d51bdf",
+  "desktop": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "scroll_width": 1280,
+    "diagnostic_visible": true,
+    "failure_visible": true
+  },
+  "mobile": {
+    "viewport": [
+      390,
+      844
+    ],
+    "scroll_width": 390,
+    "diagnostic_present": true,
+    "failure_present": true
+  },
+  "screenshot": "/private/tmp/opd-full-acceptance-desktop-final.png",
+  "previous_qa": {
+    "artifact_sha256": "a0cc15766e27372b49d8146471dafaa9b5eada9352413c4e9d7992df365b2fd2",
+    "desktop_viewport": "1280x720",
+    "desktop_visual_inspected": true,
+    "desktop_overflow": false,
+    "mobile_viewport": "390x844",
+    "mobile_overflow": false,
+    "comparison_rows_including_header": 8,
+    "table_count": 11,
+    "details_count": 30,
+    "final_result_visible": true,
+    "screenshot": "/private/tmp/overnight-final-report.png",
+    "previous_artifact_sha256": "56d1f68d4112f6d241b6f76ac2a5c875b2558f96ea246d8c0675cca05eb50bb8",
+    "deep_audit_update_dom_checked": true,
+    "screenshot_scope": "prior report visual layout; deep audit text addition verified through desktop/mobile DOM"
+  }
 }

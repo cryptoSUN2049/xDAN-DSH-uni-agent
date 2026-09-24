@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "microbatches": [
+    {
+      "file": "/workspace/verl-uni-agent-harbor-opd-rl/runs/opd-live-acceptance-20260924/capture/micro-1045333-0001.pt",
+      "valid_tokens": 2534,
+      "teacher_id_mismatches": 0,
+      "actual_loss": 0.14935849606990814,
+      "recomputed_loss": 0.14935849606990814,
+      "loss_absolute_error": 0.0,
+      "gradient_max_absolute_error": 0.0,
+      "outside_response_gradient_max": 0.0,
+      "finite": true,
+      "temperature": "0.8",
+      "passed": true
+    },
+    {
+      "file": "/workspace/verl-uni-agent-harbor-opd-rl/runs/opd-live-acceptance-20260924/capture/micro-1045333-0002.pt",
+      "valid_tokens": 1921,
+      "teacher_id_mismatches": 0,
+      "actual_loss": 0.07179879397153854,
+      "recomputed_loss": 0.07179879397153854,
+      "loss_absolute_error": 0.0,
+      "gradient_max_absolute_error": 0.0,
+      "outside_response_gradient_max": 0.0,
+      "finite": true,
+      "temperature": "0.8",
+      "passed": true
+    }
+  ]
+}

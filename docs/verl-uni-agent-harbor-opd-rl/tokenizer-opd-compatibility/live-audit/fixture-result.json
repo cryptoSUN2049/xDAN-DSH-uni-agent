@@ -1,0 +1,17 @@
+{
+  "scope": "CPU synthetic integration fixture, not live training evidence",
+  "status": "passed",
+  "remote_directory": "/tmp/opd-audit-fixture-20260924-v2",
+  "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+  "exit_code": 0,
+  "verified": [
+    "sitecustomize import hook actually intercepts deployed native distillation_loss",
+    "dense and jagged nested model log_probs both captured",
+    "TensorDict non-tensor metadata preserved",
+    "independent PPO loss and raw logprob gradient replay matches",
+    "teacher IDs equal response IDs at valid response positions",
+    "subsequent native loss.backward succeeds after auditing"
+  ],
+  "first_attempt_failure": "clip_ratio_c absent in config class; native get default 3.0 now explicitly captured",
+  "local_validation": "ruff check passed; py_compile passed"
+}

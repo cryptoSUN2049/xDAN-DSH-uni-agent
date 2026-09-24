@@ -1,0 +1,8 @@
+{
+  "pid": 1051298,
+  "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+  "virtual_env": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1",
+  "module": "/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl/verl/trainer/distillation/losses.py",
+  "source_sha256": "8fc5835f410228c110f492a10dddfe6ce3274efd22f439dfaf8c88c5d5a6d843",
+  "capture_sha256": "a56ea8a8e9caa849dd06191a111406f7a942e9665fe0e034be80154a70f35284"
+}

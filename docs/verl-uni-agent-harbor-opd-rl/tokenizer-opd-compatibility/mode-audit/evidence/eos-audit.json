@@ -1,0 +1,145 @@
+{
+  "script_sha256": "85678c4fb9b4ff1a332905a5c74ed771ed0bca4aa2475dab9044da551f62747d",
+  "generation_config_source": "AutoConfig text_config.eos_token_id via GenerationConfig.from_model_config; no generation_config.json",
+  "model_eos_ids": [
+    248044
+  ],
+  "model_eos_text": "<|endoftext|>",
+  "tokenizer_eos_id": 248046,
+  "tokenizer_eos_text": "<|im_end|>",
+  "runtime_verified": true,
+  "original_samples_unchanged": true,
+  "cases": [
+    {
+      "domain": "single_thinking_false",
+      "last_token_id": 248044,
+      "model_eos_reached": true,
+      "original_tokenizer_eos_reached": false,
+      "budget_exhausted": false
+    },
+    {
+      "domain": "single_thinking_true",
+      "last_token_id": 369,
+      "model_eos_reached": false,
+      "original_tokenizer_eos_reached": false,
+      "budget_exhausted": true
+    },
+    {
+      "domain": "history_reasoning_field_thinking_false",
+      "last_token_id": 248044,
+      "model_eos_reached": true,
+      "original_tokenizer_eos_reached": false,
+      "budget_exhausted": false
+    },
+    {
+      "domain": "history_reasoning_field_thinking_true",
+      "last_token_id": 248044,
+      "model_eos_reached": true,
+      "original_tokenizer_eos_reached": false,
+      "budget_exhausted": false
+    },
+    {
+      "domain": "history_inline_thinking_thinking_false",
+      "last_token_id": 248044,
+      "model_eos_reached": true,
+      "original_tokenizer_eos_reached": false,
+      "budget_exhausted": false
+    },
+    {
+      "domain": "history_inline_thinking_thinking_true",
+      "last_token_id": 248044,
+      "model_eos_reached": true,
+      "original_tokenizer_eos_reached": false,
+      "budget_exhausted": false
+    },
+    {
+      "domain": "tool_history_control_thinking_false",
+      "last_token_id": 248044,
+      "model_eos_reached": true,
+      "original_tokenizer_eos_reached": false,
+      "budget_exhausted": false
+    },
+    {
+      "domain": "tool_history_control_thinking_true",
+      "last_token_id": 248044,
+      "model_eos_reached": true,
+      "original_tokenizer_eos_reached": false,
+      "budget_exhausted": false
+    },
+    {
+      "domain": "long_prompt_thinking_false",
+      "last_token_id": 248044,
+      "model_eos_reached": true,
+      "original_tokenizer_eos_reached": false,
+      "budget_exhausted": false
+    }
+  ],
+  "live_capture_cases": [
+    {
+      "domain": "live_00_instruction",
+      "last_token_id": 248046,
+      "response_tokens": 152,
+      "model_eos_reached": false,
+      "tokenizer_eos_reached": true,
+      "length_1024": false
+    },
+    {
+      "domain": "live_01_code",
+      "last_token_id": 248046,
+      "response_tokens": 612,
+      "model_eos_reached": false,
+      "tokenizer_eos_reached": true,
+      "length_1024": false
+    },
+    {
+      "domain": "live_02_chat",
+      "last_token_id": 248046,
+      "response_tokens": 746,
+      "model_eos_reached": false,
+      "tokenizer_eos_reached": true,
+      "length_1024": false
+    },
+    {
+      "domain": "live_03_math",
+      "last_token_id": 1088,
+      "response_tokens": 1024,
+      "model_eos_reached": false,
+      "tokenizer_eos_reached": false,
+      "length_1024": true
+    },
+    {
+      "domain": "live_04_instruction",
+      "last_token_id": 248046,
+      "response_tokens": 128,
+      "model_eos_reached": false,
+      "tokenizer_eos_reached": true,
+      "length_1024": false
+    },
+    {
+      "domain": "live_05_code",
+      "last_token_id": 248046,
+      "response_tokens": 165,
+      "model_eos_reached": false,
+      "tokenizer_eos_reached": true,
+      "length_1024": false
+    },
+    {
+      "domain": "live_06_instruction",
+      "last_token_id": 248046,
+      "response_tokens": 604,
+      "model_eos_reached": false,
+      "tokenizer_eos_reached": true,
+      "length_1024": false
+    },
+    {
+      "domain": "live_07_math",
+      "last_token_id": 3944,
+      "response_tokens": 1024,
+      "model_eos_reached": false,
+      "tokenizer_eos_reached": false,
+      "length_1024": true
+    }
+  ],
+  "generation_framework_equivalence_verified": false,
+  "forced_scoring_scope": "HF and vLLM score identical fixed IDs; no assertion of equivalent generation stopping"
+}

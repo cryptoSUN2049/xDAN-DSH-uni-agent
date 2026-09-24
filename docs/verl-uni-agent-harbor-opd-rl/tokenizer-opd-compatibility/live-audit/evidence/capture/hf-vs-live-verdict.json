@@ -1,0 +1,159 @@
+{
+  "passed": true,
+  "required_actual_live_samples": 8,
+  "samples": [
+    {
+      "sample_index": 0,
+      "source_capture": "micro-1045333-0001.pt",
+      "teacher_hf_vs_actual_live": {
+        "tokens": 152,
+        "finite": true,
+        "mean_abs": 0.024522523136678694,
+        "p95_abs": 0.1028835535049438,
+        "max_abs": 0.18428421020507812
+      },
+      "student_hf_vs_live_diagnostic_only": {
+        "tokens": 152,
+        "finite": true,
+        "mean_abs": 0.029714157086994552,
+        "p95_abs": 0.11432158946990954,
+        "max_abs": 0.24671387672424316
+      },
+      "passed": true
+    },
+    {
+      "sample_index": 1,
+      "source_capture": "micro-1045333-0001.pt",
+      "teacher_hf_vs_actual_live": {
+        "tokens": 612,
+        "finite": true,
+        "mean_abs": 0.014583383668334194,
+        "p95_abs": 0.09118880033493022,
+        "max_abs": 0.24071931838989258
+      },
+      "student_hf_vs_live_diagnostic_only": {
+        "tokens": 612,
+        "finite": true,
+        "mean_abs": 0.015124126942628897,
+        "p95_abs": 0.08740062713623042,
+        "max_abs": 0.2107710838317871
+      },
+      "passed": true
+    },
+    {
+      "sample_index": 2,
+      "source_capture": "micro-1045333-0001.pt",
+      "teacher_hf_vs_actual_live": {
+        "tokens": 746,
+        "finite": true,
+        "mean_abs": 0.01186401340587222,
+        "p95_abs": 0.08677160739898682,
+        "max_abs": 0.20012855529785156
+      },
+      "student_hf_vs_live_diagnostic_only": {
+        "tokens": 746,
+        "finite": true,
+        "mean_abs": 0.01570967235404221,
+        "p95_abs": 0.08158951997756958,
+        "max_abs": 0.2776017189025879
+      },
+      "passed": true
+    },
+    {
+      "sample_index": 3,
+      "source_capture": "micro-1045333-0001.pt",
+      "teacher_hf_vs_actual_live": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs": 0.003321663460437163,
+        "p95_abs": 0.017227031290530985,
+        "max_abs": 0.24349522590637207
+      },
+      "student_hf_vs_live_diagnostic_only": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs": 0.0029987076676874502,
+        "p95_abs": 0.011628874763846357,
+        "max_abs": 0.28758668899536133
+      },
+      "passed": true
+    },
+    {
+      "sample_index": 4,
+      "source_capture": "micro-1045333-0002.pt",
+      "teacher_hf_vs_actual_live": {
+        "tokens": 128,
+        "finite": true,
+        "mean_abs": 0.01833995426228796,
+        "p95_abs": 0.10510791540145872,
+        "max_abs": 0.16568708419799805
+      },
+      "student_hf_vs_live_diagnostic_only": {
+        "tokens": 128,
+        "finite": true,
+        "mean_abs": 0.016665330635937115,
+        "p95_abs": 0.07567692995071411,
+        "max_abs": 0.15834331512451172
+      },
+      "passed": true
+    },
+    {
+      "sample_index": 5,
+      "source_capture": "micro-1045333-0002.pt",
+      "teacher_hf_vs_actual_live": {
+        "tokens": 165,
+        "finite": true,
+        "mean_abs": 0.002728435330272539,
+        "p95_abs": 0.024297997355461114,
+        "max_abs": 0.09575819969177246
+      },
+      "student_hf_vs_live_diagnostic_only": {
+        "tokens": 165,
+        "finite": true,
+        "mean_abs": 0.004039333105296288,
+        "p95_abs": 0.006793595105409614,
+        "max_abs": 0.2664046287536621
+      },
+      "passed": true
+    },
+    {
+      "sample_index": 6,
+      "source_capture": "micro-1045333-0002.pt",
+      "teacher_hf_vs_actual_live": {
+        "tokens": 604,
+        "finite": true,
+        "mean_abs": 0.008656837913280702,
+        "p95_abs": 0.06791149377822878,
+        "max_abs": 0.23772764205932617
+      },
+      "student_hf_vs_live_diagnostic_only": {
+        "tokens": 604,
+        "finite": true,
+        "mean_abs": 0.011911204447868574,
+        "p95_abs": 0.0783853083848954,
+        "max_abs": 0.27603673934936523
+      },
+      "passed": true
+    },
+    {
+      "sample_index": 7,
+      "source_capture": "micro-1045333-0002.pt",
+      "teacher_hf_vs_actual_live": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs": 0.007322196281775682,
+        "p95_abs": 0.05656979978084559,
+        "max_abs": 0.20878982543945312
+      },
+      "student_hf_vs_live_diagnostic_only": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs": 0.007204442153056524,
+        "p95_abs": 0.045375804603099826,
+        "max_abs": 0.31067419052124023
+      },
+      "passed": true
+    }
+  ],
+  "student_diagnostic_note": "HF base bf16 vs live FSDP actor precision/microbatch numerics; not teacher gate"
+}

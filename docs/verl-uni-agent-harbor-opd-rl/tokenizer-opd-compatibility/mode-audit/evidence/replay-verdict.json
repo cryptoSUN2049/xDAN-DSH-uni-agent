@@ -1,0 +1,183 @@
+{
+  "scope": "9-mode HF student raw IDs; constructed histories, student template, context <=4096; plus 8 separate live-capture scoring cases",
+  "cases": [
+    {
+      "domain": "single_thinking_false",
+      "response_tokens": 171,
+      "mean_abs_error": 0.00395249449541744,
+      "p95_abs_error": 0.01984250545501709,
+      "max_abs_error": 0.10645318031311035,
+      "wrong_shift_mean_abs_error": 0.20989982039202978,
+      "first_error": 0.10645318031311035,
+      "last_error": 4.768370445162873e-07
+    },
+    {
+      "domain": "single_thinking_true",
+      "response_tokens": 1024,
+      "mean_abs_error": 0.0049565632901881,
+      "p95_abs_error": 0.033580686151981246,
+      "max_abs_error": 0.1788492202758789,
+      "wrong_shift_mean_abs_error": 0.31243182042734857,
+      "first_error": 0.013794898986816406,
+      "last_error": 0.0033900365233421326
+    },
+    {
+      "domain": "history_reasoning_field_thinking_false",
+      "response_tokens": 5,
+      "mean_abs_error": 0.00010859121994144516,
+      "p95_abs_error": 0.0004270014207577332,
+      "max_abs_error": 0.0005316371098160744,
+      "wrong_shift_mean_abs_error": 0.0003342911948038818,
+      "first_error": 8.458664524368942e-06,
+      "last_error": 0.0005316371098160744
+    },
+    {
+      "domain": "history_reasoning_field_thinking_true",
+      "response_tokens": 181,
+      "mean_abs_error": 0.009427745691870505,
+      "p95_abs_error": 0.07824981212615967,
+      "max_abs_error": 0.24997997283935547,
+      "wrong_shift_mean_abs_error": 0.6558669772929371,
+      "first_error": 0.24997997283935547,
+      "last_error": 0.0003737539518624544
+    },
+    {
+      "domain": "history_inline_thinking_thinking_false",
+      "response_tokens": 5,
+      "mean_abs_error": 0.00010859121994144516,
+      "p95_abs_error": 0.0004270014207577332,
+      "max_abs_error": 0.0005316371098160744,
+      "wrong_shift_mean_abs_error": 0.0003342911948038818,
+      "first_error": 8.458664524368942e-06,
+      "last_error": 0.0005316371098160744
+    },
+    {
+      "domain": "history_inline_thinking_thinking_true",
+      "response_tokens": 181,
+      "mean_abs_error": 0.009427745691870505,
+      "p95_abs_error": 0.07824981212615967,
+      "max_abs_error": 0.24997997283935547,
+      "wrong_shift_mean_abs_error": 0.6558669772929371,
+      "first_error": 0.24997997283935547,
+      "last_error": 0.0003737539518624544
+    },
+    {
+      "domain": "tool_history_control_thinking_false",
+      "response_tokens": 18,
+      "mean_abs_error": 0.007169590513992969,
+      "p95_abs_error": 0.020559236826374953,
+      "max_abs_error": 0.12485599517822266,
+      "wrong_shift_mean_abs_error": 0.8510530915622279,
+      "first_error": 0.0006459951400756836,
+      "last_error": 3.3378191801602952e-06
+    },
+    {
+      "domain": "tool_history_control_thinking_true",
+      "response_tokens": 45,
+      "mean_abs_error": 0.008981195671253772,
+      "p95_abs_error": 0.06315717101097096,
+      "max_abs_error": 0.1249990463256836,
+      "wrong_shift_mean_abs_error": 0.9403063444709377,
+      "first_error": 0.0003413029480725527,
+      "last_error": 4.768370445162873e-07
+    },
+    {
+      "domain": "long_prompt_thinking_false",
+      "response_tokens": 6,
+      "mean_abs_error": 0.0007158559964940044,
+      "p95_abs_error": 0.003178311999363359,
+      "max_abs_error": 0.004210904240608215,
+      "wrong_shift_mean_abs_error": 0.006205845784268149,
+      "first_error": 0.004210904240608215,
+      "last_error": 5.960462772236497e-07
+    },
+    {
+      "domain": "live_00_instruction",
+      "response_tokens": 152,
+      "mean_abs_error": 0.02746349058998021,
+      "p95_abs_error": 0.10275598168373104,
+      "max_abs_error": 0.20572471618652344,
+      "wrong_shift_mean_abs_error": 2.3045286208018525,
+      "first_error": 0.012827247381210327,
+      "last_error": 0.02171003818511963
+    },
+    {
+      "domain": "live_01_code",
+      "response_tokens": 612,
+      "mean_abs_error": 0.014583383083974931,
+      "p95_abs_error": 0.09118880033493022,
+      "max_abs_error": 0.24071931838989258,
+      "wrong_shift_mean_abs_error": 1.0149481535876257,
+      "first_error": 0.00011793727753683925,
+      "last_error": 0.0006157462485134602
+    },
+    {
+      "domain": "live_02_chat",
+      "response_tokens": 746,
+      "mean_abs_error": 0.011864013325973232,
+      "p95_abs_error": 0.08677160739898682,
+      "max_abs_error": 0.20012855529785156,
+      "wrong_shift_mean_abs_error": 1.0758417053556144,
+      "first_error": 1.7115380614995956e-05,
+      "last_error": 0.00010459672193974257
+    },
+    {
+      "domain": "live_03_math",
+      "response_tokens": 1024,
+      "mean_abs_error": 0.0029141960762645164,
+      "p95_abs_error": 0.007962294667959212,
+      "max_abs_error": 0.24349522590637207,
+      "wrong_shift_mean_abs_error": 0.18277912033988436,
+      "first_error": 4.767134669236839e-07,
+      "last_error": 0.0
+    },
+    {
+      "domain": "live_04_instruction",
+      "response_tokens": 128,
+      "mean_abs_error": 0.01833995704170377,
+      "p95_abs_error": 0.10510791540145872,
+      "max_abs_error": 0.16568708419799805,
+      "wrong_shift_mean_abs_error": 1.1615576671873302,
+      "first_error": 0.08657670021057129,
+      "last_error": 1.4494580682367086e-06
+    },
+    {
+      "domain": "live_05_code",
+      "response_tokens": 165,
+      "mean_abs_error": 0.0038706416969943825,
+      "p95_abs_error": 0.025452148914337055,
+      "max_abs_error": 0.12494945526123047,
+      "wrong_shift_mean_abs_error": 0.39954445289926943,
+      "first_error": 0.0001814872957766056,
+      "last_error": 0.006308902055025101
+    },
+    {
+      "domain": "live_06_instruction",
+      "response_tokens": 604,
+      "mean_abs_error": 0.008139191673433965,
+      "p95_abs_error": 0.05522723495960253,
+      "max_abs_error": 0.23772764205932617,
+      "wrong_shift_mean_abs_error": 0.7154582236348423,
+      "first_error": 0.0027756690979003906,
+      "last_error": 0.09159183502197266
+    },
+    {
+      "domain": "live_07_math",
+      "response_tokens": 1024,
+      "mean_abs_error": 0.007568954842170156,
+      "p95_abs_error": 0.059932267665863036,
+      "max_abs_error": 0.17565536499023438,
+      "wrong_shift_mean_abs_error": 0.3942489954744023,
+      "first_error": 6.723450496792793e-05,
+      "last_error": 0.0018785391002893448
+    }
+  ],
+  "response_tokens": 6091,
+  "mean_abs_error": 0.008256419708058094,
+  "p95_abs_error": 0.06524848937988281,
+  "passed": true,
+  "student_temperature": 0.8,
+  "teacher_temperature": 1.0,
+  "tool_execution_verified": false,
+  "tool_rollout_mask_verified": false
+}

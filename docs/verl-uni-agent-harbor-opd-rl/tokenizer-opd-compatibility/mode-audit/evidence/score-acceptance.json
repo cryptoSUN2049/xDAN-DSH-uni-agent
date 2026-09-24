@@ -1,0 +1,444 @@
+{
+  "passed": true,
+  "coverage": {
+    "expected_live": 8,
+    "actual_live": 8,
+    "expected_modes": 9,
+    "actual_modes": 9
+  },
+  "gates": {
+    "mean_abs_error_below": 0.1,
+    "p95_abs_error_below": 0.5,
+    "finite_required": true
+  },
+  "teacher_reference_temperature": 1.0,
+  "student_reference_temperature": 0.8,
+  "student_comparison_scope": "Diagnostic only: requires separate proof of initial base identity, zero-B LoRA and no preceding optimizer update. Not a gate.",
+  "limits": [
+    "Model identity, source hashes and actual launch temperatures must be audited separately",
+    "Eight distinct capture rows do not alone prove all trainer microbatches were captured"
+  ],
+  "cases": [
+    {
+      "index": 0,
+      "domain": "single_thinking_false",
+      "hf_vs_vllm_teacher": {
+        "tokens": 171,
+        "finite": true,
+        "mean_abs_error": 0.00395249449541744,
+        "p95_abs_error": 0.01984250545501709,
+        "max_abs_error": 0.10645318031311035,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "index": 1,
+      "domain": "single_thinking_true",
+      "hf_vs_vllm_teacher": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs_error": 0.0049565632901881,
+        "p95_abs_error": 0.033580686151981246,
+        "max_abs_error": 0.1788492202758789,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "index": 2,
+      "domain": "history_reasoning_field_thinking_false",
+      "hf_vs_vllm_teacher": {
+        "tokens": 5,
+        "finite": true,
+        "mean_abs_error": 0.00010859121994144516,
+        "p95_abs_error": 0.0004270014207577332,
+        "max_abs_error": 0.0005316371098160744,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "index": 3,
+      "domain": "history_reasoning_field_thinking_true",
+      "hf_vs_vllm_teacher": {
+        "tokens": 181,
+        "finite": true,
+        "mean_abs_error": 0.009427745691870505,
+        "p95_abs_error": 0.07824981212615967,
+        "max_abs_error": 0.24997997283935547,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "index": 4,
+      "domain": "history_inline_thinking_thinking_false",
+      "hf_vs_vllm_teacher": {
+        "tokens": 5,
+        "finite": true,
+        "mean_abs_error": 0.00010859121994144516,
+        "p95_abs_error": 0.0004270014207577332,
+        "max_abs_error": 0.0005316371098160744,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "index": 5,
+      "domain": "history_inline_thinking_thinking_true",
+      "hf_vs_vllm_teacher": {
+        "tokens": 181,
+        "finite": true,
+        "mean_abs_error": 0.009427745691870505,
+        "p95_abs_error": 0.07824981212615967,
+        "max_abs_error": 0.24997997283935547,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "index": 6,
+      "domain": "tool_history_control_thinking_false",
+      "hf_vs_vllm_teacher": {
+        "tokens": 18,
+        "finite": true,
+        "mean_abs_error": 0.007169590513992969,
+        "p95_abs_error": 0.020559236826374953,
+        "max_abs_error": 0.12485599517822266,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "index": 7,
+      "domain": "tool_history_control_thinking_true",
+      "hf_vs_vllm_teacher": {
+        "tokens": 45,
+        "finite": true,
+        "mean_abs_error": 0.008981195671253772,
+        "p95_abs_error": 0.06315717101097096,
+        "max_abs_error": 0.1249990463256836,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "index": 8,
+      "domain": "long_prompt_thinking_false",
+      "hf_vs_vllm_teacher": {
+        "tokens": 6,
+        "finite": true,
+        "mean_abs_error": 0.0007158559964940044,
+        "p95_abs_error": 0.003178311999363359,
+        "max_abs_error": 0.004210904240608215,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "index": 9,
+      "domain": "live_00_instruction",
+      "hf_vs_vllm_teacher": {
+        "tokens": 152,
+        "finite": true,
+        "mean_abs_error": 0.02746349058998021,
+        "p95_abs_error": 0.10275598168373104,
+        "max_abs_error": 0.20572471618652344,
+        "passed": true
+      },
+      "live_teacher_vs_hf_at_temperature_1": {
+        "tokens": 152,
+        "finite": true,
+        "mean_abs_error": 0.024522523136678694,
+        "p95_abs_error": 0.1028835535049438,
+        "max_abs_error": 0.18428421020507812,
+        "passed": true
+      },
+      "student_diagnostic_only": {
+        "tokens": 152,
+        "finite": true,
+        "mean_abs_error": 0.029714157086994552,
+        "p95_abs_error": 0.11432158946990954,
+        "max_abs_error": 0.24671387672424316,
+        "passed": true
+      },
+      "old_policy_diagnostic_only": {
+        "tokens": 152,
+        "finite": true,
+        "mean_abs_error": 0.029714157086994552,
+        "p95_abs_error": 0.11432158946990954,
+        "max_abs_error": 0.24671387672424316,
+        "passed": true
+      },
+      "actor_temperature_recorded": "0.8",
+      "passed": true
+    },
+    {
+      "index": 10,
+      "domain": "live_01_code",
+      "hf_vs_vllm_teacher": {
+        "tokens": 612,
+        "finite": true,
+        "mean_abs_error": 0.014583383083974931,
+        "p95_abs_error": 0.09118880033493022,
+        "max_abs_error": 0.24071931838989258,
+        "passed": true
+      },
+      "live_teacher_vs_hf_at_temperature_1": {
+        "tokens": 612,
+        "finite": true,
+        "mean_abs_error": 0.014583383668334194,
+        "p95_abs_error": 0.09118880033493022,
+        "max_abs_error": 0.24071931838989258,
+        "passed": true
+      },
+      "student_diagnostic_only": {
+        "tokens": 612,
+        "finite": true,
+        "mean_abs_error": 0.015124126942628897,
+        "p95_abs_error": 0.08740062713623042,
+        "max_abs_error": 0.2107710838317871,
+        "passed": true
+      },
+      "old_policy_diagnostic_only": {
+        "tokens": 612,
+        "finite": true,
+        "mean_abs_error": 0.015124126942628897,
+        "p95_abs_error": 0.08740062713623042,
+        "max_abs_error": 0.2107710838317871,
+        "passed": true
+      },
+      "actor_temperature_recorded": "0.8",
+      "passed": true
+    },
+    {
+      "index": 11,
+      "domain": "live_02_chat",
+      "hf_vs_vllm_teacher": {
+        "tokens": 746,
+        "finite": true,
+        "mean_abs_error": 0.011864013325973232,
+        "p95_abs_error": 0.08677160739898682,
+        "max_abs_error": 0.20012855529785156,
+        "passed": true
+      },
+      "live_teacher_vs_hf_at_temperature_1": {
+        "tokens": 746,
+        "finite": true,
+        "mean_abs_error": 0.01186401340587222,
+        "p95_abs_error": 0.08677160739898682,
+        "max_abs_error": 0.20012855529785156,
+        "passed": true
+      },
+      "student_diagnostic_only": {
+        "tokens": 746,
+        "finite": true,
+        "mean_abs_error": 0.01570967235404221,
+        "p95_abs_error": 0.08158951997756958,
+        "max_abs_error": 0.2776017189025879,
+        "passed": true
+      },
+      "old_policy_diagnostic_only": {
+        "tokens": 746,
+        "finite": true,
+        "mean_abs_error": 0.01570967235404221,
+        "p95_abs_error": 0.08158951997756958,
+        "max_abs_error": 0.2776017189025879,
+        "passed": true
+      },
+      "actor_temperature_recorded": "0.8",
+      "passed": true
+    },
+    {
+      "index": 12,
+      "domain": "live_03_math",
+      "hf_vs_vllm_teacher": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs_error": 0.0029141960762645164,
+        "p95_abs_error": 0.007962294667959212,
+        "max_abs_error": 0.24349522590637207,
+        "passed": true
+      },
+      "live_teacher_vs_hf_at_temperature_1": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs_error": 0.003321663460437163,
+        "p95_abs_error": 0.017227031290530985,
+        "max_abs_error": 0.24349522590637207,
+        "passed": true
+      },
+      "student_diagnostic_only": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs_error": 0.0029987076676874502,
+        "p95_abs_error": 0.011628874763846357,
+        "max_abs_error": 0.28758668899536133,
+        "passed": true
+      },
+      "old_policy_diagnostic_only": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs_error": 0.0029987076676874502,
+        "p95_abs_error": 0.011628874763846357,
+        "max_abs_error": 0.28758668899536133,
+        "passed": true
+      },
+      "actor_temperature_recorded": "0.8",
+      "passed": true
+    },
+    {
+      "index": 13,
+      "domain": "live_04_instruction",
+      "hf_vs_vllm_teacher": {
+        "tokens": 128,
+        "finite": true,
+        "mean_abs_error": 0.01833995704170377,
+        "p95_abs_error": 0.10510791540145872,
+        "max_abs_error": 0.16568708419799805,
+        "passed": true
+      },
+      "live_teacher_vs_hf_at_temperature_1": {
+        "tokens": 128,
+        "finite": true,
+        "mean_abs_error": 0.01833995426228796,
+        "p95_abs_error": 0.10510791540145872,
+        "max_abs_error": 0.16568708419799805,
+        "passed": true
+      },
+      "student_diagnostic_only": {
+        "tokens": 128,
+        "finite": true,
+        "mean_abs_error": 0.016665330635937115,
+        "p95_abs_error": 0.07567692995071411,
+        "max_abs_error": 0.15834331512451172,
+        "passed": true
+      },
+      "old_policy_diagnostic_only": {
+        "tokens": 128,
+        "finite": true,
+        "mean_abs_error": 0.016665330635937115,
+        "p95_abs_error": 0.07567692995071411,
+        "max_abs_error": 0.15834331512451172,
+        "passed": true
+      },
+      "actor_temperature_recorded": "0.8",
+      "passed": true
+    },
+    {
+      "index": 14,
+      "domain": "live_05_code",
+      "hf_vs_vllm_teacher": {
+        "tokens": 165,
+        "finite": true,
+        "mean_abs_error": 0.0038706416969943825,
+        "p95_abs_error": 0.025452148914337055,
+        "max_abs_error": 0.12494945526123047,
+        "passed": true
+      },
+      "live_teacher_vs_hf_at_temperature_1": {
+        "tokens": 165,
+        "finite": true,
+        "mean_abs_error": 0.002728435330272539,
+        "p95_abs_error": 0.024297997355461114,
+        "max_abs_error": 0.09575819969177246,
+        "passed": true
+      },
+      "student_diagnostic_only": {
+        "tokens": 165,
+        "finite": true,
+        "mean_abs_error": 0.004039333105296288,
+        "p95_abs_error": 0.006793595105409614,
+        "max_abs_error": 0.2664046287536621,
+        "passed": true
+      },
+      "old_policy_diagnostic_only": {
+        "tokens": 165,
+        "finite": true,
+        "mean_abs_error": 0.004039333105296288,
+        "p95_abs_error": 0.006793595105409614,
+        "max_abs_error": 0.2664046287536621,
+        "passed": true
+      },
+      "actor_temperature_recorded": "0.8",
+      "passed": true
+    },
+    {
+      "index": 15,
+      "domain": "live_06_instruction",
+      "hf_vs_vllm_teacher": {
+        "tokens": 604,
+        "finite": true,
+        "mean_abs_error": 0.008139191673433965,
+        "p95_abs_error": 0.05522723495960253,
+        "max_abs_error": 0.23772764205932617,
+        "passed": true
+      },
+      "live_teacher_vs_hf_at_temperature_1": {
+        "tokens": 604,
+        "finite": true,
+        "mean_abs_error": 0.008656837913280702,
+        "p95_abs_error": 0.06791149377822878,
+        "max_abs_error": 0.23772764205932617,
+        "passed": true
+      },
+      "student_diagnostic_only": {
+        "tokens": 604,
+        "finite": true,
+        "mean_abs_error": 0.011911204447868574,
+        "p95_abs_error": 0.0783853083848954,
+        "max_abs_error": 0.27603673934936523,
+        "passed": true
+      },
+      "old_policy_diagnostic_only": {
+        "tokens": 604,
+        "finite": true,
+        "mean_abs_error": 0.011911204447868574,
+        "p95_abs_error": 0.0783853083848954,
+        "max_abs_error": 0.27603673934936523,
+        "passed": true
+      },
+      "actor_temperature_recorded": "0.8",
+      "passed": true
+    },
+    {
+      "index": 16,
+      "domain": "live_07_math",
+      "hf_vs_vllm_teacher": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs_error": 0.007568954842170156,
+        "p95_abs_error": 0.059932267665863036,
+        "max_abs_error": 0.17565536499023438,
+        "passed": true
+      },
+      "live_teacher_vs_hf_at_temperature_1": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs_error": 0.007322196281775682,
+        "p95_abs_error": 0.05656979978084559,
+        "max_abs_error": 0.20878982543945312,
+        "passed": true
+      },
+      "student_diagnostic_only": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs_error": 0.007204442153056524,
+        "p95_abs_error": 0.045375804603099826,
+        "max_abs_error": 0.31067419052124023,
+        "passed": true
+      },
+      "old_policy_diagnostic_only": {
+        "tokens": 1024,
+        "finite": true,
+        "mean_abs_error": 0.007204442153056524,
+        "p95_abs_error": 0.045375804603099826,
+        "max_abs_error": 0.31067419052124023,
+        "passed": true
+      },
+      "actor_temperature_recorded": "0.8",
+      "passed": true
+    }
+  ]
+}

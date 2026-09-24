@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "scope": "batch8,n1,ppo_epochs1,one update; no inference to larger runs",
+  "command_verified": true,
+  "command_expected": {
+    "data.train_batch_size": "8",
+    "actor_rollout_ref.rollout.n": "1",
+    "actor_rollout_ref.actor.ppo_epochs": "1",
+    "trainer.total_training_steps": "1",
+    "actor_rollout_ref.actor.optim.lr_warmup_steps": "0"
+  },
+  "command_sha256": "fa171848eba881735b944073ec50f4aeaca4ece55ea0c1ba7ff72fb14e1ccd0b",
+  "captured_rows": 8,
+  "valid_tokens_per_row": [
+    152,
+    612,
+    746,
+    1024,
+    128,
+    165,
+    604,
+    1024
+  ],
+  "microbatch_calls": {
+    "1045333": [
+      1,
+      2
+    ]
+  },
+  "calls_contiguous_below_cap": true,
+  "actor_temperatures": [
+    0.8,
+    0.8
+  ],
+  "train_exit_code": 0,
+  "exit_file": "/workspace/verl-uni-agent-harbor-opd-rl/runs/opd-live-acceptance-20260924/exit-code.txt",
+  "exit_file_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+  "checkpoint": "/workspace/verl-uni-agent-harbor-opd-rl/runs/opd-live-acceptance-20260924/checkpoints/global_step_1",
+  "checkpoint_model_shards": [
+    "/workspace/verl-uni-agent-harbor-opd-rl/runs/opd-live-acceptance-20260924/checkpoints/global_step_1/actor/model_world_size_1_rank_0.pt"
+  ],
+  "checkpoint_present": true,
+  "all_microbatches_pass": true,
+  "teacher_temperature_note": "Teacher temperature1 requires launch config plus source SHA evidence"
+}

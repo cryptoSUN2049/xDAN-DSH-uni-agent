@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "updated_modules": 248,
+  "total_modules": 358,
+  "adapter_sha256": "4de54f78dc7f1fce19dab20debd295b95a545b1bea9da176665f3c748eb951bb",
+  "reload_matches_export_sha256": true,
+  "outputs": 30,
+  "infra": 0,
+  "budget": {
+    "max_tokens": 4096,
+    "temperature": 0,
+    "seed": 20260924,
+    "template": "student tokenizer; enable_thinking=False; no tools"
+  },
+  "scope": "actual exported adapter independently loaded; 30 frozen validation rows; capability conclusions limited by verifier coverage"
+}

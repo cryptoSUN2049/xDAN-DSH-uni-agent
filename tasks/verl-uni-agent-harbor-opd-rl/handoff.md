@@ -2,6 +2,15 @@
 
 ## 2026-09-24 夜间单教师 OPD（当前入口）
 
+- **完整测试执行完成，非全门禁通过**：统一入口 `overnight/index.html`，结论 `tokenizer-opd-compatibility/full-verdict.md`、机器门禁 `full-acceptance.json`。当前thinking-off文本OPD链路通过；thinking1024单例未闭合，原mode driver exit1保留，禁止称全部适配。
+- 真实训练runs/opd-live-acceptance-20260924 exit0；2microbatch/8条/4455token，独立loss和grad误差0、mask外0、teacher ID错位0、coverage pass。248文本LoRA全部非零B，110视觉零B；导出/独立30题重载SHA一致，infra0。评分math4/5、IF5/8、knowledge1/1，code/chat未计正确率。
+- 17案例9模式+8现场，6091response token；HF/vLLM mean0.00825642、P950.06524849、parser全通过。实际live teacher vsHF8/8通过，weightedmean0.00907492。工具原生mask5控制通过但生成传输mock。
+- thinking2048独立诊断exit0，1751token闭合、正确391，原1024前缀完全重现；不替换原fail，新增尾部未评分。HF默认EOS248044/endoftext，而live VERL正常EOS248046/im_end；forced评分可比，不宣称生成停止等价。
+- 本轮无需继续GPU作业；未启动扩量训练。后续是统一停止配置、合格数据扩量/固定验证/封存测试/代码聊天评分；不将兼容通过当高性能证明。W&B仍offline。
+
+
+
+
 - 深度兼容验收完成：driver1037003 exit0，GPU释放。2736响应token五域文本重放+EOS，HF/vLLM mean0.008197/P950.064773，原生parser IDs全对齐。真实概率loss误差2.78e-17、grad4.34e-19；四组边界控制通过。证据deep-evidence/，结论deep-verdict.md，已整合overnight报告。只支持当前文本单轮关闭thinking；历史原始张量未保存，不能声称精确重建。新扩量训练尚未启动，用户允许考虑扩量，优先补合格数据/评分和固定验证。
 
 - 后续新请求：用户要求进一步确认适配、定位VERL源码，并允许考虑数据不足时扩大训练。当前先做深度验收，不重复原122条冒充扩量。远端runs/opd-deep-audit-20260924，driver1037003；CPU实际loss独立损失/梯度/边界控制通过，HF五域文本重放+EOS已完成，vLLM对照运行中。原训练没存逐token张量，重放不是历史精确重建。文档tokenizer-opd-compatibility/deep-source-audit.md、deep-design.md。待结果完成后再定扩量与验证集。
