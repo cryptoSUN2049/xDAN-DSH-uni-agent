@@ -58,7 +58,7 @@ run依次通过manifest/env → grader正负控制 → base/teacher基线 → co
 | 控制policy | 同control目录；与stage/supervisor集成 | decide(run_state, metrics, policy)→CONTINUE/PAUSE/FAIL+reason+evidence；幂等、仅本run |
 | 分析skill | .claude/skills/rl-training-analyst/SKILL.md及scripts | 从run manifest定位项目与算法；OPD/RL分型；证据对账、异常时间窗和根因建议 |
 | W&B/trace | uni_agent/rl_insight现有facade/adapter、VERL真实producer接线 | 同run/step/sample/policy身份；后端失败显式降级，关键本地账本不丢 |
-| 报告与导航 | architecture.html、既有report.py骨架、本目录实验产物 | 一个导航入口；分域学习/行为/成本/事故/源码证据；状态不得虚报 |
+| 报告与导航 | training-production.html、既有report.py骨架、本目录实验产物 | 一个导航入口；分域学习/行为/成本/事故/源码证据；状态不得虚报 |
 
 原有未提交修改保留，先单独保存或有界提交已验证资产，不能自动stash/reset。仍在既有隔离worktree推进，不修改主目录。
 

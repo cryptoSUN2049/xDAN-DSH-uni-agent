@@ -6,7 +6,7 @@
 
 用户目标是建立可复现、可观测、可分析、可发现问题并受控修复的科学大模型训练产线，最终支持全面高性能9B。约1000条多领域单教师OPD是首个产线验收实验，不取代长期MOPD、SFT、mid-training与RL研究。
 
-- 唯一导航：[architecture.html](architecture.html)。
+- 唯一导航：[training-production.html](training-production.html)。
 - 当前总纲：本文；组件合同：[training-system-v2-design.md](training-system-v2-design.md)。
 - 首个实验：[training-pilot-1k-plan.md](training-pilot-1k-plan.md)。
 - 索引：[project-index.md](project-index.md)。

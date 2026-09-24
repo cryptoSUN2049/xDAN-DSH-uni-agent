@@ -1,9 +1,18 @@
 # 全版本 checkpoint 评测交接
 
+## 2026-09-24 独立产线HTML入口
+
+- 用户批准独立于MiMo研究报告建立我们自己的科学训练产线。新唯一入口：docs/verl-uni-agent-harbor-opd-rl/training-production.html。
+- 双维导航：产线架构 / 阶段目标；研究来源辅助入口。Curator、Teich、Verifier、观测控制与OPD/MOPD/规模化RL专项均写明职责、状态和验收。
+- 原MiMo HTML未修改，architecture.html保留历史并链接新入口。详细总纲与1K合同仍为权威设计，HTML不代替原始证据。
+- 本轮仅文档/导航，无训练或infra部署；1000条尚未ready、云观测与质量止损仍待验收。
+- 文件：training-production.html（16节）、production-portal-design.md；索引/总纲/历史架构/记忆同步。后续继续数据与grader、事件与控制建设。
+
+
 ## 2026-09-24 当前主任务：科学训练产线与1000条pilot
 
 - 用户已确认：建立完整专业可观测、可分析、可诊断修复的大模型训练产线，1000条多领域单教师OPD为首个受控实验；长期MOPD目标保留。
-- 先读 docs/verl-uni-agent-harbor-opd-rl/project-index.md → training-production-charter.md → training-pilot-1k-plan.md；HTML唯一导航仍architecture.html。
+- 先读 docs/verl-uni-agent-harbor-opd-rl/project-index.md → training-production-charter.md → training-pilot-1k-plan.md；HTML唯一导航为training-production.html。
 - 当前仅设计/盘点/项目记忆索引已更新；1000条未构建、未启动新训练。原始源足够多，但代码120条、科学旧40审计仅4保留、聊天头部240行均不能直接扩成高质量1000。
 - 现有原生文本OPD链路已验收；不能说Uni-Agent/Harbor工具路线、W&B云端与真实verl-insight后端、质量止损已全部接通。按P0合同/评分→观测/控制真实验收→有界pilot推进。
 - 最新新文档/已有修改位于既有performance-9b worktree，保留之前未提交变更；勿stash/reset或把旧纯RL提案作为本轮启动依据。

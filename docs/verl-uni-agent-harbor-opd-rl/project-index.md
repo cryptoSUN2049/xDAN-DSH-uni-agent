@@ -6,7 +6,7 @@
 
 | 需要什么 | 权威入口 | 状态 |
 |---|---|---|
-| 总导航与架构 | [architecture.html](architecture.html) | 唯一导航；设计与真实运行分开 |
+| 总导航与架构 | [training-production.html](training-production.html) | 唯一导航；设计与真实运行分开 |
 | 产线目标、职责、核心指标、诊断与修复 | [training-production-charter.md](training-production-charter.md) | 当前总纲，2026-09-24 |
 | P0–P4详细组件与历史审计 | [training-system-v2-design.md](training-system-v2-design.md) | 保留合同；旧纯RL首轮提案已由本轮OPD试验替代 |
 | 1000条试验配额/门禁/文件范围/测试 | [training-pilot-1k-plan.md](training-pilot-1k-plan.md) | 设计；未构建1000条，未启动扩训 |

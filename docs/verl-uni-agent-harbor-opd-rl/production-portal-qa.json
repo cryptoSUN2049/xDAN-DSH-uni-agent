@@ -1,0 +1,17 @@
+{
+  "date": "2026-09-24",
+  "html_sha256": "8e4ee1149c2016d459102c8e75c37782dda3485416baf5c0772abd2b625e7d93",
+  "sections": 16,
+  "local_links_checked": 47,
+  "broken_links": 0,
+  "duplicate_ids": 0,
+  "desktop_width": 1280,
+  "desktop_scroll_width": 1280,
+  "mobile_width": 390,
+  "mobile_scroll_width": 390,
+  "navigation_switch": true,
+  "directory_search": true,
+  "console_after_reload": [],
+  "source_mimo_sha256": "580f3cdf4e8d20ed9b5c14e94cc296a0487d9ac148c089b55c74162b9bd21bad",
+  "review": "No blocking scientific-boundary issues; clarified bounded smoke and environment cleanup."
+}

@@ -1,3 +1,5 @@
+> 当前统一入口：[我们的科学训练产线](training-production.html)。下文旧architecture.html为历史拓扑，最新状态与阶段目标见新入口。
+
 # VERL + Uni-Agent 训练体系 v2 设计
 
 状态：v2组件设计与历史审计；部分执行链已验收，统一控制面尚待实现。

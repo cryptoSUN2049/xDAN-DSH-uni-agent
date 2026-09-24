@@ -807,3 +807,11 @@ Review: step16 math5/5 vs base4/5; IF5/8 and knowledge1/1 unchanged. Improvement
 - [ ] Run 1K pilot with per-domain curves/budgets; independent checkpoint/dev/sealed conclusions.
 
 Review: this milestone documents the production-line objective and reusable infra accurately; no new dataset readiness, cloud telemetry or training completion claimed.
+
+## 2026-09-24 独立科学训练产线入口（用户批准）
+- [x] 核对MiMo原报告与既有总纲，冻结独立页面设计。
+- [x] 建设产线HTML：数据工程、任务评分、观测、控制与研究映射。
+- [x] 统一入口链接与项目记忆，保留MiMo原文和历史架构。
+- [x] 浏览器/链接/事实核验，保存提交与交接。
+
+Review: 新入口16节、47链接检查无断链/重复ID；桌面1280与移动390无横溢出；切换/搜索通过，reload后console为空，原MiMo SHA不变。未启动训练或部署候选infra。

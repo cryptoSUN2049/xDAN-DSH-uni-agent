@@ -1,3 +1,5 @@
+> 2026-09-24 导航更新：唯一HTML入口 [我们的科学训练产线](../../docs/verl-uni-agent-harbor-opd-rl/training-production.html)。按产线架构与阶段目标双维组织；MiMo原报告为研究依据，architecture.html保留历史。组件选型不等于已部署，专项以验收结果完成。
+
 # Performance-9B：MOPD 核心项目记忆
 
 更新：2026-09-24。性质：目标、已核验约束、设计判断；不是训练完成报告。
