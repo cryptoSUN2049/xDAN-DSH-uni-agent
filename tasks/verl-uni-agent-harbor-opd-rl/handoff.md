@@ -250,3 +250,7 @@
 - 保留上游固定 revision、数据文件、许可证、README 与 provenance SHA256。远端内容核验完成。
 - 下一步仍是训练准入审计；不要把 archived_unvalidated 当成可直接训练。
 - 当前分支 performance-9b；本次归档不修改训练进程，不能据此更新实时训练状态。
+
+## 2026-09-24 Qwen Max数据补搜
+
+qwen38-max-sft-review.md固定3库revision、区分Max-Preview/27B，候选有真实用途与污染限制，当前配额0。v2强教师核心不变，未下载全量/训练。

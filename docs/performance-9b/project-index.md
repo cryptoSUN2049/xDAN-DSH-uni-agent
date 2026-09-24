@@ -6,6 +6,7 @@
 
 | 需要什么 | 权威入口 | 状态 |
 |---|---|---|
+| Qwen3.8-Max补充候选 | [qwen38-max-sft-review.md](qwen38-max-sft-review.md) | 两个原始库已核；许可/污染/质量待放行，当前配额0 |
 | Fable/GPT强教师数据复核 | [strong-teacher-sft-review.md](strong-teacher-sft-review.md) | 原始/独立Fable恢复优先级；GPT5.6加权；GPT6未发现合格通用池 |
 | 首轮Agent SFT完整数据配方 | [agent-sft-data-plan-v2.md](agent-sft-data-plan-v2.md) | 1000训练目标：Fable160＋GPT5.6 240核心；600现成＋400新生成；独立评测与成本门 |
 | Agent SFT主线与20种子任务 | [agent-sft-seed20-plan.md](agent-sft-seed20-plan.md) | 20题规格已列；环境/控制/真实轨迹待建设；tool-call实验独立 |

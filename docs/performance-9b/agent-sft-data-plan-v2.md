@@ -92,3 +92,7 @@ Curator：任务规格/批处理/缓存；Uni-Agent/已验收harness：教师真
 后续执行顺序：核心来源完整文件审计与种子控制 → 教师接口/硬预算确认 → 20/100验收 → release冻结 → 同预算SFT效果实验。当前仅设计；未获得核心400合格数量、未启动新计费生成或训练。
 
 参考：[强教师复核](strong-teacher-sft-review.md)、[20种子计划](agent-sft-seed20-plan.md)、[tool-call专项](apus-chat-v1-tool-call.md)。
+
+## Qwen3.8-Max补充候选
+
+已搜到单教师49772条与混合库57937条，见[专项复核](qwen38-max-sft-review.md)。教师为Max-Preview，非27B；用途条款、benchmark污染和质量仍待放行，当前配额0，不改变本版1000分布。

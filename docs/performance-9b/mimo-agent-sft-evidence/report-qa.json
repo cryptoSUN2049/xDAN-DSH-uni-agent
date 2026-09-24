@@ -4,10 +4,10 @@
   "desktop": "1280x720 no overflow; screenshot inspected",
   "mobile": "390x844 no overflow; screenshot inspected",
   "interactions": "GRPO search=1 entry; SFT view hides RL; reset passes",
-  "report_sha256": "9d0da02d4678a121221162cfcbd8053f6244fa8a41a4d630571c2bcaaaa572f7",
+  "report_sha256": "40263b4c11c12ca7ee09df207d9f6f1e38af917c37da74a65869517d8e700205",
   "links_checked": 55,
   "expanded_sections_review": "desktop1280/mobile390 screenshots; no page overflow; 0 broken anchors",
-  "latest_addition": "v2 recipe link and quota update; no layout change",
+  "latest_addition": "Qwen Max source review link verified; no layout change",
   "local_links_checked": 20,
   "migration_check": "docs/performance-9b relative links verified"
 }
