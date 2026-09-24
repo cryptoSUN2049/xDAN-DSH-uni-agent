@@ -9,7 +9,7 @@
 
 | 里程碑 | 状态 | 证据 |
 |---|---|---|
-| 全流程脚本化（环境 → 数据 → oracle → rollout → 训练 → checkpoint 差分 → 断点续训 → 验收） | **完成，验收 PASS**（2026-09-16 16:47） | `docs/verl-uni-agent-harbor-opd-rl/pipe-r1/acceptance.json` |
+| 全流程脚本化（环境 → 数据 → oracle → rollout → 训练 → checkpoint 差分 → 断点续训 → 验收） | **完成，验收 PASS**（2026-09-16 16:47） | `docs/performance-9b/pipe-r1/acceptance.json` |
 | 算法正确性（GRPO 组内 advantage、action mask、LoRA 权重变化） | **核实** | 重算 advantage 与 grad_norm 逐步吻合；504/504 adapter 变、399/399 base 不变 |
 | 学习信号（reward 方差 → 非零梯度） | **出现**：pipe-r2 六步 grad_norm 0.053 / 0.0065 / 0.0091 / 0.0147 …，训练集 reward 0.19–0.60 | wandb `dzlqgapu` |
 | 清理后数据集接入（`gump2049/xDAN-Harbor-Stage1-Tasks`） | **接入**：Terminal-Lego 20 题训练、5 题 held-out（仓库现有 50 题） | `runs/pipe-r2`、`runs/pipe-r3` |
@@ -17,7 +17,7 @@
 | 27B Teacher / 9B Student 权重 | **就绪**（已下载到共享卷） | `/workspace/models/` |
 | 训练前 held-out 基线（5 题） | 0.328（pipe-r2）/ 0.394（pipe-r3），同一模型的差异即噪声水平 | `runs/pipe-r*/train/agent-logs/*/step_0` |
 | TB 2.1 官方基线（4B） | **初步 ≈ 0%**：两次评测（n=1 / n=3）有效样本 54 / 62 条全部未通过；因 Modal 额度中途触顶，样本不完整，需额度恢复后重跑 n=1 定为正式基线 | `runs/eval-tb21-4b-base-n1`、`-n3` |
-| pipe-r2（stage1 20 题纯 RL）验收 | **PASS**（07:46）：7/7 步非零梯度且与 wandb 对账一致；resume 从 step 7 接续 | `docs/verl-uni-agent-harbor-opd-rl/pipe-r2/acceptance.json` |
+| pipe-r2（stage1 20 题纯 RL）验收 | **PASS**（07:46）：7/7 步非零梯度且与 wandb 对账一致；resume 从 step 7 接续 | `docs/performance-9b/pipe-r2/acceptance.json` |
 | 训练后 held-out（5 题 n=1） | 0.328 → 0.497（step 6）→ 0.458（step 7）；同一 checkpoint 两次评估相差 0.06，**5 题只能证明机制，不能证明提升** | wandb `dzlqgapu` / `eg1ix7eo` val-core |
 | pipe-r3（4B 自评 Teacher，路线 ② 接线） | **验收 PASS**（12:10）：Teacher + 断点续训连续，7/7 步梯度非零，与 wandb 对账一致 | `docs/…/pipe-r3/acceptance.json` |
 | TB 2.1 官方基线（4B，n=1，正式） | **0/66 有效通过**（上界约 4.5%），23 题因镜像构建/额度未完成；三次评测一致 | `docs/…/tb21-4b-baseline-n1/summary.json` |

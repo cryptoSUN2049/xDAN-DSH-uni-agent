@@ -78,6 +78,6 @@ bash examples/harbor_opd_rl/launch-detached.sh \
 1. 读本文件 → `todo.md` 的 H5 → `memory.md` 最后三节 → `lessons.md` 第 44–46 条。
 2. `git log -3 --oneline`，确认 HEAD 已推送。
 3. 双卡 pod：`ssh -p 11965`，`nvidia-smi`；看进度：`tail runs/pipe-r11/driver.log`、`grep -a "Training Progress" runs/pipe-r11/train/train.log | tail -1`、`cat runs/pipe-r11/pipeline-summary.jsonl`。
-4. 效果：`python docs/verl-uni-agent-harbor-opd-rl/pipe-r9/resolve_by_step.py <run 目录>`（按步、按来源的二值解决率）。
+4. 效果：`python docs/performance-9b/pipe-r9/resolve_by_step.py <run 目录>`（按步、按来源的二值解决率）。
 5. 单卡 pod：`ssh -p 12063`；连不上说明还没重启，端口变了先跑 `gpu-pod-restore.sh <新端口>`。
 6. 每个节点 commit/push，关键事实写 `memory.md`，踩坑写 `lessons.md`。

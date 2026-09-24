@@ -46,7 +46,7 @@ flowchart LR
 1. `examples/harbor_opd_rl/eval_val_only.sh`：保留底层退出状态；保存失败证据；空结果或不足题数/样本数不得报告完整成功；GPU 路由诊断；如需配置调整，必须经实测验证。
 2. `examples/harbor_opd_rl/eval_checkpoint_matrix.py`（新增）：清单校验、逐版本脱机执行、GPU 占用检查、有界故障处理、状态更新和汇总；复用原评测与配对/行为统计入口。
 3. `tests/uni_agent/examples/test_harbor_eval_matrix.py`（新增）：失败传播、缺失样本、重复 pinned、有效已有结果复用、断点恢复与不覆盖证据。
-4. `docs/verl-uni-agent-harbor-opd-rl/checkpoint-full-eval/`：manifest、来源、每版本结果与最终报告。
+4. `docs/performance-9b/checkpoint-full-eval/`：manifest、来源、每版本结果与最终报告。
 5. `tasks/verl-uni-agent-harbor-opd-rl/handoff.md`：按用户当前目录约定记录本任务运行入口。
 
 ## 接口与统计合同

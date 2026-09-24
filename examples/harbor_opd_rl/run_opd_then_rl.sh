@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sequential OPD then RL (docs/verl-uni-agent-harbor-opd-rl/opd-then-rl-design.md §2), instead
+# Sequential OPD then RL (docs/performance-9b/opd-then-rl-design.md §2), instead
 # of S1's joint loss L = L_GRPO + 1.0*L_OPD at every step. Two run_opd_round.sh rounds:
 #   phase A  runs/<NAME>-opd  TEACHER=1 DISTILL_USE_TASK_REWARDS=False, OPD_STEPS steps: pure
 #            OPD (VERL zeroes the policy loss and fixes the distillation coefficient at 1.0).

@@ -1,3 +1,9 @@
+# 文档目录与数据配方（2026-09-24）
+
+- [x] 文档迁移至docs/performance-9b/；引用更新，历史运行证据保留原路径。
+- [x] 首轮数据来源/任务数/理由/新生领域/组件/独立split计划落盘。
+- [ ] 按20种子先建五个锚点，数据复验与教师成本核定后执行。
+
 # 当前主线：Agent SFT数据生产（2026-09-24）
 
 - [x] 用户确认tool-call独立小实验，不阻塞主线。
@@ -67,7 +73,7 @@ Review：用户已批准前文三模型对照方案。TB89×3×3、Verified500×
 
 - [x] 清点 S2 保留 checkpoint，识别 pinned 重复和 step58 文件异常。
 - [x] 只读对比成功/失败评测的显存、GPU 路由与启动阶段。
-- [x] 设计写入 docs/verl-uni-agent-harbor-opd-rl/checkpoint-full-eval-design.md。
+- [x] 设计写入 docs/performance-9b/checkpoint-full-eval-design.md。
 - [ ] 批准设计后修复评测失败传播，验证首题，执行全部78×4评测与整体报告。
 
 Review：目前没有新的评测结果；独立 step20 快检仍0题失败。相同显存配置曾成功，失败时额外占用来源未知，不归咎checkpoint。
@@ -78,7 +84,7 @@ Review：目前没有新的评测结果；独立 step20 快检仍0题失败。�
 - [x] 核实 S2 W&B 已记录 `val-core/*` / `val-aux/*`，但现有分析脚本没有读取；RL20/40/60 验证结果分别为 0.50 / 0.40625 / 0.50，OPD12 为 0.40625，OPD step12 的 step0 基线为 0.4375。
 - [x] 核实 RL 训练 59 个 rollout batch 中 57 个出现短组，累计 96 个失败 session；当前配置仍允许短组进入训练。
 - [x] 识别现有 acceptance 只验证“曾经非零梯度”，没有验证能力回退、有效组比例、预算、成本和自动止损。
-- [x] 写入 [训练体系 v2 设计](../docs/verl-uni-agent-harbor-opd-rl/training-system-v2-design.md)，包含架构、指标合同、W&B/verl-insight/Prometheus、固定验证集、行为预算、有效 RL 组、自动止损、HTML 内容收敛和测试计划。
+- [x] 写入 [训练体系 v2 设计](../docs/performance-9b/training-system-v2-design.md)，包含架构、指标合同、W&B/verl-insight/Prometheus、固定验证集、行为预算、有效 RL 组、自动止损、HTML 内容收敛和测试计划。
 - [ ] 用户审查并批准 P0/P1 设计后，实现 W&B 指标归一化、标准报告和控制器。
 - [ ] 用已完成 S2 W&B run 做离线回放，验证报告与日志逐步一致。
 - [ ] 注入短组、基础设施失败、验证集回退和成本越界测试，验证自动暂停与现场保留。
@@ -778,7 +784,7 @@ Review：CPU证据和历史Tinker证据不能代替本分支GPU闭环。当前�
 
 ## 2026-09-15 12:52 UTC：恢复观测，纠正历史阻塞记录
 
-SSH 已恢复成功读取。GPU 0%、约50GB显存，存在 metarsi-apus 推理/Ray 作业；本分支 runs 仅组件日志，限定目录检索未找到正式 launch/data/preflight/receipt。历史“必须等专用域名才能继续”记录不作为当前行动依据。详见 docs/verl-uni-agent-harbor-opd-rl/modal-blocker-audit.md。
+SSH 已恢复成功读取。GPU 0%、约50GB显存，存在 metarsi-apus 推理/Ray 作业；本分支 runs 仅组件日志，限定目录检索未找到正式 launch/data/preflight/receipt。历史“必须等专用域名才能继续”记录不作为当前行动依据。详见 docs/performance-9b/modal-blocker-audit.md。
 - [x] 核远端GPU、进程、组件日志与启动产物目录。
 - [ ] 核并同步远端产品源码到当前版本，保留其他项目进程。
 - [ ] 准备真实 task/image/RunSpec/data，执行真实 preflight。
@@ -792,7 +798,7 @@ Review：没有完整训练启动后卡在 Modal 的证据，不将组件通过�
 - [x] 重命名归档到 gump2049 私有 HF dataset 仓库。
 - [x] 校验远端大小与数据 SHA256，保存 HF 地址与 commit。
 
-Review：三套已验证完成；入口 docs/verl-uni-agent-harbor-opd-rl/hf-data-archives.md。归档不等于训练准入，未启动新训练。
+Review：三套已验证完成；入口 docs/performance-9b/hf-data-archives.md。归档不等于训练准入，未启动新训练。
 
 ## 2026-09-24 MOPD项目记忆
 - [x] 保存用户目标、token评分原理、跨族约束、静态SFT用途和两条候选路线。

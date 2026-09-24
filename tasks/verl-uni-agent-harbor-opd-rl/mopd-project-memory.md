@@ -1,6 +1,6 @@
 > 2026-09-24目标澄清：高性能9B具体优先接近Opus4.6的日常工作与Agent能力（交付物、工具、多步恢复、人工介入与成本）。OPD主线独立验证，midtraining并行准备；数学/知识作护栏。新画像方案见daily-agent-capability-plan.md，未实测的Agent/teacher优势填not_measured。
 
-> 2026-09-24 导航更新：唯一HTML入口 [我们的科学训练产线](../../docs/verl-uni-agent-harbor-opd-rl/training-production.html)。按产线架构与阶段目标双维组织；MiMo原报告为研究依据，architecture.html保留历史。组件选型不等于已部署，专项以验收结果完成。
+> 2026-09-24 导航更新：唯一HTML入口 [我们的科学训练产线](../../docs/performance-9b/training-production.html)。按产线架构与阶段目标双维组织；MiMo原报告为研究依据，architecture.html保留历史。组件选型不等于已部署，专项以验收结果完成。
 
 # Performance-9B：MOPD 核心项目记忆
 
@@ -10,12 +10,12 @@
 
 用户再次明确：核心是科学、专业、全流程、可观测、可分析的大模型训练产线，包括如何发现问题和受控解决问题、核心指标与infra；1000条OPD是首个验收实验，而不是把目标缩为一次训练。
 
-- [唯一HTML入口](../../docs/verl-uni-agent-harbor-opd-rl/architecture.html)
-- [产线总纲：指标/诊断/修复/职责](../../docs/verl-uni-agent-harbor-opd-rl/training-production-charter.md)
-- [项目索引与冷启动](../../docs/verl-uni-agent-harbor-opd-rl/project-index.md)
-- [1000条执行设计](../../docs/verl-uni-agent-harbor-opd-rl/training-pilot-1k-plan.md)
-- [详细v2组件合同](../../docs/verl-uni-agent-harbor-opd-rl/training-system-v2-design.md)
-- [真实训练验收](../../docs/verl-uni-agent-harbor-opd-rl/overnight/index.html)
+- [唯一HTML入口](../../docs/performance-9b/architecture.html)
+- [产线总纲：指标/诊断/修复/职责](../../docs/performance-9b/training-production-charter.md)
+- [项目索引与冷启动](../../docs/performance-9b/project-index.md)
+- [1000条执行设计](../../docs/performance-9b/training-pilot-1k-plan.md)
+- [详细v2组件合同](../../docs/performance-9b/training-system-v2-design.md)
+- [真实训练验收](../../docs/performance-9b/overnight/index.html)
 
 当前阶段明确多领域单27B教师OPD，长期MOPD目标不变。当前两份模型的文本原始token/评分/loss/更新/reload已通过实测；thinking1024仍fail，2048单例1751闭合。旧“待验收”“先纯RL”表述按历史解释。
 
@@ -88,8 +88,8 @@ B. 真正MOPD：用各域精选示范适配共同兼容开放底座，形成领�
 
 - [VERL官方OPD](https://github.com/verl-project/verl/blob/main/docs/algo/opd.md)：2026-09-24实际读取，共享tokenizer/vocab约束明确。
 - [Nemotron-Cascade 2 §4.4](https://arxiv.org/html/2603.19220v2)：2026论文，从共同SFT起点的领域最佳checkpoint选择教师，利用共同tokenizer避免额外对齐。
-- 数据方案：docs/verl-uni-agent-harbor-opd-rl/首次训练数据集合.md。
-- HF归档：docs/verl-uni-agent-harbor-opd-rl/hf-data-archives.md。
+- 数据方案：docs/performance-9b/首次训练数据集合.md。
+- HF归档：docs/performance-9b/hf-data-archives.md。
 - 训练执行记录：tasks/verl-uni-agent-harbor-opd-rl/performance-9b-execution.md（历史时间戳，不能替代实时状态）。
 
 ## 2026-09-24：9B与27B文件实查（不是完整评分验收）
@@ -105,4 +105,4 @@ B. 真正MOPD：用各域精选示范适配共同兼容开放底座，形成领�
 
 ## 2026-09-24 Agent SFT 与协议迁移
 
-用户希望继承MiMo数据思路，用强教师真实执行与高质量HF资产建设Agent SFT。权威方案为docs/verl-uni-agent-harbor-opd-rl/agent-sft-data-production-design.md与mimo-agent-sft-9b-report.html。保留中立轨迹，先用Qwen原生导出；Apus协议待明确，不默认新建特殊token。SFT不是OPD，模拟工具反馈不是环境执行证据，静态数据不自带在线teacher。先选模型起点并隔离模板迁移干预，再做单/多harness等预算对照。
+用户希望继承MiMo数据思路，用强教师真实执行与高质量HF资产建设Agent SFT。权威方案为docs/performance-9b/agent-sft-data-production-design.md与mimo-agent-sft-9b-report.html。保留中立轨迹，先用Qwen原生导出；Apus协议待明确，不默认新建特殊token。SFT不是OPD，模拟工具反馈不是环境执行证据，静态数据不自带在线teacher。先选模型起点并隔离模板迁移干预，再做单/多harness等预算对照。

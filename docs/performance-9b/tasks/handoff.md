@@ -5,11 +5,11 @@
 | 用途 | 绝对路径 |
 |---|---|
 | 本机 worktree（仓库根，所有命令在这里执行） | `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl` |
-| 本线文档目录 | `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl` |
-| 本文 | `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/handoff.md` |
-| 给 Codex 的交接封面 | `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/handoff/交接训练claude-to-codex-0919-2050.md` |
-| 每日训练日记 | `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/每日训练日记.md` |
-| GPU 排期与共用规则 | `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/gpu-schedule.md` |
+| 本线文档目录 | `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b` |
+| 本文 | `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/handoff.md` |
+| 给 Codex 的交接封面 | `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/handoff/交接训练claude-to-codex-0919-2050.md` |
+| 每日训练日记 | `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/每日训练日记.md` |
+| GPU 排期与共用规则 | `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/gpu-schedule.md` |
 | pod 上的 lane 根目录 | `/workspace/verl-uni-agent-harbor-opd-rl` |
 | pod 上的源码（脚本都从这里跑） | `/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent` |
 | pod 上的 runs（日志、checkpoint、评测） | `/workspace/verl-uni-agent-harbor-opd-rl/runs` |
@@ -321,37 +321,37 @@ bash examples/harbor_opd_rl/launch-detached.sh $L/runs/pipe-s2-supervise.log \
 
 **第一层：现状与规矩（约 20 分钟）**
 
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/handoff.md`：本文，讲现状、铁律和下一步
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/每日训练日记.md`：09-17 到 09-19 每天的结论、决策和费用
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/gpu-schedule.md`：GPU 排期，以及和评测会话共用这台 pod 的规则
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/lessons.md`：53 条踩坑记录，重点看第 44–53 条
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/memory.md`：逐条台账，从"2026-09-18 21:20"那一节读起
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/handoff.md`：本文，讲现状、铁律和下一步
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/每日训练日记.md`：09-17 到 09-19 每天的结论、决策和费用
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/gpu-schedule.md`：GPU 排期，以及和评测会话共用这台 pod 的规则
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/lessons.md`：53 条踩坑记录，重点看第 44–53 条
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/memory.md`：逐条台账，从"2026-09-18 21:20"那一节读起
 
 **第二层：结论是怎么得来的**
 
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/opd-then-rl-design.md`：第 0 节是格式更正，第 1 节是算法严查，第 5 节是老师打分审计
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/pipe-s1/quickcheck-step12/`：S1 快检的配对结果和行为指标
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/pipe-s1/teacher-scoring-audit/report.json`：打分审计的原始数字
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/verl-vs-tinker-algorithm.md`：两条线在算法上的差异，以更正后的表格为准
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/opd-then-rl-design.md`：第 0 节是格式更正，第 1 节是算法严查，第 5 节是老师打分审计
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/pipe-s1/quickcheck-step12/`：S1 快检的配对结果和行为指标
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/pipe-s1/teacher-scoring-audit/report.json`：打分审计的原始数字
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/verl-vs-tinker-algorithm.md`：两条线在算法上的差异，以更正后的表格为准
 - `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/open-question-opd-harm.md`：OPD 为什么有害；第 5 节是 VERL 的证据，第 7 节等着 pipe-s2 的结果
 - `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/retros/stage1-staged-opd-rl-v1-20260919-1130.md`：Tinker 的分阶段 run 为什么失败
 - `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/retros/stage1-teacher-ablation-v1-20260919-0327.md`：A' 为什么成功
 
 **第三层：数据与评测**
 
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/训练方案.md`：第 3 节题池与切片，第 6 节评估规则，第 12 节 S1 的实际配置
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/训练方案.md`：第 3 节题池与切片，第 6 节评估规则，第 12 节 S1 的实际配置
 - `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/eval-set-v1-design.md`：评估集怎么选的
 - `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/tasks/handoff-eval.md`：第 2、3 节，TB2.1 官方口径，以及在本 pod 上的 vLLM 方案
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/pipe-r9/reward-floor-finding.md`：为什么奖励默认二值
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/pipe-r11/report.md`：上一轮验收的范本
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/pipe-r9/reward-floor-finding.md`：为什么奖励默认二值
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/pipe-r11/report.md`：上一轮验收的范本
 
 **第四层：动手前查**
 
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/handoff-history-20260918-1830.md`：第 2 节一条命令起一轮训练，第 4 节成本纪律
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/handoff-history-20260918-1830.md`：第 2 节一条命令起一轮训练，第 4 节成本纪律
 - `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/.claude/skills/harbor-rl-operator/SKILL.md`：从新 pod 到一次完整训练，给 agent 用的操作手册
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/operator-runbook.md`：同一套流程的人工版
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/modal-cost-postmortem.md`：沙箱单价与泄漏
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/todo.md`：H5 到 H7，没做完的修复
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/operator-runbook.md`：同一套流程的人工版
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/modal-cost-postmortem.md`：沙箱单价与泄漏
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/todo.md`：H5 到 H7，没做完的修复
 
 **代码入口**（都在 `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/` 下）：
 
@@ -374,12 +374,12 @@ bash examples/harbor_opd_rl/launch-detached.sh $L/runs/pipe-s2-supervise.log \
 
 **不要当作事实来源：**
 
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/handoff-history.md`：09-15 的，里面有已撤回的阻塞归因
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/handoff-history-20260918-1830.md`：除第 2、4 节外的状态都过期了，比如 Modal 上限还写着 700
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/progress-report-2026-09-17.md`：09-17 的快照
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/notes.md`：09-15 的
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/handoff-history.md`：09-15 的，里面有已撤回的阻塞归因
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/handoff-history-20260918-1830.md`：除第 2、4 节外的状态都过期了，比如 Modal 上限还写着 700
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/progress-report-2026-09-17.md`：09-17 的快照
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/notes.md`：09-15 的
 - `verl-vs-tinker-algorithm.md` 的初版（2916e86）中"S1 蒸馏覆盖思考"的说法已被 61062e0 更正；`tasks/memory.md` 中 04:50 报告的"老师打分格式不一致"已在 05:40 一节撤回（lessons 53）
-- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/训练方案.md` 第 5、8、9 节：S1、S1-ctl、S2 的分轮计划、止损条件和预算，写于 700 美元上限时期，已被 pipe-s2 和负责人"不止损"的决定取代
+- `/Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/训练方案.md` 第 5、8、9 节：S1、S1-ctl、S2 的分轮计划、止损条件和预算，写于 700 美元上限时期，已被 pipe-s2 和负责人"不止损"的决定取代
 - `/Users/gumpm5/.claude/projects/-Users-gumpm5-Documents-Code-xDAN-DSH-uni-agent/memory/`：只给 Claude 会话用的索引，以仓库文档为准
 
 ## 11. 用户偏好

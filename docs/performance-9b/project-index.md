@@ -6,6 +6,7 @@
 
 | 需要什么 | 权威入口 | 状态 |
 |---|---|---|
+| 首轮Agent SFT完整数据配方 | [agent-sft-data-plan-v1.md](agent-sft-data-plan-v1.md) | 1000训练目标：420现成SFT＋580新生成；独立评测与成本门 |
 | Agent SFT主线与20种子任务 | [agent-sft-seed20-plan.md](agent-sft-seed20-plan.md) | 20题规格已列；环境/控制/真实轨迹待建设；tool-call实验独立 |
 | APUS Tool Call协议专项 | [apus-chat-v1-tool-call.md](apus-chat-v1-tool-call.md) | 设计合同；三层格式、状态机、mask、迁移与验收；实现待推进 |
 | MiMo Agent SFT 9B 专题 | [mimo-agent-sft-9b-report.html](mimo-agent-sft-9b-report.html) | 19章；含数据画像准入/强教师合成/Qwen-Apus迁移/多harness，论文事实、原理解释、实施建议分开；未启动新训练 |

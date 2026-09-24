@@ -1,5 +1,13 @@
 # 全版本 checkpoint 评测交接
 
+## 2026-09-24 文档目录统一与数据配方
+
+- 用户要求文档统一到docs/performance-9b/；整个旧文档树已迁移，内部相对结构保留。worktree与tasks目录名不变。历史JSON原始运行路径保留为证据，不当新执行入口。
+- 当前数据权威agent-sft-data-plan-v1.md：1000独立训练目标，代码200/办公200/数据200/翻译150/写作150/保留100。420现成SFT+80开源环境新生+500自有新生=1000；未构建ready。
+- 校准100（含20）+train1000+dev100+sealed200=1400独立任务规划。Curator编排，Uni-Agent真实执行，verifier+独立rubric验收。
+- 模板专项独立；未启动新训练或付费生成。未提交外来物料随目录保留，勿混入本次提交。
+
+
 ## 2026-09-24 主线收敛：数据生产与20种子
 
 - 用户确认tool-call自有格式后续按独立小实验执行，不阻塞数据主线。
@@ -10,7 +18,7 @@
 
 ## 2026-09-24 APUS Tool Call专项
 
-- 新权威文档docs/verl-uni-agent-harbor-opd-rl/apus-chat-v1-tool-call.md，覆盖数据/API/token三层、MiMo/Qwen差异、ID/参数/流式、mask、迁移实验及验收。已接项目索引与MiMo HTML。
+- 新权威文档docs/performance-9b/apus-chat-v1-tool-call.md，覆盖数据/API/token三层、MiMo/Qwen差异、ID/参数/流式、mask、迁移实验及验收。已接项目索引与MiMo HTML。
 - 当前仅文档；尚未实现模板/parser或启动训练。v1建议先E1外部适配，保持MiMo模型可见序列；多调用/并行/多模态不自动放行。
 - 下一步冻结支持范围和golden样例，再真实对照；上游模型来源保留。
 
@@ -27,7 +35,7 @@
 
 ## 2026-09-24 MiMo Agent SFT 9B 专题
 
-- 新报告 docs/verl-uni-agent-harbor-opd-rl/mimo-agent-sft-9b-report.html，14章：SFT起点/数据/mask原理/轨迹/数据工厂/分域GRPO/多harness/复现边界/两卡路线。已接产线HTML与索引。
+- 新报告 docs/performance-9b/mimo-agent-sft-9b-report.html，14章：SFT起点/数据/mask原理/轨迹/数据工厂/分域GRPO/多harness/复现边界/两卡路线。已接产线HTML与索引。
 - 固定HF revision 2367e865d009c13ac81713a2878291d33ab28177；模型卡、元数据、PDF33–36页摘录及hash位于mimo-agent-sft-evidence/。
 - 结论：监督SFT蒸馏不是OPD；公开权重不是表6各域RL模型。完整SFT超参与语料未核验，不能声称精确复现。
 - 远端检查时两卡0MiB/0%，MiMo权重未下载；旧evaluate.py强制thinking-off、默认原版tokenizer且无工具，不能直接作为新Agent选型评测。下一步须冻结原生模板/工具/预算合同再运行对照。
@@ -36,7 +44,7 @@
 ## 2026-09-24 日常工作Agent目标与双线推进
 
 - 用户收敛目标：接近Opus4.6日常工作/Agent能力，OPD有效性验证为主线，同时规划mid-training数据。
-- 新设计与实测审计：docs/verl-uni-agent-harbor-opd-rl/daily-agent-capability-plan.md；新HTML顶部已链接。
+- 新设计与实测审计：docs/performance-9b/daily-agent-capability-plan.md；新HTML顶部已链接。
 - 旧30题仅14条可评分、无工具；teacher只多过一条关键词，代码min_Jumps样本存在题面示例冲突，不可据语法通过宣称教师功能优势。
 - Qwen卡片部分Opus比较非同口径；新100个工作任务规格为待构建开发诊断，非已完成评测。1K文本配额不冒充Agent课程。
 - midtraining历史123GB画像不是当前可读库存：主要是小样；先核验来源/完整性/许可/token，再依能力缺口配方。
@@ -45,7 +53,7 @@
 
 ## 2026-09-24 独立产线HTML入口
 
-- 用户批准独立于MiMo研究报告建立我们自己的科学训练产线。新唯一入口：docs/verl-uni-agent-harbor-opd-rl/training-production.html。
+- 用户批准独立于MiMo研究报告建立我们自己的科学训练产线。新唯一入口：docs/performance-9b/training-production.html。
 - 双维导航：产线架构 / 阶段目标；研究来源辅助入口。Curator、Teich、Verifier、观测控制与OPD/MOPD/规模化RL专项均写明职责、状态和验收。
 - 原MiMo HTML未修改，architecture.html保留历史并链接新入口。详细总纲与1K合同仍为权威设计，HTML不代替原始证据。
 - 本轮仅文档/导航，无训练或infra部署；1000条尚未ready、云观测与质量止损仍待验收。
@@ -55,7 +63,7 @@
 ## 2026-09-24 当前主任务：科学训练产线与1000条pilot
 
 - 用户已确认：建立完整专业可观测、可分析、可诊断修复的大模型训练产线，1000条多领域单教师OPD为首个受控实验；长期MOPD目标保留。
-- 先读 docs/verl-uni-agent-harbor-opd-rl/project-index.md → training-production-charter.md → training-pilot-1k-plan.md；HTML唯一导航为training-production.html。
+- 先读 docs/performance-9b/project-index.md → training-production-charter.md → training-pilot-1k-plan.md；HTML唯一导航为training-production.html。
 - 当前仅设计/盘点/项目记忆索引已更新；1000条未构建、未启动新训练。原始源足够多，但代码120条、科学旧40审计仅4保留、聊天头部240行均不能直接扩成高质量1000。
 - 现有原生文本OPD链路已验收；不能说Uni-Agent/Harbor工具路线、W&B云端与真实verl-insight后端、质量止损已全部接通。按P0合同/评分→观测/控制真实验收→有界pilot推进。
 - 最新新文档/已有修改位于既有performance-9b worktree，保留之前未提交变更；勿stash/reset或把旧纯RL提案作为本轮启动依据。
@@ -76,7 +84,7 @@
 - 后续新请求：用户要求进一步确认适配、定位VERL源码，并允许考虑数据不足时扩大训练。当前先做深度验收，不重复原122条冒充扩量。远端runs/opd-deep-audit-20260924，driver1037003；CPU实际loss独立损失/梯度/边界控制通过，HF五域文本重放+EOS已完成，vLLM对照运行中。原训练没存逐token张量，重放不是历史精确重建。文档tokenizer-opd-compatibility/deep-source-audit.md、deep-design.md。待结果完成后再定扩量与验证集。
 
 - **最终：19:06:59 UTC全部队列完成，driver979002已退出。** 正式16步、四ckpt导出、五adapter独立重载均成功；7版本×30题=210输出，infra0。最终step16 math5/5（base4/5），IF5/8、knowledge1/1不变；仅幂塔题4037token内输出boxed0352改善，不能外推全面收益。
-- **最终入口**：docs/verl-uni-agent-harbor-opd-rl/overnight/index.html。final-analysis.json置顶结论；final-evaluation-audit.json逐条身份/重评分；final-weight-audit.json实际远端权重SHA与导出及eval一致；training-completion-audit.json全16步有限loss/grad；sampling-audit.json128轨迹覆盖121样本。最终summarize已显式重跑，medians与reload关联已更新。
+- **最终入口**：docs/performance-9b/overnight/index.html。final-analysis.json置顶结论；final-evaluation-audit.json逐条身份/重评分；final-weight-audit.json实际远端权重SHA与导出及eval一致；training-completion-audit.json全16步有限loss/grad；sampling-audit.json128轨迹覆盖121样本。最终summarize已显式重跑，medians与reload关联已更新。
 - **页面验收**：桌面1280×720截图检查、手机390×844无横向溢出，7模型对照表，report-qa.json锁定HTML SHA。远端control-attempt2保留全部日志、权重和W&B offline run。无新增付费沙箱调用。
 - **后续非本轮完成条件**：科学扩量、代码隔离执行评分、聊天质量评分、封存测试、近重复污染审计、W&B同步、性能触发止损、thinking/tool专项。不要把本轮有限验收改称全面高性能训练完成。此前时间线为历史快照。
 
@@ -125,7 +133,7 @@
 - CPU tokenizer、HF/vLLM评分门通过；105响应token mean_abs_error0.01044，p950.07962，仅短序列关闭thinking试验。
 - 修复vLLM sampler兼容：VLLM_USE_FLASHINFER_SAMPLER=0。用户授权的Decision Index PID897129已停止。
 - 顺序：smoke1→导出/重载评测→正式16步每4步保存→base/teacher/所有有效checkpoint同预算评测。当前仅smoke启动，未证明更新成功。
-- 脚本与HTML：`docs/verl-uni-agent-harbor-opd-rl/overnight/`；后续同步远端state、index、models、metrics回本地。
+- 脚本与HTML：`docs/performance-9b/overnight/`；后续同步远端state、index、models、metrics回本地。
 - 自动报告10秒刷新；时限停止已实现，性能触发止损尚未实现；W&B offline。异常需保留日志并修复，不重复空跑。
 - 当前分支performance-9b，已有未提交变更，勿覆盖。
 
@@ -135,10 +143,10 @@
 - 本轮S2所有保留版本，加原版与S1 step12；GPU0全量队列持续运行。
 - 已有完整结果：原版64.10%、OPD12 43.27%、RL20 50.96%、RL40 47.76%、RL60 46.15%；OPD12/RL20已补齐infra缺失。
 - 新授权：TB2.1→SWE-bench Verified，固定原版/OPD12/RL60，GPU1。数据审计完成，正在验证沙箱/评分器。全量启动待核实既有Modal900美元上限；当前账单856.04美元。
-- 先读 `docs/verl-uni-agent-harbor-opd-rl/checkpoint-full-eval-design.md`；旧训练历史在该 docs 目录的 `tasks/handoff.md`。
+- 先读 `docs/performance-9b/checkpoint-full-eval-design.md`；旧训练历史在该 docs 目录的 `tasks/handoff.md`。
 
 ## 本轮交付物
-- `docs/verl-uni-agent-harbor-opd-rl/checkpoint-full-eval-design.md`：候选清单、流程图、接口、费用、验证与拟改文件。
+- `docs/performance-9b/checkpoint-full-eval-design.md`：候选清单、流程图、接口、费用、验证与拟改文件。
 - 本文件：当前任务冷启动入口；文件行数可用 `wc -l` 复核。
 
 ## 设计约束
@@ -178,7 +186,7 @@
 - 训练12:53 UTC PASSED，最终60步保存；delta失败原因是损坏的step58，supervisor已完成退出。
 - 新文件 eval_result_check.py：精确parquet任务身份、每题样本数、checkpoint加载证明、底层退出码；validation.json complete才通过。
 - 新文件 eval_checkpoint_matrix.py：manifest哈希、数据/基线哈希、进程锁、GPU空闲检查、每版本独立目录、有限重试、0样本停止、配对/行为汇总。
-- manifest：docs/verl-uni-agent-harbor-opd-rl/checkpoint-full-eval/manifest.json；服务器 runs/full-matrix-manifest-20260920.json。
+- manifest：docs/performance-9b/checkpoint-full-eval/manifest.json；服务器 runs/full-matrix-manifest-20260920.json。
 - Probe：runs/matrix-probe60，脱机sid2663882，GPU0，step60，1题1次，原推理配置0.6/36864，model-only加载；14:20 UTC开始。
 - Queue：runs/full-matrix-20260920-launch.log，gate.json/state在runs/full-matrix-20260920；初次等待进程已停止并更新竞态保护后重挂。
 - step58 archive损坏已确认；保留证据，标记unavailable。
@@ -193,7 +201,7 @@
 - OPD12/RL20各两次后仍311/312，原队列标exhausted。固定以attempt2补缺，不能挑得分高的attempt。
 - OPD12缺TL10836：tmux no server；RL20缺TL08999：verifier timeout300s。只补infra缺口，不改已有效0分；由eval_supplement.py新模块执行（实现中）。
 - GPU0评OPD10，GPU1空闲可补缺；运行队列仍旧进程，不能声称新代码自动热更新。
-- 新证据目录 docs/verl-uni-agent-harbor-opd-rl/checkpoint-full-eval/evidence-20260921/。
+- 新证据目录 docs/performance-9b/checkpoint-full-eval/evidence-20260921/。
 - 尚未得到全版本整体结果；用户明确要继续推进。
 
 ## 2026-09-21 补测部署
@@ -206,11 +214,11 @@
 ## 2026-09-21 补测完成与跨集方案
 - 补测驱动14:43:23 UTC exit=0。OPD12/RL20 aggregate validation均complete、errors=[]，每题4次无缺失。
 - OPD12补齐43.27%，相对原版-20.83pp，95%区间[-28.53,-13.14]；RL20补齐50.96%，差-13.14pp，区间[-18.59,-7.37]。pair已存到checkpoint-full-eval/evidence-20260921/。
-- 用户询问OPD+RL是否无效、能否评测其他软件benchmark。新文档docs/verl-uni-agent-harbor-opd-rl/cross-benchmark-proposal.md记录结论边界、TB2.1/Verified/EvalPlus可行性和三模型对照方案。
+- 用户询问OPD+RL是否无效、能否评测其他软件benchmark。新文档docs/performance-9b/cross-benchmark-proposal.md记录结论边界、TB2.1/Verified/EvalPlus可行性和三模型对照方案。
 - TB2.1 parquet远端存在；Verified适配入口存在但未端到端验证。新benchmark尚未启动。不能将本次序列训练结果推广为所有OPD/RL无效；缺严格纯RL对照。
 
 ## 2026-09-21 新跨集评测授权与部署
-- 用户明确要求完成TB2.1后SWE-bench Verified三模型同预算评测，原队列继续。范围/manifest/config/audit均在docs/verl-uni-agent-harbor-opd-rl/cross-benchmark/。
+- 用户明确要求完成TB2.1后SWE-bench Verified三模型同预算评测，原队列继续。范围/manifest/config/audit均在docs/performance-9b/cross-benchmark/。
 - Verified500题已下载。两套与实际S2训练500题的canonical ID/repo/题面哈希/词7-gram相似度检查无重叠；任务内容SHA已存，不能称语义污染完全排除。
 - Verified500个verifier均采用FAIL_TO_PASS/PASS_TO_PASS及ResolvedStatus.FULL。远端nop/oracle控制驱动sid3495293，日志runs/cross-benchmark-20260921/verifier-controls.log。
 - 新driver eval_benchmark_matrix.py，base/OPD12/RL60各固定3题探针后全量（TB n3、Verified n1）；--probe-only只验证不启动全量；base补缺已支持。新20测试通过；旧gate/matrix14通过；全仓Ruff lint/format通过。
@@ -222,7 +230,7 @@
 
 ## 2026-09-23 HF 数据归档完成
 
-- 三套数据已重命名保存到 gump2049 私有 HF 仓库；入口 `docs/verl-uni-agent-harbor-opd-rl/hf-data-archives.md`，机器记录 `hf-data-archives.json`。
+- 三套数据已重命名保存到 gump2049 私有 HF 仓库；入口 `docs/performance-9b/hf-data-archives.md`，机器记录 `hf-data-archives.json`。
 - 保留上游固定 revision、数据文件、许可证、README 与 provenance SHA256。远端内容核验完成。
 - 下一步仍是训练准入审计；不要把 archived_unvalidated 当成可直接训练。
 - 当前分支 performance-9b；本次归档不修改训练进程，不能据此更新实时训练状态。

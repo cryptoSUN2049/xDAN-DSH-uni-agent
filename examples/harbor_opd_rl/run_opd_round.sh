@@ -142,7 +142,7 @@ else
   # Teacher engine kept 68 GB on GPU1 with no trainer alive. With no trainer running,
   # anything still holding a GPU is an orphan of an earlier run, except processes started
   # with KEEP_GPU_PROCESS=1 (another session's vllm serve on the GPU a one-GPU run leaves
-  # free; gpu_orphans.sh, docs/verl-uni-agent-harbor-opd-rl/gpu-schedule.md).
+  # free; gpu_orphans.sh, docs/performance-9b/gpu-schedule.md).
   if [[ ${SMOKE} -ne 1 ]]; then
     orphans=$(bash "${REPO_ROOT}/examples/harbor_opd_rl/gpu_orphans.sh" | tr '\n' ' ' | sed 's/ *$//')
     if [[ -n "${orphans}" ]]; then

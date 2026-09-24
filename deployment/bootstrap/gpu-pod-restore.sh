@@ -41,4 +41,4 @@ fi
 
 echo "[restore] lane proof (pipeline env stage)"
 "${SSH[@]}" "cd ${LANE_ROOT}/src/uni-agent && PIPE_ROOT=${LANE_ROOT}/runs/pod-restore-\$(date -u +%Y%m%dT%H%M) bash examples/harbor_opd_rl/stages/00_env.sh"
-echo "[restore] done. New port ${PORT}: update docs/verl-uni-agent-harbor-opd-rl/tasks/handoff.md"
+echo "[restore] done. New port ${PORT}: update docs/performance-9b/tasks/handoff.md"

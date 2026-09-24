@@ -105,7 +105,7 @@ pass_ratio reward（verifier CTRF 部分得分）让 4B 在 easy 4 题上出现�
 
 ## 2026-09-16 16:47 路线 ① 机制闭环验收 PASS
 
-`run_tb21_pipeline.sh` 一条命令跑完 env→data→oracle→rollout→train(3 步 colocate_async)→delta→resume(step 4)→summary→acceptance，verdict PASS（hard 3 项、soft 5 项全 true）。证据 `docs/verl-uni-agent-harbor-opd-rl/pipe-r1/`。wandb：train `ohz52n9r`、resume `6iwtnfu6`。
+`run_tb21_pipeline.sh` 一条命令跑完 env→data→oracle→rollout→train(3 步 colocate_async)→delta→resume(step 4)→summary→acceptance，verdict PASS（hard 3 项、soft 5 项全 true）。证据 `docs/performance-9b/pipe-r1/`。wandb：train `ohz52n9r`、resume `6iwtnfu6`。
 已知现象：grad_norm 只在组内有方差的 step 非零（step 1、3），step 2、4 组内同分 → 0；4B 在 easy 4 题上 16 条轨迹中 16 条撞 max_turns=50、5 条 completed。下一轮的杠杆：stage1 数据（多样性）、n=8、并发 16、held-out 打开、DAPO。
 
 ## 2026-09-17 00:45 2 卡 pod 与路线 ② 起步
@@ -117,7 +117,7 @@ pass_ratio reward（verifier CTRF 部分得分）让 4B 在 easy 4 题上出现�
 pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，step 1/2 完成 hybrid 更新，wandb 出现 `actor/distillation/*` 指标。自评 Teacher 下 distillation loss ≈ 0 是正确的零点校验（k1 = log p_student − log p_teacher）。27B Teacher 与 9B Student 已在 `/workspace/models/`，pipe-r4 只改 `TEACHER_MODEL_PATH`。
 
 ## 2026-09-17 07:46 pipe-r2（stage1 20 题纯 RL）验收 PASS
-- 证据 `docs/verl-uni-agent-harbor-opd-rl/pipe-r2/`：acceptance.json（PASS，hard 3/3 soft 5/5）、report-tables.md、verdict.json、delta.json；wandb train `dzlqgapu`、resume `eg1ix7eo`。
+- 证据 `docs/performance-9b/pipe-r2/`：acceptance.json（PASS，hard 3/3 soft 5/5）、report-tables.md、verdict.json、delta.json；wandb train `dzlqgapu`、resume `eg1ix7eo`。
 - held-out（validation 5 题，n=1）：0.328 → 0.497（step 6）→ 0.458（step 7）；同一 checkpoint 两次评估差 0.06（0.497 vs 0.56），5 题的噪声就是这个量级，只作机制证据。
 - 轨迹终止分布仍以 max_turns 为主（train 72/122、resume 22/42），parse_error 14/10；这两项是下一步的样本效率问题，不是链路问题。
 - pipe-r3（4B 自评 Teacher，wandb `pg4xsj19`）重训中：step 1 约 906 s，distillation/loss ≈ -0.0001（自评应为 0），预计 09:30 UTC 前进入 delta/resume。

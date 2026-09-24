@@ -1,4 +1,4 @@
-"""Teacher format guard for OPD (docs/verl-uni-agent-harbor-opd-rl/opd-then-rl-design.md section 4).
+"""Teacher format guard for OPD (docs/performance-9b/opd-then-rl-design.md section 4).
 
 The Teacher scores the student's training sequence as it is: prompt logprobs over the exact
 token ids the Gateway built. It judges the student in its own native format only when that

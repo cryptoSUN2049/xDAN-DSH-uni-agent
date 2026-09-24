@@ -1,6 +1,6 @@
 # 最新纠正：Modal 尚未被证实为训练卡点
 
-2026-09-15 用户要求复核：下文历史记录中“等待专用域名/Tunnel”的阻塞归因已撤回。该配置是自建 ingress 的方案约束；真实 Modal lifecycle smoke 已通过，尚无完整 Trial 在 Gateway 连接阶段失败的证据。SSH banner timeout 只证明本次无法观测服务器。下一步先恢复观测、检查真实启动输入及可达路由，不以专用域名作为唯一恢复条件。详见 docs/verl-uni-agent-harbor-opd-rl/modal-blocker-audit.md。
+2026-09-15 用户要求复核：下文历史记录中“等待专用域名/Tunnel”的阻塞归因已撤回。该配置是自建 ingress 的方案约束；真实 Modal lifecycle smoke 已通过，尚无完整 Trial 在 Gateway 连接阶段失败的证据。SSH banner timeout 只证明本次无法观测服务器。下一步先恢复观测、检查真实启动输入及可达路由，不以专用域名作为唯一恢复条件。详见 docs/performance-9b/modal-blocker-audit.md。
 
 # TL;DR
 
@@ -27,12 +27,12 @@
 - `uni_agent/tasks/harbor_dsh/isolated_trial.py`（388 行）
 - `uni_agent/tasks/harbor_dsh/worker.py`（226 行）
 - `tests/uni_agent/framework/test_teacher_loss_on_cpu.py`（156 行）
-- `docs/verl-uni-agent-harbor-opd-rl/modal-backend-design.md`（113 行）
-- `docs/verl-uni-agent-harbor-opd-rl/modal-controller-notes.md`（61 行）
+- `docs/performance-9b/modal-backend-design.md`（113 行）
+- `docs/performance-9b/modal-controller-notes.md`（61 行）
 - Teacher timeout/scoring/rollout/version、Modal helper/scope/executor/Trial/Worker测试：对应上述源码的tests目录。
-- `docs/verl-uni-agent-harbor-opd-rl/async-lora-validation.md`（78行）：真实同步缺口及GPU验收步骤。
+- `docs/performance-9b/async-lora-validation.md`（78行）：真实同步缺口及GPU验收步骤。
 - `examples/harbor_opd_rl/{base,rl,opd,hybrid}.yaml` 与 `launch.py`：原生训练配置与入口。
-- `docs/verl-uni-agent-harbor-opd-rl/{integration-design,training-recipes,teacher-bridge-review}.md`：架构、算法与CPU证据。
+- `docs/performance-9b/{integration-design,training-recipes,teacher-bridge-review}.md`：架构、算法与CPU证据。
 - `tasks/todo.md`、`tasks/lessons.md`、本目录 `memory.md`：计划、纠正与持久决策。
 
 # 设计约束
@@ -107,7 +107,7 @@ CPU命令解释器 `/private/tmp/uni-agent-opd-upgrade-cpu/bin/python`；PYTHONP
 - 不再重复原生入口实现。下一步用户双卡/域名资源就绪后，先真实preflight，再separate_async训练、权重发布、TQ恢复和独立serving验证。
 
 ## 启动条件核查
-- 见docs/verl-uni-agent-harbor-opd-rl/acceptance-status.md完整矩阵。
+- 见docs/performance-9b/acceptance-status.md完整矩阵。
 - 本地未找到可复用launch/data；本轮远端2次SSH banner超时，文件/占用未知，不能误判远端不存在或停机。
 - 用户已被询问双卡SSH和专用Gateway域名；等待回复。下次先恢复观测，再完成真实preflight和正式训练。当前阻塞审计首次，goal保持active。
 
@@ -119,7 +119,7 @@ CPU命令解释器 `/private/tmp/uni-agent-opd-upgrade-cpu/bin/python`；PYTHONP
 
 ## 2026-09-15 12:52 UTC：恢复观测，纠正历史阻塞记录
 
-SSH 已恢复成功读取。GPU 0%、约50GB显存，存在 metarsi-apus 推理/Ray 作业；本分支 runs 仅组件日志，限定目录检索未找到正式 launch/data/preflight/receipt。历史“必须等专用域名才能继续”记录不作为当前行动依据。详见 docs/verl-uni-agent-harbor-opd-rl/modal-blocker-audit.md。
+SSH 已恢复成功读取。GPU 0%、约50GB显存，存在 metarsi-apus 推理/Ray 作业；本分支 runs 仅组件日志，限定目录检索未找到正式 launch/data/preflight/receipt。历史“必须等专用域名才能继续”记录不作为当前行动依据。详见 docs/performance-9b/modal-blocker-audit.md。
 - [x] 核远端GPU、进程、组件日志与启动产物目录。
 - [ ] 核并同步远端产品源码到当前版本，保留其他项目进程。
 - [ ] 准备真实 task/image/RunSpec/data，执行真实 preflight。

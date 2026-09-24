@@ -45,7 +45,7 @@ nohup bash examples/harbor_opd_rl/run_tb21_pipeline.sh > $PIPE_ROOT/driver.log 2
 ## 4. 结束后
 1. `cat $PIPE_ROOT/acceptance/acceptance.json | head -c 600`：`verdict` 为 `PASS` / `MECHANICS_ONLY` / `FAIL`。
 2. `cat $PIPE_ROOT/acceptance/report-tables.md`：统一对比表（reward、组内方差、非零梯度 step、轨迹终止、OPD 三行、held-out）。
-3. 把 `acceptance.json`、`verdict.json`、`delta.json`、`report-tables.md` 拷进 `docs/verl-uni-agent-harbor-opd-rl/<run-name>/`，commit + push。
+3. 把 `acceptance.json`、`verdict.json`、`delta.json`、`report-tables.md` 拷进 `docs/performance-9b/<run-name>/`，commit + push。
 4. 决定下一轮参数（见 SKILL §4），或换模型（`MODEL_PATH` / `TEACHER_MODEL_PATH`）。
 
 ## 5. 出问题时
@@ -63,6 +63,6 @@ nohup bash examples/harbor_opd_rl/run_tb21_pipeline.sh > $PIPE_ROOT/driver.log 2
 - 源码 git 检出的换入（`src/uni-agent.git-checkout` → `src/uni-agent`）等所有 run 结束后做。
 
 ## 7. 参考
-- 架构图：`docs/verl-uni-agent-harbor-opd-rl/architecture.html`
+- 架构图：`docs/performance-9b/architecture.html`
 - 环境：`uv-runbook.md`；踩坑：`tasks/lessons.md`；交接：`tasks/handoff.md`
 - 训练分析：`.claude/skills/rl-training-analyst/SKILL.md`

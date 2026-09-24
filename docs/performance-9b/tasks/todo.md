@@ -27,7 +27,7 @@
 - [x] **pipe-r1 attempt5 train 通过（colocate_async，3 步，48 min）**：step1 score 0.333/0.667/0.25，grad_norm 0.020；wandb `ohz52n9r`
 - [x] **delta 通过**：504/504 LoRA adapter 张量变化，399/399 base 张量不变（`checkpoint_delta.py`）
 - [x] **resume 通过**：新进程从 global_step_3 加载 model/optimizer/rng/lr_scheduler，续训到 step 4（wandb `6iwtnfu6`）
-- [x] **acceptance = PASS（2026-09-16 16:47 UTC）**：hard{mechanics, all_finite, resume_continued} 与 soft{learning_signal, reward_variance, wandb_ok, adapter_changed, base_unchanged} 全 true；证据 `docs/verl-uni-agent-harbor-opd-rl/pipe-r1/`
+- [x] **acceptance = PASS（2026-09-16 16:47 UTC）**：hard{mechanics, all_finite, resume_continued} 与 soft{learning_signal, reward_variance, wandb_ok, adapter_changed, base_unchanged} 全 true；证据 `docs/performance-9b/pipe-r1/`
 - 证据：`runs/tb21-rl-r1/`
 
 ## 总路线（用户 2026-09-16 明确顺序）

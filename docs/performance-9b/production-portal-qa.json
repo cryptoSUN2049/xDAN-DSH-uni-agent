@@ -13,5 +13,6 @@
   "directory_search": true,
   "console_after_reload": [],
   "source_mimo_sha256": "c155520da66fdae497e6e50646b74319f6a05c629196b7b15dd20481ae1deb4a",
-  "review": "Updated daily-work/Agent goal, audited existing evidence; new Agent baseline not run."
+  "review": "Updated daily-work/Agent goal, audited existing evidence; new Agent baseline not run.",
+  "migration_check": "docs/performance-9b relative links verified"
 }

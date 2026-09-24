@@ -1,29 +1,29 @@
 交接文档本身：
-  /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/handoff.md
+  /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/handoff.md
 
 ## 直接执行：Codex 接手阅读清单
 
 **第一层：现状与规矩（约 20 分钟）**
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/handoff.md：现状、铁律、下一步
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/每日训练日记.md：09-17 到 09-19 每天的结论、决策、费用
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/gpu-schedule.md：GPU 排期，以及与 Tinker 评测会话共用 pod 的规则
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/lessons.md：踩过的坑，重点看第 44–53 条
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/memory.md：逐条台账，从"2026-09-18 21:20"一节读起
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/handoff.md：现状、铁律、下一步
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/每日训练日记.md：09-17 到 09-19 每天的结论、决策、费用
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/gpu-schedule.md：GPU 排期，以及与 Tinker 评测会话共用 pod 的规则
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/lessons.md：踩过的坑，重点看第 44–53 条
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/memory.md：逐条台账，从"2026-09-18 21:20"一节读起
 
 **第二层：结论是怎么得来的**
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/opd-then-rl-design.md：格式更正、算法严查、老师打分审计（第 0、1、5 节）
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/pipe-s1/quickcheck-step12/：S1 第 12 步退步 −0.172 的配对与行为证据
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/pipe-s1/teacher-scoring-audit/report.json：打分审计的原始数字
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/verl-vs-tinker-algorithm.md：两条线的算法差异（以更正后的版本为准）
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/opd-then-rl-design.md：格式更正、算法严查、老师打分审计（第 0、1、5 节）
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/pipe-s1/quickcheck-step12/：S1 第 12 步退步 −0.172 的配对与行为证据
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/pipe-s1/teacher-scoring-audit/report.json：打分审计的原始数字
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/verl-vs-tinker-algorithm.md：两条线的算法差异（以更正后的版本为准）
 - /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/open-question-opd-harm.md：OPD 为什么有害，读第 5、7 节
 - /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/retros/stage1-staged-opd-rl-v1-20260919-1130.md：Tinker 先 OPD 再 RL 为什么失败
 
 **第三层：数据与评测（写下一轮方案前必读）**
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/训练方案.md：题池、切片、评估规则、S1 的实际配置（第 3、6、12 节）
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/训练方案.md：题池、切片、评估规则、S1 的实际配置（第 3、6、12 节）
 - /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/eval-set-v1-design.md：评估集怎么选的
 - /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/tinker-cookbook-opd-rl/docs/tinker-cookbook-opd-rl/tasks/handoff-eval.md：TB2.1 官方口径，以及在本 pod 上的 vLLM 方案（第 2、3 节）
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/pipe-r9/reward-floor-finding.md：为什么奖励默认二值
-- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/pipe-r11/report.md：上一轮验收的范本
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/pipe-r9/reward-floor-finding.md：为什么奖励默认二值
+- /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/pipe-r11/report.md：上一轮验收的范本
 
 第四层（动手前查）、代码入口、"不要当作事实来源"的清单：在交接文档第 10 节，同样都是绝对路径。
 
@@ -47,6 +47,6 @@
 
 给 Codex 的启动指令本身也要带绝对路径。最省事的是一句话：
 
-> 先读 /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/verl-uni-agent-harbor-opd-rl/tasks/handoff.md，按第 10 节的顺序读完，先处理第 7 节里 09-20 01:00 UTC 截止的那一项，再开始动手。
+> 先读 /Users/gumpm5/Documents/Code/xDAN-DSH-uni-agent/.Codex/worktrees/verl-uni-agent-harbor-opd-rl/docs/performance-9b/tasks/handoff.md，按第 10 节的顺序读完，先处理第 7 节里 09-20 01:00 UTC 截止的那一项，再开始动手。
 
 其余路径都在交接文档里，指令就不必重复列一遍，免得两处不一致。
