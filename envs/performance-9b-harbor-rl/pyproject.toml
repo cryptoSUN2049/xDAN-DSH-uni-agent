@@ -1,0 +1,31 @@
+[project]
+name = "apus-performance-9b-harbor-rl"
+version = "0.1.0"
+description = "Pinned GPU environment for APUS performance-9b Harbor/VERL training"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "torch==2.11.0",
+  "transformers==5.9.0",
+  "vllm==0.23.0",
+  "ray[default]==2.54.1",
+  "wandb==0.30.0",
+  "harbor==0.16.1",
+  "modal==1.5.5",
+  "peft",
+  "datasets",
+  "pyarrow>=19,<26",
+  "accelerate",
+  "hydra-core",
+  "pandas",
+  "tensorboard",
+  "uni-agent",
+  "verl",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+# The two editable sources are resolved from the repository checkout on Runpod.
+uni-agent = { path = "../..", editable = true }
+verl = { path = "../../verl", editable = true }

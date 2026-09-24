@@ -947,3 +947,14 @@ Review: 新入口16节、47链接检查无断链/重复ID；桌面1280与移动3
 - [x] 形成daily-agent-capability-plan.md：OPD主线、mid-training准备线和能力画像。
 - [ ] 构建经评分校准的日常任务诊断集与teacher优势四象限。
 - [ ] 完成1K数据/控制门及有界OPD有效性试验；mid-training只先准备资产。
+## 当前 goal：数据工程完整打通（2026-09-25）
+
+- [x] 在 Runpod 固定源归档上完成 screened-v2 → `apus-sft-v1` 结构导出；输入 62,030、导出 62,030、拒绝 0。
+- [x] 完成流式 schema/JSON/消息监督/工具参数/哈希校验；62,030 行、2,870,105,620 bytes、bad=0，报告见 `docs/performance-9b/contract-v1-evidence/validation.json`。
+- [x] 保留失败边界：当前只是 `structurally_screened`，不是 `training_ready`；teacher、language、source split/license、reasoning policy 与固定验证集准入仍未闭环。
+- [ ] 回读原始 manifest 补齐 source_file/source_split/license/language/teacher evidence，重新生成带证据的母本。
+- [ ] 生成固定 validation/sealed manifest，做跨源任务组隔离、近重复与污染门禁。
+- [ ] 在母本上实现 Arrow/Parquet/HF 与 ms-swift/VERL 双导出及 mask/tokenizer 回归。
+- [ ] 仅在准入池达标后抽取 20K，上传 HF 并启动有界训练。
+
+Review：本节点完成的是数据工程结构链路和可审计证据，不宣称数据已足够训练；62,030 行候选仍受质量门禁约束。

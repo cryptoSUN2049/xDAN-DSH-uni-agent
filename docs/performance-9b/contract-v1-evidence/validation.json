@@ -1,0 +1,31 @@
+{
+  "schema_version": "apus-sft-v1",
+  "rows": 62030,
+  "bytes": 2870105620,
+  "sha256": "c75aa7068031837f749d826e265c594e7fef657e10d0a47af5669d597e7dff37",
+  "domains": {
+    "code": 44945,
+    "reasoning": 13121,
+    "general": 3964
+  },
+  "teacher_families": {
+    "gpt56": 32624,
+    "qwen38": 29406
+  },
+  "splits": {
+    "train": 59164,
+    "validation": 2866
+  },
+  "task_groups": 26757,
+  "quality_flags": {
+    "reasoning_policy_unresolved": 54682,
+    "teacher_identity_unresolved": 62030,
+    "language_unresolved": 62030,
+    "source_split_unresolved": 62030,
+    "source_license_unresolved": 62030
+  },
+  "bad_count": 0,
+  "bad_examples": [],
+  "training_ready": false,
+  "reason": "structural export only; teacher/language/reasoning/license and fixed validation admission remain unresolved"
+}

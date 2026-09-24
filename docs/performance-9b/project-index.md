@@ -2,7 +2,7 @@
 
 - [统一训练数据字段契约 v1](统一训练数据字段契约-v1.md)：27个顶层columns、messages/tool_calls/supervision子结构、三层数据边界及迁移验收。
 - [机器可读列清单](统一训练数据字段契约-v1.columns.json)：数据版本apus-sft-v1；协议版本apus-chat-v1独立。
-- 状态：字段设计已冻结，screened-v2未完成母本迁移/框架验收，不能标记training_ready。
+- 状态：字段设计已冻结；Runpod 已完成 screened-v2 → `apus-sft-v1` 结构导出与流式校验（62,030/62,030、bad=0），证据在 [contract-v1-evidence](contract-v1-evidence/)。仍不能标记 `training_ready`，因为教师证据、语言、license/source split、reasoning policy 与固定验证集尚未补齐。
 
 ## 当前进度入口（2026-09-24）
 
@@ -17,6 +17,7 @@
 2. [逐库能力与实际审计](数据集能力分布清单.md)：README优先，实际差异及准入问题另记。
 3. [能力目标与20K建议配方](20k数据规划与能力缺口.md)：建议配比与缺口，非已备齐数量。
 4. [执行设计](sft20k-execution-design.md)：完整清洗版→三教师子版→20K→HF→小步验收→训练；批准与20K来源选择待确认。
+5. [统一母本运行证据](contract-v1-evidence/validation.json)：Runpod 结构导出、哈希、分域、教师族、split 与质量缺口。
 
 # 科学训练产线：项目记忆与文档索引
 

@@ -1,0 +1,19 @@
+[project]
+name = "apus-performance-9b-data"
+version = "0.1.0"
+description = "CPU data engineering environment for the APUS performance-9b pipeline"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "datasets==4.8.4",
+  "huggingface-hub==0.35.3",
+  "jsonlines==4.0.0",
+  "orjson==3.11.3",
+  "pandas==2.3.3",
+  "pyarrow==25.0.1",
+  "python-dateutil==2.9.0.post0",
+  "tqdm==4.67.1",
+]
+
+[tool.uv]
+package = false
+

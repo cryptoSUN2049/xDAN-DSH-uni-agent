@@ -1,0 +1,10 @@
+{
+  "schema_version": "apus-sft-v1",
+  "status": "structurally_screened_not_training_ready",
+  "counts": {
+    "input": 62030,
+    "exported": 62030,
+    "rejected": 0
+  },
+  "rejection_reasons": {}
+}

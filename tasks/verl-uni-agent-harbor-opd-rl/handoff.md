@@ -345,3 +345,11 @@
 ## 2026-09-24 Qwen Max数据补搜
 
 qwen38-max-sft-review.md固定3库revision、区分Max-Preview/27B，候选有真实用途与污染限制，当前配额0。v2强教师核心不变，未下载全量/训练。
+## 2026-09-25 数据工程完整打通：结构母本已导出，质量准入未完成
+
+- 当前 goal 已收敛为：完成 Runpod 原始归档 → 统一 `apus-sft-v1` 母本 → 质量/验证门禁 → 双框架导出 → 20K → 有界训练的可审计链路；不能用候选数替代 training-ready 数。
+- Runpod `/workspace/apus-data-cleaning/reports/contract-v1/` 已从 screened-v2 导出 62,030/62,030 行，拒绝 0；流式校验 `bad_count=0`，文件 2,870,105,620 bytes，sha256 `c75aa7068031837f749d826e265c594e7fef657e10d0a47af5669d597e7dff37`。
+- 分布：code 44,945、reasoning 13,121、general 3,964；teacher family 仅 gpt56 32,624、qwen38 29,406；train 59,164、validation 2,866；task groups 26,757。
+- 这只是结构筛选中间母本：62,030 条均带 `teacher_identity_unresolved`、`language_unresolved`、`source_split_unresolved`、`source_license_unresolved` 中至少相应缺口，54,682 条 reasoning policy unresolved；`training_ready=false`。
+- 本地证据：`docs/performance-9b/contract-v1-evidence/{validation.json,apus-sft-v1.manifest.json,export.log}`；导出器 `examples/performance_9b/export_contract.py`，测试 `tests/uni_agent/examples/test_performance_9b_export_contract.py`。
+- 下一步：回读固定原始 manifest 补齐来源字段；固定 validation/sealed manifest；做任务组/污染/近重复门禁；再做 Arrow/Parquet/HF 与 ms-swift/VERL 导出。未达到准入前不抽 20K、不上传训练版、不启动训练。
