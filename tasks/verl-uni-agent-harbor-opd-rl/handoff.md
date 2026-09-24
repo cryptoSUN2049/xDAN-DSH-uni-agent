@@ -1,5 +1,15 @@
 # 全版本 checkpoint 评测交接
 
+## 2026-09-24 日常工作Agent目标与双线推进
+
+- 用户收敛目标：接近Opus4.6日常工作/Agent能力，OPD有效性验证为主线，同时规划mid-training数据。
+- 新设计与实测审计：docs/verl-uni-agent-harbor-opd-rl/daily-agent-capability-plan.md；新HTML顶部已链接。
+- 旧30题仅14条可评分、无工具；teacher只多过一条关键词，代码min_Jumps样本存在题面示例冲突，不可据语法通过宣称教师功能优势。
+- Qwen卡片部分Opus比较非同口径；新100个工作任务规格为待构建开发诊断，非已完成评测。1K文本配额不冒充Agent课程。
+- midtraining历史123GB画像不是当前可读库存：主要是小样；先核验来源/完整性/许可/token，再依能力缺口配方。
+- 本次只读GPU时两卡0MiB/0%，未启动新训练/付费Opus/沙箱。下一步数据/评分与画像、控制门；不要因卡空闲跳过准入。
+
+
 ## 2026-09-24 独立产线HTML入口
 
 - 用户批准独立于MiMo研究报告建立我们自己的科学训练产线。新唯一入口：docs/verl-uni-agent-harbor-opd-rl/training-production.html。

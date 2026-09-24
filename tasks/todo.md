@@ -815,3 +815,10 @@ Review: this milestone documents the production-line objective and reusable infr
 - [x] 浏览器/链接/事实核验，保存提交与交接。
 
 Review: 新入口16节、47链接检查无断链/重复ID；桌面1280与移动390无横溢出；切换/搜索通过，reload后console为空，原MiMo SHA不变。未启动训练或部署候选infra。
+
+## 2026-09-24 日常工作Agent目标与双线推进
+- [x] 核查Qwen3.8-27B卡片成绩及比较口径，分离公开成绩和本地实测。
+- [x] 审计base/teacher/step16逐题结果，发现代码题面契约疑点。
+- [x] 形成daily-agent-capability-plan.md：OPD主线、mid-training准备线和能力画像。
+- [ ] 构建经评分校准的日常任务诊断集与teacher优势四象限。
+- [ ] 完成1K数据/控制门及有界OPD有效性试验；mid-training只先准备资产。

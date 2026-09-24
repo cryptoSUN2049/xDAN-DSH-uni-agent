@@ -1,3 +1,5 @@
+> 2026-09-24目标补充：最终追求接近Opus4.6的日常工作与Agent能力。本文1K配额是受控文本OPD试验，不代表完整Agent训练配方；新增同预算工作任务画像与迁移验收见[daily-agent-capability-plan.md](daily-agent-capability-plan.md)。正式改变配比须发布新实验版本，不覆盖旧设计。
+
 # 约1000条多领域OPD：科学产线首次受控实验
 
 日期：2026-09-24。状态：执行设计与资产盘点完成；1000条数据尚未构建，新训练未启动。归属：[产线总纲](training-production-charter.md)。用户已确认1000条试验方向；新增infra实现按项目设计审批流程执行。

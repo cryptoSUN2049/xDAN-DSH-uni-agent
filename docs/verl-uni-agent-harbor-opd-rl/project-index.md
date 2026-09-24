@@ -6,6 +6,7 @@
 
 | 需要什么 | 权威入口 | 状态 |
 |---|---|---|
+| 日常工作/Agent目标与教师优势 | [daily-agent-capability-plan.md](daily-agent-capability-plan.md) | 旧结果已审计；新画像与双线执行待验收 |
 | 总导航与架构 | [training-production.html](training-production.html) | 唯一导航；设计与真实运行分开 |
 | 产线目标、职责、核心指标、诊断与修复 | [training-production-charter.md](training-production-charter.md) | 当前总纲，2026-09-24 |
 | P0–P4详细组件与历史审计 | [training-system-v2-design.md](training-system-v2-design.md) | 保留合同；旧纯RL首轮提案已由本轮OPD试验替代 |

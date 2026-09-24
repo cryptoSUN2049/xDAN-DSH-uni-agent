@@ -1,3 +1,5 @@
+> 2026-09-24目标澄清：高性能9B具体优先接近Opus4.6的日常工作与Agent能力（交付物、工具、多步恢复、人工介入与成本）。OPD主线独立验证，midtraining并行准备；数学/知识作护栏。新画像方案见daily-agent-capability-plan.md，未实测的Agent/teacher优势填not_measured。
+
 > 2026-09-24 导航更新：唯一HTML入口 [我们的科学训练产线](../../docs/verl-uni-agent-harbor-opd-rl/training-production.html)。按产线架构与阶段目标双维组织；MiMo原报告为研究依据，architecture.html保留历史。组件选型不等于已部署，专项以验收结果完成。
 
 # Performance-9B：MOPD 核心项目记忆
