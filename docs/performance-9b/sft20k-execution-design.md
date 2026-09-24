@@ -70,3 +70,13 @@ flowchart LR
 用户明确不需要俄语。此约束应用于完整清洗版、三教师子版及20K训练版，保留原始资产及其原始语言分布不变。HelioAI的5,469条仍是RU+EN原库数量；英文可用量须过滤后单独统计，不能把5,469全部计入英文候选。
 
 逐样本检查问题、reasoning、答案和对话正文；俄语为主或包含实质性俄语监督内容的样本排除。语言不明/混合复杂样本先隔离。不能仅按出现西里尔字母删除，也不能将俄语翻译后冒充原教师英文示范。语言识别不代表教师、许可或质量验收通过。当前仅规则更新，尚未执行正文过滤。
+
+## 实施批准
+
+用户已明确“开始处理数据”“好的 开展起来”，本设计的实施门已通过。先统一母本与过滤，SFT优先验证ms-swift，VERL保留导出及后续OPD/RL用途。现有数据身份/污染/质量门不因批准而跳过；20K最终配方按实际供给冻结。
+
+## Runpod 后台处理合同（用户要求写好后台脚本）
+
+入口 `examples/performance_9b/background.py`：`start --config PATH --run-dir NEW_DIR` 脱离 SSH；`status --run-dir DIR` 查询。每次创建新目录，冻结配置、源 SHA256 和处理器代码；保留日志、PID、原子 status.json 与定时心跳。预检每个源存在且固定 SHA256，空间低于 max(10GiB, 原始文件大小×4) 拒绝启动处理。完整执行 build 后独立核对产物哈希及计数守恒，生成 report.md。失败保留产物及 traceback，不自动重试、不覆盖原版、不自动上传或训练。
+
+状态：STARTING → PREFLIGHT → PROCESSING → VERIFYING → SUCCEEDED；任一步异常为 FAILED。SUCCEEDED 仅表示结构筛选产物已验收，training_ready 始终 false。断电/SIGKILL 时心跳过期且进程消失，status 显示 INTERRUPTED，禁止当成功。文件：background.py、对应单测、运行报告和交接。验证覆盖真实脱离进程成功、源哈希失败、目录不可覆盖、产物校验失败。

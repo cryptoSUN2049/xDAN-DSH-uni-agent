@@ -1,3 +1,19 @@
+## 最新：Runpod 后台处理脚本
+
+- 入口 `examples/performance_9b/background.py`，操作文档 `docs/performance-9b/后台数据处理操作.md`。
+- 当前运行 `/workspace/apus-data-cleaning/reports/screened-v2-background`；用 background status 查询，勿启动重复运行。冻结代码、配置、SHA；10秒心跳、失败留证、不自动训练/上传。
+- v2 已修复 val 划分漏检、同层teacher/model冲突遮蔽、孤立tool结果、同源任务及跨源相同prompt联结。v1只保留诊断，不用于最终统计。
+- 84项回归通过，全仓ruff双门通过。当前并不代表20K或训练ready。
+
+## 最新：Mac 清理与 Runpod 原始数据副本
+
+- 设计已获用户“开始处理数据/好的开展起来”批准；当前先归档，训练适配后做。不要沿用下面历史“未批准”状态。
+- 本轮清理失败处理产物约8.04GB，另删除3个无打开文件的可重建HF Arrow缓存约3.69GB；uv缓存39GiB因占用锁超时未清理，未强制删除。
+- 原版8库17文件共3,992,734,383字节已复制至Runpod `/workspace/apus-data-cleaning/apus-source-archive-v1`，逐文件大小/SHA256全部核验一致。本机原版仍保留。
+- HF私有归档上传失败：403 Private repository storage limit reached。不能称已上传或擅自转公开；待解决额度后从远端续传。
+- 证据：`docs/performance-9b/mac-cleanup-and-remote-archive.json`、`source-archive-upload-manifest.json`。
+- 处理器76项测试通过，仍未提交；第一次本机全量处理磁盘满，失败输出已清理，无有效20K版本/训练。后续在Runpod CPU上继续处理，勿回Mac生成大中间文件。
+
 ## 双框架数据适配设计
 
 已核ms-swift官方messages/Agent roles/loss字段和本地VERL源码，新增docs/performance-9b/ms-swift-verl数据适配方案.md。统一母本后两导出，不重复清洗；当前VERL需custom_cls支持target_message_index。尚未实现。用户已明确确认“从CodeFlame数据中去掉Gemini3.1”，不存在取消限制；未知/冲突来源隔离。

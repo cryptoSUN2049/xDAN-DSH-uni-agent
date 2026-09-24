@@ -1,0 +1,40 @@
+{
+  "status": "FAILED_NO_VALID_RELEASE",
+  "reason": "local_disk_full_during_finalize_groups",
+  "counts_are_provisional": true,
+  "note": "group-wide exclusion not finalized; do not train or publish as cleaned",
+  "provisional_decisions": {
+    "greghavens/gpt-5.6-sol-coding-and-debugging-traces": {
+      "screened": 17850,
+      "quarantine": 89
+    },
+    "saidutta69/Qwen3.8-Agent-Premium": {
+      "screened": 11048,
+      "quarantine": 25,
+      "excluded": 14
+    },
+    "MoreThought/SuperiorThoughts-1": {
+      "screened": 8042,
+      "excluded": 1587,
+      "quarantine": 11
+    },
+    "MoreThought/Fable-5.1-Max-Reasoning-Filtered-5000x": {
+      "quarantine": 5000
+    },
+    "saidutta69/fable-5-premium-v2": {
+      "quarantine": 85000
+    },
+    "CodeFlame/Qwen3.8-GLM5.2-Kimi-K3-GPT5.6-Gemini-3.1-Claude-Fable5-Mythos5-distillation": {
+      "quarantine": 118109,
+      "excluded": 6309,
+      "screened": 28166,
+      "duplicate": 5355
+    },
+    "HelioAI/Claude-Fable-5-5500x": {
+      "quarantine": 5469
+    },
+    "KrazyKitty/Fable-5.1-Max-Reasoning-Filtered-1000x": {
+      "quarantine": 1000
+    }
+  }
+}

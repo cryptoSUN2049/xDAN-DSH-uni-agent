@@ -1,0 +1,21 @@
+{
+  "recorded_at": "2026-09-24T07:47:08.438123+00:00",
+  "removed_failed_processing_bytes": 8040756461,
+  "removed_arrow_cache_logical_bytes": 3694134404,
+  "removed_arrow_cache_names": [
+    "OpenResearcher___open_researcher-dataset",
+    "framolfese___2_wiki_multihop_qa",
+    "hotpotqa___hotpot_qa"
+  ],
+  "uv_cache_cleanup": "not_performed_lock_timeout_no_force",
+  "raw_local_preserved": true,
+  "remote_archive": "root@157.157.221.177:11965:/workspace/apus-data-cleaning/apus-source-archive-v1",
+  "remote_verification": {
+    "files": 17,
+    "bytes": 3992734383,
+    "all_size_and_sha256_match": true
+  },
+  "hf_upload": "failed_403_private_storage_limit",
+  "hf_repo": "gump2049/APUS-SFT-Source-Archive-v1",
+  "training_started": false
+}
