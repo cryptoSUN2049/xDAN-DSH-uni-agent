@@ -1,0 +1,43 @@
+{
+  "schema_version": "apus-sft-v1-20k-deficit-v1",
+  "audit_manifest": "docs/performance-9b/quality-audit-evidence/quality-audit-v5-manifest.json",
+  "training_ready": false,
+  "approved_rows": 0,
+  "target_quota": {
+    "code": 7000,
+    "reasoning": 3000,
+    "office": 3000,
+    "data": 2500,
+    "translation": 1500,
+    "writing": 1500,
+    "general": 1500
+  },
+  "provisional_candidates": {
+    "code": 10494,
+    "reasoning": 0,
+    "office": 0,
+    "data": 0,
+    "translation": 0,
+    "writing": 0,
+    "general": 0
+  },
+  "approved_candidates": {
+    "code": 0,
+    "reasoning": 0,
+    "office": 0,
+    "data": 0,
+    "translation": 0,
+    "writing": 0,
+    "general": 0
+  },
+  "approved_deficit": {
+    "code": 7000,
+    "reasoning": 3000,
+    "office": 3000,
+    "data": 2500,
+    "translation": 1500,
+    "writing": 1500,
+    "general": 1500
+  },
+  "note": "No 20K extraction is authorized while approved_rows=0."
+}
