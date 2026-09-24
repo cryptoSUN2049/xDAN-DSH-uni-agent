@@ -1,5 +1,13 @@
 # 全版本 checkpoint 评测交接
 
+## 2026-09-24 强教师配方修订
+
+- 用户指出Fable/GPT基础示范不足；strong-teacher-sft-review.md核对画像冲突、官方卡、切片及GPT6搜索。
+- 1K领域总配额不变；代码200改GPT5.6=100、Fable原始/独立池=60、OpenSWE=20、新生=20。现成440+新生560；均目标非ready。
+- GPT5.6累积前缀仅监督最后assistant；Fable镜像model_attested必须实筛，当前切片不能证明合格子池存在。原始Fable无明文CoT不等于不可做动作SFT。
+- GPT6搜索返回4个候选，暂无可直接纳入的通用Agent母本；优先规划真实自生产，不把评测答案当训练。
+
+
 ## 2026-09-24 文档目录统一与数据配方
 
 - 用户要求文档统一到docs/performance-9b/；整个旧文档树已迁移，内部相对结构保留。worktree与tasks目录名不变。历史JSON原始运行路径保留为证据，不当新执行入口。

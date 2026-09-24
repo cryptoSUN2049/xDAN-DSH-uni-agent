@@ -1,6 +1,6 @@
 # APUS Agent SFT 首轮数据计划 v1
 
-2026-09-24。目标：继承 MiMo 9B 的通用 Agent 基础，优先增强本地办公、数据处理、中英翻译、事实写作，同时保留代码与通用能力。以下是**合格数据目标配额**，不是已构建数量，也不是最终模型的充分训练规模。
+2026-09-24（强教师复核修订v1.1，详见[专项复核](strong-teacher-sft-review.md)）。目标：继承 MiMo 9B 的通用 Agent 基础，优先增强本地办公、数据处理、中英翻译、事实写作，同时保留代码与通用能力。以下是**合格数据目标配额**，不是已构建数量，也不是最终模型的充分训练规模。
 
 本计划取代旧6000条通用SFT草案作为当前Agent SFT首轮配方；原版9B的1K OPD实验合同独立保留，不混用实验结果。参考：[数据画像抽查](mimo-agent-sft-evidence/portrait-audit.json)、[20种子](agent-sft-seed20-plan.md)。
 
@@ -22,18 +22,19 @@
 
 | 来源 | 目标任务 | 领域/用途 | 入选理由 | 必须通过的门 |
 |---|---:|---|---|---|
-| [nvidia/Open-SWE-Traces](https://huggingface.co/datasets/nvidia/Open-SWE-Traces) | 120 | SWE | 真实仓库动作/反馈及resolved信息 | 成功、无捷径、完整轨迹、可重放抽检；repo/task去重及评测隔离；固定清洗后revision |
-| [greghavens/gpt-5.6-sol-coding-and-debugging-traces](https://huggingface.co/datasets/greghavens/gpt-5.6-sol-coding-and-debugging-traces) | 40 | 终端代码/调试 | 画像中较贴近目标的母本 | 按session/task而不是前缀行计数；保留工具结果、授权与执行证据 |
+| [nvidia/Open-SWE-Traces](https://huggingface.co/datasets/nvidia/Open-SWE-Traces) | 20 | SWE | 真实仓库动作/反馈及resolved信息 | 成功、无捷径、完整轨迹、可重放抽检；repo/task去重及评测隔离；固定清洗后revision |
+| [greghavens/gpt-5.6-sol-coding-and-debugging-traces](https://huggingface.co/datasets/greghavens/gpt-5.6-sol-coding-and-debugging-traces) | 100 | 终端代码/调试 | 画像中较贴近目标的母本 | 按session/task而不是前缀行计数；保留工具结果、授权与执行证据 |
+| Fable 5原始/独立来源池（armand0e / TeichAI / AlinCiocan；DSFF镜像须身份筛选） | 60 | 代码/工具 | 恢复强教师母本覆盖，与GPT互补 | 独立task/session、跨镜像去重、teacher证据、真实工具反馈、许可；不足保留缺口 |
 | [openbmb/UltraData-SFT-Agent-2609](https://huggingface.co/datasets/openbmb/UltraData-SFT-Agent-2609) | 40 | Office轨迹 | Office/文件/skills覆盖 | 先抽审Office子集、turn mask；不可回放要明确标注；上游附加条款及转载限制 |
 | [Spreadsheet-RL/Spreadsheet-RL](https://huggingface.co/datasets/Spreadsheet-RL/Spreadsheet-RL) | 80 | Excel任务来源，需新生成轨迹 | 有训练任务、工作簿与评分环境 | 只train；parser重复合并；评测全部隔离；许可和环境验收 |
 | [FineEnvs/data-agent-sft](https://huggingface.co/datasets/FineEnvs/data-agent-sft) | 120 | 数据分析SFT | 完整bash数据分析轨迹，卡称reward=1 | 核验env/输入文件、任务重叠、原始数据许可；不能只相信标签 |
 | [nvidia/Nemotron-Cascade-2-SFT-Data](https://huggingface.co/datasets/nvidia/Nemotron-Cascade-2-SFT-Data) | 70 | chat/IF/safety/中文保留 | 多域保留、避免仅强化工具后退化 | 按子来源筛；采用NVIDIA对应许可而非假定CC-BY；事实与约束核验 |
 | [nvidia/Nemotron-SFT-Math-v4](https://huggingface.co/datasets/nvidia/Nemotron-SFT-Math-v4) | 20 | 数学保留 | 可核验答案的无工具子集 | 解答复验、难度适配、评测去污染；不等于提升数学的充分样本 |
 | [nvidia/Nemotron-SFT-Science-v2](https://huggingface.co/datasets/nvidia/Nemotron-SFT-Science-v2) | 10 | 科学保留 | 保留少量独立知识/推理检查 | 参考依据可信；数量不足不填充低质量样本 |
-| 自有新任务与教师示范 | 500 | 代码40+办公80+数据80+翻译150+写作150 | 补足开源中最缺的目标工作能力 | 全链路验证、独立评分、来源/预算明确 |
+| 自有新任务与教师示范 | 480 | 代码20+办公80+数据80+翻译150+写作150 | 补足开源中最缺的目标工作能力 | 全链路验证、独立评分、来源/预算明确 |
 | **合计** | **1000** | | | |
 
-数量口径进一步拆开：**现成SFT轨迹目标420 + 开源任务环境上新生成80 + 自有任务新生成500 = 1000**。因此需要新生产的示范是580，不是500。HF来源任务共500，自有任务共500；不要混淆任务来源与轨迹来源。
+数量口径进一步拆开：**现成SFT轨迹目标440 + 开源任务环境上新生成80 + 自有任务新生成480 = 1000**。因此需要新生产的示范是560，不是480。HF来源任务共520，自有任务共480；不要混淆任务来源与轨迹来源。
 
 以上HF配额全部为“待复验”。若某源不足或许可/完整性不满足，保留该格缺口；更换来源必须更新manifest，不能偷偷重复采样凑满。译文/商务写作首轮不依赖尚未证实适合的公开合集。
 
@@ -42,21 +43,21 @@
 - 创意写作HQ1300：本轮主训练配额0；英文创意不替代中文商务，且shadow prompt需污染审计。可独立作风格研究。
 - Nemotron Multilingual：主配额0；翻译后的STEM问答不是翻译任务，可作为未来中文保留替代候选。
 - Nemotron Agentic-v2：本轮主配额0；部分模拟工具反馈、异构格式、2025创建日期。不能当真实环境成功数据。
-- Dataclaw/Fable/MoreThought结构残缺、缺tool结果或同源镜像：暂不纳入；只有能恢复原始证据并复验才重新考虑。
+- 结构残缺、缺tool结果或重复的派生库：暂不纳入；Fable原始/独立来源不一刀切排除，按强教师专项逐源核验。
 - OfficeQA、GDPval、SpreadsheetBench等测试题：仅评测；不能借“改写”回流训练。
 - 2026优先是本轮来源筛选原则；2026发布的合集可能包含旧来源，记录实际来源日期，不冒称所有内容2026新生成。
 
-## 4. 自建580条轨迹生产清单
+## 4. 新生产560条轨迹清单
 
 | 能力 | 新生产量 | 任务/检查 |
 |---|---:|---|
-| 代码与恢复 | 40 | 小型授权repo缺陷、CLI与回归；可执行测试，拒绝改测试绕过 |
+| 代码与恢复 | 20 | 小型授权repo缺陷、CLI与回归；可执行测试，拒绝改测试绕过 |
 | Excel | 80 | Spreadsheet-RL训练任务；工作簿重算/结构/目标检查 |
 | 自有办公 | 80 | docx/pptx/xlsx、跨文件更新与引用；检查文件可读、数字/内容一致、版面抽检 |
 | 数据处理 | 80 | 清洗、SQL联表、时区单位、图表；参考计算/不变量/脚本重跑 |
 | 翻译 | 150 | 中译英75、英译中75；术语表、否定/数字/单位、表格脚注与修订；双语盲审结合自动约束 |
 | 写作 | 150 | 邮件30、提案30、事实报告40、纪要20、编辑修订30；来源支持、事实/约束/rubric |
-| 合计 | 580 | 质量未过不计入训练 |
+| 合计 | 560 | 质量未过不计入训练 |
 
 跨领域覆盖目标（可重叠，不额外加总）：失败后恢复、多轮约束保持、文件交付、证据引用、适度澄清。先观察20/100任务实际分布再定覆盖阈值，不硬造不自然工具步骤。
 
@@ -92,7 +93,7 @@ Data Designer为未来复杂属性组合的备选；NeMo Curator等用于规模�
 
 不把长轨迹直接截断到4K/8K当完整示范。超过资源能力的轨迹可按完整决策点拆成前缀训练，但必须保留足够真实历史并共用split_group，任务数仍计1。具体截取与loss策略单独验收。
 
-候选请求数依据合格率估算：需生成的580 / 实测合格率；例如70%时约829次首轮尝试，仅为示例，不是已测合格率或预算授权。成本包含失败、重试、沙箱、独立judge及人工抽检。
+候选请求数依据合格率估算：需生成的560 / 实测合格率；例如70%时约800次首轮尝试，仅为示例，不是已测合格率或预算授权。成本包含失败、重试、沙箱、独立judge及人工抽检。
 
 ## 8. 与格式/OPD/长期扩量关系
 

@@ -4,10 +4,10 @@
   "desktop": "1280x720 no overflow; screenshot inspected",
   "mobile": "390x844 no overflow; screenshot inspected",
   "interactions": "GRPO search=1 entry; SFT view hides RL; reset passes",
-  "report_sha256": "d0fccadf84dc8e0f8ca2bd4bd8a555fc37ffcfbb185cef6c3245e0d0d188baa4",
+  "report_sha256": "ed0777d8d06867be322b8d584dd67d963eb4c7ec720329efcd80ec3311ed631e",
   "links_checked": 55,
   "expanded_sections_review": "desktop1280/mobile390 screenshots; no page overflow; 0 broken anchors",
-  "latest_addition": "tool-call专项与seed20相对链接存在；JSON示例解析通过",
+  "latest_addition": "strong-teacher-sft-review.md link exists; source audit revised quotas",
   "local_links_checked": 20,
   "migration_check": "docs/performance-9b relative links verified"
 }
