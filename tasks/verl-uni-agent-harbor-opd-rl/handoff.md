@@ -377,3 +377,10 @@ qwen38-max-sft-review.md固定3库revision、区分Max-Preview/27B，候选有�
 - 普通样本通过：1247 tokens / 48 loss tokens；真实assistant tool-call样本通过：1341 tokens / 135 loss tokens。
 - 证据：`docs/performance-9b/verl-sft-adaptation.md`、`docs/performance-9b/verl-sft-evidence/export-manifest.json`。
 - 尚未完成：GPU workspace SFT lane、真实forward/backward、W&B/VERL观测接线、validation/sealed split和20K导出。
+
+## 2026-09-25 适配复杂度复核
+
+- 不再增加 MIMO 专用转换层。`examples/performance_9b/verl_sft_dataset.py` 是唯一运行时适配边界：解码 JSON 动态列、累计 Qwen chat-template 前缀、assistant header 置零 mask，并用完整渲染做等价校验。
+- 普通样本（1247 tokens / 48 loss tokens）和真实 assistant tool-call 样本（1341 / 135）均已在 CPU 共享环境通过 smoke；本地与远端适配器、启动器 SHA256 一致。
+- 剩余针对性验收只有 GPU 两卡一步 forward/backward + checkpoint smoke，并核对 W&B、`train.log`、`exit-code` 和 checkpoint 同时存在。Runpod API 当前 DNS 失败，GPU SSH 11965 当前关闭，因此尚未启动真实训练。
+- CPU 分片已固定：`train.parquet` 59164 行、`validation.parquet` 2866 行。格式适配已完成；质量审计中的 `training_ready=false` 仍是独立门禁，不被格式 smoke 覆盖。
