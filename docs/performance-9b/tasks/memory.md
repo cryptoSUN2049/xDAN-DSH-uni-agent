@@ -473,3 +473,11 @@ pipe-r3（2 卡，`TEACHER=1`，4B 自评）：Teacher vLLM 在 GPU1 常驻，st
   - 跑满轮数：27.6% → 35.3% → 37.9%；SWE 48% → 68% → 70%。
   - 超时：13.8% → 26.7% → 25.0%；TL 22% → 38% → 38%。
 - 这是阶段 B 的起点。pipe-s2 最终要回答的是：重置优化器后，48 步 RL 能不能把这 −0.190 追回来。
+
+## 2026-09-25 数据链路与 Runpod 身份纠偏
+
+- 数据主链已完成：8 个原始源归档（约 3.99GB）→ `apus-sft-v1` 62,030 行结构母本 → VERL Parquet 62,030/62,030 → train 59,164 / validation 2,866 → CPU normal/tool-call dataloader smoke。
+- VERL 运行时采用唯一薄适配层 `examples/performance_9b/verl_sft_dataset.py`：JSON 动态列解码、Qwen 累计前缀 tokenization、assistant header 零 mask、完整 chat-template 等价检查。格式适配已完成，但历史质量门禁仍为 `training_ready=false`，不能把格式通过等同于语义质量通过。
+- Runpod 身份纠偏：本机默认 key 是 `xdanwork@gmail.com`，不是当前训练账户；用户提供 key 属于 `l98348740@gmail.com`，对应 pod `45ao3zsq6w7xck`（`apus-openjev-serving`）、SSH `157.157.221.177:16358`、volume `72jdno5cuk`，实际硬件为 1× RTX PRO 6000 96GB。启动前必须记录 account/pod/ssh/volume，并运行 `nvidia-smi`。
+- 启动器已修正两卡 DP batch 整除门禁，默认全局 batch 等于 GPU 数；每个 run 保存 `train.log`、`metrics.jsonl`、`wandb/`、checkpoint 和 exit code；`VERL_RL_INSIGHT_ENABLE=1` 时才加入原生 rl-insight logger。
+- 当前 GPU preflight 在正确 pod 后台运行；真实 SFT、W&B step 对账和 rl-insight 真实 trace 尚未完成。

@@ -384,3 +384,10 @@ qwen38-max-sft-review.md固定3库revision、区分Max-Preview/27B，候选有�
 - 普通样本（1247 tokens / 48 loss tokens）和真实 assistant tool-call 样本（1341 / 135）均已在 CPU 共享环境通过 smoke；本地与远端适配器、启动器 SHA256 一致。
 - 剩余针对性验收只有 GPU 两卡一步 forward/backward + checkpoint smoke，并核对 W&B、`train.log`、`exit-code` 和 checkpoint 同时存在。Runpod API 当前 DNS 失败，GPU SSH 11965 当前关闭，因此尚未启动真实训练。
 - CPU 分片已固定：`train.parquet` 59164 行、`validation.parquet` 2866 行。格式适配已完成；质量审计中的 `training_ready=false` 仍是独立门禁，不被格式 smoke 覆盖。
+
+## 2026-09-25 Runpod 账户纠偏与 GPU preflight
+
+- 本机默认 Runpod key 属于 `xdanwork@gmail.com`，余额不足且看不到当前 pod；用户提供的 key 属于 `l98348740@gmail.com`。不得混用两个账户的 pod/volume 记录。
+- 正确资源身份：pod `45ao3zsq6w7xck`（`apus-openjev-serving`），SSH `157.157.221.177:16358`，volume `72jdno5cuk`（`RL-Harbor-sky_volume`），1× RTX PRO 6000 Blackwell Server Edition，约 96GB。
+- `sft_preflight.sh` 已同步到共享源码目录并后台运行，输出预期为 `/workspace/apus-data-cleaning/reports/verl-sft-v1/preflight.json`。完成后先读 `preflight.log/json`，再启动单卡 smoke。
+- 全局数据状态详见 `docs/performance-9b/data-pipeline-status-20260925.md`。当前仍未取得真实 SFT checkpoint、W&B step 对账或 rl-insight 后端 trace。

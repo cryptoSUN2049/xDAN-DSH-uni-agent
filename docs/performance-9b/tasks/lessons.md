@@ -54,3 +54,7 @@
 
 52. **`sync-source.sh --rsync` 会用本地未打补丁的 verl 覆盖 pod 上已打补丁的文件，补丁靠同步脚本最后一步重打；连接中途断开时补丁就缺了。** 2026-09-19 03:00 同步 e178270 时，SSH 在重打补丁前断开，`apply-verl-patches.sh` 手动重跑报 `applied=1 already=0`，说明这段时间 pod 上的 VERL 没有补丁；如果这时启动训练，第一次补齐占位样本就会重现 pipe-r11 第 5 步的崩溃。规则：每次同步后单独跑一次 `apply-verl-patches.sh`，看到 `already=1` 才能启动训练或续跑。
 53. **断言"格式不一致"之前，先读这次运行的实际配置，并用真实轨迹验证。** 2026-09-19 我用开思考的对话渲染两个模板，得出"学生删历史思考、老师加 Reasoning effort 行"，当成 S1 的问题报告给用户。其实 S1 是 `enable_thinking=False`，网关也从不重新渲染历史，老师看到的序列与原生无思考格式逐字一致。规则：比较格式时，(a) 从 `train-command.txt` 取实际的模板参数；(b) 按网关真实的拼接方式构造序列，不能用 `apply_chat_template` 一次性渲染来代替；(c) 用一条真实轨迹确认；三步都做完才下结论。
+
+54. **Runpod API key 与 SSH 节点必须按账户绑定核对。** 本机默认 key 属于 `xdanwork@gmail.com`，余额不足且 `pod list` 为空；用户提供的 key 属于 `l98348740@gmail.com`，实际 SSH `157.157.221.177:16358` 对应 pod `45ao3zsq6w7xck`，且有一张 RTX PRO 6000。规则：启动前记录账户邮箱、pod ID、SSH endpoint、volume ID，并用 `nvidia-smi` 判定硬件；不能因为旧 key 看不到 pod 就判定节点不存在。
+55. **SSH 主机名不能替代 GPU 检查。** 该节点之前被当作 CPU 节点处理，但 `nvidia-smi` 实际报告 RTX PRO 6000 96GB。规则：任何 SFT/评测节点先跑 `nvidia-smi -L` 和显存查询；“CPU 处理节点”只是历史叫法，不是硬件事实。
+56. **两卡 VERL SFT 的全局 batch 必须可被 DP 卡数整除。** 原启动器的 `train_batch_size=1` 在两卡上会得到每个 DP rank 为 0；现改为默认等于 `NPROC_PER_NODE` 并在 shell 层拒绝不可整除配置，同时启用 `file` logger 保存 `metrics.jsonl`。

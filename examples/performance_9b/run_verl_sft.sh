@@ -16,6 +16,7 @@ MAX_LENGTH=${MAX_LENGTH:-16384}
 NPROC_PER_NODE=${NPROC_PER_NODE:-2}
 TRAIN_BATCH_SIZE=${TRAIN_BATCH_SIZE:-$NPROC_PER_NODE}
 LOGGER_BACKENDS=${LOGGER_BACKENDS:-console,file,wandb}
+ATTN_IMPLEMENTATION=${ATTN_IMPLEMENTATION:-sdpa}
 [[ "$NPROC_PER_NODE" =~ ^[1-9][0-9]*$ && "$TRAIN_BATCH_SIZE" =~ ^[1-9][0-9]*$ ]] || {
   echo "GPU count and global batch size must be positive integers" >&2; exit 2
 }
@@ -63,7 +64,7 @@ COMMAND=(
   "model.path=$MODEL_PATH" "model.tokenizer_path=$MODEL_PATH"
   model.use_remove_padding=True model.enable_gradient_checkpointing=True
   model.lora_rank=16 model.lora_alpha=16 model.target_modules=all-linear
-  engine=fsdp engine.strategy=fsdp engine.ulysses_sequence_parallel_size=1
+  engine=fsdp engine.strategy=fsdp "engine.attn_implementation=$ATTN_IMPLEMENTATION" engine.ulysses_sequence_parallel_size=1
   engine.model_dtype=bfloat16 engine.dtype=bfloat16 engine.use_torch_compile=False
   "optim.lr=${SFT_LR:-1e-5}"
   checkpoint.save_contents='[model,optimizer,extra]'

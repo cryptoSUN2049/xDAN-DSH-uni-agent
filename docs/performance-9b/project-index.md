@@ -4,9 +4,10 @@
 - [机器可读列清单](统一训练数据字段契约-v1.columns.json)：数据版本apus-sft-v1；协议版本apus-chat-v1独立。
 - 状态：字段设计已冻结；Runpod 已完成 screened-v2 → `apus-sft-v1` 结构导出与流式校验（62,030/62,030、bad=0），证据在 [contract-v1-evidence](contract-v1-evidence/)。仍不能标记 `training_ready`，因为教师证据、语言、license/source split、reasoning policy 与固定验证集尚未补齐。
 
-## 当前进度入口（2026-09-24）
+## 当前进度入口（2026-09-25）
 
 - [后台处理操作](后台数据处理操作.md)：Runpod处理器与状态查询。
+- [数据加工与 VERL 转换全局进度](data-pipeline-status-20260925.md)：原版归档、母本、Parquet、分片、smoke、运行身份和未完成门禁。
 - [v2筛选报告](screened-v2-evidence/report.md)、[结果解读及Fable恢复路径](screened-v2-evidence/interpretation.md)：结构候选不等于训练ready。
 - [MiMo名称测试结论](mimo-identity-test/conclusion.md)：测试已结束，回到数据主线。
 - [原版资产清单](原始数据资产清单.md)：16库（新增1个追溯用来源），Runpod原版哈希与HF失败状态明确区分。
