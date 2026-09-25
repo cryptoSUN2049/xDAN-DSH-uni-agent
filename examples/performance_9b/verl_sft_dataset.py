@@ -55,18 +55,19 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
             )
             if isinstance(encoded, dict):
                 encoded = encoded["input_ids"]
-            if hasattr(encoded, "ids"):
-                encoded = encoded.ids
-            if hasattr(encoded, "tolist"):
-                encoded = encoded.tolist()
-            if isinstance(encoded, list) and any(hasattr(item, "ids") for item in encoded):
-                flattened = []
-                for item in encoded:
-                    flattened.extend(item.ids if hasattr(item, "ids") else item)
-                encoded = flattened
-            if encoded and isinstance(encoded[0], list):
-                encoded = encoded[0]
-            return encoded
+            def token_list(value):
+                if hasattr(value, "ids"):
+                    return list(value.ids)
+                if hasattr(value, "tolist"):
+                    value = value.tolist()
+                if isinstance(value, list):
+                    result = []
+                    for item in value:
+                        result.extend(token_list(item))
+                    return result
+                return [value]
+
+            return token_list(encoded)
 
         before = render(full_message[:index], generation=True)
         after = render(full_message[: index + 1], generation=False)
