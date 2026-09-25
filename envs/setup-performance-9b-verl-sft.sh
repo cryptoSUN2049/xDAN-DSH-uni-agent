@@ -5,7 +5,8 @@ set -euo pipefail
 # environment and runs data/dataloader smoke tests; GPU nodes reuse the same
 # environment path on the shared volume for SFT.
 ROOT=${VERL_SOURCE_ROOT:-/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl}
-ENV=${VERL_SFT_ENV:-/workspace/envs/performance-9b-verl-sft}
+WORKSPACE_ROOT=${WORKSPACE_ROOT:-/workspace/verl-uni-agent-harbor-opd-rl}
+ENV=${VERL_SFT_ENV:-$WORKSPACE_ROOT/envs/performance-9b-verl-sft}
 BASE_ENV=${VERL_BASE_ENV:-}
 
 command -v uv >/dev/null || { echo "uv is required" >&2; exit 1; }
@@ -23,7 +24,8 @@ else
 # flash-attn is an optional kernel for GPU throughput.  The current VERL
 # wheelhouse has no matching CPython 3.12 wheel on this CPU preparation node;
 # omit it here and install a CUDA-matched wheel on the GPU node if available.
-UV_PROJECT_ENVIRONMENT="$ENV" uv sync --project "$ROOT" --extra fsdp --python 3.12 --no-install-package flash-attn
+UV_CACHE_DIR=${UV_CACHE_DIR:-$WORKSPACE_ROOT/cache/uv} \
+  UV_PROJECT_ENVIRONMENT="$ENV" uv sync --project "$ROOT" --extra fsdp --python 3.12 --no-install-package flash-attn
 fi
 "$ENV/bin/python" - <<'PY'
 import torch
