@@ -51,9 +51,14 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
             example[self.tools_key] = self._decode(example[self.tools_key], list)
         return super()._build_messages(example)
 
+    def __getitem__(self, item):
+        self._active_tools = self.tools[item] if self.tools is not None else None
+        return super().__getitem__(item)
+
     def _process_single_message(self, index, message, full_message, tools=None, enable_thinking=None):
         """Tokenize a cumulative prefix so Qwen templates see system+user context."""
         processor = self.processor if self.processor is not None else self.tokenizer
+        tools = self._active_tools if tools is None else tools
 
         def render(prefix, generation):
             if not prefix or all(item.get("role") == "system" for item in prefix):
@@ -103,7 +108,8 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
             mismatch = next((i for i in range(limit) if input_ids[i] != expected_ids[i]), limit)
             raise AssertionError(
                 "APUS cumulative tokenization differs from full chat-template render: "
-                f"actual={input_ids.numel()} expected={expected_ids.numel()} first_diff={mismatch}"
+                f"actual={input_ids.numel()} expected={expected_ids.numel()} first_diff={mismatch} "
+                f"actual_head={input_ids[:8].tolist()} expected_head={expected_ids[:8].tolist()}"
             )
 
     def _read_files_and_process(self):
