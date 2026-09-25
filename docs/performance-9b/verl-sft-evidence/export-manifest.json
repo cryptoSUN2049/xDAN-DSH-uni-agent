@@ -1,0 +1,21 @@
+{
+  "schema_version": "apus-sft-v1-verl",
+  "input": 62030,
+  "exported": 62030,
+  "rejected": 0,
+  "rejection_reasons": {},
+  "columns": [
+    "messages",
+    "tools",
+    "enable_thinking",
+    "data_source",
+    "ability",
+    "record_id",
+    "task_group_id",
+    "split",
+    "teacher_family",
+    "audit_json"
+  ],
+  "training_ready": false,
+  "note": "Format export only; tokenizer and loss-mask smoke test is required."
+}
