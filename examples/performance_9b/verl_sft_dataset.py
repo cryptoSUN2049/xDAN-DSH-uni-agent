@@ -53,7 +53,7 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
                 tokenize=True,
                 **kwargs,
             )
-            if isinstance(encoded, dict):
+            if isinstance(encoded, dict) or hasattr(encoded, "get"):
                 encoded = encoded["input_ids"]
             def token_list(value):
                 if hasattr(value, "ids"):
