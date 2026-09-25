@@ -72,14 +72,20 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
                 encoded = encoded["input_ids"]
             return self._token_ids(encoded)
 
-        before = render(full_message[:index], generation=True)
+        before = render(full_message[:index], generation=False)
         after = render(full_message[: index + 1], generation=False)
         if len(after) < len(before) or after[: len(before)] != before:
             raise ValueError("chat template prefix is not token-prefix stable")
         token_ids = after[len(before) :]
         input_ids = torch.tensor(token_ids, dtype=torch.long)
         attention_mask = torch.ones_like(input_ids)
-        loss_mask = torch.ones_like(input_ids) if message.get("role") == "assistant" else torch.zeros_like(input_ids)
+        if message.get("role") == "assistant":
+            generation_prefix = render(full_message[:index], generation=True)
+            header_tokens = max(0, len(generation_prefix) - len(before))
+            loss_mask = torch.ones_like(input_ids)
+            loss_mask[: min(header_tokens, len(loss_mask))] = 0
+        else:
+            loss_mask = torch.zeros_like(input_ids)
         return input_ids, loss_mask, attention_mask, {}
 
     def sanity_check(self, input_ids, messages, tools, enable_thinking):
