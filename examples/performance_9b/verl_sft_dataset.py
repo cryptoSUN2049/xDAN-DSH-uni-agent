@@ -11,6 +11,7 @@ import json
 
 import numpy as np
 import pandas as pd
+import torch
 
 from verl.utils.dataset.multiturn_sft_dataset import MultiTurnSFTDataset
 from verl.utils.fs import copy_local_path_from_hdfs
@@ -34,6 +35,41 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
         if self.tools_key in example and example[self.tools_key] is not None:
             example[self.tools_key] = self._decode(example[self.tools_key], list)
         return super()._build_messages(example)
+
+    def _process_single_message(self, index, message, full_message, tools=None, enable_thinking=None):
+        """Tokenize a cumulative prefix so Qwen templates see system+user context."""
+        processor = self.processor if self.processor is not None else self.tokenizer
+
+        def render(prefix, generation):
+            if prefix and all(item.get("role") == "system" for item in prefix):
+                return []
+            kwargs = dict(self.apply_chat_template_kwargs)
+            if enable_thinking is not None:
+                kwargs["enable_thinking"] = enable_thinking
+            encoded = processor.apply_chat_template(
+                prefix,
+                tools=tools,
+                add_generation_prompt=generation,
+                tokenize=True,
+                **kwargs,
+            )
+            if isinstance(encoded, dict):
+                encoded = encoded["input_ids"]
+            if hasattr(encoded, "tolist"):
+                encoded = encoded.tolist()
+            if encoded and isinstance(encoded[0], list):
+                encoded = encoded[0]
+            return encoded
+
+        before = render(full_message[:index], generation=True)
+        after = render(full_message[: index + 1], generation=False)
+        if len(after) < len(before) or after[: len(before)] != before:
+            raise ValueError("chat template prefix is not token-prefix stable")
+        token_ids = after[len(before) :]
+        input_ids = torch.tensor(token_ids, dtype=torch.long)
+        attention_mask = torch.ones_like(input_ids)
+        loss_mask = torch.ones_like(input_ids) if message.get("role") == "assistant" else torch.zeros_like(input_ids)
+        return input_ids, loss_mask, attention_mask, {}
 
     def _read_files_and_process(self):
         # VERL's default dtype_backend=pyarrow path can overflow on long JSON
