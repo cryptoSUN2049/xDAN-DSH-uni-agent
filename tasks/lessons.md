@@ -357,3 +357,5 @@
 - 用户要求谨慎修复、质量验收：结构通过、README语言、row model声明不能代替语义质量、逐条语言或教师鉴真；不得自动给training_ready。
 - 原始含thinking/缺reasoning都不能直接决定loss mask；逐模型模板验收独立执行。
 - uv环境文件未成功lock/sync和回读之前，只能称重建草案；uv sync须显式绑定目标环境，不能创建A却安装到B。
+
+- VERL SFT 的最小事实核对：原生入口是 `torchrun -m verl.trainer.sft_trainer`，FSDP 是 engine、SDPA/FlashAttention 是 attention backend；不能把后端、engine 和 trainer 混称。自定义启动器只应包住数据适配、workspace 和日志，不能掩盖监督 mask 尚未验收的事实。

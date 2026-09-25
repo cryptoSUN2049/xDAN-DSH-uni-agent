@@ -348,6 +348,13 @@
 - 下一步仍是训练准入审计；不要把 archived_unvalidated 当成可直接训练。
 - 当前分支 performance-9b；本次归档不修改训练进程，不能据此更新实时训练状态。
 
+## 2026-09-25 追加更正：VERL 原生 SFT 与实际 smoke
+
+- VERL 原生 SFT 入口是 `torchrun -m verl.trainer.sft_trainer`；可参考 `verl/examples/sft/gsm8k/run_qwen2_5_0_5b_fsdp.sh`、`verl/examples/sft/multiturn/run_qwen2_5_0_5b_fsdp.sh`。本项目启动器只负责 workspace、数据 adapter、日志和可选观测，不替换 trainer。
+- 独立 GPU pod `performance-9b-verl-sft`（SSH 端口 13595）已完成单卡 1-step smoke，exit code=0；W&B run 已同步，checkpoint 已写入 workspace。此前“仍未真实 forward/backward”的旧段落作废。
+- 当前 adapter 的已知硬缺口：尚未实现 `target_message_index` 的目标消息监督，现路径对所有 assistant 输出计算 loss；不能据此启动全量蒸馏训练。
+- 当前环境没有 `flash-attn`/`causal-conv1d`，所以 smoke 明确使用 `model.override_config.attn_implementation=sdpa`。SDPA 是 attention backend，FSDP 是训练 engine，Megatron 是另一后端；未证明 FlashAttention 不兼容，需另建匹配环境后做性能与 packed 边界对照。
+
 ## 2026-09-24 Qwen Max数据补搜
 
 qwen38-max-sft-review.md固定3库revision、区分Max-Preview/27B，候选有真实用途与污染限制，当前配额0。v2强教师核心不变，未下载全量/训练。
