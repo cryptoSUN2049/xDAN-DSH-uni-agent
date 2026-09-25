@@ -368,3 +368,12 @@ qwen38-max-sft-review.md固定3库revision、区分Max-Preview/27B，候选有�
 - 20K目标与真实approved供给差距已冻结：`docs/performance-9b/20k-deficit-report.md` 和 `.json`。7K code、3K reasoning、3K office、2.5K data、1.5K translation、1.5K writing、1.5K general 当前approved均为0；不得抽样、上传或启动训练。
 - 下一里程碑：完成候选机械语义审计、teacher/license/language证据、显式assistant/tool mask覆盖率验证；所有能力域形成approved pool后才生成固定seed的20K导出。
 - 新提交：`5ae9cf9 docs(performance-9b): record 20k data deficit audit`。
+
+## 2026-09-25 最新：VERL SFT 适配 smoke 通过
+
+- 参照 `docs/performance-9b/uv-runbook.md`：workspace 是唯一持久资产根。此前失败安装产生的 `/root/.cache` 已清理，根盘由88%降至7%；源数据、模型、runs未删除。
+- `apus-sft-v1` → VERL Parquet：62030/62030，拒绝0。动态工具列以JSON字符串保存，避免Arrow异构nested struct。
+- 新增 `examples/performance_9b/verl_sft_dataset.py` 薄适配层：JSON解码、Qwen累计前缀tokenization、assistant header零mask、完整chat-template等价检查。
+- 普通样本通过：1247 tokens / 48 loss tokens；真实assistant tool-call样本通过：1341 tokens / 135 loss tokens。
+- 证据：`docs/performance-9b/verl-sft-adaptation.md`、`docs/performance-9b/verl-sft-evidence/export-manifest.json`。
+- 尚未完成：GPU workspace SFT lane、真实forward/backward、W&B/VERL观测接线、validation/sealed split和20K导出。

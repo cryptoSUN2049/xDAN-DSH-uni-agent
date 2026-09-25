@@ -969,3 +969,14 @@ Review：本节点完成的是数据工程结构链路和可审计证据，不�
 - [ ] approved pool 达标后才抽取、上传和训练 20K。
 
 Review：本节点没有训练启动；Python 单测 8 passed。`uv run pytest` 因当前网络无法获取 wheel 被阻断，已用本地 Python pytest 完成同一组测试。
+
+## 2026-09-25 VERL SFT 格式适配验收
+- [x] 按 `docs/performance-9b/uv-runbook.md` 核对 workspace venv/cache 规范；根盘失败 CUDA cache 已清理，根盘从88%降至7%。
+- [x] 62,030/62,030 结构母本导出 VERL SFT Parquet，拒绝0。
+- [x] 普通 Qwen3.5-9B 多轮样本通过 VERL adapter：1247 tokens / 48 loss tokens。
+- [x] 真实 assistant tool-call 样本通过：1341 tokens / 135 loss tokens。
+- [x] 记录最小 adapter 边界：动态工具 JSON 解码、累计前缀渲染、assistant header mask、完整模板等价校验。
+- [ ] 建立 workspace GPU SFT lane，运行真实 forward/backward 训练 smoke。
+- [ ] 固定 validation/sealed split，接入 W&B/训练日志并完成 20K 导出。
+
+Review：VERL 原生 trainer/dataset 作为底层保留；仅 Qwen3.5 模板和动态工具字段使用薄 adapter。当前通过的是格式/tokenizer/loss-mask smoke，不是训练完成。
