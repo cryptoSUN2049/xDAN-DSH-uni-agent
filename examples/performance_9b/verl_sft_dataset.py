@@ -99,7 +99,12 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
         )
         expected_ids = torch.tensor(self._token_ids(expected), dtype=torch.long)
         if not torch.equal(input_ids.cpu(), expected_ids.cpu()):
-            raise AssertionError("APUS cumulative tokenization differs from full chat-template render")
+            limit = min(input_ids.numel(), expected_ids.numel())
+            mismatch = next((i for i in range(limit) if input_ids[i] != expected_ids[i]), limit)
+            raise AssertionError(
+                "APUS cumulative tokenization differs from full chat-template render: "
+                f"actual={input_ids.numel()} expected={expected_ids.numel()} first_diff={mismatch}"
+            )
 
     def _read_files_and_process(self):
         # VERL's default dtype_backend=pyarrow path can overflow on long JSON
