@@ -14,6 +14,13 @@ TRAIN_MAX_SAMPLES=${TRAIN_MAX_SAMPLES:--1}
 VAL_MAX_SAMPLES=${VAL_MAX_SAMPLES:--1}
 MAX_LENGTH=${MAX_LENGTH:-16384}
 NPROC_PER_NODE=${NPROC_PER_NODE:-2}
+TRAIN_BATCH_SIZE=${TRAIN_BATCH_SIZE:-$NPROC_PER_NODE}
+[[ "$NPROC_PER_NODE" =~ ^[1-9][0-9]*$ && "$TRAIN_BATCH_SIZE" =~ ^[1-9][0-9]*$ ]] || {
+  echo "GPU count and global batch size must be positive integers" >&2; exit 2
+}
+(( TRAIN_BATCH_SIZE % NPROC_PER_NODE == 0 )) || {
+  echo "global batch size must be divisible by the data-parallel GPU count" >&2; exit 2
+}
 
 [[ -x "$PYTHON_BIN" ]] || { echo "missing VERL python: $PYTHON_BIN" >&2; exit 2; }
 [[ -d "$MODEL_PATH" ]] || { echo "missing model: $MODEL_PATH" >&2; exit 2; }
@@ -24,6 +31,9 @@ NPROC_PER_NODE=${NPROC_PER_NODE:-2}
 [[ ! -e "$RUN_ROOT" ]] || { echo "RUN_ROOT already exists: $RUN_ROOT" >&2; exit 2; }
 
 mkdir -p "$RUN_ROOT"
+export WANDB_DIR="$RUN_ROOT/wandb"
+export VERL_FILE_LOGGER_PATH="$RUN_ROOT/metrics.jsonl"
+mkdir -p "$WANDB_DIR"
 export PYTHONPATH="$ROOT/src/uni-agent:$ROOT/src/uni-agent/verl:$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 export PYTHONNOUSERSITE=1
 export RAY_ENABLE_UV_RUN_RUNTIME_ENV=0
@@ -43,7 +53,7 @@ COMMAND=(
   "data.max_token_len_per_gpu=$MAX_LENGTH"
   "data.train_max_samples=$TRAIN_MAX_SAMPLES"
   "data.val_max_samples=$VAL_MAX_SAMPLES"
-  data.train_batch_size=1 data.micro_batch_size_per_gpu=1
+  "data.train_batch_size=$TRAIN_BATCH_SIZE" data.micro_batch_size_per_gpu=1
   data.use_dynamic_bsz=True data.num_workers=0
   "model.path=$MODEL_PATH" "model.tokenizer_path=$MODEL_PATH"
   model.use_remove_padding=True model.enable_gradient_checkpointing=True
@@ -54,7 +64,7 @@ COMMAND=(
   checkpoint.save_contents='[model,optimizer,extra]'
   "trainer.default_local_dir=$RUN_ROOT/checkpoints"
   "trainer.project_name=$WANDB_PROJECT" "trainer.experiment_name=$RUN_ID"
-  trainer.resume_mode=disable 'trainer.logger=[console,wandb]'
+  trainer.resume_mode=disable 'trainer.logger=[console,file,wandb]'
   "trainer.save_freq=${SFT_SAVE_FREQ:-1}" "trainer.test_freq=${SFT_TEST_FREQ:-1}"
   "trainer.total_training_steps=$TRAIN_STEPS"
   "trainer.n_gpus_per_node=$NPROC_PER_NODE"
