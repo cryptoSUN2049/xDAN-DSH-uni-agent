@@ -29,6 +29,21 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
             raise ValueError(f"expected {expected.__name__}, got {type(value).__name__}")
         return value
 
+    @staticmethod
+    def _token_ids(value):
+        if isinstance(value, dict) or hasattr(value, "get"):
+            value = value["input_ids"]
+        if hasattr(value, "ids"):
+            return list(value.ids)
+        if hasattr(value, "tolist"):
+            value = value.tolist()
+        if isinstance(value, list):
+            result = []
+            for item in value:
+                result.extend(ApusMultiTurnSFTDataset._token_ids(item))
+            return result
+        return [value]
+
     def _build_messages(self, example: dict):
         example = dict(example)
         example[self.messages_key] = self._decode(example[self.messages_key], list)
@@ -55,19 +70,7 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
             )
             if isinstance(encoded, dict) or hasattr(encoded, "get"):
                 encoded = encoded["input_ids"]
-            def token_list(value):
-                if hasattr(value, "ids"):
-                    return list(value.ids)
-                if hasattr(value, "tolist"):
-                    value = value.tolist()
-                if isinstance(value, list):
-                    result = []
-                    for item in value:
-                        result.extend(token_list(item))
-                    return result
-                return [value]
-
-            return token_list(encoded)
+            return self._token_ids(encoded)
 
         before = render(full_message[:index], generation=True)
         after = render(full_message[: index + 1], generation=False)
@@ -78,6 +81,19 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
         attention_mask = torch.ones_like(input_ids)
         loss_mask = torch.ones_like(input_ids) if message.get("role") == "assistant" else torch.zeros_like(input_ids)
         return input_ids, loss_mask, attention_mask, {}
+
+    def sanity_check(self, input_ids, messages, tools, enable_thinking):
+        """Validate cumulative tokenization against one full Qwen render."""
+        processor = self.processor if self.processor is not None else self.tokenizer
+        kwargs = dict(self.apply_chat_template_kwargs)
+        if enable_thinking is not None:
+            kwargs["enable_thinking"] = enable_thinking
+        expected = processor.apply_chat_template(
+            messages, tools=tools, add_generation_prompt=False, tokenize=True, **kwargs
+        )
+        expected_ids = torch.tensor(self._token_ids(expected), dtype=torch.long)
+        if not torch.equal(input_ids.cpu(), expected_ids.cpu()):
+            raise AssertionError("APUS cumulative tokenization differs from full chat-template render")
 
     def _read_files_and_process(self):
         # VERL's default dtype_backend=pyarrow path can overflow on long JSON
