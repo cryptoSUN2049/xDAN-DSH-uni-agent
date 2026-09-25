@@ -15,6 +15,7 @@ VAL_MAX_SAMPLES=${VAL_MAX_SAMPLES:--1}
 MAX_LENGTH=${MAX_LENGTH:-16384}
 NPROC_PER_NODE=${NPROC_PER_NODE:-2}
 TRAIN_BATCH_SIZE=${TRAIN_BATCH_SIZE:-$NPROC_PER_NODE}
+LOGGER_BACKENDS=${LOGGER_BACKENDS:-console,file,wandb}
 [[ "$NPROC_PER_NODE" =~ ^[1-9][0-9]*$ && "$TRAIN_BATCH_SIZE" =~ ^[1-9][0-9]*$ ]] || {
   echo "GPU count and global batch size must be positive integers" >&2; exit 2
 }
@@ -39,6 +40,10 @@ export PYTHONNOUSERSITE=1
 export RAY_ENABLE_UV_RUN_RUNTIME_ENV=0
 export WANDB_PROJECT=${WANDB_PROJECT:-xDAN-performance-9b}
 export WANDB_RUN_GROUP=${WANDB_RUN_GROUP:-verl-sft}
+if [[ "${VERL_RL_INSIGHT_ENABLE:-0}" == "1" ]]; then
+  LOGGER_BACKENDS="$LOGGER_BACKENDS,rl_insight"
+fi
+LOGGER_SPEC="[${LOGGER_BACKENDS}]"
 
 COMMAND=(
   "$PYTHON_BIN" -m torch.distributed.run --standalone --nnodes=1
@@ -64,7 +69,7 @@ COMMAND=(
   checkpoint.save_contents='[model,optimizer,extra]'
   "trainer.default_local_dir=$RUN_ROOT/checkpoints"
   "trainer.project_name=$WANDB_PROJECT" "trainer.experiment_name=$RUN_ID"
-  trainer.resume_mode=disable 'trainer.logger=[console,file,wandb]'
+  trainer.resume_mode=disable "trainer.logger=$LOGGER_SPEC"
   "trainer.save_freq=${SFT_SAVE_FREQ:-1}" "trainer.test_freq=${SFT_TEST_FREQ:-1}"
   "trainer.total_training_steps=$TRAIN_STEPS"
   "trainer.n_gpus_per_node=$NPROC_PER_NODE"
