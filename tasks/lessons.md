@@ -365,3 +365,14 @@
 - RunPod 页面显示的可用 CUDA 版本不是容器实际 toolkit；本次镜像实际是 Torch 2.8.0+cu128 / CUDA 12.8，而项目主 lane 仍是 Torch 2.11+cu130。必须使用独立 venv、freeze、`CUDA_HOME` 和 `UV_CACHE_DIR`，不能把新镜像当作自动解决版本匹配。
 - `flash-attn` wheelhouse 只下载成功不等于 ABI 兼容；本组合的 wheel 曾出现 C++ undefined symbol。最终验收采用与 Torch/CUDA 对齐的源码构建，并要求 import、CUDA forward、双卡 FSDP smoke 三层证据。
 - 原生扩展的 uv sdist 缓存必须按 lane 隔离；cu130 和 cu128 并发复用同一个 build 目录会把错误 ABI 带入另一 venv。脚本 `setup-performance-9b-sft-cu128.sh` 默认使用 `/workspace/.../cache/uv/performance-9b-sft-py312-cu128`。
+
+## 2026-09-25：Qwen3.5 SFT adapter 必须完整渲染后按 offsets 做 mask
+
+- Qwen3.5 的 chat template 会检查最后一个 user turn；对多轮轨迹逐消息渲染并拼接，不能假设 token prefix 稳定。出现 `chat template prefix is not token-prefix stable` 时，根因是 adapter 算法，不是训练器或 GPU。
+- Qwen3.5 tokenizer 路径可能暴露 vision processor。把已经渲染的文本作为 processor 的位置参数，会被当作图片输入并触发 image decoder；文本 offsets 必须显式使用 tokenizer。
+- 可复用实现是“完整渲染一次 → character offsets → assistant body mask”，并把纯 mask 逻辑放到无框架依赖的小模块中测试。pilot v3 证明该路径可以在双卡 FSDP 上真实 forward/backward、验证和保存 checkpoint。
+
+## 2026-09-25：rl-insight logger 不等于 SFT trace 已采集
+
+- 原生 `torchrun -m verl.trainer.sft_trainer` 若未初始化 Ray，会明确记录 `Ray is not initialized; monitoring is disabled`。即使 rl-insight server、logger 配置和端口都存在，也不能宣称 trace 已进入后端。
+- 训练报告必须把 W&B、本地 `metrics.jsonl`、`train.log`、checkpoint 与 Ray/OTel trace 分开列证据；没有后端事件就标记“服务可用、trace 未验收”，不能用服务启动代替数据到达。

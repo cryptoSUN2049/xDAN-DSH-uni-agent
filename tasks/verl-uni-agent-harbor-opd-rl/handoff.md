@@ -406,3 +406,13 @@ qwen38-max-sft-review.md固定3库revision、区分Max-Preview/27B，候选有�
 - `flash-attn==2.8.3.post1`、`causal-conv1d==1.7.0` 均在该 venv/CUDA 上源码构建，`fla-core==0.5.2` 与 `flash-linear-attention==0.5.2` 已安装；import/forward smoke 和 `uv pip check` 通过。
 - 双卡 VERL FSDP SFT smoke：`runs/performance-9b-sft/verl-sft-smoke-cu128-2gpu-fla-20260925T033619Z/`，exit code `0`，train loss `2.134`、val loss `1.84526`、global tokens `2588`；W&B `https://wandb.ai/xdan-ai/xDAN-performance-9b/runs/sh6t7dg6`。
 - 该 smoke 只证明环境、native extensions、FSDP、W&B 链路可以运行；当前数据审计仍是 `training_ready=false`，监督 mask/20K准入完成前不得启动长跑。现有 cu130 lane 不得复用此 freeze 或 cache。
+
+## 2026-09-25 最新：pilot v3 完成，两个运行时问题已修复
+
+- 双卡 pod 已切换为 `157.157.221.177:11403` / `db7kewdkd71js6`，环境为 `performance-9b-sft-py312-cu128`。GPU 当前空闲，未留下训练进程。
+- 全量尝试 `verl-sft-cu128-full-20260925T0432Z` 曾在真实第 1 步后因旧 adapter 的 Qwen3.5 多轮 prefix instability 退出；不是模型或 GPU 故障。pilot v2 又发现把 Qwen3.5 vision processor 当文本 tokenizer 会触发图片解码错误。
+- 修复方式：完整渲染一次 chat template，使用 tokenizer offsets 标记 assistant body；新增无 VERL 依赖的 `examples/performance_9b/verl_sft_mask.py` 与本机回归测试，Qwen3.5 文本路径不再调用 vision processor。
+- pilot v3：`runs/performance-9b-sft/verl-sft-cu128-pilot-v3-20260925T0508Z/`，2 卡 FSDP、FlashAttention2、LoRA rank16、512 train / 64 validation samples、16 steps，exit code `0`。第 8/16 步 checkpoint 均完整；最后 `val/loss=1.0285365581512451`，W&B 为 `https://wandb.ai/xdan-ai/xDAN-performance-9b/runs/92602dg0`。
+- pilot 运行日志与 W&B 均记录了 `train/loss`、`grad_norm`、`global_tokens`、显存、validation loss；`trainer.logger` 中虽包含 `rl_insight`，但原生 torchrun 没初始化 Ray，日志为 `Ray is not initialized; monitoring is disabled`。rl-insight 服务已运行，但本次不计 Ray trace 验收。
+- 不得把 pilot 当作全量完成。旧全量配置按约 26.5 秒/step、29,582 steps 粗估约 9 天，必须先固定 20K 子集、确认数据准入与吞吐，再决定长跑；质量审计仍是 `training_ready=false`。
+- 下一步：同步新 adapter 到远端；用固定 20K/validation 做有界训练；检查 checkpoint 可读性、loss-mask 与数据域曲线；若要使用 rl-insight，补明确的 Ray 初始化或独立事件发送路径。

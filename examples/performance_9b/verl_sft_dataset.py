@@ -13,6 +13,8 @@ import numpy as np
 import pandas as pd
 import torch
 
+from examples.performance_9b.verl_sft_mask import assistant_loss_mask
+from verl.utils.dataset.dataset_utils import DatasetPadMode
 from verl.utils.dataset.multiturn_sft_dataset import MultiTurnSFTDataset
 from verl.utils.fs import copy_local_path_from_hdfs
 from verl.utils.tokenizer.chat_template import extract_system_prompt_and_generation
@@ -52,8 +54,105 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
         return super()._build_messages(example)
 
     def __getitem__(self, item):
-        self._active_tools = self.tools[item] if self.tools is not None else None
-        return super().__getitem__(item)
+        """Render one complete conversation and derive the assistant mask by offsets.
+
+        Qwen3.5's template inspects the last user turn while rendering every
+        assistant turn.  Rendering ``messages[:i]`` and ``messages[:i+1]``
+        therefore cannot produce a token-prefix-stable stream for a genuine
+        multi-turn trajectory.  The full-render path keeps the model's exact
+        template output and marks only text between assistant headers and the
+        following ``<|im_end|>`` marker.
+        """
+        row_dict = self.dataframe.iloc[item].to_dict()
+        messages = self._build_messages(row_dict)
+        tools = self.tools[item] if self.tools is not None else None
+        enable_thinking = (
+            self.enable_thinking[item] if self.enable_thinking is not None else self.enable_thinking_default
+        )
+        if enable_thinking is not None:
+            enable_thinking = bool(enable_thinking)
+
+        # Qwen3.5 exposes a vision processor even for text-only rows.  Calling
+        # that processor positionally treats the rendered string as an image;
+        # offsets for this text-only contract must come from the tokenizer.
+        processor = self.tokenizer
+        template_kwargs = dict(self.apply_chat_template_kwargs)
+        if enable_thinking is not None:
+            template_kwargs["enable_thinking"] = enable_thinking
+        rendered = processor.apply_chat_template(
+            messages,
+            tools=tools,
+            add_generation_prompt=False,
+            tokenize=False,
+            **template_kwargs,
+        )
+        if not isinstance(rendered, str):
+            raise TypeError(f"chat template must return str, got {type(rendered).__name__}")
+
+        encoded = processor(
+            rendered,
+            add_special_tokens=False,
+            return_attention_mask=False,
+            return_offsets_mapping=True,
+        )
+        token_ids = self._token_ids(encoded)
+        offsets = encoded.get("offset_mapping") if hasattr(encoded, "get") else None
+        if offsets is None:
+            raise ValueError("tokenizer must provide offset_mapping for full-render SFT masking")
+        if hasattr(offsets, "tolist"):
+            offsets = offsets.tolist()
+        if offsets and isinstance(offsets[0], list) and offsets[0] and isinstance(offsets[0][0], list):
+            offsets = offsets[0]
+        if len(token_ids) != len(offsets):
+            raise ValueError(f"token/offset length mismatch: {len(token_ids)} != {len(offsets)}")
+
+        loss_mask = torch.tensor(assistant_loss_mask(rendered, offsets), dtype=torch.long)
+
+        input_ids = torch.tensor(token_ids, dtype=torch.long)
+        attention_mask = torch.ones_like(input_ids)
+        position_ids = torch.arange(input_ids.shape[0], dtype=torch.long)
+        sequence_length = input_ids.shape[0]
+
+        if self.pad_mode == DatasetPadMode.RIGHT:
+            if sequence_length < self.max_length:
+                pad_token_id = self.tokenizer.pad_token_id if self.tokenizer.pad_token_id is not None else 0
+                pad_len = self.max_length - sequence_length
+                input_ids = torch.cat((input_ids, torch.full((pad_len,), pad_token_id, dtype=input_ids.dtype)))
+                attention_mask = torch.cat((attention_mask, torch.zeros(pad_len, dtype=attention_mask.dtype)))
+                loss_mask = torch.cat((loss_mask, torch.zeros(pad_len, dtype=loss_mask.dtype)))
+                position_ids = torch.nn.functional.pad(position_ids, (0, pad_len), value=0)
+            elif sequence_length > self.max_length:
+                if self.truncation == "left":
+                    input_ids = input_ids[-self.max_length :]
+                    attention_mask = attention_mask[-self.max_length :]
+                    loss_mask = loss_mask[-self.max_length :]
+                    position_ids = position_ids[-self.max_length :]
+                elif self.truncation == "right":
+                    input_ids = input_ids[: self.max_length]
+                    attention_mask = attention_mask[: self.max_length]
+                    loss_mask = loss_mask[: self.max_length]
+                    position_ids = position_ids[: self.max_length]
+                elif self.truncation == "error":
+                    raise ValueError(f"{sequence_length=} larger than {self.max_length=}")
+                else:
+                    raise ValueError(f"Unknown truncation method {self.truncation}")
+            return {
+                "input_ids": input_ids,
+                "attention_mask": attention_mask,
+                "position_ids": position_ids,
+                "loss_mask": loss_mask,
+            }
+
+        if self.pad_mode == DatasetPadMode.NO_PADDING:
+            if sequence_length > self.max_length and self.truncation == "error":
+                raise ValueError(f"{sequence_length=} larger than {self.max_length=}")
+            if sequence_length > self.max_length:
+                input_ids = input_ids[: self.max_length]
+                loss_mask = loss_mask[: self.max_length]
+                position_ids = position_ids[: self.max_length]
+            return {"input_ids": input_ids, "position_ids": position_ids, "loss_mask": loss_mask}
+
+        raise ValueError(f"Unknown pad mode {self.pad_mode}")
 
     def _process_single_message(self, index, message, full_message, tools=None, enable_thinking=None):
         """Tokenize a cumulative prefix so Qwen templates see system+user context."""
