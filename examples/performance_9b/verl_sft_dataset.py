@@ -59,8 +59,11 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
                 encoded = encoded.ids
             if hasattr(encoded, "tolist"):
                 encoded = encoded.tolist()
-            if isinstance(encoded, list) and encoded and hasattr(encoded[0], "ids"):
-                encoded = encoded[0].ids
+            if isinstance(encoded, list) and any(hasattr(item, "ids") for item in encoded):
+                flattened = []
+                for item in encoded:
+                    flattened.extend(item.ids if hasattr(item, "ids") else item)
+                encoded = flattened
             if encoded and isinstance(encoded[0], list):
                 encoded = encoded[0]
             return encoded
