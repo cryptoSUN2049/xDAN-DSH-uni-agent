@@ -41,7 +41,7 @@ class ApusMultiTurnSFTDataset(MultiTurnSFTDataset):
         processor = self.processor if self.processor is not None else self.tokenizer
 
         def render(prefix, generation):
-            if prefix and all(item.get("role") == "system" for item in prefix):
+            if not prefix or all(item.get("role") == "system" for item in prefix):
                 return []
             kwargs = dict(self.apply_chat_template_kwargs)
             if enable_thinking is not None:
