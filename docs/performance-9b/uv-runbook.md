@@ -29,6 +29,40 @@
 
 同一台机器上另有 MetaRSI 的 `/workspace/.venvs/metarsi-*-py311`（Torch 2.10 / vLLM 0.18.1 / Transformers 4.57.6）和 VERL 自身 uv.lock（vLLM 0.24 / Transformers 5.9）。三条 lane 不混称统一锁；正式训练前须为训练 lane 单独验锁。
 
+### 2026-09-25 2 卡 Blackwell 与 CUDA 扩展
+
+新训练 pod（SSH 端口 11403）使用 `runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404`，系统 Python 的 Torch 是 2.8.0+cu128，系统 CUDA toolkit 是 12.8。这个镜像本身不会自动消除版本问题：本项目当前锁文件明确使用 Torch 2.11.0+cu130；如果执行标准 bootstrap，venv 会按锁恢复到 cu130，而不是沿用镜像里的 Torch 2.8。
+
+当前训练 lane 继续以锁文件为准，并在 pod 中补齐 CUDA 13.0 compiler（不重装 driver）。原因是 `flash-attn`/`causal-conv1d` 的 PyPI 没有适配本组合的通用 wheel，源码扩展必须使用与 Torch 编译版本一致的 CUDA toolkit。Blackwell 的目标架构为 `sm_120`；源码构建时设置 `FLASH_ATTN_CUDA_ARCHS=120`，避免编译无关架构。
+
+扩展安装准入必须同时满足：`flash_attn` 和 `causal_conv1d` import 成功、各自 CUDA forward 成功、Torch/FSDP smoke 仍能启动。仅看到安装完成或 wheel 下载完成不算通过；VERL wheelhouse 的 flash-attn wheel 曾在本 lane 出现 C++ ABI undefined symbol，已记录并禁止直接作为成功证据。
+
+如果把新 2 卡镜像作为独立的 SFT lane，环境变量固定如下，不与现有 cu130 lane 共用锁：
+
+```bash
+export WORKSPACE_ROOT=/workspace/verl-uni-agent-harbor-opd-rl
+export LANE=performance-9b-sft-py312-cu128
+export UV_VENV=$WORKSPACE_ROOT/envs/$LANE
+export UV_CACHE_DIR=$WORKSPACE_ROOT/cache/uv/$LANE
+export CUDA_HOME=/usr/local/cuda-12.8
+export PATH=$CUDA_HOME/bin:$PATH
+export TORCH_CUDA_ARCH_LIST=12.0
+export FLASH_ATTN_CUDA_ARCHS=120
+```
+
+这个 lane 的 lock 必须同时固定 `torch==2.8.0`、`torchvision==0.23.0`、`torchaudio==2.8.0` 和与之匹配的 VERL 依赖，并通过双卡 SFT smoke 后才可以启用。当前 VERL 源码的 FSDP extra 仍声明 Torch 2.11，因此不能只替换环境变量就宣称该 lane 已完成；需单独生成 lock、跑 `uv pip check` 和训练器 import/forward 验收。原生扩展构建必须使用这个 lane 的独立 `UV_CACHE_DIR`，否则 cu130 与 cu128 的同一 sdist build 可能复用错误 ABI。
+
+**双卡验收已完成（2026-09-25）：** `deployment/versions/uv-lanes/performance-9b-sft-py312-cu128.freeze.txt` 是从远端 venv 回读的冻结快照（Torch `2.8.0+cu128`、CUDA runtime `12.8`、`flash-attn 2.8.3.post1`、`causal-conv1d 1.7.0`、`fla-core 0.5.2`、`flash-linear-attention 0.5.2`）。两个 CUDA 扩展均为在本 venv 上源码构建，并且完成了 forward smoke。VERL FSDP 两卡 SFT smoke 的命令与日志保存在：
+
+```text
+runs/performance-9b-sft/verl-sft-smoke-cu128-2gpu-fla-20260925T033619Z/
+W&B: https://wandb.ai/xdan-ai/xDAN-performance-9b/runs/sh6t7dg6
+```
+
+该运行 exit code 为 `0`，两张卡都参与训练；`train/loss=2.134`、`val/loss=1.84526`、`train/global_tokens=2588`。日志出现 Blackwell FLA allocator 初始化，未出现此前缺少 FLA fast path 的警告。该结果只证明环境、FSDP、attention/native extensions 和 W&B 链路可运行，不代表完整数据集已通过监督 mask、质量门和长跑验收。
+
+重建入口固定为 `deployment/bootstrap/setup-performance-9b-sft-cu128.sh`。脚本拒绝覆盖已有 venv，并默认把所有 mutable state 写入 `/workspace`；不要把它与 `ua-verl-py312-vllm023` 的 cu130 freeze 混用。
+
 ## 每次启动的顺序
 
 1. 核 SSH 端口（pod 重建后会变），`findmnt -T /workspace` 确认挂的是持久卷。

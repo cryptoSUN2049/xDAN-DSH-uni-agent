@@ -398,3 +398,11 @@ qwen38-max-sft-review.md固定3库revision、区分Max-Preview/27B，候选有�
 - 正确资源身份：pod `45ao3zsq6w7xck`（`apus-openjev-serving`），SSH `157.157.221.177:16358`，volume `72jdno5cuk`（`RL-Harbor-sky_volume`），1× RTX PRO 6000 Blackwell Server Edition，约 96GB。
 - `sft_preflight.sh` 已同步到共享源码目录并后台运行，输出预期为 `/workspace/apus-data-cleaning/reports/verl-sft-v1/preflight.json`。完成后先读 `preflight.log/json`，再启动单卡 smoke。
 - 全局数据状态详见 `docs/performance-9b/data-pipeline-status-20260925.md`。当前仍未取得真实 SFT checkpoint、W&B step 对账或 rl-insight 后端 trace。
+
+## 2026-09-25 双卡 cu128 SFT lane 已验收
+
+- 新双卡 pod：`157.157.221.177:11403`，镜像 `runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404`，2× RTX PRO 6000 Blackwell；`/workspace` 为持久卷。
+- 独立 lane：`performance-9b-sft-py312-cu128`，Torch `2.8.0+cu128`、CUDA runtime `12.8`。环境重建入口为 `deployment/bootstrap/setup-performance-9b-sft-cu128.sh`，freeze 为 `deployment/versions/uv-lanes/performance-9b-sft-py312-cu128.freeze.txt`；两文件已保存到本地并同步到远端源码目录。
+- `flash-attn==2.8.3.post1`、`causal-conv1d==1.7.0` 均在该 venv/CUDA 上源码构建，`fla-core==0.5.2` 与 `flash-linear-attention==0.5.2` 已安装；import/forward smoke 和 `uv pip check` 通过。
+- 双卡 VERL FSDP SFT smoke：`runs/performance-9b-sft/verl-sft-smoke-cu128-2gpu-fla-20260925T033619Z/`，exit code `0`，train loss `2.134`、val loss `1.84526`、global tokens `2588`；W&B `https://wandb.ai/xdan-ai/xDAN-performance-9b/runs/sh6t7dg6`。
+- 该 smoke 只证明环境、native extensions、FSDP、W&B 链路可以运行；当前数据审计仍是 `training_ready=false`，监督 mask/20K准入完成前不得启动长跑。现有 cu130 lane 不得复用此 freeze 或 cache。

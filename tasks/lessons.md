@@ -359,3 +359,9 @@
 - uv环境文件未成功lock/sync和回读之前，只能称重建草案；uv sync须显式绑定目标环境，不能创建A却安装到B。
 
 - VERL SFT 的最小事实核对：原生入口是 `torchrun -m verl.trainer.sft_trainer`，FSDP 是 engine、SDPA/FlashAttention 是 attention backend；不能把后端、engine 和 trainer 混称。自定义启动器只应包住数据适配、workspace 和日志，不能掩盖监督 mask 尚未验收的事实。
+
+## 2026-09-25：双卡 Blackwell 的 CUDA lane 隔离
+
+- RunPod 页面显示的可用 CUDA 版本不是容器实际 toolkit；本次镜像实际是 Torch 2.8.0+cu128 / CUDA 12.8，而项目主 lane 仍是 Torch 2.11+cu130。必须使用独立 venv、freeze、`CUDA_HOME` 和 `UV_CACHE_DIR`，不能把新镜像当作自动解决版本匹配。
+- `flash-attn` wheelhouse 只下载成功不等于 ABI 兼容；本组合的 wheel 曾出现 C++ undefined symbol。最终验收采用与 Torch/CUDA 对齐的源码构建，并要求 import、CUDA forward、双卡 FSDP smoke 三层证据。
+- 原生扩展的 uv sdist 缓存必须按 lane 隔离；cu130 和 cu128 并发复用同一个 build 目录会把错误 ABI 带入另一 venv。脚本 `setup-performance-9b-sft-cu128.sh` 默认使用 `/workspace/.../cache/uv/performance-9b-sft-py312-cu128`。
