@@ -80,8 +80,11 @@ def convert(record):
     if not isinstance(tools, list):
         raise ValueError("tools_json must contain a list")
     return {
-        "messages": messages,
-        "tools": tools,
+        # Keep dynamic tool arguments JSON-encoded in Parquet.  Arrow cannot
+        # represent a column of heterogeneous nested structs reliably; the
+        # APUS VERL dataset adapter decodes these fields before tokenization.
+        "messages": _json(messages),
+        "tools": _json(tools),
         "enable_thinking": any(item.get("reasoning_content") for item in messages),
         "data_source": record.get("source_repo", "unknown"),
         "ability": record.get("domain", "unknown"),

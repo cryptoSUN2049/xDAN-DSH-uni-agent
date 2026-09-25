@@ -43,7 +43,8 @@ def test_export_preserves_multiturn_tool_messages():
             tools=json.dumps([{"type": "function", "function": {"name": "run"}}]),
         )
     )
-    assert result["messages"][1]["tool_calls"][0]["function"]["arguments"] == {"x": 1}
+    messages = json.loads(result["messages"])
+    assert messages[1]["tool_calls"][0]["function"]["arguments"] == {"x": 1}
     assert result["enable_thinking"] is False
     assert result["ability"] == "code"
 
@@ -60,7 +61,7 @@ def test_final_assistant_tool_call_can_be_target_action():
             ]
         )
     )
-    assert result["messages"][-1]["tool_calls"][0]["id"] == "c"
+    assert json.loads(result["messages"])[-1]["tool_calls"][0]["id"] == "c"
 
 
 def test_orphan_tool_result_is_rejected():
