@@ -59,7 +59,7 @@ runs/performance-9b-sft/verl-sft-smoke-cu128-2gpu-fla-20260925T033619Z/
 W&B: https://wandb.ai/xdan-ai/xDAN-performance-9b/runs/sh6t7dg6
 ```
 
-该运行 exit code 为 `0`，两张卡都参与训练；`train/loss=2.134`、`val/loss=1.84526`、`train/global_tokens=2588`。日志出现 Blackwell FLA allocator 初始化，未出现此前缺少 FLA fast path 的警告。该结果只证明环境、FSDP、attention/native extensions 和 W&B 链路可运行，不代表完整数据集已通过监督 mask、质量门和长跑验收。
+该运行 exit code 为 `0`，两张卡都参与训练；`train/loss=2.134`、`val/loss=1.84526`、`train/global_tokens=2588`。日志出现 Blackwell FLA allocator 初始化，未出现此前缺少 FLA fast path 的警告。日志中 `torchtitan`、`veomni`、`megatron` 等 optional engine 的 `not available` 提示不影响本次 FSDP 路径，不能把它们误判为 attention fallback。该结果只证明环境、FSDP、attention/native extensions 和 W&B 链路可运行，不代表完整数据集已通过监督 mask、质量门和长跑验收。
 
 重建入口固定为 `deployment/bootstrap/setup-performance-9b-sft-cu128.sh`。脚本拒绝覆盖已有 venv，并默认把所有 mutable state 写入 `/workspace`；不要把它与 `ua-verl-py312-vllm023` 的 cu130 freeze 混用。
 
