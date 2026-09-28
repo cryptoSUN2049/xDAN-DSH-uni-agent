@@ -16,6 +16,8 @@ from uni_agent.tasks.dsh.trajectory_audit import TrajectoryAuditError, _require_
 from .client import DownloadedJob
 from .evolution_scoring import EvolutionBinding, FrozenEvolution, load_evolution_binding
 from .evolution_scoring_v2 import EvolutionV2Binding, FrozenEvolutionV2, load_evolution_v2_binding
+from .mimo import MimoBinding, MimoBindingRef, load_mimo_binding
+from .mimo import canonical as mimo_canonical
 from .protocol import JobRequest, OpaqueId, RequestPolicy, TaskRef, validate_manifest, validate_request
 from .task import (
     FrozenT2Fixture,
@@ -84,6 +86,7 @@ def _verify_saved(
     instruction: str,
     t2_fixture: FrozenT2Fixture | None = None,
     evolution: FrozenEvolution | FrozenEvolutionV2 | None = None,
+    mimo: MimoBinding | None = None,
 ) -> tuple[dict, str, float]:
     request_data, _ = _read_object(directory, "request.json")
     parsed = JobRequest.model_validate(request_data)
@@ -103,7 +106,12 @@ def _verify_saved(
     manifest = validate_manifest(manifest_data, request=request, worker_id=worker_id)
     artifacts = {entry.id: _read(directory, entry.id, entry.size_bytes) for entry in manifest.artifacts}
     reward = verify_downloaded_evidence(
-        request, DownloadedJob(manifest, artifacts), worker_id=worker_id, t2_fixture=t2_fixture, evolution=evolution
+        request,
+        DownloadedJob(manifest, artifacts),
+        worker_id=worker_id,
+        t2_fixture=t2_fixture,
+        evolution=evolution,
+        mimo=mimo,
     )
     receipt, _ = _read_object(directory, "receipt.json")
     body = {key: value for key, value in receipt.items() if key != "receipt_id"}
@@ -132,6 +140,8 @@ def _verify_saved(
         expected["t2_fixture_sha256"] = t2_fixture.sha256
     if evolution is not None:
         expected[_evolution_receipt_key(evolution)] = _evolution_receipt(evolution)
+    if mimo is not None:
+        expected["mimo_binding_sha256"] = _digest(mimo_canonical(mimo.model_dump(mode="json", by_alias=True)))
     # Canonical comparison also distinguishes bool/int/float substitutions.
     if _canonical(body) != _canonical(expected):
         raise TrajectoryAuditError("Harbor receipt does not bind the verified evidence and Framework context")
@@ -155,6 +165,7 @@ def validate_trajectories(
     t2_fixture: Mapping[str, object] | T2FixtureBinding | None = None,
     evolution_binding: Mapping[str, object] | EvolutionBinding | None = None,
     evolution_v2_binding: Mapping[str, object] | EvolutionV2Binding | None = None,
+    mimo_binding: Mapping[str, object] | MimoBindingRef | None = None,
 ) -> list[Trajectory]:
     """FQN postprocessor; all kwargs except context must be operator configured.
 
@@ -167,7 +178,7 @@ def validate_trajectories(
         trusted_context = RunnerContext.model_validate(dict(context))
         trusted_policy = RequestPolicy.model_validate(policy)
         trusted_task = TaskRef.model_validate(task_ref)
-        if sum(value is not None for value in (t2_fixture, evolution_binding, evolution_v2_binding)) > 1:
+        if sum(value is not None for value in (t2_fixture, evolution_binding, evolution_v2_binding, mimo_binding)) > 1:
             raise TrajectoryAuditError("T2 and evolution v1/v2 bindings are mutually exclusive")
         fixture = (
             load_t2_fixture(T2FixtureBinding.model_validate(t2_fixture), trusted_task)
@@ -189,7 +200,13 @@ def validate_trajectories(
                 trusted_task,
                 repository_root=Path(__file__).resolve().parents[3],
             )
-        _fixture_lane(trusted_policy.dsh_release, trusted_task, fixture, evolution)
+        mimo = None
+        if mimo_binding is not None:
+            reference = MimoBindingRef.model_validate(mimo_binding)
+            if reference.task_ref != trusted_task:
+                raise TrajectoryAuditError("MiMo binding differs from trusted TaskRef")
+            mimo = load_mimo_binding(Path(reference.path), expected_sha256=reference.sha256)
+        _fixture_lane(trusted_policy.dsh_release, trusted_task, fixture, evolution, mimo)
         TypeAdapter(OpaqueId).validate_python(run_id)
         TypeAdapter(OpaqueId).validate_python(worker_id)
         if not isinstance(instruction, str) or not instruction:
@@ -218,6 +235,7 @@ def validate_trajectories(
                         instruction=instruction,
                         t2_fixture=fixture,
                         evolution=evolution,
+                        mimo=mimo,
                     )
                 finally:
                     os.close(directory)

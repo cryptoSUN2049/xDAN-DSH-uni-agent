@@ -25,9 +25,15 @@ from harbor.trial.artifact_handler import ArtifactHandler
 from harbor.trial.single_step import SingleStepTrial
 
 from uni_agent.agents.dsh.harbor_release import T2_PATCH_PATH, T2_STRATEGY
-from uni_agent.tasks.harbor_dsh.environment_backend import TRACKED_MODAL_IMPORT, validate_modal_task
+from uni_agent.tasks.harbor_dsh.environment_backend import (
+    TRACKED_MODAL_IMPORT,
+    validate_modal_task,
+    validate_registry_secret,
+)
 from uni_agent.tasks.harbor_dsh.evolution_scoring import EVOLUTION_KIND
 from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import EVOLUTION_V2_KIND
+from uni_agent.tasks.harbor_dsh.mimo import MIMO_STRATEGY, MimoBinding, load_mimo_binding
+from uni_agent.tasks.harbor_dsh.mimo_artifacts import MimoWorkspaceArtifacts
 from uni_agent.tasks.harbor_dsh.trace_artifacts import TraceArtifacts, validate_evolution_binding
 
 _DSH_IMPORT = "uni_agent.agents.dsh.harbor_agent:DshHarborAgent"
@@ -211,9 +217,10 @@ def _validate_runtime(config: TrialConfig, allowed_task_dir: Path) -> Path:
     ):
         raise ValueError("Environment requires tracked cleanup and no runtime mounts/compose/env/kwargs")
     if modal:
+        validate_registry_secret(env.kwargs.get("registry_secret"), backend="modal")
         timeout = env.kwargs.get("sandbox_timeout_secs", 300)
         if (
-            set(env.kwargs) - {"sandbox_timeout_secs"}
+            set(env.kwargs) - {"sandbox_timeout_secs", "registry_secret"}
             or type(timeout) is not int
             or not 1 <= timeout <= 86400
             or env.force_build
@@ -253,6 +260,8 @@ def _validate_task(task: Task, *, strategy: str = "answer") -> None:
         raise ValueError("An explicit separate verifier environment is required")
     if strategy in {T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND} and config.artifacts:
         raise ValueError("T2 forbids student artifacts")
+    if strategy == MIMO_STRATEGY and config.artifacts:
+        raise ValueError("MiMo workspace transport forbids arbitrary artifact overrides")
     if strategy == "answer" and config.artifacts != ["/app/answer.txt"]:
         raise ValueError("This lane only transfers the explicit /app/answer.txt artifact")
     for env in (config.environment, config.verifier.environment):
@@ -272,13 +281,36 @@ class IsolatedDshTrial(SingleStepTrial):
         gateway_session_id: str | None = None,
         max_trace_bytes: int | None = None,
         evolution_binding: bytes | None = None,
+        mimo_binding: MimoBinding | None = None,
     ):
         # Upstream retains config by reference; isolate it from caller mutations.
         snapshot = config.model_copy(deep=True)
         task_dir = _validate_runtime(snapshot, allowed_task_dir)
         task = Task(task_dir=task_dir)
-        if strategy not in {"answer", T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND}:
+        if strategy not in {"answer", T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND, MIMO_STRATEGY}:
             raise ValueError("Unsupported isolated task strategy")
+        self._mimo_binding = mimo_binding
+        self._mimo_session = gateway_session_id
+        if strategy == MIMO_STRATEGY:
+            if (
+                mimo_binding is None
+                or load_mimo_binding(task_dir / "mimo-binding.json") != mimo_binding
+                or snapshot.agent.import_path != _DSH_IMPORT
+                or snapshot.agent.name is not None
+                or snapshot.agent.kwargs.get("patches") != []
+                or snapshot.agent.kwargs.get("profile") != "sdk-minimal"
+                or snapshot.agent.kwargs.get("workdir") != mimo_binding.cwd
+                or snapshot.agent.kwargs.get("runner_python") != mimo_binding.runner_python
+                or not gateway_session_id
+                or task.config.environment.docker_image != mimo_binding.image_binding.dsh_image
+                or task.config.verifier.environment is None
+                or task.config.verifier.environment.docker_image != mimo_binding.image_binding.resolved_verifier
+                or task.config.environment.workdir != mimo_binding.cwd
+                or task.config.verifier.environment.workdir != mimo_binding.cwd
+            ):
+                raise ValueError("MiMo strategy requires the frozen DSH/workspace/image/session contract")
+        elif mimo_binding is not None:
+            raise ValueError("MiMo binding requires explicit MiMo strategy")
         if strategy in {EVOLUTION_KIND, EVOLUTION_V2_KIND}:
             binding = validate_evolution_binding(evolution_binding)
             if binding.kind != strategy:
@@ -287,7 +319,7 @@ class IsolatedDshTrial(SingleStepTrial):
             raise ValueError("Binding requires explicit evolution strategy")
         self._evolution_binding = evolution_binding
         if snapshot.environment.type == EnvironmentType.MODAL:
-            if strategy not in {T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND}:
+            if strategy not in {T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND, MIMO_STRATEGY}:
                 raise ValueError("Modal supports only the host trace artifact strategy")
             route = urlsplit(snapshot.agent.kwargs.get("gateway_base_url", ""))
             validate_modal_task(
@@ -307,7 +339,7 @@ class IsolatedDshTrial(SingleStepTrial):
                 or max_trace_bytes <= 0
             ):
                 raise ValueError("T2 requires the fixed DSH bridge, patch, session and byte budget")
-        elif gateway_session_id is not None or max_trace_bytes is not None:
+        elif strategy != MIMO_STRATEGY and (gateway_session_id is not None or max_trace_bytes is not None):
             raise ValueError("Trace settings require explicit T2 strategy")
         self._trace_settings = (
             (gateway_session_id, max_trace_bytes)
@@ -319,6 +351,14 @@ class IsolatedDshTrial(SingleStepTrial):
 
     def _init_artifact_handler(self) -> None:
         self._validate_artifact_configuration()
+        if self._mimo_binding is not None:
+            self._artifact_handler = MimoWorkspaceArtifacts(
+                binding=self._mimo_binding,
+                agent_dir=self.paths.agent_dir,
+                gateway_session_id=self._mimo_session,
+                logger=self.logger,
+            )
+            return
         if self._trace_settings is not None:
             session, budget = self._trace_settings
             self._artifact_handler = TraceArtifacts(
@@ -361,6 +401,8 @@ class IsolatedDshTrial(SingleStepTrial):
         if result.return_code != 0:
             raise RuntimeError("Failed to create the isolated agent log directory")
         await super()._setup_agent()
+        if self._mimo_binding is not None:
+            await self._artifact_handler.capture_base(self.agent_environment)
 
     @classmethod
     async def create(cls, config: TrialConfig, *, allowed_task_dir: Path, **kwargs) -> IsolatedDshTrial:
@@ -376,6 +418,7 @@ def create_isolated_trial(
     gateway_session_id: str | None = None,
     max_trace_bytes: int | None = None,
     evolution_binding: bytes | None = None,
+    mimo_binding: MimoBinding | None = None,
 ) -> IsolatedDshTrial:
     """Construct the local trial without downloading tasks or starting resources."""
     return IsolatedDshTrial(
@@ -385,4 +428,5 @@ def create_isolated_trial(
         gateway_session_id=gateway_session_id,
         max_trace_bytes=max_trace_bytes,
         evolution_binding=evolution_binding,
+        mimo_binding=mimo_binding,
     )

@@ -1,0 +1,21 @@
+{
+  "schema": "xdan.mimo-source-selection.v1",
+  "status": "source-frozen-environment-unvalidated",
+  "training_ready": false,
+  "converter_contract_ready": true,
+  "task_id": "format-code-task-001661",
+  "source_revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+  "source_parquet_sha256": "sha256:e15733cf2451cfbc5492a4120f7f8cfddbad818aa9f0b324c79888dd1fece161",
+  "source_row_hash": "sha256:5ce55aa05e87a954d5f4f7dd3fe1eeb8490bf61eb7cc7ec360776bd0f0c195ec",
+  "source_row_file": "/workspace/mimo-dsh-rl-20260928/audit-code/selected/format-code-task-001661.row.json",
+  "source_row_file_sha256": "sha256:9fbd981fd6b50ad0c5ff3bd02ef75bd6d02e770aabf0f8c57ccd17d24e11368f",
+  "cwd": "/workspace/repo",
+  "dataset_image": "format-code-task-001661:latest",
+  "test_patch_sha256": "sha256:360a18133cef1e7ddfeb405352639c0037c7087de532189cb75464d6088e8625",
+  "test_patch_paths": [
+    "mimo_test_command.sh",
+    "usercase-test-coderl/test_bidirectional_friendship.py"
+  ],
+  "verifier_timeout_sec": 1800,
+  "source_row_index": 7
+}

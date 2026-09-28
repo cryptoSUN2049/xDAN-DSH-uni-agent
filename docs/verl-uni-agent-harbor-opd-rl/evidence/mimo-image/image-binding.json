@@ -1,0 +1,23 @@
+{
+  "config_normalizations": [
+    {
+      "kind": "docker_default_path_materialized",
+      "runtime_evidence_sha256": "867ea823c423dde850138a85879bd7e56f92adf5c63bd8d482a79ade8b73bca6"
+    }
+  ],
+  "dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-001661@sha256:15f588d627ce06e17d2904193c07100aa0b73c883269d70565ab59f36f6f2952",
+  "dsh_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+  "gateway_origin": "https://mimo9b-rl.xdan.work",
+  "gateway_route_verified": false,
+  "original_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:38280116603fd55e56437bcd7c089f3915a6df8a7ed335bb6935503ffb77f475",
+  "patches": [],
+  "profile": "sdk-minimal",
+  "python_distribution_version": "0.1.3a2",
+  "runner_python": "/opt/dsh/bin/python",
+  "runner_sha256": "a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+  "runtime_binary_sha256": "d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+  "runtime_rg_sha256": "193906679498de4d939345b937fa24e0e69a03c244bd70c859f5e41232713f21",
+  "schema": "dsh.mimo-image-binding.v1",
+  "source_commit": "c51f6fc7dad24fd03fdc090741bc30d07488b574",
+  "verification_scope": "original layers/config execution semantics preserved; fixed DSH identity and offline SDK boot"
+}

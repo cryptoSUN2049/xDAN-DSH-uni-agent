@@ -10,6 +10,15 @@ from urllib.parse import urlsplit
 TRACKED_MODAL_IMPORT = "uni_agent.tasks.harbor_dsh.modal_environment:TrackedModalEnvironment"
 
 
+def validate_registry_secret(name: str | None, *, backend: str) -> str | None:
+    """Accept an operator-owned image-pull credential name, never sandbox secrets."""
+    if name is not None and (
+        backend != "modal" or not isinstance(name, str) or re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", name) is None
+    ):
+        raise ValueError("Registry secret requires Modal and a valid operator-owned secret name")
+    return name
+
+
 def validate_gateway_origin(origin: str, *, backend: str = "docker") -> str:
     route = urlsplit(origin)
     if (

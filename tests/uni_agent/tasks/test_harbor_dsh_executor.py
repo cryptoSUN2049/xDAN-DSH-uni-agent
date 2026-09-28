@@ -593,6 +593,7 @@ def test_modal_executor_uses_tracked_scope_and_preserves_evidence(task_dir, harn
         gateway_base_url="https://gateway.example.com" + request.model_route.session_path,
         on_verifying=AsyncMock(),
         environment_backend="modal",
+        registry_secret="mimo-dsh-ghcr",
     )
     if cleanup in {"failed-clean", "cancelled-clean"}:
         with pytest.raises(executor.CleanExecutionRejected):
@@ -617,6 +618,7 @@ def test_modal_executor_uses_tracked_scope_and_preserves_evidence(task_dir, harn
     assert result.cleanup_confirmed and scopes[0].cleanup_confirmed
     assert harness.trial.config.environment.import_path == TRACKED_MODAL_IMPORT
     assert harness.trial.config.environment.type.value == "modal"
+    assert harness.trial.config.environment.kwargs["registry_secret"] == "mimo-dsh-ghcr"
     assert set(result.artifacts) == {"dsh_trace", "dsh_result", "harbor_result", "verifier_log", "reward"}
     harness.inventory.assert_not_called()
 

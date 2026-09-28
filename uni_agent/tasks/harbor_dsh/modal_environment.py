@@ -144,6 +144,14 @@ class ModalExecutionScope:
 class TrackedModalEnvironment(ModalEnvironment):
     """Fixed Harbor EnvironmentFactory seam; only usable inside an owned scope."""
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # The approved private registry lane uses GHCR. Harbor copies provider
+        # kwargs into its independent verifier, whose original public image can
+        # live on DockerHub. Never send GHCR pull credentials to that registry.
+        if not (self.task_env_config.docker_image or "").startswith("ghcr.io/"):
+            self._registry_secret = None
+
     async def _create_sandbox(self, *, entrypoint=None, block_network=None, experimental_options=None):
         scope = _SCOPE.get()
         if scope is None or scope._closed:

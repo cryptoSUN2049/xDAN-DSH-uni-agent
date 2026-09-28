@@ -1,0 +1,15 @@
+{
+  "architecture": "x86_64",
+  "runner_sha256": "a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+  "runtime_binary_sha256": "d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+  "runtime_executable": "/opt/dsh/lib/python3.12/site-packages/deepseek_harness_runtime/runtime/deepseek-harness-sdk-runtime-linux-x64",
+  "runtime_rg_sha256": "193906679498de4d939345b937fa24e0e69a03c244bd70c859f5e41232713f21",
+  "schema": "dsh.mimo-image-smoke.v1",
+  "scope": "initialize-shutdown-only",
+  "status": "passed",
+  "versions": {
+    "deepseek-harness-runtime-bin": "0.1.3a2",
+    "deepseek-harness-sdk": "0.1.3a2",
+    "pydantic": "2.12.5"
+  }
+}

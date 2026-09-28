@@ -1,0 +1,92 @@
+{
+  "checked_at": "2026-09-28",
+  "scope": "read-only metadata, two viewer samples, pinned verifier source, local source and stored run evidence; no new training",
+  "dataset": {
+    "repo": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+    "revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+    "last_modified": "2026-09-26T01:40:41.000Z",
+    "license_declared": "apache-2.0",
+    "file_count": 41292
+  },
+  "viewer": {
+    "revision_pinned": false,
+    "partial": false,
+    "failed": [],
+    "counts": {
+      "code": 2698,
+      "cyber": 1000,
+      "general": 989,
+      "music": 1000,
+      "webdev": 2093
+    },
+    "total_rows": 7780
+  },
+  "mapping": {
+    "rows": 3764,
+    "unique_source_images": 3764,
+    "conflicting_source_images": 0,
+    "revision_pinned": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+    "images_pulled": false
+  },
+  "code_samples": [
+    {
+      "viewer_row_index": 0,
+      "fields": [
+        "cwd",
+        "dataset_type",
+        "docker_image",
+        "instance_id",
+        "problem_statement",
+        "test_command",
+        "test_patch",
+        "verifier_timeout_sec"
+      ],
+      "instance_id": "format-code-task-001457",
+      "cwd": "/testbed",
+      "original_image": "format-code-task-001457:latest",
+      "mapped_images": [
+        "docker.io/xiaomimimo/mimo-v2.6-rl-oss:format-code-task-001457"
+      ],
+      "verifier_timeout_sec": 1800,
+      "test_patch_sha256": "eb2c680510048c241dc89531a68fd435867cfc0f96b18bb15207d6a099bc907d",
+      "has_oracle_solution_field": false
+    },
+    {
+      "viewer_row_index": 1,
+      "fields": [
+        "cwd",
+        "dataset_type",
+        "docker_image",
+        "instance_id",
+        "problem_statement",
+        "test_command",
+        "test_patch",
+        "verifier_timeout_sec"
+      ],
+      "instance_id": "format-code-task-001240",
+      "cwd": "/workspace/repo",
+      "original_image": "format-code-task-001240:latest",
+      "mapped_images": [
+        "docker.io/xiaomimimo/mimo-v2.6-rl-oss:format-code-task-001240"
+      ],
+      "verifier_timeout_sec": 1800,
+      "test_patch_sha256": "9f136e1f08604a8b4f9f6e1f4bfb9031cc50aa6c97699887cb09467d7e384a64",
+      "has_oracle_solution_field": false
+    }
+  ],
+  "sample_scope_warning": "Only two current-viewer rows checked; not full Code validation or image availability verification. Viewer does not pin source revision.",
+  "verifier": {
+    "repo": "XiaomiMiMo/MiMo-Agent",
+    "revision": "467f0a19016f0ac4d63b8d17a1f0da9ba07f232c",
+    "path": "src/mimoagent/environments/datasets/opensource_code.py",
+    "read": true,
+    "executed": false
+  },
+  "source_download_sha256": {
+    "mimo-rl-hf-api-20260928.json": "a088d8f90819a72a79adb01da90c833e824bad85a1a9e0e3b1dcfc2814a1eb60",
+    "mimo-rl-size-20260928.json": "dbb7740501e59487709928d946407634b1319b245aa705b30359213cd608072d",
+    "mimo-rl-code-sample-20260928.json": "09ad6cdd197b42b027d9e27c3991ba11972362e8c3d3be3580e7b363154fae29",
+    "mimo-image-mapping-639865f.jsonl": "704ad2716d746430a805b9b1ac7c6725aea2117fd8e4823ebe9d339d0313ad58",
+    "mimo-opensource-code-467f0a.py": "4bc0908161203eae5a7acf25e4f8a119d63b5114690b4c45f60126f2c53be44e"
+  }
+}

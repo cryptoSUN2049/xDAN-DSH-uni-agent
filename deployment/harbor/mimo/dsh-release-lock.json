@@ -1,0 +1,30 @@
+{
+  "schema": "dsh.mimo-release-lock.v1",
+  "status": "runtime_pinned_derived_image_unbuilt",
+  "dsh_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+  "python_distribution_version": "0.1.3a2",
+  "runtime_mode": "exe",
+  "runtime_binary_sha256": "d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+  "runtime_rg_sha256": "193906679498de4d939345b937fa24e0e69a03c244bd70c859f5e41232713f21",
+  "profile": "sdk-minimal",
+  "patches": [],
+  "runner_python": "/opt/dsh/bin/python",
+  "platform": "linux/amd64",
+  "python_version": "3.12",
+  "derived_image": null,
+  "provenance": {
+    "manifest": "deployment/versions/harbor-execution-image.json",
+    "candidate": "deployment/versions/dsh-session-v2-candidate.json",
+    "release_url": "https://github.com/cryptoSUN2049/xDAN-DSH-Exp/releases/tag/dsh-sdk-0.1.3a2-b236969-linux-x64",
+    "scope": "Existing 2026-09-08 wheel and binary identities only; no MiMo image build or runtime compatibility claimed."
+  },
+  "wheels": {
+    "annotated_types-0.7.0-py3-none-any.whl": "1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53",
+    "deepseek_harness_runtime_bin-0.1.3a2-py3-none-manylinux_2_28_x86_64.whl": "59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+    "deepseek_harness_sdk-0.1.3a2-py3-none-any.whl": "6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
+    "pydantic-2.12.5-py3-none-any.whl": "e561593fccf61e8a20fc46dfc2dfe075b8be7d0188df33f221ad1f0139180f9d",
+    "pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "eceb81a8d74f9267ef4081e246ffd6d129da5d87e37a77c9bde550cb04870c1c",
+    "typing_extensions-4.15.0-py3-none-any.whl": "f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548",
+    "typing_inspection-0.4.2-py3-none-any.whl": "4ed1cacbdc298c220f1bd249ed5287caa16f34d44ef4e9c3d0cbad5b521545e7"
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "schema": "xdan.mimo-code-cpu-audit.v1",
+  "audited_at_utc": "2026-09-28T09:26:14.069804+00:00",
+  "status": "source_contract_audited_environment_unvalidated",
+  "training_ready": false,
+  "converter_contract_ready": true,
+  "readiness_boundary": "converter_contract_ready covers source fields, mapping entries, safe complete path extraction and native git syntax only. training_ready additionally requires immutable images, actual task execution, calibrated independent verifier, DSH rollout and GPU training acceptance.",
+  "execution": {
+    "host": "runpod-ssh-11621",
+    "remote_directory": "/workspace/mimo-dsh-rl-20260928/audit-code",
+    "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+    "pyarrow_version": "25.0.1",
+    "cpu_threads": 1,
+    "gpu_used": false,
+    "task_commands_executed": false
+  },
+  "source": {
+    "repository": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+    "revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+    "parquet": "/workspace/mimo-dsh-rl-20260928/source/code.parquet",
+    "parquet_sha256": "sha256:e15733cf2451cfbc5492a4120f7f8cfddbad818aa9f0b324c79888dd1fece161",
+    "image_mapping_sha256": "sha256:704ad2716d746430a805b9b1ac7c6725aea2117fd8e4823ebe9d339d0313ad58"
+  },
+  "auditor_files": {
+    "mimo-code-audit-control.py": "sha256:3ebe019f115a4014063a39434a015b1f0e0a0aa1e47876ef0ca4ced12c91c2bf",
+    "prepare_tasks.py": "sha256:19763c20590ea35f69b7a2d250d7e50bcc0beae4708fa98399aaea2eb23ff57f",
+    "verifier.py": "sha256:07c461c106e5210405bba48b3200630ab0da4d7aa4953b7dadaf96862cce009e"
+  },
+  "rows": 2698,
+  "eight_field_contract": {
+    "required_fields": [
+      "cwd",
+      "dataset_type",
+      "docker_image",
+      "instance_id",
+      "problem_statement",
+      "test_command",
+      "test_patch",
+      "verifier_timeout_sec"
+    ],
+    "exact_field_set_pass": 2698,
+    "converter_contract_pass": 2698,
+    "converter_contract_rejected": 0,
+    "rejection_reasons": {},
+    "rejection_examples": {},
+    "observed_field_sets": {
+      "cwd,dataset_type,docker_image,instance_id,problem_statement,test_command,test_patch,verifier_timeout_sec": 2698
+    }
+  },
+  "duplicates": {
+    "unique_instance_ids": 2698,
+    "duplicate_instance_id_rows": 0,
+    "duplicate_canonical_rows": 0,
+    "normalized_prompt_duplicate_groups": 0,
+    "normalized_prompt_duplicate_rows_beyond_first": 0,
+    "normalized_prompt_duplicate_examples": [],
+    "prompt_normalization": "Unicode NFKC, whitespace collapse, casefold; this is not semantic or benchmark contamination detection"
+  },
+  "images": {
+    "mapping_entries": 3764,
+    "mapped_rows": 2698,
+    "missing_rows": 0,
+    "missing_examples": [],
+    "digests_resolved": false,
+    "pullability_verified": false
+  },
+  "cwd_counts": {
+    "/testbed": 2179,
+    "/workspace/repo": 519
+  },
+  "problem_language": {
+    "method": "Unicode script heuristic only; Latin does not prove English, source license or teacher identity",
+    "script_counts": {
+      "latin_without_cjk": 2604,
+      "cjk_and_latin": 92,
+      "arabic_present": 1,
+      "cyrillic_present": 1
+    },
+    "language_verified": false,
+    "characters": {
+      "min": 99,
+      "median": 1603.0,
+      "p95": 3148,
+      "max": 58653,
+      "sum": 4888727
+    }
+  },
+  "test_patch": {
+    "path_parse_pass": 2698,
+    "path_parse_rejected": 0,
+    "rejection_reasons": {},
+    "rejection_examples": [],
+    "bytes": {
+      "min": 1182,
+      "median": 5373.0,
+      "p95": 16366,
+      "max": 891656,
+      "sum": 21476547
+    },
+    "line_counts": {
+      "min": 32,
+      "median": 161.0,
+      "p95": 523,
+      "max": 21827,
+      "sum": 624833
+    },
+    "paths_per_task": {
+      "min": 2,
+      "median": 3.0,
+      "p95": 5,
+      "max": 119,
+      "sum": 8485
+    },
+    "path_extensions": {
+      ".sh": 2817,
+      ".py": 1504,
+      ".go": 1235,
+      ".b64": 843,
+      ".json": 737,
+      ".js": 512,
+      ".ts": 186,
+      ".txt": 48,
+      ".yaml": 48,
+      ".rb": 43,
+      ".tsx": 40,
+      ".java": 33,
+      "<no-extension>": 33,
+      ".php": 32,
+      ".yml": 22,
+      ".snap": 20,
+      ".xml": 19,
+      ".scala": 18,
+      ".md": 17,
+      ".test": 17
+    },
+    "git_binary_patch_rows": 2,
+    "edge_cases": [
+      {
+        "task_id": "format-code-task-000989",
+        "traditional_unified_prefix": true,
+        "binary_sections": []
+      },
+      {
+        "task_id": "format-code-task-002333",
+        "traditional_unified_prefix": false,
+        "binary_sections": [
+          "diff --git a/usercase-test-coderl/fixtures/make_bad_shm b/usercase-test-coderl/fixtures/make_bad_shm"
+        ]
+      },
+      {
+        "task_id": "format-code-task-000547",
+        "traditional_unified_prefix": false,
+        "binary_sections": [
+          "diff --git a/usercase-test-coderl/vendor/golang.org/x/net/publicsuffix/data/children b/usercase-test-coderl/vendor/golang.org/x/net/publicsuffix/data/children",
+          "diff --git a/usercase-test-coderl/vendor/golang.org/x/net/publicsuffix/data/nodes b/usercase-test-coderl/vendor/golang.org/x/net/publicsuffix/data/nodes"
+        ]
+      }
+    ],
+    "parser_completeness": "Traditional unified, Git text/binary/mode/rename paths decoded; all native git apply --numstat -z destination paths compared with collector.",
+    "git_native_syntax_pass": 2698,
+    "git_native_syntax_failures": [],
+    "native_destination_path_mismatches": [],
+    "git_apply_validated": false
+  },
+  "verifier_timeout_seconds_counts": {
+    "1800": 2698
+  },
+  "test_command_line_counts": {
+    "1": 2698
+  },
+  "unvalidated": [
+    "image digest and pullability",
+    "hidden answer leakage in image",
+    "task dependencies and networkless verifier runtime",
+    "patch apply and original test command",
+    "DSH/Modal independent-verifier equivalence",
+    "split leakage and semantic deduplication",
+    "GPU rollout/training/checkpoint reload"
+  ]
+}

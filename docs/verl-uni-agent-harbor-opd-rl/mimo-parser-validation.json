@@ -1,0 +1,38 @@
+{
+  "schema": "xdan.mimo-parser-validation.v1",
+  "execution": "remote-linux-cpu-only",
+  "source_root": "/workspace/mimo-dsh-rl-20260928/audit-code/tests-src",
+  "tests": {
+    "passed": 44,
+    "failed": 0,
+    "pytest_log": "/workspace/mimo-dsh-rl-20260928/audit-code/traditional-binary-coverage.log",
+    "red_log": "/workspace/mimo-dsh-rl-20260928/audit-code/traditional-binary-red.log"
+  },
+  "coverage": {
+    "covered_lines": 280,
+    "num_statements": 321,
+    "percent_covered": 87.22741433021807,
+    "percent_covered_display": "87",
+    "missing_lines": 41,
+    "excluded_lines": 0,
+    "percent_statements_covered": 87.22741433021807,
+    "percent_statements_covered_display": "87"
+  },
+  "ruff": {
+    "check": "passed",
+    "format": "applied_remote"
+  },
+  "files": {
+    "examples/mimo_dsh_rl/prepare_tasks.py": "sha256:19763c20590ea35f69b7a2d250d7e50bcc0beae4708fa98399aaea2eb23ff57f",
+    "examples/mimo_dsh_rl/verifier.py": "sha256:07c461c106e5210405bba48b3200630ab0da4d7aa4953b7dadaf96862cce009e",
+    "tests/uni_agent/examples/test_mimo_prepare_tasks.py": "sha256:01d2e3f514156447f6b91634edd7b031b7b15ddbc77ca73723a9b9d32153b588",
+    "tests/uni_agent/examples/test_mimo_verifier.py": "sha256:d8e2d124aa9da8c3baea79a97f378442bdd5ee4ce6800ea5aa1bf42fbebe95fa"
+  },
+  "full_dataset": {
+    "rows": 2698,
+    "converter_contract_ready": true,
+    "training_ready": false,
+    "native_git_syntax_pass": 2698,
+    "native_destination_path_mismatches": []
+  }
+}

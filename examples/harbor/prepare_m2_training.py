@@ -19,6 +19,8 @@ from uni_agent.agents.dsh.harbor_release import release_patch_paths
 from uni_agent.tasks.harbor_dsh.environment_backend import validate_modal_task
 from uni_agent.tasks.harbor_dsh.evolution_scoring import EvolutionBinding, load_evolution_binding
 from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import EvolutionV2Binding, load_evolution_v2_binding
+from uni_agent.tasks.harbor_dsh.mimo import MimoBindingRef, load_mimo_binding, validate_mimo_release
+from uni_agent.tasks.harbor_dsh.mimo import digest as binding_digest
 from uni_agent.tasks.harbor_dsh.protocol import DshRelease, TaskRef
 from uni_agent.tasks.harbor_dsh.registration import _token
 from uni_agent.tasks.harbor_dsh.task import T2FixtureBinding, _fixture_lane, _json, load_t2_fixture
@@ -101,11 +103,15 @@ def prepare_training(
     t2_fixture_binding: Path | None = None,
     evolution_binding: Path | None = None,
     evolution_v2_binding: Path | None = None,
+    mimo_binding: Path | None = None,
+    max_concurrent_sessions: int = 1,
 ) -> Path:
     """Spec paths remain Mac-owned; task/credential/output paths refer to this host."""
     for count in (train_count, heldout_count):
         if type(count) is not int or not 1 <= count <= 16:
             raise ValueError("Engineering dataset counts must be between one and sixteen")
+    if type(max_concurrent_sessions) is not int or not 1 <= max_concurrent_sessions <= 64:
+        raise ValueError("Maximum concurrent sessions must be between one and sixty-four")
     for path in (output_dir, task_config_path):
         _outside_repo(path)
     if task_config_path.parent.resolve() != output_dir.resolve():
@@ -116,6 +122,31 @@ def prepare_training(
     if len(refs) != 1 or task_digest(task_dir) != refs[0]["sha256"]:
         raise ValueError("Expected the one frozen task directory from the run spec")
     manifest = tomllib.loads((task_dir / "task.toml").read_text())
+    release = DshRelease.model_validate(template["dsh_release"])
+    bindings = (t2_fixture_binding, evolution_binding, evolution_v2_binding, mimo_binding)
+    if sum(value is not None for value in bindings) > 1:
+        raise ValueError("T2, evolution and MiMo bindings are mutually exclusive")
+    frozen_mimo_path = task_dir / "mimo-binding.json"
+    if frozen_mimo_path.exists() != (mimo_binding is not None):
+        raise ValueError("MiMo tasks require an explicit operator binding from the frozen task")
+    mimo_ref = None
+    if mimo_binding is not None:
+        if mimo_binding.resolve(strict=True) != frozen_mimo_path.resolve(strict=True):
+            raise ValueError("MiMo binding must use the frozen task's mimo-binding.json")
+        mimo = load_mimo_binding(mimo_binding)
+        validate_mimo_release(mimo, release, TaskRef.model_validate(refs[0]))
+        if (
+            manifest.get("environment", {}).get("docker_image") != mimo.image_binding.dsh_image
+            or manifest.get("verifier", {}).get("environment_mode") != "separate"
+            or manifest.get("verifier", {}).get("environment", {}).get("docker_image")
+            != mimo.image_binding.resolved_verifier
+        ):
+            raise ValueError("MiMo task images must match the independently frozen binding")
+        mimo_ref = MimoBindingRef(
+            task_ref=TaskRef.model_validate(refs[0]),
+            path=str(mimo_binding.resolve(strict=True)),
+            sha256=binding_digest(mimo_binding.read_bytes()),
+        )
     if spec.modal_ingress is not None:
         validate_modal_task(
             task_dir,
@@ -123,11 +154,8 @@ def prepare_training(
             gateway_origin=spec.modal_ingress.origin,
             release_digest=template["dsh_release"]["image_digest"],
         )
-    elif manifest.get("environment", {}).get("docker_image") != template["dsh_release"]["image_digest"]:
+    elif mimo_ref is None and manifest.get("environment", {}).get("docker_image") != release.image_digest:
         raise ValueError("Current task image differs from the frozen DSH release")
-    release = DshRelease.model_validate(template["dsh_release"])
-    if sum(value is not None for value in (t2_fixture_binding, evolution_binding, evolution_v2_binding)) > 1:
-        raise ValueError("T2 and evolution bindings are mutually exclusive")
     evolution_path = evolution_v2_binding if evolution_v2_binding is not None else evolution_binding
     evolution_key = "evolution_v2_binding" if evolution_v2_binding is not None else "evolution_binding"
     t2 = t2_fixture_binding is not None
@@ -194,6 +222,8 @@ def prepare_training(
         task_config["t2_fixture"] = binding.model_dump(mode="json")
     if evolution is not None:
         task_config[evolution_key] = evolution.model_dump(mode="json")
+    if mimo_ref is not None:
+        task_config["mimo_binding"] = mimo_ref.model_dump(mode="json")
     _write(task_config_path, yaml.safe_dump(task_config, allow_unicode=True, sort_keys=True).encode())
     for split, count in (("train", train_count), ("heldout", heldout_count)):
         path = output_dir / f"{split}.parquet"
@@ -206,7 +236,9 @@ def prepare_training(
                         spec.run_id,
                         split,
                         count,
-                        task_id=refs[0]["id"] if t2 or evolution is not None else "m2-file-write",
+                        task_id=refs[0]["id"]
+                        if t2 or evolution is not None or mimo_ref is not None
+                        else "m2-file-write",
                         fixture=fixture,
                     )
                 ),
@@ -230,11 +262,16 @@ def prepare_training(
             "RUN_ROOT": str(output_dir),
             "PROJECT_NAME": "harbor-evolution-engineering"
             if evolution is not None
-            else ("harbor-t2-engineering" if t2 else "harbor-m2-engineering"),
+            else (
+                "harbor-mimo-code-engineering"
+                if mimo_ref is not None
+                else ("harbor-t2-engineering" if t2 else "harbor-m2-engineering")
+            ),
             "EXP_NAME": spec.run_id,
             "MODEL_ID": template["model_name"],
             "TRAIN_MAX_SAMPLES": str(train_count),
             "VAL_MAX_SAMPLES": str(heldout_count),
+            "MAX_CONCURRENT_SESSIONS": str(max_concurrent_sessions),
         },
         "registration": registration,
         "postprocessor": {
@@ -253,6 +290,8 @@ def prepare_training(
         launch["postprocessor"]["t2_fixture"] = binding.model_dump(mode="json")
     if evolution is not None:
         launch["postprocessor"][evolution_key] = evolution.model_dump(mode="json")
+    if mimo_ref is not None:
+        launch["postprocessor"]["mimo_binding"] = mimo_ref.model_dump(mode="json")
     path = output_dir / "launch.json"
     _write(path, (json.dumps(launch, indent=2, ensure_ascii=False, allow_nan=False) + "\n").encode())
     return path
@@ -278,6 +317,8 @@ def main():
     parser.add_argument(
         "--evolution-v2-binding", type=Path, help="Operator EvolutionV2Binding JSON bound to this frozen task"
     )
+    parser.add_argument("--mimo-binding", type=Path, help="The frozen task's operator-owned mimo-binding.json")
+    parser.add_argument("--max-concurrent-sessions", type=int, default=1)
     parser.add_argument("--train-count", type=int, default=2)
     parser.add_argument("--heldout-count", type=int, default=1)
     args = parser.parse_args()

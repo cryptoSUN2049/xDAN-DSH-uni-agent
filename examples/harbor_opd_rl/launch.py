@@ -32,7 +32,7 @@ def _required(values: Mapping[str, str], key: str) -> str:
 def _overrides(values: dict, prefix: str = ""):
     for key, value in values.items():
         name = f"{prefix}.{key}" if prefix else key
-        if name == "actor_rollout_ref.rollout.custom":
+        if name in {"actor_rollout_ref.rollout.custom", "actor_rollout_ref.rollout.engine_kwargs"}:
             yield f"++{name}={_hydra(value)}"
         elif name == "actor_rollout_ref.rollout.agent.agent_loop_manager_class":
             yield f"++{name}={_hydra(value)}"
@@ -42,7 +42,9 @@ def _overrides(values: dict, prefix: str = ""):
             yield f"{name}={_hydra(value)}"
 
 
-def build_overrides(mode: str, launch: dict, environment: Mapping[str, str]) -> list[str]:
+def build_overrides(
+    mode: str, launch: dict, environment: Mapping[str, str], *, recipe_config: str | Path | None = None
+) -> list[str]:
     """Keep prepared controller registration/receipt policy and native config fields."""
     if mode not in MODES:
         raise ValueError(f"Unsupported mode: {mode}")
@@ -52,6 +54,8 @@ def build_overrides(mode: str, launch: dict, environment: Mapping[str, str]) -> 
     prepared = launch["environment"]
     run_root = Path(_required(prepared, "RUN_ROOT")) / f"{mode}-training"
     cfg = OmegaConf.merge(OmegaConf.load(RECIPE / "base.yaml"), OmegaConf.load(RECIPE / f"{mode}.yaml"))
+    if recipe_config is not None:
+        cfg = OmegaConf.merge(cfg, OmegaConf.load(recipe_config))
     cfg.actor_rollout_ref.model.path = student
     cfg.actor_rollout_ref.rollout.multi_turn.format = _required(environment, "TOOL_PARSER")
     if mode != "rl":
@@ -66,6 +70,11 @@ def build_overrides(mode: str, launch: dict, environment: Mapping[str, str]) -> 
     framework = OmegaConf.select(cfg, FRAMEWORK)
     framework.log_dir = str(run_root / "agent")
     framework.trajectory_postprocessor_kwargs = launch["postprocessor"]
+    concurrency = environment.get("MAX_CONCURRENT_SESSIONS", prepared.get("MAX_CONCURRENT_SESSIONS"))
+    if concurrency is not None:
+        if not isinstance(concurrency, str) or not concurrency.isdecimal() or not 1 <= int(concurrency) <= 64:
+            raise ValueError("MAX_CONCURRENT_SESSIONS must be between one and sixty-four")
+        framework.agent_runners.task.max_concurrent_sessions = int(concurrency)
     kwargs = framework.agent_runners.task.runner_kwargs
     kwargs.task_config_path = environment.get("TASK_CONFIG") or _required(prepared, "TASK_CONFIG")
     kwargs.model_name = _required(prepared, "MODEL_ID")
@@ -148,6 +157,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", required=True, choices=MODES)
     parser.add_argument("--launch", required=True, type=Path, help="Private prepared Harbor launch.json")
+    parser.add_argument("--recipe-config", type=Path, help="Optional YAML overlay before prepared task/model bindings")
     parser.add_argument("--print-config", action="store_true", help="Compose only; no Ray/GPU/controller requests")
     parser.add_argument("--preflight-only", action="store_true", help="Check tokenizer and filtered data; no training")
     parser.add_argument(
@@ -158,7 +168,9 @@ def main() -> None:
     )
     parser.add_argument("--resume-from-path", type=Path, help="Explicit native global_step_N checkpoint to restore")
     args = parser.parse_args()
-    overrides = build_overrides(args.mode, json.loads(args.launch.read_bytes()), os.environ)
+    overrides = build_overrides(
+        args.mode, json.loads(args.launch.read_bytes()), os.environ, recipe_config=args.recipe_config
+    )
     for key, value in [("total_training_steps", args.total_training_steps), ("save_freq", args.save_freq)]:
         if value is not None:
             overrides.append(f"trainer.{key}={value}")

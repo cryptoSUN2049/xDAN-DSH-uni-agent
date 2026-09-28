@@ -21,10 +21,11 @@ from pathlib import Path
 from typing import Annotated
 
 from aiohttp import web
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_serializer, model_validator
-
 from deployment.services.harbor_modal_ingress import ModalIngress, ModalIngressConfig, require_external_private_path
 from deployment.services.harbor_tunnel import SshTunnel
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_serializer, model_validator
+
+from uni_agent.tasks.harbor_dsh.environment_backend import validate_registry_secret
 from uni_agent.tasks.harbor_dsh.protocol import OpaqueId, Port, RequestPolicy, Sha256
 
 
@@ -84,12 +85,15 @@ class RunSpec(BaseModel):
     remote_control_port: Port
     remote_worker_port: Port
     modal_ingress: ModalIngressConfig | None = None
+    registry_secret: str | None = None
 
     @model_serializer(mode="wrap")
     def _serialize(self, handler):
         result = handler(self)
         if self.modal_ingress is None:
             result.pop("modal_ingress", None)
+        if self.registry_secret is None:
+            result.pop("registry_secret", None)
         return result
 
     @field_validator("ssh_host")
@@ -115,6 +119,7 @@ class RunSpec(BaseModel):
 
     @model_validator(mode="after")
     def _paths_ports(self):
+        validate_registry_secret(self.registry_secret, backend="modal" if self.modal_ingress is not None else "docker")
         for name in ("root", "task_dir", "registration_token_file", "worker_token_file", "ssh_key", "known_hosts"):
             path = getattr(self, name)
             if not path.is_absolute() or ".." in path.parts:
@@ -181,6 +186,7 @@ async def start_worker(spec, policy):
         if spec.modal_ingress
         else f"http://host.docker.internal:{spec.model_port}",
         environment_backend="modal" if spec.modal_ingress else "docker",
+        registry_secret=spec.registry_secret,
     )
     runner = web.AppRunner(worker_app(worker, token=read_token(spec.worker_token_file)), access_log=None)
     try:

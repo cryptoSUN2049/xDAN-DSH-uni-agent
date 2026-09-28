@@ -9,7 +9,7 @@ import os
 import time
 from pathlib import Path
 
-from .environment_backend import validate_gateway_origin
+from .environment_backend import validate_gateway_origin, validate_registry_secret
 from .execution_outcome import CleanExecutionRejected
 from .ledger import JobLedger
 from .protocol import Artifact, JobRequest, RequestPolicy, validate_artifact, validate_manifest
@@ -39,11 +39,13 @@ class HarborWorker:
         root: Path,
         gateway_base_url: str,
         environment_backend: str = "docker",
+        registry_secret: str | None = None,
         executor=None,
         clock=time.time,
     ):
         gateway_base_url = validate_gateway_origin(gateway_base_url, backend=environment_backend)
         self.environment_backend = environment_backend
+        self.registry_secret = validate_registry_secret(registry_secret, backend=environment_backend)
         if executor is None:
             from .executor import execute_job
 
@@ -83,6 +85,8 @@ class HarborWorker:
             backend_kwargs = (
                 {"environment_backend": self.environment_backend} if self.environment_backend != "docker" else {}
             )
+            if self.registry_secret is not None:
+                backend_kwargs["registry_secret"] = self.registry_secret
             execution = asyncio.create_task(
                 self.executor(
                     request,

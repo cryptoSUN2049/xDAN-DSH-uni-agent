@@ -36,7 +36,11 @@ from uni_agent.agents.dsh.harbor_release import (
     release_patch_paths,
     release_patch_paths_digest,
 )
-from uni_agent.tasks.harbor_dsh.environment_backend import TRACKED_MODAL_IMPORT, validate_modal_task
+from uni_agent.tasks.harbor_dsh.environment_backend import (
+    TRACKED_MODAL_IMPORT,
+    validate_modal_task,
+    validate_registry_secret,
+)
 from uni_agent.tasks.harbor_dsh.evolution_scoring import EvolutionBinding, load_evolution_binding
 from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import (
     EVOLUTION_V2_KIND,
@@ -45,6 +49,13 @@ from uni_agent.tasks.harbor_dsh.evolution_scoring_v2 import (
 )
 from uni_agent.tasks.harbor_dsh.execution_outcome import CleanExecutionRejected
 from uni_agent.tasks.harbor_dsh.isolated_trial import _run_bounded_command, create_isolated_trial
+from uni_agent.tasks.harbor_dsh.mimo import (
+    MIMO_STRATEGY,
+    MimoBinding,
+    load_mimo_binding,
+    validate_mimo_receipt,
+    validate_mimo_release,
+)
 from uni_agent.tasks.harbor_dsh.protocol import JobRequest
 
 
@@ -165,7 +176,9 @@ async def _confirm_failure_cleanup(trial) -> None:
                 return
 
 
-def _collect_evidence(trial, result, request: JobRequest, private_root: Path) -> dict[str, bytes]:
+def _collect_evidence(
+    trial, result, request: JobRequest, private_root: Path, *, mimo: MimoBinding | None = None
+) -> dict[str, bytes]:
     if result.exception_info is not None or str(result.id) != str(trial.id):
         raise RuntimeError("Harbor trial failed or returned a different identity")
     paths = trial.paths
@@ -182,6 +195,8 @@ def _collect_evidence(trial, result, request: JobRequest, private_root: Path) ->
         "verifier_log": paths.test_stdout_path,
         "reward": reward_path,
     }
+    if mimo is not None:
+        selected.update(binding=dsh / "mimo-state.json", receipt=paths.verifier_dir / "mimo-receipt.json")
     budget = request.budgets.max_artifact_bytes
     artifacts = {}
     for kind, path in selected.items():
@@ -261,6 +276,14 @@ def _collect_evidence(trial, result, request: JobRequest, private_root: Path) ->
         or harbor.get("verifier_result", {}).get("rewards") != reward
     ):
         raise RuntimeError("Independent verifier reward is missing, non-finite or inconsistent")
+    if mimo is not None:
+        validate_mimo_receipt(
+            _json(artifacts["binding"]),
+            _json(artifacts["receipt"]),
+            binding=mimo,
+            session=session,
+            reward=float(reward["reward"]),
+        )
     return artifacts
 
 
@@ -339,9 +362,11 @@ async def execute_job(
     gateway_base_url: str,
     on_verifying: Callable[[], Awaitable[None]],
     environment_backend: str = "docker",
+    registry_secret: str | None = None,
 ) -> ExecutionResult:
     """Execute an already admitted single-file task; failures never imply cleanup."""
     request = JobRequest.model_validate(request.model_dump(mode="json", by_alias=True))
+    registry_secret = validate_registry_secret(registry_secret, backend=environment_backend)
     url = urlsplit(gateway_base_url)
     if (
         url.scheme not in {"http", "https"}
@@ -361,8 +386,18 @@ async def execute_job(
     if _task_digest(task_dir) != request.task_ref.sha256:
         raise ValueError("Frozen task content hash mismatch")
     task = tomllib.loads(_read_regular(task_dir, task_dir / "task.toml", 1024 * 1024).decode())
+    mimo_path = task_dir / "mimo-binding.json"
+    mimo = load_mimo_binding(mimo_path) if mimo_path.exists() or mimo_path.is_symlink() else None
+    if mimo is not None:
+        validate_mimo_release(mimo, request.dsh_release, request.task_ref)
+        if (
+            task.get("environment", {}).get("docker_image") != mimo.image_binding.dsh_image
+            or task.get("verifier", {}).get("environment", {}).get("docker_image")
+            != mimo.image_binding.resolved_verifier
+        ):
+            raise ValueError("MiMo task images differ from the frozen binding")
     if environment_backend == "modal":
-        if not patch_paths:
+        if not patch_paths and mimo is None:
             raise ValueError("Modal requires the approved host trace artifact strategy")
         validate_modal_task(
             task_dir,
@@ -370,13 +405,15 @@ async def execute_job(
             gateway_origin=f"{url.scheme}://{url.netloc}",
             release_digest=request.dsh_release.image_digest,
         )
-    elif task.get("environment", {}).get("docker_image") != request.dsh_release.image_digest:
+    elif mimo is None and task.get("environment", {}).get("docker_image") != request.dsh_release.image_digest:
         raise ValueError("Task image does not match the approved DSH release")
     if patch_paths:
         patch = _read_regular(task_dir, task_dir / "environment" / "evolution.patch.yml", 65536)
         if _digest(patch) != T2_PATCH_SHA256:
             raise ValueError("Frozen T2 task patch byte hash mismatch")
     evolution_binding = _evolution_verifier_binding(task_dir, request)
+    if mimo is not None and evolution_binding is not None:
+        raise ValueError("MiMo and evolution execution strategies are mutually exclusive")
     remaining = min(request.budgets.wall_time_seconds, request.budgets.deadline_unix - time.time())
     if remaining <= 0:
         raise ValueError("Job deadline expired")
@@ -397,7 +434,8 @@ async def execute_job(
                     "gateway_base_url": gateway_base_url,
                     "profile": request.dsh_release.profile,
                     "patches": list(patch_paths),
-                    "workdir": "/app",
+                    "workdir": mimo.cwd if mimo is not None else "/app",
+                    **({"runner_python": mimo.runner_python} if mimo is not None else {}),
                     "max_tokens_per_turn": request.budgets.max_tokens,
                     "run_timeout": remaining,
                 },
@@ -405,7 +443,13 @@ async def execute_job(
             "environment": {
                 "type": environment_backend,
                 **(
-                    {"import_path": TRACKED_MODAL_IMPORT, "kwargs": {"sandbox_timeout_secs": math.ceil(remaining)}}
+                    {
+                        "import_path": TRACKED_MODAL_IMPORT,
+                        "kwargs": {
+                            "sandbox_timeout_secs": math.ceil(remaining),
+                            **({"registry_secret": registry_secret} if registry_secret is not None else {}),
+                        },
+                    }
                     if environment_backend == "modal"
                     else {}
                 ),
@@ -416,6 +460,8 @@ async def execute_job(
         }
     )
     trial_kwargs = {}
+    if mimo is not None:
+        trial_kwargs.update(strategy=MIMO_STRATEGY, gateway_session_id=request.gateway_session_id, mimo_binding=mimo)
     if patch_paths:
         trial_kwargs = dict(
             strategy=T2_STRATEGY,
@@ -466,7 +512,7 @@ async def execute_job(
             raise RuntimeError("Native verifier did not start")
         if _task_digest(task_dir) != request.task_ref.sha256:
             raise RuntimeError("Frozen task changed during execution")
-        artifacts = _collect_evidence(trial, result, request, private_root)
+        artifacts = _collect_evidence(trial, result, request, private_root, mimo=mimo)
     except (ValueError, RuntimeError, OSError) as error:
         raise CleanExecutionRejected(trial_id=str(trial.id)) from error
     return ExecutionResult(trial_id=str(trial.id), artifacts=artifacts, cleanup_confirmed=True)

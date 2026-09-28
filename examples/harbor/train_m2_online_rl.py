@@ -51,6 +51,9 @@ def _hydra(value):
 def build_overrides(launch: dict) -> list[str]:
     if launch.get("schema") != "dsh.harbor-m2-launch.v1":
         raise ValueError("Unknown prepared launch schema")
+    concurrency = launch["environment"].get("MAX_CONCURRENT_SESSIONS", "1")
+    if not isinstance(concurrency, str) or not concurrency.isdecimal() or not 1 <= int(concurrency) <= 64:
+        raise ValueError("MAX_CONCURRENT_SESSIONS must be between one and sixty-four")
     return [
         # Harbor stores its own receipt/artifacts; legacy DSH-only roots are invalid.
         "++" + PREFIX + ".agent_runners.task.runner_kwargs.dsh_trace_root=null",
@@ -67,7 +70,7 @@ def build_overrides(launch: dict) -> list[str]:
         "++" + PREFIX + ".trajectory_postprocessor_kwargs=" + _hydra(launch["postprocessor"]),
         "++" + PREFIX + ".trajectory_postprocessor_pass_context=True",
         "++" + PREFIX + ".gateway_count=1",
-        "++" + PREFIX + ".agent_runners.task.max_concurrent_sessions=1",
+        "++" + PREFIX + ".agent_runners.task.max_concurrent_sessions=" + str(int(concurrency)),
     ]
 
 

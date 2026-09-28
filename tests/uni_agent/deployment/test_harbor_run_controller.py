@@ -208,7 +208,8 @@ async def test_reused_root_is_not_modified_on_failed_start_or_close(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_real_factory_binds_run_and_closes_listener_before_worker(monkeypatch, tmp_path):
+@pytest.mark.parametrize("registry_secret", [None, "mimo-dsh-ghcr"])
+async def test_real_factory_binds_run_and_closes_listener_before_worker(monkeypatch, tmp_path, registry_secret):
     from deployment.services.harbor_run_controller import start_worker
     from uni_agent.tasks.harbor_dsh import worker as worker_module
 
@@ -249,12 +250,35 @@ async def test_real_factory_binds_run_and_closes_listener_before_worker(monkeypa
     monkeypatch.setattr("deployment.services.harbor_run_controller.web.AppRunner", Runner)
     monkeypatch.setattr("deployment.services.harbor_run_controller.web.TCPSite", Site)
     spec = make_spec(tmp_path)
+    if registry_secret is not None:
+        spec = RunSpec.model_validate(
+            {
+                **spec.model_dump(),
+                "registry_secret": registry_secret,
+                "modal_ingress": {
+                    "origin": "https://gateway.example.com",
+                    "tunnel_id": "12345678-1234-1234-1234-123456789abc",
+                    "credentials_file": str(tmp_path / "cloudflared.json"),
+                    "listen_port": 18999,
+                },
+            }
+        )
     service = await start_worker(spec, policy(payload()))
+    assert service.worker.kwargs.get("registry_secret") == registry_secret
     assert service.worker.submit({"run_id": "run-1"}) == {"run_id": "run-1"}
     with pytest.raises(ValueError, match="controller run"):
         service.worker.submit({"run_id": "other-run"})
     await service.close()
     assert calls == ["site-start", "site-stop", "worker-close", "runner-cleanup"]
+
+
+def test_registry_secret_is_operator_only_and_does_not_change_old_spec_hash(tmp_path):
+    spec = make_spec(tmp_path)
+    before = spec.model_dump(mode="json")
+    assert "registry_secret" not in before
+    assert RunSpec.model_validate({**before, "registry_secret": None}).model_dump(mode="json") == before
+    with pytest.raises(ValueError):
+        RunSpec.model_validate({**before, "registry_secret": "mimo-dsh-ghcr"})
 
 
 @pytest.mark.asyncio

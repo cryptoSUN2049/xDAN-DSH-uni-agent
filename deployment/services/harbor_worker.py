@@ -27,6 +27,7 @@ async def main(args):
             root=args.root / "jobs",
             gateway_base_url=args.gateway_origin,
             environment_backend=args.environment_backend,
+            registry_secret=args.registry_secret,
         )
         runner = web.AppRunner(create_app(worker, token=token), access_log=None)
         try:
@@ -59,6 +60,7 @@ if __name__ == "__main__":
     parser.add_argument("--worker-id", required=True)
     parser.add_argument("--gateway-origin", required=True)
     parser.add_argument("--environment-backend", choices=("docker", "modal"), default="docker")
+    parser.add_argument("--registry-secret", help="Operator-owned Modal GHCR image-pull secret name")
     parser.add_argument("--port", type=int, required=True)
     parser.add_argument("--max-runtime", type=int, required=True)
     args = parser.parse_args()

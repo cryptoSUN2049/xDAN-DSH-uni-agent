@@ -44,6 +44,7 @@ from .evolution_scoring_v2 import (
     require_evolution_v2_admission,
     score_evolution_v2,
 )
+from .mimo import MimoBinding, MimoBindingRef, load_mimo_binding, validate_mimo_receipt, validate_mimo_release
 from .protocol import (
     Contract,
     JobRequest,
@@ -110,7 +111,11 @@ def load_t2_fixture(binding: T2FixtureBinding, task_ref: TaskRef) -> FrozenT2Fix
     return FrozenT2Fixture(task_ref=binding.task_ref, sha256=binding.fixture_sha256, raw=raw)
 
 
-def _fixture_lane(release, task_ref, fixture, evolution=None):
+def _fixture_lane(release, task_ref, fixture, evolution=None, mimo=None):
+    if mimo is not None:
+        if fixture is not None or evolution is not None:
+            raise ValueError("MiMo and historical fixture bindings are mutually exclusive")
+        validate_mimo_release(mimo, release, task_ref)
     patched = bool(release_patch_paths(release))
     if fixture is not None and evolution is not None:
         raise ValueError("T2 and evolution bindings are mutually exclusive")
@@ -172,8 +177,9 @@ class HarborDshTaskConfig(TaskConfig):
     t2_fixture: T2FixtureBinding | None = None
     evolution_binding: EvolutionBinding | None = None
     evolution_v2_binding: EvolutionV2Binding | None = None
+    mimo_binding: MimoBindingRef | None = None
     task_config_optional_only_fields: ClassVar[frozenset[str]] = frozenset(
-        {"t2_fixture", "evolution_binding", "evolution_v2_binding"}
+        {"t2_fixture", "evolution_binding", "evolution_v2_binding", "mimo_binding"}
     )
     policy: RequestPolicy
     worker_url: str
@@ -249,21 +255,25 @@ def verify_downloaded_evidence(
     worker_id: str,
     t2_fixture: FrozenT2Fixture | None = None,
     evolution: FrozenEvolution | FrozenEvolutionV2 | None = None,
+    mimo: MimoBinding | None = None,
 ) -> float:
     """Pure second-side evidence check; does not attest worker or Gateway tokens."""
-    _fixture_lane(request.dsh_release, request.task_ref, t2_fixture, evolution)
+    _fixture_lane(request.dsh_release, request.task_ref, t2_fixture, evolution, mimo)
     manifest = validate_manifest(
         downloaded.manifest.model_dump(mode="json", by_alias=True), request=request, worker_id=worker_id
     )
     kinds = {entry.kind for entry in manifest.artifacts}
-    if manifest.status != "succeeded" or kinds != {
+    expected_kinds = {
         "dsh_trace",
         "dsh_result",
         "harbor_result",
         "verifier_log",
         "reward",
-    }:
-        raise ValueError("Expected the five completed first-stage Harbor evidence artifacts")
+    }
+    if mimo is not None:
+        expected_kinds.update({"binding", "receipt"})
+    if manifest.status != "succeeded" or kinds != expected_kinds:
+        raise ValueError("Expected the complete strategy-specific Harbor evidence artifacts")
     if set(downloaded.artifacts) != {entry.id for entry in manifest.artifacts}:
         raise ValueError("Downloaded artifact identities differ from manifest")
     by_kind = {}
@@ -340,6 +350,14 @@ def verify_downloaded_evidence(
             gateway_session_id=session,
         )
         admission(evaluation, float(reward["reward"]))
+    if mimo is not None:
+        validate_mimo_receipt(
+            _object(_json(by_kind["binding"])),
+            _object(_json(by_kind["receipt"])),
+            binding=mimo,
+            session=session,
+            reward=float(reward["reward"]),
+        )
     return float(reward["reward"])
 
 
@@ -374,7 +392,12 @@ class HarborDshTask(Task):
         if (
             sum(
                 value is not None
-                for value in (config.t2_fixture, config.evolution_binding, config.evolution_v2_binding)
+                for value in (
+                    config.t2_fixture,
+                    config.evolution_binding,
+                    config.evolution_v2_binding,
+                    config.mimo_binding,
+                )
             )
             > 1
         ):
@@ -392,7 +415,12 @@ class HarborDshTask(Task):
             self._evolution = load_evolution_v2_binding(
                 config.evolution_v2_binding, config.task_ref, repository_root=Path(__file__).resolve().parents[3]
             )
-        _fixture_lane(config.policy.dsh_release, config.task_ref, self._fixture, self._evolution)
+        self._mimo = None
+        if config.mimo_binding is not None:
+            if config.mimo_binding.task_ref != config.task_ref:
+                raise ValueError("MiMo operator binding TaskRef mismatch")
+            self._mimo = load_mimo_binding(Path(config.mimo_binding.path), expected_sha256=config.mimo_binding.sha256)
+        _fixture_lane(config.policy.dsh_release, config.task_ref, self._fixture, self._evolution, self._mimo)
         self._ran = False
 
     async def run(self) -> TaskResult:
@@ -471,7 +499,12 @@ class HarborDshTask(Task):
                     raise ValueError("Artifact exceeds declared size or is not bytes")
                 _write(directory, entry.id, content)
             reward = verify_downloaded_evidence(
-                request, downloaded, worker_id=cfg.worker_id, t2_fixture=self._fixture, evolution=self._evolution
+                request,
+                downloaded,
+                worker_id=cfg.worker_id,
+                t2_fixture=self._fixture,
+                evolution=self._evolution,
+                mimo=self._mimo,
             )
             body = {
                 "schema": "dsh.harbor-verifier-receipt.v1",
@@ -498,6 +531,10 @@ class HarborDshTask(Task):
                 body["t2_fixture_sha256"] = self._fixture.sha256
             if self._evolution is not None:
                 body[_evolution_receipt_key(self._evolution)] = _evolution_receipt(self._evolution)
+            if self._mimo is not None:
+                from .mimo import canonical as mimo_canonical
+
+                body["mimo_binding_sha256"] = _digest(mimo_canonical(self._mimo.model_dump(mode="json", by_alias=True)))
             receipt_id = _digest(_canonical(body))
             _write(directory, "receipt.json", _canonical({**body, "receipt_id": receipt_id}))
             os.fsync(directory)
