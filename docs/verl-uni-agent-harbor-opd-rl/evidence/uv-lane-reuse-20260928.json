@@ -1,0 +1,76 @@
+{
+  "schema": "dsh.uv-lane-reuse-audit.v1",
+  "date": "2026-09-28",
+  "host": "157.157.221.177:11621",
+  "method": "Read-only CPU Python metadata, importlib.util.find_spec, pyvenv.cfg and source-file inspection; no model or GPU package execution",
+  "interpreter": {
+    "sys_executable": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+    "real_executable": "/usr/bin/python3.12",
+    "sys_prefix": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1",
+    "sys_base_prefix": "/usr",
+    "pyvenv_cfg": {
+      "home": "/usr/bin",
+      "implementation": "CPython",
+      "uv": "0.9.0",
+      "version_info": "3.12.3",
+      "include_system_site_packages": false
+    }
+  },
+  "installed_versions": {
+    "torch_distribution": "2.11.0",
+    "torch_version_py": "2.11.0+cu130",
+    "torch_cuda_version_py": "13.0",
+    "vllm": "0.23.0",
+    "transformers": "5.8.0",
+    "transferqueue": "0.1.9.dev0",
+    "ray": "2.54.1",
+    "harbor": "0.16.1",
+    "modal": "1.5.5",
+    "uni-agent": "0.1.0.dev0",
+    "verl": "0.10.0.dev0"
+  },
+  "lane_freeze": {
+    "repository_path": "deployment/versions/uv-lanes/ua-verl-py312-vllm023.freeze.txt",
+    "remote_path": "/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/deployment/versions/uv-lanes/ua-verl-py312-vllm023.freeze.txt",
+    "local_and_remote_sha256": "e9f87349997a81b7fbc31ef1ce74f9abb078c37600282d4684c63c75514c4dc7",
+    "version_constraints_checked": 273,
+    "version_differences": [],
+    "comparison": "Parse non-editable, non-URL requirement lines and compare importlib.metadata.version against each packaging.Requirement specifier; direct VCS provenance checked separately below"
+  },
+  "transferqueue_provenance": {
+    "source": "Installed distribution direct_url.json",
+    "vcs": "git",
+    "commit_id": "434f8c476b4be24bc087e6e95070e64efcc739f9",
+    "requested_revision": "434f8c476b4be24bc087e6e95070e64efcc739f9"
+  },
+  "optional_dependencies": {
+    "absent_distribution_names": ["flash-attn", "cupy", "cupy-cuda12x", "cupy-cuda13x"],
+    "absent_module_specs": ["flash_attn", "cupy"],
+    "also_absent_from_selected_lane_freeze": true
+  },
+  "source_resolution": {
+    "PYTHONPATH": "/workspace/mimo-dsh-rl-20260928/run-src-r4:/workspace/mimo-dsh-rl-20260928/run-src-r4/verl",
+    "uni_agent_spec_origin": "/workspace/mimo-dsh-rl-20260928/run-src-r4/uni_agent/__init__.py",
+    "verl_spec_origin": "/workspace/mimo-dsh-rl-20260928/run-src-r4/verl/verl/__init__.py",
+    "frozen_verl_is_symlink": false,
+    "frozen_verl_resolved_path": "/workspace/mimo-dsh-rl-20260928/run-src-r4/verl",
+    "scope": "Observed in the audit subprocess with the explicit PYTHONPATH above; this does not inspect or attest another running process's environment"
+  },
+  "decision": {
+    "reuse_existing_lane": true,
+    "activate_missing": false,
+    "run_uv_sync_in_existing_lane": false,
+    "reason": "The installed lane matches its dedicated freeze. Repository root has no uv.lock; verl/uv.lock specifies a distinct vLLM 0.24.0 / Transformers 5.9.0 stack. Syncing that project would change the selected stack, not merely activate it.",
+    "selected_mimo_configuration": "Explicit SDPA, use_remove_padding=false and naive checkpoint backend match the selected colocate_async smoke path without requiring missing FA2/CuPy."
+  },
+  "read_only_boundaries": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "dependency_install_or_sync": false,
+    "shared_environment_modified": false,
+    "source_modified_by_audit": false,
+    "gpu_process_started": false,
+    "model_loaded": false,
+    "limits": "Metadata/version and module-resolution evidence only. This does not validate binary package integrity, CUDA kernels, CUDA IPC, GPU capacity, rollout, training updates or checkpoint reload."
+  }
+}
