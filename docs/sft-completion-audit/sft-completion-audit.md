@@ -88,3 +88,5 @@ pilot 曾启用 rl_insight，但因为 Ray 未初始化而禁用 monitoring。�
 - 原观测服务复用，不改训练器。runtime/build约束已部署到独立代码快照，新venv正在冷重建，当前进入FlashAttention源码构建。
 - 已部署nohup空卡验收队列：等待环境重建exit0、GPU连续30秒低于512MiB且利用率<5%，才运行2条训练/2条验证、一步、4K、单卡的真实SFT。最多等24小时。尚未计为GPU验收完成。
 - 不抢占现有双卡评测和单卡其他项目服务；实际GPU小样、冷重建终态和后端真实训练指标仍待核验。
+
+冷重建最终结果：exit0，160包pip check通过，157项固定版本/来源验证通过，Torch2.8.0+cu128及扩展导入成功。MIN_GPU_COUNT=0，本项不包含CUDA forward；真实SFT小样仍排队。回执environment-rebuild-result.json。

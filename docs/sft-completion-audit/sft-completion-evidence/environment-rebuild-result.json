@@ -1,0 +1,17 @@
+{
+  "checked_date": "2026-09-28",
+  "venv": "/workspace/verl-uni-agent-harbor-opd-rl/envs/performance-9b-sft-cu128-rebuild-20260928",
+  "log": "/workspace/verl-uni-agent-harbor-opd-rl/runs/sft-environment-rebuild/launch.log",
+  "exit_code": 0,
+  "uv_pip_check_packages": 160,
+  "uv_pip_check_passed": true,
+  "audited_runtime_distributions_verified": 157,
+  "torch": "2.8.0+cu128",
+  "cuda_runtime": "12.8",
+  "imports_passed": true,
+  "minimum_gpu_count": 0,
+  "cuda_forward_verified": false,
+  "freeze_path": "/workspace/verl-uni-agent-harbor-opd-rl/runs/sft-environment-rebuild/uv-lane-performance-9b-sft-py312-cu128-20260928T034548Z.freeze.txt",
+  "freeze_sha256": "49ddd58e2b58ce09439a36f97809e925f6a0fea9cd413be77920deb7ba378781",
+  "scope": "Fresh venv rebuilt using pinned runtime/build constraints and existing shared-volume editable source. CPU import/package validation passed; GPU acceptance queued separately."
+}

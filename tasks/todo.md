@@ -5,7 +5,8 @@
 - [x] 固定运行/构建依赖约束及5项测试。
 - [x] 原生rl-insight CPU双值发送与Prometheus查询。
 - [x] 正式sidecar脚本CPU双值和val后端验收；forwarding_complete且进程退出。
-- [ ] 独立环境冷重建、版本复核、CUDA验收。
+- [x] 独立环境冷重建exit0、pip check及版本/来源核验通过。
+- [ ] CUDA验收等待空卡真实SFT。
 - [ ] 空卡上的真实有界SFT及后端指标对账。
 - [ ] 更新报告与交接，检查后提交推送。
 

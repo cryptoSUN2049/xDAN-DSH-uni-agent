@@ -33,14 +33,14 @@
 - [x] 用户批准、sidecar与launcher实施；CPU双值真实Prometheus range和val查询通过，sidecar退出干净。
 - [ ] 原生脚本真实有界SFT期间验证后端指标可查询。
 - [x] 固定依赖约束实现。
-- [ ] 独立冷重建当前后台进行，尚未取得exit0/CUDA验收。
+- [ ] 独立独立冷重建exit0、160包pip check和157项来源/版本核验通过；CUDA验收仍待空卡。
 - [ ] 整理多领域数据配比，保留当前编程模型作为对照。
 
 ## 6. 分支/部署状态
 - 分支docs/sft-completion-audit，基于performance-9b c51f6fc。
 - 未申请新GPU、未上传模型。11403原评测仍运行。
 - 不可变代码快照 /workspace/sft-observability/20260928；使用新venv envs/performance-9b-sft-cu128-rebuild-20260928，不覆盖原环境。
-- 冷重建 PID74254（shell）、74255（bootstrap）；runs/sft-environment-rebuild/launch.log与exit-code，最近进入flash-attn源码构建。先确认进程，不能因日志慢重启。
+- 冷重建 PID74254（shell）、74255（bootstrap）；runs/sft-environment-rebuild/launch.log与exit-code，已完成exit0；新venv的包检查/导入通过，不重启重建。
 - 空卡队列 PID75874；runs/sft-observability-queue/nohup.log、pid、exit-code。已用nohup启动；重建失败则拒绝启动GPU，连续空闲再执行，最多24h。
 - 真实小样预期run：runs/performance-9b-sft/verl-sft-insight-smoke-20260928；尚未证明启动或完成。
 - 已有单卡pod769tt1sxhn6bpj的SSH现为11621；上面已有其他项目18547/42501模型服务，不停止。旧15728不可继续当作当前地址。
