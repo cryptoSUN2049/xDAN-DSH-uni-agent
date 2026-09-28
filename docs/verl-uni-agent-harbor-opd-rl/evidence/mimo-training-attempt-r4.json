@@ -1,0 +1,536 @@
+{
+  "admitted_jobs": 0,
+  "checkpoint": null,
+  "checkpoint_inventory": {
+    "configured_root": "/workspace/mimo-dsh-rl-20260928/runs/r4/rl-training/checkpoints",
+    "entries": [],
+    "global_step_directories": [],
+    "interpretation": "No native checkpoint exists in this run; agent/step_1 and logged global_steps=1 are rollout iteration labels, not proof of an optimizer update.",
+    "observed_at_utc": "2026-09-28T12:58:13.597500+00:00",
+    "root_exists": false,
+    "scope": "/workspace/mimo-dsh-rl-20260928/runs/r4"
+  },
+  "cleanup": {
+    "all_modal_terminated": true,
+    "controller": {
+      "cleanup_errors": [],
+      "docker_cleanup_proven": false
+    },
+    "gpu": {
+      "delete_confirmed_utc": "2026-09-28T12:52:38Z",
+      "delete_http_status": 204,
+      "pod_id": "gqgtsz3pfov6tl",
+      "subsequent_get_status": 404,
+      "subsequent_list": {
+        "has_next_page": false,
+        "other_pods_count": 7,
+        "owned_pod_present": false
+      },
+      "training_terminal": {
+        "checkpoints_observed": [],
+        "exit_code": 1,
+        "gpu_memory_mib_after_exit": 0,
+        "updates_verified": 0
+      }
+    },
+    "gpu_cleanup_public_reference": "mimo-r4-gpu-cleanup.json",
+    "modal_confirmation": "Explicit terminate followed by independent integer poll returncode for each sandbox; 137 here is a termination result and not OOM evidence.",
+    "modal_resources": [
+      {
+        "returncode": 137,
+        "sandbox_id": "sb-0fwTaPUzu0bCbnWQUWC1Yr",
+        "session_id": "dsh-62c67041fa6052a92cec62ff7d05360e__env"
+      },
+      {
+        "returncode": 137,
+        "sandbox_id": "sb-Ud26bVzTLyzf7XHtfG9ooH",
+        "session_id": "dsh-62c67041fa6052a92cec62ff7d05360e__verifier__trial"
+      },
+      {
+        "returncode": 137,
+        "sandbox_id": "sb-495SOgABNCon5uiWewUlJK",
+        "session_id": "dsh-63ace7398337a8dbc844b7f3f5e31e78__env"
+      },
+      {
+        "returncode": 137,
+        "sandbox_id": "sb-sfDehRn2ibdNO2W8VMA4ci",
+        "session_id": "dsh-63ace7398337a8dbc844b7f3f5e31e78__verifier__trial"
+      },
+      {
+        "returncode": 137,
+        "sandbox_id": "sb-2fI96zA5UF4MCr5GVNmxqi",
+        "session_id": "dsh-47eea4769390e408f869e350acc06afa__env"
+      }
+    ],
+    "modal_resources_observed": 5
+  },
+  "failure": {
+    "diagnostic": "bash: line 1: /tests/test.sh: No such file or directory",
+    "exception_type": "RewardFileNotFoundError",
+    "operator_entrypoint_exists": true,
+    "operator_entrypoint_mode": "0755",
+    "root_cause": "Harbor 0.16.1 separate verifier sets skip_tests_upload=True, assuming its image already contains /tests/test.sh; the selected original MiMo image does not.",
+    "source_locations": [
+      "harbor_trial_source:572",
+      "harbor_verifier_source:97",
+      "harbor_verifier_source:147",
+      "harbor_verifier_source:232"
+    ]
+  },
+  "failure_stage": "Harbor separate verifier trusted test entrypoint injection",
+  "job_count": 3,
+  "jobs": [
+    {
+      "admitted_artifact_count": 0,
+      "dsh": {
+        "event_count": 100,
+        "finish_reason": "max-tokens",
+        "finished": false,
+        "schema": "dsh.harbor-agent-execution.v1",
+        "status": "unfinished",
+        "trace_sha256": "sha256:78a4b6ca877072e4542f50fb915dd38e0fb23591edcccc1afdcbb476ac1940ed"
+      },
+      "dsh_release": {
+        "patches": [],
+        "runner_sha256": "sha256:a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+        "runtime_version": "0.1.3a2",
+        "sdk_version": "0.1.3a2"
+      },
+      "dsh_trace_summary": {
+        "assistant_message_events": 18,
+        "count_limitation": "Event counts are SDK trace observations, not a fabricated HTTP request metric.",
+        "event_counts": {
+          "agent/inbox/spliced": 2,
+          "assistant/message": 18,
+          "request/context": 1,
+          "request/header": 1,
+          "session/title": 1,
+          "step/end": 18,
+          "step/start": 18,
+          "tool/call": 19,
+          "tool/result": 19,
+          "turn/end": 1,
+          "turn/start": 1,
+          "user/message": 1
+        },
+        "events": 100,
+        "http_model_request_count": null,
+        "model_request_header_observed": true,
+        "model_response_observed": true,
+        "tool_calls": 19,
+        "tool_results": 19
+      },
+      "job_id": "job-8d5efe68bcd546b48d7bfce09d07afeb",
+      "ledger_status": "cancelled",
+      "manifest": {
+        "error_code": "evidence-rejected-after-cleanup",
+        "sealed_at_unix": 1790599366.3343816,
+        "status": "cancelled",
+        "trial_id": "57ed2bb2-3c34-4823-aee0-481241086e3d"
+      },
+      "modal_cleanup_source": "job_1_modal_cleanup",
+      "reward": null,
+      "reward_file_present": false,
+      "trial_path": "/root/mimo-private/controller-r4/jobs/job-8d5efe68bcd546b48d7bfce09d07afeb/trials/job-8d5efe68bcd546b48d7bfce09d07afeb/dsh-62c67041fa6052a92cec62ff7d05360e",
+      "verifier_failure": {
+        "diagnostic": "bash: line 1: /tests/test.sh: No such file or directory",
+        "exception_type": "RewardFileNotFoundError",
+        "reward_classification": "infrastructure failure; no reward produced",
+        "stage": "trusted verifier shell entrypoint before test execution"
+      },
+      "verifier_receipt_present": false,
+      "workspace": {
+        "base_ref": "125729aed4a777af6ceb6ace5744f53db9d7933c",
+        "base_tree": "450112c0a9d66c5797e4758a4f5a592969aa9dba",
+        "bytes": 133120,
+        "files": 48,
+        "history": {
+          "future_commit_objects_after": 0,
+          "future_reachable_after": 0,
+          "future_reachable_before": 82,
+          "policy": "strip",
+          "workspace_preserved": true
+        },
+        "snapshot_sha256": "sha256:2850b8ee9557ed9b1bb9b01283af391a443daba669b126a7c26d0b4d3d69ee1f"
+      }
+    },
+    {
+      "admitted_artifact_count": 0,
+      "dsh": {
+        "event_count": 115,
+        "finish_reason": "max-tokens",
+        "finished": false,
+        "schema": "dsh.harbor-agent-execution.v1",
+        "status": "unfinished",
+        "trace_sha256": "sha256:7c08da3ba5df307026a742f7bf49f48f7246cb7e3c6c6a5f77183b10685f3491"
+      },
+      "dsh_release": {
+        "patches": [],
+        "runner_sha256": "sha256:a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+        "runtime_version": "0.1.3a2",
+        "sdk_version": "0.1.3a2"
+      },
+      "dsh_trace_summary": {
+        "assistant_message_events": 21,
+        "count_limitation": "Event counts are SDK trace observations, not a fabricated HTTP request metric.",
+        "event_counts": {
+          "agent/inbox/spliced": 2,
+          "assistant/message": 21,
+          "request/context": 1,
+          "request/header": 1,
+          "session/title": 1,
+          "step/end": 21,
+          "step/start": 21,
+          "tool/call": 22,
+          "tool/result": 22,
+          "turn/end": 1,
+          "turn/start": 1,
+          "user/message": 1
+        },
+        "events": 115,
+        "http_model_request_count": null,
+        "model_request_header_observed": true,
+        "model_response_observed": true,
+        "tool_calls": 22,
+        "tool_results": 22
+      },
+      "job_id": "job-797125038eba44d5b3a1ac464060c882",
+      "ledger_status": "cancelled",
+      "manifest": {
+        "error_code": "evidence-rejected-after-cleanup",
+        "sealed_at_unix": 1790599532.4071794,
+        "status": "cancelled",
+        "trial_id": "7f1c049e-1df5-46c4-b0b6-4f61c2a0df30"
+      },
+      "modal_cleanup_source": "job_2_modal_cleanup",
+      "reward": null,
+      "reward_file_present": false,
+      "trial_path": "/root/mimo-private/controller-r4/jobs/job-797125038eba44d5b3a1ac464060c882/trials/job-797125038eba44d5b3a1ac464060c882/dsh-63ace7398337a8dbc844b7f3f5e31e78",
+      "verifier_failure": {
+        "diagnostic": "bash: line 1: /tests/test.sh: No such file or directory",
+        "exception_type": "RewardFileNotFoundError",
+        "reward_classification": "infrastructure failure; no reward produced",
+        "stage": "trusted verifier shell entrypoint before test execution"
+      },
+      "verifier_receipt_present": false,
+      "workspace": {
+        "base_ref": "125729aed4a777af6ceb6ace5744f53db9d7933c",
+        "base_tree": "450112c0a9d66c5797e4758a4f5a592969aa9dba",
+        "bytes": 133120,
+        "files": 46,
+        "history": {
+          "future_commit_objects_after": 0,
+          "future_reachable_after": 0,
+          "future_reachable_before": 82,
+          "policy": "strip",
+          "workspace_preserved": true
+        },
+        "snapshot_sha256": "sha256:55f3c1b0e37b3a36e20b88a17888f55fb35a081eba8b15e609da4c3b9b5ece69"
+      }
+    },
+    {
+      "admitted_artifact_count": 0,
+      "dsh": {
+        "schema": "dsh.harbor-agent-execution.v1",
+        "status": "failed"
+      },
+      "dsh_release": {
+        "patches": [],
+        "runner_sha256": "sha256:a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+        "runtime_version": "0.1.3a2",
+        "sdk_version": "0.1.3a2"
+      },
+      "dsh_trace_summary": {
+        "events": null,
+        "reason": "No completed trace was collected before operator cancellation."
+      },
+      "job_id": "job-834c7251de2d44b98d98f05ba7c9852e",
+      "ledger_status": "cancelled",
+      "manifest": {
+        "error_code": "evidence-rejected-after-cleanup",
+        "sealed_at_unix": 1790599685.994914,
+        "status": "cancelled",
+        "trial_id": "32ec1dca-597a-41e1-b811-e20cef379058"
+      },
+      "modal_cleanup_source": "job_3_modal_cleanup",
+      "reward": null,
+      "reward_file_present": false,
+      "trial_path": "/root/mimo-private/controller-r4/jobs/job-834c7251de2d44b98d98f05ba7c9852e/trials/job-834c7251de2d44b98d98f05ba7c9852e/dsh-47eea4769390e408f869e350acc06afa",
+      "verifier_receipt_present": false,
+      "workspace": {
+        "base_ref": "125729aed4a777af6ceb6ace5744f53db9d7933c",
+        "base_tree": "450112c0a9d66c5797e4758a4f5a592969aa9dba",
+        "bytes": 122880,
+        "files": 44,
+        "history": {
+          "future_commit_objects_after": 0,
+          "future_reachable_after": 0,
+          "future_reachable_before": 82,
+          "policy": "strip",
+          "workspace_preserved": true
+        },
+        "snapshot_sha256": "sha256:6bdead6af9705992c69211487ea295ee2aa0de557881951118e4d9b48760c810"
+      }
+    }
+  ],
+  "limitations": [
+    "No valid reward or optimizer update was accepted from r4.",
+    "Controller-stop docker_cleanup_proven=false is not used as Modal cleanup evidence.",
+    "The third job was cancelled by the operator before a completed DSH trace and verifier result were collected.",
+    "Only structured summaries and source identities are included; no prompt, hidden tests, model/tool content, credentials or full configs/results/session traces are copied."
+  ],
+  "optimizer_updates_verified": 0,
+  "pending_issues": [
+    {
+      "id": "mimo-separate-verifier-test-injection",
+      "next_action": "Fix the Harbor separate-verifier /tests contract and run the exact full Harbor path with both failing and passing controls before another training run.",
+      "status": "pending"
+    },
+    {
+      "id": "mimo-dsh-max-tokens",
+      "next_action": "Investigate both unfinished DSH max-tokens results independently; preserve context/budget evidence and do not admit unfinished rollouts as completed.",
+      "status": "pending"
+    }
+  ],
+  "recorded_at_utc": "2026-09-28T12:58:13.597478+00:00",
+  "reward": null,
+  "route_registration": {
+    "controller_id": "mimo-controller-r4",
+    "policy_sha256": "sha256:03d5d37ec30aa3dc64d5e00638d3bbf4b14ee75184f2ed06d8f22b66dbd13930",
+    "registered_at_unix": 1790599091.6629593,
+    "run_id": "mimo9b-001661-r4",
+    "run_spec_sha256": "sha256:d67665220deef3addfc9a2c3c7e9b0c4facf7334cb48d9cb38ec6c9810a6a50f"
+  },
+  "run_id": "mimo9b-001661-r4",
+  "schema": "xdan.mimo-training-attempt.v1",
+  "sources": {
+    "controller_stop": {
+      "bytes": 51,
+      "path": "/root/mimo-private/controller-r4/controller-stop.json",
+      "sha256": "sha256:294ff842991d881ac743179e7599d270304fa99f5beb12b4f09977b3adc412b3"
+    },
+    "frozen_launcher_source": {
+      "bytes": 14002,
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r4/examples/harbor_opd_rl/launch.py",
+      "sha256": "sha256:b6b3d202378413605e9d91f4e25f39845373183f5c95e8364cf6f68edb12533d"
+    },
+    "frozen_task_toml": {
+      "bytes": 722,
+      "path": "/root/mimo-private/task-001661-r4/task/task.toml",
+      "sha256": "sha256:98f393f417c36e80c7f16fa3be24fdaa887b8e70fdecebfc648ceaca90a7fabc"
+    },
+    "harbor_trial_source": {
+      "bytes": 44778,
+      "path": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/harbor/trial/trial.py",
+      "sha256": "sha256:787280b0f007969a09e7e79176e3d70541539d7afc74720b132e894b3ce60af8"
+    },
+    "harbor_verifier_source": {
+      "bytes": 8659,
+      "path": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/harbor/verifier/verifier.py",
+      "sha256": "sha256:7110e7b854ec216f9bbef2e3b03712f2fd2614d5d0dc8a9a1768c0e887e129fc"
+    },
+    "health_failure": {
+      "bytes": 130,
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r4/operator/health-failure.json",
+      "sha256": "sha256:939a67c4a450b1918293f3199e02a5cbd06c7b3b6c2c3cd560839d90a079160a"
+    },
+    "job_1_dsh_setup": {
+      "bytes": 157,
+      "path": "/root/mimo-private/controller-r4/jobs/job-8d5efe68bcd546b48d7bfce09d07afeb/trials/job-8d5efe68bcd546b48d7bfce09d07afeb/dsh-62c67041fa6052a92cec62ff7d05360e/agent/dsh/setup.json",
+      "sha256": "sha256:e20a97a26a6feb6e17cae78a704bc221f315de6d6b9a4bf2162257079e4d9419"
+    },
+    "job_1_dsh_status": {
+      "bytes": 698,
+      "path": "/root/mimo-private/controller-r4/jobs/job-8d5efe68bcd546b48d7bfce09d07afeb/trials/job-8d5efe68bcd546b48d7bfce09d07afeb/dsh-62c67041fa6052a92cec62ff7d05360e/agent/dsh/status.json",
+      "sha256": "sha256:0a98d1616583fb696f50b9996060f58884edc60cb89a2d52c20f37918dcf11d4"
+    },
+    "job_1_dsh_trace": {
+      "bytes": 184250,
+      "path": "/root/mimo-private/controller-r4/jobs/job-8d5efe68bcd546b48d7bfce09d07afeb/trials/job-8d5efe68bcd546b48d7bfce09d07afeb/dsh-62c67041fa6052a92cec62ff7d05360e/agent/dsh/session.jsonl",
+      "sha256": "sha256:78a4b6ca877072e4542f50fb915dd38e0fb23591edcccc1afdcbb476ac1940ed"
+    },
+    "job_1_manifest": {
+      "bytes": 502,
+      "path": "/root/mimo-private/controller-r4/jobs/job-8d5efe68bcd546b48d7bfce09d07afeb/manifest.json",
+      "sha256": "sha256:726600f6a5a6b67c26d2431c81aeddb180b0e6b25770fd53b5596d55e725007a"
+    },
+    "job_1_modal_cleanup": {
+      "bytes": 366,
+      "path": "/root/mimo-private/controller-r4/jobs/job-8d5efe68bcd546b48d7bfce09d07afeb/trials/job-8d5efe68bcd546b48d7bfce09d07afeb/modal-cleanup.json",
+      "sha256": "sha256:f8ad034aa949b26ef5e13a150918ee3c90379bd99e6f62d3a676c3ba02de66d9"
+    },
+    "job_1_private_harbor_result": {
+      "bytes": 7595,
+      "path": "/root/mimo-private/controller-r4/jobs/job-8d5efe68bcd546b48d7bfce09d07afeb/trials/job-8d5efe68bcd546b48d7bfce09d07afeb/dsh-62c67041fa6052a92cec62ff7d05360e/result.json",
+      "sha256": "sha256:36a5a818e3df9153eccf730dedd760c56fe4d66a3833d5a510a63a312f224144"
+    },
+    "job_1_trial_exception": {
+      "bytes": 1666,
+      "path": "/root/mimo-private/controller-r4/jobs/job-8d5efe68bcd546b48d7bfce09d07afeb/trials/job-8d5efe68bcd546b48d7bfce09d07afeb/dsh-62c67041fa6052a92cec62ff7d05360e/exception.txt",
+      "sha256": "sha256:29328a41516d8a1f785cd8ed2a1b45f52d8ec5648321613b1f6813f7a803068d"
+    },
+    "job_1_verifier_stdout": {
+      "bytes": 56,
+      "path": "/root/mimo-private/controller-r4/jobs/job-8d5efe68bcd546b48d7bfce09d07afeb/trials/job-8d5efe68bcd546b48d7bfce09d07afeb/dsh-62c67041fa6052a92cec62ff7d05360e/verifier/test-stdout.txt",
+      "sha256": "sha256:7d4a7c37dce884d484a1f3cbf74af3e51a24e5cff446920c88a414747d191da2"
+    },
+    "job_1_workspace_state": {
+      "bytes": 1737,
+      "path": "/root/mimo-private/controller-r4/jobs/job-8d5efe68bcd546b48d7bfce09d07afeb/trials/job-8d5efe68bcd546b48d7bfce09d07afeb/dsh-62c67041fa6052a92cec62ff7d05360e/agent/dsh/mimo-state.json",
+      "sha256": "sha256:dc2a057ba65913790c5f5d4f4dd0c1fbdb338833e200ab0b23c4aa059e7c61ed"
+    },
+    "job_2_dsh_setup": {
+      "bytes": 157,
+      "path": "/root/mimo-private/controller-r4/jobs/job-797125038eba44d5b3a1ac464060c882/trials/job-797125038eba44d5b3a1ac464060c882/dsh-63ace7398337a8dbc844b7f3f5e31e78/agent/dsh/setup.json",
+      "sha256": "sha256:e20a97a26a6feb6e17cae78a704bc221f315de6d6b9a4bf2162257079e4d9419"
+    },
+    "job_2_dsh_status": {
+      "bytes": 698,
+      "path": "/root/mimo-private/controller-r4/jobs/job-797125038eba44d5b3a1ac464060c882/trials/job-797125038eba44d5b3a1ac464060c882/dsh-63ace7398337a8dbc844b7f3f5e31e78/agent/dsh/status.json",
+      "sha256": "sha256:9db4bc68a33fe896980ae10b2155394dcbf1435a21a19784e46bdbdc5b6645d0"
+    },
+    "job_2_dsh_trace": {
+      "bytes": 190294,
+      "path": "/root/mimo-private/controller-r4/jobs/job-797125038eba44d5b3a1ac464060c882/trials/job-797125038eba44d5b3a1ac464060c882/dsh-63ace7398337a8dbc844b7f3f5e31e78/agent/dsh/session.jsonl",
+      "sha256": "sha256:7c08da3ba5df307026a742f7bf49f48f7246cb7e3c6c6a5f77183b10685f3491"
+    },
+    "job_2_manifest": {
+      "bytes": 502,
+      "path": "/root/mimo-private/controller-r4/jobs/job-797125038eba44d5b3a1ac464060c882/manifest.json",
+      "sha256": "sha256:623fd9f219d373efd9ce73b998b09afef5c5da9e0b0c5340216b6cf6a7d54e78"
+    },
+    "job_2_modal_cleanup": {
+      "bytes": 366,
+      "path": "/root/mimo-private/controller-r4/jobs/job-797125038eba44d5b3a1ac464060c882/trials/job-797125038eba44d5b3a1ac464060c882/modal-cleanup.json",
+      "sha256": "sha256:cf21f97a44e56108c974d97ee26fbe74efa6795dcbf16c3f5055e52b496af9e1"
+    },
+    "job_2_private_harbor_result": {
+      "bytes": 7594,
+      "path": "/root/mimo-private/controller-r4/jobs/job-797125038eba44d5b3a1ac464060c882/trials/job-797125038eba44d5b3a1ac464060c882/dsh-63ace7398337a8dbc844b7f3f5e31e78/result.json",
+      "sha256": "sha256:4e8f742b916593f5ce69b98e2ffc774be53a2248295fcb9d9489b3025a02293e"
+    },
+    "job_2_trial_exception": {
+      "bytes": 1666,
+      "path": "/root/mimo-private/controller-r4/jobs/job-797125038eba44d5b3a1ac464060c882/trials/job-797125038eba44d5b3a1ac464060c882/dsh-63ace7398337a8dbc844b7f3f5e31e78/exception.txt",
+      "sha256": "sha256:a51d88b562f8fd4a2369919056d9e77da6fede604c302f3c7563605ef03856d0"
+    },
+    "job_2_verifier_stdout": {
+      "bytes": 56,
+      "path": "/root/mimo-private/controller-r4/jobs/job-797125038eba44d5b3a1ac464060c882/trials/job-797125038eba44d5b3a1ac464060c882/dsh-63ace7398337a8dbc844b7f3f5e31e78/verifier/test-stdout.txt",
+      "sha256": "sha256:7d4a7c37dce884d484a1f3cbf74af3e51a24e5cff446920c88a414747d191da2"
+    },
+    "job_2_workspace_state": {
+      "bytes": 1737,
+      "path": "/root/mimo-private/controller-r4/jobs/job-797125038eba44d5b3a1ac464060c882/trials/job-797125038eba44d5b3a1ac464060c882/dsh-63ace7398337a8dbc844b7f3f5e31e78/agent/dsh/mimo-state.json",
+      "sha256": "sha256:bf35512f785dd1cfa72a252e1e287efd6eeab2c59495e69a9abe51374b685acd"
+    },
+    "job_3_dsh_setup": {
+      "bytes": 157,
+      "path": "/root/mimo-private/controller-r4/jobs/job-834c7251de2d44b98d98f05ba7c9852e/trials/job-834c7251de2d44b98d98f05ba7c9852e/dsh-47eea4769390e408f869e350acc06afa/agent/dsh/setup.json",
+      "sha256": "sha256:e20a97a26a6feb6e17cae78a704bc221f315de6d6b9a4bf2162257079e4d9419"
+    },
+    "job_3_dsh_status": {
+      "bytes": 388,
+      "path": "/root/mimo-private/controller-r4/jobs/job-834c7251de2d44b98d98f05ba7c9852e/trials/job-834c7251de2d44b98d98f05ba7c9852e/dsh-47eea4769390e408f869e350acc06afa/agent/dsh/status.json",
+      "sha256": "sha256:0180017989f2184f2b2a4a619930227efae16c980910b56cfe6c02f251b20e2c"
+    },
+    "job_3_manifest": {
+      "bytes": 501,
+      "path": "/root/mimo-private/controller-r4/jobs/job-834c7251de2d44b98d98f05ba7c9852e/manifest.json",
+      "sha256": "sha256:7c4bc56b3e0ef7d28b4363db4b06b2603d2de06efbdfc1f15fd77c3b0874039f"
+    },
+    "job_3_modal_cleanup": {
+      "bytes": 231,
+      "path": "/root/mimo-private/controller-r4/jobs/job-834c7251de2d44b98d98f05ba7c9852e/trials/job-834c7251de2d44b98d98f05ba7c9852e/modal-cleanup.json",
+      "sha256": "sha256:78fbb6d880324882fcdc16a59eb457ab3ac2c551f18699aabe1d7ea0efc45aac"
+    },
+    "job_3_private_harbor_result": {
+      "bytes": 8947,
+      "path": "/root/mimo-private/controller-r4/jobs/job-834c7251de2d44b98d98f05ba7c9852e/trials/job-834c7251de2d44b98d98f05ba7c9852e/dsh-47eea4769390e408f869e350acc06afa/result.json",
+      "sha256": "sha256:0f7763ceee2735e9bd7b2bd65ae8153a19bb4b650755c61122057a318615f594"
+    },
+    "job_3_trial_exception": {
+      "bytes": 3856,
+      "path": "/root/mimo-private/controller-r4/jobs/job-834c7251de2d44b98d98f05ba7c9852e/trials/job-834c7251de2d44b98d98f05ba7c9852e/dsh-47eea4769390e408f869e350acc06afa/exception.txt",
+      "sha256": "sha256:10764287d08ab5c85516b2d1675962c2ee3274df8d13f000e77585bbacd2db2e"
+    },
+    "job_3_workspace_state": {
+      "bytes": 1737,
+      "path": "/root/mimo-private/controller-r4/jobs/job-834c7251de2d44b98d98f05ba7c9852e/trials/job-834c7251de2d44b98d98f05ba7c9852e/dsh-47eea4769390e408f869e350acc06afa/agent/dsh/mimo-state.json",
+      "sha256": "sha256:ebbf89961e0431c4eaf61956b4fb93186d42f659c4f9faa1be15a720c8137aaa"
+    },
+    "job_ledger": {
+      "bytes": 36864,
+      "path": "/root/mimo-private/controller-r4/jobs.sqlite",
+      "sha256": "sha256:6fba8b43147e9e6086b2e1a1841f28593d4b675f9dce03a54e21cee913c7e007"
+    },
+    "operator_exit_code": {
+      "bytes": 4,
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r4/operator/exit-code",
+      "sha256": "sha256:0e55cbbc9d11449b186092d82905aa6974858df7a0b7d706ae51c4716c9461ef"
+    },
+    "operator_status": {
+      "bytes": 202,
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r4/operator/status.json",
+      "sha256": "sha256:dbd904bfa3419e5332813cc7baf6d4228a534f8958d73483f1118d78625ea86b"
+    },
+    "operator_test_entrypoint": {
+      "bytes": 183,
+      "path": "/root/mimo-private/task-001661-r4/task/tests/test.sh",
+      "sha256": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338"
+    },
+    "owned_gpu_cleanup": {
+      "bytes": 1515,
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r4/operator/gpu-cleanup.public.json",
+      "sha256": "sha256:8bbf1f7c31d6df7dea7fc084922b72f2dfba1510ba9489103796f3c1f246a276"
+    },
+    "prepared_run": {
+      "bytes": 550,
+      "path": "/workspace/mimo-dsh-rl-20260928/prepared-r4.json",
+      "sha256": "sha256:ba9004008a47bf32e2b98ad895b15d2fd829b51dab2b74d5b947c637cb0aa59a"
+    },
+    "route_registration": {
+      "bytes": 1130,
+      "path": "/root/mimo-private/controller-r4/registration-receipt.json",
+      "sha256": "sha256:af972a72d0933654b277d20b5362582efac96a90a2d3b71227b4fed32b573817"
+    },
+    "supervisor": {
+      "bytes": 347,
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r4/operator/supervisor-result.json",
+      "sha256": "sha256:fa2eb685bdebb539181354287097633c1fd505b51d0677d8414508074557fa52"
+    },
+    "training_log": {
+      "bytes": 2678989,
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r4/operator/train.log",
+      "sha256": "sha256:3b9fbdff8f24e38b52264d9ac07ae4b85910db5a842cdc5a8c72e4bbe10e5c0f"
+    }
+  },
+  "status": {
+    "exit_code": 1,
+    "finished_at": 1790599773.6637692,
+    "run_id": "mimo9b-001661-r4",
+    "started_at": 1790597979.560554,
+    "status": "exited",
+    "supervisor_pid": 996,
+    "wall_clock_seconds": 2400
+  },
+  "supervisor": {
+    "elapsed_seconds": 1791.628,
+    "exit_code": -15,
+    "health_failure": {
+      "exception_type": "URLError",
+      "observed_at_unix": 1790599773.09984,
+      "phase": "runtime",
+      "reason_type": "ConnectionRefusedError"
+    },
+    "pid": 997,
+    "reason": "controller-health-failed",
+    "recovered_health_windows": 0,
+    "transient_health_failures": 18
+  },
+  "task_ref": {
+    "id": "mimo-code-format-code-task-001661",
+    "sha256": "sha256:603c1f65f95a2e6b89716a618713f683b1fc9072386002eb014fb9b0ccb878e2",
+    "version": "v1"
+  }
+}

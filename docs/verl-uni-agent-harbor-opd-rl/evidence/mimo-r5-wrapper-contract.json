@@ -1,0 +1,25 @@
+{
+  "schema": "dsh.mimo-resume-wrapper-contract.v1",
+  "date": "2026-09-28",
+  "scope": "Unlaunched operator draft for hypothetical r4 C2 to absolute step 3; r4 produced no checkpoint, so this draft must not be used for the next fresh retry",
+  "host": "157.157.221.177:11621",
+  "cwd": "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2",
+  "test_command": "CUDA_VISIBLE_DEVICES= PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=. /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python -m pytest tests/uni_agent/examples/test_mimo_resume_wrapper.py -q --disable-warnings --tb=short",
+  "test_exit_code": 0,
+  "tests_passed": 3,
+  "elapsed_seconds": 0.23,
+  "prior_red": "3 failed in 0.63s; wrapper file not yet created",
+  "method": "runpy executes the actual wrapper main; a fake supervisor uses real argparse and captures the exact training command. Checks C2 path, absolute target 3, save interval 1, legacy-adapter rejection and frozen recipe cwd requirement.",
+  "ruff_commands": [
+    "/workspace/mimo-dsh-rl-20260928/builder-tooling/bin/ruff check docs/verl-uni-agent-harbor-opd-rl/mimo-r5-resume-wrapper.py tests/uni_agent/examples/test_mimo_resume_wrapper.py",
+    "/workspace/mimo-dsh-rl-20260928/builder-tooling/bin/ruff format --check docs/verl-uni-agent-harbor-opd-rl/mimo-r5-resume-wrapper.py tests/uni_agent/examples/test_mimo_resume_wrapper.py"
+  ],
+  "ruff_exit_codes": [0, 0],
+  "local_equals_remote_source_sha256": {
+    "docs/verl-uni-agent-harbor-opd-rl/mimo-r5-resume-wrapper.py": "5ab3f44f8facd254556a996e1bf8f25f21645ea02cf3041fcb5d83857f35a5b5",
+    "tests/uni_agent/examples/test_mimo_resume_wrapper.py": "08119e82d8beda5e51bae39a57651a52945bbb106f0b8fa533b2593d0c926470"
+  },
+  "raw_log": "mimo-r5-wrapper-green.log",
+  "raw_log_sha256": "f7da7f86cbf89957a3d2994d522437ec98ca4c257402418f86bbcbd223cc7b9e",
+  "limits": "No CUDA stack import, model inference, GPU work, native checkpoint loading, controller creation or r5 start. Existing r4 wrapper/source was not changed."
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "mimo.owned-gpu-cleanup.v1",
+  "pod_id": "gqgtsz3pfov6tl",
+  "name": "mimo-dsh-9b-20260928-r4",
+  "created_request_unix": 1790596614.1390703,
+  "original_deadline_unix": 1790602014.1390703,
+  "delete_confirmed_utc": "2026-09-28T12:52:38Z",
+  "delete_http_status": 204,
+  "subsequent_get_status": 404,
+  "subsequent_list": {
+    "owned_pod_present": false,
+    "other_pods_count": 7,
+    "has_next_page": false
+  },
+  "reason": "Production verifier lacks /tests/test.sh; DSH runs also hit 16K context. Training stopped and private evidence archived before early Pod deletion.",
+  "gpu_quote_usd_per_hour": 2.09,
+  "gpu_window_estimate_usd": 1.94,
+  "estimate_scope": "Created request to delete acknowledgement; not billed total; excludes storage and Modal.",
+  "training_terminal": {
+    "exit_code": 1,
+    "updates_verified": 0,
+    "checkpoints_observed": [],
+    "gpu_memory_mib_after_exit": 0
+  },
+  "modal_sandboxes": {
+    "observed": 5,
+    "all_terminated": true
+  },
+  "private_archive": {
+    "root": "/root/mimo-private/evidence-r4",
+    "unadmitted_files": 37,
+    "unadmitted_summary_sha256": "23c4df4808c925cd49d1bd3e3a5a1d2abba0d4ff6f81d74af539fbaf7b9c1e10",
+    "jobs": 3,
+    "admitted_jobs": 0
+  },
+  "limitations": [
+    "No valid reward or optimizer update from r4",
+    "Controller stop docker_cleanup_proven=false is not used as Modal cleanup evidence; sandbox-specific poll results establish termination",
+    "Network volume preserved; existing unrelated pods untouched"
+  ]
+}

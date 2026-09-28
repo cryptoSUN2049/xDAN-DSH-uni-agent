@@ -9,10 +9,14 @@ separate verifier lifecycle and host-side DSH bridge evidence collection.
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import importlib.metadata
 import io
+import os
 import re
+import stat
 import tarfile
+import tempfile
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -50,6 +54,29 @@ _DSH_KWARGS = {
 }
 
 MAX_ANSWER_BYTES = 4096
+
+
+def _snapshot_mimo_tests(path: Path) -> dict[str, bytes]:
+    """Read only the four frozen MiMo test files, never following links."""
+    names = {"test.sh", "test.patch", "verification.json", "verifier.py"}
+    directory = None
+    try:
+        directory = os.open(path, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        if set(os.listdir(directory)) != names:
+            raise ValueError("MiMo verifier tests require the exact frozen four-file bundle")
+        result = {}
+        for name in sorted(names):
+            descriptor = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=directory)
+            with os.fdopen(descriptor, "rb") as source:
+                if not stat.S_ISREG(os.fstat(source.fileno()).st_mode):
+                    raise ValueError("MiMo verifier tests must be regular files")
+                result[name] = source.read()
+        return result
+    except OSError as error:
+        raise ValueError("MiMo verifier tests must be a regular frozen bundle") from error
+    finally:
+        if directory is not None:
+            os.close(directory)
 
 
 class AnswerArtifactError(RuntimeError):
@@ -329,6 +356,10 @@ class IsolatedDshTrial(SingleStepTrial):
                 release_digest=(task.config.environment.docker_image or "").rsplit("@", 1)[-1],
             )
         _validate_task(task, strategy=strategy)
+        # Executor checks the complete TaskRef digest before construction and
+        # after the trial. Snapshot trusted test bytes between those gates; an
+        # agent never receives this host directory or the uploaded copy.
+        self._mimo_tests = _snapshot_mimo_tests(task.paths.tests_dir) if mimo_binding is not None else None
         if strategy in {T2_STRATEGY, EVOLUTION_KIND, EVOLUTION_V2_KIND}:
             if (
                 snapshot.agent.import_path != _DSH_IMPORT
@@ -348,6 +379,25 @@ class IsolatedDshTrial(SingleStepTrial):
         )
         self._artifact_collection_failed = False
         super().__init__(snapshot, _task=task)
+
+    @contextlib.asynccontextmanager
+    async def _separate_verifier_env(self, env_config, *, key, plan, step_cfg=None):
+        # Harbor 0.16.1 skips tests upload for separate verifiers, assuming tests
+        # are baked into the image. MiMo keeps the original image unchanged.
+        async with super()._separate_verifier_env(env_config, key=key, plan=plan, step_cfg=step_cfg) as environment:
+            if self._mimo_tests is not None:
+                if environment is self.agent_environment:
+                    raise ValueError("MiMo verifier tests cannot be uploaded to the agent environment")
+                if _snapshot_mimo_tests(self.task.paths.tests_dir) != self._mimo_tests:
+                    raise ValueError("Frozen MiMo verifier tests changed before upload")
+                with tempfile.TemporaryDirectory(prefix="mimo-verifier-tests-") as temporary:
+                    tests = Path(temporary)
+                    for name, content in self._mimo_tests.items():
+                        target = tests / name
+                        target.write_bytes(content)
+                        target.chmod(0o600)
+                    await environment.upload_dir(source_dir=tests, target_dir="/tests")
+            yield environment
 
     def _init_artifact_handler(self) -> None:
         self._validate_artifact_configuration()

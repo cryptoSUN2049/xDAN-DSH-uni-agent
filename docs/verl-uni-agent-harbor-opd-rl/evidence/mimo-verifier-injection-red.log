@@ -1,0 +1,62 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+________ test_native_skip_upload_branch_receives_tests_only_in_verifier ________
+tests/uni_agent/tasks/test_mimo_verifier_injection.py:85: in test_native_skip_upload_branch_receives_tests_only_in_verifier
+    result = await verify(trial, tmp_path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/uni_agent/tasks/test_mimo_verifier_injection.py:75: in verify
+    return await trial._run_separate_verifier(
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/harbor/trial/trial.py:589: in _run_separate_verifier
+    return await asyncio.wait_for(
+/usr/lib/python3.12/asyncio/tasks.py:520: in wait_for
+    return await fut
+           ^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/harbor/verifier/verifier.py:232: in verify
+    raise RewardFileNotFoundError(
+E   harbor.verifier.verifier.RewardFileNotFoundError: No reward file found at /tmp/pytest-of-root/pytest-63/test_native_skip_upload_branch0/private-trials/isolated-1/verifier/reward.txt or /tmp/pytest-of-root/pytest-63/test_native_skip_upload_branch0/private-trials/isolated-1/verifier/reward.json
+_______ test_changed_frozen_tests_fail_before_verification_and_close_env _______
+tests/uni_agent/tasks/test_mimo_verifier_injection.py:103: in test_changed_frozen_tests_fail_before_verification_and_close_env
+    await verify(trial, tmp_path)
+tests/uni_agent/tasks/test_mimo_verifier_injection.py:75: in verify
+    return await trial._run_separate_verifier(
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/harbor/trial/trial.py:589: in _run_separate_verifier
+    return await asyncio.wait_for(
+/usr/lib/python3.12/asyncio/tasks.py:520: in wait_for
+    return await fut
+           ^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/harbor/verifier/verifier.py:232: in verify
+    raise RewardFileNotFoundError(
+E   harbor.verifier.verifier.RewardFileNotFoundError: No reward file found at /tmp/pytest-of-root/pytest-63/test_changed_frozen_tests_fail0/private-trials/isolated-1/verifier/reward.txt or /tmp/pytest-of-root/pytest-63/test_changed_frozen_tests_fail0/private-trials/isolated-1/verifier/reward.json
+___________ test_failed_test_upload_keeps_parent_environment_cleanup ___________
+tests/uni_agent/tasks/test_mimo_verifier_injection.py:117: in test_failed_test_upload_keeps_parent_environment_cleanup
+    await verify(trial, tmp_path)
+tests/uni_agent/tasks/test_mimo_verifier_injection.py:75: in verify
+    return await trial._run_separate_verifier(
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/harbor/trial/trial.py:589: in _run_separate_verifier
+    return await asyncio.wait_for(
+/usr/lib/python3.12/asyncio/tasks.py:520: in wait_for
+    return await fut
+           ^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/harbor/verifier/verifier.py:232: in verify
+    raise RewardFileNotFoundError(
+E   harbor.verifier.verifier.RewardFileNotFoundError: No reward file found at /tmp/pytest-of-root/pytest-63/test_failed_test_upload_keeps_0/private-trials/isolated-1/verifier/reward.txt or /tmp/pytest-of-root/pytest-63/test_failed_test_upload_keeps_0/private-trials/isolated-1/verifier/reward.json
+_____________ test_tests_bundle_paths_are_closed_and_regular[link] _____________
+tests/uni_agent/tasks/test_mimo_verifier_injection.py:134: in test_tests_bundle_paths_are_closed_and_regular
+    with pytest.raises(ValueError, match="MiMo verifier tests"):
+E   Failed: DID NOT RAISE ValueError
+____________ test_tests_bundle_paths_are_closed_and_regular[extra] _____________
+tests/uni_agent/tasks/test_mimo_verifier_injection.py:134: in test_tests_bundle_paths_are_closed_and_regular
+    with pytest.raises(ValueError, match="MiMo verifier tests"):
+E   Failed: DID NOT RAISE ValueError
+___________ test_tests_bundle_paths_are_closed_and_regular[missing] ____________
+tests/uni_agent/tasks/test_mimo_verifier_injection.py:134: in test_tests_bundle_paths_are_closed_and_regular
+    with pytest.raises(ValueError, match="MiMo verifier tests"):
+E   Failed: DID NOT RAISE ValueError
+=========================== short test summary info ============================
+FAILED tests/uni_agent/tasks/test_mimo_verifier_injection.py::test_native_skip_upload_branch_receives_tests_only_in_verifier
+FAILED tests/uni_agent/tasks/test_mimo_verifier_injection.py::test_changed_frozen_tests_fail_before_verification_and_close_env
+FAILED tests/uni_agent/tasks/test_mimo_verifier_injection.py::test_failed_test_upload_keeps_parent_environment_cleanup
+FAILED tests/uni_agent/tasks/test_mimo_verifier_injection.py::test_tests_bundle_paths_are_closed_and_regular[link]
+FAILED tests/uni_agent/tasks/test_mimo_verifier_injection.py::test_tests_bundle_paths_are_closed_and_regular[extra]
+FAILED tests/uni_agent/tasks/test_mimo_verifier_injection.py::test_tests_bundle_paths_are_closed_and_regular[missing]
+6 failed in 2.09s

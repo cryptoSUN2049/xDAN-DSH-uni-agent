@@ -20,6 +20,9 @@ def task_dir(tmp_path):
     (path / "mimo-binding.json").write_text(json.dumps(binding))
     (path / "instruction.md").write_text("Fix the issue")
     (path / "tests/test.sh").write_text("#!/bin/sh\nexit 0\n")
+    (path / "tests/test.patch").write_text("frozen hidden patch")
+    (path / "tests/verification.json").write_text("{}")
+    (path / "tests/verifier.py").write_text("# frozen verifier\n")
     (path / "task.toml").write_text(
         'schema_version="1.3"\nartifacts=[]\n'
         '[environment]\nworkdir="/testbed"\ndocker_image="' + binding["image_binding"]["dsh_image"] + '"\n'
@@ -31,9 +34,9 @@ def task_dir(tmp_path):
     return path
 
 
-def test_mimo_trial_uses_explicit_workspace_strategy_without_t2_patch(task_dir):
+def make_trial(task_dir):
     binding = MimoBinding.model_validate(binding_value())
-    trial = create_isolated_trial(
+    return create_isolated_trial(
         config(
             task_dir,
             agent={
@@ -53,6 +56,10 @@ def test_mimo_trial_uses_explicit_workspace_strategy_without_t2_patch(task_dir):
         gateway_session_id="session-1",
         mimo_binding=binding,
     )
+
+
+def test_mimo_trial_uses_explicit_workspace_strategy_without_t2_patch(task_dir):
+    trial = make_trial(task_dir)
     try:
         assert isinstance(trial._artifact_handler, MimoWorkspaceArtifacts)
         assert trial._agent_env_mounts == []

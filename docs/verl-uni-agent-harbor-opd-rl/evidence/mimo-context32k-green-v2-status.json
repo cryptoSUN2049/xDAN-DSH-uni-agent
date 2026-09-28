@@ -1,0 +1,44 @@
+{
+  "schema": "mimo.context32k-check.v1",
+  "pid": 86017,
+  "status": "passed",
+  "started_at": 1790605248.2320051,
+  "commands": [
+    {
+      "argv": [
+        "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "pytest_asyncio.plugin",
+        "-q",
+        "tests/uni_agent/examples/test_mimo_smoke_recipe.py",
+        "tests/uni_agent/examples/test_harbor_launch_preflight.py",
+        "tests/uni_agent/gateway/test_session_generation_budget.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/workspace/mimo-dsh-rl-20260928/builder-tooling/bin/ruff",
+        "check",
+        "tests/uni_agent/examples/test_mimo_smoke_recipe.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/workspace/mimo-dsh-rl-20260928/builder-tooling/bin/ruff",
+        "format",
+        "--check",
+        "tests/uni_agent/examples/test_mimo_smoke_recipe.py"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "finished_at": 1790605326.8542879,
+  "source_sha256": {
+    "examples/mimo_dsh_rl/mimo-9b-smoke.yaml": "0d1119fc2dae3382662085e452e95ee6aafab1b6c590e55790bc1db7a153c206",
+    "tests/uni_agent/examples/test_mimo_smoke_recipe.py": "11b18dfb74298128854cda06a0b19a1ee731fc4cf3bd5b643c2eed6e625a8e5d"
+  }
+}

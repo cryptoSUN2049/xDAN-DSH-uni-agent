@@ -1,0 +1,388 @@
+{
+  "admitted": false,
+  "budget_semantics": {
+    "configured_response_component_is_not_independent_response_cap": true,
+    "dataset_preflight_prompt_is_not_dsh_gateway_prompt": true,
+    "gateway_total_capacity": "prompt_length + response_length; both include total serialized context through a capacity sum",
+    "non_generated_context_growth_is": "tool observations plus chat serialization/headers and any net context effects; not measured tool-only tokens",
+    "observed_appended_context": 14885,
+    "observed_gateway_initial_prompt": 1499,
+    "separate_initial_prompt_2048_gate": false,
+    "trajectory_json_npz_missing_reason": "runner failed before Gateway finalization/dump; no admitted token arrays exist"
+  },
+  "interpretation": {
+    "context_growth_includes_tool_observations_and_serialization": true,
+    "initial_prompt_independent_limit_enforced_in_gateway": false,
+    "no_admitted_trajectory_npz": true,
+    "same_argument_repeat_is_not_proof_of_loop": true,
+    "session_generation_cap": 14336,
+    "session_generation_cap_reached": false,
+    "single_generation_cap": 4096,
+    "truncation": "total trajectory/model context 16384"
+  },
+  "observed_budget_config": {
+    "data.max_prompt_length": 2048,
+    "data.max_response_length": 14336,
+    "dsh_max_tokens_per_request": 4096,
+    "max_generated_tokens_per_episode": 14336,
+    "rollout.max_model_len": 16384
+  },
+  "recommended_bounded_next_config": {
+    "actor.ppo_max_token_len_per_gpu": 32768,
+    "data.max_prompt_length": 2048,
+    "data.max_response_length": 30720,
+    "does_not_guarantee_completion_or_reward": true,
+    "dsh_max_tokens_per_request": 4096,
+    "generation_budget_increased": false,
+    "keep_chunked_prefill_max_num_batched_tokens": 8192,
+    "max_generated_tokens_per_episode": 14336,
+    "rollout.log_prob_max_token_len_per_gpu": 32768,
+    "rollout.max_model_len": 32768
+  },
+  "schema": "mimo-r4-token-analysis.v1",
+  "scope": "DSH usage metadata only; no hidden tests, prompts, tool arguments or outputs copied",
+  "sessions": [
+    {
+      "finish_reason": "max-tokens",
+      "gateway_session_id": "session-sample-0-rollout-0-6745313b2e5e4a7397c3e198e6ec44f2",
+      "generation_calls": 18,
+      "initial_prompt_tokens": 1499,
+      "job_id": "job-8d5efe68bcd546b48d7bfce09d07afeb",
+      "last_context_plus_completion": 16384,
+      "last_six_tools": [
+        "bash",
+        "bash",
+        "bash",
+        "str_replace_editor",
+        "str_replace_editor",
+        "bash"
+      ],
+      "max_single_generated_tokens": 1184,
+      "non_generated_context_growth": 7548,
+      "non_generated_share_of_appended_context": 0.5070876721531743,
+      "per_generation_usage": [
+        {
+          "inputTokens": 1499,
+          "outputTokens": 81,
+          "step": 1,
+          "totalTokens": 1580
+        },
+        {
+          "inputTokens": 1828,
+          "outputTokens": 90,
+          "step": 2,
+          "totalTokens": 1918
+        },
+        {
+          "inputTokens": 2304,
+          "outputTokens": 52,
+          "step": 3,
+          "totalTokens": 2356
+        },
+        {
+          "inputTokens": 5263,
+          "outputTokens": 174,
+          "step": 4,
+          "totalTokens": 5437
+        },
+        {
+          "inputTokens": 6211,
+          "outputTokens": 1184,
+          "step": 5,
+          "totalTokens": 7395
+        },
+        {
+          "inputTokens": 7659,
+          "outputTokens": 506,
+          "step": 6,
+          "totalTokens": 8165
+        },
+        {
+          "inputTokens": 8312,
+          "outputTokens": 88,
+          "step": 7,
+          "totalTokens": 8400
+        },
+        {
+          "inputTokens": 8534,
+          "outputTokens": 401,
+          "step": 8,
+          "totalTokens": 8935
+        },
+        {
+          "inputTokens": 8957,
+          "outputTokens": 738,
+          "step": 9,
+          "totalTokens": 9695
+        },
+        {
+          "inputTokens": 9717,
+          "outputTokens": 291,
+          "step": 10,
+          "totalTokens": 10008
+        },
+        {
+          "inputTokens": 10035,
+          "outputTokens": 967,
+          "step": 11,
+          "totalTokens": 11002
+        },
+        {
+          "inputTokens": 11043,
+          "outputTokens": 872,
+          "step": 12,
+          "totalTokens": 11915
+        },
+        {
+          "inputTokens": 12295,
+          "outputTokens": 91,
+          "step": 13,
+          "totalTokens": 12386
+        },
+        {
+          "inputTokens": 12688,
+          "outputTokens": 124,
+          "step": 14,
+          "totalTokens": 12812
+        },
+        {
+          "inputTokens": 13252,
+          "outputTokens": 116,
+          "step": 15,
+          "totalTokens": 13368
+        },
+        {
+          "inputTokens": 14532,
+          "outputTokens": 866,
+          "step": 16,
+          "totalTokens": 15398
+        },
+        {
+          "inputTokens": 15469,
+          "outputTokens": 73,
+          "step": 17,
+          "totalTokens": 15542
+        },
+        {
+          "inputTokens": 15761,
+          "outputTokens": 623,
+          "step": 18,
+          "totalTokens": 16384
+        }
+      ],
+      "persisted_network_session_logs": {
+        "framework.log": {
+          "bytes": 2461,
+          "sha256": "sha256:856b4cdd54c5055fb56bc0413c99b88de32d7e71b9e50578797b05996af58715"
+        },
+        "task.log": {
+          "bytes": 105,
+          "sha256": "sha256:94666c5143b168043a4de0841d4555cb344fc0612f62883a03af7b62f5c32767"
+        }
+      },
+      "repeated_tool_argument_groups": [],
+      "tool_calls": 19,
+      "tool_counts": {
+        "bash": 13,
+        "str_replace_editor": 6
+      },
+      "tool_error_steps": [
+        6,
+        16
+      ],
+      "tool_results": 19,
+      "total_generated_tokens": 7337,
+      "trace_sha256": "sha256:78a4b6ca877072e4542f50fb915dd38e0fb23591edcccc1afdcbb476ac1940ed",
+      "trajectory_dump_present": false
+    },
+    {
+      "finish_reason": "max-tokens",
+      "gateway_session_id": "session-sample-0-rollout-1-c2f442ce44f54fadbe5e1b9cdf47ab25",
+      "generation_calls": 21,
+      "initial_prompt_tokens": 1499,
+      "job_id": "job-797125038eba44d5b3a1ac464060c882",
+      "last_context_plus_completion": 16384,
+      "last_six_tools": [
+        "bash",
+        "str_replace_editor",
+        "bash",
+        "str_replace_editor",
+        "bash",
+        "bash"
+      ],
+      "max_single_generated_tokens": 1358,
+      "non_generated_context_growth": 7781,
+      "non_generated_share_of_appended_context": 0.5227410144440712,
+      "per_generation_usage": [
+        {
+          "inputTokens": 1499,
+          "outputTokens": 77,
+          "step": 1,
+          "totalTokens": 1576
+        },
+        {
+          "inputTokens": 1822,
+          "outputTokens": 85,
+          "step": 2,
+          "totalTokens": 1907
+        },
+        {
+          "inputTokens": 2408,
+          "outputTokens": 53,
+          "step": 3,
+          "totalTokens": 2461
+        },
+        {
+          "inputTokens": 5368,
+          "outputTokens": 149,
+          "step": 4,
+          "totalTokens": 5517
+        },
+        {
+          "inputTokens": 5707,
+          "outputTokens": 240,
+          "step": 5,
+          "totalTokens": 5947
+        },
+        {
+          "inputTokens": 5957,
+          "outputTokens": 941,
+          "step": 6,
+          "totalTokens": 6898
+        },
+        {
+          "inputTokens": 7603,
+          "outputTokens": 803,
+          "step": 7,
+          "totalTokens": 8406
+        },
+        {
+          "inputTokens": 8428,
+          "outputTokens": 260,
+          "step": 8,
+          "totalTokens": 8688
+        },
+        {
+          "inputTokens": 8710,
+          "outputTokens": 538,
+          "step": 9,
+          "totalTokens": 9248
+        },
+        {
+          "inputTokens": 9270,
+          "outputTokens": 1358,
+          "step": 10,
+          "totalTokens": 10628
+        },
+        {
+          "inputTokens": 10931,
+          "outputTokens": 79,
+          "step": 11,
+          "totalTokens": 11010
+        },
+        {
+          "inputTokens": 11451,
+          "outputTokens": 153,
+          "step": 12,
+          "totalTokens": 11604
+        },
+        {
+          "inputTokens": 12509,
+          "outputTokens": 1145,
+          "step": 13,
+          "totalTokens": 13654
+        },
+        {
+          "inputTokens": 13676,
+          "outputTokens": 114,
+          "step": 14,
+          "totalTokens": 13790
+        },
+        {
+          "inputTokens": 14842,
+          "outputTokens": 117,
+          "step": 15,
+          "totalTokens": 14959
+        },
+        {
+          "inputTokens": 15075,
+          "outputTokens": 111,
+          "step": 16,
+          "totalTokens": 15186
+        },
+        {
+          "inputTokens": 15208,
+          "outputTokens": 83,
+          "step": 17,
+          "totalTokens": 15291
+        },
+        {
+          "inputTokens": 15395,
+          "outputTokens": 522,
+          "step": 18,
+          "totalTokens": 15917
+        },
+        {
+          "inputTokens": 15939,
+          "outputTokens": 111,
+          "step": 19,
+          "totalTokens": 16050
+        },
+        {
+          "inputTokens": 16139,
+          "outputTokens": 127,
+          "step": 20,
+          "totalTokens": 16266
+        },
+        {
+          "inputTokens": 16346,
+          "outputTokens": 38,
+          "step": 21,
+          "totalTokens": 16384
+        }
+      ],
+      "persisted_network_session_logs": {
+        "framework.log": {
+          "bytes": 2461,
+          "sha256": "sha256:205a4f1e384b1cab7a8808ca75a444e25d725dafe4e6f7064f5b12808e677b7f"
+        },
+        "task.log": {
+          "bytes": 105,
+          "sha256": "sha256:9247275b9d57593bb0f9b11995b65cde7efc647bb14c712b88a6d7ce3c8aded7"
+        }
+      },
+      "repeated_tool_argument_groups": [
+        {
+          "contains_test_runner_word": false,
+          "count": 3,
+          "steps": [
+            14,
+            17,
+            19
+          ],
+          "tool": "bash"
+        }
+      ],
+      "tool_calls": 22,
+      "tool_counts": {
+        "bash": 14,
+        "str_replace_editor": 8
+      },
+      "tool_error_steps": [],
+      "tool_results": 22,
+      "total_generated_tokens": 7104,
+      "trace_sha256": "sha256:7c08da3ba5df307026a742f7bf49f48f7246cb7e3c6c6a5f77183b10685f3491",
+      "trajectory_dump_present": false
+    }
+  ],
+  "source_root": "/workspace/mimo-dsh-rl-20260928/run-src-r4",
+  "source_sha256": {
+    "examples/harbor_opd_rl/base.yaml": "sha256:6e0e8cf24fb43e9dba9f7d56758d8fcac03c4597801f45cd7b60078793e38ce9",
+    "examples/mimo_dsh_rl/mimo-9b-smoke.yaml": "sha256:d9839a3f51bf043e6f04de01c3d8902539c2c2f953c091c6bf8b86b9774bfc5f",
+    "uni_agent/framework/entry.py": "sha256:babb4f92296e9bdb573f767c868e46b90ff7175579b92903e5b2f64fec7d4c87",
+    "uni_agent/framework/framework.py": "sha256:c988d2ec0d53e4029443fb1c730021829a6d77c147a9e0b8b6e50a12db60d72e",
+    "uni_agent/gateway/session/session.py": "sha256:a8809abf0a6d730b5f89fce4b98ba37d500e00d1576a15485b63e296d557386e",
+    "verl/verl/trainer/config/rollout/rollout.yaml": "sha256:a3df650363bbfd3b0b2af4d4ff62902d54d730b0fb08ab94336e6d72b2a1bd74",
+    "verl/verl/trainer/ppo/v1/trainer_base.py": "sha256:e2ca9b9af567fbd0c99224475fafec7c881bc3e3ff730fdc6e8825c844b34e58"
+  }
+}

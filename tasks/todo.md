@@ -980,3 +980,30 @@ Review：本节点没有训练启动；Python 单测 8 passed。`uv run pytest` 
 - [ ] 固定 validation/sealed split，接入 W&B/训练日志并完成 20K 导出。
 
 Review：VERL 原生 trainer/dataset 作为底层保留；仅 Qwen3.5 模板和动态工具字段使用薄 adapter。当前通过的是格式/tokenizer/loss-mask smoke，不是训练完成。
+
+## 2026-09-28 MiMo RL 数据与 DSH harness 接入评估
+
+- [x] 读取当前 worktree handoff、lessons 和 Git 现场，保留已有未提交变更。
+- [x] 核实 Harbor / Modal / Uni-Agent / VERL 的历史训练闭环与真实调用关系。
+- [x] 对照 MiMo 数据卡、官方 recipe 与用户指定的 sibling 项目。
+- [x] 审计 DSH 作为唯一执行 harness 的既有能力与待补契约。
+- [x] 落盘集成设计：架构、文件清单、接口、分阶段验收和复刻边界。
+- [ ] 交叉核对证据与文档链接，更新 handoff 并向用户交付判断。
+
+范围更新：用户随后明确批准开始真实实施及Runpod GPU/Modal验收；DSH为首轮harness，后续同一policy可加入terminus-2。已完成分支与upstream同名调整。
+
+## 2026-09-28 MiMo + DSH + Harbor/Modal + Runpod 9B RL 实施（已批准）
+
+- [x] 设计获用户“开始真实推进”批准；补充base_ref/工件保真、预算与截断合同。
+- [x] 本地分支、目录同名；upstream和默认push指向origin/verl-uni-agent-harbor-opd-rl，旧引用归档。
+- [x] M0 固定2698条Code行/映射并全量合同审计；首题真实镜像与评分校准通过。
+- [ ] M0 扩展真实可运行子池和独立留出split；首题同题工程验证不能作为泛化集。
+- [x] M1 转换器/DSH MiMo执行策略/派生镜像与Gateway路由完成CPU回归。
+- [ ] M1 真实Modal单题：DSH工具执行、独立verifier等价、Gateway原始token轨迹、资源清理。
+- [ ] M2 Runpod 9B真实GRPO更新、有效梯度、参数变化、checkpoint保存/独立reload/续训。
+- [ ] M3 固定同预算留出评估及完整证据、成本与失败计数。
+- [ ] 节点review/Conventional Commit；每次push前ruff双门，交接更新。
+
+执行约束：不覆盖现有未提交工作，不停止其他训练/评估进程；首轮单任务固定worker不提前重构整套registry。GPU占用以实时查询为准。
+
+Review（14:28UTC）：基础提交7e48aaa/cc372a3、后端67a5948、uv预检0f4f6f2、IPC/启动4c572c6。r4实际Gateway/DSH工具已跑通，但16K上下文截断及Harbor skip_tests_upload入口缺失导致零有效reward/更新，3jobs取消、5Modal停止，GPU12:52:38提前删除且absence已验，无checkpoint。原生verifier注入修复96回归/94%覆盖、真实native baseline0/candidate1及4Modal清理通过；32K配置52回归和真实MiMo CPU预检通过。下一次固定新源码、新身份并设独立GPU期限，完成有效更新与重载续训；所有计算留云端，原失败与测试插件配置失败均留档。M0扩展子池/M3泛化评估为后续阶段，不冒充本阶段工程退出条件。

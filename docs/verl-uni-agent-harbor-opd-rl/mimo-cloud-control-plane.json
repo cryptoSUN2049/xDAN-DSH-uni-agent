@@ -45,7 +45,7 @@
       "gpu_updates": 0
     }
   },
-  "active_gpu_window": {
+  "last_gpu_window": {
     "id": "gqgtsz3pfov6tl",
     "name": "mimo-dsh-9b-20260928-r4",
     "network_volume_id": "72jdno5cuk",
@@ -67,10 +67,15 @@
     "supervisor_pid": 996,
     "training_started_at": 1790597979.560554,
     "training_wall_seconds": 2400,
-    "last_observed_state": "12:23:46 UTC: Ray started, controller healthy/unregistered; no model allocation or rollout evidence yet",
+    "last_observed_state": "r4 exited without admitted reward or update; three jobs cancelled, five Modal sandboxes stopped, GPU deleted and absence verified",
+    "resource_status": "deleted_confirmed",
+    "deleted_at_utc": "2026-09-28T12:52:38Z",
+    "watchdog_stopped": true,
+    "estimated_gpu_usd": 1.94,
     "cuda_ipc_gate": "1 passed, 0 skipped, 203.53 seconds, no residual GPU processes",
     "network_recovery": "same pod stop/start cleared provider host-port conflict; original deadline preserved"
   },
+  "active_gpu_window": null,
   "policy": "do not stop existing workloads; new owned GPU resource requires bounded cleanup",
-  "readiness_scope": "cloud controller fresh HTTPS nonce only; model traffic pending"
+  "readiness_scope": "historical r4 Gateway registration and real DSH model/tool traffic verified; controller now stopped; no valid reward or update"
 }

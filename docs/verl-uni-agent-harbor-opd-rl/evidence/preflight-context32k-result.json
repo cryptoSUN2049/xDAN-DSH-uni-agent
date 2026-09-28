@@ -1,0 +1,31 @@
+{
+  "schema": "xdan.mimo-actual-cpu-preflight.v1",
+  "status": "passed",
+  "started_at": 1790605257.4269478,
+  "finished_at": 1790605321.0359566,
+  "report": {
+    "train_rows": 1,
+    "validation_rows": 1,
+    "steps_per_epoch": 1,
+    "total_training_steps": 2,
+    "total_epochs": 2,
+    "save_freq": 1,
+    "backend_validation": {
+      "attention": [
+        {
+          "backend": "sdpa",
+          "validation": "torch_sdpa_operator"
+        }
+      ],
+      "checkpoint_backend": "naive",
+      "gpu_execution_validated": false
+    }
+  },
+  "cuda_initialized": false,
+  "source": "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2",
+  "files": {
+    "examples/harbor_opd_rl/launch.py": "b6b3d202378413605e9d91f4e25f39845373183f5c95e8364cf6f68edb12533d",
+    "examples/mimo_dsh_rl/mimo-9b-smoke.yaml": "0d1119fc2dae3382662085e452e95ee6aafab1b6c590e55790bc1db7a153c206"
+  },
+  "scope": "real tokenizer/processor/dataset and configured dependency checks; no controller/GPU/model weights/rollout/update"
+}

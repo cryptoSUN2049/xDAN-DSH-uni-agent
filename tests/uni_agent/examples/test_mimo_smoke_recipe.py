@@ -73,27 +73,39 @@ def test_mimo_smoke_composes_native_single_gpu_and_complete_context_budget():
     assert cfg.trainer.test_freq == -1 and cfg.trainer.val_before_train is False
     assert cfg.data.train_batch_size == 1
     assert cfg.data.seed == cfg.actor_rollout_ref.rollout.seed == cfg.actor_rollout_ref.actor.fsdp_config.seed == 42
-    assert cfg.data.max_prompt_length == 2048 and cfg.data.max_response_length == 14336
+    assert cfg.data.max_prompt_length == 2048 and cfg.data.max_response_length == 30720
     model, actor, rollout = cfg.actor_rollout_ref.model, cfg.actor_rollout_ref.actor, cfg.actor_rollout_ref.rollout
     assert model.override_config.attn_implementation == "sdpa"
     assert model.use_remove_padding is False
     assert actor.fsdp_config.ulysses_sequence_parallel_size == 1
     assert model.lora_rank == 16 and model.lora.merge and model.enable_gradient_checkpointing
-    assert actor.use_dynamic_bsz and actor.ppo_max_token_len_per_gpu == 16384
+    assert actor.use_dynamic_bsz and actor.ppo_max_token_len_per_gpu == 32768
     assert actor.use_torch_compile is False and actor.fsdp_config.use_torch_compile is False
     assert actor.fsdp_config.param_offload and actor.fsdp_config.optimizer_offload
-    assert rollout.n == 4 and rollout.max_model_len == 16384
+    assert rollout.n == 4 and rollout.max_model_len == 32768
     assert rollout.checkpoint_engine.backend == "naive"
     assert rollout.prompt_length + rollout.response_length == rollout.max_model_len
     assert rollout.enforce_eager and rollout.free_cache_engine and not rollout.layered_summon
     assert rollout.engine_kwargs.vllm.reasoning_parser == "deepseek_r1"
     assert rollout.engine_kwargs.vllm.cpu_offload_gb == 0
-    assert rollout.log_prob_use_dynamic_bsz and rollout.log_prob_max_token_len_per_gpu == 16384
+    assert rollout.log_prob_use_dynamic_bsz and rollout.log_prob_max_token_len_per_gpu == 32768
     framework = rollout.custom.agent_framework
     assert framework.max_generated_tokens_per_episode == 14336
     assert framework.agent_runners.task.max_concurrent_sessions == 1
     assert framework.fail_on_rollout_error and framework.require_verifier_reward and framework.require_version_evidence
     assert framework.require_finished_episode and framework.require_trajectory_dump
+
+
+@pytest.mark.parametrize("observed_input_tokens", [15761, 16346])
+def test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history(observed_input_tokens):
+    cfg = launch.compose_config(launch.build_overrides("rl", prepared_launch(), ENVIRONMENT, recipe_config=RECIPE))
+    rollout = cfg.actor_rollout_ref.rollout
+    # r4 clamped these real final requests to 623 and 38 tokens respectively.
+    assert rollout.max_model_len - observed_input_tokens >= 4096
+    assert rollout.prompt_length + rollout.response_length == rollout.max_model_len
+    assert cfg.actor_rollout_ref.actor.ppo_max_token_len_per_gpu >= rollout.max_model_len
+    assert rollout.log_prob_max_token_len_per_gpu >= rollout.max_model_len
+    assert rollout.custom.agent_framework.max_generated_tokens_per_episode == 14336
 
 
 def test_overlay_cli_print_never_loads_model_or_starts_trainer(tmp_path, monkeypatch, capsys):

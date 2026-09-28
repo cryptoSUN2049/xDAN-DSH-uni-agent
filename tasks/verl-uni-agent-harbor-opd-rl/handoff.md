@@ -1,3 +1,58 @@
+## 2026-09-28 最新 MiMo + DSH 9B RL 实施入口
+
+### TL;DR
+- 用户已批准真实推进并于11:14UTC明确激活goal：MiMo Code小样本 → 固定DSH → Harbor/Modal → Uni-Agent/TQ → Runpod VERL 9B有效RL更新、保存及独立重载续训；DSH-first，terminus-2后续加入同一policy。
+- 当前worktree/分支均为verl-uni-agent-harbor-opd-rl，upstream/@{push}同名；HEAD至少4c572c6；后端修复、uv273约束一致、MiMo预检/IPC证据已提交，未push。
+- **不增加Mac计算负担**：已停止本地Docker pull；镜像构建/CPU测试/数据处理均云端，Mac只编辑与调度。
+- 全2698条Code转换合同审计、派生镜像构建/冷拉取、HTTPS及真实tokenizer预检通过；r4真实DSH已有18/21轮生成及19/22工具调用，但上下文截断且verifier入口缺失，零有效reward/更新。
+- r4已终止并归档：3jobs取消、5Modal停止，GPU12:52:38提前删除确认，无checkpoint。Harbor注入修复96回归+native0/1校准已过；32K配置52回归+实际MiMo预检通过。下一fresh GPU运行仍待有效更新+独立reload。
+
+### 本轮交付物
+- docs/verl-uni-agent-harbor-opd-rl/mimo-dsh-integration-design.md：批准设计、API、架构与分阶段验收。
+- docs/verl-uni-agent-harbor-opd-rl/mimo-dsh-integration-evidence.json、mimo-code-full-contract-audit.json：来源固定与2698行远端审计。
+- examples/mimo_dsh_rl/{prepare_tasks,verifier}.py：任务转换与原始测试语义，traditional/binary/arbitrary-prefix边界已修；2698条均通过解析。
+- deployment/harbor/mimo/：固定DSH lock、离线context、安装、回读binding、Modal VM CPU builder。
+- uni_agent/tasks/harbor_dsh/mimo*.py及既有executor/task/registration/trajectory/isolated_trial增量：独立verifier与完整workspace快照。
+- 修复核心isolated_trial.py现482行、新test_mimo_verifier_injection.py143行、原生Modal probe161行；32K recipe及回归、失败/清理/预算证据见同名docs目录。其余对应tests/uni_agent/{examples,deployment,tasks}/test_mimo*.py。
+
+### 设计约束
+- 复用已有DSH/VERL闭环，不重造harness/trainer。DSH源码b2369692ea530007075ebcd18d39fdba0bbd3982，SDK/runtime0.1.3a2，profile=sdk-minimal，无T2 patch，固定全部wheel/binary摘要。
+- 数据revision639865fd3374018d6cb29b9fb82dd531406fcf5f；2698 Code，全部真实镜像映射。原测试patch、command和cwd保持。
+- 隐藏测试只交独立verifier；可信base_ref必须在agent前捕获。保留untracked/deleted/binary/permissions/safe symlinks，不交.git。
+- 不停止/挤占现有GPU业务；首轮单任务固定worker、sessions串行。工程同题评估不冒充heldout提升。
+
+### 已踩坑 / 真实行为
+- 全量审计发现000989合法traditional unified diff，002333/000547含binary patch；修复解析后才放行转换。
+- 当前11403/11621/16358的GPU均有其他业务；Runpod API显示闲置不可采信，以nvidia-smi为准。
+- 固定GitHubRelease/PyPI的7wheel与portable Python全部远端下载且hash通过。私有派生镜像ghcr.io/cryptosun2049/mimo-dsh-code-001661@sha256:15f588d627ce06e17d2904193c07100aa0b73c883269d70565ab59f36f6f2952已验证；4个Modal构建/验收VM均终止。
+- 首题format-code-task-001661原图含base ancestry外可达commit；官方源码也要求history检查。不能仅删calibration断言，production与calibration必须同策略。
+- MiMo9B实际qwen3_5架构/特殊模板，需要qwen3_coder工具parser；普通Qwen builder额外换行和reasoning丢失已由真实tokenizer测试复现。旧qwen3_4b wrapper不能使用。
+
+### 下一里程碑
+- [x] 完成binary/traditional patch修复、全量重新审计。
+- [x] Modal VM真实Docker探针，原镜像+固定DSH派生层、私有GHCR回读及Modal私有拉取。
+- [ ] DSH模型工具已实测；修复独立verifier入口注入和16K上下文截断后，新身份重跑完整轨迹准入。
+- [ ] Runpod专用GPU有界GRPO、保存/参数差异/独立reload/续训。
+- [ ] 独立任务同预算评估；节点commit、质量门、完整交接。
+
+### 分支 / 部署状态
+- 原旧同名分支归档archive/verl-uni-agent-harbor-opd-rl-20260928-2a3f595；performance-9b远端保留，无强推/删除。
+- 已提交7e48aaa、cc372a3、67a5948、0f4f6f2、4c572c6；当前verifier/32K修复与r4终态证据待提交。预存脏文件和嵌套OpenCompass独立仓不得混入。
+- 全仓Ruff此前被嵌套OpenCompass的9项lint/2文件format阻断，尚未通过push门禁；不得绕过。
+- 远端CPU工作根/workspace/mimo-dsh-rl-20260928；SSH root@157.157.221.177:11621。Python为/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python。凭据只在/root/mimo-private/，不打印/提交。
+- 原专属GPU pbpxdvlt9uruc8于11:24:54UTC提前deleted_confirmed（原期限11:38UTC保持且未延长）；旧SSH58129失效，估计GPU约$3.70非账单。证据evidence/mimo-first-gpu-cleanup.json；checkpoint没有产生，模型/源码/失败日志均留网络卷。勿动其他GPU。
+- r4 GPU gqgtsz3pfov6tl已12:52:38UTC提前删除（204/get404/list absence），SSH51176失效；driver995/supervisor996已退出，controller80823停止，5Modal全部停。估计GPU窗口$1.94非账单。watchdog78224及archive83278/83279已停；原13:26:54deadline未改。
+- 网络卷runs/r4/operator已存终态/脱敏log；CPU/root/mimo-private/evidence-r4保存launch/registration、3failed requests及37份未准入证据，0receipts。真实IPC首跑180sec超时、retry 1passed/203.53s；诊断probe曾core原因未立，保留全部失败。
+- 专属HTTPS https://mimo9b-rl.xdan.work，tunnel04729718-cb6b-40bd-ab74-72967ce77abf；r1/r2/r3 controller均已SIGINT停止，均未注册模型/创建worker任务。r3 task hash603c1f65...、spec49928dfa...保留审计；新窗口必须新Pod/SSH/spec/凭据/运行身份。
+- run-src-r4冻结不修改；修复在integration-check/source-v2进行CPU/Modal验证。下一GPU须新身份及固定新源码；模型/venv沿用持久卷。r4没有C2，mimo-r5-resume-wrapper仅草稿不可用于fresh retry。
+- 续训必须新run/controller/Ray/session；当前TQ0.1.9.dev0无snapshot API，不会原生恢复旧队列。按同一步消费uid回查receipt、reward差异、advantage两端、有限非零grad及C1→C2/C2→C3参数差异；旧MECHANICS_ONLY不能验收有效更新。
+
+### 冷启动 checklist
+1. 先读本段、tasks/lessons.md和mimo-dsh-integration-design.md；下方SFT内容为独立历史主线。
+2. 核git status/branch/upstream，保持现有脏文件；核三agent当前状态防重复覆盖。
+3. 先核专属GPU lease/watchdog、controller和agent最新状态，保全网络卷工件；不能凭本段“运行中”推断成功。
+4. 读取最新审计/测试证据，然后继续M1；全部计算留在云端。
+
 ## 2026-09-25 CPU 质量审计修订
 
 - CPU 端口16358，quality-audit-v2 PID982791启动；须检查进程及终态manifest，不凭本行假设仍运行。

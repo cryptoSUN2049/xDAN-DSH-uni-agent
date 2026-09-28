@@ -72,3 +72,5 @@ python -m examples.harbor_opd_rl.launch --mode rl \
 - 原生IPC首跑180秒超时；只增加父进程等待到300秒、外层720秒后，同一测试1passed/0skipped，203.53秒且无残留GPU进程。诊断probe中CUDA算术通过，但周期trace采样时出现core，原因未建立，不能把该probe计作通过；独立原生测试的完整结果才是IPC准入证据。
 - r4于12:19:39UTC启动driver995/supervisor996，40分钟上限；CPU controller80823。12:26:13UTC进入worker初始化、GPU559MiB，尚无rollout/更新。真实日志在GPU/root/mimo-private/launch-r4/train.log，结束后脱敏归档至网络卷runs/r4/operator。
 - 恢复验收不能依赖旧MECHANICS_ONLY退出码：同一步须reward有差异、advantage最小值<0<最大值、当前grad_norm有限且>0、对应checkpoint参数改变。当前TQ0.1.9.dev0缺snapshot API，原生resume新建队列；仍需验证新run的实际消费轨迹/receipt及恢复后的policy版本。
+- r4终态：Gateway注册及真实DSH工具调用通过，但原图不含/tests，Harbor separate-verifier默认skip上传，原测试未执行；另两条轨迹撞16K总上下文，非生成额度耗尽。3jobs取消、5Modal全部停止；GPU12:52:38提前删除，零有效reward/更新、无checkpoint，GPU窗口估计$1.94非账单。公开失败与清理证据见mimo-training-attempt-r4.json及mimo-r4-gpu-cleanup.json。
+- 生产修复仅向独立verifier上传已冻结四个tests文件，96CPU回归+真实native baseline0/candidate1通过，4Modal清理。当前recipe改为32K总上下文，训练/logprob容量同步，生成上限仍14336；52回归及真实MiMo CPU预检通过。r4冻结源码不变，下一次新身份须固定新修复；旧r5-resume草稿引用不存在r4 C2，不可用于fresh retry。

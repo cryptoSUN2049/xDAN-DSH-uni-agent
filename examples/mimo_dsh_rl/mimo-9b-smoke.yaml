@@ -18,7 +18,8 @@ data:
   seed: 42
   dataloader_num_workers: 0
   max_prompt_length: 2048
-  max_response_length: 14336
+  # Total context includes masked tool observations, not just model generation.
+  max_response_length: 30720
 actor_rollout_ref:
   model:
     lora_rank: 16
@@ -33,7 +34,7 @@ actor_rollout_ref:
   actor:
     ppo_mini_batch_size: 1
     use_dynamic_bsz: true
-    ppo_max_token_len_per_gpu: 16384
+    ppo_max_token_len_per_gpu: 32768
     use_torch_compile: false
     data_loader_seed: 42
     # Match the proven single-GPU launcher; avoid layered NO_SHARD offload fallback.
@@ -56,12 +57,12 @@ actor_rollout_ref:
       backend: naive
     gpu_memory_utilization: 0.4
     load_format: safetensors
-    max_model_len: 16384
+    max_model_len: 32768
     # Chunk prefill to avoid a full-context vocabulary-sized temporary allocation.
     max_num_batched_tokens: 8192
     max_num_seqs: 1
     log_prob_use_dynamic_bsz: true
-    log_prob_max_token_len_per_gpu: 16384
+    log_prob_max_token_len_per_gpu: 32768
     engine_kwargs:
       vllm:
         reasoning_parser: deepseek_r1

@@ -1,0 +1,477 @@
+COMMAND ["/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python", "-m", "pytest", "-q", "tests/uni_agent/examples/test_mimo_smoke_recipe.py", "tests/uni_agent/examples/test_harbor_launch_preflight.py", "tests/uni_agent/gateway/test_session_generation_budget.py"]
+..................................FFFFFFFFFFFFFFFFFF                     [100%]
+=================================== FAILURES ===================================
+___________ test_budget_counts_backend_only_and_cannot_be_overridden ___________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+_____________ test_concurrent_budget_requests_do_not_overallocate ______________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+__________ test_unknown_or_excess_backend_output_blocks_retry[error] ___________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+_________ test_unknown_or_excess_backend_output_blocks_retry[overflow] _________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+_______________ test_rollback_does_not_refund_completion_budget ________________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+___________ test_backend_parameter_mutation_cannot_change_saved_cap ____________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+_________________ test_cancelled_unknown_backend_cannot_retry __________________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+_________________ test_post_generation_failure_does_not_refund _________________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+_________ test_budget_evidence_is_gateway_owned_and_forks_share_ledger _________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+_____________ test_budget_exhaustion_reason_and_dump_are_persisted _____________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+_____________ test_pre_backend_invalid_request_poison_is_explicit ______________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+_______ test_generated_limit_wins_when_sequence_limit_is_also_exhausted ________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+_ test_exact_backend_cap_records_reason_without_extra_request[3-length-max_generated_tokens] _
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+___ test_exact_backend_cap_records_reason_without_extra_request[3-stop-None] ___
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+__ test_exact_backend_cap_records_reason_without_extra_request[5-length-None] __
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+_ test_exact_backend_cap_records_reason_without_extra_request[None-length-None] _
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+______________ test_exact_cap_reason_does_not_leak_to_other_chain ______________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+________ test_context_length_terminal_is_persisted_for_budgeted_episode ________
+async def functions are not natively supported.
+You need to install a suitable plugin for your async framework, for example:
+  - anyio
+  - pytest-asyncio
+  - pytest-tornasync
+  - pytest-trio
+  - pytest-twisted
+=============================== warnings summary ===============================
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55: DeprecationWarning: Ray state API is no longer experimental. Please import from `ray.util.state`. instead. Importing from `ray.experimental` will be deprecated in future releases. 
+    warnings.warn(
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:235
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:235: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:258
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:258: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:293
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:293: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:318
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:318: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:356
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:356: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:379
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:379: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:410
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:410: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:434
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:434: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:466
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:466: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:494
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:494: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:529
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:529: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:559
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:559: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:589
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:589: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:613
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:613: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:646
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:646: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:689
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:689: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:712
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:712: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:733
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:733: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:765
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:765: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:803
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:803: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:844
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:844: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:883
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:883: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:905
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:905: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:930
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:930: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:970
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:970: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1007
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1007: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1033
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1033: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1061
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1061: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1094
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1094: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1122
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1122: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1153
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1153: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1193
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1193: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1206
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1206: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1233
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1233: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1272
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1272: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1296
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1296: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1316
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1316: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1355
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1355: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1419
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1419: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1457
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1457: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1491
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1491: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1526
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1526: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1571
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1571: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1600
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1600: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1628
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1628: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1720
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1720: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1775
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1775: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1832
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1832: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1857
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1857: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1870
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1870: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1900
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1900: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1932
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1932: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1954
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1954: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1977
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1977: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1992
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:1992: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:2017
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:2017: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:2030
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:2030: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:2045
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py:2045: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:37
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:37: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:52
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:52: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:62
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:62: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:74
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:74: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:84
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:84: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:97
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:97: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:116
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:116: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:128
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:128: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:140
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:140: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:160
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:160: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:175
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:175: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:189
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:189: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:208
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:208: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/gateway/test_session_generation_budget.py:225
+  /workspace/mimo-dsh-rl-20260928/integration-check/source-v2/tests/uni_agent/gateway/test_session_generation_budget.py:225: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+  /workspace/mimo-dsh-rl-20260928/run-src-r4/verl/verl/utils/tokenizer/tokenizer.py:146: UserWarning: tokenizer.pad_token_id is None. Now set to 1
+    warnings.warn(f"tokenizer.pad_token_id is None. Now set to {tokenizer.eos_token_id}", stacklevel=1)
+
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/multiprocess/popen_fork.py:66: DeprecationWarning: This process (pid=85686) is multi-threaded, use of fork() may lead to deadlocks in the child.
+    self.pid = os.fork()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_budget_counts_backend_only_and_cannot_be_overridden
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_concurrent_budget_requests_do_not_overallocate
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_unknown_or_excess_backend_output_blocks_retry[error]
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_unknown_or_excess_backend_output_blocks_retry[overflow]
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_rollback_does_not_refund_completion_budget
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_backend_parameter_mutation_cannot_change_saved_cap
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_cancelled_unknown_backend_cannot_retry
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_post_generation_failure_does_not_refund
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_budget_evidence_is_gateway_owned_and_forks_share_ledger
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_budget_exhaustion_reason_and_dump_are_persisted
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_pre_backend_invalid_request_poison_is_explicit
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_generated_limit_wins_when_sequence_limit_is_also_exhausted
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_exact_backend_cap_records_reason_without_extra_request[3-length-max_generated_tokens]
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_exact_backend_cap_records_reason_without_extra_request[3-stop-None]
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_exact_backend_cap_records_reason_without_extra_request[5-length-None]
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_exact_backend_cap_records_reason_without_extra_request[None-length-None]
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_exact_cap_reason_does_not_leak_to_other_chain
+FAILED tests/uni_agent/gateway/test_session_generation_budget.py::test_context_length_terminal_is_persisted_for_budgeted_episode
+18 failed, 34 passed, 83 warnings in 85.27s (0:01:25)

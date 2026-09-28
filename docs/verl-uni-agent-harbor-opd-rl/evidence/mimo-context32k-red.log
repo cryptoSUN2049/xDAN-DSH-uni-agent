@@ -1,0 +1,34 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history[15761] __
+
+observed_input_tokens = 15761
+
+    @pytest.mark.parametrize("observed_input_tokens", [15761, 16346])
+    def test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history(observed_input_tokens):
+        cfg = launch.compose_config(launch.build_overrides("rl", prepared_launch(), ENVIRONMENT, recipe_config=RECIPE))
+        rollout = cfg.actor_rollout_ref.rollout
+        # r4 clamped these real final requests to 623 and 38 tokens respectively.
+>       assert rollout.max_model_len - observed_input_tokens >= 4096
+E       AssertionError: assert (16384 - 15761) >= 4096
+E        +  where 16384 = {'_target_': 'verl.workers.config.RolloutConfig', 'name': 'vllm', 'mode': 'async', 'nnodes': 0, 'n_gpus_per_node': 1, ...gent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}}}.max_model_len
+
+tests/uni_agent/examples/test_mimo_smoke_recipe.py:104: AssertionError
+_ test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history[16346] __
+
+observed_input_tokens = 16346
+
+    @pytest.mark.parametrize("observed_input_tokens", [15761, 16346])
+    def test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history(observed_input_tokens):
+        cfg = launch.compose_config(launch.build_overrides("rl", prepared_launch(), ENVIRONMENT, recipe_config=RECIPE))
+        rollout = cfg.actor_rollout_ref.rollout
+        # r4 clamped these real final requests to 623 and 38 tokens respectively.
+>       assert rollout.max_model_len - observed_input_tokens >= 4096
+E       AssertionError: assert (16384 - 16346) >= 4096
+E        +  where 16384 = {'_target_': 'verl.workers.config.RolloutConfig', 'name': 'vllm', 'mode': 'async', 'nnodes': 0, 'n_gpus_per_node': 1, ...gent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}}}.max_model_len
+
+tests/uni_agent/examples/test_mimo_smoke_recipe.py:104: AssertionError
+=========================== short test summary info ============================
+FAILED tests/uni_agent/examples/test_mimo_smoke_recipe.py::test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history[15761]
+FAILED tests/uni_agent/examples/test_mimo_smoke_recipe.py::test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history[16346]
+2 failed, 4 deselected in 1.89s
