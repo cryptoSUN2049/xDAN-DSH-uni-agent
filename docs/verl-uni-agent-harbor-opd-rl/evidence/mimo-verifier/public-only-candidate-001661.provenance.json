@@ -1,0 +1,26 @@
+{
+  "schema": "mimo-public-only-calibration-patch-v1",
+  "task_id": "format-code-task-001661",
+  "base_ref": "125729aed4a777af6ceb6ace5744f53db9d7933c",
+  "purpose": "verifier calibration positive control; never a student rollout or training demonstration",
+  "allowed_inputs": "public problem_statement and original image production source only",
+  "public_source_path": "/workspace/mimo-dsh-rl-20260928/verifier-calibration-20260928-r1/public-source.json",
+  "public_source_sha256": "sha256:e6472490d2f95cd66c0838352069fc06e3d8bfcb0301df321b3a4dc599900c67",
+  "problem_statement_sha256": "sha256:8a0bda0463eb3755eb6fee93c59e101ca66cc9a287d213d7685b843247030646",
+  "source_files_sha256": {
+    "friends/models.py": "sha256:aa4f0145ee5144a39fc5ca864745db99d3dfec9947c416c0d979a50295b80a3d",
+    "friends/__init__.py": "sha256:cbc7aed6e89ffe8d408ee453c858cf35f49d03238b2867a9289b2129f7a0e7d8"
+  },
+  "patch_path": "/workspace/mimo-dsh-rl-20260928/public-only-candidate-001661.patch",
+  "patch_sha256": "sha256:2229cbd226fa8f2add77b39247ecea70832cdcb748f60239f70e60162d1dfdbc",
+  "modified_files": [
+    "friends/models.py"
+  ],
+  "updated_source_sha256": "sha256:bdc958613e4ba8a23352b3f6de8c0e237d646e8eaadf398dc741f6a6ff9d7f90",
+  "verification": {
+    "python_ast_parse": "passed",
+    "actual_image_calibration": "pending"
+  },
+  "hidden_test_patch_read_for_authorship": false,
+  "hidden_test_files_read_for_authorship": false
+}

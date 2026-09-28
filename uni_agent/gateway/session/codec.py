@@ -23,6 +23,8 @@ from verl.utils.tokenizer.chat_template import apply_chat_template as _apply_cha
 from verl.utils.tokenizer.chat_template import initialize_turn_separator
 from verl.utils.tokenizer.continuous_token_wiring import create_continuous_token_builder
 
+from .mimo_template import is_mimo_template, split_mimo_reasoning
+
 logger = logging.getLogger(__name__)
 
 # Map backend stop_reason values into the gateway's internal finish_reason vocabulary.
@@ -176,14 +178,18 @@ class MessageCodec:
         self._vision_info_extractor_kwargs = dict(vision_info_extractor_kwargs or {})
         self._apply_chat_template_kwargs = dict(apply_chat_template_kwargs or {})
         self._mm_processor_kwargs = dict(mm_processor_kwargs or {})
+        processing_class = self._processor if self._processor is not None else tokenizer
+        self._mimo_template = is_mimo_template(processing_class, hf_model_type)
         self._continuous_token_builder = create_continuous_token_builder(
             tokenizer,
+            # MiMo's frozen template has no newline after im_end. The generic
+            # text/VL builder renders it verbatim; Qwen's builder inserts one.
+            model_family="default" if self._mimo_template else "auto",
             hf_model_type=hf_model_type,
             chat_template_kwargs=self._apply_chat_template_kwargs,
             mm_processor_kwargs=self._mm_processor_kwargs,
             processor=processor,
         )
-        processing_class = self._processor if self._processor is not None else tokenizer
         if hasattr(processing_class, "chat_template") and processing_class.chat_template is None:
             self._generation_prompt = []
             self._turn_separator = []
@@ -510,10 +516,11 @@ class MessageCodec:
                     "content": content or "",
                     "tool_calls": tool_calls,
                 }
-                return message, "tool_calls"
+                return (split_mimo_reasoning(message) if self._mimo_template else message), "tool_calls"
         response_text = self._tokenizer.decode(response_ids, skip_special_tokens=True)
         finish_reason = _FINISH_REASON_MAP.get(stop_reason, stop_reason) if stop_reason else "stop"
-        return {"role": "assistant", "content": response_text}, finish_reason
+        message = {"role": "assistant", "content": response_text}
+        return (split_mimo_reasoning(message) if self._mimo_template else message), finish_reason
 
     def canonicalize_message_for_prefix_comparison(self, message: dict[str, Any]) -> dict[str, Any]:
         """Canonicalize one message before session prefix comparison."""

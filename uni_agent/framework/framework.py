@@ -351,7 +351,13 @@ class GatewayAgentFramework(AgentFramework):
         trajectory_postprocessor_pass_context: bool = False,
         trajectory_postprocessor: TrajectoryPostprocessor | None = None,
         trajectory_postprocessor_kwargs: dict[str, object] | None = None,
+        max_generated_tokens_per_episode: int | None = None,
     ):
+        if max_generated_tokens_per_episode is not None and (
+            type(max_generated_tokens_per_episode) is not int or max_generated_tokens_per_episode <= 0
+        ):
+            raise ValueError("max_generated_tokens_per_episode must be a positive integer or None")
+        self._max_generated_tokens_per_episode = max_generated_tokens_per_episode
         self.gateway_manager = gateway_manager
         self.runner_registry = runner_registry
         self.teacher_server_manager = teacher_server_manager
@@ -543,6 +549,7 @@ class GatewayAgentFramework(AgentFramework):
             trajectory_postprocessor_pass_context=postprocessor_pass_context,
             trajectory_postprocessor=trajectory_postprocessor,
             trajectory_postprocessor_kwargs=trajectory_postprocessor_kwargs,
+            max_generated_tokens_per_episode=af_cfg.get("max_generated_tokens_per_episode"),
         )
 
     async def _apply_trajectory_postprocessor(
@@ -1021,6 +1028,8 @@ class GatewayAgentFramework(AgentFramework):
             runner_name=runner_name,
             runner_config=runner_config,
             sampling_params=sampling_params,
+            max_generated_tokens=self._max_generated_tokens_per_episode,
+            reject_truncated_episode=self._max_generated_tokens_per_episode is not None,
         )
         return stage.trajectories, stage.sample_fields
 
@@ -1039,6 +1048,7 @@ class GatewayAgentFramework(AgentFramework):
         stage_session_id: str | None = None,
         dump_consumption_crosswalk: bool = True,
         max_generated_tokens: int | None = None,
+        reject_truncated_episode: bool = False,
     ) -> GatewayStageExecution:
         """Execute one stage through the existing manager, runner and reward path.
 
@@ -1052,6 +1062,8 @@ class GatewayAgentFramework(AgentFramework):
             raise ValueError("stage_session_id must be 1-128 safe ASCII letters, digits, underscores or hyphens")
         if type(dump_consumption_crosswalk) is not bool:
             raise ValueError("dump_consumption_crosswalk must be a bool")
+        if type(reject_truncated_episode) is not bool:
+            raise ValueError("reject_truncated_episode must be a bool")
         session_id = stage_session_id or f"session-sample-{sample_index}-rollout-{session_index}-{uuid4().hex}"
         uid = str(sample_fields.get("uid", ""))
         session_trace = agent_loop_session(
@@ -1149,11 +1161,6 @@ class GatewayAgentFramework(AgentFramework):
                         f"Agent runner {runner_name!r} must return TaskResult or None, got {type(task_result).__name__}"
                     )
                 session_trajectories = await self.gateway_manager.finalize_session(session_id)
-                session_trajectories = _select_session_trajectories(
-                    session_id,
-                    session_trajectories,
-                    runner_config.trajectory_selection,
-                )
             except asyncio.CancelledError:
                 # Parent shutdown/cancellation must not leave the Gateway route
                 # and actor-owned session live after the runner task is gone.
@@ -1171,6 +1178,19 @@ class GatewayAgentFramework(AgentFramework):
                     trajectories=[],
                 )
                 raise
+
+            # Finalization already released the Gateway route. Reject before
+            # selection or the runner's finished/reward fields can hide a
+            # truncated branch; an already finalized route must not be aborted.
+            if reject_truncated_episode and any(
+                (trajectory.extra_fields or {}).get(key) in {"max_generated_tokens", "max_trajectory_length"}
+                for trajectory in session_trajectories
+                for key in ("materialization_reason", "session_exhaustion_reason")
+            ):
+                raise ValueError("Episode token budget exhausted: truncated rollout cannot be admitted as completed")
+            session_trajectories = _select_session_trajectories(
+                session_id, session_trajectories, runner_config.trajectory_selection
+            )
 
             # Make the Runner's canonical result visible to postprocessors before
             # they filter or reorder trajectories.  These fields are the

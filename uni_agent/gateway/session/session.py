@@ -200,6 +200,7 @@ class GatewaySession:
         self._generated_tokens = 0
         self._generation_budget_lock = asyncio.Lock()
         self._generation_budget_failed = False
+        self._session_exhaustion_reason: str | None = None
 
         self.handle = handle
         self._codec = codec
@@ -279,6 +280,10 @@ class GatewaySession:
                             encoded.sampling_params.get("max_tokens", remaining), remaining
                         )
                 if encoded.capacity_exhausted:
+                    if self._max_generated_tokens is not None:
+                        # A denied new chain has no trajectory of its own, but
+                        # still prevents claiming that the episode completed.
+                        self._session_exhaustion_reason = exhaustion_reason
                     empty_msg = {"role": "assistant", "content": ""}
                     if encoded.chain_id is not None:
                         self._close_length_exhausted_chain(encoded, reason=exhaustion_reason)
@@ -392,6 +397,14 @@ class GatewaySession:
                     # no subsequent request is required to persist exhaustion.
                     _, exhausted_chain = self._find_active_chain(chain_id)
                     exhausted_chain.generation_exhaustion_reason = "max_generated_tokens"
+                    self._session_exhaustion_reason = "max_generated_tokens"
+                elif (
+                    finish_reason == "length"
+                    and self._max_generated_tokens is not None
+                    and self._trajectory_capacity is not None
+                    and len(merged_token_ids) >= self._trajectory_capacity
+                ):
+                    self._session_exhaustion_reason = "max_trajectory_length"
                 if reserved_chain_id is not None:
                     self.reserved_chain_ids.discard(reserved_chain_id)
                     reserved_chain_id = None
@@ -434,6 +447,9 @@ class GatewaySession:
                 materialized.trajectory
                 for materialized in sorted(self.materialized_chains, key=lambda chain: chain.order_seq)
             ]
+            if self._session_exhaustion_reason is not None:
+                for trajectory in ordered_trajectories:
+                    trajectory.extra_fields["session_exhaustion_reason"] = self._session_exhaustion_reason
             return ordered_trajectories
 
     async def abort(self) -> None:

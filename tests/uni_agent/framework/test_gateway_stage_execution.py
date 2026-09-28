@@ -33,12 +33,12 @@ class Manager:
         self.aborted.append(session_id)
 
 
-def build(tmp_path, trajectories=None):
+def build(tmp_path, trajectories=None, **kwargs):
     if trajectories is None:
         trajectories = [Trajectory([11, 12], [13, 14, 15], [1, 0, 1], [-0.5, 0.0, -0.25], num_turns=2)]
     manager = Manager(trajectories)
     config = _RunnerConfig(f"{__name__}._noop", {}, "inline_async", 0)
-    framework = GatewayAgentFramework(manager, runner_registry={"runner": config}, log_dir=str(tmp_path))
+    framework = GatewayAgentFramework(manager, runner_registry={"runner": config}, log_dir=str(tmp_path), **kwargs)
     args = dict(
         sample_fields={"raw_prompt": [{"role": "user", "content": "task"}], "uid": "group-1"},
         sample_index=2,
@@ -201,3 +201,67 @@ async def test_trusted_stage_budget_reaches_real_gateway_session(tmp_path):
     for stage in ("A", "B"):
         await framework._execute_gateway_stage(**args, stage_session_id=stage, max_generated_tokens=8192)
     assert seen == [8192, 8192]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("budget", [None, 8192])
+async def test_regular_episode_passes_only_operator_generation_budget(tmp_path, budget):
+    framework, manager, args = build(tmp_path, max_generated_tokens_per_episode=budget)
+    args["sample_fields"]["max_generated_tokens_per_episode"] = 999999
+    await framework._run_agent_episode(**args)
+    if budget is None:
+        assert "max_generated_tokens" not in manager.created[0][1]
+    else:
+        assert manager.created[0][1]["max_generated_tokens"] == budget
+
+
+@pytest.mark.parametrize("budget", [0, -1, True, 1.5, "8192"])
+def test_regular_episode_rejects_invalid_generation_budget(tmp_path, budget):
+    with pytest.raises(ValueError, match="max_generated_tokens_per_episode"):
+        build(tmp_path, max_generated_tokens_per_episode=budget)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("reason_key", ["materialization_reason", "session_exhaustion_reason"])
+@pytest.mark.parametrize("reason", ["max_generated_tokens", "max_trajectory_length"])
+async def test_budgeted_episode_cannot_hide_truncation_with_longest_selection(tmp_path, reason_key, reason):
+    trajectories = [
+        Trajectory([11], [12], [1], [-0.1], extra_fields={reason_key: reason}),
+        Trajectory([13], [14, 15], [1, 1], [-0.2, -0.3]),
+    ]
+    framework, manager, args = build(tmp_path, trajectories, max_generated_tokens_per_episode=14336)
+    args["runner_config"].trajectory_selection = "longest"
+
+    async def runner(**kwargs):
+        return TaskResult(reward=1.0, verifier_reward=1.0, finished=True)
+
+    framework._inline_runners["runner"] = runner
+    with pytest.raises(ValueError, match="truncated rollout"):
+        await framework._run_agent_episode(**args)
+    assert all(t.reward_score is None for t in trajectories)
+    assert manager.finalized and not manager.aborted
+    assert not list(tmp_path.rglob("trajectory.npz"))
+
+
+def test_from_config_passes_episode_budget(tmp_path):
+    from omegaconf import OmegaConf
+
+    cfg = OmegaConf.create(
+        {
+            "actor_rollout_ref": {
+                "rollout": {
+                    "custom": {
+                        "agent_framework": {
+                            "agent_runners": {
+                                "runner": {"runner_fqn": f"{__name__}._noop", "dispatch_mode": "inline_async"}
+                            },
+                            "log_dir": str(tmp_path),
+                            "max_generated_tokens_per_episode": 14336,
+                        }
+                    }
+                }
+            }
+        }
+    )
+    framework = GatewayAgentFramework.from_config(config=cfg, gateway_manager=Manager([]))
+    assert framework._max_generated_tokens_per_episode == 14336

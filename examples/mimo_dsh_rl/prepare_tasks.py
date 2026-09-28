@@ -153,6 +153,7 @@ def prepare_task(
         "cwd": instance["cwd"],
         "runner_python": "/opt/dsh/bin/python",
         "base_ref_capture": "before_agent",
+        "history_policy": "strip",
         "artifact_contract": "mimo-code-workspace-v1",
         "image_binding": {"original_image": original, "dsh_image": derived, "verifier_image": verifier},
     }

@@ -33,6 +33,7 @@ class MimoWorkspaceArtifacts(ArtifactHandler):
     async def _helper(self, environment, action, *, archive=None, base_ref=None):
         python = "python3" if action == "restore" else self.binding.runner_python
         argv = [python, "-c", self._source, action, self.binding.cwd]
+        argv += ["--history-policy", self.binding.history_policy]
         if archive is not None:
             argv += ["--archive", str(archive)]
         if base_ref is not None:

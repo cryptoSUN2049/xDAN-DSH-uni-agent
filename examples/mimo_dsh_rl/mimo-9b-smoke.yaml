@@ -64,6 +64,7 @@ actor_rollout_ref:
       max_parallel_calls: 1
     custom:
       agent_framework:
+        max_generated_tokens_per_episode: 14336
         agent_runners:
           task:
             max_concurrent_sessions: 1

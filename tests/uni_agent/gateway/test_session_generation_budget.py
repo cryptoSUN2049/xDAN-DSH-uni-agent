@@ -45,6 +45,8 @@ async def test_budget_counts_backend_only_and_cannot_be_overridden():
     assert b.caps == [3, 2]
     assert end.finish_reason == "length" and end.completion_tokens == 0
     assert s._generated_tokens == 5
+    trajectories = await s.finalize()
+    assert all(t.extra_fields["session_exhaustion_reason"] == "max_generated_tokens" for t in trajectories)
 
 
 @pytest.mark.asyncio
@@ -198,6 +200,7 @@ async def test_exact_backend_cap_records_reason_without_extra_request(budget, st
     outcome = await _run(s, TerminalBackend(), [{"role": "user", "content": "task"}], max_tokens=3)
     trajectories = await s.finalize()
     assert trajectories[0].extra_fields.get("materialization_reason") == expected
+    assert trajectories[0].extra_fields.get("session_exhaustion_reason") == expected
     assert outcome.completion_tokens == 3
     assert outcome.finish_reason == ("length" if stop_reason == "length" else "stop")
 
@@ -217,3 +220,17 @@ async def test_exact_cap_reason_does_not_leak_to_other_chain():
     assert len(trajectories) == 2
     assert trajectories[0].extra_fields.get("materialization_reason") is None
     assert trajectories[1].extra_fields["materialization_reason"] == "max_generated_tokens"
+
+
+@pytest.mark.asyncio
+async def test_context_length_terminal_is_persisted_for_budgeted_episode():
+    class LengthBackend(Backend):
+        async def generate(self, **kwargs):
+            return TokenOutput(token_ids=[65, 65], stop_reason="length")
+
+    s = session(100)
+    messages = [{"role": "user", "content": "task"}]
+    s._trajectory_capacity = len(s._codec.build_initial_tokens(messages)) + 2
+    await _run(s, LengthBackend(), messages, max_tokens=99)
+    trajectories = await s.finalize()
+    assert trajectories[0].extra_fields["session_exhaustion_reason"] == "max_trajectory_length"

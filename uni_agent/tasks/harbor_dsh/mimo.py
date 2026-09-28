@@ -67,6 +67,7 @@ class MimoBinding(Contract):
     image_binding: MimoImages
     artifact_contract: Literal["mimo-code-workspace-v1"]
     base_ref_capture: Literal["before_agent"]
+    history_policy: Literal["reject", "strip"] = "reject"
     max_workspace_bytes: Annotated[int, Field(gt=0, le=2147483648)] = 536870912
     max_workspace_files: Annotated[int, Field(gt=0, le=1000000)] = 100000
 

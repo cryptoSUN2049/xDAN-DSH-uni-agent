@@ -1,0 +1,8 @@
+{
+  "status": "graded",
+  "reward": 1.0,
+  "resolved": true,
+  "verifier_returncode": 0,
+  "test_duration": 0.7234059879999997,
+  "test_output": "============================= test session starts ==============================\nplatform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python\ncachedir: .pytest_cache\nrootdir: /workspace/repo\ncollecting ... collected 9 items\n\nusercase-test-coderl/test_bidirectional_friendship.py::test_friends_for_user_returns_the_other_user_from_either_storage_direction PASSED [ 11%]\nusercase-test-coderl/test_bidirectional_friendship.py::test_are_friends_answers_true_both_ways_and_false_for_absent_pairs PASSED [ 22%]\nusercase-test-coderl/test_bidirectional_friendship.py::test_remove_forward_order_deletes_the_matching_friendship_row PASSED [ 33%]\nusercase-test-coderl/test_bidirectional_friendship.py::test_remove_reverse_order_deletes_row_and_marks_same_direction_invitation_deleted PASSED [ 44%]\nusercase-test-coderl/test_bidirectional_friendship.py::test_friend_set_for_returns_the_bidirectional_user_set PASSED [ 55%]\nusercase-test-coderl/test_bidirectional_friendship.py::test_remove_without_a_matching_row_does_not_create_or_delete_friendships PASSED [ 66%]\nusercase-test-coderl/test_bidirectional_friendship.py::test_cleanup_leaves_already_deleted_invitation_status_at_8_on_repeated_cleanup_paths PASSED [ 77%]\nusercase-test-coderl/test_bidirectional_friendship.py::test_two_friendship_pairs_keep_independent_state_after_one_pair_is_removed PASSED [ 88%]\nusercase-test-coderl/test_bidirectional_friendship.py::test_friendship_row_count_stays_bounded_across_many_remove_cycles PASSED [100%]\n\n============================== 9 passed in 0.45s ===============================\n"
+}

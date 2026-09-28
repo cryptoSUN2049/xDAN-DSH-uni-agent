@@ -1,0 +1,211 @@
+{
+  "base": {
+    "base_ref": "125729aed4a777af6ceb6ace5744f53db9d7933c",
+    "base_tree": "450112c0a9d66c5797e4758a4f5a592969aa9dba",
+    "history": {
+      "after": {
+        "commit_objects_outside_base_count": 0,
+        "object_examples": [],
+        "reachable_examples": [],
+        "reachable_outside_base_count": 0,
+        "ref_examples": [],
+        "refs_count": 0,
+        "refs_sha256": "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      },
+      "before": {
+        "commit_objects_outside_base_count": 82,
+        "object_examples": [
+          "0929c62b806618e4a832d14a0f3e6c5e6f338a43",
+          "1fcd1fad8dcd8fa5ac118435f4aa67989baef735",
+          "219e785e78f3b003f812cd454617fb35a03f5867",
+          "23825345bbe620c1d573335a97270407a0c1109e",
+          "255271712e97e07d616f88632d996db1763dcccb"
+        ],
+        "reachable_examples": [
+          "625fbdb3528d4f916a20a62e0393f6fd55903f77",
+          "46e83acb66ffdc50a1a1b505e466734d26c3693d",
+          "682413a510750f53901e441127bd5299c1b39aac",
+          "23825345bbe620c1d573335a97270407a0c1109e",
+          "e33f7aef9a414e593cfbe13cee9c249053aa4b93"
+        ],
+        "reachable_outside_base_count": 82,
+        "ref_examples": [
+          "refs/heads/master 125729aed4a777af6ceb6ace5744f53db9d7933c",
+          "refs/remotes/origin/HEAD 625fbdb3528d4f916a20a62e0393f6fd55903f77",
+          "refs/remotes/origin/master 625fbdb3528d4f916a20a62e0393f6fd55903f77"
+        ],
+        "refs_count": 3,
+        "refs_sha256": "sha256:10c6337e3b38fc7a5d2ca07bb98037010613a5ecce7e1029421cf46a466673da"
+      },
+      "policy": "strip",
+      "workspace_preserved": true,
+      "worktree_sha256": "sha256:8fd0b5138fea2840cf20d39cfc9a97f0bcc8b118940d485f69d5b0b562164b6f"
+    }
+  },
+  "baseline": "passed",
+  "baseline_calibration": "passed",
+  "baseline_history_admission": {
+    "base_ref": "125729aed4a777af6ceb6ace5744f53db9d7933c",
+    "base_tree": "450112c0a9d66c5797e4758a4f5a592969aa9dba",
+    "history": {
+      "after": {
+        "commit_objects_outside_base_count": 0,
+        "object_examples": [],
+        "reachable_examples": [],
+        "reachable_outside_base_count": 0,
+        "ref_examples": [],
+        "refs_count": 0,
+        "refs_sha256": "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      },
+      "before": {
+        "commit_objects_outside_base_count": 82,
+        "object_examples": [
+          "0929c62b806618e4a832d14a0f3e6c5e6f338a43",
+          "1fcd1fad8dcd8fa5ac118435f4aa67989baef735",
+          "219e785e78f3b003f812cd454617fb35a03f5867",
+          "23825345bbe620c1d573335a97270407a0c1109e",
+          "255271712e97e07d616f88632d996db1763dcccb"
+        ],
+        "reachable_examples": [
+          "625fbdb3528d4f916a20a62e0393f6fd55903f77",
+          "46e83acb66ffdc50a1a1b505e466734d26c3693d",
+          "682413a510750f53901e441127bd5299c1b39aac",
+          "23825345bbe620c1d573335a97270407a0c1109e",
+          "e33f7aef9a414e593cfbe13cee9c249053aa4b93"
+        ],
+        "reachable_outside_base_count": 82,
+        "ref_examples": [
+          "refs/heads/master 125729aed4a777af6ceb6ace5744f53db9d7933c",
+          "refs/remotes/origin/HEAD 625fbdb3528d4f916a20a62e0393f6fd55903f77",
+          "refs/remotes/origin/master 625fbdb3528d4f916a20a62e0393f6fd55903f77"
+        ],
+        "refs_count": 3,
+        "refs_sha256": "sha256:10c6337e3b38fc7a5d2ca07bb98037010613a5ecce7e1029421cf46a466673da"
+      },
+      "policy": "strip",
+      "workspace_preserved": true,
+      "worktree_sha256": "sha256:8fd0b5138fea2840cf20d39cfc9a97f0bcc8b118940d485f69d5b0b562164b6f"
+    }
+  },
+  "candidate-workspace": {
+    "bytes": 102400,
+    "files": 42,
+    "snapshot_sha256": "sha256:a6c760b76180eadfc61da94352272b53883de0eca1ea81c298daf84b3379ad28"
+  },
+  "candidate_patch_sha256": "sha256:2229cbd226fa8f2add77b39247ecea70832cdcb748f60239f70e60162d1dfdbc",
+  "dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-001661@sha256:15f588d627ce06e17d2904193c07100aa0b73c883269d70565ab59f36f6f2952",
+  "gpu": null,
+  "history_policy": "strip",
+  "operator_budget_seconds": 600,
+  "original_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:38280116603fd55e56437bcd7c089f3915a6df8a7ed335bb6935503ffb77f475",
+  "original_timeout_seconds": 1800,
+  "positive_control": "passed",
+  "reachable_outside_head_count": 0,
+  "resources": [
+    {
+      "image": "ghcr.io/cryptosun2049/mimo-dsh-code-001661@sha256:15f588d627ce06e17d2904193c07100aa0b73c883269d70565ab59f36f6f2952",
+      "role": "source",
+      "sandbox_id": "sb-ncESZJDkIMyghwAdNg8Z0p",
+      "terminated": true
+    },
+    {
+      "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:38280116603fd55e56437bcd7c089f3915a6df8a7ed335bb6935503ffb77f475",
+      "role": "baseline-original",
+      "sandbox_id": "sb-FwvbLsS0RilrS3nscu5WCz",
+      "terminated": true
+    },
+    {
+      "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:38280116603fd55e56437bcd7c089f3915a6df8a7ed335bb6935503ffb77f475",
+      "role": "restored-original",
+      "sandbox_id": "sb-pvcJQBiOZ5XRJigEbcgaSz",
+      "terminated": true
+    }
+  ],
+  "restored_history_admission": {
+    "history_admission": {
+      "base_ref": "125729aed4a777af6ceb6ace5744f53db9d7933c",
+      "base_tree": "450112c0a9d66c5797e4758a4f5a592969aa9dba",
+      "history": {
+        "after": {
+          "commit_objects_outside_base_count": 0,
+          "object_examples": [],
+          "reachable_examples": [],
+          "reachable_outside_base_count": 0,
+          "ref_examples": [],
+          "refs_count": 0,
+          "refs_sha256": "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+        },
+        "before": {
+          "commit_objects_outside_base_count": 82,
+          "object_examples": [
+            "0929c62b806618e4a832d14a0f3e6c5e6f338a43",
+            "1fcd1fad8dcd8fa5ac118435f4aa67989baef735",
+            "219e785e78f3b003f812cd454617fb35a03f5867",
+            "23825345bbe620c1d573335a97270407a0c1109e",
+            "255271712e97e07d616f88632d996db1763dcccb"
+          ],
+          "reachable_examples": [
+            "625fbdb3528d4f916a20a62e0393f6fd55903f77",
+            "46e83acb66ffdc50a1a1b505e466734d26c3693d",
+            "682413a510750f53901e441127bd5299c1b39aac",
+            "23825345bbe620c1d573335a97270407a0c1109e",
+            "e33f7aef9a414e593cfbe13cee9c249053aa4b93"
+          ],
+          "reachable_outside_base_count": 82,
+          "ref_examples": [
+            "refs/heads/master 125729aed4a777af6ceb6ace5744f53db9d7933c",
+            "refs/remotes/origin/HEAD 625fbdb3528d4f916a20a62e0393f6fd55903f77",
+            "refs/remotes/origin/master 625fbdb3528d4f916a20a62e0393f6fd55903f77"
+          ],
+          "refs_count": 3,
+          "refs_sha256": "sha256:10c6337e3b38fc7a5d2ca07bb98037010613a5ecce7e1029421cf46a466673da"
+        },
+        "policy": "strip",
+        "workspace_preserved": true,
+        "worktree_sha256": "sha256:8fd0b5138fea2840cf20d39cfc9a97f0bcc8b118940d485f69d5b0b562164b6f"
+      }
+    },
+    "restored": true
+  },
+  "results": {
+    "baseline-direct": {
+      "resolved": false,
+      "reward": 0.0,
+      "status": "graded",
+      "test_duration": 0.7736149830000001,
+      "verifier_returncode": 2
+    },
+    "baseline-restored": {
+      "resolved": false,
+      "reward": 0.0,
+      "status": "graded",
+      "test_duration": 0.6207955190000001,
+      "verifier_returncode": 2
+    },
+    "candidate-restored": {
+      "resolved": true,
+      "reward": 1.0,
+      "status": "graded",
+      "test_duration": 0.7234059879999997,
+      "verifier_returncode": 0
+    }
+  },
+  "schema": "dsh.mimo-verifier-calibration.v1",
+  "scope": "verifier controls only; no training or Gateway acceptance",
+  "source_hashes": {
+    "/workspace/mimo-dsh-rl-20260928/audit-code/selected/format-code-task-001661.row.json": "sha256:9fbd981fd6b50ad0c5ff3bd02ef75bd6d02e770aabf0f8c57ccd17d24e11368f",
+    "/workspace/mimo-dsh-rl-20260928/builder-src/deployment/harbor/mimo/calibrate_verifier.py": "sha256:82a1268593a0aa31bffc48cf2b850a70066f212fde46d73d90c42f9a7813e7ef",
+    "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2/examples/mimo_dsh_rl/verifier.py": "sha256:d705910bcdf06dbf88f67042c42909c6d7039e90f61ba9f602c11d75308228d2",
+    "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2/uni_agent/tasks/harbor_dsh/mimo_workspace.py": "sha256:a63bb29c3185f1ef15f8e9de8b35930ebaf0426b63d9d2d3cf3d1cb83544ddde"
+  },
+  "stage": "candidate-restored",
+  "status": "calibration_passed",
+  "task_id": "format-code-task-001661",
+  "test_command": "bash /workspace/repo/mimo_test_command.sh",
+  "test_patch_sha256": "sha256:360a18133cef1e7ddfeb405352639c0037c7087de532189cb75464d6088e8625",
+  "unchanged-workspace": {
+    "bytes": 102400,
+    "files": 42,
+    "snapshot_sha256": "sha256:43b1a21144eb640a081718103de14e25662430bc7d8072716bbb215d37cd3933"
+  }
+}

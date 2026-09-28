@@ -21,17 +21,128 @@ import tarfile
 from pathlib import Path, PurePosixPath
 
 
-def capture_base(root: Path) -> dict:
+def _git(root: Path, *args: str, timeout: int = 30, allowed=(0,)) -> subprocess.CompletedProcess:
+    env = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+    env["GIT_NO_REPLACE_OBJECTS"] = "1"
+    result = subprocess.run(
+        ["git", "-c", f"safe.directory={root}", "-c", "core.hooksPath=/dev/null", "-C", str(root), *args],
+        capture_output=True,
+        text=True,
+        timeout=timeout,
+        env=env,
+    )
+    if len(result.stdout) + len(result.stderr) > 16 * 1024 * 1024:
+        raise ValueError("Git history output exceeds the operator budget")
+    if result.returncode not in allowed:
+        raise ValueError(f"Git history operation failed: {args[0]}: {result.stderr[-1000:]}")
+    return result
+
+
+def _history(root: Path, base: str) -> dict:
+    ancestry = set(_git(root, "rev-list", base).stdout.splitlines())
+    outside_refs = _git(root, "rev-list", "--all", "--not", base).stdout.splitlines()
+    objects = _git(root, "cat-file", "--batch-all-objects", "--batch-check=%(objectname) %(objecttype)").stdout
+    outside_objects = sorted(
+        line.split()[0] for line in objects.splitlines() if line.endswith(" commit") and line.split()[0] not in ancestry
+    )
+    refs = _git(root, "for-each-ref", "--format=%(refname) %(objectname)").stdout.splitlines()
+    return {
+        "reachable_outside_base_count": len(outside_refs),
+        "commit_objects_outside_base_count": len(outside_objects),
+        "reachable_examples": outside_refs[:5],
+        "object_examples": outside_objects[:5],
+        "refs_count": len(refs),
+        "ref_examples": refs[:20],
+        "refs_sha256": "sha256:" + hashlib.sha256(("\n".join(refs) + "\n").encode()).hexdigest(),
+    }
+
+
+def _worktree_identity(root: Path, *, max_bytes: int, max_files: int) -> str:
+    records, total = [], 0
+    for name, info in _entries(root, max_files):
+        path = root / name
+        if stat.S_ISREG(info.st_mode):
+            total += info.st_size
+            if total > max_bytes:
+                raise ValueError("Workspace byte budget exceeded during history admission")
+            with path.open("rb") as stream:
+                identity = hashlib.file_digest(stream, "sha256").hexdigest()
+        elif stat.S_ISLNK(info.st_mode):
+            identity = os.readlink(path)
+        else:
+            identity = "directory"
+        records.append((name, stat.S_IMODE(info.st_mode), identity))
+    return "sha256:" + hashlib.sha256(json.dumps(records, separators=(",", ":")).encode()).hexdigest()
+
+
+def _strip_history(root: Path, base: str) -> None:
+    # Same cleanup as upstream DatasetEnvironment._strip_future_commits at
+    # 467f0a19016f0ac4d63b8d17a1f0da9ba07f232c. Detach by updating only HEAD:
+    # checkout/reset must not discard task-image compatibility modifications.
+    _git(root, "update-ref", "--no-deref", "HEAD", base)
+    for remote in _git(root, "remote").stdout.splitlines():
+        _git(root, "remote", "remove", remote)
+    for ref in _git(root, "for-each-ref", "--format=%(refname)").stdout.splitlines():
+        if ref.startswith("refs/tags/"):
+            ancestor = _git(root, "merge-base", "--is-ancestor", ref, base, allowed=(0, 1, 128))
+            if ancestor.returncode == 0:
+                continue
+        _git(root, "update-ref", "--no-deref", "-d", ref)
+    git_dir = root / ".git"
+    for name in ("ORIG_HEAD", "FETCH_HEAD", "MERGE_HEAD", "AUTO_MERGE", "REBASE_HEAD", "CHERRY_PICK_HEAD"):
+        (git_dir / name).unlink(missing_ok=True)
+    _git(root, "reflog", "expire", "--expire=now", "--all")
+    _git(root, "-c", "gc.pruneExpire=now", "-c", "gc.cruftPacks=false", "gc", "--prune=now", timeout=120)
+
+
+def capture_base(
+    root: Path, *, history_policy: str = "reject", max_bytes: int = 536870912, max_files: int = 100000
+) -> dict:
     root = root.resolve(strict=True)
+    if history_policy not in {"reject", "strip"}:
+        raise ValueError("History policy must be reject or explicit strip")
 
     def git(*args):
-        return subprocess.check_output(["git", "-C", str(root), *args], text=True, timeout=30).strip()
+        return _git(root, *args).stdout.strip()
 
     if Path(git("rev-parse", "--show-toplevel")).resolve() != root:
         raise ValueError("MiMo cwd must be the repository root")
     result = {"base_ref": git("rev-parse", "HEAD"), "base_tree": git("rev-parse", "HEAD^{tree}")}
     if any(re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", value) is None for value in result.values()):
         raise ValueError("Invalid repository base identity")
+    git_dir = root / ".git"
+    if (
+        not git_dir.is_dir()
+        or git_dir.is_symlink()
+        or Path(git("rev-parse", "--absolute-git-dir")).resolve() != git_dir
+        or (git_dir / "objects/info/alternates").exists()
+        or (git_dir / "info/grafts").exists()
+    ):
+        raise ValueError("History admission requires an independent Git directory without alternates/grafts")
+    before = _history(root, result["base_ref"])
+    if history_policy == "reject" and (
+        before["reachable_outside_base_count"] or before["commit_objects_outside_base_count"]
+    ):
+        raise ValueError("MiMo image history is not truncated; explicit strip policy required")
+    worktree = _worktree_identity(root, max_bytes=max_bytes, max_files=max_files)
+    if history_policy == "strip":
+        _strip_history(root, result["base_ref"])
+    after = _history(root, result["base_ref"])
+    if (
+        after["reachable_outside_base_count"]
+        or after["commit_objects_outside_base_count"]
+        or git("rev-parse", "HEAD") != result["base_ref"]
+        or git("rev-parse", "HEAD^{tree}") != result["base_tree"]
+        or _worktree_identity(root, max_bytes=max_bytes, max_files=max_files) != worktree
+    ):
+        raise ValueError("Git history admission did not preserve a clean baseline and exact workspace")
+    result["history"] = {
+        "policy": history_policy,
+        "before": before,
+        "after": after,
+        "worktree_sha256": worktree,
+        "workspace_preserved": True,
+    }
     return result
 
 
@@ -131,10 +242,13 @@ def snapshot_workspace(root: Path, output: Path, *, max_bytes: int, max_files: i
         raise
 
 
-def restore_workspace(root: Path, archive_path: Path, *, base_ref: str, max_bytes: int, max_files: int) -> None:
+def restore_workspace(
+    root: Path, archive_path: Path, *, base_ref: str, max_bytes: int, max_files: int, history_policy: str = "reject"
+) -> dict:
     root = root.resolve(strict=True)
-    if capture_base(root)["base_ref"] != base_ref:
+    if _git(root, "rev-parse", "HEAD").stdout.strip() != base_ref:
         raise ValueError("Independent verifier repository base differs from the captured base")
+    admission = capture_base(root, history_policy=history_policy, max_bytes=max_bytes, max_files=max_files)
     if max_bytes <= 0 or max_files <= 0 or archive_path.stat().st_size > max_bytes:
         raise ValueError("Workspace archive budget exceeded")
     with tarfile.open(archive_path, "r:") as archive:
@@ -177,6 +291,7 @@ def restore_workspace(root: Path, archive_path: Path, *, base_ref: str, max_byte
                     shutil.copyfileobj(source, output)
             if not member.issym():
                 target.chmod(member.mode)
+    return admission
 
 
 def main():
@@ -187,16 +302,24 @@ def main():
     parser.add_argument("--base-ref")
     parser.add_argument("--max-bytes", type=int, default=536870912)
     parser.add_argument("--max-files", type=int, default=100000)
+    parser.add_argument("--history-policy", choices=("reject", "strip"), default="reject")
     args = parser.parse_args()
     if args.action == "capture":
-        result = capture_base(args.root)
+        result = capture_base(
+            args.root, history_policy=args.history_policy, max_bytes=args.max_bytes, max_files=args.max_files
+        )
     elif args.action == "snapshot":
         result = snapshot_workspace(args.root, args.archive, max_bytes=args.max_bytes, max_files=args.max_files)
     else:
-        restore_workspace(
-            args.root, args.archive, base_ref=args.base_ref, max_bytes=args.max_bytes, max_files=args.max_files
+        admission = restore_workspace(
+            args.root,
+            args.archive,
+            base_ref=args.base_ref,
+            max_bytes=args.max_bytes,
+            max_files=args.max_files,
+            history_policy=args.history_policy,
         )
-        result = {"restored": True}
+        result = {"restored": True, "history_admission": admission}
     print(json.dumps(result, sort_keys=True, separators=(",", ":")))
 
 

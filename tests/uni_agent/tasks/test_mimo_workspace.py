@@ -39,7 +39,9 @@ def test_workspace_command_interface_captures_transports_and_restores(tmp_path, 
     archive = tmp_path / "snapshot.tar"
     snapshot = command("snapshot", student, "--archive", archive)
     assert snapshot["files"] == 2
-    assert command("restore", verifier, "--archive", archive, "--base-ref", base["base_ref"]) == {"restored": True}
+    restored = command("restore", verifier, "--archive", archive, "--base-ref", base["base_ref"])
+    assert restored["restored"] is True
+    assert restored["history_admission"]["base_ref"] == base["base_ref"]
     assert (verifier / "new.txt").read_text() == "edited"
 
 
@@ -155,3 +157,90 @@ def test_capture_rejects_nested_repository_workdir(tmp_path):
     (root / "nested").mkdir()
     with pytest.raises(ValueError, match="repository root"):
         capture_base(root / "nested")
+
+
+def future_repository(root):
+    root = repository(root)
+    base = git(root, "rev-parse", "HEAD")
+    git(root, "tag", "ancestor-release")
+    (root / "old.txt").write_text("future reference fix")
+    git(root, "add", ".")
+    git(root, "-c", "user.name=Test", "-c", "user.email=test@example.org", "commit", "-qm", "future")
+    future = git(root, "rev-parse", "HEAD")
+    git(root, "tag", "future-release")
+    git(root, "update-ref", "refs/remotes/origin/main", future)
+    git(root, "remote", "add", "origin", "https://example.invalid/repo")
+    git(root, "checkout", "-q", "--detach", base)
+    return root, base, future
+
+
+def test_default_history_rejects_future_without_mutating_refs_or_worktree(tmp_path):
+    root, base, future = future_repository(tmp_path / "repo")
+    refs = git(root, "show-ref")
+    with pytest.raises(ValueError, match="history is not truncated"):
+        capture_base(root)
+    assert git(root, "show-ref") == refs
+    assert git(root, "rev-parse", "HEAD") == base
+    assert git(root, "cat-file", "-t", future) == "commit"
+    assert (root / "old.txt").read_text() == "original"
+
+
+def test_strip_preserves_dirty_workspace_base_and_ancestor_tag_and_prunes_future(tmp_path):
+    root, base, future = future_repository(tmp_path / "repo")
+    tree = git(root, "rev-parse", "HEAD^{tree}")
+    (root / "old.txt").write_text("uncommitted compatibility changes")
+    (root / "binary").write_bytes(b"\x00\xff")
+    (root / "binary").chmod(0o751)
+    (root / "link").symlink_to("binary")
+    state = capture_base(root, history_policy="strip")
+    assert state["base_ref"] == base and state["base_tree"] == tree
+    assert state["history"]["workspace_preserved"] is True
+    assert state["history"]["before"]["reachable_outside_base_count"] == 1
+    assert state["history"]["after"]["commit_objects_outside_base_count"] == 0
+    assert git(root, "tag", "--list") == "ancestor-release"
+    assert git(root, "remote") == ""
+    assert git(root, "reflog", "--all") == ""
+    assert subprocess.run(["git", "-C", str(root), "cat-file", "-e", future], capture_output=True).returncode != 0
+    assert (root / "old.txt").read_text() == "uncommitted compatibility changes"
+    assert (root / "binary").read_bytes() == b"\x00\xff"
+    assert (root / "binary").stat().st_mode & 0o777 == 0o751
+    assert (root / "link").is_symlink()
+    assert capture_base(root)["base_ref"] == base
+
+
+def test_reflog_only_future_is_rejected_then_physically_pruned(tmp_path):
+    root, base, future = future_repository(tmp_path / "repo")
+    for ref in git(root, "for-each-ref", "--format=%(refname)").splitlines():
+        git(root, "update-ref", "-d", ref)
+    assert git(root, "rev-list", "--all", "--not", base) == ""
+    with pytest.raises(ValueError, match="history is not truncated"):
+        capture_base(root)
+    state = capture_base(root, history_policy="strip")
+    assert state["history"]["before"]["commit_objects_outside_base_count"] == 1
+    assert subprocess.run(["git", "-C", str(root), "cat-file", "-e", future], capture_output=True).returncode != 0
+
+
+def test_gc_failure_is_not_accepted(tmp_path, monkeypatch):
+    from uni_agent.tasks.harbor_dsh import mimo_workspace
+
+    root, _, _ = future_repository(tmp_path / "repo")
+    original = mimo_workspace._git
+
+    def failing_git(path, *args, **kwargs):
+        if "gc" in args:
+            raise ValueError("simulated GC failure")
+        return original(path, *args, **kwargs)
+
+    monkeypatch.setattr(mimo_workspace, "_git", failing_git)
+    with pytest.raises(ValueError, match="GC failure"):
+        capture_base(root, history_policy="strip")
+
+
+def test_restore_applies_same_explicit_history_policy(tmp_path):
+    root, base, _ = future_repository(tmp_path / "repo")
+    archive = tmp_path / "workspace.tar"
+    snapshot_workspace(root, archive, max_bytes=100000, max_files=100)
+    with pytest.raises(ValueError, match="history is not truncated"):
+        restore_workspace(root, archive, base_ref=base, max_bytes=100000, max_files=100)
+    restore_workspace(root, archive, base_ref=base, max_bytes=100000, max_files=100, history_policy="strip")
+    assert (root / "old.txt").read_text() == "original"

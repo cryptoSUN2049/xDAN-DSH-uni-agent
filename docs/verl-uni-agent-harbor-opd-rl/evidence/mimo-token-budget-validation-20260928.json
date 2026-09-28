@@ -1,0 +1,101 @@
+{
+  "schema": "mimo.token-budget-validation.v1",
+  "date": "2026-09-28",
+  "scope": "CPU-only; no GPU inference, backward pass or parameter-update claim",
+  "source": {
+    "remote_checkout": "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2",
+    "bundle": "/workspace/mimo-dsh-rl-20260928/integration-check/mimo-token-budget-reviewed.tar",
+    "bundle_sha256": "sha256:fa71e41afceb80d7c703bcbc81ef165db652eceaa9e77a0fc0cf27b7e0f61e3e",
+    "files": {
+      "uni_agent/framework/framework.py": "sha256:c988d2ec0d53e4029443fb1c730021829a6d77c147a9e0b8b6e50a12db60d72e",
+      "uni_agent/gateway/session/codec.py": "sha256:6320d39edbab0568b7a66b3922d216fbc8e8a76792e366d1655bc262158bf59c",
+      "uni_agent/gateway/session/mimo_template.py": "sha256:818b3fb05c9937b217203376448f75bc9767301162ea4159a9aa2a2be75f1f14",
+      "uni_agent/gateway/session/session.py": "sha256:a8809abf0a6d730b5f89fce4b98ba37d500e00d1576a15485b63e296d557386e",
+      "examples/mimo_dsh_rl/mimo-9b-smoke.yaml": "sha256:e10d90586f93b9c7ef6c5c366cdd9013c4b3cdf8184dc377d6930d6d49e7101f",
+      "tests/uni_agent/gateway/test_mimo_template.py": "sha256:ea95735338a50f804a1cac317a1898cb40c48dcfa09b8d6af2fa42466d6b7bdb",
+      "tests/uni_agent/gateway/fixtures/mimo-distill-qwen-9b.jinja": "sha256:59a64ebb4df6d1489d09a91267cf3ceb106162d4a893c4f84833cfb8c897ff63",
+      "tests/uni_agent/framework/test_gateway_stage_execution.py": "sha256:f160b1ac141639a447a4c0b329fdae6b83550a0667412202ae7235a4f1e6685d",
+      "tests/uni_agent/gateway/test_session_generation_budget.py": "sha256:0791d11fed61a62e277bb026852f228f68f19c51bc8ef77efef32b91c23ba9d5",
+      "tests/uni_agent/examples/test_mimo_smoke_recipe.py": "sha256:6f66afc2485fd591cff735b49729d5bc08756d463eeef0e16279050c4d3dbfa8"
+    }
+  },
+  "full_regression": {
+    "passed": 234,
+    "warnings": 2,
+    "duration_seconds": 183.19,
+    "exit_code": 0,
+    "selection": [
+      "tests/uni_agent/gateway/test_mimo_template.py",
+      "tests/uni_agent/gateway/test_session_generation_budget.py",
+      "tests/uni_agent/framework/test_gateway_stage_execution.py",
+      "tests/uni_agent/examples/test_mimo_smoke_recipe.py",
+      "tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py",
+      "tests/uni_agent/framework/test_generate_sequences_on_cpu.py"
+    ],
+    "args": "-q --disable-warnings --tb=short",
+    "log_kind": "tool-result summary; original complete stdout not persisted",
+    "log": "mimo-token-budget-cpu-result.log",
+    "log_sha256": "sha256:8f255bb97924b49864dea5c288efa20c2d55bfa9f77aa0b22fd57ad97f4d5fc7"
+  },
+  "template_contract": {
+    "model_path": "/workspace/models/MiMo-V2.6-Distill-Qwen-9B",
+    "model_type": "qwen3_5",
+    "template_sha256": "sha256:59a64ebb4df6d1489d09a91267cf3ceb106162d4a893c4f84833cfb8c897ff63",
+    "tool_parser": "qwen3_coder",
+    "paths": [
+      "fixture tokenizer",
+      "real AutoTokenizer",
+      "real AutoTokenizer + AutoProcessor"
+    ],
+    "assertions": [
+      "two reasoning/tool-call turns; full reconstructed token equality",
+      "all generated tokens retain aligned distinct logprobs and mask=1",
+      "all context tokens receive mask=0 and logprob=0",
+      "length finish cannot execute syntactically complete tool calls",
+      "other Qwen templates retain existing builder and decode behavior"
+    ]
+  },
+  "coverage": {
+    "passed": 7,
+    "warnings": 1,
+    "duration_seconds": 117.11,
+    "exit_code": 0,
+    "selection": "tests/uni_agent/gateway/test_mimo_template.py",
+    "include": "*/uni_agent/gateway/session/mimo_template.py",
+    "totals": {
+      "covered_lines": 10,
+      "num_statements": 11,
+      "percent_covered": 90.9090909090909,
+      "percent_covered_display": "91",
+      "missing_lines": 1,
+      "excluded_lines": 0,
+      "percent_statements_covered": 90.9090909090909,
+      "percent_statements_covered_display": "91"
+    },
+    "raw_log": "mimo-template-coverage.log",
+    "raw_log_sha256": "sha256:9948f228d24871bbaf638fc16688de13a699db645333bd313595939f94c4f79c",
+    "json": "mimo-template-coverage.json",
+    "json_sha256": "sha256:f7fe7518d797355db0bc263385e756a5b4f8b9c6be27bd760e790836b396373f",
+    "instrumentation_retry": "Initial --source=package.module caused premature package import and Torch duplicate-docstring collection failure; path --include avoided eager package import. No production code or dependency changes for this retry."
+  },
+  "ruff": {
+    "check_exit_code": 0,
+    "format_check_exit_code": 0,
+    "python_files_checked": 8,
+    "executable": "/workspace/mimo-dsh-rl-20260928/builder-tooling/bin/ruff",
+    "evidence": "mimo-token-budget-cpu-result.log"
+  },
+  "budget": {
+    "max_generated_tokens_per_episode": 14336,
+    "context_capacity": 16384,
+    "default_existing_lanes": null,
+    "truncation_admission": "reject before trajectory selection and runner reward/finished annotation; no fabricated zero reward",
+    "covers": [
+      "new-chain capacity denial",
+      "longest selection cannot hide failed chain",
+      "rollback cannot refund generated tokens",
+      "terminal backend length and exact-cap natural stop differ",
+      "context-capacity exhaustion retained"
+    ]
+  }
+}

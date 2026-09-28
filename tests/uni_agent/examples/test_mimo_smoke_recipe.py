@@ -86,6 +86,7 @@ def test_mimo_smoke_composes_native_single_gpu_and_complete_context_budget():
     assert rollout.engine_kwargs.vllm.cpu_offload_gb == 0
     assert rollout.log_prob_use_dynamic_bsz and rollout.log_prob_max_token_len_per_gpu == 16384
     framework = rollout.custom.agent_framework
+    assert framework.max_generated_tokens_per_episode == 14336
     assert framework.agent_runners.task.max_concurrent_sessions == 1
     assert framework.fail_on_rollout_error and framework.require_verifier_reward and framework.require_version_evidence
     assert framework.require_finished_episode and framework.require_trajectory_dump
