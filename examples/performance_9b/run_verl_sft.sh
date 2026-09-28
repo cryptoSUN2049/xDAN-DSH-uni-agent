@@ -41,8 +41,15 @@ export PYTHONNOUSERSITE=1
 export RAY_ENABLE_UV_RUN_RUNTIME_ENV=0
 export WANDB_PROJECT=${WANDB_PROJECT:-xDAN-performance-9b}
 export WANDB_RUN_GROUP=${WANDB_RUN_GROUP:-verl-sft}
-if [[ "${VERL_RL_INSIGHT_ENABLE:-0}" == "1" ]]; then
-  LOGGER_BACKENDS="$LOGGER_BACKENDS,rl_insight"
+SFT_INSIGHT_ENABLE=${SFT_INSIGHT_ENABLE:-${VERL_RL_INSIGHT_ENABLE:-0}}
+# Native rl_insight assumes Ray in the training process. The CPU sidecar owns
+# its own Ray runtime instead; never attach the torchrun ranks to that runtime.
+if [[ "$SFT_INSIGHT_ENABLE" == "1" ]]; then
+  : "${RL_INSIGHT_SERVER_URL:?set RL_INSIGHT_SERVER_URL for the SFT sidecar}"
+  [[ ",$LOGGER_BACKENDS," != *,rl_insight,* ]] || {
+    echo "use the SFT sidecar, not the native Ray logger, with torchrun" >&2; exit 2
+  }
+  export VERL_RL_INSIGHT_ENABLE=0
 fi
 LOGGER_SPEC="[${LOGGER_BACKENDS}]"
 
@@ -80,8 +87,60 @@ COMMAND=(
 printf '%q ' "${COMMAND[@]}" > "$RUN_ROOT/command.sh"
 printf '\n' >> "$RUN_ROOT/command.sh"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$RUN_ROOT/start.utc"
+SIDECAR_PID=""
+cleanup_sidecar() {
+  if [[ -n "$SIDECAR_PID" ]] && kill -0 "$SIDECAR_PID" 2>/dev/null; then
+    kill "$SIDECAR_PID"
+    wait "$SIDECAR_PID" || true
+  fi
+}
+trap cleanup_sidecar EXIT
+if [[ "$SFT_INSIGHT_ENABLE" == "1" ]]; then
+  touch "$VERL_FILE_LOGGER_PATH"
+  RAY_SUFFIX=$("$PYTHON_BIN" -c 'import hashlib,sys; print(hashlib.sha256(sys.argv[1].encode()).hexdigest()[:12])' "$RUN_ROOT")
+  INSIGHT_COMMAND=("$PYTHON_BIN" "$(dirname -- "${BASH_SOURCE[0]}")/sft_insight_sidecar.py"
+    --metrics "$VERL_FILE_LOGGER_PATH" --state "$RUN_ROOT/insight-cursor.json"
+    --status "$RUN_ROOT/insight-status.json" --exit-code "$RUN_ROOT/exit-code"
+    --project "$WANDB_PROJECT" --experiment "$RUN_ID"
+    --server-url "$RL_INSIGHT_SERVER_URL"
+    --metrics-port "${SFT_INSIGHT_METRICS_PORT:-19092}"
+    --ray-temp-dir "/workspace/ri-$RAY_SUFFIX")
+  printf '%q ' "${INSIGHT_COMMAND[@]}" > "$RUN_ROOT/insight-command.sh"
+  printf '\n' >> "$RUN_ROOT/insight-command.sh"
+  "${INSIGHT_COMMAND[@]}" > "$RUN_ROOT/insight.log" 2>&1 &
+  SIDECAR_PID=$!
+  printf '%s\n' "$SIDECAR_PID" > "$RUN_ROOT/insight.pid"
+  READY=0
+  for ((attempt=0; attempt<180; attempt++)); do
+    kill -0 "$SIDECAR_PID" 2>/dev/null || break
+    if "$PYTHON_BIN" -c 'import json,sys,pathlib; p=pathlib.Path(sys.argv[1]); sys.exit(0 if p.exists() and json.loads(p.read_text()).get("status")=="running" else 1)' "$RUN_ROOT/insight-status.json"; then
+      READY=1
+      break
+    fi
+    sleep 1
+  done
+  if [[ "$READY" != "1" ]]; then
+    kill "$SIDECAR_PID" 2>/dev/null || true
+    insight_code=0
+    wait "$SIDECAR_PID" || insight_code=$?
+    printf '%s\n' "$insight_code" > "$RUN_ROOT/insight-exit-code"
+    SIDECAR_PID=""
+    echo "SFT insight startup failed; see $RUN_ROOT/insight.log" >&2
+    exit 3
+  fi
+fi
 set +e
 "${COMMAND[@]}" 2>&1 | tee "$RUN_ROOT/train.log"
 code=${PIPESTATUS[0]}
 printf '%s\n' "$code" > "$RUN_ROOT/exit-code"
+if [[ -n "$SIDECAR_PID" ]]; then
+  wait "$SIDECAR_PID"
+  insight_code=$?
+  printf '%s\n' "$insight_code" > "$RUN_ROOT/insight-exit-code"
+  SIDECAR_PID=""
+  if [[ "$code" == "0" && "$insight_code" != "0" ]]; then
+    echo "training completed, but requested insight forwarding failed" >&2
+    exit 3
+  fi
+fi
 exit "$code"
