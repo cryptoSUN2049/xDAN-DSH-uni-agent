@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "started_at": 1790597046.26277,
+  "pid": 667,
+  "source": "/workspace/mimo-dsh-rl-20260928/run-src-r4/verl",
+  "exit_code": 124,
+  "finished_at": 1790597226.331665,
+  "gpu_processes_after": ""
+}

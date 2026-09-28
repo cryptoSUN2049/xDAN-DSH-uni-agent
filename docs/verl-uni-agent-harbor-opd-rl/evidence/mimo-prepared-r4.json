@@ -1,0 +1,16 @@
+{
+  "schema": "xdan.mimo-prepared-run.v1",
+  "run_id": "mimo9b-001661-r4",
+  "task_ref": {
+    "id": "mimo-code-format-code-task-001661",
+    "version": "v1",
+    "sha256": "sha256:603c1f65f95a2e6b89716a618713f683b1fc9072386002eb014fb9b0ccb878e2"
+  },
+  "run_spec_sha256": "sha256:d67665220deef3addfc9a2c3c7e9b0c4facf7334cb48d9cb38ec6c9810a6a50f",
+  "history_policy": "strip",
+  "gpu_preparation": {
+    "prepared": true,
+    "task_sha256": "sha256:603c1f65f95a2e6b89716a618713f683b1fc9072386002eb014fb9b0ccb878e2"
+  },
+  "training_started": false
+}

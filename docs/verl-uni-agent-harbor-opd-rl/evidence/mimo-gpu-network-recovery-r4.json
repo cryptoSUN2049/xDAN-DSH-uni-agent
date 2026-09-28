@@ -1,0 +1,18 @@
+{
+  "id": "gqgtsz3pfov6tl",
+  "reason": "provider container networking failed to bind host port 50830; no SSH or model process ever started",
+  "started_at": 1790596966.973018,
+  "deadline_unchanged": 1790602014.1390703,
+  "actions": [
+    {
+      "action": "stop",
+      "returncode": 0,
+      "at": 1790596968.0979095
+    },
+    {
+      "action": "start",
+      "returncode": 0,
+      "at": 1790596969.5674803
+    }
+  ]
+}

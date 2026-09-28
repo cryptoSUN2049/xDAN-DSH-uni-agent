@@ -1,0 +1,3 @@
+operator timing only: native PROCESS_TIMEOUT 60 -> 300; all transfer assertions unchanged
+.
+1 passed in 203.53s (0:03:23)

@@ -29,8 +29,10 @@
 
 ## 当前状态
 
-截至 2026-09-28 11:44 UTC：r2 缺失 FA2、r3 继承 NCCL 后端但缺 CuPy，均在模型轨迹前退出，训练更新为零。首个专属 GPU 已于 11:24:54 UTC 提前删除并回读确认，原 11:38 截止未延长。
+截至 2026-09-28 12:24 UTC：r2 缺失 FA2、r3 继承 NCCL 后端但缺 CuPy，均在模型轨迹前退出，训练更新为零。首个专属 GPU 已于 11:24:54 UTC 提前删除并回读确认，原 11:38 截止未延长。
 
-下一尝试使用 MiMo 专属 SDPA/naive 配置，并补启动依赖预检。云端 `run-src-r4/verl` 已复制冻结实际源码，逐文件摘要位于 `integration-check/verl-source-r4.json`；没有修改共享 VERL。新 GPU 尚未分配。
+r4 使用 MiMo 专属 SDPA/naive 配置（67a5948），45 项 CPU 回归、真实模型 tokenizer/dataset 预检通过；uv 持久化环境 273 项约束一致。云端 `run-src-r4/verl` 已复制冻结实际源码，逐文件摘要位于 `integration-check/verl-source-r4.json`，没有修改共享 VERL。
+
+新 GPU `gqgtsz3pfov6tl` 已通过原生 CUDA IPC 小测试（1 passed/0 skipped，203.53 秒），结束无残留 GPU 进程。r4 driver 995/supervisor 996 于 12:19:39 UTC 启动，Ray 已启动，尚无本轮模型轨迹或更新证据。controller 80823 位于 CPU SSH11621，GPU SSH 为 `157.157.221.30:51176`；watchdog 78224 硬截止 **13:26:54 UTC**。不能依据本段判断当前仍运行，须查实时进程与日志。
 
 执行设计见 [集成设计](mimo-dsh-integration-design.md)，操作入口见 [云端 runbook](mimo-9b-cloud-runbook.md)，冷启动见 [handoff](../../tasks/verl-uni-agent-harbor-opd-rl/handoff.md)。

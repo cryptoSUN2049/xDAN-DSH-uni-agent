@@ -1,0 +1,50 @@
+{
+  "recorded_at": 1790598207.82837,
+  "first_ipc": "timeout124 after180s, no residual GPU process",
+  "diagnostic_probe": {
+    "torch_cuda_arithmetic_passed": true,
+    "native_transport_import_completed": false,
+    "core_message": true,
+    "log_sha256": "6f280aa047cd3744e6c12aaed7c7786977b96fa837f9f8aa77c3568a99b62710",
+    "cause": "not established; traceback sampling was enabled; do not claim this probe passed"
+  },
+  "retry": "same native case, only parent join timeout60\u2192300, outer720; 1passed/0skipped; no residual GPU process",
+  "artifacts": {
+    "mimo-cuda-ipc-r4-first.json": {
+      "sha256": "579d2087f76b311e49fb1a5abc4559bb667238f34b699311919bbca18e9ac0c8",
+      "bytes": 221
+    },
+    "mimo-cuda-ipc-r4-retry.json": {
+      "sha256": "b384b65009a8eb8f19161838b9c35c8fed4275651c7f8badf907ad1f6024081d",
+      "bytes": 282
+    },
+    "mimo-cuda-ipc-r4-retry.log": {
+      "sha256": "4ca56b02e3677b314248ba5d892094eb4f26f93e1ca7caefa852508753adb441",
+      "bytes": 122
+    },
+    "mimo-cuda-ipc-r4-retry.xml": {
+      "sha256": "52597498b177242d90647922b913fa4072c8e68d45423d8c8722204501956430",
+      "bytes": 398
+    },
+    "mimo-prepared-r4.json": {
+      "sha256": "ba9004008a47bf32e2b98ad895b15d2fd829b51dab2b74d5b947c637cb0aa59a",
+      "bytes": 550
+    },
+    "mimo-gpu-lease-r4.json": {
+      "sha256": "3fba4a674f268ec83ef1637f9e7fa0d5d1565df96c74dc9f620e5ee77c3ef828",
+      "bytes": 214
+    },
+    "mimo-gpu-discovery-r4.json": {
+      "sha256": "935984906e1ff6e6765e327078641b579a5c9380634c5a6f2dd66b4b05530d37",
+      "bytes": 215
+    },
+    "mimo-gpu-network-recovery-r4.json": {
+      "sha256": "10d063213452528c64d2e0418843ed943308a9b7687fea2edc25f65d2fcae687",
+      "bytes": 424
+    },
+    "mimo-training-start-r4.json": {
+      "sha256": "dc2da329e2163c71d40fd0976f432935a6ac0f991ead6695821cf08e77074def",
+      "bytes": 148
+    }
+  }
+}

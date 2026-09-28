@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "started_at": 1790597624.949163,
+  "pid": 783,
+  "source": "/workspace/mimo-dsh-rl-20260928/run-src-r4/verl",
+  "exit_code": 0,
+  "finished_at": 1790597835.390125,
+  "tests": 1,
+  "skipped": 0,
+  "errors": 0,
+  "failures": 0,
+  "gpu_processes_after": ""
+}
