@@ -1,0 +1,19 @@
+Evidence kind: result summary transcribed from tool outputs, not raw pytest stdout.
+Original full-run stdout was not persisted to a file.
+Remote source: /workspace/mimo-dsh-rl-20260928/integration-check/source-v2
+Python: /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python
+Environment: CUDA_VISIBLE_DEVICES= HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false
+MIMO_TOKENIZER_DIR=/workspace/models/MiMo-V2.6-Distill-Qwen-9B
+PYTHONPATH=.:/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl
+
+Command: python -m pytest tests/uni_agent/gateway/test_mimo_template.py tests/uni_agent/gateway/test_session_generation_budget.py tests/uni_agent/framework/test_gateway_stage_execution.py tests/uni_agent/examples/test_mimo_smoke_recipe.py tests/uni_agent/gateway/test_session_multiple_chains_on_cpu.py tests/uni_agent/framework/test_generate_sequences_on_cpu.py -q --disable-warnings --tb=short
+Observed result: 234 passed, 2 warnings in 183.19s (0:03:03)
+Process exit code: 0
+Tool exec session: 6590
+
+Ruff executable: /workspace/mimo-dsh-rl-20260928/builder-tooling/bin/ruff
+Ruff checked paths: uni_agent/framework/framework.py uni_agent/gateway/session/codec.py uni_agent/gateway/session/mimo_template.py uni_agent/gateway/session/session.py tests/uni_agent/gateway/test_mimo_template.py tests/uni_agent/framework/test_gateway_stage_execution.py tests/uni_agent/gateway/test_session_generation_budget.py tests/uni_agent/examples/test_mimo_smoke_recipe.py
+Observed ruff check result: All checks passed!
+Observed ruff format --check result: 8 files already formatted
+Process exit codes: 0
+Scope: CPU token/template/session/framework/composer contracts; no GPU model loading, inference, backward pass or training claim.

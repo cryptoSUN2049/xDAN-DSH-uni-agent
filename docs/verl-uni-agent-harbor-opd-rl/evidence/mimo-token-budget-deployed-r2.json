@@ -1,0 +1,15 @@
+{
+  "bundle_sha256": "fa71e41afceb80d7c703bcbc81ef165db652eceaa9e77a0fc0cf27b7e0f61e3e",
+  "files": {
+    "uni_agent/framework/framework.py": "c988d2ec0d53e4029443fb1c730021829a6d77c147a9e0b8b6e50a12db60d72e",
+    "uni_agent/gateway/session/codec.py": "6320d39edbab0568b7a66b3922d216fbc8e8a76792e366d1655bc262158bf59c",
+    "uni_agent/gateway/session/mimo_template.py": "818b3fb05c9937b217203376448f75bc9767301162ea4159a9aa2a2be75f1f14",
+    "uni_agent/gateway/session/session.py": "a8809abf0a6d730b5f89fce4b98ba37d500e00d1576a15485b63e296d557386e",
+    "tests/uni_agent/gateway/test_mimo_template.py": "ea95735338a50f804a1cac317a1898cb40c48dcfa09b8d6af2fa42466d6b7bdb",
+    "tests/uni_agent/gateway/fixtures/mimo-distill-qwen-9b.jinja": "59a64ebb4df6d1489d09a91267cf3ceb106162d4a893c4f84833cfb8c897ff63",
+    "tests/uni_agent/framework/test_gateway_stage_execution.py": "f160b1ac141639a447a4c0b329fdae6b83550a0667412202ae7235a4f1e6685d",
+    "tests/uni_agent/gateway/test_session_generation_budget.py": "0791d11fed61a62e277bb026852f228f68f19c51bc8ef77efef32b91c23ba9d5",
+    "tests/uni_agent/examples/test_mimo_smoke_recipe.py": "6f66afc2485fd591cff735b49729d5bc08756d463eeef0e16279050c4d3dbfa8",
+    "examples/mimo_dsh_rl/mimo-9b-smoke.yaml": "e10d90586f93b9c7ef6c5c366cdd9013c4b3cdf8184dc377d6930d6d49e7101f"
+  }
+}

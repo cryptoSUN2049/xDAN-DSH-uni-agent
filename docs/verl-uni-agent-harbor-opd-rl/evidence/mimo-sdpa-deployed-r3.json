@@ -1,0 +1,9 @@
+{
+  "bundle_sha256": "5872ac75b3ac2744f1c20cb30e09c1e6f9eb4dc9c33bd57cb3aa521be3bec569",
+  "files": {
+    "examples/mimo_dsh_rl/mimo-9b-smoke.yaml": "ab3570cd1abfdfe8deb791363d772b556a463cb89c8025aaa6c4800e41cec089",
+    "examples/harbor_opd_rl/launch.py": "d326517eac106c3ac4b8b1d8c14b0bb5eba7c1f661591668d125459cebbf2a71",
+    "tests/uni_agent/examples/test_mimo_smoke_recipe.py": "e97435353a41fc2971726154a73857280cfd8e6667d34d7ec9f51e4335feee4c"
+  },
+  "cpu_regression_passed": 35
+}

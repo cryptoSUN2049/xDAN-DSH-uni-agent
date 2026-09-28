@@ -1,0 +1,9 @@
+{
+  "schema": "xdan.owned-gpu-lease.v1",
+  "id": "pbpxdvlt9uruc8",
+  "name": "mimo-dsh-9b-20260928-r1",
+  "deadline_unix": 1790595529.5176694,
+  "status": "deleted_confirmed",
+  "updated_at": 1790594694.1016889,
+  "attempt": 1
+}

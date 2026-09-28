@@ -1,0 +1,1 @@
+{"native_registry": ["naive"], "naive_instantiation": "passed", "actual_actor_worker_merged_route": "passed", "versions_observed": [0, 1], "distinct_cpu_weights": true, "cuda_initialized": false, "limitations": "CPU actor-engine and rollout doubles; no real FSDP merge or CUDA IPC transfer executed"}

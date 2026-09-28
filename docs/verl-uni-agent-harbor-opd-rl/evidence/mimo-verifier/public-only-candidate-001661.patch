@@ -1,0 +1,64 @@
+--- a/friends/models.py
++++ b/friends/models.py
+@@ -49,6 +49,32 @@
+         return "%s (%s's contact)" % (self.email, self.user)
+ 
+ 
++class FriendshipManager(models.Manager):
++    def friends_for_user(self, user):
++        friendships = self.filter(
++            models.Q(from_user=user) | models.Q(to_user=user)
++        ).select_related("from_user", "to_user")
++        return [
++            {
++                "friend": friendship.to_user if friendship.from_user_id == user.pk else friendship.from_user,
++                "friendship": friendship,
++            }
++            for friendship in friendships
++        ]
++
++    def _between(self, user1, user2):
++        return self.filter(
++            models.Q(from_user=user1, to_user=user2)
++            | models.Q(from_user=user2, to_user=user1)
++        )
++
++    def are_friends(self, user1, user2):
++        return self._between(user1, user2).exists()
++
++    def remove(self, user1, user2):
++        return self._between(user1, user2).delete()
++
++
+ class Friendship(models.Model):
+     """
+     A friendship is a bi-directional association between two users who
+@@ -60,6 +86,8 @@
+     # @@@ relationship types
+     added = models.DateField(default=datetime.date.today)
+     
++    objects = FriendshipManager()
++
+     class Meta:
+         unique_together = (('to_user', 'from_user'),)
+ 
+@@ -216,3 +244,19 @@
+ 
+ 
+ signals.pre_save.connect(friendship_invitation, sender=FriendshipInvitation)
++
++
++def friend_set_for(user):
++    return {item["friend"] for item in Friendship.objects.friends_for_user(user)}
++
++
++def friendship_deleted(sender, instance, using, **kwargs):
++    FriendshipInvitation.objects.using(using).filter(
++        from_user_id=instance.from_user_id,
++        to_user_id=instance.to_user_id,
++    ).exclude(status="8").update(status="8")
++
++
++signals.post_delete.connect(
++    friendship_deleted, sender=Friendship, dispatch_uid="friends.friendship_deleted"
++)

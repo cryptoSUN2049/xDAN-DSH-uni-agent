@@ -1,0 +1,29 @@
+{
+  "schema": "xdan.mimo-training-attempt.v1",
+  "run_id": "mimo9b-001661-r2",
+  "status": {
+    "run_id": "mimo9b-001661-r2",
+    "started_at": 1790593068.1385663,
+    "wall_clock_seconds": 2101,
+    "status": "exited",
+    "supervisor_pid": 4714,
+    "exit_code": 1,
+    "finished_at": 1790593560.4162784
+  },
+  "supervisor": {
+    "exit_code": 1,
+    "reason": "training-exited",
+    "elapsed_seconds": 490.216,
+    "pid": 4715,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "failure_stage": "actor model from_pretrained before Gateway registration",
+  "failure": "Missing FlashAttention2 package in shared cloud venv",
+  "log_sha256": "c24f284ce37d796365c3c61e20c42c4f7561c9ddffdb998d8cd7edec5417045f",
+  "gpu_updates": 0,
+  "model_rollouts": 0,
+  "reward": null,
+  "checkpoint": null,
+  "next_action": "native SDPA with remove_padding=false; fresh r3 identity; no shared dependency mutation"
+}

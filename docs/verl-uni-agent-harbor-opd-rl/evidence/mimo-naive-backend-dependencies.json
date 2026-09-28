@@ -1,0 +1,21 @@
+{
+  "versions": {
+    "torch": "2.11.0",
+    "vllm": "0.23.0",
+    "pyzmq": "27.2.0",
+    "ray": "2.54.1",
+    "peft": "0.18.1"
+  },
+  "zmq_version": "4.3.5",
+  "zmq_unix_socket_roundtrip": "passed",
+  "source_sha256": {
+    "verl/checkpoint_engine/base.py": "cdbfccaf6aca586e250ce25327ca181d53ff3acaa1f3f0ebef0651b815fc05b1",
+    "verl/workers/engine_workers.py": "1d9be0846e70bf1c668776f7ff3403bb420171e6b42766c27f5a1261ac94a52b",
+    "verl/workers/engine/fsdp/transformer_impl.py": "fb8ea0cb0eab38bb746fd386bdc6866b389cf7b5deee6ebf267d71b9cca51c04",
+    "verl/workers/rollout/vllm_rollout/vllm_rollout.py": "e82e1c6782573e03c871b982eb0653801f54cb1647367a604aa8b1c5454773cb",
+    "verl/workers/rollout/vllm_rollout/bucketed_weight_transfer.py": "bafd173610e57321d3096c9bdb960fb7d8e4a37f08a4c49d1bbcde6542e7a89a",
+    "verl/trainer/ppo/v1/trainer_base.py": "e2ca9b9af567fbd0c99224475fafec7c881bc3e3ff730fdc6e8825c844b34e58",
+    "verl/trainer/ppo/v1/trainer_colocate_async.py": "efc3fa946cfb24ce4727b5ad92d6ac7ecffd961c5afd0d9d605436c7dbf7a025"
+  },
+  "cuda_ipc": "not exercised; requires fresh GPU window"
+}

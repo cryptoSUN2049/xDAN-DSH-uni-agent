@@ -1,0 +1,14 @@
+{
+  "train_rows": 1,
+  "validation_rows": 1,
+  "steps_per_epoch": 1,
+  "total_training_steps": 2,
+  "total_epochs": 2,
+  "save_freq": 1,
+  "resume_mode": "disable",
+  "resume_from_path": null,
+  "exit_code": 0,
+  "finished_at": 1790591166.172408,
+  "scope": "native tokenizer and dataset CPU preflight, not RL execution",
+  "log_sha256": "af56c245ced595004485116a23fb151391be15b6b3f5e14f6e0d1e4581e64caa"
+}

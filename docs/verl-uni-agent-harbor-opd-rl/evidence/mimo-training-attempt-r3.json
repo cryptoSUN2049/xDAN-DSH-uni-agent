@@ -1,0 +1,31 @@
+{
+  "schema": "xdan.mimo-training-attempt.v1",
+  "run_id": "mimo9b-001661-r3",
+  "status": {
+    "run_id": "mimo9b-001661-r3",
+    "started_at": 1790593965.551522,
+    "wall_clock_seconds": 1203,
+    "status": "exited",
+    "supervisor_pid": 8776,
+    "exit_code": 1,
+    "finished_at": 1790594518.1467333
+  },
+  "supervisor": {
+    "exit_code": 1,
+    "reason": "training-exited",
+    "elapsed_seconds": 550.234,
+    "pid": 8777,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "attention_backend": "sdpa",
+  "actor_weights_loaded": 760,
+  "failure_stage": "actor checkpoint engine initialization before Gateway registration",
+  "failure": "NCCL checkpoint backend cannot import CuPy; only naive registered",
+  "log_sha256": "d302c4d28677ff162b3ecd1891b9081040c4ef3b1dc30ca683705deb2629965f",
+  "gpu_updates": 0,
+  "model_rollouts": 0,
+  "reward": null,
+  "checkpoint": null,
+  "next_action": "validate native colocate_async backend contract and CPU preflight before next bounded GPU window"
+}

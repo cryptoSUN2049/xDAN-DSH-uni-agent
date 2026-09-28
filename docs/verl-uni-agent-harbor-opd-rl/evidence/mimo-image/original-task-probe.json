@@ -1,0 +1,11 @@
+{
+  "cwd": "/workspace/repo",
+  "python_path": "/usr/local/bin/python3",
+  "python_version": "Python 3.12.13",
+  "git_path": "/usr/bin/git",
+  "git_root": "/workspace/repo",
+  "base_ref": "125729aed4a777af6ceb6ace5744f53db9d7933c",
+  "base_tree": "450112c0a9d66c5797e4758a4f5a592969aa9dba",
+  "source": "image-verify-20260928-r1 original-task-probe",
+  "scope": "real immutable original image, CPU sandbox"
+}

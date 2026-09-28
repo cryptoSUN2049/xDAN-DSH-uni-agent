@@ -1,0 +1,125 @@
+{
+  "schema": "mimo-naive-backend-cpu-evidence-v1",
+  "recorded_at_utc": "2026-09-28T11:36:17.143308+00:00",
+  "host": "SSH11621 existing CPU environment",
+  "source_root": "/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl",
+  "source_git_head": "a9f2985159536a607211dcac730d3f5d55028950",
+  "source_sha256": {
+    "verl/checkpoint_engine/base.py": "sha256:cdbfccaf6aca586e250ce25327ca181d53ff3acaa1f3f0ebef0651b815fc05b1",
+    "verl/workers/engine_workers.py": "sha256:1d9be0846e70bf1c668776f7ff3403bb420171e6b42766c27f5a1261ac94a52b",
+    "verl/workers/engine/fsdp/transformer_impl.py": "sha256:fb8ea0cb0eab38bb746fd386bdc6866b389cf7b5deee6ebf267d71b9cca51c04",
+    "verl/workers/rollout/vllm_rollout/vllm_rollout.py": "sha256:e82e1c6782573e03c871b982eb0653801f54cb1647367a604aa8b1c5454773cb",
+    "verl/workers/rollout/vllm_rollout/bucketed_weight_transfer.py": "sha256:bafd173610e57321d3096c9bdb960fb7d8e4a37f08a4c49d1bbcde6542e7a89a",
+    "verl/trainer/ppo/v1/trainer_base.py": "sha256:e2ca9b9af567fbd0c99224475fafec7c881bc3e3ff730fdc6e8825c844b34e58",
+    "verl/trainer/ppo/v1/trainer_colocate_async.py": "sha256:efc3fa946cfb24ce4727b5ad92d6ac7ecffd961c5afd0d9d605436c7dbf7a025",
+    "tests/checkpoint_engine/test_global_steps_on_cpu.py": "sha256:5afcc5d6a01f72b8e7d97d3a49a323c0cf9b918c2fff35edfd4b28f293c66dad",
+    "tests/workers/rollout/test_vllm_weight_update_utils_on_cpu.py": "sha256:a8bf22c8a3dddea970f2a3ec21db2adfba381575b88f4f1fc8f06cea8df429fb",
+    "tests/utils/test_vllm_weight_name_normalization_on_cpu.py": "sha256:0f8852cfb7f215c5e65f4cef13113c6795c5c7831128e4471dae81ce961c6bc8",
+    "tests/utils/test_bucketed_weight_transfer.py": "sha256:b17b021edd3703f2c2cde80e4ee5652fa22004dc4105a081e5572b5d48e43800"
+  },
+  "python_bin": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+  "environment_versions": {
+    "torch": "2.11.0",
+    "vllm": "0.23.0",
+    "pyzmq": "27.2.0",
+    "ray": "2.54.1",
+    "peft": "0.18.1"
+  },
+  "libzmq_version": "4.3.5",
+  "artifacts": {
+    "mimo-naive-backend-cpu-probe.log": {
+      "sha256": "sha256:b2fd83556a06aed240c23790d9bf40815670de42ebeb25d128e48e62d13bfb52",
+      "bytes": 301,
+      "remote_raw_path": "/workspace/mimo-dsh-rl-20260928/audit-code/naive-backend-cpu-probe.log"
+    },
+    "mimo-naive-backend-existing-tests.log": {
+      "sha256": "sha256:636481ffd8bc1843367072c1b17303811e043dc52257b9bd02501fbc60f05ec1",
+      "bytes": 715,
+      "remote_raw_path": "/workspace/mimo-dsh-rl-20260928/audit-code/naive-backend-existing-tests.log"
+    },
+    "mimo-naive-backend-dependencies.json": {
+      "sha256": "sha256:2542eb164e5cab0e0f894bdb9c16073325d75606d2595de0bb3005a68342255e",
+      "bytes": 1110,
+      "remote_raw_path": "/workspace/mimo-dsh-rl-20260928/audit-code/naive-backend-dependencies.json"
+    }
+  },
+  "checks": {
+    "actual_registry_instantiation": {
+      "native_registry": [
+        "naive"
+      ],
+      "naive_instantiation": "passed",
+      "actual_actor_worker_merged_route": "passed",
+      "versions_observed": [
+        0,
+        1
+      ],
+      "distinct_cpu_weights": true,
+      "cuda_initialized": false,
+      "limitations": "CPU actor-engine and rollout doubles; no real FSDP merge or CUDA IPC transfer executed"
+    },
+    "existing_tests": {
+      "passed": 29,
+      "warnings": 1,
+      "seconds": 47.02,
+      "raw_log": "mimo-naive-backend-existing-tests.log",
+      "selection": [
+        "tests/checkpoint_engine/test_global_steps_on_cpu.py",
+        "tests/workers/rollout/test_vllm_weight_update_utils_on_cpu.py",
+        "tests/utils/test_vllm_weight_name_normalization_on_cpu.py",
+        "tests/utils/test_bucketed_weight_transfer.py::test_sender_accepts_strided_tensor"
+      ],
+      "implementation": "Existing pinned VERL tests; no new mirrored implementation test was written."
+    },
+    "unix_zmq_socket_roundtrip": "passed"
+  },
+  "cpu_boundaries": {
+    "actor_worker": "Executed actual ActorRolloutRefWorker.update_weights.__wrapped__, mode=auto/config backend=naive/peft_merge=True. Actor engine supplies small full named CPU tensors; rollout records weights and versions 0/1. GPU cache/memory hooks are patched.",
+    "not_exercised": [
+      "real FSDP LoRA merge/export",
+      "Ray actor RPC",
+      "CUDA IPC handle creation/rebuild",
+      "vLLM GPU weight loading",
+      "9B rollout or optimizer update"
+    ],
+    "receiver_tests": "Existing CPU tests use real receiver utility code with heavyweight vLLM dependencies stubbed; they are not an end-to-end GPU transfer.",
+    "gpu_resources_started": false,
+    "shared_venv_or_verl_modified": false
+  },
+  "conclusion": {
+    "colocate_async_naive_supported_by_pinned_control_flow": true,
+    "independent_cpu_preflight": "passed",
+    "gpu_ipc_verified": false,
+    "training_ready": false
+  },
+  "gpu_followup": {
+    "status": "not run by this agent",
+    "test_node": "/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl/tests/utils/test_bucketed_weight_transfer.py::TestBucketedWeightTransferIPC::test_single_small_weight",
+    "working_directory": "/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl",
+    "prerequisites": [
+      "new dedicated GPU lease",
+      "CUDA_VISIBLE_DEVICES=0 refers to that lease's assigned GPU",
+      "IPC_EVIDENCE_DIR exists in the new run evidence directory"
+    ],
+    "command": "CUDA_VISIBLE_DEVICES=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=\"/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl\" timeout --signal=TERM --kill-after=10s 180s \"/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python\" -m pytest -q -rs -p no:cacheprovider \"/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl/tests/utils/test_bucketed_weight_transfer.py::TestBucketedWeightTransferIPC::test_single_small_weight\" --junitxml=\"$IPC_EVIDENCE_DIR/mimo-naive-cuda-ipc.xml\"",
+    "pass_criterion": "Exactly 1 passed, zero skipped/errors/failures; pytest exit 0 alone is insufficient because skip returns 0.",
+    "payload": {
+      "tensor_name": "layer.weight",
+      "shape": [
+        32,
+        16
+      ],
+      "dtype": "float32",
+      "tensor_bytes": 2048,
+      "bucket_megabytes": 1,
+      "sender_receiver_processes": 2
+    },
+    "validation": "Exact name/dtype/shape and float checksum equality; not every-element equality.",
+    "estimated_seconds": "30-120 including cold imports; estimate, not a measurement",
+    "outer_wall_seconds": 180,
+    "outer_kill_after_seconds": 10,
+    "internal_join_timeout_seconds_per_child": 60,
+    "cleanup_normal": "Both transport endpoints run finally cleanup, close sockets, release buffers and collect CUDA IPC/cache. Sender deletes its own UUID socket. Processes then exit.",
+    "cleanup_failure": "Helper has no finally terminate/join for stuck children. GNU timeout without --foreground controls the command process group, TERM at 180 seconds then KILL after 10 more. Recheck only owned test PIDs/GPU contexts; do not global-pkill. Hard kill can leave UUID socket filesystem entries."
+  }
+}
