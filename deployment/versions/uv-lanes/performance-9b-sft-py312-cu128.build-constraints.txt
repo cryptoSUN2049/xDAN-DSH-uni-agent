@@ -1,0 +1,6 @@
+# Build-only wheel pin supplements the audited runtime freeze.
+# Source builds run without isolation against the pinned runtime toolchain.
+wheel==0.45.1
+setuptools==78.1.0
+ninja==1.13.2
+packaging==25.0
