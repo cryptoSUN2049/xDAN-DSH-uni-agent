@@ -75,11 +75,15 @@ def test_mimo_smoke_composes_native_single_gpu_and_complete_context_budget():
     assert cfg.data.seed == cfg.actor_rollout_ref.rollout.seed == cfg.actor_rollout_ref.actor.fsdp_config.seed == 42
     assert cfg.data.max_prompt_length == 2048 and cfg.data.max_response_length == 14336
     model, actor, rollout = cfg.actor_rollout_ref.model, cfg.actor_rollout_ref.actor, cfg.actor_rollout_ref.rollout
+    assert model.override_config.attn_implementation == "sdpa"
+    assert model.use_remove_padding is False
+    assert actor.fsdp_config.ulysses_sequence_parallel_size == 1
     assert model.lora_rank == 16 and model.lora.merge and model.enable_gradient_checkpointing
     assert actor.use_dynamic_bsz and actor.ppo_max_token_len_per_gpu == 16384
     assert actor.use_torch_compile is False and actor.fsdp_config.use_torch_compile is False
     assert actor.fsdp_config.param_offload and actor.fsdp_config.optimizer_offload
     assert rollout.n == 4 and rollout.max_model_len == 16384
+    assert rollout.checkpoint_engine.backend == "naive"
     assert rollout.prompt_length + rollout.response_length == rollout.max_model_len
     assert rollout.enforce_eager and rollout.free_cache_engine and not rollout.layered_summon
     assert rollout.engine_kwargs.vllm.reasoning_parser == "deepseek_r1"

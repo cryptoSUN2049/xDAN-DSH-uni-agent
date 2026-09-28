@@ -25,7 +25,10 @@ actor_rollout_ref:
     lora_alpha: 32
     lora:
       merge: true
-    use_remove_padding: true
+    # Dense masked SDPA works with the pinned Torch build without external FA2.
+    override_config:
+      attn_implementation: sdpa
+    use_remove_padding: false
     enable_gradient_checkpointing: true
   actor:
     ppo_mini_batch_size: 1
@@ -48,6 +51,9 @@ actor_rollout_ref:
     enforce_eager: true
     free_cache_engine: true
     layered_summon: false
+    # Native colocate_async uses direct CUDA IPC/ZMQ weight updates.
+    checkpoint_engine:
+      backend: naive
     gpu_memory_utilization: 0.4
     load_format: safetensors
     max_model_len: 16384

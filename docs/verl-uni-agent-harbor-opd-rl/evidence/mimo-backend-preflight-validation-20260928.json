@@ -1,0 +1,50 @@
+{
+  "schema": "dsh.mimo-backend-preflight-validation.v1",
+  "date": "2026-09-28",
+  "scope": "Native launcher selected attention/checkpoint CPU admission; MiMo smoke SDPA/dense-mask/naive configuration",
+  "execution": {
+    "host": "existing SSH 11621 CPU lane",
+    "source_root": "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2",
+    "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+    "CUDA_VISIBLE_DEVICES": "",
+    "HF_HUB_OFFLINE": "1",
+    "gpu_process_started": false,
+    "shared_environment_modified": false,
+    "production_source_deployed": false
+  },
+  "tests": {
+    "selection": [
+      "tests/uni_agent/examples/test_harbor_launch_preflight.py",
+      "tests/uni_agent/examples/test_mimo_smoke_recipe.py",
+      "tests/uni_agent/examples/test_harbor_opd_rl_recipe.py"
+    ],
+    "arguments": "-q --disable-warnings --tb=short",
+    "result": "45 passed, 11 warnings in 74.38s",
+    "prior_red": "7 failed, 7 passed, 13 deselected, 1 warning in 62.81s",
+    "raw_log": "mimo-backend-green.log",
+    "raw_log_sha256": "d54a3f54ab9baf5266ab06ad11b2094b2bb00332f8f05eb66ab2fb59bf700288",
+    "remote_raw_red_log": "/workspace/mimo-dsh-rl-20260928/integration-check/mimo-backend-red.log",
+    "raw_red_log_sha256": "01ffce231bdb67d406ddcf9af145f9383fbbc84fff9ede59c35155f125e86748",
+    "ruff_executable": "/workspace/mimo-dsh-rl-20260928/builder-tooling/bin/ruff",
+    "ruff_check": "passed for all three changed Python files",
+    "ruff_format_check": "passed for all three changed Python files",
+    "local_git_diff_check": "passed for all four changed files"
+  },
+  "source_bundle": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/mimo-backend-reviewed.tar",
+    "sha256": "9a0d419d75ea23ab6c867d6f427b868403ab124a0a9f5b373a86697c5e3339c2",
+    "files": {
+      "examples/harbor_opd_rl/launch.py": "b6b3d202378413605e9d91f4e25f39845373183f5c95e8364cf6f68edb12533d",
+      "examples/mimo_dsh_rl/mimo-9b-smoke.yaml": "d9839a3f51bf043e6f04de01c3d8902539c2c2f953c091c6bf8b86b9774bfc5f",
+      "tests/uni_agent/examples/test_harbor_launch_preflight.py": "551ba7856327f66e0b3d6cfb55cbf7f6ed8dc0207509bdccb4c6a723dac54684",
+      "tests/uni_agent/examples/test_mimo_smoke_recipe.py": "ab0e6831b92a9503aff99f088bfd370863e1cf52ce5a948d0a65018b6dadaf5e"
+    }
+  },
+  "limits": [
+    "The suite composes native VERL configs, filters datasets using a real lightweight local tokenizer, and checks the real checkpoint registry without constructing backends.",
+    "Hidden-CUDA FA2 tests use temporary distribution metadata and an importable or failing module; no installed working FA2 wheel or GPU kernel was validated.",
+    "Registered custom attention is admitted as registered_interface_only; its runtime dependencies and GPU execution are not certified.",
+    "Full preflight with the actual MiMo tokenizer/processor and prepared dataset is delegated to the root agent's separate CPU preflight fixture and is not claimed by this report.",
+    "This suite does not validate CUDA IPC, 9B rollout, backward/update, reward quality, or training completion."
+  ]
+}

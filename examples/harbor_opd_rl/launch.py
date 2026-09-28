@@ -9,10 +9,13 @@ import re
 import subprocess
 import sys
 from collections.abc import Mapping
+from importlib import import_module
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
 from hydra import compose, initialize_config_dir
 from omegaconf import OmegaConf
+from packaging.version import InvalidVersion, Version
 
 from examples.harbor.train_m2_online_rl import _hydra
 
@@ -32,7 +35,11 @@ def _required(values: Mapping[str, str], key: str) -> str:
 def _overrides(values: dict, prefix: str = ""):
     for key, value in values.items():
         name = f"{prefix}.{key}" if prefix else key
-        if name in {"actor_rollout_ref.rollout.custom", "actor_rollout_ref.rollout.engine_kwargs"}:
+        if name in {
+            "actor_rollout_ref.model.override_config",
+            "actor_rollout_ref.rollout.custom",
+            "actor_rollout_ref.rollout.engine_kwargs",
+        }:
             yield f"++{name}={_hydra(value)}"
         elif name == "actor_rollout_ref.rollout.agent.agent_loop_manager_class":
             yield f"++{name}={_hydra(value)}"
@@ -112,14 +119,78 @@ def finalize_training_plan(config, *, train_rows: int, validation_rows: int) -> 
     }
 
 
+def _validate_attention_backend(config) -> list[dict[str, str]]:
+    """Check dependencies/interfaces; CPU admission does not validate GPU execution."""
+    selected = OmegaConf.select(
+        config, "actor_rollout_ref.model.override_config.attn_implementation", default="flash_attention_2"
+    )
+    backends = selected.values() if isinstance(selected, Mapping) else [selected]
+    checks = []
+    for backend in backends:
+        if backend is None or backend == "eager":
+            import_module("torch")
+            checks.append({"backend": backend or "auto", "validation": "torch_import"})
+            continue
+        if backend == "sdpa":
+            import torch.nn.functional as functional
+
+            if not callable(getattr(functional, "scaled_dot_product_attention", None)):
+                raise ValueError("Attention backend sdpa unavailable: PyTorch SDPA operator is missing")
+            checks.append({"backend": backend, "validation": "torch_sdpa_operator"})
+            continue
+        if backend == "flash_attention_2":
+            # Transformers 5.8's public availability predicate also requires
+            # visible CUDA. Check its dependency minimum and ABI import instead,
+            # so a CPU preflight with CUDA_VISIBLE_DEVICES='' is not misclassified.
+            try:
+                installed = Version(version("flash-attn"))
+            except (PackageNotFoundError, InvalidVersion) as error:
+                raise ValueError(
+                    "Attention backend flash_attention_2 unavailable: flash-attn>=2.3.3 required"
+                ) from error
+            if installed < Version("2.3.3"):
+                raise ValueError("Attention backend flash_attention_2 unavailable: flash-attn>=2.3.3 required")
+            try:
+                import_module("flash_attn")
+            except Exception as error:
+                raise ValueError(f"Attention backend flash_attention_2 import failed: {error}") from error
+            checks.append({"backend": backend, "validation": "distribution_and_import"})
+            continue
+        from transformers.modeling_utils import ALL_ATTENTION_FUNCTIONS
+
+        if not isinstance(backend, str) or backend not in ALL_ATTENTION_FUNCTIONS:
+            raise ValueError(f"Cannot validate attention backend {backend!r}: no registered interface")
+        if not callable(ALL_ATTENTION_FUNCTIONS[backend]):
+            raise ValueError(f"Cannot validate attention backend {backend!r}: interface is not callable")
+        checks.append({"backend": backend, "validation": "registered_interface_only"})
+    return checks
+
+
+def _validate_checkpoint_backend(config) -> str:
+    """Mirror native plugin registration and lookup without constructing a backend."""
+    from verl.checkpoint_engine import CheckpointEngineRegistry
+    from verl.utils.import_utils import import_external_libs
+
+    selected = OmegaConf.select(config, "actor_rollout_ref.rollout.checkpoint_engine.backend", default="naive")
+    plugin = OmegaConf.select(config, "actor_rollout_ref.rollout.checkpoint_engine.custom_backend_module")
+    if OmegaConf.is_config(plugin):
+        plugin = OmegaConf.to_container(plugin, resolve=True)
+    import_external_libs(plugin or None)
+    CheckpointEngineRegistry.get(selected)
+    return selected
+
+
 def preflight_training(config) -> dict:
-    """Use the trainer's tokenizer/processor and filtered datasets before starting Ray."""
-    from verl.trainer.ppo.utils import create_rl_dataset
-    from verl.utils.config import omega_conf_to_dataclass
+    """Validate dependencies, tokenizer/processor and filtered data before starting Ray."""
 
     sampling_subset = any(config.data.get(f"{part}_max_samples", -1) > 0 for part in ("train", "val"))
     if sampling_subset and config.data.shuffle and config.data.get("seed") is None:
         raise ValueError("A fixed data.seed is required when preflight randomly selects a dataset subset")
+    attention_checks = _validate_attention_backend(config)
+    checkpoint_backend = _validate_checkpoint_backend(config)
+    from verl.trainer.ppo.utils import create_rl_dataset
+    from verl.utils.config import omega_conf_to_dataclass
+
     model = omega_conf_to_dataclass(config.actor_rollout_ref.model)
     counts = {}
     for partition, is_train in [("train", True), ("val", False)]:
@@ -132,7 +203,13 @@ def preflight_training(config) -> dict:
             max_samples=config.data.get(f"{partition}_max_samples", -1),
         )
         counts[partition] = len(dataset)
-    return finalize_training_plan(config, train_rows=counts["train"], validation_rows=counts["val"])
+    report = finalize_training_plan(config, train_rows=counts["train"], validation_rows=counts["val"])
+    report["backend_validation"] = {
+        "attention": attention_checks,
+        "checkpoint_backend": checkpoint_backend,
+        "gpu_execution_validated": False,
+    }
+    return report
 
 
 def _positive_int(value: str) -> int:
