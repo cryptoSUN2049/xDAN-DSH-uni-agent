@@ -1,0 +1,11 @@
+{
+  "checked_utc": "2026-09-28T03:29:29.668297+00:00",
+  "ssh_port": 11403,
+  "prometheus_ready": {"http_status": 200},
+  "grafana_health": {"http_status": 200, "database": "ok", "version": "13.0.0"},
+  "tempo_ready": {"http_status": 200},
+  "rl_insight_healthz": {"status": "ok"},
+  "prometheus_active_targets": [],
+  "scope": "Read-only live service health and targets. Does not prove metrics ingestion or dashboard data.",
+  "note": "Initial /health probe returned 404; installed server/http_api.py:88 declares /healthz. Corrected /healthz returned status ok."
+}

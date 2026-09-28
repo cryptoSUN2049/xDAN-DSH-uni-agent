@@ -18,6 +18,7 @@
 - 所有密钥留现有凭据存储，证据中不包含token或原始对话。
 
 ## 4. 真实行为
+- 2026-09-28 03:29 UTC后端健康检查通过，但Prometheus activeTargets为空；见insight-health-audit.json。rl-insight健康路由为/healthz，不是/health。
 - rl-insight客户端只注册Ray后端，torchrun未初始化Ray，必须单独解决监控传输。
 - 当前bootstrap部分依赖未约束；156包版本一致不等于冷重建成功。
 - 20K是源前20000行，验证是源前256行；已发布100条验证只是子集。

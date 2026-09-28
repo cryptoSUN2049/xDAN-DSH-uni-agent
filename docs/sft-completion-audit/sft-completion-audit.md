@@ -77,3 +77,5 @@ pilot 曾启用 rl_insight，但因为 Ray 未初始化而禁用 monitoring。�
 - 11403 上 Prometheus/Grafana/Tempo/http_api 进程仍在运行；这只证明服务存活，不证明该SFT run已接入。
 
 后续方案应保持torchrun训练方式，独立解决监控传输；不为安装观测重跑20K训练。历史曲线回放须标明 replay，不能制造历史trace。
+
+2026-09-28 03:29 UTC实际后端检查：Prometheus /-/ready、Grafana /api/health、Tempo /ready均200；rl-insight /healthz返回status=ok。但Prometheus /api/v1/targets的activeTargets为空。回执insight-health-audit.json证明服务健康，不证明SFT接入；不需要仅因无数据就重装服务。
