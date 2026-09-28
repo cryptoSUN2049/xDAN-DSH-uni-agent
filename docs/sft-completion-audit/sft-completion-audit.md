@@ -79,3 +79,12 @@ pilot 曾启用 rl_insight，但因为 Ray 未初始化而禁用 monitoring。�
 后续方案应保持torchrun训练方式，独立解决监控传输；不为安装观测重跑20K训练。历史曲线回放须标明 replay，不能制造历史trace。
 
 2026-09-28 03:29 UTC实际后端检查：Prometheus /-/ready、Grafana /api/health、Tempo /ready均200；rl-insight /healthz返回status=ok。但Prometheus /api/v1/targets的activeTargets为空。回执insight-health-audit.json证明服务健康，不证明SFT接入；不需要仅因无数据就重装服务。
+
+## 已批准修复实施（2026-09-28）
+
+- 用户明确“继续”后实施CPU sidecar、launcher就绪门禁和独立退出码；默认不开启，使用SFT_INSIGHT_ENABLE=1及RL_INSIGHT_SERVER_URL开启。
+- 46项相关测试通过；sidecar单独31测试，覆盖189/197=96%。
+- 原生API与正式sidecar两条CPU传输路径都已在11403真实运行；Prometheus range query包含train_loss=0.75、0.5，并读到val_loss=0.4。正式sidecar处理2记录，Hub接收7事件，终态forwarding_complete，进程退出。此为合成数据传输验收，非SFT模型表现或历史回放。
+- 原观测服务复用，不改训练器。runtime/build约束已部署到独立代码快照，新venv正在冷重建，当前进入FlashAttention源码构建。
+- 已部署nohup空卡验收队列：等待环境重建exit0、GPU连续30秒低于512MiB且利用率<5%，才运行2条训练/2条验证、一步、4K、单卡的真实SFT。最多等24小时。尚未计为GPU验收完成。
+- 不抢占现有双卡评测和单卡其他项目服务；实际GPU小样、冷重建终态和后端真实训练指标仍待核验。

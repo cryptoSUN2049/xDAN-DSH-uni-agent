@@ -1,0 +1,75 @@
+{
+  "experiment": "sft-transport-probe-20260928",
+  "scope": "CPU synthetic transport, not a training trace",
+  "observations": [
+    {
+      "sent": 0.75,
+      "hub": {
+        "actor_name": "RLInsightMonitorHub",
+        "namespace": "rl-insight-monitor",
+        "node_ip": "172.24.0.2",
+        "metrics_endpoint": "http://172.24.0.2:19092/metrics",
+        "prometheus_metrics_enabled": true,
+        "otel_traces_enabled": true,
+        "events_applied": 1
+      },
+      "query": "rl_insight_monitor_sft_probe_loss{experiment_name=\"sft-transport-probe-20260928\"}",
+      "response": {
+        "status": "success",
+        "data": {
+          "resultType": "vector",
+          "result": [
+            {
+              "metric": {
+                "__name__": "rl_insight_monitor_sft_probe_loss",
+                "experiment_name": "sft-transport-probe-20260928",
+                "instance": "172.24.0.2:19092",
+                "job": "trainer_metrics",
+                "project": "xDAN-performance-9b"
+              },
+              "value": [
+                1790566924.606,
+                "0.75"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sent": 0.5,
+      "hub": {
+        "actor_name": "RLInsightMonitorHub",
+        "namespace": "rl-insight-monitor",
+        "node_ip": "172.24.0.2",
+        "metrics_endpoint": "http://172.24.0.2:19092/metrics",
+        "prometheus_metrics_enabled": true,
+        "otel_traces_enabled": true,
+        "events_applied": 2
+      },
+      "query": "rl_insight_monitor_sft_probe_loss{experiment_name=\"sft-transport-probe-20260928\"}",
+      "response": {
+        "status": "success",
+        "data": {
+          "resultType": "vector",
+          "result": [
+            {
+              "metric": {
+                "__name__": "rl_insight_monitor_sft_probe_loss",
+                "experiment_name": "sft-transport-probe-20260928",
+                "instance": "172.24.0.2:19092",
+                "job": "trainer_metrics",
+                "project": "xDAN-performance-9b"
+              },
+              "value": [
+                1790566944.619,
+                "0.5"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "passed": true
+}

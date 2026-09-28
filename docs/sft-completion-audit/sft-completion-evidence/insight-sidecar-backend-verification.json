@@ -1,0 +1,1 @@
+{"passed": true, "scope": "CPU synthetic JSONL sidecar integration, not GPU SFT", "observed_train_values": [0.5, 0.75], "observed_val": 0.4, "checked_unix": 1790567568.6151636}
