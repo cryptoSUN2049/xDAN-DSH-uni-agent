@@ -1,0 +1,13 @@
+{
+  "checked_utc": "2026-09-28T03:23:58.000132+00:00",
+  "source_train_sha256": "d2e2d80789d425d808a68ed335a39e749a4fbb33aaed22dd7937ec04bf6df819",
+  "source_validation_sha256": "b5363b8ec4dd0e65bf8d03960df6a1fb8d3706c2ba57ce01f382d83f86e10381",
+  "release_train_sha256": "e9ce70b339a3f7f960ecffef325004e6b84a797fe81de9062bf3afa28b49cc46",
+  "release_validation_sha256": "3075c4ff5ecd7e07a42e619baa0ac2cb60fd1f7e963c0346c0f32df2665e2de2",
+  "all_four_hashes_match_release_manifest": true,
+  "train_first_20000_rows_equal_release": true,
+  "validation_first_100_rows_equal_release": true,
+  "passed": true,
+  "method": "Read-only SHA256 of four remote files, then pyarrow.Table.equals(check_metadata=False) over all columns of source prefix and release table.",
+  "limitations": "Verifies current shared-volume source and release consistency. Does not re-download HF snapshot or prove pre-training immutability. Published validation100 is not the entire validation256 used by trainer."
+}

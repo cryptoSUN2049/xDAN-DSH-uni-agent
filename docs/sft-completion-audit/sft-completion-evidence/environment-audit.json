@@ -1,0 +1,11 @@
+{
+  "pinned_packages": 156,
+  "matching": 156,
+  "differences": {},
+  "non_version_lines": [
+    "transferqueue @ git+https://github.com/Ascend/TransferQueue.git@434f8c476b4be24bc087e6e95070e64efcc739f9",
+    "-e file:///workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent",
+    "-e file:///workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl"
+  ],
+  "scope": "Installed distribution versions only; does not verify source edits, build ABI, or successful cold rebuild."
+}

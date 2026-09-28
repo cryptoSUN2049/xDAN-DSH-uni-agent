@@ -1,0 +1,27 @@
+{
+  "schema": "apus.sft.validation_snapshot.v1",
+  "created_utc": "2026-09-28T03:25:45.143517+00:00",
+  "training_run": "verl-sft-cu128-64k-20k-fsdp2-20260925T0756Z",
+  "wandb_run": "cxo04d3j",
+  "source": "/workspace/apus-data-cleaning/reports/verl-sft-v1/validation.parquet",
+  "source_sha256": "b5363b8ec4dd0e65bf8d03960df6a1fb8d3706c2ba57ce01f382d83f86e10381",
+  "selection": "first 256 rows in source order; same val_max_samples=256 and shuffle default False as trained run",
+  "file": "/workspace/apus-data-cleaning/releases/sft-run-cxo04d3j-validation256/validation-256.parquet",
+  "rows": 256,
+  "sha256": "c88d841b2f38639036e64e5e4b11d5ddcf877c71c95d94ffd0a41995c269d637",
+  "bytes": 3078774,
+  "column_names": [
+    "messages",
+    "tools",
+    "enable_thinking",
+    "data_source",
+    "ability",
+    "record_id",
+    "task_group_id",
+    "split",
+    "teacher_family",
+    "audit_json"
+  ],
+  "content_roundtrip_equal": true,
+  "scope": "Reproduction validation, code-only. Not a new held-out benchmark."
+}

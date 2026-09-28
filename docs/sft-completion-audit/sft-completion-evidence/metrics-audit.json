@@ -1,0 +1,131 @@
+{
+  "metrics_sha256": "df171fbb0a4068214ae34de981703f78a5c0a2f69b307d87eb72c36e0041dfb9",
+  "train_steps": 10000,
+  "validation_points": 20,
+  "finite_numeric_metrics": true,
+  "zero_gradient_steps": 0,
+  "mfu_all_zero": true,
+  "validation": [
+    {
+      "step": 500,
+      "data": {
+        "val/loss": 0.5132781267166138
+      }
+    },
+    {
+      "step": 1000,
+      "data": {
+        "val/loss": 0.47125008702278137
+      }
+    },
+    {
+      "step": 1500,
+      "data": {
+        "val/loss": 0.4490373134613037
+      }
+    },
+    {
+      "step": 2000,
+      "data": {
+        "val/loss": 0.44012582302093506
+      }
+    },
+    {
+      "step": 2500,
+      "data": {
+        "val/loss": 0.4353821873664856
+      }
+    },
+    {
+      "step": 3000,
+      "data": {
+        "val/loss": 0.4293127655982971
+      }
+    },
+    {
+      "step": 3500,
+      "data": {
+        "val/loss": 0.42637258768081665
+      }
+    },
+    {
+      "step": 4000,
+      "data": {
+        "val/loss": 0.4223645031452179
+      }
+    },
+    {
+      "step": 4500,
+      "data": {
+        "val/loss": 0.4206564128398895
+      }
+    },
+    {
+      "step": 5000,
+      "data": {
+        "val/loss": 0.4184129238128662
+      }
+    },
+    {
+      "step": 5500,
+      "data": {
+        "val/loss": 0.4173840880393982
+      }
+    },
+    {
+      "step": 6000,
+      "data": {
+        "val/loss": 0.4157261252403259
+      }
+    },
+    {
+      "step": 6500,
+      "data": {
+        "val/loss": 0.41562628746032715
+      }
+    },
+    {
+      "step": 7000,
+      "data": {
+        "val/loss": 0.4155697822570801
+      }
+    },
+    {
+      "step": 7500,
+      "data": {
+        "val/loss": 0.4143904745578766
+      }
+    },
+    {
+      "step": 8000,
+      "data": {
+        "val/loss": 0.41408348083496094
+      }
+    },
+    {
+      "step": 8500,
+      "data": {
+        "val/loss": 0.41324907541275024
+      }
+    },
+    {
+      "step": 9000,
+      "data": {
+        "val/loss": 0.41338470578193665
+      }
+    },
+    {
+      "step": 9500,
+      "data": {
+        "val/loss": 0.41311323642730713
+      }
+    },
+    {
+      "step": 10000,
+      "data": {
+        "val/loss": 0.41297483444213867
+      }
+    }
+  ],
+  "scope": "Local training metrics audit; does not prove benchmark gains or cloud telemetry delivery."
+}

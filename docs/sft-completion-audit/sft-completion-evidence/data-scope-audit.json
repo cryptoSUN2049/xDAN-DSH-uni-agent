@@ -1,0 +1,23 @@
+{
+  "checked_date": "2026-09-28",
+  "method": "Read current source Parquet metadata columns with pyarrow; select first 20000 train and first 256 validation rows, following release manifest and adapter default shuffle=False. Counts are row counts, not unique tasks or token proportions.",
+  "train_rows": 20000,
+  "val_rows": 256,
+  "train_distribution": {
+    "data_source": {
+      "greghavens/gpt-5.6-sol-coding-and-debugging-traces": 15589,
+      "saidutta69/Qwen3.8-Agent-Premium": 4411
+    },
+    "ability": {"code": 20000},
+    "teacher_family": {"gpt56": 15589, "qwen38": 4411}
+  },
+  "validation_distribution": {
+    "data_source": {"greghavens/gpt-5.6-sol-coding-and-debugging-traces": 256},
+    "ability": {"code": 256},
+    "teacher_family": {"gpt56": 256}
+  },
+  "record_overlap": 0,
+  "nonempty_group_overlap": 0,
+  "limitations": "Metadata labels do not constitute content-level classification. Zero ID overlap does not prove semantic decontamination. Current source and frozen release should additionally be checked by content hashes.",
+  "conclusion": "This run is code-focused SFT, not the intended multi-domain mixture."
+}

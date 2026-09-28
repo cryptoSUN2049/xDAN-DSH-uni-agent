@@ -1,0 +1,16 @@
+{
+  "checked_utc": "2026-09-28T03:15:35.376865+00:00",
+  "run": "xdan-ai/xDAN-performance-9b/cxo04d3j",
+  "state": "finished",
+  "local_sha256": "df171fbb0a4068214ae34de981703f78a5c0a2f69b307d87eb72c36e0041dfb9",
+  "cloud_rows": 10000,
+  "local_steps": 10000,
+  "cloud_first_step": 1,
+  "cloud_last_step": 10000,
+  "matched_values": 90020,
+  "missing_values": [],
+  "mismatches": [],
+  "duplicate_cloud_steps": [],
+  "passed": true,
+  "method": "Read-only wandb.Api().run(...).scan_history(page_size=1000). Merge local rows by step, compare all local metric values to cloud _step with rel_tol=1e-8, abs_tol=1e-9. Credentials read by SDK from existing remote netrc; no credentials saved."
+}
