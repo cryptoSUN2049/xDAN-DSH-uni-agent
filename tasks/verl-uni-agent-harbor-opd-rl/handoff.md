@@ -1,3 +1,12 @@
+## 2026-09-29 16:52 UTC：r14 双卡 colocate 已启动，等待实测验收
+
+- 实际prepare及CPU-only preflight均exit0：最终sessions2，273依赖通过，CUDA未初始化。预检实际入口coverage96.15%，无排除行；公共证据r14-prepared/runtime-preflight/actual-preflight-coverage。
+- 冻结runtime c2f9d36，897文件manifest81c39e8870e1ccc8f9b8ff66625b5be4a64a30802ca2276cbe5d5c82e55049c1；独立双rank checker另随f9d0c68推送，不改冻结运行代码。
+- run mimo9b-001661-r14，controller106972/driver328518/supervisor328544/timeline328519/archiver106988；16:51:58UTC operator running，仍初始化，不等于双卡训练验收通过。
+- fresh固定SFT→2steps，actor world2+两TP1 replicas，sessions2/n4、32K/20480、native naive、W&B+RLInsight。旧C4保留，不做world1→world2直接恢复。
+- 私有日志GPU launch-r14/train.log、supervised-r14*、gpu-timeline-r14.jsonl；共享runs/r14/operator/status.json。CPU controller-r14/archive-r14/evidence-r14。截止1790709401/19:16:41UTC不变，180秒清理，Pod不关闭。
+- 下一步：核真实两rank/replica请求路由→n4组有效更新/C1/C2两rank文件→独立cloudCPU sharded_checkpoint_delta→W&B全history与Prom/Tempo对账→所属资源归档清理。不要把r12结果冒充r14结果。
+
 ## 2026-09-29 16:36 UTC：r13准入拒绝，最小修正转r14
 
 - r13训练未启动。CPU prepare exit0；GPU-host CPU-only preflight因最终sessions=1退出1。根因旧prepare模板显式max_concurrent_sessions=1经launch.environment覆盖recipe2，不是GPU或依赖故障。失败报告已落evidence/r13-runtime-preflight-failure-20260929.json。

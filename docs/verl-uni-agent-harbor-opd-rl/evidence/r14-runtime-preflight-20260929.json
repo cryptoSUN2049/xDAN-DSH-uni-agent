@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "source_commit": "c2f9d36b282e991881644c499ce5ec50ef706c4e",
+  "package_constraints_verified": 273,
+  "report": {
+    "train_rows": 1,
+    "validation_rows": 1,
+    "steps_per_epoch": 1,
+    "total_training_steps": 2,
+    "total_epochs": 2,
+    "save_freq": 1,
+    "backend_validation": {
+      "attention": [
+        {
+          "backend": "sdpa",
+          "validation": "torch_sdpa_operator"
+        }
+      ],
+      "checkpoint_backend": "naive",
+      "gpu_execution_validated": false
+    }
+  },
+  "cuda_initialized": false,
+  "finished_at": 1790700587.1656535,
+  "resume_from_path": null,
+  "resume_mode": "disable",
+  "total_training_steps": 2,
+  "mode": "colocate_async",
+  "backend": "naive",
+  "actor_world_size": 2,
+  "rollout_replicas": 2,
+  "gpu_transport_scope": "two native IPC lanes; FSDP training remains unverified until actual run",
+  "training_started": false,
+  "observability_entrypoint": [
+    "/workspace/mimo-dsh-rl-20260928/run-src-r14/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py"
+  ],
+  "hydra_run_dir": "/root/mimo-private/launch-r14/hydra",
+  "hydra_entry_executed": false,
+  "hydra_readonly_entry_probe": {
+    "path": "/root/mimo-private/observability-hydra-bootstrap-20260929/status.json",
+    "sha256": "34857367db5137a88b56e6f382d16c332adc944ecabaed84a1615529d9072013",
+    "helper_sha256": "f383a7f775de9504718308b970e2bfe181de6594894ffde654c26a973101f469",
+    "status": "passed",
+    "scope": "Actual entry reached deliberate guard after private Hydra metadata creation",
+    "training_acceptance": false
+  },
+  "observability_environment": {
+    "WANDB_MODE": "online",
+    "WANDB_ENTITY": "xdan-ai",
+    "WANDB_PROJECT": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+    "WANDB_NAME": "mimo9b-001661-r14",
+    "WANDB_RUN_ID": "mimo9b001661r14",
+    "WANDB_RESUME": "never",
+    "WANDB_DIR": "/root/mimo-private/wandb-r14",
+    "VERL_RL_INSIGHT_ENABLE": "1",
+    "RL_INSIGHT_SERVER_URL": "http://127.0.0.1:18080",
+    "MIMO_PROMETHEUS_URL": "http://127.0.0.1:9090"
+  }
+}
