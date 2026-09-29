@@ -111,3 +111,11 @@ Goal API当前仍报告paused，工具没有resume接口；用户已在会话明
 - CPU最终归档160文件5305319字节，errors=[]，controller/archiver均已停；26个Modal沙箱实时poll全部137，errors=[]。137按显式清理终态记录，不解释成OOM。既有Runpod仍保留计费。
 - 公开小报告docs/verl-uni-agent-harbor-opd-rl/evidence/r9-completion-20260929.json；原始model/optimizer/batch审计保留cloud integration-check/r9-final，报告绑定各文件SHA，train.log SHA=c18869e6f50ead7e528f719c500a9017098de4ae9c477879e0ec91dabda0544a。无heldout能力提升结论。
 - 下一阶段使用用户已批准的separate_async：两个独立GPU资源池与NCCL权重同步，先真实探针，再新身份从C2恢复到C3；不能将r9两步成功、CPU配置52例通过等同于双卡完整通过。
+
+## 2026-09-29 11:06 UTC separate_async r10启动与Modal旧App清理
+
+- 用户明确批准separate_async；recipe52项回归、准备门禁30项/98.62%覆盖、全仓Ruff双门通过，源码aaae616已push。真实NCCL2GPU，rebuild false/true各3版本，18张量精确一致；固定273依赖未变，CuPy14.0.1独立overlay2432文件有哈希。
+- run-src-r10冻结796文件，manifestSHA8837215143bf7c725556d75a2dc030ae51054b67ed6966b3a2500dd93d0e8afa。准备新specSHA96ec3524f9ed150d2d914c5dfca7ce6a2208d0c8a1a39c6693b55690766ee3da，taskhash603c1f65保持；CPU-only实际预检exit0 SHA04c533a786274829342b6caa3691a81c431f7ff284332ff8da67c12c98464073。
+- GPU11403 driver264705/supervisor264718，CPU11621 controller103207/archiver103275。11:05:57UTC operator running、两卡仍0MiB，属于初始化快照，不证明模型恢复或双卡更新。controller authenticated health=true。归档复用hash核验的archive-r8 helper；首次在source内寻找helper缺失而拒绝，未启动进程，随后使用实际既有路径。
+- r10从r9 C2独立恢复到绝对step3，原截止1790687801不变。后续检查首组Gateway version2、真实消费、有限非零grad、C2→C3模型/optimizer与保存。
+- Modal实时158Live Apps并非158运行沙箱；活动Sandbox实查0。147个超过48h，复核后停止90个明确带日期的旧实验App并逐个确认，Live68。保留14服务、11近期、4共享(__harbor__/verl-harbor/verl-eval/verl-crossbench)、39用途待确认；未动Volumes/Secrets/Images/Runpod。清理证据同名docs/evidence/modal-cleanup-20260929.json。

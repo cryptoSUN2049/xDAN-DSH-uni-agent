@@ -1,0 +1,756 @@
+{
+  "schema": "mimo.modal-old-idle-app-cleanup.v1",
+  "finished_at": "2026-09-29T11:04:53.635807+00:00",
+  "cutoff": "2026-09-27T10:59:33.974438+00:00",
+  "initial_app_count": 158,
+  "old_app_count": 147,
+  "initial_running_sandbox_count": 0,
+  "target_count": 90,
+  "result_counts": {
+    "stopped-confirmed": 90
+  },
+  "final_state_counts": {
+    "APP_STATE_DEPLOYED": 68,
+    "APP_STATE_STOPPED": 50
+  },
+  "final_live_app_count": 68,
+  "final_running_task_count": 0,
+  "final_running_sandbox_count": 0,
+  "scope": "Stop only dated experiment Apps older than48h with no functions/classes/running tasks/sandboxes; shared infrastructure, undated names and recent Apps protected. No volumes, secrets, images or Runpod instances deleted.",
+  "protected_counts": {
+    "undated-or-unidentified-protect": 39,
+    "shared-infrastructure-protect": 4,
+    "deployed-service-protect": 14,
+    "recent-protect": 11
+  },
+  "protected_service_and_shared_apps": [
+    {
+      "app_id": "ap-519cMfLGy7Kk0I0SOR3G3d",
+      "description": "__harbor__",
+      "classification": "shared-infrastructure-protect",
+      "created_at": "2026-09-17 11:13:00+00:00",
+      "function_count": 0,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-3nFdi3i3pxChTIwUlnmtmX",
+      "description": "verl-harbor",
+      "classification": "shared-infrastructure-protect",
+      "created_at": "2026-09-18 01:08:36+00:00",
+      "function_count": 0,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-cp9aBvRWb7DORbKRuTEfr0",
+      "description": "tinker-harbor-stage1-controller",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 09:45:58+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-WwfvQsnIDjVRPX3fxyoCia",
+      "description": "tinker-harbor-eval-pool",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 10:05:48+00:00",
+      "function_count": 1,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-J9sC768TZkBzZxQCU81tn9",
+      "description": "tinker-abl-rl",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 11:06:32+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-xX0WVRg9g4PH1LslQitgy1",
+      "description": "tinker-abl-skipthink",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 11:09:31+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-AdTmcrlcb6RXaPppYqjODX",
+      "description": "tinker-abl-kl01",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 11:12:30+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-kgfTQ45FCqzkkgUPxpEjpp",
+      "description": "tinker-abl-nothink",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 11:15:31+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-5naDcXjVceElLbqWsQcPWg",
+      "description": "tinker-b-rep-20260919",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 18:41:24+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-OrqWBemTfzvZm6FWkidK9B",
+      "description": "verl-eval",
+      "classification": "shared-infrastructure-protect",
+      "created_at": "2026-09-18 19:01:21+00:00",
+      "function_count": 0,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-YLU1BP5pJq1gnNCr9r8hxe",
+      "description": "tinker-v2-hybrid",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 19:54:18+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-hjFrxAr2GsLTFj9wAGXZlt",
+      "description": "codex-stage1-v4-probe-20260919",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 20:00:16+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-p6sL9yokbtb4oE3geszfP1",
+      "description": "tinker-v2-rl",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 20:20:01+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-VFThfjuUFbqqNf6yuLmvAf",
+      "description": "tinker-v2-opd",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 20:23:01+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-XqVGiiUAgYfD4D1XtQZtVf",
+      "description": "tinker-v2-full",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-18 20:26:01+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-InOvCBRMEQV7VwCuJqFpCH",
+      "description": "tinker-staged",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-19 05:07:48+00:00",
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-4vofSZ4KHj5ohnnMWmI9mc",
+      "description": "tinker-harbor-eval-pool-tb21",
+      "classification": "deployed-service-protect",
+      "created_at": "2026-09-19 06:20:40+00:00",
+      "function_count": 1,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-Lfp5cLpGEs27lBQYePb1fR",
+      "description": "verl-crossbench",
+      "classification": "shared-infrastructure-protect",
+      "created_at": "2026-09-21 15:49:42+00:00",
+      "function_count": 0,
+      "class_count": 0
+    }
+  ],
+  "stopped_apps": [
+    {
+      "app_id": "ap-7nvCye6wFgcoLQS6SmcO5I",
+      "name": "tinker-train-codex-stage1-v4-probe-20260919",
+      "stopped_at": 1790679870.928034,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-OMIWK8bpnrcrIDDcixrd3N",
+      "name": "tinker-train-stage1-b-rep-20260919",
+      "stopped_at": 1790679870.946762,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-NJFh5kAypuqMrrJ6sIGz2i",
+      "name": "xdan-harbor-v2-normalized-20260923",
+      "stopped_at": 1790679871.061624,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-aNnyGaB5hhEmyrUeT22LCs",
+      "name": "xdan-harbor-v2-tap-20260923",
+      "stopped_at": 1790679871.059962,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-MW5huw1Jd7XnTrvNMWiCdJ",
+      "name": "xdan-harbor-v2-ctrf-fix-20260923",
+      "stopped_at": 1790679871.919454,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-Ls02R5ez8iRD7wSR4ka6wD",
+      "name": "xdan-harbor-v2-ctrf-retry-20260923",
+      "stopped_at": 1790679871.999812,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-ACqhC7BMeTE1dP7qMswyNX",
+      "name": "xdan-harbor-v2-ctrf-smoke-20260923",
+      "stopped_at": 1790679872.05516,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-f4aFMCUcdGtdopINx8DOXI",
+      "name": "xdan-harbor-v2-ctrf-remaining-20260923",
+      "stopped_at": 1790679872.171203,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-Hpoj7Ia567PVxnCrF98LRg",
+      "name": "xdan-harbor-v2-ctrf-microsoft-20260923",
+      "stopped_at": 1790679872.903149,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-hVi4lA55NkC3s6cQ7ynXiS",
+      "name": "xdan-v2-risk-php-00-20260924",
+      "stopped_at": 1790679873.01633,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-xLpNfAJG479LXKBZGBAaRC",
+      "name": "xdan-v2-risk-php-01-20260924",
+      "stopped_at": 1790679873.030835,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-WT4KyJwni7QBDidBewa0Z3",
+      "name": "xdan-v2-risk-js-02-20260924",
+      "stopped_at": 1790679873.191326,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-5Gg5y2RMX3hVIujNSP6nLx",
+      "name": "xdan-v2-risk-js-03-20260924",
+      "stopped_at": 1790679873.911437,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-KO26X7IM6jswRla2M0m6yV",
+      "name": "xdan-v2-risk-js-04-20260924",
+      "stopped_at": 1790679874.011535,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-pSh2jSOvaf0OER0m9ZGR0u",
+      "name": "xdan-v2-risk-js-05-20260924",
+      "stopped_at": 1790679874.035768,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-80LR863PZyi4U9cJz2XyQl",
+      "name": "xdan-v2-risk-js-06-20260924",
+      "stopped_at": 1790679874.380505,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-5qDwCP9TShGguwXlaHaf6G",
+      "name": "xdan-v2-risk-js-07-20260924",
+      "stopped_at": 1790679874.88093,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-wgR3TXlcAyU3uJRs4xxKfW",
+      "name": "xdan-v2-risk-js-08-20260924",
+      "stopped_at": 1790679875.031558,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-KHSQkXizbtbfdXGcmirpCM",
+      "name": "xdan-v2-risk-js-09-20260924",
+      "stopped_at": 1790679875.054441,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-vwP5HAjizX4ZmzztE9taDV",
+      "name": "xdan-v2-risk-js-10-20260924",
+      "stopped_at": 1790679875.401667,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-tamIgSTiWNwdbPKBiw9jIO",
+      "name": "xdan-v2-risk-js-11-20260924",
+      "stopped_at": 1790679875.85613,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-o6LZoCzMbRUfg9kgiYcarJ",
+      "name": "xdan-v2-risk-mvn-13-20260924",
+      "stopped_at": 1790679876.050412,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-ZOlg95SDJ7q0yB0yVZJm7b",
+      "name": "xdan-v2-risk-mvn-12-20260924",
+      "stopped_at": 1790679876.038088,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-7CN811qnxz3e3kJkSv8AIJ",
+      "name": "xdan-v2-risk-mvn-14-20260924",
+      "stopped_at": 1790679876.397716,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-xP20JNgypMV94ZYWfQMoHr",
+      "name": "xdan-v2-risk-mvn-entrypoint-network-20260924",
+      "stopped_at": 1790679876.901165,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-CjO2YrVN0TKvzPUlM4dwC2",
+      "name": "xdan-v2-risk-mvn-14-r4sep24",
+      "stopped_at": 1790679877.04429,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-r4VUcMmQ457Jz8HWO2Ilhp",
+      "name": "xdan-v2-risk-mvn-13-r4sep24",
+      "stopped_at": 1790679877.052444,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-sbRTjAGJQTNHuqTL4wbiTW",
+      "name": "xdan-v2-risk-mvn-15-r4sep24",
+      "stopped_at": 1790679877.416527,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-WUD28QkqoTS0yWf1MIlvT1",
+      "name": "xdan-v2-risk-mvn-16-r4sep24",
+      "stopped_at": 1790679877.975421,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-uN9vnLYlhUax1dmC5xeZgF",
+      "name": "xdan-v2-risk-mvn-17-r4sep24",
+      "stopped_at": 1790679878.047351,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-RhPJ1iOmAQu7HkF0Za0UNt",
+      "name": "xdan-v2-risk-mvn-18-r4sep24",
+      "stopped_at": 1790679878.048432,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-a483uVL1ga0roE8LrdOZhp",
+      "name": "xdan-v2-risk-mvn-19-r4sep24",
+      "stopped_at": 1790679878.431013,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-AWeaYcEhNmBvm8TdLfzqkK",
+      "name": "xdan-v2-risk-mvn-21-r4sep24",
+      "stopped_at": 1790679879.036276,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-bLB67SfyyhCReHfgyhbZfs",
+      "name": "xdan-v2-risk-mvn-20-r4sep24",
+      "stopped_at": 1790679879.032978,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-IKaBa0W4wCDloucWZACq4L",
+      "name": "xdan-v2-risk-gradle-22-r4sep24",
+      "stopped_at": 1790679879.029696,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-1f5et7SOVGQdexTp57XKKD",
+      "name": "xdan-v2-risk-gradle-23-r4sep24",
+      "stopped_at": 1790679879.467265,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-vRWxDnmVJoOMFAcVRznWOv",
+      "name": "xdan-v2-risk-gradle-24-r4sep24",
+      "stopped_at": 1790679880.072469,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-d2KRnz9Mt4rqkwf02loJp2",
+      "name": "xdan-v2-tl-recheck-smoke-20260924",
+      "stopped_at": 1790679880.069984,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-DKHstPke5EHMVnQvlcQmiC",
+      "name": "xdan-v2-gradle-clikt-diagnostic-20260924",
+      "stopped_at": 1790679880.100837,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-6JbHLz58qtkRhfCzcJK3aI",
+      "name": "xdan-v3-gradle-clikt-smoke-20260924",
+      "stopped_at": 1790679880.459705,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-jkAxCUFODaxsIJ0YpkYldk",
+      "name": "xdan-v3-risk-gradle-02-codexsep24r2",
+      "stopped_at": 1790679881.1031,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-VC2AVX5G6KDxiheeRyvhUp",
+      "name": "xdan-v3-risk-gradle-01-codexsep24r2",
+      "stopped_at": 1790679881.129013,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-EBFE20T3cK1YDbMudJMjGr",
+      "name": "xdan-v3-risk-gradle-00-codexsep24r2",
+      "stopped_at": 1790679881.15773,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-iDai9oyUqemBgJlNIqR8Nb",
+      "name": "xdan-v3-risk-gradle-03-codexsep24r2",
+      "stopped_at": 1790679881.447316,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-H0NZsA9wv5BzwUxcqQcwLl",
+      "name": "xdan-v2-js111-diagnostic-sep24",
+      "stopped_at": 1790679882.089865,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-ENPweXxM57cdhiaSaE8GEI",
+      "name": "xdan-v3-risk-gradle-04-codexsep24r2",
+      "stopped_at": 1790679882.120603,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-HheiPaGavKbQ5PiB3aEJKE",
+      "name": "xdan-v2-js111-alt-sep24",
+      "stopped_at": 1790679882.160676,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-eg4di2JjlXgYkngF5mIvtG",
+      "name": "xdan-v2-js111-alt-oracle-sep24",
+      "stopped_at": 1790679882.469689,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-3IWlgcImpAZH7eI49FpGJs",
+      "name": "xdan-v3-risk-gradle-05-codexsep24r2",
+      "stopped_at": 1790679883.087787,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-zzweYK2BQrrjpbflK8qzQk",
+      "name": "xdan-v2-js111-ignore2322-sep24",
+      "stopped_at": 1790679883.146132,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-O9ivoWjwfEIp3uIFqmzilq",
+      "name": "xdan-v2-js111-exclude-sep24",
+      "stopped_at": 1790679883.156451,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-f345KlGe1wb31nIsvXuwrM",
+      "name": "xdan-v3-risk-gradle-06-codexsep24r2",
+      "stopped_at": 1790679883.453882,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-sf8wHhoZ6zp8srxzhp5M7y",
+      "name": "xdan-v4-js111-codexsep24",
+      "stopped_at": 1790679884.081274,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-A9MKSZrmJoPieD2IzxLHgq",
+      "name": "xdan-v3-risk-gradle-08-codexsep24r2",
+      "stopped_at": 1790679884.135257,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-YgF4QU2NHHmvsyXcjqQmjD",
+      "name": "xdan-v3-risk-gradle-07-codexsep24r2",
+      "stopped_at": 1790679884.156379,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-HJj0fTTOjWdl23qxO8Q7qk",
+      "name": "xdan-v3-mordant97-diag-sep24",
+      "stopped_at": 1790679884.438639,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-HnOs0AJomEskEQSKt8v1kQ",
+      "name": "xdan-v4-mordant97-smoke-sep24",
+      "stopped_at": 1790679885.070672,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-LfHMqcOS8E2dgnLaFWzPGG",
+      "name": "xdan-v3-mordant77-retry-sep24",
+      "stopped_at": 1790679885.143327,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-bb5ySHwiIR4NjGQ2K6wyaH",
+      "name": "xdan-tl-v4-recheck-w0-sep24",
+      "stopped_at": 1790679885.155454,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-HLo5aGMwPHmDfhFP0NNm69",
+      "name": "xdan-tl-v4-recheck-w1-sep24",
+      "stopped_at": 1790679885.439685,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-uNeOcwyWsE0NDFQ6Jh9aXl",
+      "name": "xdan-tl-v4-full-000-sep24",
+      "stopped_at": 1790679886.064979,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-nHk5vJvlIGvoMSibXTIRmb",
+      "name": "xdan-tl-v4-full-001-sep24s",
+      "stopped_at": 1790679886.12488,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-deaiFqWvKwPntct51y6Pko",
+      "name": "xdan-tl-v4-full-002-sep24b",
+      "stopped_at": 1790679886.187739,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-FVmjES0EPniXkIPiTUUk9i",
+      "name": "xdan-tl-v4-full-003-sep24b",
+      "stopped_at": 1790679886.4119,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-HFgmuZ1jmhIgzKj3O0BBF3",
+      "name": "xdan-tl-v4-full-004-sep24b",
+      "stopped_at": 1790679887.068989,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-cLoxPPf1QKbwdzTILXu1Kr",
+      "name": "xdan-tl-v4-full-005-sep24b",
+      "stopped_at": 1790679887.111636,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-m7wI59jnomy0LkMkEKQZqk",
+      "name": "xdan-tl-v4-full-006-sep24b",
+      "stopped_at": 1790679887.197256,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-LiANG1mMkpXpFu5OuqtV2K",
+      "name": "tinker-eval-v4-base-smoke-20250925-r2",
+      "stopped_at": 1790679887.476653,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-vW1Hrzy7EOCgEHVdbOzHu7",
+      "name": "tinker-eval-v4-base-smoke-20250925-r3",
+      "stopped_at": 1790679888.051962,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-SmR6IbB1FVWDELf4OXJbSB",
+      "name": "tinker-eval-v4-base-smoke-20250925-r4",
+      "stopped_at": 1790679888.133706,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-s8EryvOToO8AEPYHJZPvBb",
+      "name": "tinker-eval-v4-base-screening-pilot-20250925",
+      "stopped_at": 1790679888.210029,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-2tpG96GzhVca2Ql5oiV7Op",
+      "name": "tinker-eval-v4-base-screening-b000-20250925",
+      "stopped_at": 1790679888.45991,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-wDhijIt3Qbo0qdYF0Txd0J",
+      "name": "tinker-eval-v4-base-screening-b000-clean-20250925",
+      "stopped_at": 1790679889.055605,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-B28Q1zLdtWlHPNdjnVfOlr",
+      "name": "tinker-eval-v4-base-screening-b001-clean-20250925",
+      "stopped_at": 1790679889.100909,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-NJfjK52RdEd77t9noxVZ38",
+      "name": "tinker-eval-v4-base-screening-b003-clean-20250925",
+      "stopped_at": 1790679889.184438,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-NCDNUE5RFgsxCiGQryplMK",
+      "name": "tinker-eval-v4-base-screening-cdx-b003-20250925",
+      "stopped_at": 1790679889.532245,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-tUwvfoJWbOtFZc73ergBWB",
+      "name": "tinker-eval-v4-base-screening-cdx-b003-new-20250925",
+      "stopped_at": 1790679890.029894,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-e7m4KEVsoa4LsPmkzZ4kPn",
+      "name": "tinker-eval-v4-base-screening-cdx-b003-unique-20250925",
+      "stopped_at": 1790679890.085062,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-BadQGQ35A36rLpXzp6zGek",
+      "name": "xdan-v4-three-oracle-textualize__rich-2294-r2-20260926",
+      "stopped_at": 1790679890.158608,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-7FIwKL0rYZoOfzg8jD95kK",
+      "name": "xdan-tl-v4-full-007-cdx0926",
+      "stopped_at": 1790679890.532987,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-3G56nEWI5slvEmvG7YTrBJ",
+      "name": "xdan-swe-397b-3task-cdx0926",
+      "stopped_at": 1790679891.022509,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-T8N1SORrYIvTBaUUILRmwe",
+      "name": "xdan-tl-v4-full-007-c7",
+      "stopped_at": 1790679891.089145,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-StBII2PpxC6rSM12ZYh8ke",
+      "name": "xdan-tl-v4-full-008-c8",
+      "stopped_at": 1790679891.150943,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-srfqw9K23snFKhAeqFsFrZ",
+      "name": "xdan-tl-v4-full-009-c8",
+      "stopped_at": 1790679891.53431,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-WDghUxXGWzsPJIP3rmnvmO",
+      "name": "xdan-tl-v4-full-010-c8",
+      "stopped_at": 1790679892.011713,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-XHvI6Z22kP3vbfk2Ar7CZb",
+      "name": "xdan-tl-v4-full-011-c8",
+      "stopped_at": 1790679892.083437,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-DOpN8EFEm72Mx0vw3albHU",
+      "name": "xdan-tl-v4-full-008-c9",
+      "stopped_at": 1790679892.154548,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-SMeOpQLbXhgaIEcjEYkN0C",
+      "name": "xdan-tl-v4-full-009-c10",
+      "stopped_at": 1790679892.506325,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-hc0K0FXjjQxGgUhHMM4aOy",
+      "name": "xdan-tl-v4-full-010-c11",
+      "stopped_at": 1790679892.971813,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-ceJZcCxfiIhKvyPgWbCbQb",
+      "name": "xdan-tl-v4-full-011-c12",
+      "stopped_at": 1790679893.04835,
+      "verified_state": "APP_STATE_STOPPED"
+    }
+  ],
+  "private_evidence": [
+    {
+      "path": "/root/mimo-private/modal-inventory-20260929/apps.json",
+      "sha256": "c5f28e83577379038773c94a8c5a4ac1a1dae0c5eaab8f8430c22ae05f9c42e7",
+      "bytes": 34101
+    },
+    {
+      "path": "/root/mimo-private/modal-inventory-20260929/running-sandboxes.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    {
+      "path": "/root/mimo-private/modal-inventory-20260929/layout-classification.json",
+      "sha256": "ca640329b3bf5c443c7a7dfb59a4181caaba11f1fa1eb3ba7b39e1ff5ffb5bba",
+      "bytes": 71182
+    },
+    {
+      "path": "/root/mimo-private/modal-inventory-20260929/stop-plan.json",
+      "sha256": "9c13185e160e533bbeefe9e121222b538a1278f7e5816f8eb078043182ce2da9",
+      "bytes": 71074
+    },
+    {
+      "path": "/root/mimo-private/modal-inventory-20260929/stop-journal.jsonl",
+      "sha256": "2b9d4922853f317d4e2a1a427ec8e1b2d96bccc7cf1ade64577fe05167aadc51",
+      "bytes": 72055
+    },
+    {
+      "path": "/root/mimo-private/modal-inventory-20260929/cleanup-result.json",
+      "sha256": "fb9ed4c664b27aaf73b5d61b7f28eca55b3280b43778ef78009730584536ef52",
+      "bytes": 136346
+    }
+  ],
+  "interpretation": [
+    "Live Apps158 counted deployed Apps, not running sandboxes. Initial and final running sandbox count were zero.",
+    "147 Apps were older than48h;133 had no functions/classes. The final target was90 dated experiment Apps after shared and undated namespaces were excluded.",
+    "Final AppList includes68 deployed and50 recently stopped; each of all90 stop targets was individually confirmed STOPPED immediately after its stop request.",
+    "This cleanup reduces stale deployment entries; it does not demonstrate savings from terminating active sandbox compute."
+  ],
+  "documentation": [
+    "https://modal.com/docs/cli/latest/app",
+    "https://modal.com/docs/sdk/py/latest/Sandbox"
+  ]
+}

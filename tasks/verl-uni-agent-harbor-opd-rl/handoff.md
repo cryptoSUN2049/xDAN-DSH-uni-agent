@@ -1,3 +1,13 @@
+## 2026-09-29 11:06 UTC 当前入口：r10 separate_async 独立恢复已启动
+
+用户明确选择 separate_async，源码 aaae616 已 push。r9 两步 exit0、C2完整：第二组奖励[1,1,0,0]、grad0.1328125、adv±0.866、248个LoRA张量改变、760个base不变；C1 moments全零导致保守optimizer delta失败，C2独立有限/非零，整体验收仍未完成。读最新notes及evidence/r9-completion-20260929.json。
+
+r10来源run-src-r10冻结796文件，manifest SHA8837215143bf7c725556d75a2dc030ae51054b67ed6966b3a2500dd93d0e8afa；固定273依赖不变，独立CuPy14.0.1 overlay。真实双GPU NCCL两种重建模式/各三版本全通过，实际CPU预检exit0。新run mimo9b-001661-r10从r9 C2→absolute3，actor1卡+standalone1卡、sync1、32K/20480保持。GPU driver264705/supervisor264718；CPU controller103207/archiver103275。11:05:57UTC快照operator running，GPU尚0MiB（初始化），必须实时核验，不得仅据配置宣称双卡模型已运行。
+
+绝对截止仍1790687801=13:16:41UTC/新加坡21:16:41；不重计五小时，Pod保留计费。只用11403 GPU、11621 CPU；不要动213.192.2.76。冷启动先读同名docs/mimo-separate-async-design.md，再核runs/r10/operator/status.json、private launch-r10/train.log及controller/归档健康。下一验收：真实恢复日志、首组版本2、step3消费/梯度/参数/optimizer/保存；尚不能mark goal complete。
+
+Modal用户要求清理旧资源：已确认90个超过48h的旧实验App停止，Live Apps158→68，活动Sandbox清理前后均0。保留14函数服务+11近期+4共享Harbor名称+39用途待确认，证据evidence/modal-cleanup-20260929.json。以下r9运行中及更早条目均为历史。
+
 ## 2026-09-29 09:06 UTC 当前入口：r9运行中，五小时绝对截止已部署
 
 先读notes.md最新r9段和docs同名evidence/r9-launch-20260929.json。用户要求的截止为13:16:41UTC / 新加坡21:16:41，按08:16:41请求起算五小时，重启不顺延；训练预留180秒清理，实例保留计费。r8四条奖励[0,1,1,0]，在dense entropy OOM退出，零checkpoint。3e0e55d修复已push，r9新身份fresh两步/GPU0/32K，774文件+273依赖+实际tokenizer/IPC预检通过。GPU driver213662/supervisor213663，CPU controller101484/archiver101513。必须实时核状态；尚未完成更新/checkpoint/独立resume验收，真正C2续训改用r10。旧r8及以下状态为历史。

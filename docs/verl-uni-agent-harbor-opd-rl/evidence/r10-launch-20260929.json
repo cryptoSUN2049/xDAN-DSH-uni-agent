@@ -1,0 +1,92 @@
+{
+  "schema": "mimo.r10-start-window-evidence.v1",
+  "checked_unix": 1790679957.1554391,
+  "checked_utc": "2026-09-29 11:05:57 UTC",
+  "run_id": "mimo9b-001661-r10",
+  "phase": "initializing",
+  "mode": "resume",
+  "trainer_mode": "separate_async",
+  "source_commit": "aaae61637430b76ca309a1828fae7ea265557e0a",
+  "source_manifest_sha256": "8837215143bf7c725556d75a2dc030ae51054b67ed6966b3a2500dd93d0e8afa",
+  "source_files_verified": 796,
+  "run_spec_sha256": "sha256:96ec3524f9ed150d2d914c5dfca7ce6a2208d0c8a1a39c6693b55690766ee3da",
+  "resume_from_path": "/workspace/mimo-dsh-rl-20260928/runs/r9/rl-training/checkpoints/global_step_2",
+  "total_training_steps": 3,
+  "save_freq": 1,
+  "deadline_unix": 1790687801,
+  "deadline_utc": "2026-09-29 13:16:41 UTC",
+  "deadline_singapore": "2026-09-29 21:16:41 +08:00",
+  "driver_pid": 264705,
+  "driver_alive": true,
+  "operator": {
+    "run_id": "mimo9b-001661-r10",
+    "started_at": 1790679939.3269887,
+    "wall_clock_seconds": 7699,
+    "status": "running",
+    "supervisor_pid": 264718
+  },
+  "controller_pid": 103207,
+  "archive_pid": 103275,
+  "preflight": {
+    "status": "passed",
+    "report_sha256": "04c533a786274829342b6caa3691a81c431f7ff284332ff8da67c12c98464073",
+    "package_constraints_verified": 273,
+    "train_rows": 1,
+    "validation_rows": 1,
+    "total_training_steps": 3,
+    "checkpoint_backend": "nccl",
+    "attention_backend": "sdpa",
+    "cuda_initialized": false,
+    "finished_at": 1790679847.0062547
+  },
+  "native_nccl_preflight": {
+    "status": "passed",
+    "report_sha256": "1674b5d84b7266ce890b28b04998d5024cd9055ec31d96e3f8cfe7d647e705cf",
+    "tests": 2,
+    "versions_per_test": 3,
+    "skipped": 0,
+    "errors": 0,
+    "failures": 0,
+    "overlay_manifest_sha256": "ef5fb1393db7aa8ee8d80fb2e2d4484650790adb15cd527e8778845aeb281967"
+  },
+  "configured_topology": {
+    "actor_gpus": 1,
+    "standalone_rollout_gpus": 1,
+    "visible_gpu_indexes": [
+      0,
+      1
+    ],
+    "parameter_sync_step": 1,
+    "hybrid_rollout_switch": false,
+    "context_tokens": 32768,
+    "episode_generated_token_limit": 20480,
+    "per_call_generated_token_limit": 4096,
+    "group_size": 4
+  },
+  "gpu_observation": {
+    "compute_apps": [],
+    "devices": [
+      {
+        "index": 0,
+        "uuid": "GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94",
+        "memory_used_mib": 0,
+        "utilization_percent": 0
+      },
+      {
+        "index": 1,
+        "uuid": "GPU-2676ad09-5ff2-cb59-a4bd-9c516041194b",
+        "memory_used_mib": 0,
+        "utilization_percent": 0
+      }
+    ],
+    "training_worker_placement_verified": false
+  },
+  "train_log_empty_at_snapshot": true,
+  "pod_deleted": false,
+  "training_acceptance": false,
+  "checkpoint_resume_acceptance": false,
+  "limitation": "Startup snapshot only. Both GPUs were idle while the new run initialized. The prior native NCCL probe proves transport, not this run's GPU placement, model restoration or effective training.",
+  "configured_cleanup_reserve_seconds": 180,
+  "supervisor_nominal_end_unix": 1790687638.3269887,
+  "nominal_seconds_before_absolute_deadline": 162.673011302948
+}
