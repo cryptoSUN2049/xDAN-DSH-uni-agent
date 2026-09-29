@@ -1,0 +1,364 @@
+{
+  "schema": "mimo.r9-completion-evidence.v1",
+  "checked_at_utc": "2026-09-29T10:47:52.270956+00:00",
+  "run_id": "mimo9b-001661-r9",
+  "source_commit": "3e0e55d9367999a58d3a6eeb547cc1ff51d2b417",
+  "source_manifest": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/source-r9-manifest.json",
+    "sha256": "f2d189bbb668167999ef1b29d8349e0cd0cd5fa6a908a0b9ae80dbd6688bf42e",
+    "bytes": 128968
+  },
+  "verl_upstream_gitlink": "a9f2985159536a607211dcac730d3f5d55028950",
+  "verl_overlay": {
+    "schema": "mimo.verl-source-overlay.v1",
+    "upstream_gitlink": "a9f2985159536a607211dcac730d3f5d55028950",
+    "source_run": "r8",
+    "files": [
+      {
+        "path": "verl/workers/engine/fsdp/transformer_impl.py",
+        "before_sha256": "fb8ea0cb0eab38bb746fd386bdc6866b389cf7b5deee6ebf267d71b9cca51c04",
+        "after_sha256": "713666208d1caad05c440d0ddb49fe0e4eeeca5e33726e59c60fb708b75bdeef"
+      }
+    ],
+    "patch": "a9f2985-dense-entropy-chunking.patch",
+    "patch_sha256": "13f4943eaf7a610f4367e1f7c29ad109401ff1324ae786c5f3f4bbcba18171a2",
+    "application": {
+      "working_directory": "verl submodule root inside a new isolated run source",
+      "command": [
+        "patch",
+        "--batch",
+        "--forward",
+        "-p1",
+        "-i",
+        "<patch-path>"
+      ],
+      "input_policy": "Require exact before_sha256; exact after_sha256 means already applied; any other SHA fails closed.",
+      "output_policy": "Require exact after_sha256 before launching."
+    }
+  },
+  "operator": {
+    "run_id": "mimo9b-001661-r9",
+    "started_at": 1790672772.954067,
+    "wall_clock_seconds": 14848,
+    "status": "exited",
+    "supervisor_pid": 213663,
+    "exit_code": 0,
+    "finished_at": 1790677595.2288792
+  },
+  "operator_evidence": {
+    "path": "/workspace/mimo-dsh-rl-20260928/runs/r9/operator/status.json",
+    "sha256": "9aa3e1ea74b41cf997e376944f12586d23abf6383b224ad59dfef2e784718dab",
+    "bytes": 206
+  },
+  "deadline_unix": 1790687801,
+  "deadline_singapore": "2026-09-29 21:16:41 +08:00",
+  "topology": {
+    "trainer_mode": "colocate_async",
+    "actor_rollout_gpu_indexes": [
+      0
+    ],
+    "gpu1_used_for_r9": false
+  },
+  "configuration": {
+    "context_tokens": 32768,
+    "cumulative_generated_tokens": 20480,
+    "group_size": 4,
+    "training_steps": 2,
+    "checkpoint_interval": 1
+  },
+  "recipe": {
+    "path": "/workspace/mimo-dsh-rl-20260928/run-src-r9/examples/mimo_dsh_rl/mimo-9b-budget-terminal.yaml",
+    "sha256": "9b98a126c84a5ef165c6aabb9a85f4e7f716d2f84eb31a195116b6565bd0aefe",
+    "bytes": 2634
+  },
+  "train_log": {
+    "path": "/root/mimo-private/launch-r9/train.log",
+    "sha256": "c18869e6f50ead7e528f719c500a9017098de4ae9c477879e0ec91dabda0544a",
+    "bytes": 211623
+  },
+  "step_metrics": [
+    {
+      "global_step": 1,
+      "values": {
+        "actor/pg_loss": 0.0,
+        "actor/grad_norm": 0.0,
+        "actor/perf/max_memory_allocated_gb": 87.63970518112183,
+        "training/global_step": 1.0,
+        "critic/rewards/mean": 0.0,
+        "critic/advantages/max": 0.0,
+        "critic/advantages/min": 0.0,
+        "timing_s/gen": 1403.3420184338465,
+        "timing_s/update_actor": 98.85493428818882,
+        "timing_s/step": 1567.94707122026
+      },
+      "line_sha256": "e4240703d684630072f9013ca6a1fed05f63ceb2b44febbce6659d7af911711a"
+    },
+    {
+      "global_step": 2,
+      "values": {
+        "training/rollout_failure/evicted_samples": 1.0,
+        "actor/pg_loss": 0.14361217617988586,
+        "actor/grad_norm": 0.1328125,
+        "actor/perf/max_memory_allocated_gb": 87.72411870956421,
+        "training/global_step": 2.0,
+        "critic/rewards/mean": 0.5,
+        "critic/advantages/max": 0.8660238981246948,
+        "critic/advantages/min": -0.8660238981246948,
+        "timing_s/gen": 2306.16980795376,
+        "timing_s/update_actor": 75.42008965602145,
+        "timing_s/step": 2437.889150994364
+      },
+      "line_sha256": "5ed35af8e540f5c617bd42b4975fd6f8883d6e3de4ab324f6a8e4a352e5c663c"
+    }
+  ],
+  "batch_audit": {
+    "errors": [],
+    "groups": [
+      {
+        "consumed_transfer_queue_keys": [
+          "40dd02c0-1a8c-40e9-886b-53dd343917b7_0_0",
+          "40dd02c0-1a8c-40e9-886b-53dd343917b7_1_0",
+          "40dd02c0-1a8c-40e9-886b-53dd343917b7_2_0",
+          "40dd02c0-1a8c-40e9-886b-53dd343917b7_3_0"
+        ],
+        "global_steps": 1,
+        "group_uid": "40dd02c0-1a8c-40e9-886b-53dd343917b7",
+        "has_reward_variance": false,
+        "partition_id": "train",
+        "rewards": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "session_indexes": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "status": "admitted-and-training-batch-matched",
+        "termination_kinds": [
+          "budget_exhausted",
+          "budget_exhausted",
+          "budget_exhausted",
+          "budget_exhausted"
+        ],
+        "transfer_queue_keys": [
+          "40dd02c0-1a8c-40e9-886b-53dd343917b7_0_0",
+          "40dd02c0-1a8c-40e9-886b-53dd343917b7_1_0",
+          "40dd02c0-1a8c-40e9-886b-53dd343917b7_2_0",
+          "40dd02c0-1a8c-40e9-886b-53dd343917b7_3_0"
+        ]
+      },
+      {
+        "consumed_transfer_queue_keys": [
+          "62b4afe3-69e6-4258-af98-916a5df03438_0_0",
+          "62b4afe3-69e6-4258-af98-916a5df03438_1_0",
+          "62b4afe3-69e6-4258-af98-916a5df03438_2_0",
+          "62b4afe3-69e6-4258-af98-916a5df03438_3_0"
+        ],
+        "global_steps": 2,
+        "group_uid": "62b4afe3-69e6-4258-af98-916a5df03438",
+        "has_reward_variance": true,
+        "partition_id": "train",
+        "rewards": [
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "session_indexes": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "status": "admitted-and-training-batch-matched",
+        "termination_kinds": [
+          "budget_exhausted",
+          "completed",
+          "budget_exhausted",
+          "budget_exhausted"
+        ],
+        "transfer_queue_keys": [
+          "62b4afe3-69e6-4258-af98-916a5df03438_0_0",
+          "62b4afe3-69e6-4258-af98-916a5df03438_1_0",
+          "62b4afe3-69e6-4258-af98-916a5df03438_2_0",
+          "62b4afe3-69e6-4258-af98-916a5df03438_3_0"
+        ]
+      }
+    ],
+    "launch_sha256": "sha256:3a98cf2a12a3dd25e52688f4e8eadf0066adc380d1080972e12e8607ec97447f",
+    "mode": "training-only",
+    "optimizer_update_verified": false,
+    "passed": true,
+    "schema": "dsh.harbor-training-batch-audit.v1",
+    "unconsumed_groups": [
+      {
+        "complete": false,
+        "consumed_transfer_queue_keys": [],
+        "global_steps": 1,
+        "group_uid": "cc59c16c-f463-43e3-917a-b49e9488b10b",
+        "partition_id": "train",
+        "rewards": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "session_indexes": [
+          1,
+          2,
+          3
+        ],
+        "status": "admitted-not-consumed",
+        "termination_kinds": [
+          "completed",
+          "budget_exhausted",
+          "budget_exhausted"
+        ],
+        "transfer_queue_keys": [
+          "cc59c16c-f463-43e3-917a-b49e9488b10b_1_0",
+          "cc59c16c-f463-43e3-917a-b49e9488b10b_2_0",
+          "cc59c16c-f463-43e3-917a-b49e9488b10b_3_0"
+        ]
+      }
+    ],
+    "unconsumed_trajectory_count": 3
+  },
+  "model_delta_summary": {
+    "schema": "dsh.single-rank-lora-delta.v1",
+    "passed": true,
+    "adapter_count": 716,
+    "adapter_changed": 248,
+    "base_count": 760,
+    "base_changed": 0,
+    "before": {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r9/rl-training/checkpoints/global_step_1/actor/model_world_size_1_rank_0.pt",
+      "sha256": "b9cacf2ce471c743f1fbf52fb2ea34e80bf9b46f6beb508eb7001f00f7812e43"
+    },
+    "after": {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r9/rl-training/checkpoints/global_step_2/actor/model_world_size_1_rank_0.pt",
+      "sha256": "f636a7e99aa52c890232739bab62b5636f28b4d6dd4beea43949597f7d378986"
+    }
+  },
+  "optimizer_delta_audit": {
+    "schema": "dsh.native-optimizer-delta.v1",
+    "passed": false,
+    "errors": [
+      "ValueError: All optimizer moments are zero"
+    ],
+    "files": {
+      "before": {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r9/rl-training/checkpoints/global_step_1/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "8cfabc6e95cbdf4b8a0007d4da1c62e19b0e67552fa11fac443ff5c73140bad7"
+      },
+      "after": {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r9/rl-training/checkpoints/global_step_2/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "edcd9dcbf6b3c39f2a7d30c88e691a6fdfa70a95d93f78e70c9a0eb953383b4c"
+      }
+    },
+    "input_scope": "Trusted checkpoints produced by this project's own run; weights_only=True, CPU only"
+  },
+  "optimizer_after_inspection": {
+    "schema": "mimo.optimizer-after-inspection.v1",
+    "checkpoint": {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r9/rl-training/checkpoints/global_step_2/actor/optim_world_size_1_rank_0.pt",
+      "sha256": "edcd9dcbf6b3c39f2a7d30c88e691a6fdfa70a95d93f78e70c9a0eb953383b4c"
+    },
+    "state": {
+      "steps": [
+        2
+      ],
+      "active_state_count": 716,
+      "empty_state_count": 60,
+      "tensor_count": 2148,
+      "all_finite": true,
+      "nonzero_moment_tensors": 496
+    },
+    "scope": "C2 standalone state inspection; does not replace failed C1-to-C2 delta audit"
+  },
+  "checkpoint": {
+    "latest_iteration": 2,
+    "latest_iteration_evidence": {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r9/rl-training/checkpoints/latest_checkpointed_iteration.txt",
+      "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "bytes": 1
+    },
+    "dataloader_states": [
+      {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r9/rl-training/checkpoints/global_step_1/data.pt",
+        "sha256": "58f16b6036f8994e9b19abde895b0a7969dbba54365747f210e577ebd0368d37",
+        "bytes": 1499
+      },
+      {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r9/rl-training/checkpoints/global_step_2/data.pt",
+        "sha256": "58f16b6036f8994e9b19abde895b0a7969dbba54365747f210e577ebd0368d37",
+        "bytes": 1499
+      }
+    ]
+  },
+  "audit_sources": [
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r9-final/batch.log",
+      "sha256": "279367e027eb75b2bd88b7bf25ae0a8176bb0a844dcc9d4d46af566a07ebd075",
+      "bytes": 3055
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r9-final/model-delta.json",
+      "sha256": "b8dd4b1edf8f286fb05e7c48334b068ec79e625045749e9f4f5de1d4631eb80f",
+      "bytes": 305891
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r9-final/optimizer-delta.json",
+      "sha256": "bb20e2c5c241582f1d5d982596a6853488fa6b15ce4910a7c980dcb9da6d350d",
+      "bytes": 727
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r9-final/optimizer-after.json",
+      "sha256": "91de10c4f34ab54d6b180a181ee60d3cdce7b49065916fba181d294f9f5b510d",
+      "bytes": 567
+    }
+  ],
+  "acceptance": {
+    "training_process_exited_successfully": true,
+    "consumed_batch_provenance_verified": true,
+    "step2_reward_variance_and_nonzero_gradient_observed": true,
+    "adapter_parameter_change_verified": true,
+    "base_parameters_unchanged": true,
+    "optimizer_delta_verified": false,
+    "effective_update_verified": false,
+    "independent_checkpoint_resume_verified": false,
+    "overall_training_acceptance": false,
+    "reason": "The conservative optimizer-delta audit rejected C1 zero moments. C2 standalone finite/nonzero state is preserved as separate evidence, not a replacement pass. Independent fresh-run checkpoint resume is still pending."
+  },
+  "scope_limitations": [
+    "One engineering task; no held-out capability improvement claim.",
+    "Step1 rewards, advantage, policy loss and gradient were zero; it is a mechanical checkpoint.",
+    "One incomplete prefetched group was not consumed; batch audit retains its three admitted but unconsumed trajectories.",
+    "No cross-GPU separate_async result is implied by this completed single-GPU run.",
+    "No Pod shutdown or restoration of an in-flight TransferQueue is implied."
+  ],
+  "archive_and_cleanup": {
+    "worker_evidence": {
+      "files": 160,
+      "bytes": 5305319,
+      "errors": [],
+      "controller_alive": false,
+      "archiver_alive": false
+    },
+    "worker_evidence_source": {
+      "path": "/root/mimo-private/evidence-r9/worker-final/final-evidence-check.json",
+      "sha256": "005ca4c4eb20711d27455bebaf1a46c70ecec9924712740091b1c950307b379a"
+    },
+    "modal_poll": {
+      "resource_count": 26,
+      "all_live_returncodes_137": true,
+      "errors": [],
+      "path": "/root/mimo-private/evidence-r9/worker-final/modal-live-poll.json",
+      "sha256": "70a044262a12515ab871eb5c50efedddf7afcbf70d9d7016979e6f0fe5bc65f1"
+    },
+    "modal_exit_interpretation": "Explicit sandbox termination; returncode 137 is not treated as an OOM diagnosis.",
+    "pod_stopped_or_deleted": false
+  }
+}

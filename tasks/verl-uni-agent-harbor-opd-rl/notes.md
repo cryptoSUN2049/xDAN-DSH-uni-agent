@@ -101,3 +101,13 @@ Goal API当前仍报告paused，工具没有resume接口；用户已在会话明
 - run_id=mimo9b-001661-r9；spec sha256:dd058b964f0691368c73d94b1d79111c7ba74f5214de70d2c4346a547bd36149；taskhash603c1f65...保持。CPU新端口38650/51/52/53，旧r8已停；既有Pod不删除/不自动停机，继续计费。
 - 实时入口：持久runs/r9/operator/status.json；GPU私有launch-r9/train.log、artifacts及registrations；CPU controller-r9/jobs、evidence-r9/status.json（30秒一次，截止同上）。启动时authenticated health=true/unregistered，归档首5轮errors=[]。
 - 公开证据evidence/r9-launch-20260929.json。当前仅完成启动和初始化；真实有效更新、C1/C2参数/optimizer差异、checkpoint及新身份重载仍待验收，不可标记goal完成。
+
+## 2026-09-29 10:48 UTC r9完成两步与独立证据核验
+
+- r9 operator真实exit0，finished1790677595.2288792（10:26:35UTC），latest_checkpointed_iteration=2；它仍是GPU0的colocate_async运行，不是双卡验收。固定截止13:16:41UTC保持。
+- 实际消费batch审计passed=true/errors=[]：step1 group40dd02c0奖励[0,0,0,0]，loss/grad/adv均0；step2 group62b4afe3奖励[1,1,0,0]，pg_loss0.14361217617988586、grad_norm0.1328125、advantage±0.8660238981246948。一个不完整预取组的三条轨迹留在unconsumed，未混入训练。
+- C1→C2模型差异审计通过：716个adapter张量中248个改变，760个base张量全部保持。模型checkpoint SHA C1=b9cacf2ce471c743f1fbf52fb2ea34e80bf9b46f6beb508eb7001f00f7812e43，C2=f636a7e99aa52c890232739bab62b5636f28b4d6dd4beea43949597f7d378986。
+- optimizer-delta仍明确failed：C1的moments全零触发现有保守检查。C2独立只读检查为step2、716个active/60个empty state、2148个tensor全有限、496个moment非零；该after证据不替代失败的delta审计，不把aggregate effective_update_verified或resume验收设为true。
+- CPU最终归档160文件5305319字节，errors=[]，controller/archiver均已停；26个Modal沙箱实时poll全部137，errors=[]。137按显式清理终态记录，不解释成OOM。既有Runpod仍保留计费。
+- 公开小报告docs/verl-uni-agent-harbor-opd-rl/evidence/r9-completion-20260929.json；原始model/optimizer/batch审计保留cloud integration-check/r9-final，报告绑定各文件SHA，train.log SHA=c18869e6f50ead7e528f719c500a9017098de4ae9c477879e0ec91dabda0544a。无heldout能力提升结论。
+- 下一阶段使用用户已批准的separate_async：两个独立GPU资源池与NCCL权重同步，先真实探针，再新身份从C2恢复到C3；不能将r9两步成功、CPU配置52例通过等同于双卡完整通过。
