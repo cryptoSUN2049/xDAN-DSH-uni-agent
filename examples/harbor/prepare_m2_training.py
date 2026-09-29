@@ -292,6 +292,9 @@ def prepare_training(
         launch["postprocessor"][evolution_key] = evolution.model_dump(mode="json")
     if mimo_ref is not None:
         launch["postprocessor"]["mimo_binding"] = mimo_ref.model_dump(mode="json")
+    if template.get("termination_policy", "completed-only") != "completed-only":
+        launch["postprocessor"]["termination_policy"] = template["termination_policy"]
+        launch["postprocessor"]["budget_limits"] = template["budget_limits"]
     path = output_dir / "launch.json"
     _write(path, (json.dumps(launch, indent=2, ensure_ascii=False, allow_nan=False) + "\n").encode())
     return path

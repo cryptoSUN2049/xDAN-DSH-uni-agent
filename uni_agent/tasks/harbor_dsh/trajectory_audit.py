@@ -18,7 +18,16 @@ from .evolution_scoring import EvolutionBinding, FrozenEvolution, load_evolution
 from .evolution_scoring_v2 import EvolutionV2Binding, FrozenEvolutionV2, load_evolution_v2_binding
 from .mimo import MimoBinding, MimoBindingRef, load_mimo_binding
 from .mimo import canonical as mimo_canonical
-from .protocol import JobRequest, OpaqueId, RequestPolicy, TaskRef, validate_manifest, validate_request
+from .protocol import (
+    BudgetLimits,
+    JobRequest,
+    OpaqueId,
+    RequestPolicy,
+    TaskRef,
+    TerminationPolicy,
+    validate_manifest,
+    validate_request,
+)
 from .task import (
     FrozenT2Fixture,
     RunnerContext,
@@ -31,6 +40,7 @@ from .task import (
     _json,
     _object,
     load_t2_fixture,
+    verified_termination,
     verify_downloaded_evidence,
 )
 
@@ -113,6 +123,12 @@ def _verify_saved(
         evolution=evolution,
         mimo=mimo,
     )
+    by_kind = {entry.kind: artifacts[entry.id] for entry in manifest.artifacts}
+    finished, termination_kind = verified_termination(
+        request,
+        _object(_json(by_kind["dsh_result"])),
+        [_object(_json(line)) for line in by_kind["dsh_trace"].splitlines()],
+    )
     receipt, _ = _read_object(directory, "receipt.json")
     body = {key: value for key, value in receipt.items() if key != "receipt_id"}
     expected = {
@@ -134,8 +150,14 @@ def _verify_saved(
         "artifacts": [entry.model_dump() for entry in manifest.artifacts],
         "reward": reward,
         "verifier_reward": reward,
-        "finished": True,
+        "finished": finished,
     }
+    if request.termination_policy != "completed-only":
+        expected.update(
+            schema="dsh.harbor-verifier-receipt.v2",
+            termination_policy=request.termination_policy,
+            termination_kind=termination_kind,
+        )
     if t2_fixture is not None:
         expected["t2_fixture_sha256"] = t2_fixture.sha256
     if evolution is not None:
@@ -166,6 +188,8 @@ def validate_trajectories(
     evolution_binding: Mapping[str, object] | EvolutionBinding | None = None,
     evolution_v2_binding: Mapping[str, object] | EvolutionV2Binding | None = None,
     mimo_binding: Mapping[str, object] | MimoBindingRef | None = None,
+    termination_policy: TerminationPolicy = "completed-only",
+    budget_limits: Mapping[str, object] | BudgetLimits | None = None,
 ) -> list[Trajectory]:
     """FQN postprocessor; all kwargs except context must be operator configured.
 
@@ -177,6 +201,13 @@ def validate_trajectories(
             raise TrajectoryAuditError("Harbor audit requires at least one trajectory")
         trusted_context = RunnerContext.model_validate(dict(context))
         trusted_policy = RequestPolicy.model_validate(policy)
+        if termination_policy != trusted_policy.termination_policy:
+            raise TrajectoryAuditError("Postprocessor termination policy differs from operator policy")
+        if termination_policy == "budget-terminal-v1":
+            if BudgetLimits.model_validate(budget_limits) != trusted_policy.budget_limits:
+                raise TrajectoryAuditError("Postprocessor budget limits differ from operator policy")
+        elif budget_limits is not None:
+            raise TrajectoryAuditError("Completed-only postprocessor may not declare budget terminal limits")
         trusted_task = TaskRef.model_validate(task_ref)
         if sum(value is not None for value in (t2_fixture, evolution_binding, evolution_v2_binding, mimo_binding)) > 1:
             raise TrajectoryAuditError("T2 and evolution v1/v2 bindings are mutually exclusive")
@@ -215,11 +246,14 @@ def validate_trajectories(
         if not root.is_absolute() or ".." in root.parts:
             raise TrajectoryAuditError("Operator artifact root must be absolute")
         root_fd = _private_directory(root)
+        admitted = []
         try:
             for trajectory in trajectories:
                 _validate_token_evidence(trajectory)
                 info = _object((trajectory.extra_fields or {}).get("dsh_reward_info"))
-                if trajectory.finished is not True or info.get("finished") is not True:
+                if termination_policy == "completed-only" and (
+                    trajectory.finished is not True or info.get("finished") is not True
+                ):
                     raise TrajectoryAuditError("Typed and receipt completion must be true")
                 metadata = _object(info.get("harbor_dsh"))
                 job_id = TypeAdapter(OpaqueId).validate_python(metadata.get("job_id"))
@@ -252,10 +286,28 @@ def validate_trajectories(
                 for value in (trajectory.reward_score, info.get("reward"), info.get("verifier_reward")):
                     if _require_finite(value, field="Harbor reward") != reward:
                         raise TrajectoryAuditError("Typed reward differs from the verified Harbor reward")
+                if termination_policy == "budget-terminal-v1":
+                    from .budget_admission import record_budget_admission
+
+                    directory = _private_directory(job_id, dir_fd=root_fd)
+                    try:
+                        trajectory = record_budget_admission(
+                            trajectory,
+                            directory=directory,
+                            context=trusted_context.model_dump(),
+                            run_id=run_id,
+                            policy=trusted_policy.model_dump(mode="json"),
+                            receipt=body,
+                            receipt_id=receipt_id,
+                            online=task_result is not None,
+                        )
+                    finally:
+                        os.close(directory)
+                admitted.append(trajectory)
         finally:
             os.close(root_fd)
     except TrajectoryAuditError:
         raise
     except (OSError, ValueError, TypeError, RuntimeError, KeyError) as error:
         raise TrajectoryAuditError("Harbor saved evidence or runtime binding was rejected") from error
-    return list(trajectories)
+    return admitted

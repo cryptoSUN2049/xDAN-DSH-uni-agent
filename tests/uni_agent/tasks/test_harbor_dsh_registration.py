@@ -369,7 +369,7 @@ def test_registered_audit_passes_only_explicit_operator_fixture(monkeypatch):
     from uni_agent.tasks import TaskResult
     from uni_agent.tasks.harbor_dsh import registration as module
 
-    trusted_policy = object()
+    trusted_policy = policy(payload())
     binding = {"task_ref": {"id": "t2"}, "fixture_path": "/operator/frozen.json", "fixture_sha256": "sha256:trusted"}
     seen = []
     monkeypatch.setattr(module, "load_registered_policy", lambda **kwargs: trusted_policy)

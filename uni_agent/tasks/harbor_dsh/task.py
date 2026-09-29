@@ -248,6 +248,22 @@ def _object(value):
     return value
 
 
+def verified_termination(request: JobRequest, helper: dict, events: list[dict]) -> tuple[bool, str]:
+    """Classify DSH evidence only; this never establishes Gateway budget exhaustion."""
+    reason = helper.get("finish_reason")
+    if not events or events[-1].get("type") != "turn/end":
+        raise ValueError("DSH trace must end with turn/end")
+    if request.termination_policy == "completed-only":
+        if reason != "completed":
+            raise ValueError("DSH completion required by termination policy")
+        return True, "completed"
+    terminal = _object(events[-1].get("data")).get("reason")
+    trace_reason = terminal.get("kind") if isinstance(terminal, dict) else terminal
+    if reason not in {"completed", "max-tokens"} or trace_reason != reason:
+        raise ValueError("DSH terminal trace/helper mismatch or non-budget failure")
+    return reason == "completed", "completed" if reason == "completed" else "budget_exhausted"
+
+
 def verify_downloaded_evidence(
     request: JobRequest,
     downloaded: DownloadedJob,
@@ -290,9 +306,9 @@ def verify_downloaded_evidence(
     )
     events = [_object(_json(line)) for line in by_kind["dsh_trace"].splitlines()]
     trace_hash = _digest(by_kind["dsh_trace"])
+    finished, _ = verified_termination(request, helper, events)
     if (
-        helper.get("finish_reason") != "completed"
-        or helper.get("profile") != request.dsh_release.profile
+        helper.get("profile") != request.dsh_release.profile
         or request.dsh_release.profile != "sdk-minimal"
         or helper.get("patches_sha256") != release_patch_paths_digest(request.dsh_release)
         or type(helper["event_count"]) is not int
@@ -306,8 +322,8 @@ def verify_downloaded_evidence(
     status = _object(_object(_object(harbor.get("agent_result")).get("metadata")).get("dsh"))
     expected = {
         "schema": "dsh.harbor-agent-execution.v1",
-        "status": "completed",
-        "finish_reason": "completed",
+        "status": "completed" if finished else "unfinished",
+        "finish_reason": helper["finish_reason"],
         "gateway_session_id": session,
         "dsh_session_id": "dsh-" + session,
         "harbor_context_id": manifest.trial_id,
@@ -320,7 +336,7 @@ def verify_downloaded_evidence(
         harbor.get("id") != manifest.trial_id
         or "exception_info" not in harbor
         or harbor["exception_info"] is not None
-        or status.get("finished") is not True
+        or status.get("finished") is not finished
         or type(status.get("event_count")) is not int
         or any(status.get(key) != value for key, value in expected.items())
     ):
@@ -447,7 +463,9 @@ class HarborDshTask(Task):
         now = time.time()
         job_id = "job-" + uuid4().hex
         data = {
-            "schema": "dsh.harbor-job-request.v1",
+            "schema": "dsh.harbor-job-request.v1"
+            if cfg.policy.termination_policy == "completed-only"
+            else "dsh.harbor-job-request.v2",
             "job_id": job_id,
             "idempotency_key": job_id,
             "run_id": cfg.run_id,
@@ -474,6 +492,9 @@ class HarborDshTask(Task):
                 "max_artifact_bytes": cfg.policy.max_artifact_bytes,
             },
         }
+        if cfg.policy.termination_policy != "completed-only":
+            data["termination_policy"] = cfg.policy.termination_policy
+            data["budget_limits"] = cfg.policy.budget_limits.model_dump(mode="json")
         data["request_sha256"] = request_sha256(data)
         request = validate_request(data, policy=cfg.policy, now_unix=now)
         client = HarborDshClient(
@@ -506,6 +527,12 @@ class HarborDshTask(Task):
                 evolution=self._evolution,
                 mimo=self._mimo,
             )
+            by_kind = {entry.kind: downloaded.artifacts[entry.id] for entry in manifest.artifacts}
+            finished, termination_kind = verified_termination(
+                request,
+                _object(_json(by_kind["dsh_result"])),
+                [_object(_json(line)) for line in by_kind["dsh_trace"].splitlines()],
+            )
             body = {
                 "schema": "dsh.harbor-verifier-receipt.v1",
                 "admission_stage": "task-evidence-verified",
@@ -525,8 +552,14 @@ class HarborDshTask(Task):
                 "artifacts": [entry.model_dump() for entry in manifest.artifacts],
                 "reward": reward,
                 "verifier_reward": reward,
-                "finished": True,
+                "finished": finished,
             }
+            if request.termination_policy != "completed-only":
+                body.update(
+                    schema="dsh.harbor-verifier-receipt.v2",
+                    termination_policy=request.termination_policy,
+                    termination_kind=termination_kind,
+                )
             if self._fixture is not None:
                 body["t2_fixture_sha256"] = self._fixture.sha256
             if self._evolution is not None:
@@ -541,7 +574,7 @@ class HarborDshTask(Task):
             result = TaskResult(
                 reward=reward,
                 verifier_reward=reward,
-                finished=True,
+                finished=finished,
                 reward_info={
                     "harbor_dsh": {
                         "schema": body["schema"],

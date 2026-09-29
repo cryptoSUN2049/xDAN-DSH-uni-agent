@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_budget_amounts_are_bound_to_operator_request_and_not_metadata ______
+
+    def test_budget_amounts_are_bound_to_operator_request_and_not_metadata():
+>       data = budget_request().model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:22: in budget_request
+    data["request_sha256"] = request_sha256(data)
+                             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v2', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for _RequestBody
+E       budget_limits
+E         Extra inputs are not permitted [type=extra_forbidden, input_value={'max_generated_tokens': ...ectory_capacity': 32768}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:129: ValidationError
+=========================== short test summary info ============================
+FAILED tests/uni_agent/tasks/test_harbor_budget_terminal.py::test_budget_amounts_are_bound_to_operator_request_and_not_metadata
+1 failed in 2.14s

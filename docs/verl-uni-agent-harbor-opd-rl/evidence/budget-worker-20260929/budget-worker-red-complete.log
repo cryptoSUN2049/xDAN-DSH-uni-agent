@@ -1,0 +1,590 @@
+FFFFFFFFF.FFFFF.                                                         [100%]
+=================================== FAILURES ===================================
+_____________ test_default_policy_does_not_change_v1_wire_or_hash ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-78/test_default_policy_does_not_c0')
+
+    def test_default_policy_does_not_change_v1_wire_or_hash(tmp_path):
+        data = payload()
+>       assert request_sha256({**data, "termination_policy": "completed-only"}) == data["request_sha256"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v1', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for _RequestBody
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='completed-only', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:114: ValidationError
+____________ test_new_policy_requires_v2_and_frozen_operator_match _____________
+
+    def test_new_policy_requires_v2_and_frozen_operator_match():
+>       request = budget_request()
+                  ^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:21: in budget_request
+    data["request_sha256"] = request_sha256(data)
+                             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v2', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for _RequestBody
+E       schema
+E         Input should be 'dsh.harbor-job-request.v1' [type=literal_error, input_value='dsh.harbor-job-request.v2', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:114: ValidationError
+______ test_task_preserves_unfinished_candidate_and_verifier_reward[0.0] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-78/test_task_preserves_unfinished0')
+transport = ([], {'fn': <function test_task_preserves_unfinished_candidate_and_verifier_reward.<locals>.<lambda> at 0x7a7a2e5ceac0>, 'score': 0.0})
+score = 0.0
+
+    @pytest.mark.parametrize("score", [0.0, 1.0])
+    @pytest.mark.asyncio
+    async def test_task_preserves_unfinished_candidate_and_verifier_reward(tmp_path, transport, score):
+        calls, edit = transport
+        edit.update(score=score, fn=lambda request, contents: terminal_contents(contents))
+>       result = await HarborDshTask(fixtures.config(tmp_path, policy=budget_policy())).run()
+                                                                      ^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = None
+
+    def budget_policy(data=None):
+>       return RequestPolicy.model_validate({**policy(data or payload()).model_dump(), "termination_policy": MODE})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for RequestPolicy
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:26: ValidationError
+______ test_task_preserves_unfinished_candidate_and_verifier_reward[1.0] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-78/test_task_preserves_unfinished1')
+transport = ([], {'fn': <function test_task_preserves_unfinished_candidate_and_verifier_reward.<locals>.<lambda> at 0x7a7a2e5ce200>, 'score': 1.0})
+score = 1.0
+
+    @pytest.mark.parametrize("score", [0.0, 1.0])
+    @pytest.mark.asyncio
+    async def test_task_preserves_unfinished_candidate_and_verifier_reward(tmp_path, transport, score):
+        calls, edit = transport
+        edit.update(score=score, fn=lambda request, contents: terminal_contents(contents))
+>       result = await HarborDshTask(fixtures.config(tmp_path, policy=budget_policy())).run()
+                                                                      ^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = None
+
+    def budget_policy(data=None):
+>       return RequestPolicy.model_validate({**policy(data or payload()).model_dump(), "termination_policy": MODE})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for RequestPolicy
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:26: ValidationError
+____ test_budget_mode_rejects_non_budget_or_inconsistent_terminal[changes0] ____
+
+changes = {'reason': 'cancelled'}
+
+    @pytest.mark.parametrize(
+        "changes",
+        [
+            {"reason": "cancelled"},
+            {"reason": "timeout"},
+            {"reason": "error"},
+            {"trace_reason": "completed"},
+            {"finished": True},
+        ],
+    )
+    def test_budget_mode_rejects_non_budget_or_inconsistent_terminal(changes):
+>       request = budget_request()
+                  ^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:21: in budget_request
+    data["request_sha256"] = request_sha256(data)
+                             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v2', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for _RequestBody
+E       schema
+E         Input should be 'dsh.harbor-job-request.v1' [type=literal_error, input_value='dsh.harbor-job-request.v2', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:114: ValidationError
+____ test_budget_mode_rejects_non_budget_or_inconsistent_terminal[changes1] ____
+
+changes = {'reason': 'timeout'}
+
+    @pytest.mark.parametrize(
+        "changes",
+        [
+            {"reason": "cancelled"},
+            {"reason": "timeout"},
+            {"reason": "error"},
+            {"trace_reason": "completed"},
+            {"finished": True},
+        ],
+    )
+    def test_budget_mode_rejects_non_budget_or_inconsistent_terminal(changes):
+>       request = budget_request()
+                  ^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:21: in budget_request
+    data["request_sha256"] = request_sha256(data)
+                             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v2', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for _RequestBody
+E       schema
+E         Input should be 'dsh.harbor-job-request.v1' [type=literal_error, input_value='dsh.harbor-job-request.v2', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:114: ValidationError
+____ test_budget_mode_rejects_non_budget_or_inconsistent_terminal[changes2] ____
+
+changes = {'reason': 'error'}
+
+    @pytest.mark.parametrize(
+        "changes",
+        [
+            {"reason": "cancelled"},
+            {"reason": "timeout"},
+            {"reason": "error"},
+            {"trace_reason": "completed"},
+            {"finished": True},
+        ],
+    )
+    def test_budget_mode_rejects_non_budget_or_inconsistent_terminal(changes):
+>       request = budget_request()
+                  ^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:21: in budget_request
+    data["request_sha256"] = request_sha256(data)
+                             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v2', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for _RequestBody
+E       schema
+E         Input should be 'dsh.harbor-job-request.v1' [type=literal_error, input_value='dsh.harbor-job-request.v2', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:114: ValidationError
+____ test_budget_mode_rejects_non_budget_or_inconsistent_terminal[changes3] ____
+
+changes = {'trace_reason': 'completed'}
+
+    @pytest.mark.parametrize(
+        "changes",
+        [
+            {"reason": "cancelled"},
+            {"reason": "timeout"},
+            {"reason": "error"},
+            {"trace_reason": "completed"},
+            {"finished": True},
+        ],
+    )
+    def test_budget_mode_rejects_non_budget_or_inconsistent_terminal(changes):
+>       request = budget_request()
+                  ^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:21: in budget_request
+    data["request_sha256"] = request_sha256(data)
+                             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v2', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for _RequestBody
+E       schema
+E         Input should be 'dsh.harbor-job-request.v1' [type=literal_error, input_value='dsh.harbor-job-request.v2', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:114: ValidationError
+____ test_budget_mode_rejects_non_budget_or_inconsistent_terminal[changes4] ____
+
+changes = {'finished': True}
+
+    @pytest.mark.parametrize(
+        "changes",
+        [
+            {"reason": "cancelled"},
+            {"reason": "timeout"},
+            {"reason": "error"},
+            {"trace_reason": "completed"},
+            {"finished": True},
+        ],
+    )
+    def test_budget_mode_rejects_non_budget_or_inconsistent_terminal(changes):
+>       request = budget_request()
+                  ^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:21: in budget_request
+    data["request_sha256"] = request_sha256(data)
+                             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v2', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for _RequestBody
+E       schema
+E         Input should be 'dsh.harbor-job-request.v1' [type=literal_error, input_value='dsh.harbor-job-request.v2', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:114: ValidationError
+____ test_executor_accepts_only_verified_unfinished_candidate_after_cleanup ____
+
+task_dir = PosixPath('/tmp/pytest-of-root/pytest-78/test_executor_accepts_only_ver0/task')
+harness = namespace(trial=None, edit=<function test_executor_accepts_only_verified_unfinished_candidate_after_cleanup.<locals>.<lambda> at 0x7a7a372ed580>, inventory=<AsyncMock id='134671587388368'>)
+
+    def test_executor_accepts_only_verified_unfinished_candidate_after_cleanup(task_dir, harness):
+        harness.edit = lambda trial: setattr(trial, "rewrite", lambda: rewrite_terminal(trial))
+>       request = budget_request(fixtures.request_for(task_dir).model_dump(mode="json", by_alias=True))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_executor.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:21: in budget_request
+    data["request_sha256"] = request_sha256(data)
+                             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v2', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for _RequestBody
+E       schema
+E         Input should be 'dsh.harbor-job-request.v1' [type=literal_error, input_value='dsh.harbor-job-request.v2', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:114: ValidationError
+___ test_executor_budget_candidate_keeps_auxiliary_and_reward_gates[change0] ___
+
+task_dir = PosixPath('/tmp/pytest-of-root/pytest-78/test_executor_budget_candidate0/task')
+harness = namespace(trial=None, edit=<function test_executor_budget_candidate_keeps_auxiliary_and_reward_gates.<locals>.<lambda> at 0x7a7bac1f9940>, inventory=<AsyncMock id='134671587162832'>)
+change = {'reason': 'cancelled'}
+
+    @pytest.mark.parametrize("change", [{"reason": "cancelled"}, {"bad_agent": True}, {"bad_reward": True}])
+    def test_executor_budget_candidate_keeps_auxiliary_and_reward_gates(task_dir, harness, change):
+        harness.edit = lambda trial: setattr(trial, "rewrite", lambda: rewrite_terminal(trial, **change))
+>       request = budget_request(fixtures.request_for(task_dir).model_dump(mode="json", by_alias=True))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_executor.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:21: in budget_request
+    data["request_sha256"] = request_sha256(data)
+                             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v2', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for _RequestBody
+E       schema
+E         Input should be 'dsh.harbor-job-request.v1' [type=literal_error, input_value='dsh.harbor-job-request.v2', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:114: ValidationError
+___ test_executor_budget_candidate_keeps_auxiliary_and_reward_gates[change1] ___
+
+task_dir = PosixPath('/tmp/pytest-of-root/pytest-78/test_executor_budget_candidate1/task')
+harness = namespace(trial=None, edit=<function test_executor_budget_candidate_keeps_auxiliary_and_reward_gates.<locals>.<lambda> at 0x7a7bac1f9440>, inventory=<AsyncMock id='134671587390240'>)
+change = {'bad_agent': True}
+
+    @pytest.mark.parametrize("change", [{"reason": "cancelled"}, {"bad_agent": True}, {"bad_reward": True}])
+    def test_executor_budget_candidate_keeps_auxiliary_and_reward_gates(task_dir, harness, change):
+        harness.edit = lambda trial: setattr(trial, "rewrite", lambda: rewrite_terminal(trial, **change))
+>       request = budget_request(fixtures.request_for(task_dir).model_dump(mode="json", by_alias=True))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_executor.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:21: in budget_request
+    data["request_sha256"] = request_sha256(data)
+                             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v2', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for _RequestBody
+E       schema
+E         Input should be 'dsh.harbor-job-request.v1' [type=literal_error, input_value='dsh.harbor-job-request.v2', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:114: ValidationError
+___ test_executor_budget_candidate_keeps_auxiliary_and_reward_gates[change2] ___
+
+task_dir = PosixPath('/tmp/pytest-of-root/pytest-78/test_executor_budget_candidate2/task')
+harness = namespace(trial=None, edit=<function test_executor_budget_candidate_keeps_auxiliary_and_reward_gates.<locals>.<lambda> at 0x7a7babbfcd60>, inventory=<AsyncMock id='134665345016816'>)
+change = {'bad_reward': True}
+
+    @pytest.mark.parametrize("change", [{"reason": "cancelled"}, {"bad_agent": True}, {"bad_reward": True}])
+    def test_executor_budget_candidate_keeps_auxiliary_and_reward_gates(task_dir, harness, change):
+        harness.edit = lambda trial: setattr(trial, "rewrite", lambda: rewrite_terminal(trial, **change))
+>       request = budget_request(fixtures.request_for(task_dir).model_dump(mode="json", by_alias=True))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/uni_agent/tasks/test_harbor_budget_executor.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/tasks/test_harbor_budget_terminal.py:21: in budget_request
+    data["request_sha256"] = request_sha256(data)
+                             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema': 'dsh.harbor-job-request.v2', 'job_id': 'job-1', 'idempotency_key': 'idem-1', 'run_id': 'run-1', ...}
+
+    def request_sha256(value: Mapping[str, Any] | JobRequest) -> str:
+        """Hash validated normalized fields, excluding request_sha256 itself.
+    
+        JSON uses sorted keys, UTF-8, compact separators and no NaN. Numeric budget
+        fields normalize to floats before hashing; tuple arrays serialize as lists.
+        """
+        data = value.model_dump(mode="json", by_alias=True) if isinstance(value, JobRequest) else dict(value)
+        data.pop("request_sha256", None)
+>       body = _RequestBody.model_validate(data).model_dump(mode="json", by_alias=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for _RequestBody
+E       schema
+E         Input should be 'dsh.harbor-job-request.v1' [type=literal_error, input_value='dsh.harbor-job-request.v2', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+E       termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+uni_agent/tasks/harbor_dsh/protocol.py:114: ValidationError
+___________ test_operator_policy_is_bound_in_task_and_postprocessor ____________
+
+inputs = {'run_spec_path': PosixPath('/tmp/pytest-of-root/pytest-78/test_operator_policy_is_bound_0/run-spec.json'), 'task_dir'...'task_config_path': PosixPath('/tmp/pytest-of-root/pytest-78/test_operator_policy_is_bound_0/prepared/task.yaml'), ...}
+
+    def test_operator_policy_is_bound_in_task_and_postprocessor(inputs):
+        spec = json.loads(inputs["run_spec_path"].read_bytes())
+        spec["policy_template"]["termination_policy"] = "budget-terminal-v1"
+        inputs["run_spec_path"].write_text(json.dumps(spec))
+>       launch = json.loads(prepare_training(**inputs).read_bytes())
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/uni_agent/examples/test_harbor_budget_preparation.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run_spec_path = PosixPath('/tmp/pytest-of-root/pytest-78/test_operator_policy_is_bound_0/run-spec.json')
+task_dir = PosixPath('/tmp/pytest-of-root/pytest-78/test_operator_policy_is_bound_0/task')
+output_dir = PosixPath('/tmp/pytest-of-root/pytest-78/test_operator_policy_is_bound_0/prepared')
+task_config_path = PosixPath('/tmp/pytest-of-root/pytest-78/test_operator_policy_is_bound_0/prepared/task.yaml')
+registration_token_file = PosixPath('/tmp/pytest-of-root/pytest-78/test_operator_policy_is_bound_0/registration-token')
+worker_token_file = PosixPath('/tmp/pytest-of-root/pytest-78/test_operator_policy_is_bound_0/worker-token')
+train_count = 2, heldout_count = 1, t2_fixture_binding = None
+evolution_binding = None, evolution_v2_binding = None, mimo_binding = None
+max_concurrent_sessions = 1
+
+    def prepare_training(
+        *,
+        run_spec_path: Path,
+        task_dir: Path,
+        output_dir: Path,
+        task_config_path: Path,
+        registration_token_file: Path,
+        worker_token_file: Path,
+        train_count: int = 2,
+        heldout_count: int = 1,
+        t2_fixture_binding: Path | None = None,
+        evolution_binding: Path | None = None,
+        evolution_v2_binding: Path | None = None,
+        mimo_binding: Path | None = None,
+        max_concurrent_sessions: int = 1,
+    ) -> Path:
+        """Spec paths remain Mac-owned; task/credential/output paths refer to this host."""
+        for count in (train_count, heldout_count):
+            if type(count) is not int or not 1 <= count <= 16:
+                raise ValueError("Engineering dataset counts must be between one and sixteen")
+        if type(max_concurrent_sessions) is not int or not 1 <= max_concurrent_sessions <= 64:
+            raise ValueError("Maximum concurrent sessions must be between one and sixty-four")
+        for path in (output_dir, task_config_path):
+            _outside_repo(path)
+        if task_config_path.parent.resolve() != output_dir.resolve():
+            raise ValueError("Task YAML must be inside the private output directory")
+>       spec = RunSpec.model_validate_json(run_spec_path.read_bytes())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for RunSpec
+E       policy_template.termination_policy
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='budget-terminal-v1', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+examples/harbor/prepare_m2_training.py:119: ValidationError
+=============================== warnings summary ===============================
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55: DeprecationWarning: Ray state API is no longer experimental. Please import from `ray.util.state`. instead. Importing from `ray.experimental` will be deprecated in future releases. 
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/uni_agent/tasks/test_harbor_budget_terminal.py::test_default_policy_does_not_change_v1_wire_or_hash
+FAILED tests/uni_agent/tasks/test_harbor_budget_terminal.py::test_new_policy_requires_v2_and_frozen_operator_match
+FAILED tests/uni_agent/tasks/test_harbor_budget_terminal.py::test_task_preserves_unfinished_candidate_and_verifier_reward[0.0]
+FAILED tests/uni_agent/tasks/test_harbor_budget_terminal.py::test_task_preserves_unfinished_candidate_and_verifier_reward[1.0]
+FAILED tests/uni_agent/tasks/test_harbor_budget_terminal.py::test_budget_mode_rejects_non_budget_or_inconsistent_terminal[changes0]
+FAILED tests/uni_agent/tasks/test_harbor_budget_terminal.py::test_budget_mode_rejects_non_budget_or_inconsistent_terminal[changes1]
+FAILED tests/uni_agent/tasks/test_harbor_budget_terminal.py::test_budget_mode_rejects_non_budget_or_inconsistent_terminal[changes2]
+FAILED tests/uni_agent/tasks/test_harbor_budget_terminal.py::test_budget_mode_rejects_non_budget_or_inconsistent_terminal[changes3]
+FAILED tests/uni_agent/tasks/test_harbor_budget_terminal.py::test_budget_mode_rejects_non_budget_or_inconsistent_terminal[changes4]
+FAILED tests/uni_agent/tasks/test_harbor_budget_executor.py::test_executor_accepts_only_verified_unfinished_candidate_after_cleanup
+FAILED tests/uni_agent/tasks/test_harbor_budget_executor.py::test_executor_budget_candidate_keeps_auxiliary_and_reward_gates[change0]
+FAILED tests/uni_agent/tasks/test_harbor_budget_executor.py::test_executor_budget_candidate_keeps_auxiliary_and_reward_gates[change1]
+FAILED tests/uni_agent/tasks/test_harbor_budget_executor.py::test_executor_budget_candidate_keeps_auxiliary_and_reward_gates[change2]
+FAILED tests/uni_agent/examples/test_harbor_budget_preparation.py::test_operator_policy_is_bound_in_task_and_postprocessor
+14 failed, 2 passed, 1 warning in 56.16s

@@ -16,3 +16,6 @@
 - DSH max-tokens要核每轮真实usage。r4两条终轮input+output均为16384，而累计生成仅7337/7104；这是总上下文耗尽，非4096单次或14336生成预算耗尽。扩大上下文时同步训练/logprob容量，保留独立生成上限与截断拒绝。
 - pytest禁用自动插件时须显式加载pytest_asyncio.plugin。UnknownMark/async unsupported是测试执行失败，不能将未执行用例算通过；保留失败后再复验。
 - r6真实证明另一种max-tokens：32K上下文尚余空间，但累计生成恰为14336，末轮被裁至119/125。须按真实usage分别诊断context与episode预算；本轮改20480生成，保留32K与完成门。测试通过但未完成的轨迹仍不能伪装completed或从失败组挑选成功成员训练。
+
+- 云端独立测试快照必须包含 tests/__init__.py、tests/uni_agent/__init__.py；否则helper imports可能落到editable旧仓，出现假RED/GREEN。同步排除__pycache__/*.pyc；最终验证使用独立PYTHONPYCACHEPREFIX并核__file__/co_filename与源码hash。
+- 用户提醒及时commit/push：按已验证slice提交；混合worktree有独立嵌套仓库时，以待推送commit的干净detached worktree运行完整ruff check .和ruff format --check .，两者通过后从该精确HEAD推送，不绕过门禁、不格式化其他独立仓。

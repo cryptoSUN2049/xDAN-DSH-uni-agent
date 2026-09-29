@@ -460,7 +460,10 @@ def test_registered_wrapper_forwards_evolution_binding(monkeypatch, binding_key)
 
     binding = {"marker": "operator-binding"}
     captured = {}
-    monkeypatch.setattr(registration, "load_registered_policy", lambda **kwargs: "registered-policy")
+    from tests.uni_agent.tasks.test_harbor_dsh_protocol import payload, policy
+
+    trusted_policy = policy(payload())
+    monkeypatch.setattr(registration, "load_registered_policy", lambda **kwargs: trusted_policy)
 
     def check(trajectories, **kwargs):
         captured.update(kwargs)
@@ -483,7 +486,7 @@ def test_registered_wrapper_forwards_evolution_binding(monkeypatch, binding_key)
     )
     assert result == ()
     assert captured[binding_key] is binding
-    assert captured["policy"] == "registered-policy"
+    assert captured["policy"] is trusted_policy
 
 
 @pytest.mark.parametrize(

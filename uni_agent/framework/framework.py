@@ -352,11 +352,15 @@ class GatewayAgentFramework(AgentFramework):
         trajectory_postprocessor: TrajectoryPostprocessor | None = None,
         trajectory_postprocessor_kwargs: dict[str, object] | None = None,
         max_generated_tokens_per_episode: int | None = None,
+        termination_policy: str = "completed-only",
     ):
         if max_generated_tokens_per_episode is not None and (
             type(max_generated_tokens_per_episode) is not int or max_generated_tokens_per_episode <= 0
         ):
             raise ValueError("max_generated_tokens_per_episode must be a positive integer or None")
+        if termination_policy not in ("completed-only", "budget-terminal-v1"):
+            raise ValueError("Unknown termination_policy")
+        self._termination_policy = termination_policy
         self._max_generated_tokens_per_episode = max_generated_tokens_per_episode
         self.gateway_manager = gateway_manager
         self.runner_registry = runner_registry
@@ -408,6 +412,36 @@ class GatewayAgentFramework(AgentFramework):
         self._trajectory_postprocessor_pass_context = trajectory_postprocessor_pass_context
         self._trajectory_postprocessor = trajectory_postprocessor
         self._trajectory_postprocessor_kwargs = trajectory_postprocessor_kwargs or {}
+        if termination_policy == "budget-terminal-v1":
+            from uni_agent.tasks.harbor_dsh.registration import validate_registered_trajectories
+
+            kw = self._trajectory_postprocessor_kwargs
+            limits = kw.get("budget_limits", {})
+            if not (
+                fail_on_rollout_error
+                and require_finished_episode
+                and require_verifier_reward
+                and require_trajectory_dump
+                and require_version_evidence is True
+                and trajectory_postprocessor_pass_context
+                and not mask_unfinished_episode
+                and log_dir
+                and trajectory_postprocessor is validate_registered_trajectories
+                and kw.get("termination_policy") == termination_policy
+                and kw.get("policy_template", {}).get("termination_policy") == termination_policy
+                and limits == kw.get("policy_template", {}).get("budget_limits")
+                and type(limits.get("max_generated_tokens")) is int
+                and limits["max_generated_tokens"] == max_generated_tokens_per_episode
+                and type(limits.get("trajectory_capacity")) is int
+                and limits["trajectory_capacity"] > 0
+                and rollout_config is not None
+                and rollout_config.get("max_model_len") == limits["trajectory_capacity"]
+                and teacher_server_manager is None
+                and not custom_reward_function_configured
+            ):
+                raise ValueError(
+                    "budget-terminal requires strict registered evidence, matching budgets and unmasked actions"
+                )
 
     @classmethod
     def from_config(
@@ -550,6 +584,7 @@ class GatewayAgentFramework(AgentFramework):
             trajectory_postprocessor=trajectory_postprocessor,
             trajectory_postprocessor_kwargs=trajectory_postprocessor_kwargs,
             max_generated_tokens_per_episode=af_cfg.get("max_generated_tokens_per_episode"),
+            termination_policy=af_cfg.get("termination_policy", "completed-only"),
         )
 
     async def _apply_trajectory_postprocessor(
@@ -798,7 +833,7 @@ class GatewayAgentFramework(AgentFramework):
 
         strict_unfinished_episodes = (
             sum(
-                any(trajectory.finished is not True for trajectory in trajectories)
+                any(not self._admitted_terminal(trajectory) for trajectory in trajectories)
                 for _, trajectories, _ in successful_outcomes
             )
             if self._require_finished_episode
@@ -1033,6 +1068,18 @@ class GatewayAgentFramework(AgentFramework):
         )
         return stage.trajectories, stage.sample_fields
 
+    def _admitted_terminal(self, trajectory: Trajectory) -> bool:
+        if trajectory.finished is True:
+            return True
+        admission = (trajectory.extra_fields or {}).get("budget_admission", {})
+        return (
+            self._termination_policy == "budget-terminal-v1"
+            and trajectory.finished is False
+            and admission.get("schema") == "dsh.harbor-budget-admission.v1"
+            and admission.get("termination_policy") == self._termination_policy
+            and admission.get("termination_kind") == "budget_exhausted"
+        )
+
     async def _execute_gateway_stage(
         self,
         *,
@@ -1182,10 +1229,31 @@ class GatewayAgentFramework(AgentFramework):
             # Finalization already released the Gateway route. Reject before
             # selection or the runner's finished/reward fields can hide a
             # truncated branch; an already finalized route must not be aborted.
-            if reject_truncated_episode and any(
-                (trajectory.extra_fields or {}).get(key) in {"max_generated_tokens", "max_trajectory_length"}
-                for trajectory in session_trajectories
-                for key in ("materialization_reason", "session_exhaustion_reason")
+            budget_mode = self._termination_policy == "budget-terminal-v1"
+            if budget_mode:
+                from uni_agent.gateway.session.types import validate_gateway_budget_proof
+
+                if not session_trajectories:
+                    raise ValueError("budget-terminal requires finalized Gateway trajectories")
+                proof = (session_trajectories[0].extra_fields or {}).get("gateway_budget_proof")
+                if any((t.extra_fields or {}).get("gateway_budget_proof") != proof for t in session_trajectories):
+                    raise ValueError("Gateway budget proofs disagree across finalized chains")
+                if max_generated_tokens != self._max_generated_tokens_per_episode:
+                    raise ValueError("budget-terminal stage generation limit differs from operator")
+                validate_gateway_budget_proof(
+                    proof,
+                    session_trajectories,
+                    session_id=session_id,
+                    expected_limits=self._trajectory_postprocessor_kwargs["budget_limits"],
+                )
+            if (
+                reject_truncated_episode
+                and not budget_mode
+                and any(
+                    (trajectory.extra_fields or {}).get(key) in {"max_generated_tokens", "max_trajectory_length"}
+                    for trajectory in session_trajectories
+                    for key in ("materialization_reason", "session_exhaustion_reason")
+                )
             ):
                 raise ValueError("Episode token budget exhausted: truncated rollout cannot be admitted as completed")
             session_trajectories = _select_session_trajectories(
@@ -1475,6 +1543,28 @@ class GatewayAgentFramework(AgentFramework):
                     for index, traj in enumerate(trajectories)
                 ],
             }
+            if self._termination_policy == "budget-terminal-v1":
+                from uni_agent.tasks.harbor_dsh.budget_admission import bind_budget_dump
+
+                bind_budget_dump(
+                    trajectories,
+                    context={
+                        key: meta[key]
+                        for key in (
+                            "gateway_session_id",
+                            "partition_id",
+                            "global_steps",
+                            "group_uid",
+                            "group_size",
+                            "sample_index",
+                            "session_index",
+                        )
+                    },
+                    npz_sha256=meta["trajectory_npz_sha256"],
+                    metadata=meta,
+                    artifact_root=self._trajectory_postprocessor_kwargs["artifact_root"],
+                    online=True,
+                )
             json_payload = json.dumps(meta, ensure_ascii=False, separators=(",", ":"), default=_json_default)
             npz_temporary = run_dir / "trajectory.npz.tmp"
             json_temporary = run_dir / "trajectory.json.tmp"
@@ -1495,8 +1585,12 @@ class GatewayAgentFramework(AgentFramework):
         transfer_queue_key: str | None,
     ) -> dict[str, object]:
         """Small, human-readable per-trajectory summary; the token arrays live in the npz."""
+        from uni_agent.tasks.harbor_dsh.budget_admission import DUMP_FIELDS
+
         extra = traj.extra_fields or {}
         return {
+            "chain_id": traj.chain_id,
+            **{key: deepcopy(extra[key]) for key in DUMP_FIELDS if key in extra},
             "trajectory_index": trajectory_index,
             **({"transfer_queue_key": transfer_queue_key} if transfer_queue_key is not None else {}),
             "num_turns": traj.num_turns,

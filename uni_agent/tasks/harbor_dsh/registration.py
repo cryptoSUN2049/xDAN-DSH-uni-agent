@@ -20,7 +20,7 @@ from pydantic import Field, TypeAdapter
 from uni_agent.gateway.session import SessionHandle
 from uni_agent.tasks.base import TaskResult
 
-from .protocol import Contract, OpaqueId, RequestPolicy, Sha256
+from .protocol import BudgetLimits, Contract, OpaqueId, RequestPolicy, Sha256, TerminationPolicy
 from .task import RunnerContext, _json, _object, _write
 from .trajectory_audit import _private_directory, _read, validate_trajectories
 
@@ -264,6 +264,8 @@ def validate_registered_trajectories(
     evolution_binding=None,
     evolution_v2_binding=None,
     mimo_binding=None,
+    termination_policy: TerminationPolicy = "completed-only",
+    budget_limits=None,
 ):
     """Static FQN kwargs support a port learned only from independent registration."""
     policy = load_registered_policy(
@@ -273,6 +275,15 @@ def validate_registered_trajectories(
         run_spec_sha256=run_spec_sha256,
         policy_template=policy_template,
     )
+    if termination_policy != policy.termination_policy:
+        raise ValueError("Postprocessor termination policy differs from registered operator policy")
+    terminal_kwargs = {}
+    if termination_policy != "completed-only":
+        if BudgetLimits.model_validate(budget_limits) != policy.budget_limits:
+            raise ValueError("Postprocessor budget limits differ from registered operator policy")
+        terminal_kwargs = {"termination_policy": termination_policy, "budget_limits": budget_limits}
+    elif budget_limits is not None:
+        raise ValueError("Completed-only postprocessor may not declare budget terminal limits")
     return validate_trajectories(
         trajectories,
         task_result=task_result,
@@ -287,4 +298,5 @@ def validate_registered_trajectories(
         evolution_binding=evolution_binding,
         evolution_v2_binding=evolution_v2_binding,
         mimo_binding=mimo_binding,
+        **terminal_kwargs,
     )

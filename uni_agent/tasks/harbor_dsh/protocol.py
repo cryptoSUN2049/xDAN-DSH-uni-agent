@@ -14,13 +14,14 @@ import math
 from collections.abc import Iterable, Mapping
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, field_validator, model_serializer, model_validator
 
 OpaqueId = Annotated[str, Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$")]
 Sha256 = Annotated[str, Field(pattern=r"^sha256:[0-9a-f]{64}$")]
 PositiveInt = Annotated[int, Field(gt=0)]
 PositiveFloat = Annotated[float, Field(gt=0, allow_inf_nan=False)]
 Port = Annotated[int, Field(ge=1, le=65535)]
+TerminationPolicy = Literal["completed-only", "budget-terminal-v1"]
 
 
 def _array(value: Any) -> tuple:
@@ -31,6 +32,30 @@ def _array(value: Any) -> tuple:
 
 class Contract(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True, frozen=True, revalidate_instances="always")
+
+
+class BudgetLimits(Contract):
+    max_generated_tokens: PositiveInt
+    trajectory_capacity: PositiveInt
+
+
+class TerminationContract(Contract):
+    termination_policy: TerminationPolicy = "completed-only"
+    budget_limits: BudgetLimits | None = None
+
+    @model_validator(mode="after")
+    def _termination_budget(self):
+        if (self.termination_policy == "budget-terminal-v1") != (self.budget_limits is not None):
+            raise ValueError("Explicit budget limits are required only for budget-terminal-v1")
+        return self
+
+    @model_serializer(mode="wrap")
+    def _serialize(self, handler):
+        value = handler(self)
+        if self.termination_policy == "completed-only":
+            value.pop("termination_policy", None)
+            value.pop("budget_limits", None)
+        return value
 
 
 class TaskRef(Contract):
@@ -81,8 +106,8 @@ class Budgets(Contract):
     max_artifact_bytes: PositiveInt
 
 
-class _RequestBody(Contract):
-    schema_: Literal["dsh.harbor-job-request.v1"] = Field(alias="schema")
+class _RequestBody(TerminationContract):
+    schema_: Literal["dsh.harbor-job-request.v1", "dsh.harbor-job-request.v2"] = Field(alias="schema")
     job_id: OpaqueId
     idempotency_key: OpaqueId
     run_id: OpaqueId
@@ -98,6 +123,11 @@ class _RequestBody(Contract):
 
     @model_validator(mode="after")
     def _session_path(self):
+        expected_schema = (
+            "dsh.harbor-job-request.v1" if self.termination_policy == "completed-only" else "dsh.harbor-job-request.v2"
+        )
+        if self.schema_ != expected_schema:
+            raise ValueError("Request schema does not match termination policy")
         if self.model_route.session_path != f"/sessions/{self.gateway_session_id}/v1":
             raise ValueError("Gateway path does not match the published session")
         return self
@@ -126,7 +156,7 @@ class JobRequest(_RequestBody):
         return self
 
 
-class RequestPolicy(Contract):
+class RequestPolicy(TerminationContract):
     task_refs: Annotated[tuple[TaskRef, ...], BeforeValidator(_array), Field(min_length=1)]
     dsh_release: DshRelease
     gateway_host: str
@@ -146,6 +176,10 @@ def validate_request(data: Mapping[str, Any], *, policy: RequestPolicy, now_unix
         raise ValueError("Invalid controller time")
     if request.task_ref not in policy.task_refs or request.dsh_release != policy.dsh_release:
         raise ValueError("Task or DSH release is not approved")
+    if request.termination_policy != policy.termination_policy:
+        raise ValueError("Request termination policy differs from operator policy")
+    if request.budget_limits != policy.budget_limits:
+        raise ValueError("Request budget terminal limits differ from operator policy")
     for field in ("gateway_host", "gateway_port", "model_name", "tunnel_alias"):
         if getattr(request.model_route, field) != getattr(policy, field):
             raise ValueError(f"Unapproved model route: {field}")

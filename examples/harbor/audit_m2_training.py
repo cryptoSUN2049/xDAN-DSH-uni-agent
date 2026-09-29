@@ -136,6 +136,7 @@ def audit_training(
                     group_uid=context.group_uid,
                     session_indexes=[],
                     rewards=[],
+                    termination_kinds=[],
                     transfer_queue_keys=[],
                     consumed_transfer_queue_keys=[],
                 ),
@@ -154,6 +155,17 @@ def audit_training(
                     raise ValueError("TransferQueue key mismatch")
                 trajectory = _load_dump_trajectory(npz_bytes=raw_npz, trajectory_meta=entry, trajectory_index=index)
                 validate_registered_trajectories((trajectory,), context=context.model_dump(), **kwargs)
+                if kwargs.get("termination_policy") == "budget-terminal-v1":
+                    from uni_agent.tasks.harbor_dsh.budget_admission import bind_budget_dump
+
+                    bind_budget_dump(
+                        [trajectory],
+                        context=context.model_dump(),
+                        metadata=meta,
+                        npz_sha256=meta["trajectory_npz_sha256"],
+                        artifact_root=kwargs["artifact_root"],
+                        online=False,
+                    )
                 receipt = trajectory.extra_fields["dsh_reward_info"]["harbor_dsh"]["receipt_sha256"]
                 if receipt in seen_receipts:
                     raise ValueError("Receipt reused across sessions")
@@ -166,6 +178,11 @@ def audit_training(
                     if rows[partition][joined] != [trajectory.reward_score]:
                         raise ValueError("Trainer row duplicated or reward mismatched")
                     group["consumed_transfer_queue_keys"].append(tq_key)
+                group["termination_kinds"].append(
+                    (trajectory.extra_fields.get("budget_admission") or {}).get(
+                        "termination_kind", "completed" if trajectory.finished is True else "unfinished"
+                    )
+                )
                 group["rewards"].append(trajectory.reward_score)
                 group["transfer_queue_keys"].append(tq_key)
             seen_receipts.update(local_receipts)

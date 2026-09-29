@@ -1,0 +1,35 @@
+{
+  "schema": "xdan.budget-terminal-cpu-validation.v1",
+  "gpu_training_accepted": false,
+  "gateway": {
+    "passed": 121,
+    "cloud_log": "integration-check/budget-gateway-green-v3.log",
+    "sha256": "1ad0665a06d974007fd4c3ae44d1352857ea37c141f8d3b9331bd51bd9c214bd"
+  },
+  "launcher": {
+    "passed": 71,
+    "cloud_log": "integration-check/budget-launcher-green.log",
+    "sha256": "8b3e5b713a7e0f149160f812f8de5e0aceee61833d8c9cb0d0f22d6fc781a4dc"
+  },
+  "framework_regression": {
+    "passed": 160,
+    "cloud_log": "integration-check/budget-framework-green-v3.log",
+    "prior_failures": "Missing tests package markers then missing test fixture modules; original failed attempts retained."
+  },
+  "joint_group": {
+    "passed": 12,
+    "cloud_log": "integration-check/budget-group-review-green-v4.log",
+    "sha256": "89238eb8119f89bc39a840e7a7c7b828312b96d3efe0b9213d339e95aee7c257",
+    "cache_isolated": true,
+    "source_provenance_checked": true
+  },
+  "private_admission_and_group_coverage_run": {
+    "passed": 28,
+    "cloud_log": "integration-check/budget-group-coverage.log",
+    "sha256": "12f0d624b0e30908352efe4858c2f3d7679dfe254eacf281108b815fc9b3b981",
+    "cache_isolated": true
+  },
+  "worker": "../budget-worker-20260929/validation.json",
+  "counts_overlap": true,
+  "scope": "CPU correctness evidence only; real optimizer update/checkpoint/resume still required."
+}

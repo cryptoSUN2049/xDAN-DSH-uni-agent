@@ -49,6 +49,69 @@ def _overrides(values: dict, prefix: str = ""):
             yield f"{name}={_hydra(value)}"
 
 
+def _validate_termination_recipe(mode: str, config, postprocessor: dict) -> None:
+    """Bind the opt-in finite-budget objective to independently prepared inputs."""
+    framework = OmegaConf.select(config, FRAMEWORK)
+    policy = framework.get("termination_policy", "completed-only")
+    template = postprocessor.get("policy_template", {})
+    if not isinstance(template, Mapping):
+        raise ValueError("Prepared termination policy template must be a mapping")
+    declarations = (
+        policy,
+        postprocessor.get("termination_policy", "completed-only"),
+        template.get("termination_policy", "completed-only"),
+    )
+    if policy not in ("completed-only", "budget-terminal-v1") or any(value != policy for value in declarations):
+        raise ValueError("Recipe and prepared termination policies must match")
+    if policy == "completed-only":
+        return
+    if mode != "rl" or config.algorithm.adv_estimator != "grpo" or config.distillation.enabled is not False:
+        raise ValueError("Budget-terminal requires RL with GRPO and no distillation")
+    if not postprocessor.get("mimo_binding"):
+        raise ValueError("Budget-terminal currently requires a prepared MiMo binding")
+    limits = postprocessor.get("budget_limits")
+    template_limits = template.get("budget_limits")
+    for value in (limits, template_limits):
+        if (
+            not isinstance(value, Mapping)
+            or set(value) != {"max_generated_tokens", "trajectory_capacity"}
+            or any(type(item) is not int or item <= 0 for item in value.values())
+        ):
+            raise ValueError("Prepared budget limits must be exact positive integer limits")
+    if limits != template_limits:
+        raise ValueError("Prepared budget limits differ from the registered policy template")
+    rollout, actor = config.actor_rollout_ref.rollout, config.actor_rollout_ref.actor
+    generated = framework.get("max_generated_tokens_per_episode")
+    if type(generated) is not int or generated != limits["max_generated_tokens"]:
+        raise ValueError("Recipe generated budget differs from prepared operator limits")
+    data_prompt, data_response = config.data.max_prompt_length, config.data.max_response_length
+    prompt = rollout.get("prompt_length", data_prompt)
+    response = rollout.get("response_length", data_response)
+    capacity = limits["trajectory_capacity"]
+    values = (data_prompt, data_response, prompt, response, rollout.max_model_len)
+    if (
+        any(type(value) is not int or value <= 0 for value in values)
+        or data_prompt + data_response != capacity
+        or prompt + response != capacity
+        or rollout.max_model_len != capacity
+    ):
+        raise ValueError("Recipe context capacity differs from prepared budget limits")
+    for value in (actor.ppo_max_token_len_per_gpu, rollout.log_prob_max_token_len_per_gpu):
+        if type(value) is not int or value < capacity:
+            raise ValueError("Training and logprob capacity must cover the prepared context budget")
+    for name in (
+        "fail_on_rollout_error",
+        "require_finished_episode",
+        "require_verifier_reward",
+        "require_trajectory_dump",
+        "require_version_evidence",
+    ):
+        if framework.get(name) is not True:
+            raise ValueError(f"Budget-terminal requires {name}=true")
+    if framework.get("mask_unfinished_episode", False) is not False:
+        raise ValueError("Budget-terminal requires mask_unfinished_episode=false")
+
+
 def build_overrides(
     mode: str, launch: dict, environment: Mapping[str, str], *, recipe_config: str | Path | None = None
 ) -> list[str]:
@@ -86,6 +149,7 @@ def build_overrides(
     kwargs.task_config_path = environment.get("TASK_CONFIG") or _required(prepared, "TASK_CONFIG")
     kwargs.model_name = _required(prepared, "MODEL_ID")
     kwargs.harbor_route_registration = launch["registration"]
+    _validate_termination_recipe(mode, cfg, launch["postprocessor"])
     return list(_overrides(OmegaConf.to_container(cfg, resolve=True)))
 
 

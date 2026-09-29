@@ -1,0 +1,33 @@
+import json
+from pathlib import Path
+
+import coverage
+import pytest
+
+sources = ["protocol", "task", "executor", "registration", "trajectory_audit"]
+cov = coverage.Coverage(source=["uni_agent.tasks.harbor_dsh." + name for name in sources])
+cov.start()
+from tests.uni_agent.tasks import test_harbor_dsh_task as task_fixture
+from tests.uni_agent.tasks import test_harbor_dsh_executor as executor_fixture
+
+root = Path.cwd().resolve()
+paths = {name: str(Path(module.__file__).resolve()) for name, module in [("task", task_fixture), ("executor", executor_fixture)]}
+print("FIXTURE_IMPORTS=" + json.dumps(paths), flush=True)
+print("ROOT=" + str(root), flush=True)
+assert all(Path(path).is_relative_to(root) for path in paths.values())
+code_paths = {"task_config": task_fixture.config.__code__.co_filename, "executor_request": executor_fixture.request_for.__code__.co_filename}
+print("FIXTURE_CODE=" + json.dumps(code_paths), flush=True)
+assert all(Path(path).resolve().is_relative_to(root) for path in code_paths.values())
+files = [
+    "tasks/test_harbor_budget_terminal.py", "tasks/test_harbor_budget_executor.py",
+    "tasks/test_harbor_budget_trajectory.py", "examples/test_harbor_budget_preparation.py",
+    "tasks/test_harbor_dsh_protocol.py", "tasks/test_harbor_dsh_task.py", "tasks/test_harbor_dsh_executor.py",
+    "tasks/test_harbor_dsh_registration.py", "tasks/test_harbor_dsh_trajectory_audit.py",
+    "deployment/test_harbor_run_controller.py", "examples/test_harbor_m2_training_entry.py",
+    "examples/test_mimo_training_entry.py", "tasks/test_mimo_executor.py", "tasks/test_mimo_task_evidence.py",
+]
+exit_code = pytest.main(["-q"] + ["tests/uni_agent/" + path for path in files])
+cov.stop()
+cov.save()
+cov.report(show_missing=True)
+raise SystemExit(exit_code)

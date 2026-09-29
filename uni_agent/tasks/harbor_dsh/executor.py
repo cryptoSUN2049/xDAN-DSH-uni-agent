@@ -57,6 +57,7 @@ from uni_agent.tasks.harbor_dsh.mimo import (
     validate_mimo_release,
 )
 from uni_agent.tasks.harbor_dsh.protocol import JobRequest
+from uni_agent.tasks.harbor_dsh.task import verified_termination
 
 
 @dataclass(frozen=True)
@@ -219,10 +220,13 @@ def _collect_evidence(
     )
     trace_hash = _digest(artifacts["dsh_trace"])
     events = [_json(line) for line in artifacts["dsh_trace"].splitlines()]
+    if any(not isinstance(event, dict) for event in events):
+        raise RuntimeError("DSH trace contains a non-object event")
+    finished, _ = verified_termination(request, helper, events)
     expected_status = {
         "schema": "dsh.harbor-agent-execution.v1",
-        "status": "completed",
-        "finish_reason": "completed",
+        "status": "completed" if finished else "unfinished",
+        "finish_reason": helper["finish_reason"],
         "gateway_session_id": session,
         "dsh_session_id": f"dsh-{session}",
         "harbor_context_id": str(trial.id),
@@ -235,11 +239,10 @@ def _collect_evidence(
     if (
         not isinstance(status, dict)
         or any(status.get(key) != value for key, value in expected_status.items())
-        or status.get("finished") is not True
-        or agent.get("finished") is not True
+        or status.get("finished") is not finished
+        or agent.get("finished") is not finished
         or result.agent_result is None
         or result.agent_result.metadata.get("dsh") != status
-        or helper.get("finish_reason") != "completed"
         or helper.get("profile") != request.dsh_release.profile
         or helper.get("patches_sha256") != release_patch_paths_digest(request.dsh_release)
         or helper["trace_sha256"] != trace_hash

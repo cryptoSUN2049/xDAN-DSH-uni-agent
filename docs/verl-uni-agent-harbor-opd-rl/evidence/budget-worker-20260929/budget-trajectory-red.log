@@ -1,0 +1,256 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+_ test_real_gateway_and_worker_evidence_online_then_read_only_offline[True-False-1.0] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-87/test_real_gateway_and_worker_e0')
+transport = ([JobRequest(termination_policy='budget-terminal-v1', budget_limits=BudgetLimits(max_generated_tokens=9, trajectory_ca...8f9500dfccdd7502581fc80bdf4eb042b04')], {'fn': <function transport.<locals>.<lambda> at 0x7b4bddd522a0>, 'score': 1.0})
+completed = True, context_limit = False, score = 1.0
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("completed,context_limit,score", [(True, False, 1.0), (False, False, 0.0), (False, True, 1.0)])
+    async def test_real_gateway_and_worker_evidence_online_then_read_only_offline(tmp_path, transport, completed, context_limit, score):
+        trajectory, result, kwargs, directory = await make_case(
+            tmp_path, transport, completed=completed, context_limit=context_limit, score=score,
+        )
+        with pytest.raises(TrajectoryAuditError):
+>           validate_trajectories((trajectory,), **kwargs)
+E           TypeError: validate_trajectories() got an unexpected keyword argument 'termination_policy'
+
+tests/uni_agent/tasks/test_harbor_budget_trajectory.py:75: TypeError
+------------------------------ Captured log call -------------------------------
+WARNING  verl.utils.tokenizer.continuous_token_wiring:continuous_token_wiring.py:210 No model-specific Continuous Token builder is registered for config.json model_type=None; falling back to default.
+_ test_real_gateway_and_worker_evidence_online_then_read_only_offline[False-False-0.0] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-87/test_real_gateway_and_worker_e1')
+transport = ([JobRequest(termination_policy='budget-terminal-v1', budget_limits=BudgetLimits(max_generated_tokens=3, trajectory_ca...b0d9300b2239dd6fb8bdce7e2ed618b02e6')], {'fn': <function make_case.<locals>.<lambda> at 0x7b4bddd531a0>, 'score': 0.0})
+completed = False, context_limit = False, score = 0.0
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("completed,context_limit,score", [(True, False, 1.0), (False, False, 0.0), (False, True, 1.0)])
+    async def test_real_gateway_and_worker_evidence_online_then_read_only_offline(tmp_path, transport, completed, context_limit, score):
+        trajectory, result, kwargs, directory = await make_case(
+            tmp_path, transport, completed=completed, context_limit=context_limit, score=score,
+        )
+        with pytest.raises(TrajectoryAuditError):
+>           validate_trajectories((trajectory,), **kwargs)
+E           TypeError: validate_trajectories() got an unexpected keyword argument 'termination_policy'
+
+tests/uni_agent/tasks/test_harbor_budget_trajectory.py:75: TypeError
+------------------------------ Captured log call -------------------------------
+WARNING  verl.utils.tokenizer.continuous_token_wiring:continuous_token_wiring.py:210 No model-specific Continuous Token builder is registered for config.json model_type=None; falling back to default.
+_ test_real_gateway_and_worker_evidence_online_then_read_only_offline[False-True-1.0] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-87/test_real_gateway_and_worker_e2')
+transport = ([JobRequest(termination_policy='budget-terminal-v1', budget_limits=BudgetLimits(max_generated_tokens=9, trajectory_ca...962b6a9c27b5a549ad2a5c6e8928f15ae99')], {'fn': <function make_case.<locals>.<lambda> at 0x7b4bddd53600>, 'score': 1.0})
+completed = False, context_limit = True, score = 1.0
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("completed,context_limit,score", [(True, False, 1.0), (False, False, 0.0), (False, True, 1.0)])
+    async def test_real_gateway_and_worker_evidence_online_then_read_only_offline(tmp_path, transport, completed, context_limit, score):
+        trajectory, result, kwargs, directory = await make_case(
+            tmp_path, transport, completed=completed, context_limit=context_limit, score=score,
+        )
+        with pytest.raises(TrajectoryAuditError):
+>           validate_trajectories((trajectory,), **kwargs)
+E           TypeError: validate_trajectories() got an unexpected keyword argument 'termination_policy'
+
+tests/uni_agent/tasks/test_harbor_budget_trajectory.py:75: TypeError
+------------------------------ Captured log call -------------------------------
+WARNING  verl.utils.tokenizer.continuous_token_wiring:continuous_token_wiring.py:210 No model-specific Continuous Token builder is registered for config.json model_type=None; falling back to default.
+___ test_joint_admission_fails_closed_before_writing_private_evidence[proof] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-87/test_joint_admission_fails_clo0')
+transport = ([JobRequest(termination_policy='budget-terminal-v1', budget_limits=BudgetLimits(max_generated_tokens=3, trajectory_ca...c5886f1750241e8cc4c3bfcc2800d2aa883')], {'fn': <function make_case.<locals>.<lambda> at 0x7b4bddd53100>, 'score': 1.0})
+attack = 'proof'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("attack", ["proof", "token", "limits", "policy", "finished", "receipt"])
+    async def test_joint_admission_fails_closed_before_writing_private_evidence(tmp_path, transport, attack):
+        trajectory, result, kwargs, directory = await make_case(tmp_path, transport)
+        if attack == "proof":
+            trajectory.extra_fields.pop("gateway_budget_proof")
+        elif attack == "token":
+            trajectory.response_ids[0] += 1
+        elif attack == "limits":
+            kwargs["budget_limits"] = {**kwargs["budget_limits"], "max_generated_tokens": 4}
+        elif attack == "policy":
+            kwargs["termination_policy"] = "completed-only"
+        elif attack == "finished":
+            trajectory.finished = True
+        else:
+            path = directory / "receipt.json"
+            path.write_bytes(path.read_bytes() + b" ")
+        with pytest.raises(TrajectoryAuditError):
+>           validate_trajectories((trajectory,), task_result=result, **kwargs)
+E           TypeError: validate_trajectories() got an unexpected keyword argument 'termination_policy'
+
+tests/uni_agent/tasks/test_harbor_budget_trajectory.py:114: TypeError
+------------------------------ Captured log call -------------------------------
+WARNING  verl.utils.tokenizer.continuous_token_wiring:continuous_token_wiring.py:210 No model-specific Continuous Token builder is registered for config.json model_type=None; falling back to default.
+___ test_joint_admission_fails_closed_before_writing_private_evidence[token] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-87/test_joint_admission_fails_clo1')
+transport = ([JobRequest(termination_policy='budget-terminal-v1', budget_limits=BudgetLimits(max_generated_tokens=3, trajectory_ca...c841f30cd65f437789508e2283cb4375a09')], {'fn': <function make_case.<locals>.<lambda> at 0x7b4bddd528e0>, 'score': 1.0})
+attack = 'token'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("attack", ["proof", "token", "limits", "policy", "finished", "receipt"])
+    async def test_joint_admission_fails_closed_before_writing_private_evidence(tmp_path, transport, attack):
+        trajectory, result, kwargs, directory = await make_case(tmp_path, transport)
+        if attack == "proof":
+            trajectory.extra_fields.pop("gateway_budget_proof")
+        elif attack == "token":
+            trajectory.response_ids[0] += 1
+        elif attack == "limits":
+            kwargs["budget_limits"] = {**kwargs["budget_limits"], "max_generated_tokens": 4}
+        elif attack == "policy":
+            kwargs["termination_policy"] = "completed-only"
+        elif attack == "finished":
+            trajectory.finished = True
+        else:
+            path = directory / "receipt.json"
+            path.write_bytes(path.read_bytes() + b" ")
+        with pytest.raises(TrajectoryAuditError):
+>           validate_trajectories((trajectory,), task_result=result, **kwargs)
+E           TypeError: validate_trajectories() got an unexpected keyword argument 'termination_policy'
+
+tests/uni_agent/tasks/test_harbor_budget_trajectory.py:114: TypeError
+------------------------------ Captured log call -------------------------------
+WARNING  verl.utils.tokenizer.continuous_token_wiring:continuous_token_wiring.py:210 No model-specific Continuous Token builder is registered for config.json model_type=None; falling back to default.
+__ test_joint_admission_fails_closed_before_writing_private_evidence[limits] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-87/test_joint_admission_fails_clo2')
+transport = ([JobRequest(termination_policy='budget-terminal-v1', budget_limits=BudgetLimits(max_generated_tokens=3, trajectory_ca...11bddd302390a5269c148f9e6fc6ce745bc')], {'fn': <function make_case.<locals>.<lambda> at 0x7b4bddd94220>, 'score': 1.0})
+attack = 'limits'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("attack", ["proof", "token", "limits", "policy", "finished", "receipt"])
+    async def test_joint_admission_fails_closed_before_writing_private_evidence(tmp_path, transport, attack):
+        trajectory, result, kwargs, directory = await make_case(tmp_path, transport)
+        if attack == "proof":
+            trajectory.extra_fields.pop("gateway_budget_proof")
+        elif attack == "token":
+            trajectory.response_ids[0] += 1
+        elif attack == "limits":
+            kwargs["budget_limits"] = {**kwargs["budget_limits"], "max_generated_tokens": 4}
+        elif attack == "policy":
+            kwargs["termination_policy"] = "completed-only"
+        elif attack == "finished":
+            trajectory.finished = True
+        else:
+            path = directory / "receipt.json"
+            path.write_bytes(path.read_bytes() + b" ")
+        with pytest.raises(TrajectoryAuditError):
+>           validate_trajectories((trajectory,), task_result=result, **kwargs)
+E           TypeError: validate_trajectories() got an unexpected keyword argument 'termination_policy'
+
+tests/uni_agent/tasks/test_harbor_budget_trajectory.py:114: TypeError
+------------------------------ Captured log call -------------------------------
+WARNING  verl.utils.tokenizer.continuous_token_wiring:continuous_token_wiring.py:210 No model-specific Continuous Token builder is registered for config.json model_type=None; falling back to default.
+__ test_joint_admission_fails_closed_before_writing_private_evidence[policy] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-87/test_joint_admission_fails_clo3')
+transport = ([JobRequest(termination_policy='budget-terminal-v1', budget_limits=BudgetLimits(max_generated_tokens=3, trajectory_ca...8ff6ae1f6f6043272f7819be73e58c31e50')], {'fn': <function make_case.<locals>.<lambda> at 0x7b4bddd94680>, 'score': 1.0})
+attack = 'policy'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("attack", ["proof", "token", "limits", "policy", "finished", "receipt"])
+    async def test_joint_admission_fails_closed_before_writing_private_evidence(tmp_path, transport, attack):
+        trajectory, result, kwargs, directory = await make_case(tmp_path, transport)
+        if attack == "proof":
+            trajectory.extra_fields.pop("gateway_budget_proof")
+        elif attack == "token":
+            trajectory.response_ids[0] += 1
+        elif attack == "limits":
+            kwargs["budget_limits"] = {**kwargs["budget_limits"], "max_generated_tokens": 4}
+        elif attack == "policy":
+            kwargs["termination_policy"] = "completed-only"
+        elif attack == "finished":
+            trajectory.finished = True
+        else:
+            path = directory / "receipt.json"
+            path.write_bytes(path.read_bytes() + b" ")
+        with pytest.raises(TrajectoryAuditError):
+>           validate_trajectories((trajectory,), task_result=result, **kwargs)
+E           TypeError: validate_trajectories() got an unexpected keyword argument 'termination_policy'
+
+tests/uni_agent/tasks/test_harbor_budget_trajectory.py:114: TypeError
+------------------------------ Captured log call -------------------------------
+WARNING  verl.utils.tokenizer.continuous_token_wiring:continuous_token_wiring.py:210 No model-specific Continuous Token builder is registered for config.json model_type=None; falling back to default.
+_ test_joint_admission_fails_closed_before_writing_private_evidence[finished] __
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-87/test_joint_admission_fails_clo4')
+transport = ([JobRequest(termination_policy='budget-terminal-v1', budget_limits=BudgetLimits(max_generated_tokens=3, trajectory_ca...b9e22d21d1bada8071ea7b143b1eb6d16ea')], {'fn': <function make_case.<locals>.<lambda> at 0x7b4bddd95120>, 'score': 1.0})
+attack = 'finished'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("attack", ["proof", "token", "limits", "policy", "finished", "receipt"])
+    async def test_joint_admission_fails_closed_before_writing_private_evidence(tmp_path, transport, attack):
+        trajectory, result, kwargs, directory = await make_case(tmp_path, transport)
+        if attack == "proof":
+            trajectory.extra_fields.pop("gateway_budget_proof")
+        elif attack == "token":
+            trajectory.response_ids[0] += 1
+        elif attack == "limits":
+            kwargs["budget_limits"] = {**kwargs["budget_limits"], "max_generated_tokens": 4}
+        elif attack == "policy":
+            kwargs["termination_policy"] = "completed-only"
+        elif attack == "finished":
+            trajectory.finished = True
+        else:
+            path = directory / "receipt.json"
+            path.write_bytes(path.read_bytes() + b" ")
+        with pytest.raises(TrajectoryAuditError):
+>           validate_trajectories((trajectory,), task_result=result, **kwargs)
+E           TypeError: validate_trajectories() got an unexpected keyword argument 'termination_policy'
+
+tests/uni_agent/tasks/test_harbor_budget_trajectory.py:114: TypeError
+------------------------------ Captured log call -------------------------------
+WARNING  verl.utils.tokenizer.continuous_token_wiring:continuous_token_wiring.py:210 No model-specific Continuous Token builder is registered for config.json model_type=None; falling back to default.
+__ test_joint_admission_fails_closed_before_writing_private_evidence[receipt] __
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-87/test_joint_admission_fails_clo5')
+transport = ([JobRequest(termination_policy='budget-terminal-v1', budget_limits=BudgetLimits(max_generated_tokens=3, trajectory_ca...c95b25e277309eb2b443379e39af9fbbfff')], {'fn': <function make_case.<locals>.<lambda> at 0x7b4bddd95580>, 'score': 1.0})
+attack = 'receipt'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("attack", ["proof", "token", "limits", "policy", "finished", "receipt"])
+    async def test_joint_admission_fails_closed_before_writing_private_evidence(tmp_path, transport, attack):
+        trajectory, result, kwargs, directory = await make_case(tmp_path, transport)
+        if attack == "proof":
+            trajectory.extra_fields.pop("gateway_budget_proof")
+        elif attack == "token":
+            trajectory.response_ids[0] += 1
+        elif attack == "limits":
+            kwargs["budget_limits"] = {**kwargs["budget_limits"], "max_generated_tokens": 4}
+        elif attack == "policy":
+            kwargs["termination_policy"] = "completed-only"
+        elif attack == "finished":
+            trajectory.finished = True
+        else:
+            path = directory / "receipt.json"
+            path.write_bytes(path.read_bytes() + b" ")
+        with pytest.raises(TrajectoryAuditError):
+>           validate_trajectories((trajectory,), task_result=result, **kwargs)
+E           TypeError: validate_trajectories() got an unexpected keyword argument 'termination_policy'
+
+tests/uni_agent/tasks/test_harbor_budget_trajectory.py:114: TypeError
+------------------------------ Captured log call -------------------------------
+WARNING  verl.utils.tokenizer.continuous_token_wiring:continuous_token_wiring.py:210 No model-specific Continuous Token builder is registered for config.json model_type=None; falling back to default.
+=============================== warnings summary ===============================
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55: DeprecationWarning: Ray state API is no longer experimental. Please import from `ray.util.state`. instead. Importing from `ray.experimental` will be deprecated in future releases. 
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/uni_agent/tasks/test_harbor_budget_trajectory.py::test_real_gateway_and_worker_evidence_online_then_read_only_offline[True-False-1.0]
+FAILED tests/uni_agent/tasks/test_harbor_budget_trajectory.py::test_real_gateway_and_worker_evidence_online_then_read_only_offline[False-False-0.0]
+FAILED tests/uni_agent/tasks/test_harbor_budget_trajectory.py::test_real_gateway_and_worker_evidence_online_then_read_only_offline[False-True-1.0]
+FAILED tests/uni_agent/tasks/test_harbor_budget_trajectory.py::test_joint_admission_fails_closed_before_writing_private_evidence[proof]
+FAILED tests/uni_agent/tasks/test_harbor_budget_trajectory.py::test_joint_admission_fails_closed_before_writing_private_evidence[token]
+FAILED tests/uni_agent/tasks/test_harbor_budget_trajectory.py::test_joint_admission_fails_closed_before_writing_private_evidence[limits]
+FAILED tests/uni_agent/tasks/test_harbor_budget_trajectory.py::test_joint_admission_fails_closed_before_writing_private_evidence[policy]
+FAILED tests/uni_agent/tasks/test_harbor_budget_trajectory.py::test_joint_admission_fails_closed_before_writing_private_evidence[finished]
+FAILED tests/uni_agent/tasks/test_harbor_budget_trajectory.py::test_joint_admission_fails_closed_before_writing_private_evidence[receipt]
+9 failed, 1 warning in 38.66s

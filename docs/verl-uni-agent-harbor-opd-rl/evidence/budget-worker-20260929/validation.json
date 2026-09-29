@@ -1,0 +1,130 @@
+{
+  "schema": "dsh.budget-worker-cpu-validation.v1",
+  "recorded_at_utc": "2026-09-29T07:25:03.588249+00:00",
+  "source_base_commit": "a7d8b76c1fe7a941dcb396514b9865ca3f01ea84",
+  "scope": "Worker candidate contract, registered policy passthrough, v2 receipt revalidation, Gateway joint admission",
+  "status": "passed_across_two_cache_isolated_runs",
+  "tests": {
+    "aggregate_unique_passed": 360,
+    "main_run": {
+      "passed": 356,
+      "failed": 4,
+      "exit_code": 1,
+      "seconds": 73.96,
+      "log": "budget-worker-final-green.log",
+      "failure_cause": "Isolated source snapshot lacked Git provenance required by four existing Modal T2 preparation tests."
+    },
+    "affected_rerun": {
+      "passed": 4,
+      "failed": 0,
+      "exit_code": 0,
+      "seconds": 62.31,
+      "log": "budget-worker-fixture-green.log",
+      "fixture_change": "Created an explicitly empty Git fixture commit inside budget-worker only; production code and this worktree history unchanged."
+    },
+    "red_before_implementation": [
+      {
+        "log": "budget-worker-red-complete.log",
+        "failed": 14,
+        "passed": 2
+      },
+      {
+        "log": "budget-worker-limits-red.log",
+        "failed": 1
+      },
+      {
+        "log": "budget-trajectory-red.log",
+        "failed": 9
+      }
+    ],
+    "final_fixture_module_and_code_paths_checked": true,
+    "warnings": [
+      "Existing Ray deprecation warning",
+      "Executor module not imported during four-case coverage append; prior executor coverage retained."
+    ]
+  },
+  "coverage": {
+    "statements": 1071,
+    "covered": 998,
+    "percent": 93.18394024276377,
+    "by_file": {
+      "uni_agent/tasks/harbor_dsh/executor.py": 90.44117647058823,
+      "uni_agent/tasks/harbor_dsh/protocol.py": 100.0,
+      "uni_agent/tasks/harbor_dsh/registration.py": 92.6829268292683,
+      "uni_agent/tasks/harbor_dsh/task.py": 91.58249158249158,
+      "uni_agent/tasks/harbor_dsh/trajectory_audit.py": 92.80575539568345
+    }
+  },
+  "lint": {
+    "ruff_check_exit_code": 0,
+    "ruff_format_check_exit_code": 0,
+    "formatted_files": 12,
+    "git_diff_check_exit_code": 0
+  },
+  "execution": {
+    "host": "CPU SSH 157.157.221.177:11621",
+    "source": "/workspace/mimo-dsh-rl-20260928/integration-check/budget-worker",
+    "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+    "native_source_read_only": "/workspace/mimo-dsh-rl-20260928/run-src-r4/verl",
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPYCACHEPREFIX_main": "/root/mimo-private/pycache-budget-worker-final-20260929",
+    "PYTHONPYCACHEPREFIX_rerun": "/root/mimo-private/pycache-budget-worker-fixture-recheck-20260929",
+    "runner_artifact": "budget-worker-test-run.py.txt",
+    "shared_environment_modified": false,
+    "production_run_sources_modified": false,
+    "gpu_started": false
+  },
+  "source_archive": {
+    "remote": "/workspace/mimo-dsh-rl-20260928/integration-check/budget-worker-reviewed.tar",
+    "sha256": "74c52f2a433aa8cd5db4ff8065f6b7509f0637a3a516e5401106552fd00a1c86",
+    "files": [
+      "uni_agent/tasks/harbor_dsh/protocol.py",
+      "uni_agent/tasks/harbor_dsh/task.py",
+      "uni_agent/tasks/harbor_dsh/registration.py",
+      "uni_agent/tasks/harbor_dsh/executor.py",
+      "uni_agent/tasks/harbor_dsh/trajectory_audit.py",
+      "examples/harbor/prepare_m2_training.py",
+      "tests/uni_agent/tasks/test_harbor_budget_terminal.py",
+      "tests/uni_agent/tasks/test_harbor_budget_executor.py",
+      "tests/uni_agent/tasks/test_harbor_budget_trajectory.py",
+      "tests/uni_agent/examples/test_harbor_budget_preparation.py",
+      "tests/uni_agent/tasks/test_harbor_dsh_registration.py",
+      "tests/uni_agent/examples/test_harbor_m2_training_entry.py"
+    ]
+  },
+  "source_sha256": {
+    "uni_agent/tasks/harbor_dsh/protocol.py": "37fd32a760e5053d0bec82891c7fd69851978fdd4fd818e0f01f60b83a35938a",
+    "uni_agent/tasks/harbor_dsh/task.py": "b30f3b8a3a5a09ea9b6c4668a8842207621e9464af47c2f9b11681fce2f0ac0e",
+    "uni_agent/tasks/harbor_dsh/registration.py": "2eaecd9b9b5ec6c89c65d064379f2152862d00a48bc4a017481007e306a300f0",
+    "uni_agent/tasks/harbor_dsh/executor.py": "a48b527dfed9e97eebd117571ecf30fe803aedd66d1a011f9c3a8ed83d013dfa",
+    "uni_agent/tasks/harbor_dsh/trajectory_audit.py": "2278c13b71f4c941a432f6a437b456fd5ac212fe0b567f1ed0a7f6ccfb930ca7",
+    "examples/harbor/prepare_m2_training.py": "777c92bf5949a65837ad11433a98bdc642a119064b26d8d0b747265e6e37e432",
+    "tests/uni_agent/tasks/test_harbor_budget_terminal.py": "e4179ef795d1c933a760252206d5bcce3ce03899384a253f7e0cc7398d7ada9a",
+    "tests/uni_agent/tasks/test_harbor_budget_executor.py": "cb7872b0e11f972b4df44ef9436aeef06914f0d4469cfe7c26b5d282cdf531af",
+    "tests/uni_agent/tasks/test_harbor_budget_trajectory.py": "08c96d16b84562c7779dff462acc45e28c410e72e8101639b046b4422b14182b",
+    "tests/uni_agent/examples/test_harbor_budget_preparation.py": "bd6d126e934a4a37aab50b50dbfec928b90bca527000508b5c6566a8c7567d04",
+    "tests/uni_agent/tasks/test_harbor_dsh_registration.py": "32f3b27232eb9cdecfbc81742d7b821c64117c9f142363ab2b894302f8a040ce",
+    "tests/uni_agent/examples/test_harbor_m2_training_entry.py": "39fc20a1d34d49881a09db01b91ac24edbd1a707d26c71dbc0137daea34b645a"
+  },
+  "verified_dependency_sha256": {
+    "uni_agent/tasks/harbor_dsh/budget_admission.py": "5e4699379568aee7fff5890f32d4bb890937842366c05e7eae51e48f7dee90f0",
+    "uni_agent/gateway/session/session.py": "a0e119d87bc4941f41aac2bbd1612746b1625e946fdf1d6f74a15ae1662e0ad5",
+    "uni_agent/gateway/session/types.py": "f87ffbf2cc93c8646b781083d6ddb2563ec365bee35ea069f7204015fd62483b"
+  },
+  "all_source_and_dependency_hashes_match_remote": true,
+  "evidence_sha256": {
+    "budget-trajectory-red.log": "f3a2ba8541949863a124d085ab1686f5ceaf1c0219148e12b0b5208ede6be707",
+    "budget-worker-coverage.json": "0a2c3d2287a91814e719be52fb3131f163f2711a4b58c65ca859e7c9945fa2dd",
+    "budget-worker-final-green.log": "a3b51eeabcb4ff2b8384b69f083a56cbe764343eedf67d91929fc9da23897a2c",
+    "budget-worker-fixture-green.log": "055e1a96d56512952b85fa236604e2bf58a880a499576cb7a9886c27f9fc0da0",
+    "budget-worker-limits-red.log": "c78d13c99db3893f802d7fca652fd81ef9f41979c51ccf9a5f717b6cef4a0295",
+    "budget-worker-red-complete.log": "2cb5763220516341a879e4e3a656a411aefc67ff627a4a927bc4d468000732fa",
+    "budget-worker-test-run.py.txt": "f58bb71183e8a8b90123e0940ce24bc5c2e4bccc21839b2e42df7c6d89a3d35c"
+  },
+  "limits": [
+    "CPU tests use real Gateway Session and real Harbor task receipt validation with fake model/Worker transport boundaries.",
+    "No real GPU update or checkpoint/resume was performed by these tests.",
+    "Historical rejected trajectories are not retroactively admitted."
+  ]
+}

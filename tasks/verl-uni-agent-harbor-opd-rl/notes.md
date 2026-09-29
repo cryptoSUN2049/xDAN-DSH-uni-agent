@@ -59,3 +59,12 @@ Goal API当前仍报告paused，工具没有resume接口；用户已在会话明
 - 公开终态报告 /workspace/mimo-dsh-rl-20260928/integration-check/r7-failure-evidence.json；私有原始证据留CPU /root/mimo-private/evidence-r7/。
 - docs/verl-uni-agent-harbor-opd-rl/budget-terminal-admission-design.md已呈交用户；异步问题等待批准。新契约仍finished=false，要求Gateway可信预算证明+独立verifier+完整同策略组，不能只关闭完成门。尚未实现，旧r6/r7不追认成功。
 - 现有Pod仍运行计费，禁止旧watchdog删除；保留模型/固定273项uv环境。后续有效更新/保存/独立重载验收仍未完成。
+
+
+## 2026-09-29 预算准入获批并通过CPU联调
+
+- 用户明确“批准 开始”，后问64K，已说明保持32K/20480生成，先预算终态闭环，再做64K成本比较；未将方案改为64K。
+- Gateway121项、launcher71项、Framework/旧回归160项、n4实际合同联调12项、私有准入+group覆盖28项通过（用例重叠不累加）。Worker356项+补足Git fixture后4项，共360项分别通过，五模块coverage93.18%；helper含分支80.53%，Framework新增可执行行86.67%。
+- private admission绑定完整Gateway proof/receipt/policy/context/token/versions，private dump绑定NPZ和metadata。新mode v2 request/receipt，默认v1 wire/hash保持。预算样本finished=false；无效成员整组失败；取消和per-call长度终止不伪造budget。
+- Gateway slice648d61a与import格式a7d8b76已push origin同名分支；在 /tmp/mimo-budget-push-check 精确提交干净worktree执行完整Ruff双门通过。不改未提交OpenCompass。
+- r8源码staging=/workspace/mimo-dsh-rl-20260928/run-src-r8；尚未启动训练。CPU准备脚本prepare-r8.py与driver/wrapper已按新身份改好，待冻结commit/source manifest、设新限时窗口、任务与真实预检。禁止删除已有Pod；保持固定模型/DSH/uv。

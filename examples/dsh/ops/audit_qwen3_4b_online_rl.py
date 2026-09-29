@@ -136,6 +136,10 @@ def _load_dump_trajectory(
     if trajectory_meta.get("has_logprobs") is not True:
         raise TrajectoryAuditError("trajectory metadata must declare has_logprobs=true")
 
+    from uni_agent.tasks.harbor_dsh.budget_admission import DUMP_FIELDS
+
+    if "finished" in trajectory_meta and trajectory_meta["finished"] is not reward_info.get("finished"):
+        raise TrajectoryAuditError("trajectory metadata completion differs from reward_info")
     return Trajectory(
         prompt_ids=prompt_ids,
         response_ids=response_ids,
@@ -144,7 +148,12 @@ def _load_dump_trajectory(
         finished=reward_info.get("finished"),
         reward_score=float(reward_score),
         num_turns=int(trajectory_meta.get("num_turns", 0)),
-        extra_fields={"reward_extra_info": reward_extra_info, "dsh_reward_info": reward_info},
+        chain_id=trajectory_meta.get("chain_id"),
+        extra_fields={
+            "reward_extra_info": reward_extra_info,
+            "dsh_reward_info": reward_info,
+            **{key: trajectory_meta[key] for key in DUMP_FIELDS if key in trajectory_meta},
+        },
     )
 
 
