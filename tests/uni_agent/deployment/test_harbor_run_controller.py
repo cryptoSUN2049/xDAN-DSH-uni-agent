@@ -9,6 +9,66 @@ from deployment.services.harbor_run_controller import HarborRunController, RunSp
 from tests.uni_agent.tasks.test_harbor_dsh_protocol import payload, policy
 
 
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "modal,available,missing",
+    [
+        (False, set(), "ssh"),
+        (True, {"cloudflared"}, "ssh"),
+        (True, {"ssh"}, "cloudflared"),
+        (False, {"ssh"}, None),
+        (True, {"ssh", "cloudflared"}, None),
+    ],
+)
+async def test_main_checks_executables_before_creating_resources(tmp_path, monkeypatch, modal, available, missing):
+    import shutil
+
+    from deployment.services import harbor_run_controller as module
+
+    spec = make_spec(tmp_path)
+    if modal:
+        spec = RunSpec.model_validate(
+            {
+                **spec.model_dump(),
+                "modal_ingress": {
+                    "origin": "https://gateway.example.com",
+                    "tunnel_id": "12345678-1234-1234-1234-123456789abc",
+                    "credentials_file": str(tmp_path / "cloudflared.json"),
+                    "listen_port": 18999,
+                },
+            }
+        )
+    path = tmp_path / "spec.json"
+    path.write_text(spec.model_dump_json())
+    looked_up, constructed = [], []
+
+    def lookup(name):
+        looked_up.append(name)
+        return "/private/bin/" + name if name in available else None
+
+    class ConstructionReached(Exception):
+        pass
+
+    def construct(value):
+        constructed.append(value)
+        raise ConstructionReached
+
+    monkeypatch.setattr(shutil, "which", lookup)
+    monkeypatch.setattr(module.time, "time", lambda: 1000)
+    monkeypatch.setattr(module, "HarborRunController", construct)
+    monkeypatch.setattr(module.web, "AppRunner", lambda *a, **k: pytest.fail("Unexpected resource creation"))
+    if missing:
+        with pytest.raises(RuntimeError, match=f"Required executable not found on PATH: {missing}"):
+            await module.main(path)
+        assert constructed == []
+    else:
+        with pytest.raises(ConstructionReached):
+            await module.main(path)
+        assert len(constructed) == 1
+    assert looked_up == (["ssh", "cloudflared"] if modal and "ssh" in available else ["ssh"])
+    assert not spec.root.exists()
+
+
 def make_spec(tmp_path):
     template = policy(payload()).model_dump(mode="json")
     template.pop("gateway_port")

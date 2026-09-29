@@ -1,0 +1,42 @@
+{
+  "schema": "mimo.r15-preparation-validation.v1",
+  "exit_code": 0,
+  "finished_at": 1790702212.28757,
+  "gpu_training_started": false,
+  "runtime_prepared": false,
+  "stage_exit_code": 0,
+  "scripts_manifest": {
+    "files": {
+      "launch-r15-driver.py": "b8d2e4f61db489ad8b56b6c16c8cd6dcba5714307da0bd3b8bfd9e58bcffc71a",
+      "mimo-supervised-native-r15.py": "9d7b4cdcd67f19ec4bbf4e104a8164b8ae621d86fcf9ec47d5c43db5d9cc211c",
+      "mimo_r15_preparation.py": "be45a33eeb279211452c0058158cf08553a2be5546a29390a09cf17fbb252544",
+      "preflight-r15.py": "9553bacf287f1c292e1d2bd912538335c9dfd2fedfc2b02879af59b3704ce042",
+      "prepare-r15.py": "f28a2bc4e26454d761a269ee6de68eae442ae7738b26e59088892ec40ae831cc"
+    },
+    "schema": "mimo.r15-script-preparation.v1",
+    "templates": {
+      "driver": "575d5e4a91378cb23522b4411dbbbe116940b5173cca4eddb361671b13a40196",
+      "prepare": "9cf593482a12aceb24c0bcbe7c051429482da3fcd0e3d322dac6e3a20b004074",
+      "wrapper": "5a90973107bf13f9ab97273aa504844702b1db836192d899bbc8bdd5fc551600"
+    },
+    "training_started": false
+  },
+  "junit": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "52",
+      "time": "18.927",
+      "timestamp": "2026-09-29T17:16:31.562314+00:00",
+      "hostname": "2b1a577993cd"
+    }
+  ],
+  "files": {
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r15_preparation.py": "be45a33eeb279211452c0058158cf08553a2be5546a29390a09cf17fbb252544",
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r15_preflight.py": "9553bacf287f1c292e1d2bd912538335c9dfd2fedfc2b02879af59b3704ce042",
+    "tests/uni_agent/deployment/test_mimo_r15_preparation.py": "383a0d4a081481f585ed735d2d5885f21abbea625db5692fbcbb6786deb25e28",
+    "tests/uni_agent/deployment/test_mimo_r15_preflight.py": "0da732858289e3be1881b4edf545192c00e951c3ae5aab9ae4541dc0b414d9cf"
+  }
+}

@@ -15,6 +15,7 @@ import ipaddress
 import json
 import math
 import os
+import shutil
 import stat
 import time
 from pathlib import Path
@@ -414,6 +415,10 @@ async def main(path, max_run_seconds=14400):
     spec = RunSpec.model_validate_json(path.read_bytes())
     if not 0 < spec.deadline_unix - time.time() <= max_run_seconds:
         raise ValueError(f"Run must have a future deadline within {max_run_seconds} seconds")
+    required = ("ssh", "cloudflared") if spec.modal_ingress is not None else ("ssh",)
+    for executable in required:
+        if shutil.which(executable) is None:
+            raise RuntimeError(f"Required executable not found on PATH: {executable}")
     controller = HarborRunController(spec)
     runner = web.AppRunner(create_app(controller), access_log=None, shutdown_timeout=2)
     try:

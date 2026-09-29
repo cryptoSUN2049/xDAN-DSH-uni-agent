@@ -1,0 +1,50 @@
+{
+  "schema": "mimo.controller-failure.v1",
+  "run_id": "mimo9b-001661-r14",
+  "controller_log_sha256": "14bc324ac17cdf8c300312308dd7e82ca405c6462950b85718441922ad2d377f",
+  "root_exception": "FileNotFoundError: [Errno 2] No such file or directory: 'cloudflared'",
+  "failure_phase": "first gateway registration / ingress.start",
+  "controller": {
+    "controller_id": "mimo-controller-r14",
+    "failure_observed_at_unix": 1790701842.2382665,
+    "healthy": false,
+    "reason": "controller-failed",
+    "run_id": "mimo9b-001661-r14",
+    "run_spec_sha256": "sha256:2a9eed8946f7374dea5853b2efaa4cda090978eab48db1b20fefe74909855e35",
+    "ssh_exit_codes": {
+      "control": null,
+      "model": 0
+    },
+    "state": "failed"
+  },
+  "cleanup": {
+    "cleanup_errors": [],
+    "docker_cleanup_proven": false
+  },
+  "worker_started": false,
+  "controller_stopped": true,
+  "archiver_stopped": true,
+  "gpu_pod_preserved": true,
+  "corrected_executable": {
+    "schema": "mimo.controller-executable-preflight.v1",
+    "cloudflared_path": "/root/mimo-private/bin/cloudflared",
+    "cloudflared_sha256": "77e26d8d900e0b8469f416239d14b5f296525fdf79fee6f511ef55609e3fbac2",
+    "cloudflared_version": "cloudflared version 2026.9.3 (built 2026-09-24-16:07 UTC)",
+    "controller_path_prefix": "/root/mimo-private/bin",
+    "ssh_path": "/usr/bin/ssh",
+    "status": "passed",
+    "r14_archive_stopped": true,
+    "r14_controller_stopped": true
+  },
+  "real_ingress_probe": {
+    "schema": "mimo.native-ingress-preflight.v1",
+    "started_at": 1790702633.8548522,
+    "gpu_started": false,
+    "model_requests": 0,
+    "status": "passed",
+    "public_nonce_probe": true,
+    "cloudflared_pid": 107271,
+    "cleanup_confirmed": true,
+    "finished_at": 1790702637.9003832
+  }
+}

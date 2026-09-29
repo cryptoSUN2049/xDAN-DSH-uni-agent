@@ -1,0 +1,122 @@
+{
+  "schema": "mimo.r14-startup-termination-audit.v1",
+  "checked_at": "2026-09-29T17:14:18.512805+00:00",
+  "read_only": true,
+  "runtime_commit": "c2f9d36",
+  "wandb": {
+    "url": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/mimo9b001661r14",
+    "state": "running",
+    "created_at": "2026-09-29T17:09:04Z",
+    "history_method": "scan_history() without keys, unsampled"
+  },
+  "wandb_history_rows": 0,
+  "wandb_state_interpretation": "API still reports running after supervisor termination; terminal crashed/failed classification is pending backend detection. No status mutation performed.",
+  "training_result": {
+    "completed_optimizer_steps": 0,
+    "console_step_metric_count": 0,
+    "checkpoint_file_count": 0,
+    "checkpoint_root_exists": false,
+    "initial_weight_sync_reached_training_warmup": true,
+    "both_gpu_actor_processes_observed": true,
+    "both_gpu_vllm_processes_observed": true,
+    "two_replicas_registered": true,
+    "actual_request_routing_to_both_replicas_proven": false,
+    "dual_gpu_training_acceptance": false
+  },
+  "console": {
+    "sha256": "9a9c9530c67792ef8950215ae03423f86c78ffb970a2e98baf6e6faf26234dd3",
+    "bytes": 188265,
+    "step_metric_lines": [],
+    "startup_lines": [
+      "(TaskRunnerV1 pid=333511) INFO:2026-09-29 17:00:43,035:actor and ref model engine initialized",
+      "(TaskRunnerV1 pid=333511) INFO:2026-09-29 17:07:49,247:all initialize finished, ready to fit",
+      "(TaskRunnerV1 pid=333511) INFO:2026-09-29 17:09:06,308:Added 1 warmup prompts after restoring 0 of 1 target prompt groups",
+      "(TaskRunnerV1 pid=333511) [rl-insight] Registered 2 Prometheus targets with RL-Insight server (job_name=vllm)",
+      "(AgentFrameworkWorker pid=341906)     raise ValueError(\"Controller registration HTTP response rejected\")",
+      "(AgentFrameworkWorker pid=341906) ValueError: Controller registration HTTP response rejected",
+      "*** SIGTERM received at time=1790701841 on cpu 72 ***",
+      "[2026-09-29 17:10:41,667 E 328704 328704] logging.cc:474: *** SIGTERM received at time=1790701841 on cpu 72 ***"
+    ]
+  },
+  "gpu_timeline": {
+    "source": "/root/mimo-private/gpu-timeline-r14.jsonl",
+    "sha256": "d70848980e5989678b0d1716e7483d640dd85e5d05edf1706933dd48c2414946",
+    "snapshots": 115,
+    "first_two_actor_processes": {
+      "run_id": "mimo9b-001661-r14",
+      "observed_at": 1790701171.3889894,
+      "operator_status": "running",
+      "gpus": [
+        "0, GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94, 0, 559, 97887",
+        "1, GPU-2676ad09-5ff2-cb59-a4bd-9c516041194b, 0, 559, 97887"
+      ],
+      "compute_processes": [
+        "335361, GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94, 550",
+        "335362, GPU-2676ad09-5ff2-cb59-a4bd-9c516041194b, 550"
+      ],
+      "process_names": {
+        "335361": "ray::WorkerDict",
+        "335362": "ray::WorkerDict"
+      }
+    },
+    "first_two_vllm_processes": {
+      "run_id": "mimo9b-001661-r14",
+      "observed_at": 1790701514.8099597,
+      "operator_status": "running",
+      "gpus": [
+        "0, GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94, 0, 1742, 97887",
+        "1, GPU-2676ad09-5ff2-cb59-a4bd-9c516041194b, 0, 1742, 97887"
+      ],
+      "compute_processes": [
+        "335361, GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94, 900",
+        "339003, GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94, 808",
+        "335362, GPU-2676ad09-5ff2-cb59-a4bd-9c516041194b, 900",
+        "338995, GPU-2676ad09-5ff2-cb59-a4bd-9c516041194b, 808"
+      ],
+      "process_names": {
+        "335361": "ray::WorkerDict",
+        "339003": "VLLM::Worker",
+        "335362": "ray::WorkerDict",
+        "338995": "VLLM::Worker"
+      }
+    },
+    "highest_minimum_dual_gpu_utilization": {
+      "run_id": "mimo9b-001661-r14",
+      "observed_at": 1790701676.3971856,
+      "operator_status": "running",
+      "gpus": [
+        "0, GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94, 61, 49520, 97887",
+        "1, GPU-2676ad09-5ff2-cb59-a4bd-9c516041194b, 69, 49520, 97887"
+      ],
+      "compute_processes": [
+        "335361, GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94, 30538",
+        "339003, GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94, 18946",
+        "335362, GPU-2676ad09-5ff2-cb59-a4bd-9c516041194b, 30538",
+        "338995, GPU-2676ad09-5ff2-cb59-a4bd-9c516041194b, 18946"
+      ],
+      "process_names": {
+        "335361": "ray::WorkerDict",
+        "339003": "VLLM::Worker",
+        "335362": "ray::WorkerDict",
+        "338995": "VLLM::Worker"
+      }
+    },
+    "utilization_interpretation": "Initialization/weight synchronization activity; no completed optimizer update or per-replica request routing is inferred."
+  },
+  "tempo": {
+    "trace_count": 0,
+    "root_counts": {},
+    "search_limit": 1000
+  },
+  "failure": {
+    "first_session_error_at": "2026-09-29T17:10:41Z",
+    "observed_error": "Controller registration HTTP response rejected",
+    "sigterm_at": "2026-09-29T17:10:41Z",
+    "root_cause_scope": "Parent controller audit identified CPU cloudflared FileNotFoundError/PATH. This report independently checks GPU startup and W&B; it does not independently re-audit the controller's filesystem or PATH.",
+    "not_gpu_kernel_failure_evidence": true
+  },
+  "source": {
+    "private_report": "/root/mimo-private/r14-readonly-audit/termination-private.json",
+    "sha256": "803f4a01243e46b32263bc58a74b213d195687bf7694dcdd7834b964962bd482"
+  }
+}

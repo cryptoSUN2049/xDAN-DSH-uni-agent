@@ -35,3 +35,5 @@
 - 用户明确A5是错字后立即取消该澄清依赖。双卡目标不能悄悄降成单卡对照；先查项目memory与实跑证据，区分学生+教师双卡、actor+rollout分卡、FSDP双rank。模式切换失败与旧链路成功须分开报告；已有C4不跨rank强行resume，独立fresh测试要明确告知。
 
 - recipe中的runner参数可能被prepared launch.environment覆盖。r13虽通过配置fixture测试，实际prepare继承max_concurrent_sessions=1使最终并发仍为1；预检正确拦住。修改吞吐参数时必须核实际prepare输出→build_overrides→最终compose整个绑定链，不能只测缺少覆盖字段的手写launch fixture。
+
+- r14 的双卡模型已初始化，却因手动controller PATH误指到共享root/bin、实际cloudflared在/root/mimo-private/bin而在首次注册失败。GPU预检与unregistered健康检查都不覆盖延迟启动的外部二进制。所有controller启动必须在最终子进程环境中解析ssh/cloudflared，校验现有binary/hash/version；在GPU前执行有界真实HTTPS nonce探针并清理，main缺依赖时禁止创建资源。不得把这类操作遗漏归因于GPU模式，也不能在用户睡觉后只留下running表象。
