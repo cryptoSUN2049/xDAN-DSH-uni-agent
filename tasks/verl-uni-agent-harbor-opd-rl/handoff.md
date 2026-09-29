@@ -1,3 +1,11 @@
+## 2026-09-29 17:36 UTC：r15 正式双卡重跑已启动
+
+- 实际prepare/preflight均exit0，273依赖/fresh/world2/两replica/并发2通过；entrycoverage96.15%，public r15-prepared/runtime-preflight/actual-preflight-coverage。正确cloudflared PATH与真实HTTPS入口已验证，controller health通过。
+- controller107570(CPU11621)、driver344153/supervisor344192/timeline344154(GPU11403)、archiver107586(CPU)。operator17:35:33UTC running/初始化，预算5906秒；尚无训练step/checkpoint，不能验收完成。
+- 源码9a133cd、920文件manifest a659d70870756b37a8101303ced33cf2486a45439079ddbea1b364f33f186736固定。run/W&B分别mimo9b-001661-r15/mimo9b001661r15。所有private/shared日志沿r14路径替换r15；controller PATH=/root/mimo-private/bin:$PATH。
+- 用户睡觉后要求继续完整跑通及真实W&B API核验。当前分工：recipe只读startup+W&B/Prom/Tempo；review等C1/C2完整后cloudCPU sharded_checkpoint_delta；preparation准备真实batch/receipt/grad与双rank证据组合。现有effective_update_audit仅single-rank，禁止将sharded证据伪造该schema。
+- 仍截止19:16:41UTC，180秒清理，GPU Pod保留。r14失败证据与旧r12C4完整保留；不要修改运行freeze、共享uv或其他用户业务。
+
 ## 2026-09-29 17:28 UTC：r14控制器PATH失败，r15已修复冻结待启动
 
 - 用户准备睡觉，明确要求自主完成全链路并真实W&B API确认。不能以running或初始化替代验收；继续到有效更新、checkpoint及指标对账或留下真实阻断证据。绝对截止仍19:16:41UTC/新加坡03:16:41，Pod保留。

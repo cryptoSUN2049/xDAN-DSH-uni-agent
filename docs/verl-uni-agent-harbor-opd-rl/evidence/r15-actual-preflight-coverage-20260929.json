@@ -1,0 +1,64 @@
+{
+  "schema": "mimo.r15-actual-preflight-coverage.v1",
+  "status": "passed",
+  "source_commit": "9a133cd548cdf864de0005814b472793a3fa6909",
+  "scope": "One real CPU-only preflight main/entry execution against frozen source; excludes GPU training and not a synthetic fixture run.",
+  "actual_exit": {
+    "status": "exited",
+    "started_at": 1790703093.9857993,
+    "wrapper_pid": 344004,
+    "source_commit": "9a133cd548cdf864de0005814b472793a3fa6909",
+    "cuda_visible_devices": "",
+    "coverage_instrumented": true,
+    "pid": 344005,
+    "exit_code": 0,
+    "finished_at": 1790703247.214811
+  },
+  "entry": {
+    "path": "/workspace/mimo-dsh-rl-20260928/run-src-r15/docs/verl-uni-agent-harbor-opd-rl/mimo_r15_preflight.py",
+    "sha256": "9553bacf287f1c292e1d2bd912538335c9dfd2fedfc2b02879af59b3704ce042",
+    "bytes": 6867
+  },
+  "coverage_tool": {
+    "version": "7.16.2",
+    "manifest": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/coverage-r14/manifest.json",
+      "sha256": "61d0edde3f556ee8414269268ae2c2139264e488877d47aec29d52efceb9a0af",
+      "bytes": 9089
+    },
+    "fixed_venv_modified": false,
+    "pythonpath_modified": false
+  },
+  "totals": {
+    "covered_lines": 65,
+    "num_statements": 66,
+    "percent_covered": 96.15384615384616,
+    "percent_covered_display": "96",
+    "missing_lines": 1,
+    "excluded_lines": 0,
+    "percent_statements_covered": 98.48484848484848,
+    "percent_statements_covered_display": "98",
+    "num_branches": 12,
+    "num_partial_branches": 2,
+    "covered_branches": 10,
+    "missing_branches": 2,
+    "percent_branches_covered": 83.33333333333333,
+    "percent_branches_covered_display": "83"
+  },
+  "raw_coverage": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/preflight-r15-coverage.json",
+    "sha256": "e754bf0e4a51ed33907755da3e32ee76afb2311680c04853059119104078547c",
+    "bytes": 4651
+  },
+  "raw_log": {
+    "path": "/root/mimo-private/preflight-r15.log",
+    "sha256": "c426def23e34dabeeffeae640a434337d7ba4f3a57825c22f64806f8dcce7fd8",
+    "bytes": 2913
+  },
+  "runtime_preflight": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/preflight-r15-result.json",
+    "sha256": "70e4fe3a35ef1b1d3e737c15e0ddb03700e9794021a01e273a06296ca2971eb0",
+    "bytes": 2038
+  },
+  "training_started_by_this_check": false
+}
