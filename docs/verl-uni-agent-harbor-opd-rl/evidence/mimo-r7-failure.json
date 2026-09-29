@@ -1,0 +1,43 @@
+{
+  "run_id": "mimo9b-001661-r7",
+  "checked_at": "2026-09-29T05:53:51.423861+00:00",
+  "jobs": {
+    "job-9a271cb139d44f468066538f9fb9e8db": "cancelled",
+    "job-bcd0f35c936c4f0fbc45b8c8f5820519": "cancelled"
+  },
+  "cleanup": [
+    {
+      "resources": [
+        {
+          "returncode": 137,
+          "sandbox_id": "sb-o00evibhFMyaZQ7MoN8jbp",
+          "session_id": "dsh-88d9ea1f421072827cb11ac97fc07d3e__env"
+        },
+        {
+          "returncode": 137,
+          "sandbox_id": "sb-AMhzHOKHsicSuVoD7OZhI8",
+          "session_id": "dsh-88d9ea1f421072827cb11ac97fc07d3e__verifier__trial"
+        }
+      ],
+      "schema": "dsh.harbor-modal-cleanup.v1",
+      "trial_id": "d0a2040c-e8c7-4c05-8a7d-6f8fc097c95a"
+    },
+    {
+      "resources": [
+        {
+          "returncode": 137,
+          "sandbox_id": "sb-48zJbTnW2EUaNmRBkkMzPe",
+          "session_id": "dsh-fc16b1beb0a0215ef8606f2b9abd3ca8__env"
+        }
+      ],
+      "schema": "dsh.harbor-modal-cleanup.v1",
+      "trial_id": "01a4c6ad-f696-49a2-a56f-388d9773f9b3"
+    }
+  ],
+  "archived_files": 29,
+  "archived_bytes": 659035,
+  "archive_byte_comparison_passed": true,
+  "optimizer_updates": 0,
+  "checkpoints": 0,
+  "training_accepted": false
+}
