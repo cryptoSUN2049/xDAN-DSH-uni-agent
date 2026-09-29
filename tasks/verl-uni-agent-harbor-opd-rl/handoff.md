@@ -1,3 +1,12 @@
+## 2026-09-29 17:28 UTC：r14控制器PATH失败，r15已修复冻结待启动
+
+- 用户准备睡觉，明确要求自主完成全链路并真实W&B API确认。不能以running或初始化替代验收；继续到有效更新、checkpoint及指标对账或留下真实阻断证据。绝对截止仍19:16:41UTC/新加坡03:16:41，Pod保留。
+- r14已失败exit1：双rank FSDP及两vLLM/初始naive同步成功，17:09进入warmup；17:10:41首次gateway注册时controller找不到cloudflared，supervisor按健康保护SIGTERM。完成step0/checkpoint0，W&B最后查仍running/history0，不人为改finished。
+- 根因是root手动controller PATH误指共享root/bin；实际binary/root/mimo-private/bin/cloudflared。已核SHA77e26d8d900e0b8469f416239d14b5f296525fdf79fee6f511ef55609e3fbac2与version2026.9.3，并真实HTTPS nonce探针PASS且cleanup。controllermain已增加ssh/cloudflared failfast，27测试/82.81%覆盖率通过。
+- r14controller/所属SSH/监听/archiver均结束，两GPU0MiB；worker尚未创建，无Modal训练任务。public r14-controller-failure与startup-termination保留。
+- r15 runtime9a133cd已push，920文件manifest a659d70870756b37a8101303ced33cf2486a45439079ddbea1b364f33f186736；bundle audit-code/r15-preparation，52tests PASS。fresh双卡配置不变，ports38710–38713，W&Bmimo9b001661r15；actualprepare/preflight由separate_preparation执行中，root负责后续controller/driver，尚未启动r15GPU。
+- 下次controller必须PATH=/root/mimo-private/bin:$PATH并核shutil.which解析到同一binary，再启动fixedpy/source-r15。严禁再用不存在的共享bin。r15driver通过MIMO_R15_MODE=fresh及SOURCE_COMMIT9a133cd，前置实际preflight exit0。
+
 ## 2026-09-29 16:52 UTC：r14 双卡 colocate 已启动，等待实测验收
 
 - 实际prepare及CPU-only preflight均exit0：最终sessions2，273依赖通过，CUDA未初始化。预检实际入口coverage96.15%，无排除行；公共证据r14-prepared/runtime-preflight/actual-preflight-coverage。
