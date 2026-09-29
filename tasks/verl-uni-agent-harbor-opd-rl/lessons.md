@@ -21,3 +21,5 @@
 - 用户提醒及时commit/push：按已验证slice提交；混合worktree有独立嵌套仓库时，以待推送commit的干净detached worktree运行完整ruff check .和ruff format --check .，两者通过后从该精确HEAD推送，不绕过门禁、不格式化其他独立仓。
 - 用户延长运行时间时先核内存中的controller/supervisor deadline；改磁盘JSON不能延长现有进程。新run使用原请求时刻算出的绝对截止，不能重启后重新计五小时；训练退出与Pod停止计费分别报告。
 - r8完整n4奖励[0,1,1,0]仍在old-log-prob entropy阶段OOM。真实采样与可信reward只是训练前置条件；不得等同于optimizer更新或checkpoint成功。dense输出路径须实际核配置开关是否被执行，不能只看YAML已设置。
+
+- 用户明确双卡目标时，区分 sync/colocate_async/separate_async 与卡数；单卡 smoke 仅用于短期排障，不应长期占用双卡而未给出迁移路径。2026-09-29 用户批准 separate_async，应落实 actor/rollout 独立资源池、非 naive 权重同步和实际 GPU 映射验收，不能仅修改可见卡数。
