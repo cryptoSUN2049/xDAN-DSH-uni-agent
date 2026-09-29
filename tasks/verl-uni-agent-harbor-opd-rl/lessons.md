@@ -15,3 +15,4 @@
 - 手动verifier校准不覆盖Harbor生产编排。Harbor0.16.1 separate verifier跳过tests上传；原始MiMo图无/tests，须在独立verifier context注入冻结四文件，并用原生_run_separate_verifier复验，不能用手工bash替代。
 - DSH max-tokens要核每轮真实usage。r4两条终轮input+output均为16384，而累计生成仅7337/7104；这是总上下文耗尽，非4096单次或14336生成预算耗尽。扩大上下文时同步训练/logprob容量，保留独立生成上限与截断拒绝。
 - pytest禁用自动插件时须显式加载pytest_asyncio.plugin。UnknownMark/async unsupported是测试执行失败，不能将未执行用例算通过；保留失败后再复验。
+- r6真实证明另一种max-tokens：32K上下文尚余空间，但累计生成恰为14336，末轮被裁至119/125。须按真实usage分别诊断context与episode预算；本轮改20480生成，保留32K与完成门。测试通过但未完成的轨迹仍不能伪装completed或从失败组挑选成功成员训练。

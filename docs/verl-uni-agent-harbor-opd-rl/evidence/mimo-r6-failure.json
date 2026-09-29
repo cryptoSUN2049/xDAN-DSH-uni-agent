@@ -1,0 +1,192 @@
+{
+  "run_id": "mimo9b-001661-r6",
+  "status": "failed_no_optimizer_update",
+  "checkpoint_count": 0,
+  "admitted_trajectories": 3,
+  "consumed_complete_groups": 0,
+  "reason": "incomplete group: cumulative generation budget exhausted",
+  "jobs": [
+    {
+      "job_id": "job-2445857647034aac98aa0113323ad13b",
+      "status": "succeeded",
+      "error_code": null,
+      "modal_cleanup": [
+        {
+          "resources": [
+            {
+              "returncode": 137,
+              "sandbox_id": "sb-2qjTiitmoOupDxQ1TG10yW",
+              "session_id": "dsh-74efba5dcd566712bcb2b4956b966e85__env"
+            },
+            {
+              "returncode": 137,
+              "sandbox_id": "sb-g7G3GUMEaqcbDF4ZyQRSlM",
+              "session_id": "dsh-74efba5dcd566712bcb2b4956b966e85__verifier__trial"
+            }
+          ],
+          "schema": "dsh.harbor-modal-cleanup.v1",
+          "trial_id": "e57a88ce-e549-4763-8288-8b1a0c8b57e2"
+        }
+      ],
+      "finish_reason": "completed",
+      "reward": 1.0,
+      "model_calls": 18,
+      "generated_tokens": 13984,
+      "last_usage": {
+        "inputTokens": 25059,
+        "outputTokens": 656,
+        "totalTokens": 25715
+      }
+    },
+    {
+      "job_id": "job-2d40172fc0fa46f9ab06eeb59cf44ad0",
+      "status": "succeeded",
+      "error_code": null,
+      "modal_cleanup": [
+        {
+          "resources": [
+            {
+              "returncode": 137,
+              "sandbox_id": "sb-v5EspkSYygmrcvXpZ9Qt7U",
+              "session_id": "dsh-570946f2e0fd511717a382d70ac5c408__env"
+            },
+            {
+              "returncode": 137,
+              "sandbox_id": "sb-1JIgxztZN4hO4qtakQxE5c",
+              "session_id": "dsh-570946f2e0fd511717a382d70ac5c408__verifier__trial"
+            }
+          ],
+          "schema": "dsh.harbor-modal-cleanup.v1",
+          "trial_id": "8a3b7001-e068-488c-b21b-d197f7839d47"
+        }
+      ],
+      "finish_reason": "completed",
+      "reward": 0.0,
+      "model_calls": 24,
+      "generated_tokens": 9992,
+      "last_usage": {
+        "inputTokens": 19230,
+        "outputTokens": 423,
+        "totalTokens": 19653
+      }
+    },
+    {
+      "job_id": "job-6cc42c7db894401697b4b58a7a57f316",
+      "status": "succeeded",
+      "error_code": null,
+      "modal_cleanup": [
+        {
+          "resources": [
+            {
+              "returncode": 137,
+              "sandbox_id": "sb-uhJ1bJMXkBbyFzpaDzw3AF",
+              "session_id": "dsh-4816368c3d0929f6489f471a20af2759__env"
+            },
+            {
+              "returncode": 137,
+              "sandbox_id": "sb-nbJymB6QcCY684XFFdBPmY",
+              "session_id": "dsh-4816368c3d0929f6489f471a20af2759__verifier__trial"
+            }
+          ],
+          "schema": "dsh.harbor-modal-cleanup.v1",
+          "trial_id": "7bbcccf7-70ed-415d-8eed-10ce8c20bff7"
+        }
+      ],
+      "finish_reason": "completed",
+      "reward": 0.0,
+      "model_calls": 23,
+      "generated_tokens": 7262,
+      "last_usage": {
+        "inputTokens": 13594,
+        "outputTokens": 522,
+        "totalTokens": 14116
+      }
+    },
+    {
+      "job_id": "job-79c15675d156496c93d0bb24af7dae11",
+      "status": "cancelled",
+      "error_code": "evidence-rejected-after-cleanup",
+      "modal_cleanup": [
+        {
+          "resources": [
+            {
+              "returncode": 137,
+              "sandbox_id": "sb-qnd6MoIOpRrb5oTHQqk6mz",
+              "session_id": "dsh-4b234f2cde0ae9d9b4589f72996f1648__env"
+            },
+            {
+              "returncode": 137,
+              "sandbox_id": "sb-mcwZC72SU1FMaUvM4eSNz4",
+              "session_id": "dsh-4b234f2cde0ae9d9b4589f72996f1648__verifier__trial"
+            }
+          ],
+          "schema": "dsh.harbor-modal-cleanup.v1",
+          "trial_id": "75193e7f-21c6-4563-b706-14bfb307620f"
+        }
+      ],
+      "finish_reason": "max-tokens",
+      "reward": 1.0,
+      "model_calls": 32,
+      "generated_tokens": 14336,
+      "last_usage": {
+        "inputTokens": 24495,
+        "outputTokens": 119,
+        "totalTokens": 24614
+      }
+    },
+    {
+      "job_id": "job-7ea1821e7deb4c3597516ebf525ddac2",
+      "status": "cancelled",
+      "error_code": "evidence-rejected-after-cleanup",
+      "modal_cleanup": [
+        {
+          "resources": [
+            {
+              "returncode": 137,
+              "sandbox_id": "sb-oeXsePLxtbAY7LMANK8FsZ",
+              "session_id": "dsh-b4ff5e0ab1a5a9c0686583991a091f26__env"
+            },
+            {
+              "returncode": 137,
+              "sandbox_id": "sb-d06wKO8nbVqspeZvbiJWid",
+              "session_id": "dsh-b4ff5e0ab1a5a9c0686583991a091f26__verifier__trial"
+            }
+          ],
+          "schema": "dsh.harbor-modal-cleanup.v1",
+          "trial_id": "e5bf61c6-197f-4346-bf1e-4ae425423490"
+        }
+      ],
+      "finish_reason": "max-tokens",
+      "reward": 0.0,
+      "model_calls": 35,
+      "generated_tokens": 14336,
+      "last_usage": {
+        "inputTokens": 28513,
+        "outputTokens": 125,
+        "totalTokens": 28638
+      }
+    },
+    {
+      "job_id": "job-bf229069424e44c293aa26b8441a3155",
+      "status": "cancelled",
+      "error_code": "evidence-rejected-after-cleanup",
+      "modal_cleanup": [
+        {
+          "resources": [
+            {
+              "returncode": 137,
+              "sandbox_id": "sb-ZZggN8rLqftRpualHO8X8T",
+              "session_id": "dsh-e2feae09852c4c6bbef351afc449720a__env"
+            }
+          ],
+          "schema": "dsh.harbor-modal-cleanup.v1",
+          "trial_id": "db60e889-1684-4df4-9b22-59e2424050d5"
+        }
+      ]
+    }
+  ],
+  "private_archive_files": 122,
+  "private_archive_bytes": 3497246,
+  "preserved_pod": "db7kewdkd71js6",
+  "at": 1790654045.3602889
+}

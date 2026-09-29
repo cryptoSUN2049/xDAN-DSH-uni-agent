@@ -1,5 +1,14 @@
 # 2026-09-29 r6 操作记录
 
+## 最新：r6 终态与 r7 fresh 重跑
+
+- r6已停止：driver exit1、trainer -15，supervisor因主动停止controller后的health failure清理；无checkpoint、无optimizer更新。前三条同组completed轨迹奖励0/1/0已准入，但第四条max-tokens使完整组失败，不能拿前三条拼成功。
+- 两条失败轨迹累计生成均恰为14336；末轮分别24495+119=24614、28513+125=28638，总上下文尚未满。第四条独立verifier实际得1，仍因未正常结束严格拒绝，未修改准入合同。
+- r6 6jobs：3succeeded、3cancelled；11Modal都有显式终止后的poll137证据（不代表OOM）；GPU进程已消失。122份CPU私有文件共3497246字节保存在/root/mimo-private/evidence-r6/cpu-jobs；GPU端3可信receipts等34文件已归档。archiver90337已停，Pod保留。
+- r7是fresh retry，不是resume：复制run-src-r5为run-src-r7，加入已提交审计修复，仅将累计生成预算14336→20480，32K上下文/4096单次/n4/完成门保持。云端RED5failed49passed，GREEN54passed。新任务准备、原生IPC、真实数据预检正在进行；未验GPU训练成功。
+- r7使用独立/root/mimo-private/*r7*与持久runs/r7，仍单GPU0；下一次真实C2后续训须另用r8身份。旧r5-resume草稿和不存在的r4 C2禁止使用。
+- 云端独立审计快照的包边界与原仓不同；Ruff0.15.8显式known-first-party=[uni_agent,verl,examples,tests]后双检查通过。原仓默认配置本地也通过；未改运行源码或放宽规则，所有失败日志保留。
+
 ## 当前入口
 
 - 用户已授权继续完整 RL 闭环，并指定接管 high-performance 双 RTX PRO 6000：db7kewdkd71js6，SSH 157.157.221.177:11403。Qwen3.5-9B 服务 PID103940/104728 已 SIGTERM 退出，两卡 0 MiB 已实测。

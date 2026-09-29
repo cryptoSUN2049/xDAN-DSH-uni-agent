@@ -90,7 +90,7 @@ def test_mimo_smoke_composes_native_single_gpu_and_complete_context_budget():
     assert rollout.engine_kwargs.vllm.cpu_offload_gb == 0
     assert rollout.log_prob_use_dynamic_bsz and rollout.log_prob_max_token_len_per_gpu == 32768
     framework = rollout.custom.agent_framework
-    assert framework.max_generated_tokens_per_episode == 14336
+    assert framework.max_generated_tokens_per_episode == 20480
     assert framework.agent_runners.task.max_concurrent_sessions == 1
     assert framework.fail_on_rollout_error and framework.require_verifier_reward and framework.require_version_evidence
     assert framework.require_finished_episode and framework.require_trajectory_dump
@@ -105,7 +105,19 @@ def test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history(observe
     assert rollout.prompt_length + rollout.response_length == rollout.max_model_len
     assert cfg.actor_rollout_ref.actor.ppo_max_token_len_per_gpu >= rollout.max_model_len
     assert rollout.log_prob_max_token_len_per_gpu >= rollout.max_model_len
-    assert rollout.custom.agent_framework.max_generated_tokens_per_episode == 14336
+    assert rollout.custom.agent_framework.max_generated_tokens_per_episode == 20480
+
+
+@pytest.mark.parametrize("observed_input_tokens", [24495, 28513])
+def test_mimo_budget_allows_another_call_after_observed_r6_generation(observed_input_tokens):
+    cfg = launch.compose_config(launch.build_overrides("rl", prepared_launch(), ENVIRONMENT, recipe_config=RECIPE))
+    rollout = cfg.actor_rollout_ref.rollout
+    generated_before_final_call = 14336 - (119 if observed_input_tokens == 24495 else 125)
+    remaining = rollout.custom.agent_framework.max_generated_tokens_per_episode - generated_before_final_call
+    # Real r6 final calls were clamped to 119/125 by cumulative generation.
+    assert min(4096, remaining, rollout.max_model_len - observed_input_tokens) == 4096
+    assert rollout.max_model_len == 32768
+    assert rollout.custom.agent_framework.require_finished_episode
 
 
 def test_overlay_cli_print_never_loads_model_or_starts_trainer(tmp_path, monkeypatch, capsys):

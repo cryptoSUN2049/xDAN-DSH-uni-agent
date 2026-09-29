@@ -1,0 +1,24 @@
+......................................................                   [100%]
+=============================== warnings summary ===============================
+../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55: DeprecationWarning: Ray state API is no longer experimental. Please import from `ray.util.state`. instead. Importing from `ray.experimental` will be deprecated in future releases. 
+    warnings.warn(
+
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+  /workspace/mimo-dsh-rl-20260928/run-src-r7/verl/verl/utils/tokenizer/tokenizer.py:146: UserWarning: tokenizer.pad_token_id is None. Now set to 1
+    warnings.warn(f"tokenizer.pad_token_id is None. Now set to {tokenizer.eos_token_id}", stacklevel=1)
+
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/multiprocess/popen_fork.py:66: DeprecationWarning: This process (pid=91241) is multi-threaded, use of fork() may lead to deadlocks in the child.
+    self.pid = os.fork()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+54 passed, 11 warnings in 128.60s (0:02:08)

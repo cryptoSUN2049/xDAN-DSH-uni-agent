@@ -1,0 +1,139 @@
+.FFFFF................................................                   [100%]
+=================================== FAILURES ===================================
+____ test_mimo_smoke_composes_native_single_gpu_and_complete_context_budget ____
+
+    def test_mimo_smoke_composes_native_single_gpu_and_complete_context_budget():
+        cfg = launch.compose_config(launch.build_overrides("rl", prepared_launch(), ENVIRONMENT, recipe_config=RECIPE))
+        assert cfg.trainer.v1.trainer_mode == "colocate_async"
+        assert cfg.trainer.nnodes == cfg.trainer.n_gpus_per_node == 1
+        assert cfg.actor_rollout_ref.rollout.nnodes == cfg.distillation.nnodes == 0
+        assert cfg.distillation.enabled is False
+        assert cfg.trainer.total_training_steps == 2 and cfg.trainer.save_freq == 1
+        assert cfg.trainer.test_freq == -1 and cfg.trainer.val_before_train is False
+        assert cfg.data.train_batch_size == 1
+        assert cfg.data.seed == cfg.actor_rollout_ref.rollout.seed == cfg.actor_rollout_ref.actor.fsdp_config.seed == 42
+        assert cfg.data.max_prompt_length == 2048 and cfg.data.max_response_length == 30720
+        model, actor, rollout = cfg.actor_rollout_ref.model, cfg.actor_rollout_ref.actor, cfg.actor_rollout_ref.rollout
+        assert model.override_config.attn_implementation == "sdpa"
+        assert model.use_remove_padding is False
+        assert actor.fsdp_config.ulysses_sequence_parallel_size == 1
+        assert model.lora_rank == 16 and model.lora.merge and model.enable_gradient_checkpointing
+        assert actor.use_dynamic_bsz and actor.ppo_max_token_len_per_gpu == 32768
+        assert actor.use_torch_compile is False and actor.fsdp_config.use_torch_compile is False
+        assert actor.fsdp_config.param_offload and actor.fsdp_config.optimizer_offload
+        assert rollout.n == 4 and rollout.max_model_len == 32768
+        assert rollout.checkpoint_engine.backend == "naive"
+        assert rollout.prompt_length + rollout.response_length == rollout.max_model_len
+        assert rollout.enforce_eager and rollout.free_cache_engine and not rollout.layered_summon
+        assert rollout.engine_kwargs.vllm.reasoning_parser == "deepseek_r1"
+        assert rollout.engine_kwargs.vllm.cpu_offload_gb == 0
+        assert rollout.log_prob_use_dynamic_bsz and rollout.log_prob_max_token_len_per_gpu == 32768
+        framework = rollout.custom.agent_framework
+>       assert framework.max_generated_tokens_per_episode == 20480
+E       AssertionError: assert 14336 == 20480
+E        +  where 14336 = {'gateway_count': 1, 'fail_on_rollout_error': True, 'require_finished_episode': True, 'require_verifier_reward': True,.../agent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}.max_generated_tokens_per_episode
+
+tests/uni_agent/examples/test_mimo_smoke_recipe.py:93: AssertionError
+_ test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history[15761] __
+
+observed_input_tokens = 15761
+
+    @pytest.mark.parametrize("observed_input_tokens", [15761, 16346])
+    def test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history(observed_input_tokens):
+        cfg = launch.compose_config(launch.build_overrides("rl", prepared_launch(), ENVIRONMENT, recipe_config=RECIPE))
+        rollout = cfg.actor_rollout_ref.rollout
+        # r4 clamped these real final requests to 623 and 38 tokens respectively.
+        assert rollout.max_model_len - observed_input_tokens >= 4096
+        assert rollout.prompt_length + rollout.response_length == rollout.max_model_len
+        assert cfg.actor_rollout_ref.actor.ppo_max_token_len_per_gpu >= rollout.max_model_len
+        assert rollout.log_prob_max_token_len_per_gpu >= rollout.max_model_len
+>       assert rollout.custom.agent_framework.max_generated_tokens_per_episode == 20480
+E       AssertionError: assert 14336 == 20480
+E        +  where 14336 = {'gateway_count': 1, 'fail_on_rollout_error': True, 'require_finished_episode': True, 'require_verifier_reward': True,.../agent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}.max_generated_tokens_per_episode
+E        +    where {'gateway_count': 1, 'fail_on_rollout_error': True, 'require_finished_episode': True, 'require_verifier_reward': True,.../agent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}} = {'agent_framework': {'gateway_count': 1, 'fail_on_rollout_error': True, 'require_finished_episode': True, 'require_ver...agent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}}.agent_framework
+E        +      where {'agent_framework': {'gateway_count': 1, 'fail_on_rollout_error': True, 'require_finished_episode': True, 'require_ver...agent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}} = {'_target_': 'verl.workers.config.RolloutConfig', 'name': 'vllm', 'mode': 'async', 'nnodes': 0, 'n_gpus_per_node': 1, ...gent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}}}.custom
+
+tests/uni_agent/examples/test_mimo_smoke_recipe.py:108: AssertionError
+_ test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history[16346] __
+
+observed_input_tokens = 16346
+
+    @pytest.mark.parametrize("observed_input_tokens", [15761, 16346])
+    def test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history(observed_input_tokens):
+        cfg = launch.compose_config(launch.build_overrides("rl", prepared_launch(), ENVIRONMENT, recipe_config=RECIPE))
+        rollout = cfg.actor_rollout_ref.rollout
+        # r4 clamped these real final requests to 623 and 38 tokens respectively.
+        assert rollout.max_model_len - observed_input_tokens >= 4096
+        assert rollout.prompt_length + rollout.response_length == rollout.max_model_len
+        assert cfg.actor_rollout_ref.actor.ppo_max_token_len_per_gpu >= rollout.max_model_len
+        assert rollout.log_prob_max_token_len_per_gpu >= rollout.max_model_len
+>       assert rollout.custom.agent_framework.max_generated_tokens_per_episode == 20480
+E       AssertionError: assert 14336 == 20480
+E        +  where 14336 = {'gateway_count': 1, 'fail_on_rollout_error': True, 'require_finished_episode': True, 'require_verifier_reward': True,.../agent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}.max_generated_tokens_per_episode
+E        +    where {'gateway_count': 1, 'fail_on_rollout_error': True, 'require_finished_episode': True, 'require_verifier_reward': True,.../agent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}} = {'agent_framework': {'gateway_count': 1, 'fail_on_rollout_error': True, 'require_finished_episode': True, 'require_ver...agent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}}.agent_framework
+E        +      where {'agent_framework': {'gateway_count': 1, 'fail_on_rollout_error': True, 'require_finished_episode': True, 'require_ver...agent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}} = {'_target_': 'verl.workers.config.RolloutConfig', 'name': 'vllm', 'mode': 'async', 'nnodes': 0, 'n_gpus_per_node': 1, ...gent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}}}.custom
+
+tests/uni_agent/examples/test_mimo_smoke_recipe.py:108: AssertionError
+___ test_mimo_budget_allows_another_call_after_observed_r6_generation[24495] ___
+
+observed_input_tokens = 24495
+
+    @pytest.mark.parametrize("observed_input_tokens", [24495, 28513])
+    def test_mimo_budget_allows_another_call_after_observed_r6_generation(observed_input_tokens):
+        cfg = launch.compose_config(launch.build_overrides("rl", prepared_launch(), ENVIRONMENT, recipe_config=RECIPE))
+        rollout = cfg.actor_rollout_ref.rollout
+        generated_before_final_call = 14336 - (119 if observed_input_tokens == 24495 else 125)
+        remaining = rollout.custom.agent_framework.max_generated_tokens_per_episode - generated_before_final_call
+        # Real r6 final calls were clamped to 119/125 by cumulative generation.
+>       assert min(4096, remaining, rollout.max_model_len - observed_input_tokens) == 4096
+E       AssertionError: assert 119 == 4096
+E        +  where 119 = min(4096, 119, (32768 - 24495))
+E        +    where 32768 = {'_target_': 'verl.workers.config.RolloutConfig', 'name': 'vllm', 'mode': 'async', 'nnodes': 0, 'n_gpus_per_node': 1, ...gent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}}}.max_model_len
+
+tests/uni_agent/examples/test_mimo_smoke_recipe.py:118: AssertionError
+___ test_mimo_budget_allows_another_call_after_observed_r6_generation[28513] ___
+
+observed_input_tokens = 28513
+
+    @pytest.mark.parametrize("observed_input_tokens", [24495, 28513])
+    def test_mimo_budget_allows_another_call_after_observed_r6_generation(observed_input_tokens):
+        cfg = launch.compose_config(launch.build_overrides("rl", prepared_launch(), ENVIRONMENT, recipe_config=RECIPE))
+        rollout = cfg.actor_rollout_ref.rollout
+        generated_before_final_call = 14336 - (119 if observed_input_tokens == 24495 else 125)
+        remaining = rollout.custom.agent_framework.max_generated_tokens_per_episode - generated_before_final_call
+        # Real r6 final calls were clamped to 119/125 by cumulative generation.
+>       assert min(4096, remaining, rollout.max_model_len - observed_input_tokens) == 4096
+E       AssertionError: assert 125 == 4096
+E        +  where 125 = min(4096, 125, (32768 - 28513))
+E        +    where 32768 = {'_target_': 'verl.workers.config.RolloutConfig', 'name': 'vllm', 'mode': 'async', 'nnodes': 0, 'n_gpus_per_node': 1, ...gent', 'trajectory_postprocessor_kwargs': {'artifact_root': '/private/run/artifacts', 'controller_id': 'controller'}}}}.max_model_len
+
+tests/uni_agent/examples/test_mimo_smoke_recipe.py:118: AssertionError
+=============================== warnings summary ===============================
+../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55: DeprecationWarning: Ray state API is no longer experimental. Please import from `ray.util.state`. instead. Importing from `ray.experimental` will be deprecated in future releases. 
+    warnings.warn(
+
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+  /workspace/mimo-dsh-rl-20260928/run-src-r7/verl/verl/utils/tokenizer/tokenizer.py:146: UserWarning: tokenizer.pad_token_id is None. Now set to 1
+    warnings.warn(f"tokenizer.pad_token_id is None. Now set to {tokenizer.eos_token_id}", stacklevel=1)
+
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_uses_native_filtered_dataset_not_raw_row_count
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+tests/uni_agent/examples/test_harbor_launch_preflight.py::test_preflight_accepts_real_local_tokenizer_and_complete_batch
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/multiprocess/popen_fork.py:66: DeprecationWarning: This process (pid=91078) is multi-threaded, use of fork() may lead to deadlocks in the child.
+    self.pid = os.fork()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/uni_agent/examples/test_mimo_smoke_recipe.py::test_mimo_smoke_composes_native_single_gpu_and_complete_context_budget
+FAILED tests/uni_agent/examples/test_mimo_smoke_recipe.py::test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history[15761]
+FAILED tests/uni_agent/examples/test_mimo_smoke_recipe.py::test_mimo_context_retains_a_full_turn_after_observed_r4_tool_history[16346]
+FAILED tests/uni_agent/examples/test_mimo_smoke_recipe.py::test_mimo_budget_allows_another_call_after_observed_r6_generation[24495]
+FAILED tests/uni_agent/examples/test_mimo_smoke_recipe.py::test_mimo_budget_allows_another_call_after_observed_r6_generation[28513]
+5 failed, 49 passed, 11 warnings in 85.18s (0:01:25)

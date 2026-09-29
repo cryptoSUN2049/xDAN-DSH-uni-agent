@@ -71,7 +71,8 @@ actor_rollout_ref:
       max_parallel_calls: 1
     custom:
       agent_framework:
-        max_generated_tokens_per_episode: 14336
+        # r6 exhausted 14336 generated tokens before the 32K context was full.
+        max_generated_tokens_per_episode: 20480
         agent_runners:
           task:
             max_concurrent_sessions: 1
