@@ -176,6 +176,68 @@ def test_validation_cannot_supply_training_consumption(audit_case):
     assert not audit_training(**kwargs)["passed"]
 
 
+def test_training_without_validation_directory(audit_case):
+    from examples.harbor.audit_m2_training import audit_training
+
+    kwargs, *_ = audit_case
+    kwargs.pop("validation_data_dir").rmdir()
+    kwargs.pop("validation_n")
+    report = audit_training(**kwargs, no_validation=True)
+    assert report["passed"], report
+    assert report["mode"] == "training-only"
+    assert report["unconsumed_groups"] == []
+
+
+@pytest.mark.parametrize("conflict", [{"val_only": True}, {"validation_n": 1}])
+def test_no_validation_rejects_conflicting_options(audit_case, conflict):
+    from examples.harbor.audit_m2_training import audit_training
+
+    kwargs, *_ = audit_case
+    kwargs.pop("validation_data_dir")
+    kwargs.pop("validation_n")
+    assert not audit_training(**dict(kwargs, no_validation=True, **conflict))["passed"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("mode", ["prefetch", "missing-consumed", "tampered-prefetch"])
+async def test_prefetch_is_separate_from_consumption(audit_case, tmp_path, mode):
+    from examples.harbor.audit_m2_training import audit_training
+
+    kwargs, row, dump, _ = audit_case
+    metadata = json.loads(dump.read_text())
+    ctx = dict(
+        config(tmp_path).runner_context.model_dump(),
+        group_size=1,
+        session_index=0,
+        group_uid="prefetch-group",
+        gateway_session_id="prefetch-session",
+        global_steps=5,
+    )
+    cfg = config(tmp_path, runner_context=ctx, gateway_base_url="http://10.0.0.2:45678/sessions/prefetch-session/v1")
+    result = await HarborDshTask(cfg).run()
+    metadata.update(ctx, session_id="prefetch-session")
+    metadata["trajectories"][0].update(transfer_queue_key="prefetch-group_0_0", reward_info=build_reward_info(result))
+    prefetch = dump.parent / "prefetch-session"
+    prefetch.mkdir()
+    npz = prefetch / "trajectory.npz"
+    npz.write_bytes((dump.parent / "trajectory.npz").read_bytes())
+    prefetch_dump = prefetch / "trajectory.json"
+    prefetch_dump.write_text(json.dumps(metadata))
+    if mode == "missing-consumed":
+        row.write_text(row.read_text() + json.dumps(dict(step=6, uid="missing_0_0", score=1.0)) + "\n")
+    if mode == "tampered-prefetch":
+        npz.write_bytes(b"tampered")
+    before = prefetch_dump.read_bytes()
+    report = audit_training(**kwargs)
+    assert report["passed"] == (mode == "prefetch"), report
+    assert prefetch_dump.read_bytes() == before
+    if mode == "prefetch":
+        assert [g["group_uid"] for g in report["groups"]] == ["group-1"]
+        assert [g["group_uid"] for g in report["unconsumed_groups"]] == ["prefetch-group"]
+        assert report["unconsumed_trajectory_count"] == 1
+        assert report["unconsumed_groups"][0]["status"] == "admitted-not-consumed"
+
+
 @pytest.mark.asyncio
 @pytest.mark.parametrize("mode", ["mixed", "val-only", "bad-score", "missing-val", "default-val-only"])
 async def test_validation_is_reported_as_evaluated(audit_case, tmp_path, mode):

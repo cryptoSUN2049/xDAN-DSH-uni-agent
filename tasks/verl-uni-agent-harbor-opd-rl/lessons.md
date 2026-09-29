@@ -1,5 +1,9 @@
 # MiMo RL 集成经验
 
+- GPU 库存随时变化：一次区域分配失败不等于 RTX PRO 6000 持续无货；升级到高价 GPU 前重新查询目标区域和规格。用户指定其他会话使用的机器时，只读核对归属，未经明确接管不得停止；2026-09-29 用户明确授权接管 11403，仍须先核对进程身份、优雅退出并验证显存释放，SSH 超时不能当作命令已执行。
+- Mac TCP 已连接但 SSH banner 超时，先查 route 与网络接口；2026-09-29 默认 utun4 路由失败，单次 `ProxyCommand=nc -b en0 -G 8 %h %p` 成功，无需重启 Pod 或修改全局网络。仅对当前网络适用，不能把 Mac en0 参数带入云端控制器。
+- 云端 Ruff 0.13.3 与本地0.15.8 对独立快照的导入分组检查结果不同；快照须携带仓库配置、包标记，工具版本也须对齐。显式src未解决本次差异，不能宣称已通过或修改导入分组迎合缺少上下文的检查。静态检查与真实云端测试分别记录。
+
 - 用户要求不增加 Mac 性能占用：Mac 只做编辑、Git、轻量 SSH 与小证据回读。镜像、模型、依赖、测试、推理和训练都在云端；不要再次从 Mac 拉 Docker 镜像。
 - 用户提醒复用既有 uv 环境时，先核 runbook、sys.prefix、freeze 与实际 metadata。当前 RL lane 的 273 项约束一致，本来没有 FA2/CuPy；重新 activate 不会增加依赖。不要把 SFT cu128 lane 或 VERL 另一版 uv.lock 混入现有 cu130/vLLM0.23 环境。
 - GPU 分配前验证实际 recipe 所选 attention 与 checkpoint backend。单卡 colocate_async 的原生 naive 路径仍传真实权重，不应为继承的 NCCL 默认值修改共享环境。

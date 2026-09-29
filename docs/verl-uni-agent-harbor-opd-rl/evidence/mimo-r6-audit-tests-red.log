@@ -1,0 +1,107 @@
+...........FFFF.......                                                   [100%]
+=================================== FAILURES ===================================
+__________________ test_training_without_validation_directory __________________
+
+audit_case = ({'launch_path': PosixPath('/tmp/pytest-of-root/pytest-72/test_training_without_validati0/launch.json'), 'agent_log_di...on'), PosixPath('/tmp/pytest-of-root/pytest-72/test_training_without_validati0/registrations/run-1/registration.json'))
+
+    def test_training_without_validation_directory(audit_case):
+        from examples.harbor.audit_m2_training import audit_training
+    
+        kwargs, *_ = audit_case
+        kwargs.pop("validation_data_dir").rmdir()
+        kwargs.pop("validation_n")
+>       report = audit_training(**kwargs, no_validation=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: audit_training() got an unexpected keyword argument 'no_validation'
+
+tests/uni_agent/examples/test_harbor_offline_audit.py:185: TypeError
+__________ test_no_validation_rejects_conflicting_options[conflict0] ___________
+
+audit_case = ({'launch_path': PosixPath('/tmp/pytest-of-root/pytest-72/test_no_validation_rejects_con0/launch.json'), 'agent_log_di...on'), PosixPath('/tmp/pytest-of-root/pytest-72/test_no_validation_rejects_con0/registrations/run-1/registration.json'))
+conflict = {'val_only': True}
+
+    @pytest.mark.parametrize("conflict", [{"val_only": True}, {"validation_n": 1}])
+    def test_no_validation_rejects_conflicting_options(audit_case, conflict):
+        from examples.harbor.audit_m2_training import audit_training
+    
+        kwargs, *_ = audit_case
+        kwargs.pop("validation_data_dir")
+        kwargs.pop("validation_n")
+>       assert not audit_training(**dict(kwargs, no_validation=True, **conflict))["passed"]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: audit_training() got an unexpected keyword argument 'no_validation'
+
+tests/uni_agent/examples/test_harbor_offline_audit.py:198: TypeError
+__________ test_no_validation_rejects_conflicting_options[conflict1] ___________
+
+audit_case = ({'launch_path': PosixPath('/tmp/pytest-of-root/pytest-72/test_no_validation_rejects_con1/launch.json'), 'agent_log_di...on'), PosixPath('/tmp/pytest-of-root/pytest-72/test_no_validation_rejects_con1/registrations/run-1/registration.json'))
+conflict = {'validation_n': 1}
+
+    @pytest.mark.parametrize("conflict", [{"val_only": True}, {"validation_n": 1}])
+    def test_no_validation_rejects_conflicting_options(audit_case, conflict):
+        from examples.harbor.audit_m2_training import audit_training
+    
+        kwargs, *_ = audit_case
+        kwargs.pop("validation_data_dir")
+        kwargs.pop("validation_n")
+>       assert not audit_training(**dict(kwargs, no_validation=True, **conflict))["passed"]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: audit_training() got an unexpected keyword argument 'no_validation'
+
+tests/uni_agent/examples/test_harbor_offline_audit.py:198: TypeError
+_____________ test_prefetch_is_separate_from_consumption[prefetch] _____________
+
+audit_case = ({'launch_path': PosixPath('/tmp/pytest-of-root/pytest-72/test_prefetch_is_separate_from0/launch.json'), 'agent_log_di...on'), PosixPath('/tmp/pytest-of-root/pytest-72/test_prefetch_is_separate_from0/registrations/run-1/registration.json'))
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-72/test_prefetch_is_separate_from0')
+mode = 'prefetch'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("mode", ["prefetch", "missing-consumed", "tampered-prefetch"])
+    async def test_prefetch_is_separate_from_consumption(audit_case, tmp_path, mode):
+        from examples.harbor.audit_m2_training import audit_training
+    
+        kwargs, row, dump, _ = audit_case
+        metadata = json.loads(dump.read_text())
+        ctx = dict(
+            config(tmp_path).runner_context.model_dump(),
+            group_size=1,
+            session_index=0,
+            group_uid="prefetch-group",
+            gateway_session_id="prefetch-session",
+            global_steps=5,
+        )
+        cfg = config(tmp_path, runner_context=ctx, gateway_base_url="http://10.0.0.2:45678/sessions/prefetch-session/v1")
+        result = await HarborDshTask(cfg).run()
+        metadata.update(ctx, session_id="prefetch-session")
+        metadata["trajectories"][0].update(transfer_queue_key="prefetch-group_0_0", reward_info=build_reward_info(result))
+        prefetch = dump.parent / "prefetch-session"
+        prefetch.mkdir()
+        npz = prefetch / "trajectory.npz"
+        npz.write_bytes((dump.parent / "trajectory.npz").read_bytes())
+        prefetch_dump = prefetch / "trajectory.json"
+        prefetch_dump.write_text(json.dumps(metadata))
+        if mode == "missing-consumed":
+            row.write_text(row.read_text() + json.dumps(dict(step=6, uid="missing_0_0", score=1.0)) + "\n")
+        if mode == "tampered-prefetch":
+            npz.write_bytes(b"tampered")
+        before = prefetch_dump.read_bytes()
+        report = audit_training(**kwargs)
+>       assert report["passed"] == (mode == "prefetch"), report
+E       AssertionError: {'schema': 'dsh.harbor-training-batch-audit.v1', 'passed': False, 'groups': [], 'errors': ['ValueError: Trainer row missing, duplicated, or reward mismatched'], ...}
+E       assert False == ('prefetch' == 'prefetch'
+E         
+E           prefetch)
+
+tests/uni_agent/examples/test_harbor_offline_audit.py:232: AssertionError
+=============================== warnings summary ===============================
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/util/state/util.py:55: DeprecationWarning: Ray state API is no longer experimental. Please import from `ray.util.state`. instead. Importing from `ray.experimental` will be deprecated in future releases. 
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/uni_agent/examples/test_harbor_offline_audit.py::test_training_without_validation_directory
+FAILED tests/uni_agent/examples/test_harbor_offline_audit.py::test_no_validation_rejects_conflicting_options[conflict0]
+FAILED tests/uni_agent/examples/test_harbor_offline_audit.py::test_no_validation_rejects_conflicting_options[conflict1]
+FAILED tests/uni_agent/examples/test_harbor_offline_audit.py::test_prefetch_is_separate_from_consumption[prefetch]
+4 failed, 18 passed, 1 warning in 48.99s

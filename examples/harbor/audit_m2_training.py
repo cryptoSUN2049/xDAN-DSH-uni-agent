@@ -63,21 +63,32 @@ def audit_training(
     *,
     launch_path,
     agent_log_dir,
-    validation_data_dir,
-    validation_n,
+    validation_data_dir=None,
+    validation_n=None,
     rollout_data_dir=None,
     train_n=None,
     val_only=False,
+    no_validation=False,
 ):
     """Report batch correspondence; optimizer verification remains a separate gate."""
     report = dict(
-        schema="dsh.harbor-training-batch-audit.v1", passed=False, groups=[], errors=[], optimizer_update_verified=False
+        schema="dsh.harbor-training-batch-audit.v1",
+        passed=False,
+        groups=[],
+        unconsumed_groups=[],
+        unconsumed_trajectory_count=0,
+        errors=[],
+        optimizer_update_verified=False,
     )
     try:
-        if type(val_only) is not bool:
-            raise ValueError("val_only must be a boolean")
-        required_counts = (validation_n,) if val_only else (train_n, validation_n)
-        if any(type(n) is not int or n <= 0 for n in required_counts):
+        if type(val_only) is not bool or type(no_validation) is not bool:
+            raise ValueError("val_only and no_validation must be booleans")
+        if no_validation and (val_only or validation_data_dir is not None or validation_n is not None):
+            raise ValueError("no_validation conflicts with validation options")
+        counts = {} if no_validation else dict(val=validation_n)
+        if not val_only:
+            counts["train"] = train_n
+        if any(type(n) is not int or n <= 0 for n in counts.values()):
             raise ValueError("Expected rollout counts must be positive integers")
         raw_launch = _read(Path(launch_path))
         launch = _json(raw_launch)
@@ -87,9 +98,10 @@ def audit_training(
         kwargs = launch["postprocessor"]
         if "context" in kwargs:
             raise ValueError("Operator kwargs must not supply runtime context")
-        report["mode"] = "validation-only" if val_only else "training-and-validation"
-        counts = dict(val=validation_n) if val_only else dict(train=train_n, val=validation_n)
-        rows = dict(val=_rows(Path(validation_data_dir)))
+        report["mode"] = (
+            "training-only" if no_validation else "validation-only" if val_only else "training-and-validation"
+        )
+        rows = {} if no_validation else dict(val=_rows(Path(validation_data_dir)))
         if not val_only:
             rows["train"] = _rows(Path(rollout_data_dir))
         log_root = Path(agent_log_dir)
@@ -113,6 +125,8 @@ def audit_training(
             seen_sessions.add(context.gateway_session_id)
             if context.group_size != counts[partition]:
                 raise ValueError("Rollout count differs from operator count")
+            if context.session_index >= context.group_size:
+                raise ValueError("Rollout session index exceeds group size")
             key = (partition, context.global_steps, context.group_uid)
             group = groups.setdefault(
                 key,
@@ -123,6 +137,7 @@ def audit_training(
                     session_indexes=[],
                     rewards=[],
                     transfer_queue_keys=[],
+                    consumed_transfer_queue_keys=[],
                 ),
             )
             group["session_indexes"].append(context.session_index)
@@ -147,14 +162,26 @@ def audit_training(
                 if joined in known[partition]:
                     raise ValueError("Duplicate admitted TransferQueue key")
                 known[partition].add(joined)
-                if rows[partition].get(joined) != [trajectory.reward_score]:
-                    raise ValueError("Trainer row missing, duplicated, or reward mismatched")
+                if joined in rows[partition]:
+                    if rows[partition][joined] != [trajectory.reward_score]:
+                        raise ValueError("Trainer row duplicated or reward mismatched")
+                    group["consumed_transfer_queue_keys"].append(tq_key)
                 group["rewards"].append(trajectory.reward_score)
                 group["transfer_queue_keys"].append(tq_key)
             seen_receipts.update(local_receipts)
         for key, group in sorted(groups.items()):
+            if not group["consumed_transfer_queue_keys"]:
+                if len(set(group["session_indexes"])) != len(group["session_indexes"]):
+                    raise ValueError("Duplicate rollout session index")
+                group["status"] = "admitted-not-consumed"
+                group["complete"] = sorted(group["session_indexes"]) == list(range(counts[key[0]]))
+                report["unconsumed_groups"].append(group)
+                report["unconsumed_trajectory_count"] += len(group["transfer_queue_keys"])
+                continue
             if sorted(group["session_indexes"]) != list(range(counts[key[0]])):
                 raise ValueError("Incomplete rollout group")
+            if group["consumed_transfer_queue_keys"] != group["transfer_queue_keys"]:
+                raise ValueError("Partially consumed rollout group")
             group["status"] = "admitted-and-training-batch-matched" if key[0] == "train" else "admitted-and-evaluated"
             group["has_reward_variance"] = len(set(group["rewards"])) > 1
             report["groups"].append(group)
@@ -162,7 +189,7 @@ def audit_training(
         if not any(group["partition_id"] == required_partition for group in report["groups"]):
             raise ValueError("No " + required_partition + " groups")
         for partition in counts:
-            if set(rows[partition]) != known[partition]:
+            if not set(rows[partition]).issubset(known[partition]):
                 raise ValueError(f"Unexpected trainer rows: {partition}")
         report["passed"] = True
     except (OSError, ValueError, TypeError, KeyError, RuntimeError) as error:
@@ -172,12 +199,14 @@ def audit_training(
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ("launch-path", "agent-log-dir", "validation-data-dir"):
+    for name in ("launch-path", "agent-log-dir"):
         parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument("--validation-data-dir", type=Path)
     parser.add_argument("--rollout-data-dir", type=Path)
     parser.add_argument("--train-n", type=int)
-    parser.add_argument("--validation-n", type=int, required=True)
+    parser.add_argument("--validation-n", type=int)
     parser.add_argument("--val-only", action="store_true")
+    parser.add_argument("--no-validation", action="store_true", help="Audit training with validation disabled")
     args = parser.parse_args()
     report = audit_training(**vars(args))
     print(json.dumps(report, sort_keys=True, indent=2, allow_nan=False))
