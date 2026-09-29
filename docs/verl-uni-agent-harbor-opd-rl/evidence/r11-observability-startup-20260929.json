@@ -1,0 +1,27 @@
+{
+  "schema": "mimo.observability-startup.v1",
+  "run_id": "mimo9b-001661-r11",
+  "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+  "checked_at": 1790689499.1076093,
+  "status": "failed_before_ray_start",
+  "training_acceptance": false,
+  "driver_pid": 295987,
+  "supervisor_pid": 295988,
+  "supervisor_exit_code": 1,
+  "started_at": 1790689358.454447,
+  "finished_at": 1790689497.9152591,
+  "error_type": "PermissionError",
+  "error": "[Errno 13] Permission denied: 'outputs/2026-09-29/13-44-48'",
+  "error_stage": "Hydra output-directory creation before wrapper entry/Ray initialization",
+  "source_commit_prefix": "dc260e6",
+  "prometheus_exact_run_query_result": [],
+  "monitor_hub_target": "172.24.0.2:9092",
+  "monitor_hub_target_health": "down",
+  "last_scrape": "2026-09-29T13:44:51.401437251Z",
+  "historical_targets_excluded": [
+    "172.24.0.2:19092",
+    "172.24.0.2:19093"
+  ],
+  "synthetic_preflight_excluded": true,
+  "monitoring_action": "Read only; no restart, GPU or collector changes."
+}

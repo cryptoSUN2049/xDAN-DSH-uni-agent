@@ -104,6 +104,8 @@ def test_observability_entrypoint_rejects_unprepared_inputs(tmp_path, monkeypatc
 
 
 def test_cli_observability_flag_selects_child_without_changing_overrides(tmp_path, monkeypatch):
+    from hydra.core.override_parser.overrides_parser import OverridesParser
+
     prepared = prepared_budget_launch()
     prepared["environment"]["RUN_ROOT"] = str(tmp_path)
     launch_path = tmp_path / "launch.json"
@@ -136,6 +138,12 @@ def test_cli_observability_flag_selects_child_without_changing_overrides(tmp_pat
     launch.main()
     assert selections == [True]
     assert commands[0][1:3] == ["/verified/mimo_observability.py", "--config-name=ppo_trainer"]
+    hydra_dirs = [
+        item.value()
+        for item in OverridesParser.create().parse_overrides(commands[0][3:])
+        if item.key_or_group == "hydra.run.dir"
+    ]
+    assert hydra_dirs == [str(tmp_path.resolve() / "hydra")]
     cfg = launch.compose_config(commands[0][3:])
     assert cfg.trainer.experiment_name == "mimo9b-001661-r11"
     assert list(cfg.trainer.logger) == ["console", "wandb", "rl_insight"]

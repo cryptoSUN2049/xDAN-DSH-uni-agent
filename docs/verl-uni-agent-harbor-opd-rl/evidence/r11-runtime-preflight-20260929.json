@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "source_commit": "dc260e6afc2dff8e61afd4e50d1042bab71bbaaa",
+  "package_constraints_verified": 273,
+  "report": {
+    "train_rows": 1,
+    "validation_rows": 1,
+    "steps_per_epoch": 1,
+    "total_training_steps": 4,
+    "total_epochs": 4,
+    "save_freq": 1,
+    "backend_validation": {
+      "attention": [
+        {
+          "backend": "sdpa",
+          "validation": "torch_sdpa_operator"
+        }
+      ],
+      "checkpoint_backend": "nccl",
+      "gpu_execution_validated": false
+    }
+  },
+  "cuda_initialized": false,
+  "finished_at": 1790688997.0375087,
+  "resume_from_path": "/workspace/mimo-dsh-rl-20260928/runs/r10/rl-training/checkpoints/global_step_3",
+  "total_training_steps": 4,
+  "mode": "separate_async",
+  "backend": "nccl",
+  "training_started": false,
+  "observability_entrypoint": [
+    "/workspace/mimo-dsh-rl-20260928/run-src-r11/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py"
+  ],
+  "observability_environment": {
+    "WANDB_MODE": "online",
+    "WANDB_ENTITY": "xdan-ai",
+    "WANDB_PROJECT": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+    "WANDB_NAME": "mimo9b-001661-r11",
+    "WANDB_RUN_ID": "mimo9b001661r11",
+    "WANDB_RESUME": "never",
+    "WANDB_DIR": "/root/mimo-private/wandb-r11",
+    "VERL_RL_INSIGHT_ENABLE": "1",
+    "RL_INSIGHT_SERVER_URL": "http://127.0.0.1:18080",
+    "MIMO_PROMETHEUS_URL": "http://127.0.0.1:9090"
+  }
+}

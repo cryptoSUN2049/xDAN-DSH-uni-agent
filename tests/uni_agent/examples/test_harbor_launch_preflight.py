@@ -81,13 +81,25 @@ def test_preflight_failure_never_invokes_trainer(tmp_path, monkeypatch):
 
 
 def test_bounded_launch_passes_final_plan_to_native_trainer(tmp_path, monkeypatch):
-    cli_setup(tmp_path, monkeypatch, "--total-training-steps", "1", "--save-freq", "1")
+    from hydra.core.override_parser.overrides_parser import OverridesParser
+
+    private_launch_dir = tmp_path / "private launch"
+    private_launch_dir.mkdir()
+    cli_setup(private_launch_dir, monkeypatch, "--total-training-steps", "1", "--save-freq", "1")
     observed = {}
 
     def preflight(config):
         return launch.finalize_training_plan(config, train_rows=2, validation_rows=1)
 
     def execute(command, **kwargs):
+        assert command[1:4] == ["-m", "verl.trainer.main_ppo", "--config-name=ppo_trainer"]
+        hydra_dirs = [
+            item.value()
+            for item in OverridesParser.create().parse_overrides(command[4:])
+            if item.key_or_group == "hydra.run.dir"
+        ]
+        assert hydra_dirs == [str(private_launch_dir.resolve() / "hydra")]
+        assert kwargs["cwd"] == launch.ROOT
         cfg = launch.compose_config(command[4:])
         observed.update(
             steps=cfg.trainer.total_training_steps, epochs=cfg.trainer.total_epochs, save=cfg.trainer.save_freq
@@ -97,7 +109,7 @@ def test_bounded_launch_passes_final_plan_to_native_trainer(tmp_path, monkeypatc
     monkeypatch.setattr(launch.subprocess, "run", execute)
     launch.main()
     assert observed == {"steps": 1, "epochs": 1, "save": 1}
-    report = json.loads((tmp_path / "run/rl-training/training-preflight.json").read_text())
+    report = json.loads((private_launch_dir / "run/rl-training/training-preflight.json").read_text())
     assert report["total_training_steps"] == 1
 
 

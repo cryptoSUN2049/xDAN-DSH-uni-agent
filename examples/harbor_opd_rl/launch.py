@@ -341,6 +341,9 @@ def main() -> None:
         recipe_config=args.recipe_config,
         experiment_name=args.experiment_name,
     )
+    # Hydra writes logs/metadata before entering the trainer; source may be read-only.
+    hydra_run_dir = args.launch.resolve().parent / "hydra"
+    overrides.append(f"hydra.run.dir={_hydra(str(hydra_run_dir))}")
     for key, value in [("total_training_steps", args.total_training_steps), ("save_freq", args.save_freq)]:
         if value is not None:
             overrides.append(f"trainer.{key}={value}")

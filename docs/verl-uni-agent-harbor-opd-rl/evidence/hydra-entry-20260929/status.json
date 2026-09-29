@@ -1,0 +1,29 @@
+{
+  "schema": "mimo.hydra-entry-preflight.v1",
+  "status": "passed",
+  "pid": 296408,
+  "started_at": 1790689613.1933656,
+  "helper_sha256": "f383a7f775de9504718308b970e2bfe181de6594894ffde654c26a973101f469",
+  "source_cwd": "/workspace/mimo-dsh-rl-20260928/run-src-r11",
+  "source_mode": "0o555",
+  "argv": [
+    "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+    "/workspace/mimo-dsh-rl-20260928/run-src-r11/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py",
+    "--config-name=ppo_trainer",
+    "trainer.use_v1=false",
+    "hydra.run.dir=/root/mimo-private/observability-hydra-bootstrap-20260929/hydra",
+    "hydra.job.chdir=false"
+  ],
+  "expected_exit_code": 1,
+  "expected_error": "Observed entry requires native V1 with wandb and rl_insight",
+  "training_acceptance": false,
+  "gpu_training_started": false,
+  "finished_at": 1790689711.9918,
+  "observed_guard_error": "Observed entry requires native V1 with wandb and rl_insight",
+  "hydra_metadata_created": true,
+  "native_ray_not_started": true,
+  "process_still_present": false,
+  "observed_exit_code": null,
+  "exit_code_note": "Expected guard error observed; exit code available only if adopted timeout remains a zombie.",
+  "gpu_compute_apps": ""
+}

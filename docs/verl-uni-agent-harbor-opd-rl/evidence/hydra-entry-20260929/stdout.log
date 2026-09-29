@@ -1,0 +1,8 @@
+WARNING:2026-09-29 13:47:31,757:Platform 'nvidia' (PlatformCUDA) is registered but not available. This may be due to this ray actor being a CPU-only actor.
+Error executing job with overrides: ['trainer.use_v1=false']
+Traceback (most recent call last):
+  File "/workspace/mimo-dsh-rl-20260928/run-src-r11/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py", line 163, in entry
+    raise ValueError("Observed entry requires native V1 with wandb and rl_insight")
+ValueError: Observed entry requires native V1 with wandb and rl_insight
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.

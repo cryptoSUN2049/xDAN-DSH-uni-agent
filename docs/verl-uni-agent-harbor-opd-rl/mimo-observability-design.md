@@ -52,3 +52,9 @@ flowchart LR
 ## 判定边界
 
 监控集成、训练更新、独立恢复、能力提升为四个不同结论。一次小样本续训只能证明链路与学习信号；缺W&B history、缺RL-Insight实际事件、指标对账失败任一项都不能宣布观测验收完成。
+
+## r11 实际入口失败与 r12 接续
+
+r11于13:44:57UTC在Hydra创建相对outputs目录时PermissionError，尚未进入Ray/模型训练，exit1；该身份与源码完整保留，controller/archiver已停止，GPU Pod保留。launcher改为显式私有`launch.json`同目录`hydra/`输出，冻结源码继续只读。真实入口已在0555源码目录成功创建Hydra元数据，再按预设use_v1=false guard退出；这个CPU路径检查不等于训练。
+
+r12使用独立身份/ports38680–38683/Ray目录/W&B run `mimo9b001661r12`，仍从r10 C3恢复至绝对step4，复用原生Hub保留修复与既有后端。截止仍1790709401，不因启动失败重计。

@@ -27,3 +27,5 @@
 - 用户要求按实际创建时间清理超过两天的闲置 Modal App 时，不应额外要求名称含日期，也不应仅因代码未来可能 lookup 通用名字而保留。以平台 created_at、Function/Class、当前 Task/Sandbox 和正在运行流程的实际依赖判断；2026-09-29 扩大清理覆盖 undated 实验及 verl-crossbench/verl-harbor/verl-eval，冻结 r10 executor 未覆盖 app_name，故仅保留其实际继承的 __harbor__ 默认命名空间、近期 App 与部署的 Function 服务。Live Apps 数量不等于活跃 sandbox 数量，清理空部署不能虚报节省正在计费的计算资源。
 
 - rl-insight0.3.0的finish仅清理进程内state，且Hub实际并非detached；不能据过时docstring推断它会存活。真实CPU Ray探针证明保留TaskRunner仍可能丢失最后Hub handle、导致首次Prometheus scrape前actor消失。必须保留原生Hub handle跨越finish，并以唯一preflight实验的真实Prom/Tempo回执验证，不靠sleep或端口健康推定通过。
+
+- 冻结源码必须保持只读；Hydra会在进入用户entry之前创建日志目录，compose/tokenizer预检不覆盖这一步。launcher应显式配置独立私有hydra.run.dir，并验证实际只读cwd入口、日志元数据及pre-Ray guard，避免仅凭配置组合测试推断训练能启动。

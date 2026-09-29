@@ -1,0 +1,19 @@
+{
+  "schema": "mimo-r11-failure-cleanup.v1",
+  "at_unix": 1790689703.7081819,
+  "controller_stopped": true,
+  "archiver_stopped": true,
+  "controller_cleanup": {
+    "cleanup_errors": [],
+    "docker_cleanup_proven": false
+  },
+  "jobs_database_created": false,
+  "pod_retained": true,
+  "archive": {
+    "state": "stopped",
+    "errors": [],
+    "source_missing": []
+  },
+  "archive_files": 3,
+  "archive_jobs": 0
+}
