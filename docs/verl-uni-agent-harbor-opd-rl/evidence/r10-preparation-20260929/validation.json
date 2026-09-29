@@ -1,0 +1,40 @@
+{
+  "schema": "mimo.r10-stage-validation.v1",
+  "stage_only": true,
+  "training_started_by_stage": false,
+  "prepared_run_by_stage": false,
+  "inner_gpu_script_ast_valid": true,
+  "coverage": {
+    "covered_lines": 122,
+    "num_statements": 123,
+    "percent_covered": 98.62068965517241,
+    "percent_covered_display": "99",
+    "missing_lines": 1,
+    "excluded_lines": 0,
+    "num_branches": 22,
+    "num_partial_branches": 1,
+    "covered_branches": 21,
+    "missing_branches": 1
+  },
+  "tests": 30,
+  "skipped": 0,
+  "bundle": "/workspace/mimo-dsh-rl-20260928/audit-code/r10-preparation",
+  "scripts": {
+    "schema": "mimo.r10-script-preparation.v1",
+    "files": {
+      "prepare-r10.py": "0f5a93f41141730fdb4bf6c36035f21377b0f893c3a4faed12bde74f66beae16",
+      "launch-r10-driver.py": "ca3dfa1917754936337564bb304cb212b9b528bab522dbbb3956747e0d2dcf9a",
+      "mimo-supervised-native-r10.py": "521efc12128d80701bf6af6c6480f3a6d78267b4d6e8370f6f44186e2595f8ec",
+      "mimo_r10_preparation.py": "4950c65e6a50e4fd3bcd23273a36b09ca3c3f61e6829ab9fe091475d8b003641",
+      "preflight-r10.py": "2b1e4ef3f36d9e8950abd7dbe021946b0bbfb96365f3249f50297fac91428ae5"
+    },
+    "training_started": false,
+    "templates": {
+      "prepare": "548fcb17c01665b3f49b06f8a626bc9edeb72193577710f72733efc71f757d44",
+      "driver": "76da14b7c58695b144dcb2e7a2cbc9d5ce13206f27e3c411c51b494638642561",
+      "wrapper": "6404ff6a74ba3cc70ab57fb69b95554705896791c2e380c504de06acde5d372d"
+    }
+  },
+  "source_sha256": "4950c65e6a50e4fd3bcd23273a36b09ca3c3f61e6829ab9fe091475d8b003641",
+  "tests_sha256": "d1446d742e4a01472c55225692a6a499d9460bfde3ad27ea6eb353ff3b87c766"
+}

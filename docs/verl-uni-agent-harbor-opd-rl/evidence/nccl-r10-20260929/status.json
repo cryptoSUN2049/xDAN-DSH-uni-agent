@@ -1,0 +1,124 @@
+{
+  "status": "passed",
+  "mode": "separate_async",
+  "backend": "nccl",
+  "tests": 2,
+  "skipped": 0,
+  "errors": 0,
+  "failures": 0,
+  "versions_per_test": 3,
+  "started_at": 1790678873.5615675,
+  "overlay_manifest_sha256": "ef5fb1393db7aa8ee8d80fb2e2d4484650790adb15cd527e8778845aeb281967",
+  "native_source_sha256": "e32bfa5d650d86016e8e38307c7b26eb81e818bc1e809202dd62a55bd6cb22a6",
+  "results": [
+    {
+      "rebuild_group": false,
+      "identities": [
+        {
+          "ray_gpu_ids": [
+            "0"
+          ],
+          "uuid": "f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94",
+          "pid": 260305
+        },
+        {
+          "ray_gpu_ids": [
+            "1"
+          ],
+          "uuid": "2676ad09-5ff2-cb59-a4bd-9c516041194b",
+          "pid": 260309
+        }
+      ],
+      "rounds": [
+        [
+          {
+            "version": 2,
+            "sent": 3
+          },
+          {
+            "version": 2,
+            "exact_equal": true,
+            "tensors": 3
+          }
+        ],
+        [
+          {
+            "version": 3,
+            "sent": 3
+          },
+          {
+            "version": 3,
+            "exact_equal": true,
+            "tensors": 3
+          }
+        ],
+        [
+          {
+            "version": 4,
+            "sent": 3
+          },
+          {
+            "version": 4,
+            "exact_equal": true,
+            "tensors": 3
+          }
+        ]
+      ]
+    },
+    {
+      "rebuild_group": true,
+      "identities": [
+        {
+          "ray_gpu_ids": [
+            "0"
+          ],
+          "uuid": "f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94",
+          "pid": 260348
+        },
+        {
+          "ray_gpu_ids": [
+            "1"
+          ],
+          "uuid": "2676ad09-5ff2-cb59-a4bd-9c516041194b",
+          "pid": 260338
+        }
+      ],
+      "rounds": [
+        [
+          {
+            "version": 2,
+            "sent": 3
+          },
+          {
+            "version": 2,
+            "exact_equal": true,
+            "tensors": 3
+          }
+        ],
+        [
+          {
+            "version": 3,
+            "sent": 3
+          },
+          {
+            "version": 3,
+            "exact_equal": true,
+            "tensors": 3
+          }
+        ],
+        [
+          {
+            "version": 4,
+            "sent": 3
+          },
+          {
+            "version": 4,
+            "exact_equal": true,
+            "tensors": 3
+          }
+        ]
+      ]
+    }
+  ],
+  "finished_at": 1790679051.6152642
+}

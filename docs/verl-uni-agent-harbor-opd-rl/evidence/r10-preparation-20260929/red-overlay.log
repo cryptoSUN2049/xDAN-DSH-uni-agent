@@ -1,0 +1,52 @@
+......................EEEEEEEE                                           [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_training_environment_binds_real_preflight_overlay_and_source _
+tests/uni_agent/deployment/test_mimo_r10_preparation.py:173: in preflight
+    "schema_version": 1, "overlay_path": str(packages), "python": m.PYTHON,
+                                                                  ^^^^^^^^
+E   AttributeError: module 'r10_preparation' has no attribute 'PYTHON'
+_ ERROR at setup of test_training_environment_rejects_unproven_transport[failed] _
+tests/uni_agent/deployment/test_mimo_r10_preparation.py:173: in preflight
+    "schema_version": 1, "overlay_path": str(packages), "python": m.PYTHON,
+                                                                  ^^^^^^^^
+E   AttributeError: module 'r10_preparation' has no attribute 'PYTHON'
+_ ERROR at setup of test_training_environment_rejects_unproven_transport[same-gpu] _
+tests/uni_agent/deployment/test_mimo_r10_preparation.py:173: in preflight
+    "schema_version": 1, "overlay_path": str(packages), "python": m.PYTHON,
+                                                                  ^^^^^^^^
+E   AttributeError: module 'r10_preparation' has no attribute 'PYTHON'
+_ ERROR at setup of test_training_environment_rejects_unproven_transport[old-version] _
+tests/uni_agent/deployment/test_mimo_r10_preparation.py:173: in preflight
+    "schema_version": 1, "overlay_path": str(packages), "python": m.PYTHON,
+                                                                  ^^^^^^^^
+E   AttributeError: module 'r10_preparation' has no attribute 'PYTHON'
+_ ERROR at setup of test_training_environment_rejects_unproven_transport[different-source] _
+tests/uni_agent/deployment/test_mimo_r10_preparation.py:173: in preflight
+    "schema_version": 1, "overlay_path": str(packages), "python": m.PYTHON,
+                                                                  ^^^^^^^^
+E   AttributeError: module 'r10_preparation' has no attribute 'PYTHON'
+_ ERROR at setup of test_training_environment_rejects_unproven_transport[changed-overlay] _
+tests/uni_agent/deployment/test_mimo_r10_preparation.py:173: in preflight
+    "schema_version": 1, "overlay_path": str(packages), "python": m.PYTHON,
+                                                                  ^^^^^^^^
+E   AttributeError: module 'r10_preparation' has no attribute 'PYTHON'
+_ ERROR at setup of test_training_environment_rejects_unproven_transport[bad-hash] _
+tests/uni_agent/deployment/test_mimo_r10_preparation.py:173: in preflight
+    "schema_version": 1, "overlay_path": str(packages), "python": m.PYTHON,
+                                                                  ^^^^^^^^
+E   AttributeError: module 'r10_preparation' has no attribute 'PYTHON'
+_ ERROR at setup of test_training_environment_rejects_unproven_transport[symlink] _
+tests/uni_agent/deployment/test_mimo_r10_preparation.py:173: in preflight
+    "schema_version": 1, "overlay_path": str(packages), "python": m.PYTHON,
+                                                                  ^^^^^^^^
+E   AttributeError: module 'r10_preparation' has no attribute 'PYTHON'
+=========================== short test summary info ============================
+ERROR tests/uni_agent/deployment/test_mimo_r10_preparation.py::test_training_environment_binds_real_preflight_overlay_and_source
+ERROR tests/uni_agent/deployment/test_mimo_r10_preparation.py::test_training_environment_rejects_unproven_transport[failed]
+ERROR tests/uni_agent/deployment/test_mimo_r10_preparation.py::test_training_environment_rejects_unproven_transport[same-gpu]
+ERROR tests/uni_agent/deployment/test_mimo_r10_preparation.py::test_training_environment_rejects_unproven_transport[old-version]
+ERROR tests/uni_agent/deployment/test_mimo_r10_preparation.py::test_training_environment_rejects_unproven_transport[different-source]
+ERROR tests/uni_agent/deployment/test_mimo_r10_preparation.py::test_training_environment_rejects_unproven_transport[changed-overlay]
+ERROR tests/uni_agent/deployment/test_mimo_r10_preparation.py::test_training_environment_rejects_unproven_transport[bad-hash]
+ERROR tests/uni_agent/deployment/test_mimo_r10_preparation.py::test_training_environment_rejects_unproven_transport[symlink]
+22 passed, 8 errors in 1.09s

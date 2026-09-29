@@ -7,6 +7,7 @@
 - 在既有 11403 双 RTX PRO 6000 上运行 actor 1 GPU + standalone rollout 1 GPU；不操作其他 Pod。
 - 固定 MiMo 数据、模型、DSH、273 项 uv 依赖与原始 verifier；32K 总上下文、20480 生成预算、n=4、LoRA 保持。
 - 使用 separate_async、每步权重同步、NCCL backend。首次关闭 hybrid_rollout.enable_switch，便于核验角色和物理卡映射。
+- 实测固定 uv lane 缺少原生 NCCL engine 导入所需 CuPy；在云端独立 `env-overlays/r10-cupy` 中固定 CuPy CUDA13 wheel 与 fastrlock，记录 wheel/文件哈希，由显式 PYTHONPATH 注入。共享 uv 273 项依赖不改。
 - 保留 r9 原始证据；新 run/controller/Ray/session/source identity。若 r9 C2 完整，优先从 C2 恢复到绝对 step 3；不得把 fresh 冒充恢复。
 - 绝对截止 1790687801（2026-09-29 13:16:41 UTC），训练预留 180 秒清理；不因切换重计时。保留 Pod，实例仍计费。
 - Mac 仅编辑、Git、静态检查和 SSH；所有测试、通信探针、张量检查、模型运行均在云端。
@@ -31,6 +32,7 @@ GPU 编号为目标布局，验收以实际 Ray placement、worker PID 和 GPU U
 - `examples/mimo_dsh_rl/mimo-9b-separate-async.yaml`：显式双池与参数同步配置，复用预算终态合同。
 - `docs/verl-uni-agent-harbor-opd-rl/mimo_r10_preparation.py`：冻结来源、新运行身份、C2 恢复和绝对截止校验；仅生成脚本与准备，不隐式启动。
 - 对应 `tests/uni_agent/`：配置解析与准备门禁回归。
+- `docs/verl-uni-agent-harbor-opd-rl/mimo_nccl_probe.py`：真实两卡 native NCCL mixed-dtype、多 bucket、多个权重版本精确比较；不等同于模型恢复验收。
 - 本目录 `evidence/`：CPU 回归、实际 NCCL 探针、双卡启动与最终验收脱敏报告。
 - `tasks/verl-uni-agent-harbor-opd-rl/{notes,lessons,handoff}.md`：交接与实测状态。
 
