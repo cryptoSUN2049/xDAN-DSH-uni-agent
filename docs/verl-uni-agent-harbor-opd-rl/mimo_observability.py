@@ -120,12 +120,21 @@ def run_then_ack(native_run, acknowledge, *, now=time.time):
     return acknowledge(started_at)
 
 
+def retain_monitor_hub(config):
+    """Hold the job-scoped hub across native Tracking.finish(), which drops its client."""
+    from rl_insight.client.ray_monitor_client import get_or_create_monitor_hub
+    from rl_insight.utils.monitor_config_loader import load_monitor_config
+
+    return get_or_create_monitor_hub(load_monitor_config(config.trainer.get("rl_insight", {}) or {}))
+
+
 def make_observed_runner(ray, native_runner):
-    """Composition retains the untouched native runner while its hub finishes export."""
+    """Retain both the native runner and its hub while terminal events are scraped."""
 
     @ray.remote(num_cpus=1)
     class ObservedTaskRunner:
         def run(self, config):
+            self.monitor_hub = retain_monitor_hub(config)
             self.native_runner = native_runner.remote()
             trainer = config.trainer
             return run_then_ack(

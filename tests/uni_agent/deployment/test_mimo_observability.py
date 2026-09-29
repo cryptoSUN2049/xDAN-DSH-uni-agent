@@ -197,6 +197,8 @@ def test_composition_retains_native_actor_through_ack(monkeypatch, tmp_path):
 
     m = module()
     events = []
+    hub = object()
+    monkeypatch.setattr(m, "retain_monitor_hub", lambda config: events.append("retain_hub") or hub)
     handle = SimpleNamespace(run=SimpleNamespace(remote=lambda config: events.append("native") or "result"))
     ray = SimpleNamespace(remote=lambda **kwargs: lambda cls: cls, get=lambda obj: obj)
     native = SimpleNamespace(remote=lambda: handle)
@@ -212,10 +214,11 @@ def test_composition_retains_native_actor_through_ack(monkeypatch, tmp_path):
 
     def acknowledge(*args):
         assert runner.native_runner is handle
+        assert runner.monitor_hub is hub
         events.append("ack")
         assert args[:3] == ("project", "r11", 4)
         return "passed"
 
     monkeypatch.setattr(m, "wait_for_ack", acknowledge)
     assert runner.run(config) == "passed"
-    assert events == ["native", "ack"]
+    assert events == ["retain_hub", "native", "ack"]

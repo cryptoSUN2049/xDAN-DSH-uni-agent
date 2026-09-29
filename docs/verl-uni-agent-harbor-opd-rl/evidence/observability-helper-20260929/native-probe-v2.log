@@ -1,0 +1,37 @@
+2026-09-29 13:19:34,598	INFO worker.py:2013 -- Started a local Ray instance.
+/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/_private/worker.py:2052: FutureWarning: Tip: In future versions of Ray, Ray will no longer override accelerator visible devices env var if num_gpus=0 or num_gpus=None (default). To enable this behavior and turn off this error message, set RAY_ACCEL_ENV_VAR_OVERRIDE_ON_ZERO=0
+  warnings.warn(
+[36m(MonitorHubActor pid=294120)[0m [rl-insight] Registered 1 Prometheus targets with RL-Insight server (job_name=trainer_metrics)
+[36m(ObservedTaskRunner pid=293861)[0m {"observability_ack": "failed", "report": "/root/mimo-private/observability-preflight-20260929-v2/observability-ack.json"}
+Traceback (most recent call last):
+  File "/workspace/mimo-dsh-rl-20260928/integration-check/mimo_observability_probe.py", line 112, in <module>
+    main()
+  File "/workspace/mimo-dsh-rl-20260928/integration-check/mimo_observability_probe.py", line 80, in main
+    report["ack"] = ray.get(runner.run.remote(config))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/_private/auto_init_hook.py", line 22, in auto_init_wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/_private/client_mode_hook.py", line 104, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/_private/worker.py", line 2981, in get
+    values, debugger_breakpoint = worker.get_objects(
+                                  ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/ray/_private/worker.py", line 1012, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TimeoutError): [36mray::ObservedTaskRunner.run()[39m (pid=293861, ip=172.24.0.2, actor_id=7a0178a1335003d0ffedc6f801000000, repr=<<run_path>.ObservedTaskRunner object at 0x7333456863c0>)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py", line 131, in run
+    return run_then_ack(
+           ^^^^^^^^^^^^^
+  File "/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py", line 120, in run_then_ack
+    return acknowledge(started_at)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py", line 133, in <lambda>
+    lambda started: wait_for_ack(
+                    ^^^^^^^^^^^^^
+  File "/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py", line 113, in wait_for_ack
+    raise TimeoutError("Prometheus did not acknowledge this run's native terminal metrics")
+TimeoutError: Prometheus did not acknowledge this run's native terminal metrics

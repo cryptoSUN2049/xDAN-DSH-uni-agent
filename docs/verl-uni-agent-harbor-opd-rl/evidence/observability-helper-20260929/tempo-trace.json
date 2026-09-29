@@ -1,0 +1,84 @@
+{
+  "batches": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "python"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.44.0"
+            }
+          },
+          {
+            "key": "service.instance.id",
+            "value": {
+              "stringValue": "08d1c992-381f-4f97-94fb-66960c730fee"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "rl_insight_monitor"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "rl_insight.utils.opentelemetry_utils"
+          },
+          "spans": [
+            {
+              "traceId": "tyCKlHZNz0jWvg5xOkPu7Q==",
+              "spanId": "YzWQDOqtK7Q=",
+              "name": "synthetic_observability_preflight",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790688481969386326",
+              "endTimeUnixNano": "1790688481969387326",
+              "attributes": [
+                {
+                  "key": "process_id",
+                  "value": {
+                    "stringValue": "295157"
+                  }
+                },
+                {
+                  "key": "project",
+                  "value": {
+                    "stringValue": "mimo-observability-preflight"
+                  }
+                },
+                {
+                  "key": "experiment_name",
+                  "value": {
+                    "stringValue": "mimo9b-observability-preflight-20260929-v3"
+                  }
+                },
+                {
+                  "key": "synthetic_preflight",
+                  "value": {
+                    "boolValue": true
+                  }
+                }
+              ],
+              "status": {}
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

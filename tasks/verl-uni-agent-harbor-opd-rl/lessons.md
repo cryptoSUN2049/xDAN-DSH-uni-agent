@@ -25,3 +25,5 @@
 - 用户明确双卡目标时，区分 sync/colocate_async/separate_async 与卡数；单卡 smoke 仅用于短期排障，不应长期占用双卡而未给出迁移路径。2026-09-29 用户批准 separate_async，应落实 actor/rollout 独立资源池、非 naive 权重同步和实际 GPU 映射验收，不能仅修改可见卡数。
 
 - 用户要求按实际创建时间清理超过两天的闲置 Modal App 时，不应额外要求名称含日期，也不应仅因代码未来可能 lookup 通用名字而保留。以平台 created_at、Function/Class、当前 Task/Sandbox 和正在运行流程的实际依赖判断；2026-09-29 扩大清理覆盖 undated 实验及 verl-crossbench/verl-harbor/verl-eval，冻结 r10 executor 未覆盖 app_name，故仅保留其实际继承的 __harbor__ 默认命名空间、近期 App 与部署的 Function 服务。Live Apps 数量不等于活跃 sandbox 数量，清理空部署不能虚报节省正在计费的计算资源。
+
+- rl-insight0.3.0的finish仅清理进程内state，且Hub实际并非detached；不能据过时docstring推断它会存活。真实CPU Ray探针证明保留TaskRunner仍可能丢失最后Hub handle、导致首次Prometheus scrape前actor消失。必须保留原生Hub handle跨越finish，并以唯一preflight实验的真实Prom/Tempo回执验证，不靠sleep或端口健康推定通过。

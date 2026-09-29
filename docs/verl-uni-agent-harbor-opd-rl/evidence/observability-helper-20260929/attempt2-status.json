@@ -1,0 +1,13 @@
+{
+  "schema": "mimo.observability-preflight.v1",
+  "status": "failed",
+  "synthetic_preflight": true,
+  "training_acceptance": false,
+  "project": "mimo-observability-preflight",
+  "experiment_name": "mimo9b-observability-preflight-20260929",
+  "started_at": 1790687961.290629,
+  "helper_sha256": "3ff07380547b416cf8fe1362f3fa6febe84fdbbf0896e03f78d76e5078245f63",
+  "error_type": "RayTaskError(TimeoutError)",
+  "error": "\u001b[36mray::ObservedTaskRunner.run()\u001b[39m (pid=293861, ip=172.24.0.2, actor_id=7a0178a1335003d0ffedc6f801000000, repr=<<run_path>.ObservedTaskRunner object at 0x7333456863c0>)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py\", line 131, in run\n    return run_then_ack(\n           ^^^^^^^^^^^^^\n  File \"/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py\", line 120, in run_then_ack\n    return acknowledge(started_at)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py\", line 133, in <lambda>\n    lambda started: wait_for_ack(\n                    ^^^^^^^^^^^^^\n  File \"/workspace/mimo-dsh-rl-20260928/integration-check/obse",
+  "finished_at": 1790688086.013158
+}

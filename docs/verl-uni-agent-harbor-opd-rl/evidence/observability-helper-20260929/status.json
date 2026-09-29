@@ -1,0 +1,91 @@
+{
+  "schema": "mimo.observability-preflight.v1",
+  "status": "passed",
+  "synthetic_preflight": true,
+  "training_acceptance": false,
+  "project": "mimo-observability-preflight",
+  "experiment_name": "mimo9b-observability-preflight-20260929-v3",
+  "started_at": 1790688410.88956,
+  "helper_sha256": "f383a7f775de9504718308b970e2bfe181de6594894ffde654c26a973101f469",
+  "ack": {
+    "schema": "mimo.native-observability-ack.v1",
+    "status": "passed",
+    "project": "mimo-observability-preflight",
+    "experiment_name": "mimo9b-observability-preflight-20260929-v3",
+    "step": 4,
+    "training_started_at": 1790688454.8678687,
+    "budget_seconds": 45,
+    "deadline_unix": 1790709401,
+    "query": "{__name__=~\"rl_insight_monitor_training_global_step|rl_insight_monitor_actor_grad_norm|rl_insight_monitor_critic_rewards_mean\",project=\"mimo-observability-preflight\",experiment_name=\"mimo9b-observability-preflight-20260929-v3\"}",
+    "backend_response": {
+      "status": "success",
+      "data": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_training_global_step",
+              "experiment_name": "mimo9b-observability-preflight-20260929-v3",
+              "instance": "172.24.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "mimo-observability-preflight"
+            },
+            "value": [
+              1790688491.996,
+              "4"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_actor_grad_norm",
+              "experiment_name": "mimo9b-observability-preflight-20260929-v3",
+              "instance": "172.24.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "mimo-observability-preflight"
+            },
+            "value": [
+              1790688491.996,
+              "0.125"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_critic_rewards_mean",
+              "experiment_name": "mimo9b-observability-preflight-20260929-v3",
+              "instance": "172.24.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "mimo-observability-preflight"
+            },
+            "value": [
+              1790688491.996,
+              "0.75"
+            ]
+          }
+        ]
+      }
+    },
+    "values": {
+      "training_global_step": 4.0,
+      "actor_grad_norm": 0.125,
+      "critic_rewards_mean": 0.75
+    },
+    "finished_at": 1790688492.0022066
+  },
+  "tempo_search": {
+    "traces": [
+      {
+        "traceID": "b7208a94764dcf48d6be0e713a43eeed",
+        "rootServiceName": "rl_insight_monitor",
+        "rootTraceName": "synthetic_observability_preflight",
+        "startTimeUnixNano": "1790688481969386326"
+      }
+    ],
+    "metrics": {
+      "inspectedTraces": 2,
+      "inspectedBytes": "35503",
+      "completedJobs": 1,
+      "totalJobs": 1
+    }
+  },
+  "finished_at": 1790688494.7966948
+}

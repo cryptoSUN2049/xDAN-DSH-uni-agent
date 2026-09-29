@@ -1,0 +1,13 @@
+{
+  "schema": "mimo.observability-preflight.v1",
+  "status": "failed",
+  "synthetic_preflight": true,
+  "training_acceptance": false,
+  "project": "mimo-observability-preflight",
+  "experiment_name": "mimo9b-observability-preflight-20260929",
+  "started_at": 1790687844.39596,
+  "helper_sha256": "3ff07380547b416cf8fe1362f3fa6febe84fdbbf0896e03f78d76e5078245f63",
+  "error_type": "OSError",
+  "error": "Ray AF_UNIX socket path exceeds 107 bytes before actor creation",
+  "terminal_observed_at": 1790687917.6875052
+}

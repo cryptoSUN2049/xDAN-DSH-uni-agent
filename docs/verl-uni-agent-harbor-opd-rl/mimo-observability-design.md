@@ -30,6 +30,7 @@ flowchart LR
 - 原生 `main_ppo` 在 Ray 初始化前传播 `VERL_RL_INSIGHT_ENABLE=1`；按已安装0.3.0实际接口绑定既有18080服务及独立 experiment 身份。开启 rollout/TQ metrics 所需开关。服务只复用，不重启他人共享监控。
 - 固定273项 uv环境及独立CuPy overlay不变。不在Mac安装、启动服务或运行模型。任何依赖/服务/API缺失先报告，不静默降级并宣称接入成功。
 - native TaskRunner保持原训练实现。可选operator wrapper在native finish之后、Ray任务退出之前，最多45秒等待Prometheus确认本实验终步、有限梯度与奖励；实际响应落盘，超时明确失败。该等待不伪造训练数据。
+- 真实CPU探针v2已证明Ray序列化可用，但发现仅保留TaskRunner不能保住MonitorHub：rl-insight0.3.0的finish丢弃client，Hub实际是非detached的job-scoped actor（其docstring过时）。wrapper必须在启动原生TaskRunner之前取得并保留原生Hub handle，使用同一trainer.rl_insight配置与Ray job；待真实scrape回执完成后随自身生命周期释放。v2失败证据保留，修复后使用新的v3合成实验身份验证，不能复用旧实验样本冒充新回执。
 - 新授权唯一截止1790709401（2026-09-29 19:16:41UTC），不重计；所有新训练必须保留清理时间，不足窗口即不启动。r11按r10实测约46分钟全程设置至少2700秒剩余窗口准入（估计而非完成保证），继续保留180秒清理预算。
 - r9/r10历史数据保留原始日志及审计报告，不创建伪装实时的 W&B补传run。凭据继续只存在现有私有位置，禁止入日志/配置/提交。
 
