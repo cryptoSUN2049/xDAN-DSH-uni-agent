@@ -9,8 +9,8 @@ from pathlib import Path
 
 def main():
     from deepseek_harness_runtime import resolve_bundled_launch_args
-    from deployment.checks.keyless_sdk_smoke import main as keyless_smoke
 
+    from deployment.checks.keyless_sdk_smoke import main as keyless_smoke
     from uni_agent.agents.dsh import runner
 
     binding = json.loads(Path("/opt/dsh/build-inputs.json").read_text())

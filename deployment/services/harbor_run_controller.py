@@ -21,10 +21,10 @@ from pathlib import Path
 from typing import Annotated
 
 from aiohttp import web
-from deployment.services.harbor_modal_ingress import ModalIngress, ModalIngressConfig, require_external_private_path
-from deployment.services.harbor_tunnel import SshTunnel
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_serializer, model_validator
 
+from deployment.services.harbor_modal_ingress import ModalIngress, ModalIngressConfig, require_external_private_path
+from deployment.services.harbor_tunnel import SshTunnel
 from uni_agent.tasks.harbor_dsh.environment_backend import validate_registry_secret
 from uni_agent.tasks.harbor_dsh.protocol import OpaqueId, Port, RequestPolicy, Sha256
 
