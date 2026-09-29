@@ -1,0 +1,407 @@
+{
+  "schema": "mimo.r17-async-batch-audit-comparison.v1",
+  "runtime_modified": false,
+  "raw_trajectory_modified": false,
+  "original_v1": {
+    "execution": {
+      "exit_code": 1,
+      "started_at": 1790708588.4638417,
+      "finished_at": 1790708638.6518793,
+      "scope": "Original v1 auditor; preserved unchanged before asynchronous interpretation fix"
+    },
+    "report": {
+      "errors": [
+        "ValueError: Unexpected trainer rows: train"
+      ],
+      "groups": [
+        {
+          "consumed_transfer_queue_keys": [
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0"
+          ],
+          "global_steps": 1,
+          "group_uid": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8",
+          "has_reward_variance": true,
+          "partition_id": "train",
+          "rewards": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "session_indexes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "status": "admitted-and-training-batch-matched",
+          "termination_kinds": [
+            "budget_exhausted",
+            "budget_exhausted",
+            "budget_exhausted",
+            "completed"
+          ],
+          "transfer_queue_keys": [
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0"
+          ]
+        }
+      ],
+      "launch_sha256": "sha256:00da18629746abaa92d1cbcd8f8f92e6dd4ccb940fd81ab02d9df2fec5bf594f",
+      "mode": "training-only",
+      "optimizer_update_verified": false,
+      "passed": false,
+      "schema": "dsh.harbor-training-batch-audit.v1",
+      "unconsumed_groups": [
+        {
+          "complete": true,
+          "consumed_transfer_queue_keys": [],
+          "global_steps": 1,
+          "group_uid": "f02d4ff1-a568-439c-9665-27e23e4c5bc4",
+          "partition_id": "train",
+          "rewards": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "session_indexes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "status": "admitted-not-consumed",
+          "termination_kinds": [
+            "budget_exhausted",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "transfer_queue_keys": [
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_0_0",
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_1_0",
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_2_0",
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_3_0"
+          ]
+        },
+        {
+          "complete": false,
+          "consumed_transfer_queue_keys": [],
+          "global_steps": 2,
+          "group_uid": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd",
+          "partition_id": "train",
+          "rewards": [
+            0.0
+          ],
+          "session_indexes": [
+            0
+          ],
+          "status": "admitted-not-consumed",
+          "termination_kinds": [
+            "completed"
+          ],
+          "transfer_queue_keys": [
+            "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_0_0"
+          ]
+        }
+      ],
+      "unconsumed_trajectory_count": 5
+    },
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r17-c2-batch-audit-v1/batch-audit.json",
+    "sha256": "bf365946a8430eaa785b44260aa4ee4d73ef49759c853cb57d78cfa4a99e11ca"
+  },
+  "explicit_v2": {
+    "execution": {
+      "exit_code": 0,
+      "started_at": 1790708818.9392793,
+      "finished_at": 1790708876.1862128,
+      "audit_source_sha256": "a4ad470da1bdfc87d742cfda943d0d0c7a10702b7f2eabe352ed0eaa348b4216",
+      "runtime_modified": false,
+      "scope": "Explicit v2 asynchronous UID-to-consumer-step evidence audit",
+      "command": [
+        "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+        "-m",
+        "examples.harbor.audit_m2_training",
+        "--launch-path",
+        "/root/mimo-private/launch-r17/launch.json",
+        "--agent-log-dir",
+        "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/agent",
+        "--rollout-data-dir",
+        "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/rollout",
+        "--train-n",
+        "4",
+        "--no-validation",
+        "--async-training"
+      ]
+    },
+    "report": {
+      "errors": [],
+      "groups": [
+        {
+          "consumed_rows": [
+            {
+              "reward": 1.0,
+              "training_global_steps": 1,
+              "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0"
+            },
+            {
+              "reward": 0.0,
+              "training_global_steps": 1,
+              "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0"
+            },
+            {
+              "reward": 0.0,
+              "training_global_steps": 1,
+              "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0"
+            },
+            {
+              "reward": 1.0,
+              "training_global_steps": 1,
+              "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0"
+            }
+          ],
+          "consumed_transfer_queue_keys": [
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0"
+          ],
+          "generation_global_steps": 1,
+          "global_steps": 1,
+          "group_uid": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8",
+          "has_reward_variance": true,
+          "partition_id": "train",
+          "rewards": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "session_indexes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "status": "admitted-and-training-batch-matched",
+          "termination_kinds": [
+            "budget_exhausted",
+            "budget_exhausted",
+            "budget_exhausted",
+            "completed"
+          ],
+          "training_global_steps": 1,
+          "transfer_queue_keys": [
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0",
+            "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0"
+          ],
+          "version_evidence": [
+            {
+              "generation_count": 49,
+              "max_global_steps": 0,
+              "min_global_steps": 0,
+              "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0",
+              "version_evidence_complete": true,
+              "versioned_generation_count": 49
+            },
+            {
+              "generation_count": 43,
+              "max_global_steps": 0,
+              "min_global_steps": 0,
+              "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0",
+              "version_evidence_complete": true,
+              "versioned_generation_count": 43
+            },
+            {
+              "generation_count": 38,
+              "max_global_steps": 0,
+              "min_global_steps": 0,
+              "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0",
+              "version_evidence_complete": true,
+              "versioned_generation_count": 38
+            },
+            {
+              "generation_count": 40,
+              "max_global_steps": 0,
+              "min_global_steps": 0,
+              "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0",
+              "version_evidence_complete": true,
+              "versioned_generation_count": 40
+            }
+          ]
+        },
+        {
+          "consumed_rows": [
+            {
+              "reward": 1.0,
+              "training_global_steps": 2,
+              "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_0_0"
+            },
+            {
+              "reward": 1.0,
+              "training_global_steps": 2,
+              "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_1_0"
+            },
+            {
+              "reward": 0.0,
+              "training_global_steps": 2,
+              "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_2_0"
+            },
+            {
+              "reward": 0.0,
+              "training_global_steps": 2,
+              "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_3_0"
+            }
+          ],
+          "consumed_transfer_queue_keys": [
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_0_0",
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_1_0",
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_2_0",
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_3_0"
+          ],
+          "generation_global_steps": 1,
+          "global_steps": 1,
+          "group_uid": "f02d4ff1-a568-439c-9665-27e23e4c5bc4",
+          "has_reward_variance": true,
+          "partition_id": "train",
+          "rewards": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "session_indexes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "status": "admitted-and-training-batch-matched",
+          "termination_kinds": [
+            "budget_exhausted",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "training_global_steps": 2,
+          "transfer_queue_keys": [
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_0_0",
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_1_0",
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_2_0",
+            "f02d4ff1-a568-439c-9665-27e23e4c5bc4_3_0"
+          ],
+          "version_evidence": [
+            {
+              "generation_count": 43,
+              "max_global_steps": 1,
+              "min_global_steps": 0,
+              "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_0_0",
+              "version_evidence_complete": true,
+              "versioned_generation_count": 43
+            },
+            {
+              "generation_count": 48,
+              "max_global_steps": 1,
+              "min_global_steps": 1,
+              "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_1_0",
+              "version_evidence_complete": true,
+              "versioned_generation_count": 48
+            },
+            {
+              "generation_count": 42,
+              "max_global_steps": 1,
+              "min_global_steps": 1,
+              "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_2_0",
+              "version_evidence_complete": true,
+              "versioned_generation_count": 42
+            },
+            {
+              "generation_count": 33,
+              "max_global_steps": 1,
+              "min_global_steps": 1,
+              "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_3_0",
+              "version_evidence_complete": true,
+              "versioned_generation_count": 33
+            }
+          ]
+        }
+      ],
+      "launch_sha256": "sha256:00da18629746abaa92d1cbcd8f8f92e6dd4ccb940fd81ab02d9df2fec5bf594f",
+      "mode": "training-only",
+      "optimizer_update_verified": false,
+      "passed": true,
+      "schema": "dsh.harbor-training-batch-audit.v2",
+      "unconsumed_groups": [
+        {
+          "complete": false,
+          "consumed_rows": [],
+          "consumed_transfer_queue_keys": [],
+          "generation_global_steps": 2,
+          "global_steps": 2,
+          "group_uid": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd",
+          "partition_id": "train",
+          "rewards": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "session_indexes": [
+            0,
+            1,
+            2
+          ],
+          "status": "admitted-not-consumed",
+          "termination_kinds": [
+            "completed",
+            "budget_exhausted",
+            "budget_exhausted"
+          ],
+          "training_global_steps": null,
+          "transfer_queue_keys": [
+            "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_0_0",
+            "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_1_0",
+            "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_2_0"
+          ],
+          "version_evidence": [
+            {
+              "generation_count": 3,
+              "max_global_steps": 1,
+              "min_global_steps": 1,
+              "transfer_queue_key": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_0_0",
+              "version_evidence_complete": true,
+              "versioned_generation_count": 3
+            },
+            {
+              "generation_count": 43,
+              "max_global_steps": 2,
+              "min_global_steps": 1,
+              "transfer_queue_key": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_1_0",
+              "version_evidence_complete": true,
+              "versioned_generation_count": 43
+            },
+            {
+              "generation_count": 44,
+              "max_global_steps": 2,
+              "min_global_steps": 2,
+              "transfer_queue_key": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_2_0",
+              "version_evidence_complete": true,
+              "versioned_generation_count": 44
+            }
+          ]
+        }
+      ],
+      "unconsumed_trajectory_count": 3
+    },
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r17-c2-batch-audit-v2/batch-audit.json",
+    "sha256": "ede2da094417507b279c001b68129a11e9b8ac60a5c7652adc4d5e96f1c415e9"
+  },
+  "scope": "Offline receipt/TQ/batch evidence only; optimizer update remains separate"
+}

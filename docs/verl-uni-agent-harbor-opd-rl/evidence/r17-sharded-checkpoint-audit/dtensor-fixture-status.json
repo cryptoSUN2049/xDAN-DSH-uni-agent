@@ -1,0 +1,54 @@
+{
+  "schema": "dsh.dtensor-checkpoint-audit-tests.v1",
+  "created_utc": "2026-09-29T19:21:54.234062+00:00",
+  "tests": 17,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 94.88,
+  "coverage": {
+    "covered_lines": 192,
+    "num_statements": 211,
+    "percent_covered": 89.88326848249027,
+    "percent_covered_display": "90",
+    "missing_lines": 19,
+    "excluded_lines": 0,
+    "percent_statements_covered": 90.99526066350711,
+    "percent_statements_covered_display": "91",
+    "num_branches": 46,
+    "num_partial_branches": 5,
+    "covered_branches": 39,
+    "missing_branches": 7,
+    "percent_branches_covered": 84.78260869565217,
+    "percent_branches_covered_display": "85"
+  },
+  "files": {
+    "deployment/checks/sharded_checkpoint_delta.py": {
+      "sha256": "ea9055884d8474bb511f0e8593dcee3fd9769714244deacd4d9c1c3017ff05a6",
+      "bytes": 14769
+    },
+    "deployment/checks/optimizer_delta.py": {
+      "sha256": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee",
+      "bytes": 6573
+    },
+    "tests/uni_agent/deployment/test_sharded_checkpoint_delta.py": {
+      "sha256": "67a070a218d15d580d91a5bafa66bc8a21f1e70b6dd20655e82c63ece749217c",
+      "bytes": 7165
+    },
+    "green.log": {
+      "sha256": "6cb54f07c6171e15e9b4429df95314a42404534e41e0df95a11102c8b17f4650",
+      "bytes": 110
+    },
+    "coverage.json": {
+      "sha256": "a9eeedf7a95a9dd01ba1a7f3d94d6d9378b59650c972435143f5df54ba2e4a04",
+      "bytes": 13049
+    }
+  },
+  "scope": "Native two-rank CPU ShardedTensor and DTensor fixture validation; actual R17 checkpoint re-audit recorded separately",
+  "rejected_layouts": [
+    "Partial",
+    "Replicate",
+    "Shard(1)"
+  ],
+  "plain_optimizer_checker_unchanged": true
+}

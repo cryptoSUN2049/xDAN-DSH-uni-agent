@@ -59,6 +59,30 @@ def _rows(directory):
     return rows
 
 
+def _async_consumption(rows):
+    """A TQ key identifies one actual trainer consumption, regardless of sampling step."""
+    result = {}
+    for (step, key), scores in rows.items():
+        if key in result or len(scores) != 1:
+            raise ValueError("TQ key consumed more than once")
+        result[key] = (step, scores[0])
+    return result
+
+
+def _version_evidence(entry, key):
+    names = ("min_global_steps", "max_global_steps", "generation_count", "versioned_generation_count")
+    values = {name: entry[name] for name in names}
+    if (
+        any(type(value) is not int for value in values.values())
+        or not 0 <= values["min_global_steps"] <= values["max_global_steps"]
+        or values["generation_count"] <= 0
+        or values["generation_count"] != values["versioned_generation_count"]
+        or entry["version_evidence_complete"] is not True
+    ):
+        raise ValueError("Incomplete Gateway version evidence")
+    return dict(transfer_queue_key=key, **values, version_evidence_complete=True)
+
+
 def audit_training(
     *,
     launch_path,
@@ -69,10 +93,11 @@ def audit_training(
     train_n=None,
     val_only=False,
     no_validation=False,
+    async_training=False,
 ):
     """Report batch correspondence; optimizer verification remains a separate gate."""
     report = dict(
-        schema="dsh.harbor-training-batch-audit.v1",
+        schema="dsh.harbor-training-batch-audit.v2" if async_training is True else "dsh.harbor-training-batch-audit.v1",
         passed=False,
         groups=[],
         unconsumed_groups=[],
@@ -83,6 +108,8 @@ def audit_training(
     try:
         if type(val_only) is not bool or type(no_validation) is not bool:
             raise ValueError("val_only and no_validation must be booleans")
+        if type(async_training) is not bool or (async_training and (not no_validation or val_only)):
+            raise ValueError("async_training requires explicit training-only audit")
         if no_validation and (val_only or validation_data_dir is not None or validation_n is not None):
             raise ValueError("no_validation conflicts with validation options")
         counts = {} if no_validation else dict(val=validation_n)
@@ -104,6 +131,8 @@ def audit_training(
         rows = {} if no_validation else dict(val=_rows(Path(validation_data_dir)))
         if not val_only:
             rows["train"] = _rows(Path(rollout_data_dir))
+        consumption = _async_consumption(rows["train"]) if async_training else {}
+        seen_tq_keys = set()
         log_root = Path(agent_log_dir)
         if not log_root.is_dir() or log_root.is_symlink():
             raise ValueError("Agent log directory missing")
@@ -142,6 +171,11 @@ def audit_training(
                 ),
             )
             group["session_indexes"].append(context.session_index)
+            if async_training:
+                group.setdefault("generation_global_steps", context.global_steps)
+                group.setdefault("training_global_steps", None)
+                group.setdefault("consumed_rows", [])
+                group.setdefault("version_evidence", [])
             raw_npz = _read(path.parent / "trajectory.npz")
             if meta["trajectory_npz_sha256"] != "sha256:" + hashlib.sha256(raw_npz).hexdigest():
                 raise ValueError("Trajectory NPZ digest mismatch")
@@ -153,6 +187,11 @@ def audit_training(
                 tq_key = trajectory_tq_key(context.group_uid, context.session_index, index)
                 if entry["transfer_queue_key"] != tq_key or entry["trajectory_index"] != index:
                     raise ValueError("TransferQueue key mismatch")
+                if async_training:
+                    if tq_key in seen_tq_keys:
+                        raise ValueError("Duplicate global TransferQueue key")
+                    seen_tq_keys.add(tq_key)
+                    group["version_evidence"].append(_version_evidence(entry, tq_key))
                 trajectory = _load_dump_trajectory(npz_bytes=raw_npz, trajectory_meta=entry, trajectory_index=index)
                 validate_registered_trajectories((trajectory,), context=context.model_dump(), **kwargs)
                 if kwargs.get("termination_policy") == "budget-terminal-v1":
@@ -170,7 +209,12 @@ def audit_training(
                 if receipt in seen_receipts:
                     raise ValueError("Receipt reused across sessions")
                 local_receipts.add(receipt)
-                joined = (context.global_steps, tq_key)
+                consumed_step = consumption.get(tq_key, (None, None))[0] if async_training else context.global_steps
+                if async_training and consumed_step is not None and consumed_step < context.global_steps:
+                    raise ValueError("Trainer consumption precedes generation")
+                if async_training and consumed_step is not None and entry["max_global_steps"] >= consumed_step:
+                    raise ValueError("Consumed trajectory claims a future policy version")
+                joined = (consumed_step, tq_key)
                 if joined in known[partition]:
                     raise ValueError("Duplicate admitted TransferQueue key")
                 known[partition].add(joined)
@@ -178,6 +222,14 @@ def audit_training(
                     if rows[partition][joined] != [trajectory.reward_score]:
                         raise ValueError("Trainer row duplicated or reward mismatched")
                     group["consumed_transfer_queue_keys"].append(tq_key)
+                    if async_training:
+                        group["consumed_rows"].append(
+                            dict(
+                                transfer_queue_key=tq_key,
+                                training_global_steps=consumed_step,
+                                reward=trajectory.reward_score,
+                            )
+                        )
                 group["termination_kinds"].append(
                     (trajectory.extra_fields.get("budget_admission") or {}).get(
                         "termination_kind", "completed" if trajectory.finished is True else "unfinished"
@@ -199,6 +251,11 @@ def audit_training(
                 raise ValueError("Incomplete rollout group")
             if group["consumed_transfer_queue_keys"] != group["transfer_queue_keys"]:
                 raise ValueError("Partially consumed rollout group")
+            if async_training:
+                steps = {row["training_global_steps"] for row in group["consumed_rows"]}
+                if len(steps) != 1:
+                    raise ValueError("Rollout group consumed across different training steps")
+                group["training_global_steps"] = steps.pop()
             group["status"] = "admitted-and-training-batch-matched" if key[0] == "train" else "admitted-and-evaluated"
             group["has_reward_variance"] = len(set(group["rewards"])) > 1
             report["groups"].append(group)
@@ -224,6 +281,9 @@ def main():
     parser.add_argument("--validation-n", type=int)
     parser.add_argument("--val-only", action="store_true")
     parser.add_argument("--no-validation", action="store_true", help="Audit training with validation disabled")
+    parser.add_argument(
+        "--async-training", action="store_true", help="Join unique TQ keys to actual consumption steps (v2)"
+    )
     args = parser.parse_args()
     report = audit_training(**vars(args))
     print(json.dumps(report, sort_keys=True, indent=2, allow_nan=False))

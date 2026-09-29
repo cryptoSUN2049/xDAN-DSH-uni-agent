@@ -1,0 +1,157 @@
+{
+  "at": 1790709205.7749372,
+  "run_id": "mimo9b-001661-r17",
+  "url": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/mimo9b001661r17",
+  "wandb_state": "finished",
+  "history_count": 3,
+  "console_sha256": {
+    "1": "65cb80e075f2d134f835357aba750e8ddd335ffafd12aacdd8cfc1485baeed91",
+    "2": "333edc83186ac148eb254ca24a5958cebb683fd410cddbf44ddbeba34be7ff2c",
+    "3": "64060bf73699640a669147b6134340625dcbc4073ca934ae1d2365746bf7980a"
+  },
+  "comparisons": [
+    {
+      "step": 1,
+      "console_metrics": 88,
+      "matched": 88,
+      "missing": [],
+      "mismatch": []
+    },
+    {
+      "step": 2,
+      "console_metrics": 88,
+      "matched": 88,
+      "missing": [],
+      "mismatch": []
+    },
+    {
+      "step": 3,
+      "console_metrics": 88,
+      "matched": 88,
+      "missing": [],
+      "mismatch": []
+    }
+  ],
+  "all_metrics_finite": true,
+  "checkpoint_marker": "3",
+  "terminal_ack": {
+    "schema": "mimo.native-observability-ack.v1",
+    "status": "passed",
+    "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+    "experiment_name": "mimo9b-001661-r17",
+    "step": 3,
+    "training_started_at": 1790705959.9290907,
+    "budget_seconds": 45,
+    "deadline_unix": 1790709401,
+    "query": "{__name__=~\"rl_insight_monitor_training_global_step|rl_insight_monitor_actor_grad_norm|rl_insight_monitor_critic_rewards_mean\",project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-001661-r17\"}",
+    "backend_response": {
+      "status": "success",
+      "data": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_actor_grad_norm",
+              "experiment_name": "mimo9b-001661-r17",
+              "instance": "172.24.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790709132.177,
+              "0.1513671875"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_training_global_step",
+              "experiment_name": "mimo9b-001661-r17",
+              "instance": "172.24.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790709132.177,
+              "3"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_critic_rewards_mean",
+              "experiment_name": "mimo9b-001661-r17",
+              "instance": "172.24.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790709132.177,
+              "0.25"
+            ]
+          }
+        ]
+      }
+    },
+    "values": {
+      "actor_grad_norm": 0.1513671875,
+      "training_global_step": 3,
+      "critic_rewards_mean": 0.25
+    },
+    "finished_at": 1790709132.177946
+  },
+  "supervisor_result": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 3375.206,
+    "pid": 370678,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "tempo_count": 524,
+  "tempo_root_counts": {
+    "gateway_generation": 498,
+    "agent_task": 13,
+    "agent_session": 13
+  },
+  "tempo_sha256": "dc96a394317dc9b3892c37aca7eeac8c64cba2f2ffde1b3ec7c12df1fe8d05bb",
+  "mutated": false,
+  "backfilled": false,
+  "schema": "mimo-native-observability-final.v1",
+  "source_commit": "4a499cf",
+  "history_query": "list(run.scan_history()) with no keys (unsampled); fresh wandb.Api",
+  "metrics_matched_total": 264,
+  "final_metric_summary": [
+    {
+      "step": 1,
+      "grad_norm": 0.126953125,
+      "pg_loss": 0.04191888868808746,
+      "reward_mean": 0.5,
+      "learning_rate": 0.000001
+    },
+    {
+      "step": 2,
+      "grad_norm": 0.1279296875,
+      "pg_loss": -0.030729874968528748,
+      "reward_mean": 0.5,
+      "learning_rate": 0.000001
+    },
+    {
+      "step": 3,
+      "grad_norm": 0.1513671875,
+      "pg_loss": -0.21434767614118755,
+      "reward_mean": 0.25,
+      "learning_rate": 0.000001
+    }
+  ],
+  "private_full_history": "/root/mimo-private/r17-readonly-audit/wandb-final.json",
+  "scope": {
+    "native_three_step_execution_and_observability_passed": true,
+    "optimizer_model_delta_audit": "separate evidence required",
+    "model_quality_improvement_proven": false
+  },
+  "notes": [
+    "Tempo includes 13 completed task/session spans: 12 consumed episodes in three groups plus one completed prefetch episode; not 13 trained episodes.",
+    "Two logged Qwen3Coder malformed-tool XML exceptions (18:56:55 and 19:08:18 UTC) did not abort the native training run; retain these failures for protocol-quality analysis.",
+    "Native W&B explicit-step buffering was confirmed by step1 appearing after step2 and all three rows naturally appearing at finish. No backfill or state mutation.",
+    "Original Ray worker stdout was used when aggregated train.log lagged."
+  ]
+}

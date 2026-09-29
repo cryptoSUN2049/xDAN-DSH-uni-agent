@@ -1,0 +1,299 @@
+{
+  "schema": "mimo-r17-resource-cleanup-final.v1",
+  "run_id": "mimo9b-001661-r17",
+  "source_commit": "4a499cf",
+  "native_training_exit": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 3375.206,
+    "pid": 370678,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "controller_signal": {
+    "pid": 108342,
+    "starttime": "312764042",
+    "at": 1790709274.976921,
+    "signal": "SIGINT",
+    "verified_cwd": "/workspace/mimo-dsh-rl-20260928/run-src-r17",
+    "verified_spec": "/root/mimo-private/run-spec-r17.json",
+    "after_gpu_final_archive_readback": {
+      "files": 16,
+      "bytes": 702149
+    }
+  },
+  "cpu_and_modal": {
+    "at": 1790709728.7435346,
+    "controller_alive": false,
+    "controller_stop": {
+      "cleanup_errors": [],
+      "docker_cleanup_proven": false
+    },
+    "archiver_alive": false,
+    "archiver_state": "deadline_reached",
+    "archiver_finished_unix": 1790709401.0000687,
+    "archiver_sigint_sent": false,
+    "note": "The archiver naturally exited at the original deadline before the intended post-verification signal; that FileNotFoundError is retained. No signal was sent to the archiver. The verified run controller had already received its authorized SIGINT.",
+    "archive_files": 188,
+    "archive_bytes": 5944708,
+    "complete_jobs": 13,
+    "pending": 2,
+    "transport_errors": [],
+    "readback_errors": [],
+    "worker_final_files": 371,
+    "worker_final_bytes": 13476232,
+    "worker_readback_errors": [],
+    "worker_manifest_sha256": "ddd558c6e5bb9bad2c6542ed53f0921761e8a3f8393b5c0eb2a30963e121f50c",
+    "status_sha256": "dce14f81688f5a8470d2eab76a1e508acc45edd857f19f9c29444de032c4eb19",
+    "modal": {
+      "at": 1790709685.115118,
+      "resources": [
+        {
+          "sandbox_id": "sb-0kMN7vZRvGQv0mAbICnW1v",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-2nGOulTvjiR5cpOJtncNuU",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-4YfbZskmxD85RhR8eJUOWa",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-5LsX3ko3GEWiDgbduYZYXr",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-6Np2VTtfrgIHOV7yWpXqH6",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-6s65ygZydLlzg1Y8aPcwk7",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-7L0ToMrUj2zL88DkQrGkWS",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-8xetnf4NtfcU2JiDoWpgP8",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-9u19duAyWOGaXSkgU92Vva",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-GKa4WCR965aIYRsk5KB172",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-IYB1puutcWC5uzRsiwVGfq",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-KApbU78GlDLYjRTy6DoTPA",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-KaPMYXXsDwjbSAZ1YXunuY",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-NNuUW9i351lzYEwzgNwqva",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-NvFow3AdIf8vqfikL7o6Uc",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-RnBDuk76n3PQEe6xZ0ccSF",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-WghVhJbI8JXNRp0WBQLAA0",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-gmNroxy7Xp6cr2vDplZra5",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-hKSOwV50O1iCG5Y4biR1mU",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-iCEkq5cbjYo232SWY6LjEm",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-jYqf9BbQ6OWoLTG8w1dv2p",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-lFtn1zryt2E34rEa7wvTqD",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-lP3emNlBDgQdAguzIg3yTp",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-mpJrUoIZDMy6m2wxe5318U",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-qG1d6xjswiDLkEdIFAe1GX",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-rew5OUrhV9DkRxh2tqX5X8",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-uct2CbTwJ2Vxp9SxhH8siN",
+          "returncode": 137,
+          "extra_terminate": false
+        },
+        {
+          "sandbox_id": "sb-zLaQTLx9QHu9wNygXitSrT",
+          "returncode": 137,
+          "extra_terminate": false
+        }
+      ]
+    },
+    "job_counts": {
+      "succeeded": 13,
+      "cancelled": 2
+    },
+    "groups": {
+      "19acb2f8-1990-4929-b1a8-dc1f09a33ef8": [
+        {
+          "job_id": "job-e7ab1d8fdabc4d1788f42ef56388b50d",
+          "state": "succeeded"
+        },
+        {
+          "job_id": "job-6742d24619e048f5943f136996083b1b",
+          "state": "succeeded"
+        },
+        {
+          "job_id": "job-c4a6c2de02f34160bbaddfe311f86d8d",
+          "state": "succeeded"
+        },
+        {
+          "job_id": "job-ad6cf82edcf04681b4285e5248601b1c",
+          "state": "succeeded"
+        }
+      ],
+      "f02d4ff1-a568-439c-9665-27e23e4c5bc4": [
+        {
+          "job_id": "job-ba0cd98e5c7b4cb6bfcaccbe0a062a9c",
+          "state": "succeeded"
+        },
+        {
+          "job_id": "job-fb7494c08f444b48985948aa51a335d7",
+          "state": "succeeded"
+        },
+        {
+          "job_id": "job-9295a079b9f14a4587b19a47f17caceb",
+          "state": "succeeded"
+        },
+        {
+          "job_id": "job-8295cdb8f3294b75a8a8aeba32557b09",
+          "state": "succeeded"
+        }
+      ],
+      "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd": [
+        {
+          "job_id": "job-f8910d6278224352ac4c8e39fd41057a",
+          "state": "succeeded"
+        },
+        {
+          "job_id": "job-ab0d6fc1001249249d00bccc9b57d5f9",
+          "state": "succeeded"
+        },
+        {
+          "job_id": "job-a2d4c9b720e74eadbd89d3ad4d4a982d",
+          "state": "succeeded"
+        },
+        {
+          "job_id": "job-6c3d86a998504d72b279b02d808760bd",
+          "state": "succeeded"
+        }
+      ],
+      "069b8a75-21ba-4e27-ac68-96e9f7dc1b1c": [
+        {
+          "job_id": "job-c9821cb2aa80437d97709494f391bce3",
+          "state": "succeeded"
+        },
+        {
+          "job_id": "job-497a6be0f9d5435ba298dbe732c02616",
+          "state": "cancelled"
+        },
+        {
+          "job_id": "job-f501de1ac28c414f93f5b134c1b10ee6",
+          "state": "cancelled"
+        }
+      ]
+    }
+  },
+  "gpu": {
+    "at": 1790709732.1767597,
+    "gpu": "0, 0 MiB, 0 %\n1, 0 MiB, 0 %\n",
+    "compute_processes": "",
+    "driver_alive": false,
+    "timeline_alive": false,
+    "supervisor": {
+      "exit_code": 0,
+      "reason": "training-exited",
+      "elapsed_seconds": 3375.206,
+      "pid": 370678,
+      "transient_health_failures": 0,
+      "recovered_health_windows": 0
+    }
+  },
+  "pod_retained": true,
+  "shared_observability_services_unchanged": true,
+  "gpu_training_after_deadline": false,
+  "archive_private_root": "/root/mimo-private/evidence-r17",
+  "consumption_scope": {
+    "trained_groups": 3,
+    "trained_episodes": 12,
+    "prefetch_extra_succeeded": 1,
+    "prefetch_cancelled": 2
+  },
+  "notes": [
+    "All 28 owned Modal sandboxes were independently polled with returncode137; no additional terminate call was needed after controller cleanup. Exit137 does not mean OOM.",
+    "Archive pending2 corresponds to the cancelled prefetch jobs; it is not evidence of failed consumed episodes.",
+    "Only read-only audits and local report finalization continued after the fixed deadline. Pod and shared Prometheus/Tempo services were not stopped or deleted.",
+    "Checkpoint optimizer/model numerical audits are independent of this resource-cleanup report."
+  ]
+}

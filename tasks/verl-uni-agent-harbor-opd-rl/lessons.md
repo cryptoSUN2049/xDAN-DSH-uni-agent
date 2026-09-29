@@ -41,3 +41,8 @@
 - R15 暴露训练侧 sessions=2 并不意味着环境服务可并发：worker 的 unfinished-task 检查和 SQLite ledger 都硬编码单任务，第二请求 HTTP409，导致整组失败。变更并发必须核完整 producer→HTTP→worker→ledger 链，并用真实两 HTTP 请求、第三拒绝、独立取消/清理回归；未确认清理的任务继续占位，不能为吞吐绕过隔离。此类服务容量不匹配不能归因双卡 FSDP 或模式不适合。
 
 - R17 主train.log延迟转发，实际TaskRunner Ray stdout已存在完整step1、同步与更新指标。状态判断应同时核原始worker日志、checkpoint完成marker与原生Prom/API；不要误报保存后卡住。异步预取的新job可早于checkpoint创建，须用后续轨迹policy版本判断权重反馈，不能仅凭新job运行证明已使用新权重。
+
+- 异步训练采样 step 与实际消费 step 不等价。R17 C2 消费在 generation step1 预取的轨迹；审计须以唯一 TQ key 关联实际 trainer 行，保留两个 step、真实 Gateway policy version，拒绝重复消费/未来版本，不重写元数据迎合同步检查器。
+- FSDP2 原生 checkpoint 是 DTensor，不能由单 rank Tensor 或 ShardedTensor fixture 推定可读。先查看实际格式，CPU local tensor 原 dtype 比较，验证 mesh/placement/完整分片和 optimizer；增加真实双 rank save/load 回归，保留首次 unsupported-format 失败。
+- W&B 显式 step 且不指定 commit 时，本轮安装版本默认缓冲到下一 step 或 finish。先查实际冻结调用与安装源码，再以完整 scan_history 与原始 worker console 对账；不补写数据来制造健康表象。
+- 双卡 colocate 成功不意味着持续两卡100%利用率，也不证明恢复或能力提升。R17 实测三步/12轨迹/参数更新/原生观测通过；world2独立恢复与留出评测仍需分别验收。

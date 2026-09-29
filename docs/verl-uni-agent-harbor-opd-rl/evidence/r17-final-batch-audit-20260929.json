@@ -1,0 +1,360 @@
+{
+  "schema": "mimo.r17-final-batch-audit-evidence.v1",
+  "execution": {
+    "exit_code": 0,
+    "started_at": 1790709561.6425712,
+    "finished_at": 1790709618.3885386,
+    "audit_source_sha256": "a4ad470da1bdfc87d742cfda943d0d0c7a10702b7f2eabe352ed0eaa348b4216",
+    "runtime_modified": false,
+    "scope": "Final native-exit observation; explicit async v2 batch/receipt audit",
+    "command": [
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+      "-m",
+      "examples.harbor.audit_m2_training",
+      "--launch-path",
+      "/root/mimo-private/launch-r17/launch.json",
+      "--agent-log-dir",
+      "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/agent",
+      "--rollout-data-dir",
+      "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/rollout",
+      "--train-n",
+      "4",
+      "--no-validation",
+      "--async-training"
+    ]
+  },
+  "audit": {
+    "errors": [],
+    "groups": [
+      {
+        "consumed_rows": [
+          {
+            "reward": 1.0,
+            "training_global_steps": 1,
+            "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0"
+          },
+          {
+            "reward": 0.0,
+            "training_global_steps": 1,
+            "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0"
+          },
+          {
+            "reward": 0.0,
+            "training_global_steps": 1,
+            "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0"
+          },
+          {
+            "reward": 1.0,
+            "training_global_steps": 1,
+            "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0"
+          }
+        ],
+        "consumed_transfer_queue_keys": [
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0"
+        ],
+        "generation_global_steps": 1,
+        "global_steps": 1,
+        "group_uid": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8",
+        "has_reward_variance": true,
+        "partition_id": "train",
+        "rewards": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "session_indexes": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "status": "admitted-and-training-batch-matched",
+        "termination_kinds": [
+          "budget_exhausted",
+          "budget_exhausted",
+          "budget_exhausted",
+          "completed"
+        ],
+        "training_global_steps": 1,
+        "transfer_queue_keys": [
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0"
+        ],
+        "version_evidence": [
+          {
+            "generation_count": 49,
+            "max_global_steps": 0,
+            "min_global_steps": 0,
+            "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 49
+          },
+          {
+            "generation_count": 43,
+            "max_global_steps": 0,
+            "min_global_steps": 0,
+            "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 43
+          },
+          {
+            "generation_count": 38,
+            "max_global_steps": 0,
+            "min_global_steps": 0,
+            "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 38
+          },
+          {
+            "generation_count": 40,
+            "max_global_steps": 0,
+            "min_global_steps": 0,
+            "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 40
+          }
+        ]
+      },
+      {
+        "consumed_rows": [
+          {
+            "reward": 1.0,
+            "training_global_steps": 2,
+            "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_0_0"
+          },
+          {
+            "reward": 1.0,
+            "training_global_steps": 2,
+            "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_1_0"
+          },
+          {
+            "reward": 0.0,
+            "training_global_steps": 2,
+            "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_2_0"
+          },
+          {
+            "reward": 0.0,
+            "training_global_steps": 2,
+            "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_3_0"
+          }
+        ],
+        "consumed_transfer_queue_keys": [
+          "f02d4ff1-a568-439c-9665-27e23e4c5bc4_0_0",
+          "f02d4ff1-a568-439c-9665-27e23e4c5bc4_1_0",
+          "f02d4ff1-a568-439c-9665-27e23e4c5bc4_2_0",
+          "f02d4ff1-a568-439c-9665-27e23e4c5bc4_3_0"
+        ],
+        "generation_global_steps": 1,
+        "global_steps": 1,
+        "group_uid": "f02d4ff1-a568-439c-9665-27e23e4c5bc4",
+        "has_reward_variance": true,
+        "partition_id": "train",
+        "rewards": [
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "session_indexes": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "status": "admitted-and-training-batch-matched",
+        "termination_kinds": [
+          "budget_exhausted",
+          "completed",
+          "completed",
+          "completed"
+        ],
+        "training_global_steps": 2,
+        "transfer_queue_keys": [
+          "f02d4ff1-a568-439c-9665-27e23e4c5bc4_0_0",
+          "f02d4ff1-a568-439c-9665-27e23e4c5bc4_1_0",
+          "f02d4ff1-a568-439c-9665-27e23e4c5bc4_2_0",
+          "f02d4ff1-a568-439c-9665-27e23e4c5bc4_3_0"
+        ],
+        "version_evidence": [
+          {
+            "generation_count": 43,
+            "max_global_steps": 1,
+            "min_global_steps": 0,
+            "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_0_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 43
+          },
+          {
+            "generation_count": 48,
+            "max_global_steps": 1,
+            "min_global_steps": 1,
+            "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_1_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 48
+          },
+          {
+            "generation_count": 42,
+            "max_global_steps": 1,
+            "min_global_steps": 1,
+            "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_2_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 42
+          },
+          {
+            "generation_count": 33,
+            "max_global_steps": 1,
+            "min_global_steps": 1,
+            "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_3_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 33
+          }
+        ]
+      },
+      {
+        "consumed_rows": [
+          {
+            "reward": 0.0,
+            "training_global_steps": 3,
+            "transfer_queue_key": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_0_0"
+          },
+          {
+            "reward": 0.0,
+            "training_global_steps": 3,
+            "transfer_queue_key": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_1_0"
+          },
+          {
+            "reward": 0.0,
+            "training_global_steps": 3,
+            "transfer_queue_key": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_2_0"
+          },
+          {
+            "reward": 1.0,
+            "training_global_steps": 3,
+            "transfer_queue_key": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_3_0"
+          }
+        ],
+        "consumed_transfer_queue_keys": [
+          "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_0_0",
+          "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_1_0",
+          "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_2_0",
+          "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_3_0"
+        ],
+        "generation_global_steps": 2,
+        "global_steps": 2,
+        "group_uid": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd",
+        "has_reward_variance": true,
+        "partition_id": "train",
+        "rewards": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "session_indexes": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "status": "admitted-and-training-batch-matched",
+        "termination_kinds": [
+          "completed",
+          "budget_exhausted",
+          "budget_exhausted",
+          "completed"
+        ],
+        "training_global_steps": 3,
+        "transfer_queue_keys": [
+          "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_0_0",
+          "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_1_0",
+          "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_2_0",
+          "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_3_0"
+        ],
+        "version_evidence": [
+          {
+            "generation_count": 3,
+            "max_global_steps": 1,
+            "min_global_steps": 1,
+            "transfer_queue_key": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_0_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 3
+          },
+          {
+            "generation_count": 43,
+            "max_global_steps": 2,
+            "min_global_steps": 1,
+            "transfer_queue_key": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_1_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 43
+          },
+          {
+            "generation_count": 44,
+            "max_global_steps": 2,
+            "min_global_steps": 2,
+            "transfer_queue_key": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_2_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 44
+          },
+          {
+            "generation_count": 40,
+            "max_global_steps": 2,
+            "min_global_steps": 2,
+            "transfer_queue_key": "2a86582a-f3c0-43db-ae61-fa1f8bc7e0cd_3_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 40
+          }
+        ]
+      }
+    ],
+    "launch_sha256": "sha256:00da18629746abaa92d1cbcd8f8f92e6dd4ccb940fd81ab02d9df2fec5bf594f",
+    "mode": "training-only",
+    "optimizer_update_verified": false,
+    "passed": true,
+    "schema": "dsh.harbor-training-batch-audit.v2",
+    "unconsumed_groups": [
+      {
+        "complete": false,
+        "consumed_rows": [],
+        "consumed_transfer_queue_keys": [],
+        "generation_global_steps": 3,
+        "global_steps": 3,
+        "group_uid": "069b8a75-21ba-4e27-ac68-96e9f7dc1b1c",
+        "partition_id": "train",
+        "rewards": [
+          0.0
+        ],
+        "session_indexes": [
+          0
+        ],
+        "status": "admitted-not-consumed",
+        "termination_kinds": [
+          "completed"
+        ],
+        "training_global_steps": null,
+        "transfer_queue_keys": [
+          "069b8a75-21ba-4e27-ac68-96e9f7dc1b1c_0_0"
+        ],
+        "version_evidence": [
+          {
+            "generation_count": 16,
+            "max_global_steps": 2,
+            "min_global_steps": 2,
+            "transfer_queue_key": "069b8a75-21ba-4e27-ac68-96e9f7dc1b1c_0_0",
+            "version_evidence_complete": true,
+            "versioned_generation_count": 16
+          }
+        ]
+      }
+    ],
+    "unconsumed_trajectory_count": 1
+  },
+  "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r17-final-batch-audit-v2/batch-audit.json",
+  "sha256": "8e92b1b1bf5951564094b45fbc8cea884e92ba310db7e541ef11637b4aa6c2a6",
+  "scope": "Final receipt/TQ/consumption proof; tensor deltas and continuation separate"
+}

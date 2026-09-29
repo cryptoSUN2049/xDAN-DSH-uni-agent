@@ -7,6 +7,9 @@ import torch.distributed as dist
 import torch.multiprocessing as mp
 from torch.distributed._shard.sharded_tensor import Shard, init_from_local_shards
 from torch.distributed._shard.sharding_spec import ShardMetadata
+from torch.distributed.device_mesh import DeviceMesh
+from torch.distributed.tensor import DTensor, Partial, Replicate
+from torch.distributed.tensor import Shard as DShard
 
 from deployment.checks.sharded_checkpoint_delta import _aggregate, _compare, _describe, audit, validate_coverage
 
@@ -19,21 +22,28 @@ def fixture_rank(rank, root):
     dist.init_process_group("gloo", init_method="file://" + str(root / "fixture-rendezvous"), rank=rank, world_size=2)
     try:
         metadata = ShardMetadata([rank * 2, 0], [2, 2], f"rank:{rank}/cpu")
+        mesh = DeviceMesh("cpu", [0, 1], mesh_dim_names=("fsdp",))
         for step in (1, 2):
-            for case in ("ok", "base", "nan", "zero_optimizer"):
+            for case in ("ok", "base", "nan", "zero_optimizer", "dtensor_ok", "dtensor_base", "dtensor_nan"):
                 dest = root / case / str(step)
                 dest.mkdir(parents=True, exist_ok=True)
                 base = torch.ones(2, 2)
                 adapter = torch.ones(2, 2) * step
-                if case == "base" and step == 2 and rank == 1:
+                if case in ("base", "dtensor_base") and step == 2 and rank == 1:
                     base[0, 0] = 2
-                if case == "nan" and step == 2 and rank == 1:
+                if case in ("nan", "dtensor_nan") and step == 2 and rank == 1:
                     adapter[0, 0] = float("nan")
                 model = {
-                    "base.weight": init_from_local_shards([Shard(base, metadata)], 4, 2),
-                    "lora_A.weight": init_from_local_shards([Shard(adapter, metadata)], 4, 2),
-                    "replicated_buffer": torch.tensor(2),
+                    name: DTensor.from_local(value, device_mesh=mesh, placements=[DShard(0)])
+                    if case.startswith("dtensor_")
+                    else init_from_local_shards([Shard(value, metadata)], 4, 2)
+                    for name, value in (("base.weight", base), ("lora_A.weight", adapter))
                 }
+                model.update(
+                    {
+                        "replicated_buffer": torch.tensor(2),
+                    }
+                )
                 torch.save(model, dest / f"model_world_size_2_rank_{rank}.pt")
                 moment = 0.0 if case == "zero_optimizer" and step == 1 else float(step)
                 optimizer = {
@@ -53,6 +63,18 @@ def fixture_rank(rank, root):
                 )
                 if rank == 0:
                     (dest / "fsdp_config.json").write_text('{"world_size":2}')
+        for placement in (Partial(), Replicate(), DShard(1)):
+            value = DTensor.from_local(torch.ones(2, 2), device_mesh=mesh, placements=[placement])
+            with pytest.raises(ValueError, match="Shard\\(0\\)"):
+                _describe(value, value, rank)
+        odd = DTensor.from_local(
+            torch.ones(2 if rank == 0 else 1, 2),
+            device_mesh=mesh,
+            placements=[DShard(0)],
+            shape=torch.Size([3, 2]),
+            stride=(2, 1),
+        )
+        assert _describe(odd, odd, rank)["local"][0]["box"]["sizes"] == [2 if rank == 0 else 1, 2]
     finally:
         dist.destroy_process_group()
 
@@ -64,7 +86,18 @@ def checkpoints(tmp_path_factory):
     return root
 
 
-@pytest.mark.parametrize("case,passed", [("ok", True), ("base", False), ("nan", False), ("zero_optimizer", False)])
+@pytest.mark.parametrize(
+    "case,passed",
+    [
+        ("ok", True),
+        ("base", False),
+        ("nan", False),
+        ("zero_optimizer", False),
+        ("dtensor_ok", True),
+        ("dtensor_base", False),
+        ("dtensor_nan", False),
+    ],
+)
 def test_native_two_rank_checkpoint_audit(checkpoints, tmp_path, case, passed):
     report = audit(checkpoints / case / "1", checkpoints / case / "2", tmp_path / "report.json")
     assert report["passed"] is passed

@@ -1,0 +1,83 @@
+{
+  "schema": "dsh.r17-c1-c2-audit-readiness.v1",
+  "time_unix": 1790708474.3650694,
+  "snapshots_separated_seconds": 5,
+  "stable": true,
+  "checkpoint_root": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints",
+  "memory_limit_bytes": 187999997952,
+  "memory_current_bytes": 44024606720,
+  "files": {
+    "1": {
+      "extra_state_world_size_2_rank_0.pt": {
+        "bytes": 15141,
+        "mtime_ns": 1790707556000000000
+      },
+      "extra_state_world_size_2_rank_1.pt": {
+        "bytes": 15141,
+        "mtime_ns": 1790707556000000000
+      },
+      "fsdp_config.json": {
+        "bytes": 46,
+        "mtime_ns": 1790707557000000000
+      },
+      "lora_train_meta.json": {
+        "bytes": 67,
+        "mtime_ns": 1790707557000000000
+      },
+      "model_world_size_2_rank_0.pt": {
+        "bytes": 9462526476,
+        "mtime_ns": 1790707556000000000
+      },
+      "model_world_size_2_rank_1.pt": {
+        "bytes": 9462526476,
+        "mtime_ns": 1790707556000000000
+      },
+      "optim_world_size_2_rank_0.pt": {
+        "bytes": 103143207,
+        "mtime_ns": 1790707556000000000
+      },
+      "optim_world_size_2_rank_1.pt": {
+        "bytes": 103143207,
+        "mtime_ns": 1790707556000000000
+      }
+    },
+    "2": {
+      "extra_state_world_size_2_rank_0.pt": {
+        "bytes": 15141,
+        "mtime_ns": 1790708383000000000
+      },
+      "extra_state_world_size_2_rank_1.pt": {
+        "bytes": 15141,
+        "mtime_ns": 1790708383000000000
+      },
+      "fsdp_config.json": {
+        "bytes": 46,
+        "mtime_ns": 1790708384000000000
+      },
+      "lora_train_meta.json": {
+        "bytes": 67,
+        "mtime_ns": 1790708384000000000
+      },
+      "model_world_size_2_rank_0.pt": {
+        "bytes": 9462526476,
+        "mtime_ns": 1790708383000000000
+      },
+      "model_world_size_2_rank_1.pt": {
+        "bytes": 9462526476,
+        "mtime_ns": 1790708383000000000
+      },
+      "optim_world_size_2_rank_0.pt": {
+        "bytes": 103143207,
+        "mtime_ns": 1790708383000000000
+      },
+      "optim_world_size_2_rank_1.pt": {
+        "bytes": 103143207,
+        "mtime_ns": 1790708383000000000
+      }
+    }
+  },
+  "source_sha256": {
+    "deployment/checks/sharded_checkpoint_delta.py": "ee49a0f89a5ac651ea59bcd4d5f09ff97c0f40f04a0aac4b3275b3bdbc163715",
+    "deployment/checks/optimizer_delta.py": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee"
+  }
+}

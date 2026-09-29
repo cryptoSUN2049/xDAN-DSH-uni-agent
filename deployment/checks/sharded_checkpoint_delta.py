@@ -20,6 +20,7 @@ import torch
 import torch.distributed as dist
 import torch.multiprocessing as mp
 from torch.distributed._shard.sharded_tensor import ShardedTensor
+from torch.distributed.tensor import DTensor, Shard
 
 from deployment.checks.optimizer_delta import compare_optimizers, load_trusted, require
 
@@ -79,7 +80,61 @@ def _compare(a, b):
     return {"finite": finite, "changed": changed, "max_abs_delta": maximum if finite else None}
 
 
+def _dtensor_parts(value, rank):
+    require(type(value) is DTensor, "Unsupported DTensor subclass")
+    mesh, placements = value.device_mesh, value.placements
+    require(mesh.mesh.ndim == 1 and mesh.mesh.tolist() == [0, 1], "Unsupported DTensor mesh")
+    require(
+        len(placements) == 1 and type(placements[0]) is Shard and placements[0].dim == 0,
+        "Only native DTensor Shard(0) is supported",
+    )
+    shape = list(value.shape)
+    require(shape and all(n > 0 for n in shape), "Invalid DTensor global shape")
+    width = (shape[0] + 1) // 2
+    boxes = []
+    for owner in range(2):
+        start = min(owner * width, shape[0])
+        size = min(width, shape[0] - start)
+        if size:
+            boxes.append({"offsets": [start] + [0] * (len(shape) - 1), "sizes": [size] + shape[1:], "rank": owner})
+    local = value.to_local()
+    expected = next((box for box in boxes if box["rank"] == rank), None)
+    require(
+        list(local.shape) == (expected["sizes"] if expected else [0] + shape[1:]),
+        "DTensor local extent disagrees with rank placement",
+    )
+    require(local.dtype == value.dtype, "DTensor local dtype mismatch")
+    descriptor = {
+        "representation": "DTensor",
+        "shape": shape,
+        "dtype": str(value.dtype),
+        "stride": list(value.stride()),
+        "boxes": boxes,
+        "mesh": {
+            "ranks": mesh.mesh.tolist(),
+            "names": list(mesh.mesh_dim_names or ()),
+            "device_type": mesh.device_type,
+        },
+        "placements": ["Shard(0)"],
+    }
+    return descriptor, local, expected
+
+
 def _describe(a, b, rank):
+    if isinstance(a, DTensor):
+        old, x, box = _dtensor_parts(a, rank)
+        new, y, new_box = _dtensor_parts(b, rank)
+        require(old == new and box == new_box, "DTensor metadata changed")
+        comparison = _compare(x, y)
+        rows = [{"box": box, **comparison}] if box else []
+        return {
+            "kind": "dtensor",
+            "descriptor": old,
+            "local": rows,
+            "local_tensor_type": "torch.Tensor",
+            "local_device_type": "cpu",
+        }
+    require(not isinstance(b, DTensor), "Tensor representation changed")
     if isinstance(a, ShardedTensor):
         require(isinstance(b, ShardedTensor), "Tensor representation changed")
         ma, mb = a.metadata(), b.metadata()
@@ -132,6 +187,7 @@ def _rank_worker(rank, before, after, temporary):
     torch.set_num_threads(2)
     report = {"rank": rank, "passed": False, "files": {}, "errors": []}
     try:
+        require(not torch.cuda.is_initialized(), "CUDA must remain uninitialized")
         dist.init_process_group(
             "gloo",
             init_method="file://" + str(Path(temporary) / "rendezvous"),
@@ -157,10 +213,12 @@ def _rank_worker(rank, before, after, temporary):
             report["files"][label + "_extra"] = info
             require(isinstance(extra, dict) and extra.get("lr_scheduler") and extra.get("rng"), "Missing scheduler/RNG")
         report["optimizer"] = compare_optimizers(*optimizers)
+        require(not torch.cuda.is_initialized(), "CUDA initialized during CPU audit")
         report["passed"] = report["optimizer"]["passed"]
     except Exception as error:
         report["errors"].append(f"{type(error).__name__}: {error}")
     finally:
+        report["cuda_initialized"] = torch.cuda.is_initialized()
         if dist.is_initialized():
             dist.destroy_process_group()
         (Path(temporary) / f"rank{rank}.json").write_text(json.dumps(report, allow_nan=False))
@@ -175,7 +233,7 @@ def _aggregate(ranks):
     for name, a in left.items():
         b = right[name]
         require(a["kind"] == b["kind"] and a["descriptor"] == b["descriptor"], "Cross-rank metadata mismatch")
-        if a["kind"] == "sharded":
+        if a["kind"] in ("sharded", "dtensor"):
             boxes = a["descriptor"]["boxes"]
             validate_coverage(a["descriptor"]["shape"], boxes)
             rows = a["local"] + b["local"]

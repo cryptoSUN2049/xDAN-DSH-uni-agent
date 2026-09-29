@@ -1,0 +1,109 @@
+{
+  "schema": "mimo.async-native-world2-audit-validation.v1",
+  "passed": true,
+  "execution": {
+    "exit_code": 0,
+    "started_at": 1790709876.405913,
+    "finished_at": 1790709940.907277,
+    "log": "/workspace/mimo-dsh-rl-20260928/integration-check/async-audit-final-cli.log"
+  },
+  "tests": {
+    "tests": 87,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
+  },
+  "source_sha256": {
+    "examples/harbor/audit_m2_training.py": "a4ad470da1bdfc87d742cfda943d0d0c7a10702b7f2eabe352ed0eaa348b4216",
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_world2_acceptance.py": "c64ae5589f6e787b3fbe981aadf7d2e8fe0c9928030564b21b83c9f7245ee871",
+    "tests/uni_agent/examples/test_harbor_offline_audit.py": "341dc855e3308f5222561d777b66fd8370044c8387bc75b8181b70ccc9b27a33",
+    "tests/uni_agent/deployment/test_mimo_world2_acceptance.py": "bf2e102edbbac1048844d10418c6cdcbc277c005bec7e9ada32b032a5566fc6e",
+    "deployment/checks/sharded_checkpoint_delta.py": "ea9055884d8474bb511f0e8593dcee3fd9769714244deacd4d9c1c3017ff05a6",
+    "deployment/checks/optimizer_delta.py": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee"
+  },
+  "coverage": {
+    "tool": "coverage 7.16.2 independent immutable cache",
+    "totals": {
+      "covered_lines": 388,
+      "num_statements": 417,
+      "percent_covered": 89.87783595113439,
+      "percent_covered_display": "90",
+      "missing_lines": 29,
+      "excluded_lines": 0,
+      "percent_statements_covered": 93.04556354916068,
+      "percent_statements_covered_display": "93",
+      "num_branches": 156,
+      "num_partial_branches": 29,
+      "covered_branches": 127,
+      "missing_branches": 29,
+      "percent_branches_covered": 81.41025641025641,
+      "percent_branches_covered_display": "81"
+    },
+    "files": {
+      "docs/verl-uni-agent-harbor-opd-rl/mimo_world2_acceptance.py": {
+        "covered_lines": 210,
+        "num_statements": 211,
+        "percent_covered": 98.44357976653697,
+        "percent_covered_display": "98",
+        "missing_lines": 1,
+        "excluded_lines": 0,
+        "percent_statements_covered": 99.5260663507109,
+        "percent_statements_covered_display": "99",
+        "num_branches": 46,
+        "num_partial_branches": 3,
+        "covered_branches": 43,
+        "missing_branches": 3,
+        "percent_branches_covered": 93.47826086956522,
+        "percent_branches_covered_display": "93"
+      },
+      "examples/harbor/audit_m2_training.py": {
+        "covered_lines": 178,
+        "num_statements": 206,
+        "percent_covered": 82.9113924050633,
+        "percent_covered_display": "83",
+        "missing_lines": 28,
+        "excluded_lines": 0,
+        "percent_statements_covered": 86.40776699029126,
+        "percent_statements_covered_display": "86",
+        "num_branches": 110,
+        "num_partial_branches": 26,
+        "covered_branches": 84,
+        "missing_branches": 26,
+        "percent_branches_covered": 76.36363636363636,
+        "percent_branches_covered_display": "76"
+      }
+    },
+    "raw_path": "/workspace/mimo-dsh-rl-20260928/integration-check/async-audit-final-cli-coverage.json",
+    "raw_sha256": "73cbacd5d0397b39bf7c217b0a77dcfd003ea4d34d2f79ce9025d468f851c262"
+  },
+  "red_evidence": [
+    {
+      "exit_code": 1,
+      "started_at": 1790708387.3151677,
+      "finished_at": 1790708440.656066,
+      "log": "/workspace/mimo-dsh-rl-20260928/integration-check/async-batch-audit-red.log"
+    },
+    {
+      "exit_code": 1,
+      "started_at": 1790708995.0678322,
+      "finished_at": 1790708998.2904058,
+      "log": "/workspace/mimo-dsh-rl-20260928/integration-check/world2-dtensor-operator-red.log"
+    },
+    {
+      "exit_code": 1,
+      "started_at": 1790709507.816976,
+      "finished_at": 1790709510.8887165,
+      "log": "/workspace/mimo-dsh-rl-20260928/integration-check/world2-explicit-dtensor-red.log"
+    }
+  ],
+  "prior_coverage_below_per_file_gate": {
+    "execution": "/workspace/mimo-dsh-rl-20260928/integration-check/async-audit-final-status.json",
+    "operator_percent": 98.44357976653697,
+    "batch_percent": 77.84810126582279,
+    "resolution": "Added actual CLI --async-training test; no source exclusions or production changes"
+  },
+  "runtime_modified": false,
+  "checkpoints_modified": false,
+  "fixed_environment_modified": false,
+  "scope": "Default synchronous v1 preserved; explicit async v2 uniquely joins actual consumer rows; operator validates explicit native DTensor metadata, plain local CPU tensors, no CUDA initialization and fixed reviewed checker SHA."
+}

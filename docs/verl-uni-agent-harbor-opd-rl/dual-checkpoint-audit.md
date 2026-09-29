@@ -1,5 +1,9 @@
 # Two-rank checkpoint audit
 
+## Actual R17 DTensor layout correction
+
+The first real C1→C2 audit failed closed with `Unsupported tensor subclass`; preserve that report. Read-only inspection found all 1476 model entries on both ranks are native DTensor, placement `[Shard(0)]`, one-dimensional mesh `[0,1]` named `fsdp` with logical CUDA placement; `map_location=cpu` yields ordinary CPU local tensors. The approved audit-only extension recognizes DTensor explicitly, records its native representation and mesh metadata, and compares `to_local()` without casting or gathering. Only a one-dimensional two-rank mesh with Shard(0) is accepted; Partial, replication, alternate axes and unknown subclasses fail. Global shape/dtype/stride/mesh must remain identical, each rank's local extent must match its computed shard box, and the existing exact coverage/finite/base/adapter and strict optimizer gates remain unchanged. Native CPU DTensor roundtrip fixtures cover success, changed base and NaN; layout rejection is tested separately. Frozen training source remains untouched.
+
 Goal: inspect the current dual-colocate run's own completed C1/C2 checkpoints on cloud CPU, without changing its frozen training source, Python environment or GPUs. Parent approved this validation approach on 2026-09-29 UTC. R13 failed its CPU admission gate before training; R14 is the next intended audit target. This is parameter/state inspection; a real checkpoint-resume run and task learning evidence remain separate gates.
 
 ```mermaid

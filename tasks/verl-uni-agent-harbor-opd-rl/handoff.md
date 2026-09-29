@@ -1,3 +1,77 @@
+## 2026-09-30 03:30 SGT：R17 双卡全链路真实验收通过
+
+### TL;DR
+
+- R17 colocate_async：双rank actor + 两TP1 rollout replicas，MiMo9B/固定DSH/Harbor/Modal，原生3步exit0。
+- 12条消费轨迹完整验收；C1→C2 760 base不变、493/716 LoRA变化、两rank optimizer1→2。
+- W&B finished、完整3行264/264对账；Prom终态通过，Tempo524 traces。C1/C2/C3保存。
+- 本轮进程和28个Modal sandbox结束，两GPU0MiB；Pod与共享观测服务保留。新world2恢复/能力提升未验收。
+
+### 本轮交付物
+
+- `deployment/checks/sharded_checkpoint_delta.py` — 332行。
+- `docs/verl-uni-agent-harbor-opd-rl/dual-checkpoint-audit.md` — 38行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-async-world2-audit-validation-20260929.json` — 109行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-c1-batch-audit-20260929.json` — 207行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-c2-async-batch-audit-20260929.json` — 407行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-cleanup-final-20260929.json` — 299行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-final-batch-audit-20260929.json` — 360行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-sharded-checkpoint-audit/README.md` — 14行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-sharded-checkpoint-audit/dtensor-fixture-green.log` — 2行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-sharded-checkpoint-audit/dtensor-fixture-status.json` — 54行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-sharded-checkpoint-audit/inspect-r17-optim.log` — 2行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-sharded-checkpoint-audit/inspect-r17-types.log` — 2行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-sharded-checkpoint-audit/r17-c1-c2-audit-readiness.json` — 83行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-sharded-checkpoint-audit/r17-c1-c2-checkpoint-audit-v2.json.gz` — 67691B，无损报告。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-sharded-checkpoint-audit/r17-c1-c2-checkpoint-audit.json` — 62行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-sharded-checkpoint-audit/r17-c1-c2-checkpoint-summary.json` — 160行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-wandb-final-20260929.json` — 157行。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r17-world2-acceptance-20260929.json` — 443行。
+- `docs/verl-uni-agent-harbor-opd-rl/mimo-dual-colocate-design.md` — 95行。
+- `docs/verl-uni-agent-harbor-opd-rl/mimo_world2_acceptance.py` — 411行。
+- `docs/verl-uni-agent-harbor-opd-rl/r17-final-acceptance-20260929.md` — 61行。
+- `examples/harbor/audit_m2_training.py` — 294行。
+- `tasks/verl-uni-agent-harbor-opd-rl/lessons.md` — 48行。
+- `tests/uni_agent/deployment/test_mimo_world2_acceptance.py` — 417行。
+- `tests/uni_agent/deployment/test_sharded_checkpoint_delta.py` — 178行。
+- `tests/uni_agent/examples/test_harbor_offline_audit.py` — 437行。
+
+### 设计约束
+
+- 仅授权11403 GPU/11621 CPU；不得操作另一会话213.192.2.76。Mac轻量，模型/依赖/测试/训练在云端。
+- run-src-r17/固定273环境/checkpoint不可改。GPU Pod不得自动关闭；截止后不启动新GPU工作。
+- 同步审计v1不变，async v2以唯一TQ key关联消费，不重写sampling step/预算终止状态。
+
+### 已踩坑/真实行为
+
+- R13覆盖sessions、R14 PATH、R15下游单任务HTTP409已修复；非双卡模式不可行的证据。
+- 显式step的W&B原生缓冲到后续step/finish；最终API对账无补写。主train.log延迟时核原始Ray worker。
+- 实际FSDP2模型为DTensor，optimizer为plain Tensor；严格CPU审计支持真实格式，保留首次失败。
+- 两次malformed XML由框架处理。12条消费之外1完成预取和2取消预取，不能计作训练样本。
+
+### 下一里程碑任务清单
+
+- [x] 原生三步/真实双卡/奖励梯度参数更新/原生观测/归档清理。
+- [ ] 同world2独立重启恢复及多任务留出评测；本轮未执行。
+- [ ] 评估后再扩大训练，不自动启动新付费GPU运行。
+
+### 分支/部署状态
+
+- 分支/worktree verl-uni-agent-harbor-opd-rl；训练runtime4a499cfcf8e5fa361b20f009d2c1472e7b49dd73，最终审计commit见git log。
+- Pod db7kewdkd71js6保留仍可能计费；训练自然exit0，controller/driver/timeline/archiver退出。
+- 最新云端CPU回归87+17通过，batch/operator/checker覆盖82.91%/98.44%/89.88%。精确commit全仓Ruff双门禁后push；不声明远程CI通过。
+- 保留其他会话脏文件与R16未运行草稿；禁止整树stage/stash/删除。
+
+### 冷启动 checklist
+
+1. 先读 docs/verl-uni-agent-harbor-opd-rl/r17-final-acceptance-20260929.md，继而world2/W&B/cleanup证据。
+2. 核git status/branch/HEAD/worktree及当前GPU/API；下方历史running描述不是当前状态。
+3. checkpoint：/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints，最新marker3。
+4. CPU11621原始归档/root/mimo-private/evidence-r17，完整W&B/root/mimo-private/r17-readonly-audit/wandb-final.json。
+5. 续训先规划同world2恢复验收和新预算；历史R12 separate恢复不能替代R17 world2恢复。
+
+---
+
 ## 2026-09-29 18:16 UTC：R17 实际预检通过，双卡运行已启动
 
 - R17 actual preflight exit0：273环境、CUDA未初始化、fresh三步/world2/two replicas、上下游容量2和唯一framework绑定通过；实际入口覆盖87.74%。公开prepared/runtime-preflight/actual-preflight-coverage均已落盘。

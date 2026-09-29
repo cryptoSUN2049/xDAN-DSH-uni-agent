@@ -15,7 +15,7 @@ from pathlib import Path
 
 from deployment.checks.effective_update_audit import parse_console_metrics
 
-CHECKER_SHA = "ee49a0f89a5ac651ea59bcd4d5f09ff97c0f40f04a0aac4b3275b3bdbc163715"
+CHECKER_SHA = "ea9055884d8474bb511f0e8593dcee3fd9769714244deacd4d9c1c3017ff05a6"
 OPTIMIZER_SHA = "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee"
 
 
@@ -99,6 +99,30 @@ def validate_coverage(shape, boxes):
     require(volume == math.prod(shape), "Incomplete shard coverage")
 
 
+def validate_dtensor_descriptor(descriptor):
+    """R17's native CUDA FSDP mesh, with placement independently reconstructed."""
+    require(descriptor["representation"] == "DTensor", "Unknown sharded representation")
+    mesh = descriptor["mesh"]
+    require(
+        mesh["ranks"] == [0, 1]
+        and all(type(rank) is int for rank in mesh["ranks"])
+        and mesh["names"] == ["fsdp"]
+        and mesh["device_type"] == "cuda",
+        "Unexpected native DTensor mesh",
+    )
+    require(descriptor["placements"] == ["Shard(0)"], "Unexpected DTensor placement")
+    shape, stride = descriptor["shape"], descriptor["stride"]
+    require(len(stride) == len(shape) and all(integer(value) for value in stride), "Invalid DTensor stride")
+    width = (shape[0] + 1) // 2
+    boxes = []
+    for rank in range(2):
+        start = min(rank * width, shape[0])
+        size = min(width, shape[0] - start)
+        if size:
+            boxes.append({"offsets": [start] + [0] * (len(shape) - 1), "sizes": [size] + shape[1:], "rank": rank})
+    require(descriptor["boxes"] == boxes, "DTensor boxes disagree with mesh placement")
+
+
 def model_summary(ranks):
     left, right = (row["model"] for row in ranks)
     require(isinstance(left, dict) and left and left.keys() == right.keys(), "Cross-rank model keys differ")
@@ -107,9 +131,21 @@ def model_summary(ranks):
         require(isinstance(name, str) and name, "Invalid tensor name")
         b = right[name]
         require(a["kind"] == b["kind"] and a["descriptor"] == b["descriptor"], "Cross-rank metadata differs")
-        if a["kind"] == "sharded":
+        if a["kind"] in {"sharded", "dtensor"}:
             boxes = a["descriptor"]["boxes"]
             validate_coverage(a["descriptor"]["shape"], boxes)
+            if a["kind"] == "dtensor":
+                validate_dtensor_descriptor(a["descriptor"])
+                require(
+                    all(
+                        row["local_tensor_type"] == "torch.Tensor" and row["local_device_type"] == "cpu"
+                        for row in (a, b)
+                    )
+                    and all(rank["cuda_initialized"] is False for rank in ranks),
+                    "DTensor audit requires plain local CPU tensors without CUDA initialization",
+                )
+            else:
+                require("representation" not in a["descriptor"], "ShardedTensor cannot conceal another representation")
             rows = a["local"] + b["local"]
             for rank, local in enumerate((a["local"], b["local"])):
                 require(all(row["box"]["rank"] == rank for row in local), "Local shard rank mismatch")
@@ -200,17 +236,19 @@ def audit(
             "Launch run/spec mismatch",
         )
         require(
-            batch["schema"] == "dsh.harbor-training-batch-audit.v1"
+            batch["schema"] in {"dsh.harbor-training-batch-audit.v1", "dsh.harbor-training-batch-audit.v2"}
             and batch["passed"] is True
             and batch["errors"] == [],
             "Batch audit failed",
         )
         require(batch["launch_sha256"] == "sha256:" + report["inputs"]["launch"]["sha256"], "Batch launch SHA mismatch")
-        groups = [g for g in batch["groups"] if g["partition_id"] == "train" and g["global_steps"] == step]
+        asynchronous = batch["schema"] == "dsh.harbor-training-batch-audit.v2"
+        step_field = "training_global_steps" if asynchronous else "global_steps"
+        groups = [g for g in batch["groups"] if g["partition_id"] == "train" and g[step_field] == step]
         require(len(groups) == 1, "Expected one consumed group for selected step")
         group = groups[0]
         require(
-            type(group["global_steps"]) is int and group["status"] == "admitted-and-training-batch-matched",
+            type(group[step_field]) is int and group["status"] == "admitted-and-training-batch-matched",
             "Unconsumed group",
         )
         uid = group["group_uid"]
@@ -230,6 +268,46 @@ def audit(
             len(rewards) == 4 and all(finite(v) for v in rewards) and min(rewards) < max(rewards),
             "Constant or invalid rewards",
         )
+        if asynchronous:
+            generation_step = group["generation_global_steps"]
+            require(
+                integer(generation_step)
+                and generation_step <= step
+                and type(group["global_steps"]) is int
+                and group["global_steps"] == generation_step,
+                "Invalid generation/consumption step crosswalk",
+            )
+            keys = group["transfer_queue_keys"]
+            consumed = group["consumed_rows"]
+            require(
+                len(consumed) == 4
+                and [row["transfer_queue_key"] for row in consumed] == keys
+                and all(
+                    type(row["training_global_steps"]) is int
+                    and row["training_global_steps"] == step
+                    and finite(row["reward"])
+                    and row["reward"] == reward
+                    for row, reward in zip(consumed, rewards, strict=True)
+                ),
+                "Invalid unique asynchronous consumption rows",
+            )
+            versions = group["version_evidence"]
+            require(
+                len(versions) == 4 and [row["transfer_queue_key"] for row in versions] == keys,
+                "Incomplete asynchronous version evidence",
+            )
+            for evidence in versions:
+                require(
+                    integer(evidence["min_global_steps"])
+                    and integer(evidence["max_global_steps"])
+                    and evidence["min_global_steps"] <= evidence["max_global_steps"]
+                    and evidence["max_global_steps"] < step
+                    and integer(evidence["generation_count"], 1)
+                    and type(evidence["versioned_generation_count"]) is int
+                    and evidence["versioned_generation_count"] == evidence["generation_count"]
+                    and evidence["version_evidence_complete"] is True,
+                    "Invalid asynchronous Gateway versions",
+                )
         require(Path(console_metrics).stat().st_size <= 64 * 1024 * 1024, "Console metrics exceed bound")
         rows = [
             row

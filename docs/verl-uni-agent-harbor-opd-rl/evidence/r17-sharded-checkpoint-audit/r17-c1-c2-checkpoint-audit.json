@@ -1,0 +1,62 @@
+{
+  "schema": "dsh.native-sharded-checkpoint-delta.v1",
+  "world_size": 2,
+  "passed": false,
+  "errors": [
+    "ValueError: Rank model audit failed"
+  ],
+  "configs": {
+    "before": {
+      "sha256": "1df34c1f433cd641f48d99b3981b311f0362bfcfd4c4e1f727301e3b50cf03bf",
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_1/actor/fsdp_config.json"
+    },
+    "after": {
+      "sha256": "1df34c1f433cd641f48d99b3981b311f0362bfcfd4c4e1f727301e3b50cf03bf",
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_2/actor/fsdp_config.json"
+    }
+  },
+  "checker_sha256": "ee49a0f89a5ac651ea59bcd4d5f09ff97c0f40f04a0aac4b3275b3bdbc163715",
+  "optimizer_checker_sha256": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee",
+  "torch_version": "2.11.0+cu130",
+  "scope": "Trusted native CPU shards; exact comparison and strict per-rank optimizer; not restore proof",
+  "ranks": [
+    {
+      "rank": 0,
+      "passed": false,
+      "files": {
+        "before_model": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_1/actor/model_world_size_2_rank_0.pt",
+          "sha256": "6f9778c33b44b9f160290d22242514e1f6c0750d4708ee828f2be1312a5604a8",
+          "bytes": 9462526476
+        },
+        "after_model": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_2/actor/model_world_size_2_rank_0.pt",
+          "sha256": "67d89dfc36de60158019385c65b20ba7a00ceb0505c7adb96971a71f163979a3",
+          "bytes": 9462526476
+        }
+      },
+      "errors": [
+        "ValueError: Unsupported tensor subclass"
+      ]
+    },
+    {
+      "rank": 1,
+      "passed": false,
+      "files": {
+        "before_model": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_1/actor/model_world_size_2_rank_1.pt",
+          "sha256": "4107ab682504287300782f7369760fb16b89ac1ef3465560ecdca405afaa729c",
+          "bytes": 9462526476
+        },
+        "after_model": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_2/actor/model_world_size_2_rank_1.pt",
+          "sha256": "ad256a76fd2fe71a4135f2e3e63e2c0c9125033f13688c10df5b1e4466df8986",
+          "bytes": 9462526476
+        }
+      },
+      "errors": [
+        "ValueError: Unsupported tensor subclass"
+      ]
+    }
+  ]
+}

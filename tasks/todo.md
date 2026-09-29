@@ -3,10 +3,13 @@
 - [x] 定位R15 HTTP409，保留原始失败与清理证据。
 - [x] 修复 controller/worker/ledger 有界并发，云端真实HTTP回归与完整Ruff通过。
 - [x] 新身份fresh三步运行配置、源码提交推送冻结、实际prepare通过。
-- [ ] 实际CPU-only preflight通过后启动双卡训练与证据归档。
-- [ ] 验证真实两job及两replica，奖励/消费轨迹/梯度/双rank checkpoint有效更新。
-- [ ] 原生W&B完整history对账、RLInsight指标/trace，所属资源归档清理，保留GPU Pod。
-- [ ] Review：明确当前模式通过项与未覆盖恢复/能力评估，提交最终handoff与证据。
+- [x] 实际CPU-only preflight通过后启动双卡训练与证据归档。
+- [x] 验证真实两job及两replica，奖励/消费轨迹/梯度/双rank checkpoint有效更新。
+- [x] 原生W&B完整history对账、RLInsight指标/trace，所属资源归档清理，保留GPU Pod。
+- [x] Review：明确当前模式通过项与未覆盖恢复/能力评估，提交最终handoff与证据。
+
+
+Review：R17原生3步exit0，12条消费/双rank有效更新通过；W&B finished且264/264对账；GPU Pod保留。详见 docs/verl-uni-agent-harbor-opd-rl/r17-final-acceptance-20260929.md。新world2独立恢复和能力提升未验证。
 
 ## 统一母本字段冻结
 

@@ -1,0 +1,2 @@
+{"rank": 0, "restricted_load": true, "counts": {"torch.Tensor": 2148}, "examples": {"torch.Tensor": {"field": "step", "shape": [], "dtype": "torch.float32"}}, "param_groups": 1, "param_ids": 776, "state_ids": 776, "empty_states": 60}
+{"rank": 1, "restricted_load": true, "counts": {"torch.Tensor": 2148}, "examples": {"torch.Tensor": {"field": "step", "shape": [], "dtype": "torch.float32"}}, "param_groups": 1, "param_ids": 776, "state_ids": 776, "empty_states": 60}

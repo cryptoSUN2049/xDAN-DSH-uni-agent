@@ -269,3 +269,149 @@ def test_strict_json_rejects_duplicate_and_nonfinite(tmp_path):
         path.write_text(raw)
         with pytest.raises(ValueError):
             m.read_json(path)
+
+
+def async_batch(args):
+    batch = json.loads(args["batch_audit"].read_text())
+    batch["schema"] = "dsh.harbor-training-batch-audit.v2"
+    group = batch["groups"][0]
+    group.update(global_steps=1, generation_global_steps=1, training_global_steps=2)
+    group["consumed_rows"] = [
+        dict(transfer_queue_key=key, training_global_steps=2, reward=reward)
+        for key, reward in zip(group["transfer_queue_keys"], group["rewards"], strict=True)
+    ]
+    group["version_evidence"] = [
+        dict(
+            transfer_queue_key=key,
+            min_global_steps=0,
+            max_global_steps=1,
+            generation_count=3,
+            versioned_generation_count=3,
+            version_evidence_complete=True,
+        )
+        for key in group["transfer_queue_keys"]
+    ]
+    return batch
+
+
+def test_async_batch_joins_actual_consumer_step(tmp_path):
+    m, args = fixture(tmp_path)
+    write(args["batch_audit"], async_batch(args))
+    report = m.audit(**args)
+    assert report["passed"], report
+    assert report["consumed_group"]["generation_global_steps"] == 1
+    assert report["identity"]["step"] == 2
+
+
+@pytest.mark.parametrize(
+    "fault",
+    [
+        "missing-row",
+        "wrong-key",
+        "duplicate-key",
+        "wrong-reward",
+        "split-step",
+        "future-generation",
+        "missing-version",
+        "wrong-generation-type",
+        "future-policy",
+        "distant-policy",
+    ],
+)
+def test_async_effective_gate_rejects_false_crosswalk(tmp_path, fault):
+    m, args = fixture(tmp_path)
+    batch = async_batch(args)
+    group = batch["groups"][0]
+    if fault == "missing-row":
+        group["consumed_rows"].pop()
+    elif fault == "wrong-key":
+        group["consumed_rows"][0]["transfer_queue_key"] = "fake"
+    elif fault == "duplicate-key":
+        group["consumed_rows"][0]["transfer_queue_key"] = group["consumed_rows"][1]["transfer_queue_key"]
+    elif fault == "wrong-reward":
+        group["consumed_rows"][0]["reward"] = 1
+    elif fault == "split-step":
+        group["consumed_rows"][0]["training_global_steps"] = 3
+    elif fault == "future-generation":
+        group["generation_global_steps"] = group["global_steps"] = 3
+    elif fault == "missing-version":
+        group["version_evidence"].pop()
+    elif fault in {"future-policy", "distant-policy"}:
+        group["version_evidence"][0]["max_global_steps"] = 2 if fault == "future-policy" else 99
+    else:
+        group["generation_global_steps"] = True
+    write(args["batch_audit"], batch)
+    assert not m.audit(**args)["passed"]
+
+
+def dtensor_ranks(args):
+    ranks = json.loads(args["sharded_delta"].read_text())["ranks"]
+    for rank in ranks:
+        rank["cuda_initialized"] = False
+        for tensor in rank["model"].values():
+            if tensor["kind"] == "sharded":
+                tensor.update(kind="dtensor", local_tensor_type="torch.Tensor", local_device_type="cpu")
+                tensor["descriptor"].update(
+                    representation="DTensor",
+                    stride=[1],
+                    mesh={"ranks": [0, 1], "names": ["fsdp"], "device_type": "cuda"},
+                    placements=["Shard(0)"],
+                )
+    return ranks
+
+
+def test_native_dtensor_mesh_and_local_coverage_are_explicit(tmp_path):
+    m, args = fixture(tmp_path)
+    report = m.model_summary(dtensor_ranks(args))
+    assert report["passed"] and report["adapter_changed"] == 1
+
+
+@pytest.mark.parametrize(
+    "fault",
+    [
+        "mesh-ranks",
+        "mesh-names",
+        "mesh-device",
+        "placement",
+        "stride",
+        "box-placement",
+        "unknown-representation",
+        "local-type",
+        "local-device",
+        "cuda-init",
+        "hidden-dtensor",
+    ],
+)
+def test_dtensor_contract_rejects_forged_metadata(tmp_path, fault):
+    m, args = fixture(tmp_path)
+    ranks = dtensor_ranks(args)
+    for rank in ranks:
+        value = rank["model"]["lora_A.weight"]
+        descriptor = value["descriptor"]
+        if fault == "mesh-ranks":
+            descriptor["mesh"]["ranks"] = [1, 0]
+        elif fault == "mesh-names":
+            descriptor["mesh"]["names"] = ["other"]
+        elif fault == "mesh-device":
+            descriptor["mesh"]["device_type"] = "meta"
+        elif fault == "placement":
+            descriptor["placements"] = ["Replicate()"]
+        elif fault == "stride":
+            descriptor["stride"] = [-1]
+        elif fault == "unknown-representation":
+            descriptor["representation"] = "OtherTensor"
+        elif fault == "local-type":
+            value["local_tensor_type"] = "DTensor"
+        elif fault == "local-device":
+            value["local_device_type"] = "cuda"
+        elif fault == "cuda-init":
+            rank["cuda_initialized"] = True
+        elif fault == "hidden-dtensor":
+            value["kind"] = "sharded"
+        else:
+            # Still a complete nonoverlapping partition, but not Shard(0)'s rank placement.
+            for box in descriptor["boxes"]:
+                box["offsets"][0] = 2 - box["offsets"][0]
+            value["local"][0]["box"]["offsets"][0] = 2 - value["local"][0]["box"]["offsets"][0]
+    with pytest.raises(ValueError):
+        m.model_summary(ranks)

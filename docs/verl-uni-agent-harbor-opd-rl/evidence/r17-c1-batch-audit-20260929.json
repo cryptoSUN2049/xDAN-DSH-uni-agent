@@ -1,0 +1,207 @@
+{
+  "schema": "mimo.r17-c1-batch-observation.v1",
+  "passed": true,
+  "scope": "C1 receipt/TQ/consumed-batch proof during active training; no optimizer tensor audit",
+  "execution": {
+    "pid": 397270,
+    "exit_code": 0,
+    "started_at": 1790708064.7916374,
+    "finished_at": 1790708111.9707808,
+    "CUDA_VISIBLE_DEVICES": "",
+    "checkpoint_tensors_loaded": false,
+    "run_active": true,
+    "command": [
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+      "-m",
+      "examples.harbor.audit_m2_training",
+      "--launch-path",
+      "/root/mimo-private/launch-r17/launch.json",
+      "--agent-log-dir",
+      "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/agent",
+      "--rollout-data-dir",
+      "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/rollout",
+      "--train-n",
+      "4",
+      "--no-validation"
+    ]
+  },
+  "batch_audit": {
+    "errors": [],
+    "groups": [
+      {
+        "consumed_transfer_queue_keys": [
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0"
+        ],
+        "global_steps": 1,
+        "group_uid": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8",
+        "has_reward_variance": true,
+        "partition_id": "train",
+        "rewards": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "session_indexes": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "status": "admitted-and-training-batch-matched",
+        "termination_kinds": [
+          "budget_exhausted",
+          "budget_exhausted",
+          "budget_exhausted",
+          "completed"
+        ],
+        "transfer_queue_keys": [
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0",
+          "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0"
+        ]
+      }
+    ],
+    "launch_sha256": "sha256:00da18629746abaa92d1cbcd8f8f92e6dd4ccb940fd81ab02d9df2fec5bf594f",
+    "mode": "training-only",
+    "optimizer_update_verified": false,
+    "passed": true,
+    "schema": "dsh.harbor-training-batch-audit.v1",
+    "unconsumed_groups": [
+      {
+        "complete": false,
+        "consumed_transfer_queue_keys": [],
+        "global_steps": 1,
+        "group_uid": "f02d4ff1-a568-439c-9665-27e23e4c5bc4",
+        "partition_id": "train",
+        "rewards": [
+          1.0,
+          1.0
+        ],
+        "session_indexes": [
+          0,
+          1
+        ],
+        "status": "admitted-not-consumed",
+        "termination_kinds": [
+          "budget_exhausted",
+          "completed"
+        ],
+        "transfer_queue_keys": [
+          "f02d4ff1-a568-439c-9665-27e23e4c5bc4_0_0",
+          "f02d4ff1-a568-439c-9665-27e23e4c5bc4_1_0"
+        ]
+      }
+    ],
+    "unconsumed_trajectory_count": 2
+  },
+  "version_evidence": [
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/agent/step_1/session-sample-0-rollout-0-2f7cba0ed073448995c394652d62b768/trajectory.json",
+      "sha256": "ee88b9caec02dee7e615c17a57b6e8daf053bcd8a4089db7d56b638946c0522e",
+      "group_uid": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8",
+      "global_steps": 1,
+      "session_index": 0,
+      "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_0_0",
+      "versions": {
+        "min_global_steps": 0,
+        "max_global_steps": 0,
+        "generation_count": 49,
+        "versioned_generation_count": 49,
+        "version_evidence_complete": true
+      },
+      "finished": false,
+      "reward": 1.0
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/agent/step_1/session-sample-0-rollout-0-6dd0d94b4bb24b08b781d181754f0ffa/trajectory.json",
+      "sha256": "cd379842039aec8bc2c86005f046acec667528cf8dda042ec6eb91b01ed2492d",
+      "group_uid": "f02d4ff1-a568-439c-9665-27e23e4c5bc4",
+      "global_steps": 1,
+      "session_index": 0,
+      "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_0_0",
+      "versions": {
+        "min_global_steps": 0,
+        "max_global_steps": 1,
+        "generation_count": 43,
+        "versioned_generation_count": 43,
+        "version_evidence_complete": true
+      },
+      "finished": false,
+      "reward": 1.0
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/agent/step_1/session-sample-0-rollout-1-8dd05585fd784539bbf412ee18b1d531/trajectory.json",
+      "sha256": "dfd968f7ac13b2a62fdd82681064bc1d2fd5eb6a318efd36261afabe3a0c023c",
+      "group_uid": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8",
+      "global_steps": 1,
+      "session_index": 1,
+      "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_1_0",
+      "versions": {
+        "min_global_steps": 0,
+        "max_global_steps": 0,
+        "generation_count": 43,
+        "versioned_generation_count": 43,
+        "version_evidence_complete": true
+      },
+      "finished": false,
+      "reward": 0.0
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/agent/step_1/session-sample-0-rollout-1-b3312d85a0a44e5ca65a93106745c883/trajectory.json",
+      "sha256": "4e44361883359dae896e2575982e8cc986e540f2c31a357ea96f15388c996b3b",
+      "group_uid": "f02d4ff1-a568-439c-9665-27e23e4c5bc4",
+      "global_steps": 1,
+      "session_index": 1,
+      "transfer_queue_key": "f02d4ff1-a568-439c-9665-27e23e4c5bc4_1_0",
+      "versions": {
+        "min_global_steps": 1,
+        "max_global_steps": 1,
+        "generation_count": 48,
+        "versioned_generation_count": 48,
+        "version_evidence_complete": true
+      },
+      "finished": true,
+      "reward": 1.0
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/agent/step_1/session-sample-0-rollout-2-7940544a4be24205a0f6525da0cee5a7/trajectory.json",
+      "sha256": "0f6862f150ab0ea81465cbdf0fb133c189823854314e5c408b5c8746e5a96ea9",
+      "group_uid": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8",
+      "global_steps": 1,
+      "session_index": 2,
+      "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_2_0",
+      "versions": {
+        "min_global_steps": 0,
+        "max_global_steps": 0,
+        "generation_count": 38,
+        "versioned_generation_count": 38,
+        "version_evidence_complete": true
+      },
+      "finished": false,
+      "reward": 0.0
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/agent/step_1/session-sample-0-rollout-3-4167824a185b48998849e6a3483222de/trajectory.json",
+      "sha256": "50c8081b52f2e7616a63e1ceff5331b96a6e77903123f0a2c83771190dbb4f85",
+      "group_uid": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8",
+      "global_steps": 1,
+      "session_index": 3,
+      "transfer_queue_key": "19acb2f8-1990-4929-b1a8-dc1f09a33ef8_3_0",
+      "versions": {
+        "min_global_steps": 0,
+        "max_global_steps": 0,
+        "generation_count": 40,
+        "versioned_generation_count": 40,
+        "version_evidence_complete": true
+      },
+      "finished": true,
+      "reward": 1.0
+    }
+  ],
+  "batch_report_sha256": "4dcdb02294e7ace6630e7ae63cefd8e6ae97d2805b09be9c1847adb9b63132b4"
+}

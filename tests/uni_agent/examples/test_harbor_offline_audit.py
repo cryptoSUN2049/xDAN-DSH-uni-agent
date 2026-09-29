@@ -15,12 +15,13 @@ pytestmark = [pytest.mark.cpu, pytest.mark.level0]
 
 
 @pytest_asyncio.fixture
-async def audit_case(tmp_path, monkeypatch):
+async def audit_case(tmp_path, monkeypatch, request):
     async def run(self, request):
         return downloaded(request, evidence(request))
 
     monkeypatch.setattr(HarborDshClient, "run", run)
     ctx = dict(config(tmp_path).runner_context.model_dump(), group_size=1, session_index=0)
+    ctx.update(getattr(request, "param", {}))
     cfg = config(tmp_path, runner_context=ctx)
     result = await HarborDshTask(cfg).run()
     policy = cfg.policy.model_dump(mode="json")
@@ -96,7 +97,7 @@ async def audit_case(tmp_path, monkeypatch):
     train = tmp_path / "train"
     train.mkdir()
     row = train / "4.jsonl"
-    row.write_text(json.dumps(dict(step=4, uid="group-1_0_0", score=1.0)) + "\n")
+    row.write_text(json.dumps(dict(step=ctx["global_steps"], uid="group-1_0_0", score=1.0)) + "\n")
     val = tmp_path / "val"
     val.mkdir()
     return (
@@ -286,3 +287,151 @@ async def test_validation_is_reported_as_evaluated(audit_case, tmp_path, mode):
             "admitted-and-training-batch-matched",
             "admitted-and-evaluated",
         }
+
+
+@pytest.mark.parametrize("audit_case", [{"global_steps": 1}], indirect=True)
+def test_async_generation_one_consumed_at_two_preserves_source(audit_case):
+    from examples.harbor.audit_m2_training import audit_training
+
+    kwargs, row, dump, _ = audit_case
+    kwargs.pop("validation_data_dir")
+    kwargs.pop("validation_n")
+    meta = json.loads(dump.read_text())
+    meta["trajectories"][0].update(
+        min_global_steps=0,
+        max_global_steps=1,
+        generation_count=3,
+        versioned_generation_count=3,
+        version_evidence_complete=True,
+    )
+    dump.write_text(json.dumps(meta))
+    row.write_text(json.dumps(dict(step=2, uid="group-1_0_0", score=1.0)) + "\n")
+    before = dump.read_bytes()
+    assert not audit_training(**kwargs, no_validation=True)["passed"]
+    report = audit_training(**kwargs, no_validation=True, async_training=True)
+    assert report["passed"], report
+    group = report["groups"][0]
+    assert report["schema"] == "dsh.harbor-training-batch-audit.v2"
+    assert group["global_steps"] == group["generation_global_steps"] == 1
+    assert group["training_global_steps"] == 2
+    assert group["consumed_rows"] == [{"transfer_queue_key": "group-1_0_0", "training_global_steps": 2, "reward": 1.0}]
+    assert group["version_evidence"][0]["min_global_steps"] == 0
+    assert group["version_evidence"][0]["max_global_steps"] == 1
+    assert dump.read_bytes() == before
+
+
+@pytest.mark.parametrize("audit_case", [{"global_steps": 1}], indirect=True)
+@pytest.mark.parametrize(
+    "fault",
+    [
+        "duplicate",
+        "cross-step",
+        "unknown-key",
+        "reward",
+        "before-generation",
+        "version-count",
+        "version-missing",
+        "future-policy",
+        "distant-policy",
+    ],
+)
+def test_async_rejects_false_consumption_or_version_proof(audit_case, fault):
+    from examples.harbor.audit_m2_training import audit_training
+
+    kwargs, row, dump, _ = audit_case
+    kwargs.pop("validation_data_dir")
+    kwargs.pop("validation_n")
+    meta = json.loads(dump.read_text())
+    entry = meta["trajectories"][0]
+    entry.update(
+        min_global_steps=0,
+        max_global_steps=1,
+        generation_count=3,
+        versioned_generation_count=3,
+        version_evidence_complete=True,
+    )
+    rows = [dict(step=2, uid="group-1_0_0", score=1.0)]
+    if fault == "duplicate":
+        rows.append(dict(rows[0]))
+    elif fault == "cross-step":
+        rows.append(dict(rows[0], step=3))
+    elif fault == "unknown-key":
+        rows[0]["uid"] = "unknown_0_0"
+    elif fault == "reward":
+        rows[0]["score"] = 0.0
+    elif fault == "before-generation":
+        rows[0]["step"] = 0
+    elif fault == "version-count":
+        entry["versioned_generation_count"] = 2
+    elif fault in {"future-policy", "distant-policy"}:
+        entry["max_global_steps"] = 2 if fault == "future-policy" else 99
+    else:
+        entry.pop("version_evidence_complete")
+    dump.write_text(json.dumps(meta))
+    row.write_text("".join(json.dumps(value) + "\n" for value in rows))
+    report = audit_training(**kwargs, no_validation=True, async_training=True)
+    assert not report["passed"], report
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("audit_case", [{"global_steps": 1, "group_size": 2}], indirect=True)
+@pytest.mark.parametrize("fault", ["none", "partial", "split"])
+async def test_async_complete_group_has_one_consumer_step(audit_case, tmp_path, fault):
+    from examples.harbor.audit_m2_training import audit_training
+
+    kwargs, row, dump, _ = audit_case
+    kwargs.pop("validation_data_dir")
+    kwargs.pop("validation_n")
+    kwargs["train_n"] = 2
+    metadata = json.loads(dump.read_text())
+    versions = dict(
+        min_global_steps=0,
+        max_global_steps=1,
+        generation_count=3,
+        versioned_generation_count=3,
+        version_evidence_complete=True,
+    )
+    metadata["trajectories"][0].update(versions)
+    dump.write_text(json.dumps(metadata))
+    ctx = {key: metadata[key] for key in config(tmp_path).runner_context.model_fields}
+    ctx.update(session_index=1, gateway_session_id="session-second")
+    cfg = config(tmp_path, runner_context=ctx, gateway_base_url="http://10.0.0.2:45678/sessions/session-second/v1")
+    result = await HarborDshTask(cfg).run()
+    metadata.update(ctx, session_id="session-second")
+    metadata["trajectories"][0].update(transfer_queue_key="group-1_1_0", reward_info=build_reward_info(result))
+    folder = dump.parent / "second"
+    folder.mkdir()
+    (folder / "trajectory.npz").write_bytes((dump.parent / "trajectory.npz").read_bytes())
+    (folder / "trajectory.json").write_text(json.dumps(metadata))
+    rows = [dict(step=2, uid="group-1_0_0", score=1.0)]
+    if fault != "partial":
+        rows.append(dict(step=3 if fault == "split" else 2, uid="group-1_1_0", score=1.0))
+    row.write_text("".join(json.dumps(value) + "\n" for value in rows))
+    report = audit_training(**kwargs, no_validation=True, async_training=True)
+    assert report["passed"] == (fault == "none"), report
+
+
+@pytest.mark.parametrize("audit_case", [{"global_steps": 1}], indirect=True)
+def test_async_cli_flag_emits_explicit_v2(audit_case, monkeypatch, capsys):
+    from examples.harbor.audit_m2_training import main
+
+    kwargs, row, dump, _ = audit_case
+    meta = json.loads(dump.read_text())
+    meta["trajectories"][0].update(
+        min_global_steps=0,
+        max_global_steps=1,
+        generation_count=3,
+        versioned_generation_count=3,
+        version_evidence_complete=True,
+    )
+    dump.write_text(json.dumps(meta))
+    row.write_text(json.dumps(dict(step=2, uid="group-1_0_0", score=1.0)) + "\n")
+    argv = ["audit", "--train-n", "1", "--no-validation", "--async-training"]
+    for name in ("launch_path", "agent_log_dir", "rollout_data_dir"):
+        argv += ["--" + name.replace("_", "-"), str(kwargs[name])]
+    monkeypatch.setattr("sys.argv", argv)
+    assert main() == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["passed"] and report["schema"] == "dsh.harbor-training-batch-audit.v2"
+    assert report["groups"][0]["generation_global_steps"] == 1
+    assert report["groups"][0]["training_global_steps"] == 2
