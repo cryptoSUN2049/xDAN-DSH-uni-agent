@@ -6,6 +6,7 @@ import asyncio
 import hashlib
 import json
 import time
+from copy import deepcopy
 from dataclasses import dataclass, field, replace
 from enum import Enum
 from typing import Any
@@ -13,7 +14,13 @@ from typing import Any
 from fastapi import HTTPException
 
 from uni_agent.gateway.session.codec import MessageCodec
-from uni_agent.gateway.session.types import InternalGenerationRequest, SessionHandle, Trajectory
+from uni_agent.gateway.session.types import (
+    InternalGenerationRequest,
+    SessionHandle,
+    Trajectory,
+    budget_json_sha256,
+    trajectory_token_sha256,
+)
 from uni_agent.rl_insight.adapter import start_generation_span
 
 _EMPTY_PREFIX_HASH = hashlib.sha256(b"uni-agent-prefix-v1\0empty").hexdigest()
@@ -145,6 +152,8 @@ class EncodedData:
     last_assistant_start: LastAssistantStart | None = None
     rollback_applied: bool = False
     rollback_dropped_trainable_tokens: int = 0
+    attempted_context_tokens: int | None = None
+    attempted_context_sha256: str | None = None
 
 
 @dataclass
@@ -201,6 +210,9 @@ class GatewaySession:
         self._generation_budget_lock = asyncio.Lock()
         self._generation_budget_failed = False
         self._session_exhaustion_reason: str | None = None
+        self._budget_inflight_requests = 0
+        self._budget_request_count = 0
+        self._budget_exhaustion_events: list[dict[str, Any]] = []
 
         self.handle = handle
         self._codec = codec
@@ -235,14 +247,21 @@ class GatewaySession:
             return await self._run_generation(request, backend)
         # Only budgeted sessions serialize requests. Buffer rollback never refunds
         # backend work, and ambiguous failures cannot be retried against a fresh cap.
-        async with self._generation_budget_lock:
-            if self._generation_budget_failed:
-                raise HTTPException(status_code=409, detail="Session generation budget cannot continue after failure")
-            try:
-                return await self._run_generation(request, backend)
-            except BaseException:
-                self._generation_budget_failed = True
-                raise
+        self._budget_inflight_requests += 1
+        try:
+            async with self._generation_budget_lock:
+                if self._generation_budget_failed:
+                    raise HTTPException(
+                        status_code=409, detail="Session generation budget cannot continue after failure"
+                    )
+                try:
+                    self._budget_request_count += 1
+                    return await self._run_generation(request, backend)
+                except BaseException:
+                    self._generation_budget_failed = True
+                    raise
+        finally:
+            self._budget_inflight_requests -= 1
 
     async def _run_generation(self, request: InternalGenerationRequest, backend) -> GenerationOutcome:
         """Run one provider-normalized generation request and return its business outcome.
@@ -284,6 +303,7 @@ class GatewaySession:
                         # A denied new chain has no trajectory of its own, but
                         # still prevents claiming that the episode completed.
                         self._session_exhaustion_reason = exhaustion_reason
+                        self._record_budget_exhaustion(encoded, exhaustion_reason, output_tokens=0, denied=True)
                     empty_msg = {"role": "assistant", "content": ""}
                     if encoded.chain_id is not None:
                         self._close_length_exhausted_chain(encoded, reason=exhaustion_reason)
@@ -398,6 +418,9 @@ class GatewaySession:
                     _, exhausted_chain = self._find_active_chain(chain_id)
                     exhausted_chain.generation_exhaustion_reason = "max_generated_tokens"
                     self._session_exhaustion_reason = "max_generated_tokens"
+                    self._record_budget_exhaustion(
+                        encoded, "max_generated_tokens", output_tokens=len(response_ids), chain_id=chain_id
+                    )
                 elif (
                     finish_reason == "length"
                     and self._max_generated_tokens is not None
@@ -405,6 +428,9 @@ class GatewaySession:
                     and len(merged_token_ids) >= self._trajectory_capacity
                 ):
                     self._session_exhaustion_reason = "max_trajectory_length"
+                    self._record_budget_exhaustion(
+                        encoded, "max_trajectory_length", output_tokens=len(response_ids), chain_id=chain_id
+                    )
                 if reserved_chain_id is not None:
                     self.reserved_chain_ids.discard(reserved_chain_id)
                     reserved_chain_id = None
@@ -438,6 +464,11 @@ class GatewaySession:
                 raise RuntimeError(f"Session {self.handle.session_id} is aborted")
             if self.phase == SessionPhase.FINALIZED:
                 raise RuntimeError(f"Session {self.handle.session_id} is finalized")
+            if self._max_generated_tokens is not None:
+                if self._budget_inflight_requests or self.reserved_chain_ids:
+                    raise RuntimeError("Session has in-flight generation; cannot finalize budget proof")
+                if self._generation_budget_failed:
+                    raise RuntimeError("Session budget accounting failed; cannot finalize budget proof")
             self._touch()
             self._materialize_active_chains()
             self.reserved_chain_ids.clear()
@@ -450,7 +481,77 @@ class GatewaySession:
             if self._session_exhaustion_reason is not None:
                 for trajectory in ordered_trajectories:
                     trajectory.extra_fields["session_exhaustion_reason"] = self._session_exhaustion_reason
+            if self._max_generated_tokens is not None:
+                proof = self._budget_proof(ordered_trajectories)
+                for trajectory in ordered_trajectories:
+                    trajectory.extra_fields["gateway_budget_proof"] = deepcopy(proof)
             return ordered_trajectories
+
+    def _record_budget_exhaustion(
+        self,
+        encoded: EncodedData,
+        reason: str,
+        *,
+        output_tokens: int,
+        chain_id: int | None = None,
+        denied: bool = False,
+    ) -> None:
+        self._budget_exhaustion_events.append(
+            {
+                "request_index": self._budget_request_count,
+                "chain_id": encoded.chain_id if denied else chain_id,
+                "reason": reason,
+                "input_tokens": (
+                    encoded.attempted_context_tokens
+                    if encoded.attempted_context_tokens is not None
+                    else len(encoded.context_ids)
+                ),
+                "input_sha256": encoded.attempted_context_sha256 or budget_json_sha256(encoded.context_ids),
+                "output_tokens": output_tokens,
+                "effective_max_tokens": 0 if denied else encoded.sampling_params["max_tokens"],
+                "generated_tokens": self._generated_tokens,
+                "denied": denied,
+            }
+        )
+
+    def _budget_proof(self, trajectories: list[Trajectory]) -> dict:
+        limits = {
+            "max_generated_tokens": self._max_generated_tokens,
+            "trajectory_capacity": self._trajectory_capacity,
+        }
+        # A historical branch's exhaustion cannot establish why the harness's
+        # final request stopped. Keep the full ledger without projecting stale
+        # session_exhaustion_reason onto the new admission contract.
+        last_event = self._budget_exhaustion_events[-1] if self._budget_exhaustion_events else None
+        terminal_reason = (
+            last_event["reason"]
+            if last_event is not None and last_event["request_index"] == self._budget_request_count
+            else None
+        )
+        proof = {
+            "schema": "uni-agent.gateway-budget-proof.v1",
+            "session_id": self.handle.session_id,
+            "phase": self.phase.value,
+            "inflight_requests": self._budget_inflight_requests,
+            "accounting_failed": self._generation_budget_failed,
+            "limits": limits,
+            "limits_sha256": budget_json_sha256(limits),
+            "generated_tokens": self._generated_tokens,
+            "request_count": self._budget_request_count,
+            "exhaustion_reason": terminal_reason,
+            "exhaustion_events": deepcopy(self._budget_exhaustion_events),
+            "trajectories": [
+                {
+                    "chain_id": trajectory.chain_id,
+                    "prompt_len": len(trajectory.prompt_ids),
+                    "response_len": len(trajectory.response_ids),
+                    "model_token_count": sum(trajectory.response_mask),
+                    "token_sha256": trajectory_token_sha256(trajectory),
+                }
+                for trajectory in trajectories
+            ],
+        }
+        return {**proof, "proof_sha256": budget_json_sha256(proof)}
 
     async def abort(self) -> None:
         """Abort the session and prevent further generation."""
@@ -497,6 +598,7 @@ class GatewaySession:
         )
         rollback_applied = False
         rollback_dropped_trainable_tokens = 0
+        capacity_context_ids = None
 
         if selection is None:
             image_data, video_data = await self._codec.extract_multi_modal_data(messages)
@@ -578,6 +680,8 @@ class GatewaySession:
                 capacity_exhausted = (
                     self._trajectory_capacity is not None and len(merged_token_ids) >= self._trajectory_capacity
                 )
+                if capacity_exhausted:
+                    capacity_context_ids = merged_token_ids
             if not capacity_exhausted and merged_token_ids is not None:
                 assert merged_response_mask is not None
                 prompt_length = len(buffer.prompt_ids)
@@ -598,6 +702,7 @@ class GatewaySession:
 
         context_ids = buffer.prompt_ids + buffer.response_ids
         if capacity_exhausted:
+            attempted_context_ids = capacity_context_ids if capacity_context_ids is not None else context_ids
             return EncodedData(
                 buffer=buffer,
                 context_ids=context_ids,
@@ -612,6 +717,8 @@ class GatewaySession:
                 incoming_message_prefix_hashes=list(incoming_message_prefix_hashes),
                 rollback_applied=rollback_applied,
                 rollback_dropped_trainable_tokens=rollback_dropped_trainable_tokens,
+                attempted_context_tokens=len(attempted_context_ids),
+                attempted_context_sha256=budget_json_sha256(attempted_context_ids),
             )
 
         remaining_trajectory_capacity = (

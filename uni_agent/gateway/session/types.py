@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
+import math
+import re
+import struct
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, TypedDict
 
@@ -81,3 +86,206 @@ class Trajectory:
     routed_experts: torch.Tensor | np.ndarray | None = None
     multi_modal_data: dict[str, Any] | None = None
     extra_fields: dict[str, Any] = field(default_factory=dict)
+
+
+def budget_json_sha256(value: Any) -> str:
+    """Canonical budget-proof digest; hashes bind bytes, not authority."""
+    raw = json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode()
+    return "sha256:" + hashlib.sha256(raw).hexdigest()
+
+
+def trajectory_token_sha256(trajectory: Trajectory) -> str:
+    """Bind token evidence, normalizing logprobs to the NPZ float32 wire dtype."""
+    value = {key: getattr(trajectory, key) for key in ("prompt_ids", "response_ids", "response_mask")}
+    for key in ("prompt_ids", "response_ids"):
+        if not isinstance(value[key], list) or any(type(item) is not int or item < 0 for item in value[key]):
+            raise ValueError("Budget proof requires nonnegative integer token IDs")
+    if (
+        not isinstance(value["response_mask"], list)
+        or len(value["response_mask"]) != len(value["response_ids"])
+        or any(type(item) is not int or item not in (0, 1) for item in value["response_mask"])
+    ):
+        raise ValueError("Budget proof requires aligned binary response mask")
+    logprobs = trajectory.response_logprobs
+    if logprobs is not None:
+        if not isinstance(logprobs, list) or len(logprobs) != len(value["response_ids"]):
+            raise ValueError("Budget proof requires aligned logprobs")
+        normalized = []
+        for item in logprobs:
+            if type(item) not in (int, float) or not math.isfinite(item):
+                raise ValueError("Budget proof requires finite logprobs")
+            try:
+                rounded = struct.unpack("<f", struct.pack("<f", item))[0]
+            except (OverflowError, struct.error) as error:
+                raise ValueError("Budget proof logprob cannot be represented as float32") from error
+            if not math.isfinite(rounded):
+                raise ValueError("Budget proof logprob overflows float32")
+            normalized.append(rounded)
+        logprobs = normalized
+    value["response_logprobs"] = logprobs
+    return budget_json_sha256(value)
+
+
+def validate_gateway_budget_proof(
+    proof: dict,
+    trajectories: list[Trajectory] | tuple[Trajectory, ...],
+    *,
+    session_id: str,
+    expected_limits: dict | None = None,
+    require_all_chains: bool = True,
+) -> dict:
+    """Check Gateway evidence; the caller must independently establish its authority.
+
+    Use the full finalized list online, before selection. Offline selected-chain
+    audits may set require_all_chains=False only with an independently bound proof.
+    This validates budget facts, not Harbor reward or admission policy.
+    """
+
+    def require(condition, message):
+        if not condition:
+            raise ValueError("Invalid Gateway budget proof: " + message)
+
+    def integer(value, minimum=0):
+        return type(value) is int and value >= minimum
+
+    def sha(value):
+        return isinstance(value, str) and re.fullmatch(r"sha256:[0-9a-f]{64}", value) is not None
+
+    require(type(require_all_chains) is bool, "chain mode")
+    require(isinstance(proof, dict), "object required")
+    require(
+        set(proof)
+        == {
+            "schema",
+            "session_id",
+            "phase",
+            "inflight_requests",
+            "accounting_failed",
+            "limits",
+            "limits_sha256",
+            "generated_tokens",
+            "request_count",
+            "exhaustion_reason",
+            "exhaustion_events",
+            "trajectories",
+            "proof_sha256",
+        },
+        "fields",
+    )
+    require(proof["schema"] == "uni-agent.gateway-budget-proof.v1", "schema")
+    require(isinstance(session_id, str) and bool(session_id) and proof["session_id"] == session_id, "session")
+    require(proof["phase"] == "FINALIZED", "not finalized")
+    require(type(proof["inflight_requests"]) is int and proof["inflight_requests"] == 0, "in-flight requests")
+    require(proof["accounting_failed"] is False, "accounting failure")
+    limits = proof["limits"]
+    require(isinstance(limits, dict) and set(limits) == {"max_generated_tokens", "trajectory_capacity"}, "limits")
+    cap, capacity = limits["max_generated_tokens"], limits["trajectory_capacity"]
+    require(integer(cap, 1) and (capacity is None or integer(capacity, 1)), "limit types")
+    require(sha(proof["limits_sha256"]) and proof["limits_sha256"] == budget_json_sha256(limits), "limits digest")
+    if expected_limits is not None:
+        require(budget_json_sha256(expected_limits) == proof["limits_sha256"], "operator limits differ")
+    generated = proof["generated_tokens"]
+    require(integer(generated) and generated <= cap, "generated count")
+    request_count = proof["request_count"]
+    require(integer(request_count, 1), "request count")
+    reasons = {"max_generated_tokens", "max_trajectory_length"}
+    reason = proof["exhaustion_reason"]
+    require(reason is None or isinstance(reason, str) and reason in reasons, "exhaustion reason")
+    entries = proof["trajectories"]
+    require(isinstance(entries, list) and bool(entries), "trajectory table")
+    chain_ids = set()
+    for entry in entries:
+        require(
+            isinstance(entry, dict)
+            and set(entry)
+            == {
+                "chain_id",
+                "prompt_len",
+                "response_len",
+                "model_token_count",
+                "token_sha256",
+            },
+            "trajectory fields",
+        )
+        chain_id = entry["chain_id"]
+        require(integer(chain_id, 1) and chain_id not in chain_ids, "duplicate/invalid chain")
+        chain_ids.add(chain_id)
+        require(all(integer(entry[k]) for k in ("prompt_len", "response_len", "model_token_count")), "token counts")
+        require(entry["model_token_count"] <= min(entry["response_len"], generated), "model token count")
+        require(sha(entry["token_sha256"]), "token digest")
+    events = proof["exhaustion_events"]
+    require(isinstance(events, list), "events")
+    previous_generated = 0
+    previous_request = 0
+    for event in events:
+        require(
+            isinstance(event, dict)
+            and set(event)
+            == {
+                "request_index",
+                "chain_id",
+                "reason",
+                "input_tokens",
+                "input_sha256",
+                "output_tokens",
+                "effective_max_tokens",
+                "generated_tokens",
+                "denied",
+            },
+            "event fields",
+        )
+        require(isinstance(event["reason"], str) and event["reason"] in reasons, "event reason")
+        request_index = event["request_index"]
+        require(integer(request_index, 1) and previous_request < request_index <= request_count, "event request order")
+        previous_request = request_index
+        require(
+            all(
+                integer(event[k])
+                for k in (
+                    "input_tokens",
+                    "output_tokens",
+                    "effective_max_tokens",
+                    "generated_tokens",
+                )
+            ),
+            "event counts",
+        )
+        require(previous_generated <= event["generated_tokens"] <= generated, "event ledger order")
+        previous_generated = event["generated_tokens"]
+        require(type(event["denied"]) is bool and sha(event["input_sha256"]), "event types")
+        require(event["chain_id"] is None or integer(event["chain_id"], 1), "event chain")
+        if event["denied"]:
+            require(event["output_tokens"] == event["effective_max_tokens"] == 0, "denied output")
+        else:
+            require(event["chain_id"] in chain_ids, "generated event chain missing")
+            require(0 < event["output_tokens"] == event["effective_max_tokens"], "terminal output cap")
+            require(event["output_tokens"] <= event["generated_tokens"], "terminal output ledger")
+        if event["reason"] == "max_generated_tokens":
+            require(event["generated_tokens"] == cap, "generation budget not exhausted")
+        else:
+            require(capacity is not None, "context capacity missing")
+            if event["denied"]:
+                require(event["input_tokens"] >= capacity, "denied context fits")
+            else:
+                require(event["input_tokens"] + event["output_tokens"] == capacity, "context budget not exhausted")
+    terminal_reason = events[-1]["reason"] if events and events[-1]["request_index"] == request_count else None
+    require(reason == terminal_reason, "terminal reason")
+    require(sha(proof["proof_sha256"]), "proof digest format")
+    require(
+        proof["proof_sha256"] == budget_json_sha256({k: v for k, v in proof.items() if k != "proof_sha256"}), "digest"
+    )
+    selected = set()
+    table = {entry["chain_id"]: entry for entry in entries}
+    for trajectory in trajectories:
+        chain_id = trajectory.chain_id
+        require(integer(chain_id, 1) and chain_id not in selected and chain_id in table, "selected chain")
+        selected.add(chain_id)
+        entry = table[chain_id]
+        require(entry["token_sha256"] == trajectory_token_sha256(trajectory), "token evidence differs")
+        require(entry["prompt_len"] == len(trajectory.prompt_ids), "prompt length")
+        require(entry["response_len"] == len(trajectory.response_ids), "response length")
+        require(entry["model_token_count"] == sum(trajectory.response_mask), "model token mask")
+    require(bool(selected), "no selected trajectories")
+    if require_all_chains:
+        require(selected == chain_ids, "missing finalized chains")
+    return proof
