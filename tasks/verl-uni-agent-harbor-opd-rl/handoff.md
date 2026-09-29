@@ -6,7 +6,7 @@ r10来源run-src-r10冻结796文件，manifest SHA8837215143bf7c725556d75a2dc030
 
 绝对截止仍1790687801=13:16:41UTC/新加坡21:16:41；不重计五小时，Pod保留计费。只用11403 GPU、11621 CPU；不要动213.192.2.76。冷启动先读同名docs/mimo-separate-async-design.md，再核runs/r10/operator/status.json、private launch-r10/train.log及controller/归档健康。下一验收：真实恢复日志、首组版本2、step3消费/梯度/参数/optimizer/保存；尚不能mark goal complete。
 
-Modal用户要求清理旧资源：已确认90个超过48h的旧实验App停止，Live Apps158→68，活动Sandbox清理前后均0。保留14函数服务+11近期+4共享Harbor名称+39用途待确认，证据evidence/modal-cleanup-20260929.json。以下r9运行中及更早条目均为历史。
+Modal清理已按用户纠偏扩展：累计132个旧App停止，Live Apps158→26；剩余14函数服务+11近期+当前r10依赖的__harbor__，实查活动Sandbox为0。截图点名三个旧App及verl-harbor/verl-eval均已停。读evidence/modal-cleanup-expanded-20260929.json；不再要求名称含日期。以下r9运行中及更早条目均为历史。
 
 ## 2026-09-29 09:06 UTC 当前入口：r9运行中，五小时绝对截止已部署
 

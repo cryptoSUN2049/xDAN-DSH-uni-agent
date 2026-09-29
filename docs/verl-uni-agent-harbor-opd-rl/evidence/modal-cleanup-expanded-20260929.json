@@ -1,0 +1,542 @@
+{
+  "schema": "mimo.modal-old-idle-app-cleanup-expanded.v1",
+  "finished_at": "2026-09-29T11:29:15.731606+00:00",
+  "cutoff": "2026-09-27T11:26:52.940614+00:00",
+  "initial_app_count": 68,
+  "old_app_count": 57,
+  "initial_running_sandbox_count": 0,
+  "target_count": 42,
+  "result_counts": {
+    "stopped-confirmed": 42
+  },
+  "final_state_counts": {
+    "APP_STATE_DEPLOYED": 26,
+    "APP_STATE_STOPPED": 50
+  },
+  "final_live_app_count": 26,
+  "final_running_task_count": 0,
+  "final_running_sandbox_count": 0,
+  "current_runtime_namespace_evidence": {
+    "app_name": "__harbor__",
+    "reason": "Frozen r10 executor does not override app_name; TrackedModalEnvironment forwards kwargs to installed Harbor0.16.1 whose default is __harbor__.",
+    "executor_path": "/workspace/mimo-dsh-rl-20260928/run-src-r10/uni_agent/tasks/harbor_dsh/executor.py",
+    "executor_sha256": "a48b527dfed9e97eebd117571ecf30fe803aedd66d1a011f9c3a8ed83d013dfa",
+    "unrelated_generic_names_not_protected": [
+      "verl-harbor",
+      "verl-eval",
+      "verl-crossbench"
+    ]
+  },
+  "protected_apps": [
+    {
+      "app_id": "ap-519cMfLGy7Kk0I0SOR3G3d",
+      "name": "__harbor__",
+      "classification": "current-training-infrastructure-protect",
+      "created_at_unix": 1789643580.81574,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-QhgMMJ9PYwUhZXRCkGo6ua",
+      "name": "mimo-dsh-cpu-builder",
+      "classification": "recent-protect",
+      "created_at_unix": 1790586807.428824,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-N8GHIPPFoxymhbjDo9soYU",
+      "name": "train-p0-dsh-smoke-20260928-095746",
+      "classification": "recent-protect",
+      "created_at_unix": 1790589466.796675,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-kEYmXr2kpiHTpHi2rt1KHW",
+      "name": "train-p0-dsh-task-smoke-6a2a52f35434a109",
+      "classification": "recent-protect",
+      "created_at_unix": 1790590105.978598,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-n3GYMFcXAVciuuKQFLCGSp",
+      "name": "train-p0-dsh-task-smoke-923b5f28e72356d2",
+      "classification": "recent-protect",
+      "created_at_unix": 1790590522.308289,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-mTVsTnAyMMFjtUMxm8K245",
+      "name": "mimo-dsh-verifier-calibration",
+      "classification": "recent-protect",
+      "created_at_unix": 1790591101.357505,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-rXwvFSVc2kC2ayoCNcs39o",
+      "name": "train-p0-grader-1790591123",
+      "classification": "recent-protect",
+      "created_at_unix": 1790591123.460596,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-IGx4TwWfvGuIg7FgDObAwt",
+      "name": "train-p0-grader-1790591309",
+      "classification": "recent-protect",
+      "created_at_unix": 1790591310.352163,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-B7LLzE4QTxoU5NrBb28aGU",
+      "name": "train-p0-holdout-001457-builder",
+      "classification": "recent-protect",
+      "created_at_unix": 1790591934.089183,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-qXJ97SFJn46KXaARIGKmtG",
+      "name": "train-p0-holdout-001457-keyless",
+      "classification": "recent-protect",
+      "created_at_unix": 1790592132.333223,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-4qJBekyHTcJRyDrBmrpUvq",
+      "name": "mimoagent",
+      "classification": "recent-protect",
+      "created_at_unix": 1790595002.466336,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-d1fqgootIsoNIWfFw4iAgM",
+      "name": "train8-image-builder",
+      "classification": "recent-protect",
+      "created_at_unix": 1790618357.242633,
+      "function_count": null,
+      "class_count": null
+    },
+    {
+      "app_id": "ap-cp9aBvRWb7DORbKRuTEfr0",
+      "name": "tinker-harbor-stage1-controller",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789724758.706393,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-WwfvQsnIDjVRPX3fxyoCia",
+      "name": "tinker-harbor-eval-pool",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789725948.828616,
+      "function_count": 1,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-J9sC768TZkBzZxQCU81tn9",
+      "name": "tinker-abl-rl",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789729592.437676,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-AdTmcrlcb6RXaPppYqjODX",
+      "name": "tinker-abl-kl01",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789729950.894432,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-xX0WVRg9g4PH1LslQitgy1",
+      "name": "tinker-abl-skipthink",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789729771.043544,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-kgfTQ45FCqzkkgUPxpEjpp",
+      "name": "tinker-abl-nothink",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789730131.00233,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-5naDcXjVceElLbqWsQcPWg",
+      "name": "tinker-b-rep-20260919",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789756884.985013,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-YLU1BP5pJq1gnNCr9r8hxe",
+      "name": "tinker-v2-hybrid",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789761258.987357,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-hjFrxAr2GsLTFj9wAGXZlt",
+      "name": "codex-stage1-v4-probe-20260919",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789761616.281364,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-VFThfjuUFbqqNf6yuLmvAf",
+      "name": "tinker-v2-opd",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789762981.131444,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-p6sL9yokbtb4oE3geszfP1",
+      "name": "tinker-v2-rl",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789762801.816338,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-XqVGiiUAgYfD4D1XtQZtVf",
+      "name": "tinker-v2-full",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789763161.019857,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-InOvCBRMEQV7VwCuJqFpCH",
+      "name": "tinker-staged",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789794468.692868,
+      "function_count": 3,
+      "class_count": 0
+    },
+    {
+      "app_id": "ap-4vofSZ4KHj5ohnnMWmI9mc",
+      "name": "tinker-harbor-eval-pool-tb21",
+      "classification": "deployed-service-protect",
+      "created_at_unix": 1789798840.786947,
+      "function_count": 1,
+      "class_count": 0
+    }
+  ],
+  "scope": "Stop all remaining idle sandbox-only Apps older than48h regardless of name date, except current r10 __harbor__ dependency. Apps with functions/classes and Apps newer than48h protected. No volumes, secrets, images or Runpod instances deleted.",
+  "protected_counts": {
+    "current-training-infrastructure-protect": 1,
+    "recent-protect": 11,
+    "deployed-service-protect": 14
+  },
+  "stopped_apps": [
+    {
+      "app_id": "ap-KXgj1td0oMD0gd6uBkjaId",
+      "name": "quota-probe",
+      "stopped_at": 1790681344.247213,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-OrqWBemTfzvZm6FWkidK9B",
+      "name": "verl-eval",
+      "stopped_at": 1790681344.247541,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-3nFdi3i3pxChTIwUlnmtmX",
+      "name": "verl-harbor",
+      "stopped_at": 1790681344.377441,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-cpf54jweLmQDb6uS0KWd7P",
+      "name": "tinker-train-stage1-laddera-r7",
+      "stopped_at": 1790681345.247255,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-JHisK5004ftnFGiDnDwmVR",
+      "name": "tinker-eval-r7-b5",
+      "stopped_at": 1790681345.281534,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-oAkG3swponEx1bO2jw0LN0",
+      "name": "tinker-train-stage1-abl-rl",
+      "stopped_at": 1790681345.393494,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-2LdXSUIxqGtJw9PnoLnAYx",
+      "name": "__harbor_probe__",
+      "stopped_at": 1790681345.580879,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-2vlZxixMSPnnS8zJI8hal5",
+      "name": "tinker-train-stage1-abl-skipthink",
+      "stopped_at": 1790681346.281364,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-wJKOrRCKhizK5iQBLNvlgH",
+      "name": "tinker-train-stage1-abl-kl01",
+      "stopped_at": 1790681346.390838,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-kH2DhMyVTU97EnfD7sQWDZ",
+      "name": "tinker-train-stage1-abl-nothink",
+      "stopped_at": 1790681346.449396,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-jl3cIocHfnzY1sUlZqetTJ",
+      "name": "tinker-eval-base-nothink-v3",
+      "stopped_at": 1790681346.5844,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-DW7JUAqQRq5iUqeonYkrjF",
+      "name": "tinker-eval-q4-abl-rl",
+      "stopped_at": 1790681347.333809,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-xb7IAaZM5lrxOusvY0uxbY",
+      "name": "tinker-eval-q4-abl-kl01",
+      "stopped_at": 1790681347.39322,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-uKylvAutiGtgHPkqVeFRoP",
+      "name": "tinker-eval-q4-abl-nothink",
+      "stopped_at": 1790681347.499145,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-AQTKOLhxcyokkFqEFYpTl5",
+      "name": "tinker-eval-q4-abl-skipthink",
+      "stopped_at": 1790681347.623747,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-G9OKitUmFYWtI9Hi9lOOoZ",
+      "name": "tinker-train-stage1-v2-hybrid",
+      "stopped_at": 1790681348.378618,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-6p3l8EgkZQnkkyzKwsSeyH",
+      "name": "tinker-train-stage1-v2-rl",
+      "stopped_at": 1790681348.511901,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-IXUf7wsF8c0JElScwv2EVJ",
+      "name": "tinker-eval-base-v4",
+      "stopped_at": 1790681348.473062,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-aJ5TdrGtcqxtwQBi9aK1XQ",
+      "name": "tinker-train-stage1-v2-opd",
+      "stopped_at": 1790681348.654271,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-xjETC26WJFKydAJ0hOKUz6",
+      "name": "tinker-train-stage1-v2-full",
+      "stopped_at": 1790681349.380235,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-NS6gysfw6rS9cFEnOBrDRo",
+      "name": "tinker-eval-n25-v2-hybrid",
+      "stopped_at": 1790681349.520077,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-JfFzbYvSYqHE5Aws1z27ud",
+      "name": "tinker-eval-n25-v2-rl",
+      "stopped_at": 1790681349.580799,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-UKMLxRH6kZHpWp6kjzFOQu",
+      "name": "tinker-eval-n25-v2-opd",
+      "stopped_at": 1790681349.730914,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-U9dI6o0pRcxboRiOsUA7po",
+      "name": "tinker-eval-n25-v2-full",
+      "stopped_at": 1790681350.381832,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-9aFq9f2jjnXgOGGSJuL3tw",
+      "name": "tinker-eval-n50-v2-rl",
+      "stopped_at": 1790681350.547688,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-pGu2UrLz2kg122mMAP4G5Q",
+      "name": "tinker-eval-n75-v2-rl",
+      "stopped_at": 1790681350.627897,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-fAD9txdTjRdavxdPiC12VJ",
+      "name": "tinker-eval-n100-v2-rl",
+      "stopped_at": 1790681350.76389,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-zSoRRopdnBzSFqCrHj8nu6",
+      "name": "tinker-audit-eval-tb21-tb21",
+      "stopped_at": 1790681351.399328,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-LNrK81KBJgXmDQ3x55DLuB",
+      "name": "tinker-train-stage1-staged-opd8-rl",
+      "stopped_at": 1790681351.549848,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-8h08T32oxI7jiHLBCPhdlr",
+      "name": "tinker-eval-tb21-base",
+      "stopped_at": 1790681351.634809,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-wTv2Q2CoCFKg62WG14HGrp",
+      "name": "tinker-eval-tb21-rl-final",
+      "stopped_at": 1790681351.800939,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-fxL1Y14G1CbuHoj25cuhBf",
+      "name": "tinker-eval-n50-staged",
+      "stopped_at": 1790681352.419217,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-ZIz6JUIJ6CjiWV57VHx3ZS",
+      "name": "tinker-eval-tb21-rl-24",
+      "stopped_at": 1790681352.597372,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-UuEcIvFY3mONdVgBswrZlI",
+      "name": "tinker-eval-tb21-rl-16",
+      "stopped_at": 1790681352.63989,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-vaaZA2dPTgqXa6PoBq3Gko",
+      "name": "tinker-tb21o-smoke-base",
+      "stopped_at": 1790681352.828278,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-XPaqCamep2QWGrqkZSPAna",
+      "name": "tinker-eval-n75-staged",
+      "stopped_at": 1790681353.444185,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-kmVnG0PO1HO5RGg2cQkQkj",
+      "name": "tinker-tb21o-smoke2-base",
+      "stopped_at": 1790681353.585391,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-JJiU5jZamWwAm9q8ZKmFiv",
+      "name": "tinker-tb21o-oracle",
+      "stopped_at": 1790681353.642389,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-0XsqaYXEB8SvJVwHW8eupH",
+      "name": "tinker-eval-n100-staged",
+      "stopped_at": 1790681353.836479,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-6frnRYILfcMQFJFzyJZqCO",
+      "name": "tinker-tb21o-smoke2-rl",
+      "stopped_at": 1790681354.461313,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-IGBC09lVh02BNrlbjeebpC",
+      "name": "tinker-audit-harbor-sources-audit-tl-train2-terminal-lego",
+      "stopped_at": 1790681354.613191,
+      "verified_state": "APP_STATE_STOPPED"
+    },
+    {
+      "app_id": "ap-Lfp5cLpGEs27lBQYePb1fR",
+      "name": "verl-crossbench",
+      "stopped_at": 1790681355.100842,
+      "verified_state": "APP_STATE_STOPPED"
+    }
+  ],
+  "private_evidence": [
+    {
+      "path": "/root/mimo-private/modal-inventory-expanded-20260929/stop-plan.json",
+      "sha256": "a22802e815e2695d725604b1804b94d758df10e4cfcfe43d1f6530ac304a1f17",
+      "bytes": 26791
+    },
+    {
+      "path": "/root/mimo-private/modal-inventory-expanded-20260929/stop-journal.jsonl",
+      "sha256": "16b32e3f1ace93d9b9e4fe31c9ae79d8caf0ca923fba9a7617ded92cb16814fb",
+      "bytes": 32669
+    },
+    {
+      "path": "/root/mimo-private/modal-inventory-expanded-20260929/cleanup-result.json",
+      "sha256": "863d83e1e2c3b4562cf500a449ab5dc9b8d52443b37563e3649b2dddfd38241e",
+      "bytes": 66578
+    }
+  ],
+  "prior_cleanup": {
+    "confirmed_stopped": 90,
+    "public_report": "modal-cleanup-20260929.json",
+    "public_report_sha256": "3e04865af68645fc56232b317e67f30f9255200a52f51c7651a7bfccb214505b"
+  },
+  "combined_cleanup": {
+    "initial_live_apps": 158,
+    "confirmed_stopped": 132,
+    "remaining_live_apps": 26,
+    "remaining_old_service_apps": 14,
+    "remaining_recent_apps": 11,
+    "remaining_current_runtime_namespace_apps": 1
+  },
+  "interpretation": [
+    "Expanded user-authorized cleanup uses actual platform creation time, not date tokens in App names.",
+    "Generic verl-crossbench, verl-harbor and verl-eval are stopped because no active dependency, tasks, sandboxes, functions or classes were found.",
+    "Current r10 uses __harbor__ through the frozen executor and installed Harbor default; this one old namespace is preserved.",
+    "Function services and Apps newer than48h remain protected. mimo-dsh-cpu-builder is recent and remains deployed.",
+    "Final AppList retains50 recently stopped entries; all42 targets were separately confirmed STOPPED immediately after their stop requests.",
+    "Running sandbox and task counts were zero before and after. Cleanup removes stale deployment entries; no active compute cost reduction is claimed."
+  ],
+  "documentation": [
+    "https://modal.com/docs/cli/latest/app",
+    "https://modal.com/docs/sdk/py/latest/Sandbox"
+  ]
+}

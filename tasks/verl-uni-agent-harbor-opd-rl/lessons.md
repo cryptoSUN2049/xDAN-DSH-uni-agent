@@ -23,3 +23,5 @@
 - r8完整n4奖励[0,1,1,0]仍在old-log-prob entropy阶段OOM。真实采样与可信reward只是训练前置条件；不得等同于optimizer更新或checkpoint成功。dense输出路径须实际核配置开关是否被执行，不能只看YAML已设置。
 
 - 用户明确双卡目标时，区分 sync/colocate_async/separate_async 与卡数；单卡 smoke 仅用于短期排障，不应长期占用双卡而未给出迁移路径。2026-09-29 用户批准 separate_async，应落实 actor/rollout 独立资源池、非 naive 权重同步和实际 GPU 映射验收，不能仅修改可见卡数。
+
+- 用户要求按实际创建时间清理超过两天的闲置 Modal App 时，不应额外要求名称含日期，也不应仅因代码未来可能 lookup 通用名字而保留。以平台 created_at、Function/Class、当前 Task/Sandbox 和正在运行流程的实际依赖判断；2026-09-29 扩大清理覆盖 undated 实验及 verl-crossbench/verl-harbor/verl-eval，冻结 r10 executor 未覆盖 app_name，故仅保留其实际继承的 __harbor__ 默认命名空间、近期 App 与部署的 Function 服务。Live Apps 数量不等于活跃 sandbox 数量，清理空部署不能虚报节省正在计费的计算资源。

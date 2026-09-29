@@ -119,3 +119,14 @@ Goal API当前仍报告paused，工具没有resume接口；用户已在会话明
 - GPU11403 driver264705/supervisor264718，CPU11621 controller103207/archiver103275。11:05:57UTC operator running、两卡仍0MiB，属于初始化快照，不证明模型恢复或双卡更新。controller authenticated health=true。归档复用hash核验的archive-r8 helper；首次在source内寻找helper缺失而拒绝，未启动进程，随后使用实际既有路径。
 - r10从r9 C2独立恢复到绝对step3，原截止1790687801不变。后续检查首组Gateway version2、真实消费、有限非零grad、C2→C3模型/optimizer与保存。
 - Modal实时158Live Apps并非158运行沙箱；活动Sandbox实查0。147个超过48h，复核后停止90个明确带日期的旧实验App并逐个确认，Live68。保留14服务、11近期、4共享(__harbor__/verl-harbor/verl-eval/verl-crossbench)、39用途待确认；未动Volumes/Secrets/Images/Runpod。清理证据同名docs/evidence/modal-cleanup-20260929.json。
+
+## 2026-09-29 11:28 UTC r10双卡启动只读诊断
+
+- 11:28:30UTC，GPU0实际为actor271163（19542MiB）及hybrid vLLM worker274606（842MiB）；GPU1已有standalone vLLM worker278909（19446MiB）。GPU1进程链为vLLMHttpServer277597 → EngineCore278430 → Worker278909；后两者仅白名单读取的CUDA_VISIBLE_DEVICES均为1。
+- 原生separate_async在base初始化与C2恢复之后才创建standalone rollout。11:25:39 standalone配置、11:25:50 spawn、11:28:24开始加载4个safetensors分片；子进程rchar在49秒内由144641929增至376885274，进程名由python变为VLLM::Worker，存在实际推进。
+- Ray debug_state中infeasible/schedule/grant/resource-wait队列均为0、40个idle CPU workers，GPU1 placement group已分配给CheckpointEngineWorker276883。当前证据指向顺序spawn/import及网络卷权重加载耗时，无资源排队死锁证据；不执行停止、重启、信号或debug attach。
+- 正确Ray日志目录含两层ray：/root/mimo-private/ray-r10/ray/session_latest/logs。standalone原始输出为worker-fab5f42ed1f03bcb7cf1efa8fa144a976014008ef4eea28637e85dc8-01000000-277597.{out,err}。双卡模型进程就位不等于已完成NCCL模型同步、首批version2采样或C3有效更新。
+
+## 2026-09-29 11:29 UTC Modal扩展清理完成
+
+用户指出截图旧App也应清理，撤销“名称须含日期”和无实际依赖的共享名称保护。再停止42/42，累计132，Live158→26。保留14函数服务、11近期(含mimo-dsh-cpu-builder)、唯一当前r10依赖__harbor__；无活动Task/Sandbox。verl-crossbench、tinker-audit-harbor-sources-audit-tl-train2-terminal-lego、tinker-eval-n100-staged、verl-harbor、verl-eval均确认STOPPED。新增evidence/modal-cleanup-expanded-20260929.json，SHAa7fdb4032334aeb9f2be2126322a7fdb896e91ee98706970e86b2f242d5a2489。
