@@ -1,0 +1,106 @@
+{
+  "schema": "mimo.observed-recipe-cpu-tests.v1",
+  "tests": {
+    "recipe_and_identity_passed": 67,
+    "recipe_and_identity_seconds": 89.78,
+    "existing_preflight_passed": 23,
+    "existing_preflight_seconds": 91.11,
+    "total_distinct_passed": 90,
+    "failed": 0
+  },
+  "red_recipe_identity": {
+    "failed": 7,
+    "passed": 3
+  },
+  "red_wrapper": {
+    "failed": 5,
+    "deselected": 10
+  },
+  "initial_green_attempt": "pytest rejected --cov flags because pytest-cov absent; zero tests executed; preserved original log",
+  "coverage_tool": "Existing CPU uv-cache coverage package exposed process-locally; fixed training environment unchanged",
+  "changed_executable_lines": [
+    141,
+    142,
+    143,
+    144,
+    305,
+    306,
+    307,
+    308,
+    309,
+    310,
+    311,
+    312,
+    313,
+    321,
+    324,
+    358
+  ],
+  "changed_missing_lines": [],
+  "changed_branch_outcomes": 8,
+  "changed_missing_branch_outcomes": [],
+  "changed_line_coverage_percent": 100.0,
+  "changed_branch_coverage_percent": 100.0,
+  "full_module_summary": {
+    "covered_lines": 244,
+    "num_statements": 254,
+    "percent_covered": 95.05494505494505,
+    "percent_covered_display": "95",
+    "missing_lines": 10,
+    "excluded_lines": 0,
+    "percent_statements_covered": 96.06299212598425,
+    "percent_statements_covered_display": "96",
+    "num_branches": 110,
+    "num_partial_branches": 8,
+    "covered_branches": 102,
+    "missing_branches": 8,
+    "percent_branches_covered": 92.72727272727273,
+    "percent_branches_covered_display": "93"
+  },
+  "cloud_source_root": "/workspace/mimo-dsh-rl-20260928/audit-code/observed-recipe",
+  "artifacts": [
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/observed-recipe-red.log",
+      "sha256": "dc6c4e73a52bd32c0fa131e484dcc0fcb9632feffe68d01d4f175cf34e2554a8"
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/observed-wrapper-red.log",
+      "sha256": "38c370488f11571b14598d304432569159f94fbb160925b887a7297aeef5d8ea"
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/observed-recipe-green.log",
+      "sha256": "ef2ab30bc9378f2e2f9889fc438d545e12636c176750f37cb433f9a9e8b66557"
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/observed-recipe-green2.log",
+      "sha256": "162398f311d7b0834d564627fbb632d37803e9a43e614bec57e8c0aff8f9f3f2"
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/observed-recipe-coverage.json",
+      "sha256": "ab65d302bb3d5de92c833bfca83d1411bc7a92a4f193b8d0ec0f08cc347b85f5"
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/observed-recipe-preflight.log",
+      "sha256": "a418a218104fb6332e4f0420a9f2f567b12c02a7669dcf3b13ec3785d6a53d6e"
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/observed-recipe-coverage-final.json",
+      "sha256": "95959dfd896d163c1b896e93f5d706eb09fdb32cdac77fec6c1ce3c097cb775f"
+    }
+  ],
+  "sources": [
+    {
+      "path": "examples/harbor_opd_rl/launch.py",
+      "sha256": "9978f4f8ac6b59138c103d65285ff35ca91fac36bfb232878f303b4fbcfe3897"
+    },
+    {
+      "path": "examples/mimo_dsh_rl/mimo-9b-observed.yaml",
+      "sha256": "0ca1d43f32d9b22b7279e25e512b3dcdf68a14602332ca1ed8a36aedb0e29ecb"
+    },
+    {
+      "path": "tests/uni_agent/examples/test_mimo_observed_recipe.py",
+      "sha256": "5e8a340185180cf3edb9f4b3e60161e03f5ca9feb4cd47f212a80c4e64dab933"
+    }
+  ],
+  "scope": "CPU Hydra composition, prepared identity and child command selection only; no real W&B/RL-Insight/GPU runtime acceptance."
+}

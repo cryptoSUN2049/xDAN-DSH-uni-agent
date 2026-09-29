@@ -1,0 +1,15 @@
+....................F..........F                                         [100%]
+=================================== FAILURES ===================================
+____________ test_actual_reviewed_templates_stage_without_starting _____________
+tests/uni_agent/deployment/test_mimo_r11_preparation.py:161: in test_actual_reviewed_templates_stage_without_starting
+    assert "audit-code/r11-preparation-v2/" in driver
+E   assert 'audit-code/r11-preparation-v2/' in "import runpy\nr11_plan = runpy.run_path('/workspace/mimo-dsh-rl-20260928/audit-code/r11-preparation/mimo_r11_preparat...n            text=text.replace(token,'[REDACTED]')\n        (evidence/name).write_text(text)\nraise SystemExit(code)\n"
+__ test_authorized_extension_preserves_absolute_stop_and_generic_six_hour_cap __
+tests/uni_agent/deployment/test_mimo_r11_preparation.py:279: in test_authorized_extension_preserves_absolute_stop_and_generic_six_hour_cap
+    assert m.DEADLINE == 1790709401
+E   AssertionError: assert 1790687801 == 1790709401
+E    +  where 1790687801 = <module 'r11_preparation' from '/workspace/mimo-dsh-rl-20260928/integration-check/r11-preparation-v2-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_r11_preparation.py'>.DEADLINE
+=========================== short test summary info ============================
+FAILED tests/uni_agent/deployment/test_mimo_r11_preparation.py::test_actual_reviewed_templates_stage_without_starting
+FAILED tests/uni_agent/deployment/test_mimo_r11_preparation.py::test_authorized_extension_preserves_absolute_stop_and_generic_six_hour_cap
+2 failed, 30 passed in 0.85s

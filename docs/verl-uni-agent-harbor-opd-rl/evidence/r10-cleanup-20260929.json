@@ -1,0 +1,71 @@
+{
+  "schema": "mimo-r10-cleanup.v1",
+  "at_utc": "2026-09-29T12:09:55.775134+00:00",
+  "archive_files": 61,
+  "archive_bytes": 1352355,
+  "archive_mismatches": [],
+  "archive_pending": [
+    "job-6caa31f08f0345ea9fb42de6d944bf6e"
+  ],
+  "pending_scope": "cancelled unconsumed prefetch job; raw worker evidence separately retained",
+  "archiver_stopped": true,
+  "controller_stopped": true,
+  "jobs": {
+    "succeeded": 4,
+    "cancelled": 1
+  },
+  "modal_resources": [
+    {
+      "sandbox_id": "sb-K6em4sj697MzU81MchNY5U",
+      "poll": 137,
+      "worker_reported": 137
+    },
+    {
+      "sandbox_id": "sb-NVRTU74v9n88h4i3BzwQJv",
+      "poll": 137,
+      "worker_reported": 137
+    },
+    {
+      "sandbox_id": "sb-ndbGt9bPy2aVPCAFuHBXdL",
+      "poll": 137,
+      "worker_reported": 137
+    },
+    {
+      "sandbox_id": "sb-Y7vglKiuv9FmW3kpUkYCf3",
+      "poll": 137,
+      "worker_reported": 137
+    },
+    {
+      "sandbox_id": "sb-tpeYh4dmh60lqsQYGkskCn",
+      "poll": 137,
+      "worker_reported": 137
+    },
+    {
+      "sandbox_id": "sb-oSIzsO5CnlQHTJFg0vV9JM",
+      "poll": 137,
+      "worker_reported": 137
+    },
+    {
+      "sandbox_id": "sb-xGRrJhVbmwIHQYVDVDr1TM",
+      "poll": 137,
+      "worker_reported": 137
+    },
+    {
+      "sandbox_id": "sb-Eh1jnk5Fn5my2xNqhipuGN",
+      "poll": 137,
+      "worker_reported": 137
+    },
+    {
+      "sandbox_id": "sb-AmINdSXtPQY7zzn8oyZLTH",
+      "poll": 137,
+      "worker_reported": 137
+    },
+    {
+      "sandbox_id": "sb-cFXjZkMLxFIlE4M0woSWkU",
+      "poll": 137,
+      "worker_reported": 137
+    }
+  ],
+  "worker_file_count": 118,
+  "pod_retained": true
+}

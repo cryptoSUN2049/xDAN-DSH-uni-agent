@@ -1,3 +1,20 @@
+## 2026-09-29 13:08 UTC 用户授权更新：继续六小时，保留GPU服务器
+
+用户已明确追加六小时。**现行固定截止1790709401 / 19:16:41UTC / 翌日03:16:41新加坡**；替代下文旧截止，不改旧运行证据。不自动关闭或删除Runpod Pod。r11 C3→C4使用新`audit-code/r11-preparation-v2`，旧v1 stage及13:03准入拒绝记录保留。controller仍有21600秒per-run上限，最早13:16:41UTC可启动；重启不延后新绝对截止。
+
+当前已完成observed recipe/唯一实验名/原生终态指标等待；云端recipe+launcher90项、v2准备32项、观测helper21项测试通过。正在验证真实CPU Ray/Prometheus/Tempo通路，尚不能称r11训练或W&B history验收完成。下一步：commit+source freeze→真实tokenizer/恢复/依赖预检→启动双卡r11→API原始指标对账。
+
+## 2026-09-29 12:13 UTC：r10 已验收，推进原生观测 r11
+
+- TL;DR：r10 separate_async 双卡从 r9 C2 独立恢复至 C3，batch/model/optimizer/effective 四项检查 exit0。W&B API 确认该轮只有 console，观测尚未验收；当前在实现 r11 原生 W&B + RL-Insight。
+- 交付物：`docs/verl-uni-agent-harbor-opd-rl/evidence/r10-acceptance-20260929.json`（347行）、`evidence/wandb-audit-20260929.json`（83行）、`mimo-observability-design.md`（46行）、`evidence/r10-cleanup-20260929.json`（清理小报告）。前三项随 c04cc99 已推送。
+- 真实行为：r10 奖励 [0,1,1,1]，grad 0.1484375，493/716 LoRA 张量改变、760 base 不变；AdamW step2→3，992 moment 张量变化。4条消费轨迹皆policy v2。一次已捕获qwen3_coder解析ValueError未中断整轮，原日志保留。该单任务无heldout提升结论。
+- 清理：controller103207、archiver103275已停；61归档文件逐hash/权限核对通过，118份worker文件另留私有目录；4成功+1取消prefetch。10个所属Modal sandbox实时poll137（显式终止），两GPU0MiB。Pod仍保留并计费。
+- 设计约束：deadline仍1790687801 /13:16:41UTC，不得因r11重计。固定uv273项、独立CuPyoverlay与原生NCCL不变；不改r10冻结字节、不在Mac跑训练或测试。
+- 下一里程碑：[ ] 独立r11 C3→C4原生logger；[ ] API逐指标对账；[ ] Prometheus与Tempo真实实验记录；[ ] 截止前归档清理。
+- 分支/部署：同名分支，当前审计文档commit c04cc99已push；r11尚未启动，监控服务复用现有18080/9090/3200，不重启共享服务。
+- 冷启动：先读本段及observability design→查agent最新代码/测试→核绝对时间与source manifest→读云端r11实际状态再行动；不得把r10通过与观测通过混为一谈。
+
 ## 2026-09-29 11:06 UTC 当前入口：r10 separate_async 独立恢复已启动
 
 用户明确选择 separate_async，源码 aaae616 已 push。r9 两步 exit0、C2完整：第二组奖励[1,1,0,0]、grad0.1328125、adv±0.866、248个LoRA张量改变、760个base不变；C1 moments全零导致保守optimizer delta失败，C2独立有限/非零，整体验收仍未完成。读最新notes及evidence/r9-completion-20260929.json。

@@ -1,0 +1,394 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+________________________ test_real_terminal_vector_ack _________________________
+
+    def test_real_terminal_vector_ack():
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7adfa0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+_____________________ test_rejects_unproven_vectors[step] ______________________
+
+mutation = 'step'
+
+    @pytest.mark.parametrize("mutation", ["step", "nan", "old", "missing", "duplicate", "identity", "type", "failure"])
+    def test_rejects_unproven_vectors(mutation):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b74aa20>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+______________________ test_rejects_unproven_vectors[nan] ______________________
+
+mutation = 'nan'
+
+    @pytest.mark.parametrize("mutation", ["step", "nan", "old", "missing", "duplicate", "identity", "type", "failure"])
+    def test_rejects_unproven_vectors(mutation):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7ac680>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+______________________ test_rejects_unproven_vectors[old] ______________________
+
+mutation = 'old'
+
+    @pytest.mark.parametrize("mutation", ["step", "nan", "old", "missing", "duplicate", "identity", "type", "failure"])
+    def test_rejects_unproven_vectors(mutation):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7ae8a0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+____________________ test_rejects_unproven_vectors[missing] ____________________
+
+mutation = 'missing'
+
+    @pytest.mark.parametrize("mutation", ["step", "nan", "old", "missing", "duplicate", "identity", "type", "failure"])
+    def test_rejects_unproven_vectors(mutation):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7af770>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+___________________ test_rejects_unproven_vectors[duplicate] ___________________
+
+mutation = 'duplicate'
+
+    @pytest.mark.parametrize("mutation", ["step", "nan", "old", "missing", "duplicate", "identity", "type", "failure"])
+    def test_rejects_unproven_vectors(mutation):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7ae900>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+___________________ test_rejects_unproven_vectors[identity] ____________________
+
+mutation = 'identity'
+
+    @pytest.mark.parametrize("mutation", ["step", "nan", "old", "missing", "duplicate", "identity", "type", "failure"])
+    def test_rejects_unproven_vectors(mutation):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7f8950>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+_____________________ test_rejects_unproven_vectors[type] ______________________
+
+mutation = 'type'
+
+    @pytest.mark.parametrize("mutation", ["step", "nan", "old", "missing", "duplicate", "identity", "type", "failure"])
+    def test_rejects_unproven_vectors(mutation):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7f9b80>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+____________________ test_rejects_unproven_vectors[failure] ____________________
+
+mutation = 'failure'
+
+    @pytest.mark.parametrize("mutation", ["step", "nan", "old", "missing", "duplicate", "identity", "type", "failure"])
+    def test_rejects_unproven_vectors(mutation):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7fa720>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+_________ test_query_escapes_identity_and_requests_native_metric_names _________
+
+    def test_query_escapes_identity_and_requests_native_metric_names():
+>       text = module().metric_query('project"one', "r11")
+               ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7fb1a0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+__________________ test_ack_polls_and_keeps_backend_evidence ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_ack_polls_and_keeps_backe0')
+
+    def test_ack_polls_and_keeps_backend_evidence(tmp_path):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7fa9f0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+______________ test_timeout_writes_failure_and_does_not_claim_ack ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_timeout_writes_failure_an0')
+
+    def test_timeout_writes_failure_and_does_not_claim_ack(tmp_path):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b5ab980>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+_________________ test_transport_error_is_bounded_and_recorded _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_transport_error_is_bounde0')
+
+    def test_transport_error_is_bounded_and_recorded(tmp_path):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7f98e0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+_________________ test_native_training_failure_never_calls_ack _________________
+
+    def test_native_training_failure_never_calls_ack():
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7f8ce0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+___________________ test_ack_occurs_after_native_completion ____________________
+
+    def test_ack_occurs_after_native_completion():
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_observability.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_observability.py:14: in module
+    spec.loader.exec_module(result)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x71155b7afb00>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/observability-r11-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_real_terminal_vector_ack
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_rejects_unproven_vectors[step]
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_rejects_unproven_vectors[nan]
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_rejects_unproven_vectors[old]
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_rejects_unproven_vectors[missing]
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_rejects_unproven_vectors[duplicate]
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_rejects_unproven_vectors[identity]
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_rejects_unproven_vectors[type]
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_rejects_unproven_vectors[failure]
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_query_escapes_identity_and_requests_native_metric_names
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_ack_polls_and_keeps_backend_evidence
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_timeout_writes_failure_and_does_not_claim_ack
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_transport_error_is_bounded_and_recorded
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_native_training_failure_never_calls_ack
+FAILED tests/uni_agent/deployment/test_mimo_observability.py::test_ack_occurs_after_native_completion
+15 failed in 1.12s

@@ -1,0 +1,47 @@
+{
+  "schema": "mimo.r11-stage-validation.v1",
+  "stage_only": true,
+  "training_started": false,
+  "run_prepared": false,
+  "tests": 31,
+  "skipped": 0,
+  "coverage": {
+    "covered_lines": 125,
+    "num_statements": 126,
+    "percent_covered": 98.64864864864865,
+    "percent_covered_display": "99",
+    "missing_lines": 1,
+    "excluded_lines": 0,
+    "num_branches": 22,
+    "num_partial_branches": 1,
+    "covered_branches": 21,
+    "missing_branches": 1
+  },
+  "scripts": {
+    "schema": "mimo.r11-script-preparation.v1",
+    "files": {
+      "prepare-r11.py": "00bd25f03c3aa9ea6801c0924253fa21ca54644150223ccdbc218b30fbdaa484",
+      "launch-r11-driver.py": "749e1dcf0bd0b3e7e1eedbf372ce5c0f22ca0d62247de3b1bda0dcdc1cab2347",
+      "mimo-supervised-native-r11.py": "140ba60ca47af5de542181e12d35357bd0a7b27f16d6ba910119d4514b1fb611",
+      "mimo_r11_preparation.py": "53eece160ff6f26d29d879501d26559d44360bdc6ac3d0762fc15a64c64e1c69",
+      "preflight-r11.py": "eabf6ee8c70063391953c12a9a70f0aff7c53b73eeb6ead8d0da359cada80889"
+    },
+    "training_started": false,
+    "templates": {
+      "prepare": "0f5a93f41141730fdb4bf6c36035f21377b0f893c3a4faed12bde74f66beae16",
+      "driver": "ca3dfa1917754936337564bb304cb212b9b528bab522dbbb3956747e0d2dcf9a",
+      "wrapper": "521efc12128d80701bf6af6c6480f3a6d78267b4d6e8370f6f44186e2595f8ec"
+    }
+  },
+  "inner_gpu_script_ast_valid": true,
+  "absolute_window_check": {
+    "rejected": true,
+    "reason": "Insufficient or unauthorized absolute run window",
+    "remaining_seconds": 809.5381894111633,
+    "minimum_seconds": 2700,
+    "checked_at": 1790686991.4618106,
+    "deadline": 1790687801
+  },
+  "helper_sha256": "53eece160ff6f26d29d879501d26559d44360bdc6ac3d0762fc15a64c64e1c69",
+  "tests_sha256": "b2af0633ab5e949e400c87e9425a46069e5a35f9c9479c6bf6be3899adb9d2f8"
+}

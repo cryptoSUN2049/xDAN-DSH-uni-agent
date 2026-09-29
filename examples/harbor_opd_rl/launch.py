@@ -113,7 +113,12 @@ def _validate_termination_recipe(mode: str, config, postprocessor: dict) -> None
 
 
 def build_overrides(
-    mode: str, launch: dict, environment: Mapping[str, str], *, recipe_config: str | Path | None = None
+    mode: str,
+    launch: dict,
+    environment: Mapping[str, str],
+    *,
+    recipe_config: str | Path | None = None,
+    experiment_name: str | None = None,
 ) -> list[str]:
     """Keep prepared controller registration/receipt policy and native config fields."""
     if mode not in MODES:
@@ -133,7 +138,10 @@ def build_overrides(
     # Explicit environment overrides permit independently prepared train/holdout files.
     cfg.data.train_files = environment.get("TRAIN_FILE") or _required(prepared, "TRAIN_FILE")
     cfg.data.val_files = environment.get("TEST_FILE") or _required(prepared, "TEST_FILE")
-    cfg.trainer.experiment_name = f"harbor-{mode}"
+    name = experiment_name if experiment_name is not None else cfg.trainer.get("experiment_name", f"harbor-{mode}")
+    if not isinstance(name, str) or not name.strip():
+        raise ValueError("experiment_name must be a non-empty string")
+    cfg.trainer.experiment_name = name
     cfg.trainer.default_local_dir = str(run_root / "checkpoints")
     cfg.trainer.rollout_data_dir = str(run_root / "rollout")
     cfg.trainer.validation_data_dir = str(run_root / "validation")
@@ -294,11 +302,28 @@ def _validate_resume(config) -> None:
         raise ValueError("total_training_steps must exceed the checkpoint step when resuming")
 
 
+def _training_entrypoint(config, *, observability_wrapper: bool) -> list[str]:
+    if not observability_wrapper:
+        return ["-m", "verl.trainer.main_ppo"]
+    if "rl_insight" not in config.trainer.logger:
+        raise ValueError("The observability wrapper requires the rl_insight logger")
+    wrapper = ROOT / "docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py"
+    if not wrapper.is_file():
+        raise ValueError("The fixed observability wrapper is missing from the prepared source")
+    return [str(wrapper)]
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", required=True, choices=MODES)
     parser.add_argument("--launch", required=True, type=Path, help="Private prepared Harbor launch.json")
     parser.add_argument("--recipe-config", type=Path, help="Optional YAML overlay before prepared task/model bindings")
+    parser.add_argument(
+        "--experiment-name", help="Explicit run identity; overrides recipe name or harbor-<mode> default"
+    )
+    parser.add_argument(
+        "--observability-wrapper", action="store_true", help="Use the fixed MiMo native monitoring lifecycle wrapper"
+    )
     parser.add_argument("--print-config", action="store_true", help="Compose only; no Ray/GPU/controller requests")
     parser.add_argument("--preflight-only", action="store_true", help="Check tokenizer and filtered data; no training")
     parser.add_argument(
@@ -310,7 +335,11 @@ def main() -> None:
     parser.add_argument("--resume-from-path", type=Path, help="Explicit native global_step_N checkpoint to restore")
     args = parser.parse_args()
     overrides = build_overrides(
-        args.mode, json.loads(args.launch.read_bytes()), os.environ, recipe_config=args.recipe_config
+        args.mode,
+        json.loads(args.launch.read_bytes()),
+        os.environ,
+        recipe_config=args.recipe_config,
+        experiment_name=args.experiment_name,
     )
     for key, value in [("total_training_steps", args.total_training_steps), ("save_freq", args.save_freq)]:
         if value is not None:
@@ -326,6 +355,7 @@ def main() -> None:
     if args.print_config:
         print(OmegaConf.to_yaml(config))
         return
+    entrypoint = _training_entrypoint(config, observability_wrapper=args.observability_wrapper)
     _validate_resume(config)
     report = preflight_training(config)
     overrides.append(f"trainer.total_epochs={config.trainer.total_epochs}")
@@ -344,7 +374,7 @@ def main() -> None:
     )
     # Execute precisely the overrides that passed native Hydra composition.
     subprocess.run(
-        [sys.executable, "-m", "verl.trainer.main_ppo", "--config-name=ppo_trainer", *overrides],
+        [sys.executable, *entrypoint, "--config-name=ppo_trainer", *overrides],
         cwd=ROOT,
         env=environment,
         check=True,
