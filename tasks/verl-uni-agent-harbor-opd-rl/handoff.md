@@ -1,3 +1,10 @@
+## 2026-09-29 18:16 UTC：R17 实际预检通过，双卡运行已启动
+
+- R17 actual preflight exit0：273环境、CUDA未初始化、fresh三步/world2/two replicas、上下游容量2和唯一framework绑定通过；实际入口覆盖87.74%。公开prepared/runtime-preflight/actual-preflight-coverage均已落盘。
+- driver370638与timeline370639于18:15:41UTC启动；supervisor370673，operator18:16:00UTC running，预算3474秒；controller108342、archiver108370。当前仅初始化，step/checkpoint与W&B未验收。
+- runtime4a499cf不变；run/spec/manifest详前段。W&B目标mimo9b001661r17。recipe只读监控，review等待稳定checkpoint做双rankdelta，preparation等待batch/receipt+world2operator验收。审计使用已验证独立stage，因历史freeze未包含optimizer_delta.py，不改运行代码补文件。
+- 待续：首次真实注册→两job实际同时running+两replica请求→三步及checkpoint→严格有效更新和W&B全history/RLInsight→所属资源归档清理。原19:16:41UTC截止、180秒reserve、保留Pod继续有效。
+
 ## 2026-09-29 18:13 UTC：R15 下游并发失败已修复，R17 预检中
 
 - R15 未完成训练：worker 和 ledger 仍单任务，第二并发 HTTP409，step/checkpoint 均0；W&B最后API仍running/history0。所属controller/driver/archiver/Modal已确认清理，两GPU0MiB，Pod保留；r15-cleanup-final报告保留843 incomplete。

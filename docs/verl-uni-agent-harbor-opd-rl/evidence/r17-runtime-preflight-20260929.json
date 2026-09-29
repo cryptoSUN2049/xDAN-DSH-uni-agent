@@ -1,0 +1,87 @@
+{
+  "schema": "mimo.r17-actual-runtime-preflight.v1",
+  "passed": true,
+  "execution": {
+    "pid": 370564,
+    "exit_code": 0,
+    "started_at": 1790705593.6236103,
+    "finished_at": 1790705724.868024,
+    "log": "/root/mimo-private/preflight-r17.log",
+    "training_started": false,
+    "CUDA_VISIBLE_DEVICES": "",
+    "coverage": "/root/mimo-private/r17-preflight-coverage.json",
+    "wandb_dir_exists": false
+  },
+  "preparation_execution": {
+    "pid": 108303,
+    "exit_code": 0,
+    "started_at": 1790705466.5491524,
+    "finished_at": 1790705573.3533173,
+    "log": "/root/mimo-private/prepare-r17.log",
+    "training_started": false
+  },
+  "preflight": {
+    "status": "passed",
+    "source_commit": "4a499cfcf8e5fa361b20f009d2c1472e7b49dd73",
+    "package_constraints_verified": 273,
+    "report": {
+      "train_rows": 1,
+      "validation_rows": 1,
+      "steps_per_epoch": 1,
+      "total_training_steps": 3,
+      "total_epochs": 3,
+      "save_freq": 1,
+      "backend_validation": {
+        "attention": [
+          {
+            "backend": "sdpa",
+            "validation": "torch_sdpa_operator"
+          }
+        ],
+        "checkpoint_backend": "naive",
+        "gpu_execution_validated": false
+      }
+    },
+    "cuda_initialized": false,
+    "finished_at": 1790705721.5956385,
+    "resume_from_path": null,
+    "resume_mode": "disable",
+    "total_training_steps": 3,
+    "mode": "colocate_async",
+    "backend": "naive",
+    "actor_world_size": 2,
+    "capacity": {
+      "max_concurrent_jobs": 2,
+      "max_concurrent_sessions": 2,
+      "run_spec_sha256": "sha256:cba3a3b4dfb5454b0533169588be1b4ef7b11aaedff01f3c1a7a5fb1ca07cf8c"
+    },
+    "rollout_replicas": 2,
+    "gpu_transport_scope": "two native IPC lanes; FSDP training remains unverified until actual run",
+    "training_started": false,
+    "observability_entrypoint": [
+      "/workspace/mimo-dsh-rl-20260928/run-src-r17/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py"
+    ],
+    "hydra_run_dir": "/root/mimo-private/launch-r17/hydra",
+    "hydra_entry_executed": false,
+    "hydra_readonly_entry_probe": {
+      "path": "/root/mimo-private/observability-hydra-bootstrap-20260929/status.json",
+      "sha256": "34857367db5137a88b56e6f382d16c332adc944ecabaed84a1615529d9072013",
+      "helper_sha256": "f383a7f775de9504718308b970e2bfe181de6594894ffde654c26a973101f469",
+      "status": "passed",
+      "scope": "Actual entry reached deliberate guard after private Hydra metadata creation",
+      "training_acceptance": false
+    },
+    "observability_environment": {
+      "WANDB_MODE": "online",
+      "WANDB_ENTITY": "xdan-ai",
+      "WANDB_PROJECT": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+      "WANDB_NAME": "mimo9b-001661-r17",
+      "WANDB_RUN_ID": "mimo9b001661r17",
+      "WANDB_RESUME": "never",
+      "WANDB_DIR": "/root/mimo-private/wandb-r17",
+      "VERL_RL_INSIGHT_ENABLE": "1",
+      "RL_INSIGHT_SERVER_URL": "http://127.0.0.1:18080",
+      "MIMO_PROMETHEUS_URL": "http://127.0.0.1:9090"
+    }
+  }
+}

@@ -1,0 +1,717 @@
+{
+  "schema": "mimo.actual-preflight-coverage.v1",
+  "run": "r17",
+  "source_commit": "4a499cfcf8e5fa361b20f009d2c1472e7b49dd73",
+  "script_sha256": "110e6a41f510dbff63d4c418d2b1b47cd75ec3f88e3e34487b004fb62d89992f",
+  "tool_version": "7.16.2",
+  "tool_manifest_sha256": "61d0edde3f556ee8414269268ae2c2139264e488877d47aec29d52efceb9a0af",
+  "actual_execution_exit_code": 0,
+  "totals": {
+    "covered_lines": 78,
+    "num_statements": 84,
+    "percent_covered": 87.73584905660377,
+    "percent_covered_display": "88",
+    "missing_lines": 6,
+    "excluded_lines": 0,
+    "percent_statements_covered": 92.85714285714286,
+    "percent_statements_covered_display": "93",
+    "num_branches": 22,
+    "num_partial_branches": 7,
+    "covered_branches": 15,
+    "missing_branches": 7,
+    "percent_branches_covered": 68.18181818181819,
+    "percent_branches_covered_display": "68"
+  },
+  "files": {
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r17_preflight.py": {
+      "executed_lines": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11,
+        13,
+        16,
+        18,
+        19,
+        47,
+        48,
+        52,
+        54,
+        56,
+        57,
+        58,
+        59,
+        61,
+        63,
+        64,
+        66,
+        68,
+        70,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        96,
+        100,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        114,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        134,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        178,
+        179,
+        182,
+        183
+      ],
+      "summary": {
+        "covered_lines": 78,
+        "num_statements": 84,
+        "percent_covered": 87.73584905660377,
+        "percent_covered_display": "88",
+        "missing_lines": 6,
+        "excluded_lines": 0,
+        "percent_statements_covered": 92.85714285714286,
+        "percent_statements_covered_display": "93",
+        "num_branches": 22,
+        "num_partial_branches": 7,
+        "covered_branches": 15,
+        "missing_branches": 7,
+        "percent_branches_covered": 68.18181818181819,
+        "percent_branches_covered_display": "68"
+      },
+      "missing_lines": [
+        49,
+        60,
+        62,
+        65,
+        67,
+        69
+      ],
+      "excluded_lines": [],
+      "executed_branches": [
+        [
+          47,
+          -16
+        ],
+        [
+          47,
+          48
+        ],
+        [
+          48,
+          47
+        ],
+        [
+          59,
+          61
+        ],
+        [
+          61,
+          63
+        ],
+        [
+          64,
+          66
+        ],
+        [
+          66,
+          68
+        ],
+        [
+          68,
+          70
+        ],
+        [
+          80,
+          81
+        ],
+        [
+          80,
+          82
+        ],
+        [
+          104,
+          105
+        ],
+        [
+          104,
+          111
+        ],
+        [
+          106,
+          107
+        ],
+        [
+          106,
+          108
+        ],
+        [
+          182,
+          183
+        ]
+      ],
+      "missing_branches": [
+        [
+          48,
+          49
+        ],
+        [
+          59,
+          60
+        ],
+        [
+          61,
+          62
+        ],
+        [
+          64,
+          65
+        ],
+        [
+          66,
+          67
+        ],
+        [
+          68,
+          69
+        ],
+        [
+          182,
+          -1
+        ]
+      ],
+      "functions": {
+        "validate_training_config": {
+          "executed_lines": [
+            18,
+            19,
+            47,
+            48
+          ],
+          "summary": {
+            "covered_lines": 4,
+            "num_statements": 5,
+            "percent_covered": 77.77777777777777,
+            "percent_covered_display": "78",
+            "missing_lines": 1,
+            "excluded_lines": 0,
+            "percent_statements_covered": 80.0,
+            "percent_statements_covered_display": "80",
+            "num_branches": 4,
+            "num_partial_branches": 1,
+            "covered_branches": 3,
+            "missing_branches": 1,
+            "percent_branches_covered": 75.0,
+            "percent_branches_covered_display": "75"
+          },
+          "missing_lines": [
+            49
+          ],
+          "excluded_lines": [],
+          "start_line": 16,
+          "executed_branches": [
+            [
+              47,
+              -16
+            ],
+            [
+              47,
+              48
+            ],
+            [
+              48,
+              47
+            ]
+          ],
+          "missing_branches": [
+            [
+              48,
+              49
+            ]
+          ]
+        },
+        "validate_capacity": {
+          "executed_lines": [
+            54,
+            56,
+            57,
+            58,
+            59,
+            61,
+            63,
+            64,
+            66,
+            68,
+            70
+          ],
+          "summary": {
+            "covered_lines": 11,
+            "num_statements": 16,
+            "percent_covered": 61.53846153846154,
+            "percent_covered_display": "62",
+            "missing_lines": 5,
+            "excluded_lines": 0,
+            "percent_statements_covered": 68.75,
+            "percent_statements_covered_display": "69",
+            "num_branches": 10,
+            "num_partial_branches": 5,
+            "covered_branches": 5,
+            "missing_branches": 5,
+            "percent_branches_covered": 50.0,
+            "percent_branches_covered_display": "50"
+          },
+          "missing_lines": [
+            60,
+            62,
+            65,
+            67,
+            69
+          ],
+          "excluded_lines": [],
+          "start_line": 52,
+          "executed_branches": [
+            [
+              59,
+              61
+            ],
+            [
+              61,
+              63
+            ],
+            [
+              64,
+              66
+            ],
+            [
+              66,
+              68
+            ],
+            [
+              68,
+              70
+            ]
+          ],
+          "missing_branches": [
+            [
+              59,
+              60
+            ],
+            [
+              61,
+              62
+            ],
+            [
+              64,
+              65
+            ],
+            [
+              66,
+              67
+            ],
+            [
+              68,
+              69
+            ]
+          ]
+        },
+        "main": {
+          "executed_lines": [
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            96,
+            100,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            114,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            134,
+            141,
+            142,
+            143,
+            144,
+            145,
+            146,
+            147,
+            148,
+            178,
+            179
+          ],
+          "summary": {
+            "covered_lines": 49,
+            "num_statements": 49,
+            "percent_covered": 100.0,
+            "percent_covered_display": "100",
+            "missing_lines": 0,
+            "excluded_lines": 0,
+            "percent_statements_covered": 100.0,
+            "percent_statements_covered_display": "100",
+            "num_branches": 6,
+            "num_partial_branches": 0,
+            "covered_branches": 6,
+            "missing_branches": 0,
+            "percent_branches_covered": 100.0,
+            "percent_branches_covered_display": "100"
+          },
+          "missing_lines": [],
+          "excluded_lines": [],
+          "start_line": 73,
+          "executed_branches": [
+            [
+              80,
+              81
+            ],
+            [
+              80,
+              82
+            ],
+            [
+              104,
+              105
+            ],
+            [
+              104,
+              111
+            ],
+            [
+              106,
+              107
+            ],
+            [
+              106,
+              108
+            ]
+          ],
+          "missing_branches": []
+        },
+        "": {
+          "executed_lines": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11,
+            13,
+            16,
+            52,
+            73,
+            182,
+            183
+          ],
+          "summary": {
+            "covered_lines": 14,
+            "num_statements": 14,
+            "percent_covered": 93.75,
+            "percent_covered_display": "94",
+            "missing_lines": 0,
+            "excluded_lines": 0,
+            "percent_statements_covered": 100.0,
+            "percent_statements_covered_display": "100",
+            "num_branches": 2,
+            "num_partial_branches": 1,
+            "covered_branches": 1,
+            "missing_branches": 1,
+            "percent_branches_covered": 50.0,
+            "percent_branches_covered_display": "50"
+          },
+          "missing_lines": [],
+          "excluded_lines": [],
+          "start_line": 1,
+          "executed_branches": [
+            [
+              182,
+              183
+            ]
+          ],
+          "missing_branches": [
+            [
+              182,
+              -1
+            ]
+          ]
+        }
+      },
+      "classes": {
+        "": {
+          "executed_lines": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11,
+            13,
+            16,
+            18,
+            19,
+            47,
+            48,
+            52,
+            54,
+            56,
+            57,
+            58,
+            59,
+            61,
+            63,
+            64,
+            66,
+            68,
+            70,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            96,
+            100,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            114,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            134,
+            141,
+            142,
+            143,
+            144,
+            145,
+            146,
+            147,
+            148,
+            178,
+            179,
+            182,
+            183
+          ],
+          "summary": {
+            "covered_lines": 78,
+            "num_statements": 84,
+            "percent_covered": 87.73584905660377,
+            "percent_covered_display": "88",
+            "missing_lines": 6,
+            "excluded_lines": 0,
+            "percent_statements_covered": 92.85714285714286,
+            "percent_statements_covered_display": "93",
+            "num_branches": 22,
+            "num_partial_branches": 7,
+            "covered_branches": 15,
+            "missing_branches": 7,
+            "percent_branches_covered": 68.18181818181819,
+            "percent_branches_covered_display": "68"
+          },
+          "missing_lines": [
+            49,
+            60,
+            62,
+            65,
+            67,
+            69
+          ],
+          "excluded_lines": [],
+          "start_line": 1,
+          "executed_branches": [
+            [
+              47,
+              -16
+            ],
+            [
+              47,
+              48
+            ],
+            [
+              48,
+              47
+            ],
+            [
+              59,
+              61
+            ],
+            [
+              61,
+              63
+            ],
+            [
+              64,
+              66
+            ],
+            [
+              66,
+              68
+            ],
+            [
+              68,
+              70
+            ],
+            [
+              80,
+              81
+            ],
+            [
+              80,
+              82
+            ],
+            [
+              104,
+              105
+            ],
+            [
+              104,
+              111
+            ],
+            [
+              106,
+              107
+            ],
+            [
+              106,
+              108
+            ],
+            [
+              182,
+              183
+            ]
+          ],
+          "missing_branches": [
+            [
+              48,
+              49
+            ],
+            [
+              59,
+              60
+            ],
+            [
+              61,
+              62
+            ],
+            [
+              64,
+              65
+            ],
+            [
+              66,
+              67
+            ],
+            [
+              68,
+              69
+            ],
+            [
+              182,
+              -1
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "raw_report": {
+    "path": "/root/mimo-private/r17-preflight-coverage.json",
+    "sha256": "98d1bb519e35192b762cd1aaffe939bf903f53c96fe5c7200c7c513c38a2e5c9"
+  },
+  "fixed_environment_modified": false,
+  "scope": "Single real CUDA-disabled admission execution; negative branch coverage is separately tested by CPU unit tests; no excluded lines."
+}
