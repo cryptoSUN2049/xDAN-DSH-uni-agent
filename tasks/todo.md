@@ -1,3 +1,13 @@
+## R17 双卡全链路验收（2026-09-29 18:13 UTC）
+
+- [x] 定位R15 HTTP409，保留原始失败与清理证据。
+- [x] 修复 controller/worker/ledger 有界并发，云端真实HTTP回归与完整Ruff通过。
+- [x] 新身份fresh三步运行配置、源码提交推送冻结、实际prepare通过。
+- [ ] 实际CPU-only preflight通过后启动双卡训练与证据归档。
+- [ ] 验证真实两job及两replica，奖励/消费轨迹/梯度/双rank checkpoint有效更新。
+- [ ] 原生W&B完整history对账、RLInsight指标/trace，所属资源归档清理，保留GPU Pod。
+- [ ] Review：明确当前模式通过项与未覆盖恢复/能力评估，提交最终handoff与证据。
+
 ## 统一母本字段冻结
 
 - [x] 27列及messages/tools/supervision合同，机器列清单、项目索引和交接已保存。

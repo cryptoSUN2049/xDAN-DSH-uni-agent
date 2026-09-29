@@ -1,0 +1,66 @@
+{
+  "schema": "mimo.r17-preparation-validation.v1",
+  "passed": true,
+  "runs": [
+    {
+      "exit_code": 0,
+      "started_at": 1790705138.0532897,
+      "finished_at": 1790705219.8246162,
+      "checkout": "/workspace/mimo-dsh-rl-20260928/integration-check/r17-preparation-tests",
+      "log": "/workspace/mimo-dsh-rl-20260928/integration-check/r17-preparation-tests-v2.log",
+      "tests": {
+        "tests": 61,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "exit_code": 0,
+      "started_at": 1790705273.4500246,
+      "finished_at": 1790705346.3118143,
+      "checkout": "/workspace/mimo-dsh-rl-20260928/integration-check/r17-preparation-tests",
+      "log": "/workspace/mimo-dsh-rl-20260928/integration-check/r17-preparation-tests-v3.log",
+      "tests": {
+        "tests": 26,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "source_sha256": {
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r17_preparation.py": "c512e8dff0d08f0aa6034b7784a26ad15980b7540978e880e30391ee2392a215",
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r17_preflight.py": "110e6a41f510dbff63d4c418d2b1b47cd75ec3f88e3e34487b004fb62d89992f",
+    "tests/uni_agent/deployment/test_mimo_r17_preparation.py": "6b145d9fe7a29c49e05a847ff824898d4a3d20402351fcd195a86b7a477da771",
+    "tests/uni_agent/deployment/test_mimo_r17_preflight.py": "64ebd547ab1b9158743dc5869da77b08ddd46c8f69d94701bd45508e2defb844",
+    "deployment/services/harbor_run_controller.py": "536900837580e52e314544cd7504aa7e9c911fdb9cd3e1834faf7b66fd896910",
+    "uni_agent/tasks/harbor_dsh/ledger.py": "d474ea39303fc6a46d7480480f3d01ffa8b7225fdb1abcae6bcbeaa464fa358d",
+    "uni_agent/tasks/harbor_dsh/worker.py": "995dabff0d64eecac0277670b89181bdaf1284313bec9a4c192fb3d0fbab5be3"
+  },
+  "staging": {
+    "files": {
+      "launch-r17-driver.py": "c35d961796ea849a04e6bc491bf7d694f6766ce27c2d50341397a74ba14b7649",
+      "mimo-supervised-native-r17.py": "dd9f82d0a1111d63104d6e399d890d549aa5da97016e2d23b074d1d88c99419f",
+      "mimo_r17_preparation.py": "c512e8dff0d08f0aa6034b7784a26ad15980b7540978e880e30391ee2392a215",
+      "preflight-r17.py": "110e6a41f510dbff63d4c418d2b1b47cd75ec3f88e3e34487b004fb62d89992f",
+      "prepare-r17.py": "721a2c741a160d9348c79078e98ba45792e8a45001444329ab8b7d533fd17b02"
+    },
+    "schema": "mimo.r17-script-preparation.v1",
+    "templates": {
+      "driver": "575d5e4a91378cb23522b4411dbbbe116940b5173cca4eddb361671b13a40196",
+      "prepare": "9cf593482a12aceb24c0bcbe7c051429482da3fcd0e3d322dac6e3a20b004074",
+      "wrapper": "5a90973107bf13f9ab97273aa504844702b1db836192d899bbc8bdd5fc551600"
+    },
+    "training_started": false
+  },
+  "first_attempt": {
+    "exit_code": 2,
+    "reason": "Cloud fixture checkout omitted test_mimo_training_entry; complete fixtures restored before rerun",
+    "log": "/workspace/mimo-dsh-rl-20260928/integration-check/r17-preparation-tests.log"
+  },
+  "runtime_preparation_executed": false,
+  "training_started": false,
+  "deadline_unix": 1790709401,
+  "scope": "61 full regression cases then 26 preflight cases including added single-runner/gateway/adapter assertions. Real prepare\u2192RunSpec digest\u2192native compose capacity checked. Unit coverage not measured in this time-bounded pass."
+}

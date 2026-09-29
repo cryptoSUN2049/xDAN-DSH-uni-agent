@@ -1,3 +1,11 @@
+## 2026-09-29 18:13 UTC：R15 下游并发失败已修复，R17 预检中
+
+- R15 未完成训练：worker 和 ledger 仍单任务，第二并发 HTTP409，step/checkpoint 均0；W&B最后API仍running/history0。所属controller/driver/archiver/Modal已确认清理，两GPU0MiB，Pod保留；r15-cleanup-final报告保留843 incomplete。
+- R17 runtime4a499cfcf8e5fa361b20f009d2c1472e7b49dd73已push；938files freeze manifest SHA698a954da76230c18210ba52803c371f9ec5a027581f978f4191775085d7252f。RunSpec→worker→ledger严格容量2，真实HTTP两接受/第三拒绝回归；68tests覆盖86.50%，R17准备61+最终26tests，完整Ruff663files通过。
+- 实际prepare18:12:53UTC exit0；spec sha256:cba3a3b4dfb5454b0533169588be1b4ef7b11aaedff01f3c1a7a5fb1ca07cf8c。controller108342于18:13:09启动，正确privatebin PATH，GPU端health healthy/unregistered。CPU-only实际preflight进行中，GPUdriver尚未启动。
+- R17 fresh三步/save1，world2 actor+两TP1 replicas、sessions2/n4，原MiMo/DSH/32K/20480不变。R16草稿未提交、R15无C2，不能运行；R17 source不包含R16代码。
+- 仍截止1790709401/19:16:41UTC，180秒清理；Pod不得停止。待实际preflight exit0→driver/timeline/archive→真实两job/replica→C1/C2/C3和W&B/Prom/Tempo。world2 checker和world2 acceptance已存在，若C1零moment优先C2→C3；不伪造单rank schema或恢复证明。
+
 ## 2026-09-29 17:36 UTC：r15 正式双卡重跑已启动
 
 - 实际prepare/preflight均exit0，273依赖/fresh/world2/两replica/并发2通过；entrycoverage96.15%，public r15-prepared/runtime-preflight/actual-preflight-coverage。正确cloudflared PATH与真实HTTPS入口已验证，controller health通过。
