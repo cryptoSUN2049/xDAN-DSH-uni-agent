@@ -1,3 +1,12 @@
+## 2026-09-29 16:17 UTC：用户已授权双卡 colocate，新r13准备中
+
+- A5是用户错字，已明确忽略，不再等待该澄清。用户要求尽快双卡正常运行，并回查历史经验；按最新指定colocate_async落实。
+- 历史核对：旧pipe-r1单卡4B/T2，旧双卡OPD为学生1卡+Teacher1卡，双卡SFT另一cu128 lane；MiMo r9单卡colocate、r10/r12双卡separate。未找到MiMo actor world2已验收事实，不能混同。
+- r12全部验收报告已提交b09c2cd并push：有效更新与独立恢复passed，496/716 LoRA张量改变，760 base不变；W&B89指标对齐、真实Prom/Tempo通过。controller/archiver及所属Modal已清理，GPU Pod保留。
+- 新r13设计docs同名mimo-dual-colocate-design.md：从固定原始MiMo9B fresh两步，actor world2共享两卡、TP1两个rollout replicas、native naive、n4/sessions2/max_num_seqs2。旧C4不改，不冒充跨rankresume。
+- 任务分工：separate_recipe实现recipe/tests；separate_preparation实现r13freshoperator/preflight/tests；separate_review跑原生IPC两GPU×2case有界探针；root负责freeze/部署/启动/最终验收。当前还未启动r13训练。
+- 最晚截止1790709401/19:16:41UTC/新加坡03:16:41保持，保留180秒清理，不自动关闭Pod。仅11403 GPU和11621 CPU；Mac轻量编辑/Git/SSH。
+
 ## 2026-09-29 15:28 UTC：r12已exit0，此前初始化状态已过期
 
 - 真实终态：14:56:23UTC退出0，C4已保存；不是仍在初始化。GPU两卡0MiB，Pod保留、不自动关闭。

@@ -1023,3 +1023,14 @@ Review（14:28UTC）：基础提交7e48aaa/cc372a3、后端67a5948、uv预检0f4
 - [ ] 新r11-v2准备脚本、原生CPU监控探针、回归及代码冻结。
 - [ ] 双卡r11 C3→C4，原生W&B与RL-Insight实际回读验收。
 - [ ] 结束训练仅清理所属进程/沙盒，保留服务器；后续启动沿用新固定截止。
+
+## 2026-09-30 MiMo dual colocate test (current worktree)
+
+- [x] Confirm A5 was a typo; inspect historical memory and distinguish older dual teacher/SFT from actor world-size 2.
+- [x] Write dual-colocate design; preserve old C4 and select explicit fresh initial model to avoid invalid world-size resume.
+- [ ] Implement dual shared-pool observed recipe and fresh-only operator/preflight, sessions2/n4, fixed deadline.
+- [ ] Cloud CPU validation and native two-GPU IPC verification; commit/push after full Ruff gates.
+- [ ] Freeze unique r13 source; prepare and run on existing dual6000, capture both rank/replica identities and stage progress.
+- [ ] Verify actual steps, two-rank checkpoints, W&B/Insight, preserve truthful reward/gradient outcomes and cleanup owned resources; keep Pod.
+
+Review: r12 acceptance, parameter/optimizer deltas and native observability all passed; current task tests a new topology, not a claim that the existing chain failed.

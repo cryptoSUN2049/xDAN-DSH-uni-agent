@@ -31,3 +31,5 @@
 - 冻结源码必须保持只读；Hydra会在进入用户entry之前创建日志目录，compose/tokenizer预检不覆盖这一步。launcher应显式配置独立私有hydra.run.dir，并验证实际只读cwd入口、日志元数据及pre-Ray guard，避免仅凭配置组合测试推断训练能启动。
 
 - 用户追问“到底问题出在哪里”时，不能用进程存活、无traceback或初始化快照回答训练健康。每次状态核验必须同时读取当前operator终态、日志时间、最新step/checkpoint和API；标注查询时间。r12实际25分钟冷启动、单步1135秒采样/60秒更新，原生logger在整步结束才写history；无history不能推断卡死，也不能宣称正常。训练结束后空GPU与启动期空GPU必须明确区分。
+
+- 用户明确A5是错字后立即取消该澄清依赖。双卡目标不能悄悄降成单卡对照；先查项目memory与实跑证据，区分学生+教师双卡、actor+rollout分卡、FSDP双rank。模式切换失败与旧链路成功须分开报告；已有C4不跨rank强行resume，独立fresh测试要明确告知。

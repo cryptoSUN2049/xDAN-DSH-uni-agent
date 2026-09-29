@@ -47,23 +47,22 @@ r12's native step was 1258.08 seconds, including 1135.06 seconds generation (90.
 
 Evidence: `evidence/r12-wandb-final-20260929.json` contains the complete 89-metric W&B/console match. No new runtime claims are made here.
 
-## Proposed execution contract (pending task identification)
+## User-selected follow-up: fresh two-GPU topology test
 
-User requested a colocate_async test, but “A5 安全终端” has no matching task definition in the inspected project. Task identity is required before launching dependent work. No A5 task, reward, image or test command may be invented. The following is the existing MiMo task comparison, applicable only if that is the intended task; a different A5 task requires its own task manifest and verifier contract.
+The user subsequently requested an actual two-GPU colocate test. The shortest safe path is a **fresh two-step run from the same original MiMo 9B SFT**, with `resume_mode=disable` and `resume_from_path=null`. This avoids converting C3/C4 and must be labeled a topology acceptance run, not an exact r12 performance comparison.
 
-```mermaid
-flowchart LR
-    C3[Immutable r10 C3] --> GPU[GPU0 shared actor and vLLM]
-    GPU --> Gateway[Uni-Agent gateway]
-    Gateway --> DSH[DSH / Harbor / Modal]
-    DSH --> Verify[Independent verifier]
-    Verify --> Queue[TransferQueue]
-    Queue --> GPU
-    GPU --> C4[New run C4 and native metrics]
-```
+Minimal recipe changes from the observed recipe: trainer GPUs 2; mode `colocate_async`; colocate warmup 1; rollout nodes 0 (no standalone pool), GPUs-per-node metadata 2; TP/DP/PP each 1; checkpoint backend `naive`; fresh run identity; two steps and save every step. Keep the same n=4, LoRA rank16/alpha32/merged rollout weights, SDPA, dense entropy chunk256, context and generation budgets. The four-sample global minibatch divides into two samples per actor rank (`engine_workers.py:266`).
 
-Proposed files: a new observed colocate recipe in `examples/mimo_dsh_rl/`; r13 preparation and preflight helpers in this docs directory; corresponding recipe and preparation tests under `tests/uni_agent/`. No VERL kernel, DSH, Harbor or general launcher change is needed.
+The latest authorized design additionally raises `max_concurrent_sessions` and `max_num_seqs` to 2 so the two replicas can receive simultaneous work; `agent.num_workers=1` and tool parallelism 1 stay fixed. `_run_prompt_rollouts` schedules all four episode coroutines with `asyncio.gather`; the per-runner semaphore permits two concurrent episodes even within one framework worker. This supersedes the earlier unchanged-concurrency proposal. Both topology and concurrency differ from r12, so any timing difference cannot be attributed solely to mode selection.
 
-API contracts: retain existing launch/registration/receipt and budget-terminal-v1 schemas, private Hydra output, unique run/spec/session/W&B identity and source manifest. Select trainer_mode=colocate_async, one actor GPU, no standalone rollout pool, native naive transfer. Preserve original task hash and C3 resume paths; never reuse r12 output identity. Keep existing fixed deadline 2026-09-29 19:16:41 UTC and leave GPU Pod running after owned-process cleanup.
+Native naive sync calls `actor_wg.update_weights(..., mode='naive')` across all actor ranks. Each worker materializes merged LoRA weights and supplies its colocated vLLM replica through IPC. The current IPC socket name includes job, replica and trainer rank; receiver rebuild uses its local device index. Source inspection found no hard prohibition on this two-rank arrangement, but it does not replace a real test of FSDP collectives, memory peaks and IPC on both GPUs.
 
-Verification: cloud CPU compose/preparation tests, incorrect topology rejection, full source/dependency/checkpoint validation, real native IPC preflight, then actual rollout/reward/update/checkpoint checks plus W&B and RL-Insight cross-checks. Separate timings from effective-update evidence. If rewards are constant, report the missing learning signal instead of treating optimizer momentum as a fresh effective update. Compare GPU allocation time separately from measured hardware utilization and actual billing.
+Acceptance must inspect two actor ranks and two TP1 replica identities; both ranks' `model_world_size_2_rank_{0,1}.pt`, optimizer and extra-state files for C1 and C2; real optimizer step progression and finite state; nonzero update evidence when the sampled rewards provide a gradient; completed trajectory/verifier receipts; and two native W&B step rows plus actual RL-Insight acknowledgements. Checkpoint files merely existing or both GPUs allocating memory is insufficient. Checkpoints remain immutable, output paths and ports are unique, and the existing shutdown deadline remains binding.
+
+If the first group has identical rewards, a zero GRPO gradient is expected. Do not manufacture reward contrast or call that an optimizer failure; separate mechanical topology acceptance from an effective-update claim. The explicit sessions=2 change must still be validated through actual per-replica requests; it does not guarantee balanced traffic or uninterrupted GPU utilization.
+
+## Current execution contract
+
+The user clarified that A5 was a typo and requested the real two-GPU colocate test. No task-identification question remains. The authorized design is [mimo-dual-colocate-design.md](mimo-dual-colocate-design.md): explicit fresh initial model, shared actor world size 2, two TP1 replicas, two concurrent sessions, n=4 and two steps. The single-GPU C3 comparison above is an unselected alternative, not the current execution plan.
+
+Preserve all existing checkpoints, the original verifier and budgets, private Hydra output, unique source/run/spec/W&B identities, and the fixed 2026-09-29 19:16:41 UTC deadline. Validate both GPU IPC lanes and then actual two-rank training; keep the GPU Pod after owned-process cleanup. This run cannot prove exact C4 continuation or isolate the causal performance effect of topology from concurrency.

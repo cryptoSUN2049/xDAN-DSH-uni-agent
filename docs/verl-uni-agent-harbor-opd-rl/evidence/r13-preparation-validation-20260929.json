@@ -1,0 +1,44 @@
+{
+  "schema": "mimo.r13-preparation-validation.v1",
+  "exit_code": 0,
+  "finished_at": 1790699008.6678746,
+  "gpu_training_started": false,
+  "runtime_prepared": false,
+  "coverage_tool_available": false,
+  "coverage_attempt_log": "/workspace/mimo-dsh-rl-20260928/integration-check/r13-preparation-tests/r13-final.log",
+  "stage_exit_code": 0,
+  "scripts_manifest": {
+    "files": {
+      "launch-r13-driver.py": "7c606cf3d6ee9b8e144c91b358c2ad0ba335b34a897fa2fe17c11a7b7e43daa5",
+      "mimo-supervised-native-r13.py": "6d7168d0c149c7706936df8b77d3249635b716a1cdcfdb0fe62d204b3fad6cbd",
+      "mimo_r13_preparation.py": "dab467e758aa87807d042e85993067ec13ab36d5c81aed327bca5a5bb9e467ec",
+      "preflight-r13.py": "4c02d112277637b709ec3ed494aa4236f986fd8f5094fe67b267b6dd3fcc7a58",
+      "prepare-r13.py": "e7be29fcde9723b42a946fb15641818babf3bf3b4ef185010e7f5d487c59b254"
+    },
+    "schema": "mimo.r13-script-preparation.v1",
+    "templates": {
+      "driver": "575d5e4a91378cb23522b4411dbbbe116940b5173cca4eddb361671b13a40196",
+      "prepare": "9cf593482a12aceb24c0bcbe7c051429482da3fcd0e3d322dac6e3a20b004074",
+      "wrapper": "5a90973107bf13f9ab97273aa504844702b1db836192d899bbc8bdd5fc551600"
+    },
+    "training_started": false
+  },
+  "junit": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "52",
+      "time": "16.154",
+      "timestamp": "2026-09-29T16:23:10.720334+00:00",
+      "hostname": "2b1a577993cd"
+    }
+  ],
+  "files": {
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r13_preparation.py": "dab467e758aa87807d042e85993067ec13ab36d5c81aed327bca5a5bb9e467ec",
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r13_preflight.py": "4c02d112277637b709ec3ed494aa4236f986fd8f5094fe67b267b6dd3fcc7a58",
+    "tests/uni_agent/deployment/test_mimo_r13_preparation.py": "cfa3ffab99230921203f3c2ae143ad380c758b7d3ba97bb5dd7bbaadd68c2425",
+    "tests/uni_agent/deployment/test_mimo_r13_preflight.py": "cc7710b28ac6777a32bdfb9b5955e88be057c1307d5e03907c198f30c1ad8f82"
+  }
+}

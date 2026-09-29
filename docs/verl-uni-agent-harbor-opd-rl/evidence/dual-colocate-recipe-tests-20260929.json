@@ -1,0 +1,75 @@
+{
+  "checked_at": "2026-09-29T16:19:16.329523+00:00",
+  "scope": "CPU recipe composition and existing launcher regression; no GPU topology or training acceptance",
+  "source_root": "/workspace/mimo-dsh-rl-20260928/audit-code/dual-colocate-recipe",
+  "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+  "host_role": "cloud CPU port11621",
+  "test_modules": [
+    "tests/uni_agent/examples/test_mimo_dual_colocate_recipe.py",
+    "tests/uni_agent/examples/test_mimo_observed_recipe.py",
+    "tests/uni_agent/examples/test_mimo_separate_recipe.py",
+    "tests/uni_agent/examples/test_mimo_budget_recipe.py",
+    "tests/uni_agent/examples/test_harbor_opd_rl_recipe.py",
+    "tests/uni_agent/examples/test_mimo_smoke_recipe.py",
+    "tests/uni_agent/examples/test_harbor_launch_preflight.py"
+  ],
+  "command": "CUDA_VISIBLE_DEVICES='' OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=.:verl <fixed_python> -m pytest tests/uni_agent/examples/test_mimo_dual_colocate_recipe.py tests/uni_agent/examples/test_mimo_observed_recipe.py tests/uni_agent/examples/test_mimo_separate_recipe.py tests/uni_agent/examples/test_mimo_budget_recipe.py tests/uni_agent/examples/test_harbor_opd_rl_recipe.py tests/uni_agent/examples/test_mimo_smoke_recipe.py tests/uni_agent/examples/test_harbor_launch_preflight.py -q --tb=short",
+  "red": {
+    "result": "5 failed in 0.76s",
+    "reason": "New recipe absent",
+    "path": "/workspace/mimo-dsh-rl-20260928/audit-code/dual-colocate-red.log",
+    "sha256": "2e7f50d4eedb8c6a52412eb3b666589fd6689b7b4d0caf2970bc64fa10aa5dd1"
+  },
+  "green": {
+    "result": "95 passed, 11 warnings in 90.97s",
+    "exit_code": 0,
+    "path": "/workspace/mimo-dsh-rl-20260928/audit-code/dual-colocate-green.log",
+    "sha256": "3d049eff9e3102c7e1bffeaa1e09579a0bb5d71a53fd80c9ef138e3c83161164"
+  },
+  "sources": {
+    "examples/mimo_dsh_rl/mimo-9b-dual-colocate-observed.yaml": {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/dual-colocate-recipe/examples/mimo_dsh_rl/mimo-9b-dual-colocate-observed.yaml",
+      "sha256": "95b541b953be1e77a8087f80d4da536392bb468414611872b830d5985005e3ef"
+    },
+    "tests/uni_agent/examples/test_mimo_dual_colocate_recipe.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/dual-colocate-recipe/tests/uni_agent/examples/test_mimo_dual_colocate_recipe.py",
+      "sha256": "61f5bd7daf1601a05a8a5bc66871d2e7afea024b990ec35284caaea3f984cae2"
+    },
+    "examples/harbor_opd_rl/launch.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/dual-colocate-recipe/examples/harbor_opd_rl/launch.py",
+      "sha256": "d9872d7f9b59d2d0e26a8f2f775fecb1a58b5fea106c0dfdc32b9e01b99e0850"
+    }
+  },
+  "contracts": {
+    "trainer_mode": "colocate_async",
+    "actor_world_size": 2,
+    "rollout_replicas": 2,
+    "rollout_tp_dp_pp": [
+      1,
+      1,
+      1
+    ],
+    "standalone_rollout_nodes": 0,
+    "checkpoint_backend": "naive",
+    "resume_mode": "disable",
+    "resume_from_path": null,
+    "steps": 2,
+    "rollout_n": 4,
+    "per_rank_minibatch": 2,
+    "max_num_seqs": 2,
+    "max_concurrent_sessions": 2,
+    "max_parallel_calls": 1,
+    "context_tokens": 32768,
+    "generated_token_budget": 20480,
+    "loggers": [
+      "console",
+      "wandb",
+      "rl_insight"
+    ]
+  },
+  "limitations": [
+    "Mandatory r13 preparation admission independently rejects rank-1 resume overrides.",
+    "No GPU or training process was launched by this test.",
+    "Fresh weights and concurrency differ from r12; not a controlled mode-only timing comparison."
+  ]
+}
