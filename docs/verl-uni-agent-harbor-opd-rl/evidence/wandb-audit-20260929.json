@@ -1,0 +1,83 @@
+{
+  "schema": "mimo.wandb-api-read-only-audit.v1",
+  "checked_at": "2026-09-29T12:00:17.253835+00:00",
+  "entity": "xdan-ai",
+  "wandb_version": "0.30.0",
+  "auth_source": "existing GPU host netrc; no login or credentials mutation",
+  "since_created_at": "2026-09-28T00:00:00Z",
+  "queried_projects": [
+    {
+      "project": "uni-agent-harbor-opd-rl",
+      "visible_in_projects_api": false,
+      "recent_run_count": 0,
+      "current_r9_r10_match_count": 0,
+      "mimo_candidate_count": 0,
+      "status": "not-listed-in-visible-projects"
+    },
+    {
+      "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+      "visible_in_projects_api": true,
+      "recent_run_count": 0,
+      "current_r9_r10_match_count": 0,
+      "mimo_candidate_count": 0,
+      "recent_runs": [],
+      "status": "queried-successfully"
+    }
+  ],
+  "matching_runs": [],
+  "scope": "Only listed visible projects under authenticated default entity, recent runs since2026-09-28; absence here is not a global W&B absence claim.",
+  "writes_to_wandb": false,
+  "backfill_performed": false,
+  "current_run_history_available": false,
+  "current_run_wandb_health_verdict": "not-assessable-without-matching-history",
+  "visible_related_projects": [
+    "xDAN-Train-Performance-Verl",
+    "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+    "xDAN-Tinker-Harbor-OPD-RL",
+    "xDAN-Qwen35-Harbor-SkyRL",
+    "verl_sandbox_fusion"
+  ],
+  "native_logging_evidence": [
+    {
+      "run": "r9",
+      "log_path": "/root/mimo-private/launch-r9/train.log",
+      "sha256": "c18869e6f50ead7e528f719c500a9017098de4ae9c477879e0ec91dabda0544a",
+      "config_lines": [
+        "(TaskRunnerV1 pid=218016)                                              'experiment_name': 'harbor-rl',",
+        "(TaskRunnerV1 pid=218016)                                              'project_name': 'uni-agent-harbor-opd-rl',",
+        "(TaskRunnerV1 pid=218016)              'experiment_name': 'harbor-rl',",
+        "(TaskRunnerV1 pid=218016)              'logger': ['console'],",
+        "(TaskRunnerV1 pid=218016)              'project_name': 'uni-agent-harbor-opd-rl',"
+      ],
+      "wandb_run_url_present": false
+    },
+    {
+      "run": "r10",
+      "log_path": "/root/mimo-private/launch-r10/train.log",
+      "sha256": "1c160e4995f9518c8e565209b5ef3c52098e2e98aad4d52dad5560e7e9faf647",
+      "config_lines": [
+        "(TaskRunnerV1 pid=269109)                                              'experiment_name': 'harbor-rl',",
+        "(TaskRunnerV1 pid=269109)                                              'project_name': 'uni-agent-harbor-opd-rl',",
+        "(TaskRunnerV1 pid=269109)              'experiment_name': 'harbor-rl',",
+        "(TaskRunnerV1 pid=269109)              'logger': ['console'],",
+        "(TaskRunnerV1 pid=269109)              'project_name': 'uni-agent-harbor-opd-rl',"
+      ],
+      "wandb_run_url_present": false
+    }
+  ],
+  "api_health_judgment": "W&B API authentication works, but this audit found no current MiMo run in the explicitly checked project scope. No W&B history-based health or learning conclusion is available.",
+  "documents": [
+    "https://github.com/wandb/wandb/blob/main/wandb/apis/public/runs.py"
+  ],
+  "cpu_auth_probe": {
+    "netrc_present": false,
+    "api_key_env_present": false,
+    "api_construction_error_class": "UsageError",
+    "status_code": null,
+    "fallback": "Existing GPU host netrc authentication succeeded; no login was performed."
+  },
+  "raw_api_audit": {
+    "path": "/root/mimo-private/wandb-audit-20260929/wandb-api-audit.json",
+    "sha256": "a6b2b90c7e00af1b611239a049897e495ae7bd5b9717675bd3ea7f6e3d612464"
+  }
+}

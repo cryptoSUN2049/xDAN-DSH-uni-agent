@@ -1,0 +1,46 @@
+# MiMo 原生 W&B 与 RL-Insight 接入
+
+用户明确要求用 W&B API 客观检查本会话训练，并补充「要注意集成 wandb verl-insight」。项目实际模块名为 `rl_insight`。本计划落实该要求，沿用已批准的双卡 separate_async、真实数据与固定截止，不扩大模型或训练预算。
+
+## 已确认的缺口
+
+r9/r10 的实际 logger 只有 console。W&B 已有凭据可读，但配置项目无对应可见 run；不能借其他实验曲线或事后补传宣称本轮原生观测已通过。r10 已 exit0 并保存 C3，奖励 [0,1,1,1]、梯度0.1484375；完整恢复及有效更新另用原始证据审计。
+
+## 原生接入方案
+
+```mermaid
+flowchart LR
+  T[VERL trainer / step4] --> W[W&B native logger]
+  T --> I[RLInsightLogger / scalars]
+  A[Uni-Agent / Gateway / TQ] --> I
+  I --> H[既有 RL-Insight MonitorHub / HTTP API]
+  H --> P[Prometheus / Tempo / Grafana]
+  W --> R[W&B API完整history与console逐step对账]
+  P --> E[按唯一experiment身份回读metric与trace]
+```
+
+- 新 r11 从完整 r10 C3 恢复，目标绝对 step4。固定 actor1/rollout1、NCCL、32K、20480、n4、LoRA，继续原任务。
+- logger 显式 `[console, wandb, rl_insight]`。W&B entity `xdan-ai`，使用已有项目 `xDAN-Verl-Uni-agent-Harbor-rl-opd`；run ID/name 与 r11 绑定，拒绝意外续接其他 W&B run。
+- 原生 `main_ppo` 在 Ray 初始化前传播 `VERL_RL_INSIGHT_ENABLE=1`；按已安装0.3.0实际接口绑定既有18080服务及独立 experiment 身份。开启 rollout/TQ metrics 所需开关。服务只复用，不重启他人共享监控。
+- 固定273项 uv环境及独立CuPy overlay不变。不在Mac安装、启动服务或运行模型。任何依赖/服务/API缺失先报告，不静默降级并宣称接入成功。
+- 唯一截止1790687801（2026-09-29 13:16:41UTC），不重计；所有新训练必须保留清理时间，不足窗口即不启动。
+- r9/r10历史数据保留原始日志及审计报告，不创建伪装实时的 W&B补传run。凭据继续只存在现有私有位置，禁止入日志/配置/提交。
+
+## 文件与合同
+
+- `examples/mimo_dsh_rl/mimo-9b-observed.yaml`：在已验证 separate recipe上启用原生logger和metrics；不改已有冻结运行配置。
+- 同名docs目录内 r11 preparation/preflight：绑定新source manifest、真实C3、独立run/controller/Ray/ports、原绝对截止及精确监控环境。
+- 对应tests：配置组合、日志后端/身份/预算/恢复合同、监控预检失败关闭。
+- 同名 `evidence/`：W&B只读审计、CPU配置回归、原生logger/后端回读、r11启动与真实history对账。
+
+## 验证顺序
+
+1. 完成r10原始batch/model/optimizer/恢复证据审计并清理所属资源；保存parse-error等真实异常。
+2. 云端配置测试，检查W&B认证、原生RL-Insight模块和服务接口。若做合成通信探针，必须使用明确preflight标签，不计作训练。
+3. 冻结新source，CPU真实tokenizer/依赖/恢复/monitor检查，然后启动r11；不改r10字节。
+4. W&B必须出现绑定r11的原生run；RL-Insight按相同身份查询真实端点/事件，不能只看端口可达。
+5. step4完成后W&B `scan_history(keys=None)`回读全量记录，与console逐指标比较，核有限梯度/loss/奖励、策略版本3及checkpoint。RL-Insight回读该experiment真实scalar/trace；不同平台指标命名转换需明确记录。
+
+## 判定边界
+
+监控集成、训练更新、独立恢复、能力提升为四个不同结论。一次小样本续训只能证明链路与学习信号；缺W&B history、缺RL-Insight实际事件、指标对账失败任一项都不能宣布观测验收完成。

@@ -1007,3 +1007,12 @@ Review：VERL 原生 trainer/dataset 作为底层保留；仅 Qwen3.5 模板和�
 执行约束：不覆盖现有未提交工作，不停止其他训练/评估进程；首轮单任务固定worker不提前重构整套registry。GPU占用以实时查询为准。
 
 Review（14:28UTC）：基础提交7e48aaa/cc372a3、后端67a5948、uv预检0f4f6f2、IPC/启动4c572c6。r4实际Gateway/DSH工具已跑通，但16K上下文截断及Harbor skip_tests_upload入口缺失导致零有效reward/更新，3jobs取消、5Modal停止，GPU12:52:38提前删除且absence已验，无checkpoint。原生verifier注入修复96回归/94%覆盖、真实native baseline0/candidate1及4Modal清理通过；32K配置52回归和真实MiMo CPU预检通过。下一次固定新源码、新身份并设独立GPU期限，完成有效更新与重载续训；所有计算留云端，原失败与测试插件配置失败均留档。M0扩展子池/M3泛化评估为后续阶段，不冒充本阶段工程退出条件。
+
+## 2026-09-29 原生 W&B / RL-Insight 验收
+- [x] W&B API只读审计：r9/r10 console-only，无对应可见run，禁止冒用其他实验曲线。
+- [x] r10 batch/model/optimizer/effective update验收通过；C2→C3独立恢复另证。
+- [x] 同名docs/mimo-observability-design.md记录原生接入及固定截止。
+- [ ] observed recipe、独立run身份、真实监控后端确认与云端回归。
+- [ ] r11从C3恢复至C4，原截止13:16:41UTC不变，留出清理时间。
+- [ ] W&B完整history、RL-Insight metrics/trace与原始日志对账，保存边界与异常。
+- [ ] 完成资源归档、handoff、Ruff双门禁与commit/push。
