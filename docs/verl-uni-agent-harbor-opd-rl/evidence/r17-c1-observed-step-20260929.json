@@ -1,0 +1,209 @@
+{
+  "schema": "mimo-c1-observed-step.v1",
+  "run_id": "mimo9b-001661-r17",
+  "at": 1790707726.1381547,
+  "source_commit": "4a499cfcf8e5fa361b20f009d2c1472e7b49dd73",
+  "checkpoint_marker": "1",
+  "checkpoint_root": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_1",
+  "checkpoint_files": [
+    {
+      "path": "data.pt",
+      "bytes": 1499
+    },
+    {
+      "path": "actor/lora_train_meta.json",
+      "bytes": 67
+    },
+    {
+      "path": "actor/fsdp_config.json",
+      "bytes": 46
+    },
+    {
+      "path": "actor/extra_state_world_size_2_rank_0.pt",
+      "bytes": 15141
+    },
+    {
+      "path": "actor/extra_state_world_size_2_rank_1.pt",
+      "bytes": 15141
+    },
+    {
+      "path": "actor/optim_world_size_2_rank_0.pt",
+      "bytes": 103143207
+    },
+    {
+      "path": "actor/optim_world_size_2_rank_1.pt",
+      "bytes": 103143207
+    },
+    {
+      "path": "actor/model_world_size_2_rank_0.pt",
+      "bytes": 9462526476
+    },
+    {
+      "path": "actor/model_world_size_2_rank_1.pt",
+      "bytes": 9462526476
+    },
+    {
+      "path": "actor/huggingface/processor_config.json",
+      "bytes": 1191
+    },
+    {
+      "path": "actor/huggingface/tokenizer.json",
+      "bytes": 19989325
+    },
+    {
+      "path": "actor/huggingface/tokenizer_config.json",
+      "bytes": 1165
+    },
+    {
+      "path": "actor/huggingface/chat_template.jinja",
+      "bytes": 3916
+    },
+    {
+      "path": "actor/huggingface/config.json",
+      "bytes": 2940
+    },
+    {
+      "path": "actor/huggingface/generation_config.json",
+      "bytes": 161
+    }
+  ],
+  "console_source": "/root/mimo-private/ray-r17/ray/session_latest/logs/worker-bd83cf64151efe9aa163a776c727fab0e49d189745c767f3851fe002-01000000-375592.out",
+  "console_snapshot": "/root/mimo-private/r17-readonly-audit/c1-console.txt",
+  "console_snapshot_sha256": "65cb80e075f2d134f835357aba750e8ddd335ffafd12aacdd8cfc1485baeed91",
+  "metrics": {
+    "global_seqlen/min": 59816,
+    "global_seqlen/max": 65536,
+    "global_seqlen/minmax_diff": 5720,
+    "global_seqlen/balanced_min": 60345,
+    "global_seqlen/balanced_max": 65007,
+    "global_seqlen/mean": 62676,
+    "actor/entropy": 0.438493013381958,
+    "training/rollout_probs_diff_valid": 1,
+    "training/rollout_probs_diff_max": 0.34908467531204224,
+    "training/rollout_probs_diff_mean": 0.0059277634136378765,
+    "training/rollout_probs_diff_std": 0.01410445012152195,
+    "training/rollout_actor_probs_pearson_corr": 0.998799741268158,
+    "rollout_corr/training_ppl": 1.5369898080825806,
+    "rollout_corr/training_log_ppl": 0.4259527623653412,
+    "rollout_corr/kl": 0.0011790083954110742,
+    "rollout_corr/k3_kl": 0.0016587963327765465,
+    "rollout_corr/rollout_ppl": 1.5352317094802856,
+    "rollout_corr/rollout_log_ppl": 0.4248093366622925,
+    "rollout_corr/log_ppl_diff": 0.0011434182524681091,
+    "rollout_corr/log_ppl_abs_diff": 0.0011434182524681091,
+    "rollout_corr/log_ppl_diff_max": 0.0015070140361785889,
+    "rollout_corr/log_ppl_diff_min": 0.0005443096160888672,
+    "rollout_corr/ppl_ratio": 1.0011441707611084,
+    "rollout_corr/chi2_token": 0.004532575607299805,
+    "rollout_corr/chi2_seq": -0.9999999403953552,
+    "actor/pg_clipfrac": 0,
+    "actor/ppo_kl": 0,
+    "actor/pg_clipfrac_lower": 0,
+    "actor/pg_loss": 0.04191888868808746,
+    "actor/loss": 0.04191888868808746,
+    "actor/grad_norm": 0.126953125,
+    "actor/lr": 1e-06,
+    "actor/perf/max_memory_allocated_gb": 82.09604120254517,
+    "actor/perf/max_memory_reserved_gb": 93.2109375,
+    "actor/perf/cpu_memory_used_gb": 174.19678115844727,
+    "perf/mfu/actor": 0,
+    "training/global_step": 1,
+    "training/epoch": 0,
+    "critic/score/mean": 0.5,
+    "critic/score/max": 1,
+    "critic/score/min": 0,
+    "critic/rewards/mean": 0.5,
+    "critic/rewards/max": 1,
+    "critic/rewards/min": 0,
+    "critic/advantages/mean": -0.041918911039829254,
+    "critic/advantages/max": 0.8660238981246948,
+    "critic/advantages/min": -0.8660238981246948,
+    "critic/returns/mean": -0.041918911039829254,
+    "critic/returns/max": 0.8660238981246948,
+    "critic/returns/min": -0.8660238981246948,
+    "response_length/mean": 29839,
+    "response_length/max": 31269,
+    "response_length/min": 26078,
+    "response_length/clip_ratio": 0.5,
+    "response_length_non_aborted/mean": 29839,
+    "response_length_non_aborted/max": 31269,
+    "response_length_non_aborted/min": 26078,
+    "response_length_non_aborted/clip_ratio": 0.5,
+    "response/aborted_ratio": 0,
+    "prompt_length/mean": 1499,
+    "prompt_length/max": 1499,
+    "prompt_length/min": 1499,
+    "prompt_length/clip_ratio": 1,
+    "timing_s/gen": 804.792387616355,
+    "timing_s/old_log_prob": 24.45660099061206,
+    "timing_s/adv": 0.03915121778845787,
+    "timing_s/update_actor": 54.13606960885227,
+    "timing_s/save_checkpoint": 12.22850459581241,
+    "timing_s/update_weights": 6.986454917583615,
+    "timing_s/step": 902.6619266606867,
+    "timing_per_token_ms/adv": 0.00031233022040699684,
+    "timing_per_token_ms/gen": 6.7427895339685895,
+    "timing_per_token_ms/update_actor": 0.43187240418064543,
+    "perf/total_num_tokens": 125352,
+    "perf/time_per_step": 902.6619266606867,
+    "perf/throughput": 69.43463344229438,
+    "training/num_turns/mean": 44.5,
+    "training/num_turns/max": 51,
+    "training/num_turns/min": 40,
+    "training/off_policy/trajectory_spans/mean": 1,
+    "training/off_policy/trajectory_spans/max": 1,
+    "training/off_policy/trajectory_spans/min": 1,
+    "training/off_policy/trajectory_staleness/mean": 0,
+    "training/off_policy/trajectory_staleness/max": 0,
+    "training/off_policy/trajectory_staleness/min": 0,
+    "training/off_policy/trajectory_staleness_worst/mean": 0,
+    "training/off_policy/trajectory_staleness_worst/max": 0,
+    "training/off_policy/trajectory_staleness_worst/min": 0
+  },
+  "prom_native_scalars": [
+    {
+      "metric": {
+        "__name__": "rl_insight_monitor_actor_grad_norm",
+        "experiment_name": "mimo9b-001661-r17",
+        "instance": "172.24.0.2:9092",
+        "job": "trainer_metrics",
+        "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+      },
+      "value": [
+        1790707718.613,
+        "0.126953125"
+      ]
+    },
+    {
+      "metric": {
+        "__name__": "rl_insight_monitor_training_global_step",
+        "experiment_name": "mimo9b-001661-r17",
+        "instance": "172.24.0.2:9092",
+        "job": "trainer_metrics",
+        "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+      },
+      "value": [
+        1790707718.613,
+        "1"
+      ]
+    },
+    {
+      "metric": {
+        "__name__": "rl_insight_monitor_critic_rewards_mean",
+        "experiment_name": "mimo9b-001661-r17",
+        "instance": "172.24.0.2:9092",
+        "job": "trainer_metrics",
+        "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+      },
+      "value": [
+        1790707718.613,
+        "0.5"
+      ]
+    }
+  ],
+  "checkpoint_tensors_loaded": false,
+  "optimizer_state_verified": false,
+  "model_parameter_delta_verified": false,
+  "note": "Original Ray worker stdout has full console step1 even though aggregated train.log had not forwarded the row; further optimizer/model audit remains separate.",
+  "run_spec_sha256": "sha256:cba3a3b4dfb5454b0533169588be1b4ef7b11aaedff01f3c1a7a5fb1ca07cf8c"
+}
