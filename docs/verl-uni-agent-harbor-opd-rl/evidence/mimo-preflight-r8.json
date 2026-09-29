@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "source_files_verified": 771,
+  "package_constraints_verified": 273,
+  "report": {
+    "train_rows": 1,
+    "validation_rows": 1,
+    "steps_per_epoch": 1,
+    "total_training_steps": 2,
+    "total_epochs": 2,
+    "save_freq": 1,
+    "backend_validation": {
+      "attention": [
+        {
+          "backend": "sdpa",
+          "validation": "torch_sdpa_operator"
+        }
+      ],
+      "checkpoint_backend": "naive",
+      "gpu_execution_validated": false
+    }
+  },
+  "cuda_initialized": false,
+  "finished_at": 1790668128.321537
+}

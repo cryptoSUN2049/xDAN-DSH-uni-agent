@@ -68,3 +68,16 @@ Goal API当前仍报告paused，工具没有resume接口；用户已在会话明
 - private admission绑定完整Gateway proof/receipt/policy/context/token/versions，private dump绑定NPZ和metadata。新mode v2 request/receipt，默认v1 wire/hash保持。预算样本finished=false；无效成员整组失败；取消和per-call长度终止不伪造budget。
 - Gateway slice648d61a与import格式a7d8b76已push origin同名分支；在 /tmp/mimo-budget-push-check 精确提交干净worktree执行完整Ruff双门通过。不改未提交OpenCompass。
 - r8源码staging=/workspace/mimo-dsh-rl-20260928/run-src-r8；尚未启动训练。CPU准备脚本prepare-r8.py与driver/wrapper已按新身份改好，待冻结commit/source manifest、设新限时窗口、任务与真实预检。禁止删除已有Pod；保持固定模型/DSH/uv。
+
+
+## 2026-09-29 07:54 UTC r8已启动（动态状态须实时核对）
+
+- f975679预算终态整合已commit/push；干净detached worktree全仓ruff check/format双门通过，616文件。raw pytest日志保留原始尾空格，未为diff清理篡改原始证据。
+- r8冻结771文件及273包约束、真实数据/tokenizer预检通过；native CUDA IPC1pass0skip，90.74秒，结束无GPU残留。
+- GPU11403 driver191874/supervisor191875，started1790668460.1635087，wall4800秒。CPU11621 controller98563，已验证healthy/unregistered后启动。
+- run_id=mimo9b-001661-r8；run-spec sha256:e0c05f574dab4cf71f1506c6eac4c251e5a0f676982c69414bcc6b6388f1076b；任务hash仍603c1f65...，DSH/model/uv固定不变。
+- 单GPU0、32K/20480/per-call4096、n4、2steps/save1；本轮新v2准入，finishedfalse预算终态须Gateway+独立verifier+privateadmission/dump联合证明。
+- 新window截止1790674087.546294（09:28:07UTC），delete_pod=false；spec deadline提前180秒，driver仅4800秒，不延长旧r7窗口。当前Pod保留且运行计费。
+- 原始launch/task/receipts及privateproof在GPU /root/mimo-private/launch-r8；公开operator状态/log在 /workspace/mimo-dsh-rl-20260928/runs/r8/operator；controller logs/jobs在CPU /root/mimo-private/controller-r8。
+- 暂未启动旧v1 archiver（不能直接用于新receipt）。保留GPU私有原件；需补v2证据归档或运行后有界复制并校验hash。
+- 后续：实际group/reward/梯度/checkpoints → audit_m2_training --train-n4 --no-validation → C1/C2参数与optimizer差异 → 新r9 controller/session/Ray重载C2再有效更新。尚未验收训练成功。
