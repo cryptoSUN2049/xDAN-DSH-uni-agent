@@ -1,0 +1,73 @@
+{
+  "schema": "mimo.world2-operator-validation.v1",
+  "status": "passed",
+  "created_at": 1790703929.3297012,
+  "execution": {
+    "exit_code": 0,
+    "finished_at": 1790703861.551071,
+    "cuda_visible_devices": "",
+    "real_checkpoint_read": false
+  },
+  "junit": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "28",
+      "time": "0.854",
+      "timestamp": "2026-09-29T17:44:20.378869+00:00",
+      "hostname": "2b1a577993cd"
+    }
+  ],
+  "coverage": {
+    "covered_lines": 179,
+    "num_statements": 180,
+    "percent_covered": 98.61111111111111,
+    "percent_covered_display": "99",
+    "missing_lines": 1,
+    "excluded_lines": 0,
+    "percent_statements_covered": 99.44444444444444,
+    "percent_statements_covered_display": "99",
+    "num_branches": 36,
+    "num_partial_branches": 2,
+    "covered_branches": 34,
+    "missing_branches": 2,
+    "percent_branches_covered": 94.44444444444444,
+    "percent_branches_covered_display": "94"
+  },
+  "source": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/world2-acceptance-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_world2_acceptance.py",
+    "sha256": "b8b3c3549f424064600d4187c18b4ac4e8563564ce0c42809bfd07f251ad5b85",
+    "bytes": 14620
+  },
+  "tests": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/world2-acceptance-tests/tests/uni_agent/deployment/test_mimo_world2_acceptance.py",
+    "sha256": "cdfe64c23467337ed432cd303774957f6154f34014df8cfda8643b004e561af1",
+    "bytes": 10345
+  },
+  "artifacts": {
+    "world2-verified.log": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/world2-acceptance-tests/world2-verified.log",
+      "sha256": "ec881059a88a2d4004f726e65d0604393bc2b816b5140332a0ad42aa53ac104c",
+      "bytes": 99
+    },
+    "world2-verified.xml": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/world2-acceptance-tests/world2-verified.xml",
+      "sha256": "da195beaab5f939392aa6c26dd7bb2c1331305840bfe453070dfaeff5533ed23",
+      "bytes": 4772
+    },
+    "world2-coverage.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/world2-acceptance-tests/world2-coverage.json",
+      "sha256": "77091bd7232c79012c36d95da020a1ba458d71d21e7c7b49325b911ed4a9b044",
+      "bytes": 14391
+    },
+    "world2-exit.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/world2-acceptance-tests/world2-exit.json",
+      "sha256": "2d94e8a695ddba97b06aab2a62851b9d847bada639fc46a8345e14f21deb7412",
+      "bytes": 120
+    }
+  },
+  "actual_training_acceptance": false,
+  "scope": "Synthetic bounded evidence-file fixtures for operator admission; no real training checkpoint was loaded."
+}
