@@ -1,0 +1,31 @@
+--- a/verl/workers/engine/fsdp/transformer_impl.py
++++ b/verl/workers/engine/fsdp/transformer_impl.py
+@@ -20,6 +20,7 @@
+ import os
+ import warnings
+ from contextlib import contextmanager, nullcontext
++from functools import partial
+ from inspect import signature
+ from typing import Callable, ContextManager, Optional
+ 
+@@ -1483,7 +1484,19 @@
+                 )
+ 
+                 if calculate_entropy:
+-                    if not self.engine_config.entropy_checkpointing:
++                    if self.engine_config.entropy_from_logits_with_chunking:
++                        # The native helper chunks tokens, not the dense batch dimension.
++                        entropy_fn = partial(
++                            self.compute_entropy_from_logits,
++                            chunk_size=self.engine_config.entropy_from_logits_chunk_size,
++                        )
++                        token_logits = logits.reshape(-1, logits.shape[-1])
++                        if self.engine_config.entropy_checkpointing:
++                            entropy = torch.utils.checkpoint.checkpoint(entropy_fn, token_logits)
++                        else:
++                            entropy = entropy_fn(token_logits)
++                        entropy = entropy.reshape(logits.shape[:-1])
++                    elif not self.engine_config.entropy_checkpointing:
+                         entropy = verl_F.entropy_from_logits(logits)
+                     else:
+                         entropy = torch.utils.checkpoint.checkpoint(verl_F.entropy_from_logits, logits)

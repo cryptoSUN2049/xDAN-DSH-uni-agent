@@ -42,6 +42,9 @@ actor_rollout_ref:
     fsdp_config:
       param_offload: true
       optimizer_offload: true
+      # Requires the hash-verified MiMo dense entropy source overlay.
+      entropy_from_logits_with_chunking: true
+      entropy_from_logits_chunk_size: 256
       use_torch_compile: false
       seed: 42
   rollout:

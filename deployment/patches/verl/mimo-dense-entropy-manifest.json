@@ -1,0 +1,27 @@
+{
+  "schema": "mimo.verl-source-overlay.v1",
+  "upstream_gitlink": "a9f2985159536a607211dcac730d3f5d55028950",
+  "source_run": "r8",
+  "files": [
+    {
+      "path": "verl/workers/engine/fsdp/transformer_impl.py",
+      "before_sha256": "fb8ea0cb0eab38bb746fd386bdc6866b389cf7b5deee6ebf267d71b9cca51c04",
+      "after_sha256": "713666208d1caad05c440d0ddb49fe0e4eeeca5e33726e59c60fb708b75bdeef"
+    }
+  ],
+  "patch": "a9f2985-dense-entropy-chunking.patch",
+  "patch_sha256": "13f4943eaf7a610f4367e1f7c29ad109401ff1324ae786c5f3f4bbcba18171a2",
+  "application": {
+    "working_directory": "verl submodule root inside a new isolated run source",
+    "command": [
+      "patch",
+      "--batch",
+      "--forward",
+      "-p1",
+      "-i",
+      "<patch-path>"
+    ],
+    "input_policy": "Require exact before_sha256; exact after_sha256 means already applied; any other SHA fails closed.",
+    "output_policy": "Require exact after_sha256 before launching."
+  }
+}

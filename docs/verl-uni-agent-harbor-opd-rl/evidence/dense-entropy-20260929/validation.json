@@ -1,0 +1,98 @@
+{
+  "schema": "mimo.dense-entropy-cpu-validation.v1",
+  "date": "2026-09-29",
+  "execution_host": "CPU controller :11621; CUDA_VISIBLE_DEVICES empty",
+  "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+  "source_snapshot": "/workspace/mimo-dsh-rl-20260928/integration-check/entropy-r9/src",
+  "red": {
+    "failed": 15,
+    "passed": 6,
+    "log": "red.log",
+    "tests_revision": "initial direct-engine regression before isolated fixture"
+  },
+  "default_fixture": {
+    "passed": 21,
+    "skipped": 0,
+    "source_input": "original before SHA; unchanged after test",
+    "log": "fixture-green.log"
+  },
+  "direct_final": {
+    "passed": 43,
+    "skipped": 0,
+    "entropy_tests": 21,
+    "recipe_tests": 22,
+    "log": "direct-green.log",
+    "env": "MIMO_DENSE_ENTROPY_DIRECT=1",
+    "source_input": "manifest after SHA required by fixture"
+  },
+  "patch_coverage": {
+    "executable_added_lines": [
+      23,
+      1487,
+      1489,
+      1493,
+      1494,
+      1495,
+      1497,
+      1498,
+      1499
+    ],
+    "covered_added_lines": [
+      23,
+      1487,
+      1489,
+      1493,
+      1494,
+      1495,
+      1497,
+      1498,
+      1499
+    ],
+    "line_percent": 100,
+    "executed_added_branches": [
+      [
+        1487,
+        1489
+      ],
+      [
+        1487,
+        1499
+      ],
+      [
+        1494,
+        1495
+      ],
+      [
+        1494,
+        1497
+      ],
+      [
+        1499,
+        1500
+      ],
+      [
+        1499,
+        1502
+      ]
+    ],
+    "missing_added_branches": [],
+    "branch_percent": 100,
+    "scope": "Only added executable code, not entire upstream engine"
+  },
+  "files": {
+    "deployment/patches/verl/a9f2985-dense-entropy-chunking.patch": "13f4943eaf7a610f4367e1f7c29ad109401ff1324ae786c5f3f4bbcba18171a2",
+    "deployment/patches/verl/mimo-dense-entropy-manifest.json": "10c771b4632d9d7b77f9dc64c1e4ee9c8bf5c28628453134e88f8de30950591e",
+    "examples/mimo_dsh_rl/mimo-9b-budget-terminal.yaml": "9b98a126c84a5ef165c6aabb9a85f4e7f716d2f84eb31a195116b6565bd0aefe",
+    "tests/uni_agent/deployment/test_mimo_dense_entropy.py": "38eecae24b1175e4a574673276e06c29389f2573182bac2d070f617e9cd7891f"
+  },
+  "evidence": {
+    "coverage-final.json": "7402043582f1bba48483069f2d0b5a377302256cc2e4bfa23b292263f467ee3b",
+    "coverage-v2.log": "924153218e877e8c81448a8d5433b781925da5c2cb2d218bd35f81780ee88ecf",
+    "coverage.json": "7b8b1c93701550eee4373b866ad0d2e3f2bb324cee56f7172628db4ffce2ee6e",
+    "direct-green.log": "4af2f343e65bda6d3725183cdebe91311dce5fb3c523f78bb59d5eef3ebc4ac5",
+    "fixture-green.log": "8b87ddb533fddd3d7af708cc3f49b74756f56c5c0e9f643cd1e560b9441f2710",
+    "green.log": "1fba4d34464a5abb189159529f2095daa08e8524a196b4a35ed82f68a45a3cc2",
+    "red.log": "47d6af16311c70c9c888fc01942ada456284dd44033a5157c12f37cf1bf4dbed"
+  },
+  "gpu_training_acceptance": "pending; CPU numerics do not establish GPU capacity or effective update"
+}

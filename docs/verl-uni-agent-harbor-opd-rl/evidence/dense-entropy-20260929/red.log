@@ -1,0 +1,510 @@
+FFFFFFFFFFFF..FF....F                                                    [100%]
+=================================== FAILURES ===================================
+________ test_chunked_dense_entropy_output_and_gradient[1-False-dtype0] ________
+
+dtype = torch.float32, checkpoint = False, chunk_size = 1
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701482466720'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+----------------------------- Captured stderr call -----------------------------
+W0929 08:46:33.884000 100499 torch/fx/_symbolic_trace.py:53] is_fx_tracing will return true for both fx.symbolic_trace and torch.export. Please use is_fx_tracing_symbolic_tracing() for specifically fx.symbolic_trace or torch.compiler.is_compiling() for specifically torch.export/compile.
+------------------------------ Captured log call -------------------------------
+WARNING  torch.fx._symbolic_trace:_symbolic_trace.py:53 is_fx_tracing will return true for both fx.symbolic_trace and torch.export. Please use is_fx_tracing_symbolic_tracing() for specifically fx.symbolic_trace or torch.compiler.is_compiling() for specifically torch.export/compile.
+________ test_chunked_dense_entropy_output_and_gradient[1-False-dtype1] ________
+
+dtype = torch.bfloat16, checkpoint = False, chunk_size = 1
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701265993152'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+________ test_chunked_dense_entropy_output_and_gradient[1-True-dtype0] _________
+
+dtype = torch.float32, checkpoint = True, chunk_size = 1
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701266004880'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+________ test_chunked_dense_entropy_output_and_gradient[1-True-dtype1] _________
+
+dtype = torch.bfloat16, checkpoint = True, chunk_size = 1
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701268141952'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+________ test_chunked_dense_entropy_output_and_gradient[4-False-dtype0] ________
+
+dtype = torch.float32, checkpoint = False, chunk_size = 4
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701266758448'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+________ test_chunked_dense_entropy_output_and_gradient[4-False-dtype1] ________
+
+dtype = torch.bfloat16, checkpoint = False, chunk_size = 4
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701265946688'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+________ test_chunked_dense_entropy_output_and_gradient[4-True-dtype0] _________
+
+dtype = torch.float32, checkpoint = True, chunk_size = 4
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701265995744'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+________ test_chunked_dense_entropy_output_and_gradient[4-True-dtype1] _________
+
+dtype = torch.bfloat16, checkpoint = True, chunk_size = 4
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701266760608'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+_______ test_chunked_dense_entropy_output_and_gradient[256-False-dtype0] _______
+
+dtype = torch.float32, checkpoint = False, chunk_size = 256
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701264058304'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+_______ test_chunked_dense_entropy_output_and_gradient[256-False-dtype1] _______
+
+dtype = torch.bfloat16, checkpoint = False, chunk_size = 256
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701264909696'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+_______ test_chunked_dense_entropy_output_and_gradient[256-True-dtype0] ________
+
+dtype = torch.float32, checkpoint = True, chunk_size = 256
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701264070512'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+_______ test_chunked_dense_entropy_output_and_gradient[256-True-dtype1] ________
+
+dtype = torch.bfloat16, checkpoint = True, chunk_size = 256
+
+    @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunk_size", [1, 4, 256])
+    def test_chunked_dense_entropy_output_and_gradient(dtype, checkpoint, chunk_size):
+        torch.manual_seed(37)
+        logits = torch.randn(2, 7, 19, dtype=dtype, requires_grad=True)
+        reference = logits.detach().clone().requires_grad_()
+        result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunk_size=chunk_size)
+>       helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701484600256'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+__________ test_old_log_prob_no_grad_and_entropy_disabled[True-False] __________
+
+checkpoint = False, chunking = True
+
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunking", [False, True])
+    def test_old_log_prob_no_grad_and_entropy_disabled(checkpoint, chunking):
+        logits = torch.randn(2, 7, 19)
+        with torch.no_grad():
+            result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunking=chunking)
+        reference = impl.verl_F.entropy_from_logits(logits.float())
+        torch.testing.assert_close(result["entropy"].values(), valid_values(reference, lengths))
+        assert not result["entropy"].values().requires_grad
+        if chunking:
+>           helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701265995648'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+__________ test_old_log_prob_no_grad_and_entropy_disabled[True-True] ___________
+
+checkpoint = True, chunking = True
+
+    @pytest.mark.parametrize("checkpoint", [False, True])
+    @pytest.mark.parametrize("chunking", [False, True])
+    def test_old_log_prob_no_grad_and_entropy_disabled(checkpoint, chunking):
+        logits = torch.randn(2, 7, 19)
+        with torch.no_grad():
+            result, helper, lengths = run_dense(logits, checkpoint=checkpoint, chunking=chunking)
+        reference = impl.verl_F.entropy_from_logits(logits.float())
+        torch.testing.assert_close(result["entropy"].values(), valid_values(reference, lengths))
+        assert not result["entropy"].values().requires_grad
+        if chunking:
+>           helper.assert_called_once()
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='132701264202016'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+______________ test_mimo_recipe_reaches_native_fsdp_engine_config ______________
+
+    def test_mimo_recipe_reaches_native_fsdp_engine_config():
+        cfg = launch.compose_config(
+            launch.build_overrides(
+                "rl",
+                prepared_budget_launch(),
+                ENV,
+                recipe_config=ROOT / "examples/mimo_dsh_rl/mimo-9b-budget-terminal.yaml",
+            )
+        )
+        native = omega_conf_to_dataclass(cfg.actor_rollout_ref.actor.fsdp_config)
+        assert isinstance(native, FSDPEngineConfig)
+>       assert native.entropy_from_logits_with_chunking is True
+E       AssertionError: assert False is True
+E        +  where False = FSDPEngineConfig(_target_='', param_offload=True, optimizer_offload=True, forward_only=False, strategy='fsdp', dtype='...output_dtype': 'bf16', 'fsdp_implementation': 'native', 'num_to_forward_prefetch': 1, 'num_to_backward_prefetch': 1}}}).entropy_from_logits_with_chunking
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py:120: AssertionError
+=============================== warnings summary ===============================
+verl/verl/workers/engine/__init__.py:32
+  /workspace/mimo-dsh-rl-20260928/integration-check/entropy-r9/src/verl/verl/workers/engine/__init__.py:32: UserWarning: torchtitan engine is not available: ModuleNotFoundError("No module named 'torchtitan'")
+    warnings.warn(f"torchtitan engine is not available: {e!r}", stacklevel=1)
+
+verl/verl/workers/engine/__init__.py:41
+  /workspace/mimo-dsh-rl-20260928/integration-check/entropy-r9/src/verl/verl/workers/engine/__init__.py:41: UserWarning: veomni engine is not available: ModuleNotFoundError("No module named 'veomni'")
+    warnings.warn(f"veomni engine is not available: {e!r}", stacklevel=1)
+
+verl/verl/workers/engine/__init__.py:50
+  /workspace/mimo-dsh-rl-20260928/integration-check/entropy-r9/src/verl/verl/workers/engine/__init__.py:50: UserWarning: automodel engine is not available: ModuleNotFoundError("No module named 'nemo_automodel'")
+    warnings.warn(f"automodel engine is not available: {e!r}", stacklevel=1)
+
+verl/verl/workers/engine/__init__.py:60
+  /workspace/mimo-dsh-rl-20260928/integration-check/entropy-r9/src/verl/verl/workers/engine/__init__.py:60: UserWarning: mindspeed engine is not available: ModuleNotFoundError("No module named 'megatron'")
+    warnings.warn(f"mindspeed engine is not available: {e!r}", stacklevel=1)
+
+verl/verl/workers/engine/__init__.py:69
+  /workspace/mimo-dsh-rl-20260928/integration-check/entropy-r9/src/verl/verl/workers/engine/__init__.py:69: UserWarning: megatron engine is not available: ModuleNotFoundError("No module named 'megatron'")
+    warnings.warn(f"megatron engine is not available: {e!r}", stacklevel=1)
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py: 10 warnings
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py:1263: UserWarning: torch.utils.checkpoint: the use_reentrant parameter should be passed explicitly. Starting in PyTorch 2.9, calling checkpoint without use_reentrant will raise an exception. use_reentrant=False is recommended, but if you need to preserve the current default behavior, you can pass use_reentrant=True. Refer to docs for more details on the differences between the two variants.
+    return fn(*args, **kwargs)
+
+tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_old_log_prob_no_grad_and_entropy_disabled[False-True]
+tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_old_log_prob_no_grad_and_entropy_disabled[True-True]
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/utils/checkpoint.py:232: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+    check_backward_validity(args)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[1-False-dtype0]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[1-False-dtype1]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[1-True-dtype0]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[1-True-dtype1]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[4-False-dtype0]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[4-False-dtype1]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[4-True-dtype0]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[4-True-dtype1]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[256-False-dtype0]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[256-False-dtype1]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[256-True-dtype0]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_chunked_dense_entropy_output_and_gradient[256-True-dtype1]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_old_log_prob_no_grad_and_entropy_disabled[True-False]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_old_log_prob_no_grad_and_entropy_disabled[True-True]
+FAILED tests/uni_agent/deployment/test_mimo_dense_entropy.py::test_mimo_recipe_reaches_native_fsdp_engine_config
+15 failed, 6 passed, 17 warnings in 93.49s (0:01:33)
