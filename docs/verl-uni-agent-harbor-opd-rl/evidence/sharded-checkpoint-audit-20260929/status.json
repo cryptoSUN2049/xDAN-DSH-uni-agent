@@ -1,0 +1,65 @@
+{
+  "schema": "dsh.sharded-checkpoint-audit-fixture.v1",
+  "created_utc": "2026-09-29T16:39:51.062505+00:00",
+  "scope": "Cloud CPU native two-rank fixture only; no R14 checkpoint audited",
+  "tests": 14,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 41.54,
+  "coverage": {
+    "covered_lines": 160,
+    "num_statements": 179,
+    "percent_covered": 88.58447488584476,
+    "percent_covered_display": "89",
+    "missing_lines": 19,
+    "excluded_lines": 0,
+    "percent_statements_covered": 89.3854748603352,
+    "percent_statements_covered_display": "89",
+    "num_branches": 40,
+    "num_partial_branches": 4,
+    "covered_branches": 34,
+    "missing_branches": 6,
+    "percent_branches_covered": 85.0,
+    "percent_branches_covered_display": "85"
+  },
+  "files": {
+    "deployment/checks/sharded_checkpoint_delta.py": {
+      "sha256": "ee49a0f89a5ac651ea59bcd4d5f09ff97c0f40f04a0aac4b3275b3bdbc163715",
+      "bytes": 12303
+    },
+    "deployment/checks/optimizer_delta.py": {
+      "sha256": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee",
+      "bytes": 6573
+    },
+    "tests/test_sharded_checkpoint_delta.py": {
+      "sha256": "60f4caaf925186f3706723738e2586cd18da9329e9c417bae89a4a07e6bbb367",
+      "bytes": 5878
+    },
+    "red.log": {
+      "sha256": "ee996e3a074185f27415be517f78befc504361053e3992fd928d9c910e5975b1",
+      "bytes": 1027
+    },
+    "green-v1.log": {
+      "sha256": "a66a51f7b12eb12e6397f6056fcabc3402c2014625118257af7b55a37051ec59",
+      "bytes": 99
+    },
+    "green-v2.log": {
+      "sha256": "282a72e13685f66ca5b7c2fc23405d1d4429cb0f0d23f0e8b70105ee55e6ab4e",
+      "bytes": 100
+    },
+    "coverage.json": {
+      "sha256": "d6e4d9f59f487cf0726beaace7292d82094e0dfa85b53fd5d6161145584f72a7",
+      "bytes": 11785
+    }
+  },
+  "native_fixture_results": {
+    "ok": true,
+    "base": false,
+    "nan": false,
+    "zero_optimizer": false
+  },
+  "owned_audit_python_processes_remaining": [],
+  "shared_environment_modified": false,
+  "gpu_used": false
+}

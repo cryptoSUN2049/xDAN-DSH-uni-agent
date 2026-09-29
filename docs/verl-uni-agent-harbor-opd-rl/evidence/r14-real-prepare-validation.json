@@ -1,0 +1,80 @@
+{
+  "checked_at": "2026-09-29T16:40:29.481007+00:00",
+  "scope": "Cloud CPU real prepare_training output through native build_overrides/compose and r14 admission; no runtime launch",
+  "source_root": "/workspace/mimo-dsh-rl-20260928/integration-check/r14-real-prepare-tests",
+  "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+  "test_modules": [
+    "tests/uni_agent/examples/test_mimo_dual_colocate_recipe.py",
+    "tests/uni_agent/examples/test_mimo_dual_prepare_contract.py",
+    "tests/uni_agent/examples/test_mimo_training_entry.py"
+  ],
+  "initial_collection_failure": {
+    "reason": "Isolated audit checkout lacked pre-existing fixture module; fixed by copying existing fixture dependencies",
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r14-real-prepare-tests/r14-contract-red.log",
+    "sha256": "c3a356515eb136580c81fa07c711038e984f52513425c3d6c715d4e4bcfbf132"
+  },
+  "red": {
+    "result": "1 failed, 7 passed, 1 warning in 52.02s",
+    "failure": "Recipe still used r13 default identity; all three real prepared-concurrency cases already passed",
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r14-real-prepare-tests/r14-contract-red-complete-fixtures.log",
+    "sha256": "7281f0a47e753bdf9118dd907ef19ec7662f15cc78d3a24d0866ba7d61274c76"
+  },
+  "green": {
+    "result": "17 passed, 1 warning in 54.23s",
+    "exit_code": 0,
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r14-real-prepare-tests/r14-contract-green.log",
+    "sha256": "d37cca93ef6e756576006f720814b57287a3d7f8210df6f2ef9eb5fa48c59d3b"
+  },
+  "real_pipeline_cases": [
+    {
+      "prepare_max_concurrent_sessions": "omitted default",
+      "prepared_environment": "1",
+      "composed_sessions": 1,
+      "r14_admission": "reject: two sessions"
+    },
+    {
+      "prepare_max_concurrent_sessions": 1,
+      "prepared_environment": "1",
+      "composed_sessions": 1,
+      "r14_admission": "reject: two sessions"
+    },
+    {
+      "prepare_max_concurrent_sessions": 2,
+      "prepared_environment": "2",
+      "composed_sessions": 2,
+      "r14_admission": "pass"
+    }
+  ],
+  "pipeline_artifacts": "Real task YAML, parquet, registration and launch.json are emitted under pytest private tmp_path; no mocked launch environment.",
+  "sources": {
+    "examples/mimo_dsh_rl/mimo-9b-dual-colocate-observed.yaml": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r14-real-prepare-tests/examples/mimo_dsh_rl/mimo-9b-dual-colocate-observed.yaml",
+      "sha256": "244c1eb109b58c672f05516809307df9873d86c29b2198396a0445bfda35d94c"
+    },
+    "tests/uni_agent/examples/test_mimo_dual_colocate_recipe.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r14-real-prepare-tests/tests/uni_agent/examples/test_mimo_dual_colocate_recipe.py",
+      "sha256": "f13b7fd818f309ea1676246a05f68d2acaebc5cef74a3ec2dbec9d684267cfb3"
+    },
+    "tests/uni_agent/examples/test_mimo_dual_prepare_contract.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r14-real-prepare-tests/tests/uni_agent/examples/test_mimo_dual_prepare_contract.py",
+      "sha256": "c6eca7621e290eaceb83e2e4be99f266bc58f5683743337a2071285b77e0c473"
+    },
+    "examples/harbor/prepare_m2_training.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r14-real-prepare-tests/examples/harbor/prepare_m2_training.py",
+      "sha256": "777c92bf5949a65837ad11433a98bdc642a119064b26d8d0b747265e6e37e432"
+    },
+    "examples/harbor_opd_rl/launch.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r14-real-prepare-tests/examples/harbor_opd_rl/launch.py",
+      "sha256": "d9872d7f9b59d2d0e26a8f2f775fecb1a58b5fea106c0dfdc32b9e01b99e0850"
+    },
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r14_preflight.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r14-real-prepare-tests/docs/verl-uni-agent-harbor-opd-rl/mimo_r14_preflight.py",
+      "sha256": "72a48ce4db59a417e752c803a147dfb6527303ed1d321010242e42ef1273cb29"
+    }
+  },
+  "limitations": [
+    "This regression validates config binding and admission, not actual dual-GPU execution.",
+    "The operator template fix is tested separately by r14 preparation tests.",
+    "R13 frozen source and failure evidence remain intact."
+  ]
+}

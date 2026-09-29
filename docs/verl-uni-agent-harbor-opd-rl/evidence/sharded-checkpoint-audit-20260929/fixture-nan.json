@@ -1,0 +1,394 @@
+{
+  "schema": "dsh.native-sharded-checkpoint-delta.v1",
+  "world_size": 2,
+  "passed": false,
+  "errors": [],
+  "configs": {
+    "before": {
+      "sha256": "99e5cbb0c082d1facd88cdae1f5964d667e881ca22492e4ca1ef6137514d0865",
+      "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/1/fsdp_config.json"
+    },
+    "after": {
+      "sha256": "99e5cbb0c082d1facd88cdae1f5964d667e881ca22492e4ca1ef6137514d0865",
+      "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/2/fsdp_config.json"
+    }
+  },
+  "checker_sha256": "ee49a0f89a5ac651ea59bcd4d5f09ff97c0f40f04a0aac4b3275b3bdbc163715",
+  "optimizer_checker_sha256": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee",
+  "torch_version": "2.11.0+cu130",
+  "scope": "Trusted native CPU shards; exact comparison and strict per-rank optimizer; not restore proof",
+  "ranks": [
+    {
+      "rank": 0,
+      "passed": true,
+      "files": {
+        "before_model": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/1/model_world_size_2_rank_0.pt",
+          "sha256": "bb73199ffe8f4e1bbee34f2edfa1c477066d73869ff3e3433e15459705735f11",
+          "bytes": 4163
+        },
+        "after_model": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/2/model_world_size_2_rank_0.pt",
+          "sha256": "fdaabe55d88c9b8eb9ae8222f22cd8604648fcc3c27f5041db01b04a0a7960ec",
+          "bytes": 4163
+        },
+        "before_optimizer": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/1/optim_world_size_2_rank_0.pt",
+          "sha256": "84ee62f414a555817a0cc10c20a7b06864379f795e803fc330ee722bd6bb8108"
+        },
+        "before_extra": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/1/extra_state_world_size_2_rank_0.pt",
+          "sha256": "adbcd3aecebaf8551a37924bb668f57f61dad15247a2a0f706a4a1b1703e91d1",
+          "bytes": 6993
+        },
+        "after_optimizer": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/2/optim_world_size_2_rank_0.pt",
+          "sha256": "c6482d4d47bf4edba386917be7fd669b3d3b4a5120f8de10bf6b34451890525d"
+        },
+        "after_extra": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/2/extra_state_world_size_2_rank_0.pt",
+          "sha256": "5a1d69cec54bf2124b70e57686628272088d744fdc540450205888dd774e57e5",
+          "bytes": 6993
+        }
+      },
+      "errors": [],
+      "model": {
+        "base.weight": {
+          "kind": "sharded",
+          "descriptor": {
+            "shape": [
+              4,
+              2
+            ],
+            "dtype": "torch.float32",
+            "boxes": [
+              {
+                "offsets": [
+                  0,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 0
+              },
+              {
+                "offsets": [
+                  2,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 1
+              }
+            ]
+          },
+          "local": [
+            {
+              "box": {
+                "offsets": [
+                  0,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 0
+              },
+              "finite": true,
+              "changed": false,
+              "max_abs_delta": 0.0
+            }
+          ]
+        },
+        "lora_A.weight": {
+          "kind": "sharded",
+          "descriptor": {
+            "shape": [
+              4,
+              2
+            ],
+            "dtype": "torch.float32",
+            "boxes": [
+              {
+                "offsets": [
+                  0,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 0
+              },
+              {
+                "offsets": [
+                  2,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 1
+              }
+            ]
+          },
+          "local": [
+            {
+              "box": {
+                "offsets": [
+                  0,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 0
+              },
+              "finite": true,
+              "changed": true,
+              "max_abs_delta": 1.0
+            }
+          ]
+        },
+        "replicated_buffer": {
+          "kind": "replicated",
+          "descriptor": {
+            "shape": [],
+            "dtype": "torch.int64"
+          },
+          "finite": true,
+          "changed": false,
+          "max_abs_delta": 0.0,
+          "before_sha256": "d86e8112f3c4c4442126f8e9f44f16867da487f29052bf91b810457db34209a4",
+          "after_sha256": "d86e8112f3c4c4442126f8e9f44f16867da487f29052bf91b810457db34209a4"
+        }
+      },
+      "optimizer": {
+        "schema": "dsh.native-optimizer-delta.v1",
+        "passed": true,
+        "errors": [],
+        "before": {
+          "steps": [
+            1
+          ],
+          "active_state_count": 1,
+          "empty_state_count": 0,
+          "tensor_count": 3,
+          "all_finite": true,
+          "nonzero_moment_tensors": 2
+        },
+        "after": {
+          "steps": [
+            2
+          ],
+          "active_state_count": 1,
+          "empty_state_count": 0,
+          "tensor_count": 3,
+          "all_finite": true,
+          "nonzero_moment_tensors": 2
+        },
+        "active_state_count": 1,
+        "empty_state_count": 0,
+        "changed_moment_tensors": 2,
+        "optimizer_step_advanced": true
+      }
+    },
+    {
+      "rank": 1,
+      "passed": true,
+      "files": {
+        "before_model": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/1/model_world_size_2_rank_1.pt",
+          "sha256": "80a156e2d19ba679f7517b840babf7ab4a0e51d039ac9a9546efdf2144d1d487",
+          "bytes": 4163
+        },
+        "after_model": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/2/model_world_size_2_rank_1.pt",
+          "sha256": "e9419b07dc28d170f307402697f8d02bf5609fe0c81354059be2e8e65a801223",
+          "bytes": 4163
+        },
+        "before_optimizer": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/1/optim_world_size_2_rank_1.pt",
+          "sha256": "b149062b85db5eb50399097bc5141e7d1cead58324928d110b546959e786c1d2"
+        },
+        "before_extra": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/1/extra_state_world_size_2_rank_1.pt",
+          "sha256": "f867bac88175d8b3cfccf573066b95e8e3f5626ded19ed6374ba11c43a16061b",
+          "bytes": 6993
+        },
+        "after_optimizer": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/2/optim_world_size_2_rank_1.pt",
+          "sha256": "6268f1fe4627fd8425a60e833ce1479ee7a7f105981de03f20b46b9d4a286166"
+        },
+        "after_extra": {
+          "path": "/tmp/pytest-of-root/pytest-142/native-shards0/nan/2/extra_state_world_size_2_rank_1.pt",
+          "sha256": "a737ee96153ed3270156d53e2a0f46d89dbc61a724985e52dc73d5f8790b8991",
+          "bytes": 6993
+        }
+      },
+      "errors": [],
+      "model": {
+        "base.weight": {
+          "kind": "sharded",
+          "descriptor": {
+            "shape": [
+              4,
+              2
+            ],
+            "dtype": "torch.float32",
+            "boxes": [
+              {
+                "offsets": [
+                  0,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 0
+              },
+              {
+                "offsets": [
+                  2,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 1
+              }
+            ]
+          },
+          "local": [
+            {
+              "box": {
+                "offsets": [
+                  2,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 1
+              },
+              "finite": true,
+              "changed": false,
+              "max_abs_delta": 0.0
+            }
+          ]
+        },
+        "lora_A.weight": {
+          "kind": "sharded",
+          "descriptor": {
+            "shape": [
+              4,
+              2
+            ],
+            "dtype": "torch.float32",
+            "boxes": [
+              {
+                "offsets": [
+                  0,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 0
+              },
+              {
+                "offsets": [
+                  2,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 1
+              }
+            ]
+          },
+          "local": [
+            {
+              "box": {
+                "offsets": [
+                  2,
+                  0
+                ],
+                "sizes": [
+                  2,
+                  2
+                ],
+                "rank": 1
+              },
+              "finite": false,
+              "changed": true,
+              "max_abs_delta": null
+            }
+          ]
+        },
+        "replicated_buffer": {
+          "kind": "replicated",
+          "descriptor": {
+            "shape": [],
+            "dtype": "torch.int64"
+          },
+          "finite": true,
+          "changed": false,
+          "max_abs_delta": 0.0,
+          "before_sha256": "d86e8112f3c4c4442126f8e9f44f16867da487f29052bf91b810457db34209a4",
+          "after_sha256": "d86e8112f3c4c4442126f8e9f44f16867da487f29052bf91b810457db34209a4"
+        }
+      },
+      "optimizer": {
+        "schema": "dsh.native-optimizer-delta.v1",
+        "passed": true,
+        "errors": [],
+        "before": {
+          "steps": [
+            1
+          ],
+          "active_state_count": 1,
+          "empty_state_count": 0,
+          "tensor_count": 3,
+          "all_finite": true,
+          "nonzero_moment_tensors": 2
+        },
+        "after": {
+          "steps": [
+            2
+          ],
+          "active_state_count": 1,
+          "empty_state_count": 0,
+          "tensor_count": 3,
+          "all_finite": true,
+          "nonzero_moment_tensors": 2
+        },
+        "active_state_count": 1,
+        "empty_state_count": 0,
+        "changed_moment_tensors": 2,
+        "optimizer_step_advanced": true
+      }
+    }
+  ],
+  "model": {
+    "base_count": 2,
+    "base_changed": 0,
+    "adapter_count": 1,
+    "adapter_changed": 1,
+    "all_finite": false,
+    "passed": false
+  }
+}
