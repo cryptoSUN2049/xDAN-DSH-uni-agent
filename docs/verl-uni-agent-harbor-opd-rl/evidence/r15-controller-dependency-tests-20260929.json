@@ -1,0 +1,56 @@
+{
+  "schema": "dsh.controller-executable-preflight-test.v1",
+  "created_utc": "2026-09-29T17:26:10.768257+00:00",
+  "tests": 27,
+  "failures": 0,
+  "errors": 0,
+  "elapsed_seconds": 1.71,
+  "coverage": {
+    "covered_lines": 271,
+    "num_statements": 319,
+    "percent_covered": 82.80871670702179,
+    "percent_covered_display": "83",
+    "missing_lines": 48,
+    "excluded_lines": 0,
+    "percent_statements_covered": 84.95297805642633,
+    "percent_statements_covered_display": "85",
+    "num_branches": 94,
+    "num_partial_branches": 21,
+    "covered_branches": 71,
+    "missing_branches": 23,
+    "percent_branches_covered": 75.53191489361703,
+    "percent_branches_covered_display": "76"
+  },
+  "files": {
+    "deployment/services/harbor_run_controller.py": {
+      "sha256": "4a0e3450488c0449ec04f280aae61732cd9c369109bdf125e31c53bdc9e87c9d",
+      "bytes": 18562
+    },
+    "test_harbor_run_controller.py": {
+      "sha256": "c8527dd879c7e9690963a07602fca02bef79afecb920816d474543ebeeb91a61",
+      "bytes": 15129
+    },
+    "red.log": {
+      "sha256": "0e6577f89988e85b4b1fe1f402567fbcb712aea482916fe56abee66485e8dabd",
+      "bytes": 1011
+    },
+    "red-v2.log": {
+      "sha256": "59fb3fd2dff935847bfaf0332b3241b51362a64048d03fe3aa13a69046ffc122",
+      "bytes": 15876
+    },
+    "green.log": {
+      "sha256": "4dc7bff85035fe9cb5dd1a0e5e331eafe070acc965ab2e1a45bab2999292eed3",
+      "bytes": 99
+    },
+    "coverage.json": {
+      "sha256": "5b278efb958c11874b146922afb17296a2168bb126e0bb6b264a774b1cfcc1b8",
+      "bytes": 27840
+    }
+  },
+  "r14_cleanup_readonly": {
+    "cleanup_errors": []
+  },
+  "r14_owned_matching_controller_ssh_processes": [],
+  "r14_listening_ports_38700_to_38703": [],
+  "scope": "CPU main-entry regression only; no GPU launch or shared environment modification"
+}
