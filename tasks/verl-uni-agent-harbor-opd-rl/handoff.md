@@ -1,3 +1,7 @@
+## 2026-09-29 09:06 UTC 当前入口：r9运行中，五小时绝对截止已部署
+
+先读notes.md最新r9段和docs同名evidence/r9-launch-20260929.json。用户要求的截止为13:16:41UTC / 新加坡21:16:41，按08:16:41请求起算五小时，重启不顺延；训练预留180秒清理，实例保留计费。r8四条奖励[0,1,1,0]，在dense entropy OOM退出，零checkpoint。3e0e55d修复已push，r9新身份fresh两步/GPU0/32K，774文件+273依赖+实际tokenizer/IPC预检通过。GPU driver213662/supervisor213663，CPU controller101484/archiver101513。必须实时核状态；尚未完成更新/checkpoint/独立resume验收，真正C2续训改用r10。旧r8及以下状态为历史。
+
 ## 2026-09-28 最新 MiMo + DSH 9B RL 实施入口
 
 ### TL;DR

@@ -1,0 +1,73 @@
+{
+  "schema": "mimo.r9-start-window-evidence.v1",
+  "checked_unix": 1790672871.792612,
+  "run_id": "mimo9b-001661-r9",
+  "mode": "fresh",
+  "source_commit": "3e0e55d9367999a58d3a6eeb547cc1ff51d2b417",
+  "source_manifest_sha256": "f2d189bbb668167999ef1b29d8349e0cd0cd5fa6a908a0b9ae80dbd6688bf42e",
+  "run_spec_sha256": "sha256:dd058b964f0691368c73d94b1d79111c7ba74f5214de70d2c4346a547bd36149",
+  "deadline_unix": 1790687801.0,
+  "deadline_utc": "2026-09-29 13:16:41 UTC",
+  "deadline_singapore": "2026-09-29 21:16:41 +08:00",
+  "cleanup_reserve_seconds": 180,
+  "driver_pid": 213662,
+  "driver_alive": true,
+  "operator": {
+    "run_id": "mimo9b-001661-r9",
+    "started_at": 1790672772.954067,
+    "wall_clock_seconds": 14848,
+    "status": "running",
+    "supervisor_pid": 213663
+  },
+  "supervisor_alive": true,
+  "supervisor_children": [
+    213676
+  ],
+  "train_log_exists": true,
+  "preflight": {
+    "status": "passed",
+    "source_files_verified": 774,
+    "package_constraints_verified": 273,
+    "report": {
+      "train_rows": 1,
+      "validation_rows": 1,
+      "steps_per_epoch": 1,
+      "total_training_steps": 2,
+      "total_epochs": 2,
+      "save_freq": 1,
+      "backend_validation": {
+        "attention": [
+          {
+            "backend": "sdpa",
+            "validation": "torch_sdpa_operator"
+          }
+        ],
+        "checkpoint_backend": "naive",
+        "gpu_execution_validated": false
+      }
+    },
+    "cuda_initialized": false,
+    "finished_at": 1790672679.2947433
+  },
+  "ipc": {
+    "status": "passed",
+    "started_at": 1790672430.47004,
+    "pid": 213354,
+    "source": "/workspace/mimo-dsh-rl-20260928/run-src-r9/verl",
+    "exit_code": 0,
+    "finished_at": 1790672529.0211189,
+    "tests": 1,
+    "skipped": 0,
+    "errors": 0,
+    "failures": 0,
+    "gpu_processes_after": ""
+  },
+  "gpu_indexes": [
+    0
+  ],
+  "controller_pid": 101484,
+  "archive_pid": 101513,
+  "pod_deleted": false,
+  "training_acceptance": false,
+  "checkpoint_resume_acceptance": false
+}

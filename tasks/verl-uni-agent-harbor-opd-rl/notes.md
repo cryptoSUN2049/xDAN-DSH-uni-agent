@@ -90,3 +90,14 @@ Goal API当前仍报告paused，工具没有resume接口；用户已在会话明
 - controller98563、archiver99526身份核对后SIGINT退出，cleanup_errors=[]；ledger4succeeded/1cancelled无活跃任务，10个Modal实时poll终态137。归档61文件1522656字节，hash/权限差异0。pending仅无训练receipt的已取消预取request。公开摘要evidence/r8-termination-20260929.json，私有原件CPU evidence-r8/worker-final。
 - 两GPU显存0MiB已实测，现有Pod保留/计费；不触碰其他服务器。r9脚本staged，尚未训练；r8无C2，因此下一轮必须fresh2steps，不能使用resume。
 - dense路径忽略既有entropy分块开关，最小MiMo overlay在独立副本验证；不改冻结r8或VERL gitlink，不关闭entropy。通过后冻结r9、固定截止启动；仍32K/20480。
+
+## 2026-09-29 09:06 UTC r9已启动，截止13:16:41UTC
+
+- 修复3e0e55d及准备28e523f均已push；干净提交完整Ruff双门通过624文件。entropy默认隔离副本21例、真实patch源连recipe43例通过，新增9行/6分支全覆盖；r9启动准备25例98.214%覆盖。计数有重叠，不累加。
+- 新冻结run-src-r9：774文件（继承r8清单及已提交增量），manifest SHA f2d189bbb668167999ef1b29d8349e0cd0cd5fa6a908a0b9ae80dbd6688bf42e；VERL gitlink保持a9f29851，显式overlay目标SHA713666208d1caad05c440d0ddb49fe0e4eeeca5e33726e59c60fb708b75bdeef。共享uv273约束及真实tokenizer/data预检通过，未初始化CUDA；native IPC1passed/0skip/94.58秒，无残留。
+- 首次freeze因继承清单含历史Hydra/pytest文件而缺项，准备入口在manifest缺失时拒绝，未创建spec/token。补齐并逐字节核验原清单，保留prepare-r9.log失败；attempt2完整成功。运行源码冻结后不再修改。
+- r9为fresh两步/save1，32K/20480/per-call4096、n4、GPU0，entropy chunk256。r8无checkpoint，不是resume；后续真正C2续训须新r10身份。
+- GPU driver213662、supervisor213663、训练入口子进程213676；started1790672772.954067，wall14848秒，约13:13:41UTC开始退出并留180秒清理。CPU controller101484、archiver101513；RunSpec硬截止1790687801=13:16:41UTC/21:16:41新加坡，按用户08:16:41请求起算五小时，不滚动续期。
+- run_id=mimo9b-001661-r9；spec sha256:dd058b964f0691368c73d94b1d79111c7ba74f5214de70d2c4346a547bd36149；taskhash603c1f65...保持。CPU新端口38650/51/52/53，旧r8已停；既有Pod不删除/不自动停机，继续计费。
+- 实时入口：持久runs/r9/operator/status.json；GPU私有launch-r9/train.log、artifacts及registrations；CPU controller-r9/jobs、evidence-r9/status.json（30秒一次，截止同上）。启动时authenticated health=true/unregistered，归档首5轮errors=[]。
+- 公开证据evidence/r9-launch-20260929.json。当前仅完成启动和初始化；真实有效更新、C1/C2参数/optimizer差异、checkpoint及新身份重载仍待验收，不可标记goal完成。
