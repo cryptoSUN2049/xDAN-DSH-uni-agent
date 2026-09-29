@@ -1,0 +1,348 @@
+{
+  "schema": "mimo.r12-acceptance.v1",
+  "created_at": 1790696108.7183182,
+  "run_id": "mimo9b-001661-r12",
+  "source_commit": "29c0cf73502fdd6d7778f5abfeb0f6eed84d6a49",
+  "source_manifest": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/source-r12-manifest.json",
+    "sha256": "f085c12d986513c76427ace010db1cfd2b70f33a1fb7e096d9bee258430666a0",
+    "bytes": 144470
+  },
+  "engineering_training_loop_passed": true,
+  "effective_update_verified": true,
+  "independent_native_resume_verified": true,
+  "capability_improvement_verified": false,
+  "exact_inflight_transfer_queue_restore_verified": false,
+  "scope": "One fixed MiMo Code engineering task, DSH + Harbor/Modal + separate_async actor1/rollout1; C3 from r10 restored in fresh r12 and updated to C4. Not a benchmark or full-recipe quality reproduction. Native observability acceptance is audited separately.",
+  "identity": {
+    "group_uid": "04be6628-ec14-4bbf-af5b-ab9db3a73b8e",
+    "launch_sha256": "sha256:c64550d8059dc6d022b75c1a40a9fb4940deb51fbc11a3aeb6e7471ec011c1d6",
+    "run_id": "mimo9b-001661-r12",
+    "run_spec_sha256": "sha256:9624f59dfaedce8864adf702708d8b49c7dd233ad5269255f140b83fe3e2fc59",
+    "step": 4,
+    "transfer_queue_keys": [
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_0_0",
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_1_0",
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_2_0",
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_3_0"
+    ]
+  },
+  "consumed_batch": {
+    "consumed_transfer_queue_keys": [
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_0_0",
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_1_0",
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_2_0",
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_3_0"
+    ],
+    "global_steps": 4,
+    "group_uid": "04be6628-ec14-4bbf-af5b-ab9db3a73b8e",
+    "has_reward_variance": true,
+    "partition_id": "train",
+    "rewards": [
+      0.0,
+      1.0,
+      0.0,
+      1.0
+    ],
+    "session_indexes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "status": "admitted-and-training-batch-matched",
+    "termination_kinds": [
+      "budget_exhausted",
+      "budget_exhausted",
+      "completed",
+      "budget_exhausted"
+    ],
+    "transfer_queue_keys": [
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_0_0",
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_1_0",
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_2_0",
+      "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_3_0"
+    ]
+  },
+  "metrics": {
+    "actor/grad_norm": 0.1513671875,
+    "actor/pg_loss": -0.3034908869303763,
+    "critic/advantages/max": 0.8660238981246948,
+    "critic/advantages/min": -0.8660238981246948,
+    "critic/score/max": 1.0,
+    "critic/score/min": 0.0
+  },
+  "model_delta": {
+    "schema": "dsh.single-rank-lora-delta.v1",
+    "passed": true,
+    "adapter_count": 716,
+    "adapter_changed": 496,
+    "base_count": 760,
+    "base_changed": 0,
+    "before": {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r10/rl-training/checkpoints/global_step_3/actor/model_world_size_1_rank_0.pt",
+      "sha256": "22a95078e5e8eeb67c837b587f9efbf507d2740b47c6f8d9792cdcdc356e7c04"
+    },
+    "after": {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r12/rl-training/checkpoints/global_step_4/actor/model_world_size_1_rank_0.pt",
+      "sha256": "96a4bd4aa8204dcbdc206dd5497b2a091883fe5fb55a1c2bcbcd6e288c7dc9b9"
+    }
+  },
+  "optimizer_delta": {
+    "schema": "dsh.native-optimizer-delta.v1",
+    "passed": true,
+    "errors": [],
+    "before": {
+      "steps": [
+        3
+      ],
+      "active_state_count": 716,
+      "empty_state_count": 60,
+      "tensor_count": 2148,
+      "all_finite": true,
+      "nonzero_moment_tensors": 992
+    },
+    "after": {
+      "steps": [
+        4
+      ],
+      "active_state_count": 716,
+      "empty_state_count": 60,
+      "tensor_count": 2148,
+      "all_finite": true,
+      "nonzero_moment_tensors": 992
+    },
+    "active_state_count": 716,
+    "empty_state_count": 60,
+    "changed_moment_tensors": 992,
+    "optimizer_step_advanced": true,
+    "files": {
+      "before": {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r10/rl-training/checkpoints/global_step_3/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "0f565c62f69272f7f1da414e92bc65f4c1f9b559a8ce69d64d8dcb2519a33173"
+      },
+      "after": {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r12/rl-training/checkpoints/global_step_4/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "c81c6fa52e1565ca6811be1cbbe0df2ce3c0718d22552ff96466ef2ec193f766"
+      }
+    },
+    "input_scope": "Trusted checkpoints produced by this project's own run; weights_only=True, CPU only"
+  },
+  "checkpoint_hashes": {
+    "model": {
+      "after": {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r12/rl-training/checkpoints/global_step_4/actor/model_world_size_1_rank_0.pt",
+        "sha256": "96a4bd4aa8204dcbdc206dd5497b2a091883fe5fb55a1c2bcbcd6e288c7dc9b9"
+      },
+      "before": {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r10/rl-training/checkpoints/global_step_3/actor/model_world_size_1_rank_0.pt",
+        "sha256": "22a95078e5e8eeb67c837b587f9efbf507d2740b47c6f8d9792cdcdc356e7c04"
+      }
+    },
+    "optimizer": {
+      "after": {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r12/rl-training/checkpoints/global_step_4/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "c81c6fa52e1565ca6811be1cbbe0df2ce3c0718d22552ff96466ef2ec193f766"
+      },
+      "before": {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r10/rl-training/checkpoints/global_step_3/actor/optim_world_size_1_rank_0.pt",
+        "sha256": "0f565c62f69272f7f1da414e92bc65f4c1f9b559a8ce69d64d8dcb2519a33173"
+      }
+    }
+  },
+  "independent_restore": {
+    "passed": true,
+    "components": {
+      "model": "(WorkerDict pid=303474) INFO:2026-09-29 14:25:57,885:[Rank 0] Loaded model from /workspace/mimo-dsh-rl-20260928/runs/r10/rl-training/checkpoints/global_step_3/actor/model_world_size_1_rank_0.pt",
+      "optimizer": "(WorkerDict pid=303474) INFO:2026-09-29 14:25:58,803:[Rank 0] Loaded optimizer from /workspace/mimo-dsh-rl-20260928/runs/r10/rl-training/checkpoints/global_step_3/actor/optim_world_size_1_rank_0.pt",
+      "rng": "(WorkerDict pid=303474) INFO:2026-09-29 14:25:58,825:[Rank 0] Loaded rng from /workspace/mimo-dsh-rl-20260928/runs/r10/rl-training/checkpoints/global_step_3/actor/extra_state_world_size_1_rank_0.pt",
+      "lr_scheduler": "(WorkerDict pid=303474) INFO:2026-09-29 14:25:58,825:[Rank 0] Loaded lr_scheduler from /workspace/mimo-dsh-rl-20260928/runs/r10/rl-training/checkpoints/global_step_3/actor/extra_state_world_size_1_rank_0.pt"
+    },
+    "resume_log": "(TaskRunnerV1 pid=301710) INFO:2026-09-29 14:24:33,690:Resuming from /workspace/mimo-dsh-rl-20260928/runs/r10/rl-training/checkpoints/global_step_3, setting global step to 3",
+    "generation_versions": [
+      {
+        "session_index": 0,
+        "session_id": "session-sample-0-rollout-0-23cd56913547484f972aaeb85eb6a09c",
+        "metadata": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r12/rl-training/agent/step_4/session-sample-0-rollout-0-23cd56913547484f972aaeb85eb6a09c/trajectory.json",
+          "sha256": "560f8cd3a99edd86f1067af4c51a613b80f39fb4170d902c4a5020a9d34535f0",
+          "bytes": 2931
+        },
+        "transfer_queue_key": "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_0_0",
+        "min_global_steps": 3,
+        "max_global_steps": 3,
+        "generation_count": 44,
+        "versioned_generation_count": 44,
+        "reward": 0.0,
+        "finished": false,
+        "receipt_sha256": "sha256:8c40e5324dd396a7ba86029124f7e090e99e57a96c7aa3d97a1ca7d24695946b"
+      },
+      {
+        "session_index": 1,
+        "session_id": "session-sample-0-rollout-1-4c944b719a124ecda8cf92c0645efe47",
+        "metadata": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r12/rl-training/agent/step_4/session-sample-0-rollout-1-4c944b719a124ecda8cf92c0645efe47/trajectory.json",
+          "sha256": "682ce5360617abbf4f9958a9e8fe1b5a7f809204a91e3617963dd4c0814d2b7d",
+          "bytes": 2931
+        },
+        "transfer_queue_key": "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_1_0",
+        "min_global_steps": 3,
+        "max_global_steps": 3,
+        "generation_count": 46,
+        "versioned_generation_count": 46,
+        "reward": 1.0,
+        "finished": false,
+        "receipt_sha256": "sha256:660cece0fcd4e64408405970ef3ed1bf5ac03448d9231ae328f48f02df89b1e4"
+      },
+      {
+        "session_index": 2,
+        "session_id": "session-sample-0-rollout-2-4337482ec98241a782d9664eb1f0d2d6",
+        "metadata": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r12/rl-training/agent/step_4/session-sample-0-rollout-2-4337482ec98241a782d9664eb1f0d2d6/trajectory.json",
+          "sha256": "83b06664107e45878cd6ad16b8238c81f38fa3f4851466fa57c086eb7dfda260",
+          "bytes": 2558
+        },
+        "transfer_queue_key": "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_2_0",
+        "min_global_steps": 3,
+        "max_global_steps": 3,
+        "generation_count": 4,
+        "versioned_generation_count": 4,
+        "reward": 0.0,
+        "finished": true,
+        "receipt_sha256": "sha256:9352ea27a71128760d5be8a417610640d3f9f4c46de875abf65e6cc077d84230"
+      },
+      {
+        "session_index": 3,
+        "session_id": "session-sample-0-rollout-3-16b2bd1aa1604562830220503819ad7f",
+        "metadata": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r12/rl-training/agent/step_4/session-sample-0-rollout-3-16b2bd1aa1604562830220503819ad7f/trajectory.json",
+          "sha256": "6f6554a586ef7f5aaf0b77bf74e2593c95671380c85660c1377926163b265f0c",
+          "bytes": 2931
+        },
+        "transfer_queue_key": "04be6628-ec14-4bbf-af5b-ab9db3a73b8e_3_0",
+        "min_global_steps": 3,
+        "max_global_steps": 3,
+        "generation_count": 41,
+        "versioned_generation_count": 41,
+        "reward": 1.0,
+        "finished": false,
+        "receipt_sha256": "sha256:7ff3e19beafc13170db953c9a372dbfe9ff657408da167d0c51eb3358ea2cfce"
+      }
+    ],
+    "data_state": {
+      "before": {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r10/rl-training/checkpoints/global_step_3/data.pt",
+        "sha256": "58f16b6036f8994e9b19abde895b0a7969dbba54365747f210e577ebd0368d37",
+        "bytes": 1499
+      },
+      "after": {
+        "path": "/workspace/mimo-dsh-rl-20260928/runs/r12/rl-training/checkpoints/global_step_4/data.pt",
+        "sha256": "58f16b6036f8994e9b19abde895b0a7969dbba54365747f210e577ebd0368d37",
+        "bytes": 1499
+      },
+      "native_restore_source": {
+        "path": "/workspace/mimo-dsh-rl-20260928/run-src-r12/verl/verl/trainer/ppo/v1/trainer_base.py",
+        "sha256": "e2ca9b9af567fbd0c99224475fafec7c881bc3e3ff730fdc6e8825c844b34e58",
+        "bytes": 95234
+      },
+      "missing_state_warning_absent": true,
+      "restore_evidence": "inferred from data.pt presence, resumed execution, bound native dataloader load_state_dict branch and absence of missing-state warning; no dedicated instrumented success log"
+    },
+    "launches": {
+      "r10": {
+        "launch": {
+          "path": "/root/mimo-private/launch-r10/launch.json",
+          "sha256": "c17edcc373a7c6d864acb6729233b182e5786088639e41a6a14afb632bcd8804",
+          "bytes": 5145
+        },
+        "run_id": "mimo9b-001661-r10",
+        "run_spec_sha256": "sha256:96ec3524f9ed150d2d914c5dfca7ce6a2208d0c8a1a39c6693b55690766ee3da",
+        "run_root": "/workspace/mimo-dsh-rl-20260928/runs/r10"
+      },
+      "r12": {
+        "launch": {
+          "path": "/root/mimo-private/launch-r12/launch.json",
+          "sha256": "c64550d8059dc6d022b75c1a40a9fb4940deb51fbc11a3aeb6e7471ec011c1d6",
+          "bytes": 5145
+        },
+        "run_id": "mimo9b-001661-r12",
+        "run_spec_sha256": "sha256:9624f59dfaedce8864adf702708d8b49c7dd233ad5269255f140b83fe3e2fc59",
+        "run_root": "/workspace/mimo-dsh-rl-20260928/runs/r12"
+      }
+    },
+    "latest_checkpointed_iteration": 4
+  },
+  "audit_reports": {
+    "batch.stdout": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r12-acceptance/batch.stdout",
+      "sha256": "d68d23a26337c068ad03e3a674423594d2c83cff109c4d9a4e4446b87fdbff8c",
+      "bytes": 1347
+    },
+    "model.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r12-acceptance/model.json",
+      "sha256": "d2336d3eccb9f5889af35d36fb311a461dba7915462ff8122dff4b295c437654",
+      "bytes": 309917
+    },
+    "optimizer.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r12-acceptance/optimizer.json",
+      "sha256": "4af4afd4fd3c895052f925dbe282db71b64e11ad2e5aead60d34121f83ed620c",
+      "bytes": 1185
+    },
+    "effective.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r12-acceptance/effective.json",
+      "sha256": "7eb2b58d97bfc88ac0aa16b15194c9621657093444787f02620b8600768695e9",
+      "bytes": 3227
+    },
+    "resume.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r12-acceptance/resume.json",
+      "sha256": "a02aebc3f28a4260639feecf40b226980e49b131c30adacd1731b2a0a175b617",
+      "bytes": 7106
+    },
+    "status.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r12-acceptance/status.json",
+      "sha256": "4cd9b14a2db84d8e14fcbea8574edb8fed9b967729186f6ce80c8d340100d0b9",
+      "bytes": 473
+    }
+  },
+  "audit_code": {
+    "checkpoint_delta.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r12-acceptance/code/checkpoint_delta.py",
+      "sha256": "3adaaf226bf798c360fb855a5868257244777222ed4c84d0959c9a672806d099",
+      "bytes": 2913
+    },
+    "optimizer_delta.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r12-acceptance/code/optimizer_delta.py",
+      "sha256": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee",
+      "bytes": 6573
+    }
+  },
+  "frozen_audit_code": {
+    "examples/harbor/audit_m2_training.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r12/examples/harbor/audit_m2_training.py",
+      "sha256": "d94e2fd8d2e3ea518e18cf918e5cd5d82edff46d60ead7a688fdfb6c7fac250c",
+      "bytes": 11257
+    },
+    "deployment/checks/effective_update_audit.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r12/deployment/checks/effective_update_audit.py",
+      "sha256": "3b7d17a5dc25c1008be10f6f76360a3f85e704cd086d600deccb3558ad0e5579",
+      "bytes": 13768
+    }
+  },
+  "operator_status": {
+    "run_id": "mimo9b-001661-r12",
+    "started_at": 1790691041.158591,
+    "wall_clock_seconds": 18196,
+    "status": "exited",
+    "supervisor_pid": 296872,
+    "exit_code": 0,
+    "finished_at": 1790693783.3679073
+  },
+  "limitations": [
+    "Independent resume is separately verified; effective_update_audit alone deliberately reports restore unknown.",
+    "Dataloader restore has no dedicated success log; its restore branch is inferred from data.pt presence, resumed execution, the bound native source and absence of a missing-state warning, not a direct instrumented load event.",
+    "New TransferQueue/session evidence does not prove exact restoration of in-flight asynchronous work.",
+    "One task, one r12 optimizer update; no held-out capability uplift or production throughput claim.",
+    "Three trajectories ended under the audited budget-terminal policy; admitted outputs and verifier rewards are not equivalent to four normally completed agent runs.",
+    "W&B/RLInsight monitoring and Controller/Modal cleanup are separate audits, not attested by this report."
+  ]
+}

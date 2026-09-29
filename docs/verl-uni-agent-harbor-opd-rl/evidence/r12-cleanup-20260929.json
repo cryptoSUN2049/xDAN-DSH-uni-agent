@@ -1,0 +1,162 @@
+{
+  "schema": "mimo.owned-cleanup.v1",
+  "run_id": "mimo9b-001661-r12",
+  "started_at": 1790695752.5709066,
+  "controller_pid": 105384,
+  "archiver_pid": 105400,
+  "ledger_before": [
+    {
+      "job_id": "job-9bbe82c0277b4c5d82798f0d3f43d8db",
+      "status": "succeeded"
+    },
+    {
+      "job_id": "job-2d26993840794bb8b24c0c37a9fbe129",
+      "status": "succeeded"
+    },
+    {
+      "job_id": "job-df9af70289824876a79096e0fcac8bce",
+      "status": "succeeded"
+    },
+    {
+      "job_id": "job-a4e2e8f1666045aeb3f060bdf8d9614e",
+      "status": "succeeded"
+    },
+    {
+      "job_id": "job-bfc5c8a4fe954d339623973217cbb335",
+      "status": "cancelled"
+    }
+  ],
+  "active_jobs_before": 0,
+  "cancelled_prefetch": "job-bfc5c8a4fe954d339623973217cbb335",
+  "action": "SIGINT verified owned controller; leave Pod and shared services running",
+  "controller_cleanup": {
+    "cleanup_errors": [],
+    "docker_cleanup_proven": false
+  },
+  "controller_exited": true,
+  "worker_backup_files": 121,
+  "archive_verified_files": 61,
+  "archive_verified_bytes": 1583006,
+  "archive_verification_errors": [],
+  "modal_live_poll": [
+    {
+      "sandbox_id": "sb-4WWfJM4EEKPlq72Iy4tfAs",
+      "returncode": 137
+    },
+    {
+      "sandbox_id": "sb-55Air83rzZU4tEMnsTN8Xx",
+      "returncode": 137
+    },
+    {
+      "sandbox_id": "sb-674rFe3Zic9ekZq89MdBJ3",
+      "returncode": 137
+    },
+    {
+      "sandbox_id": "sb-7k3O6rVc5hgmYplSJLOt75",
+      "returncode": 137
+    },
+    {
+      "sandbox_id": "sb-NrLviPWHNwClq7rf6yofBV",
+      "returncode": 137
+    },
+    {
+      "sandbox_id": "sb-TVsG9BQWkaBC8VQ1jUYMe1",
+      "returncode": 137
+    },
+    {
+      "sandbox_id": "sb-ZAUAoWz3Gxn7DffjrgXuew",
+      "returncode": 137
+    },
+    {
+      "sandbox_id": "sb-kgFzfdsiEqTheg3VsNwqAc",
+      "returncode": 137
+    },
+    {
+      "sandbox_id": "sb-xAlMzKqiZNkeSZb3sPowSt",
+      "returncode": 137
+    }
+  ],
+  "modal_checked_at": 1790695937.6977987,
+  "archiver_exited": true,
+  "archiver_final_state": "stopped",
+  "archiver_errors": [],
+  "checked_at": 1790695860.7966378,
+  "owned_cpu_processes_remaining": [],
+  "cpu_ports": {
+    "control_port": {
+      "port": 38680,
+      "connect_ex": 111
+    },
+    "worker_port": {
+      "port": 38681,
+      "connect_ex": 111
+    },
+    "model_port": {
+      "port": 38682,
+      "connect_ex": 111
+    }
+  },
+  "pod_stop_requested": false,
+  "shared_services_changed": false,
+  "modal_first_poll_without_private_config": [
+    {
+      "sandbox_id": "sb-4WWfJM4EEKPlq72Iy4tfAs",
+      "error_type": "AuthError"
+    },
+    {
+      "sandbox_id": "sb-55Air83rzZU4tEMnsTN8Xx",
+      "error_type": "AuthError"
+    },
+    {
+      "sandbox_id": "sb-674rFe3Zic9ekZq89MdBJ3",
+      "error_type": "AuthError"
+    },
+    {
+      "sandbox_id": "sb-7k3O6rVc5hgmYplSJLOt75",
+      "error_type": "AuthError"
+    },
+    {
+      "sandbox_id": "sb-NrLviPWHNwClq7rf6yofBV",
+      "error_type": "AuthError"
+    },
+    {
+      "sandbox_id": "sb-TVsG9BQWkaBC8VQ1jUYMe1",
+      "error_type": "AuthError"
+    },
+    {
+      "sandbox_id": "sb-ZAUAoWz3Gxn7DffjrgXuew",
+      "error_type": "AuthError"
+    },
+    {
+      "sandbox_id": "sb-kgFzfdsiEqTheg3VsNwqAc",
+      "error_type": "AuthError"
+    },
+    {
+      "sandbox_id": "sb-xAlMzKqiZNkeSZb3sPowSt",
+      "error_type": "AuthError"
+    }
+  ],
+  "modal_configuration_source": "existing private configuration",
+  "status": "passed",
+  "gpu_final_check": {
+    "checked_at": 1790695857.1687133,
+    "gpu_memory_mib": [
+      0,
+      0
+    ],
+    "gpu_utilization_percent": [
+      0,
+      0
+    ],
+    "compute_apps": [],
+    "driver_exists": false,
+    "supervisor_exists": false
+  },
+  "preserved": [
+    "GPU Pod",
+    "shared monitoring services",
+    "r12 C4 and earlier checkpoints",
+    "121 private worker backup files",
+    "61 verified archived GPU evidence files"
+  ]
+}

@@ -1,0 +1,535 @@
+{
+  "schema": "mimo.native-observability-final.v1",
+  "run_id": "mimo9b-001661-r12",
+  "checked_at": 1790695720.8562365,
+  "synthetic": false,
+  "terminal_ack": {
+    "schema": "mimo.native-observability-ack.v1",
+    "status": "passed",
+    "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+    "experiment_name": "mimo9b-001661-r12",
+    "step": 4,
+    "training_started_at": 1790691239.479989,
+    "budget_seconds": 45,
+    "deadline_unix": 1790709401,
+    "query": "{__name__=~\"rl_insight_monitor_training_global_step|rl_insight_monitor_actor_grad_norm|rl_insight_monitor_critic_rewards_mean\",project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-001661-r12\"}",
+    "backend_response": {
+      "status": "success",
+      "data": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_actor_grad_norm",
+              "experiment_name": "mimo9b-001661-r12",
+              "instance": "172.24.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790693772.938,
+              "0.1513671875"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_training_global_step",
+              "experiment_name": "mimo9b-001661-r12",
+              "instance": "172.24.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790693772.938,
+              "4"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_critic_rewards_mean",
+              "experiment_name": "mimo9b-001661-r12",
+              "instance": "172.24.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790693772.938,
+              "0.5"
+            ]
+          }
+        ]
+      }
+    },
+    "values": {
+      "actor_grad_norm": 0.1513671875,
+      "training_global_step": 4.0,
+      "critic_rewards_mean": 0.5
+    },
+    "finished_at": 1790693772.9388435
+  },
+  "tempo_query_tags": "project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\" experiment_name=\"mimo9b-001661-r12\"",
+  "tempo_search_limit": 1000,
+  "tempo_trace_count": 163,
+  "tempo_root_counts": {
+    "gateway_generation": 155,
+    "agent_task": 4,
+    "agent_session": 4
+  },
+  "tempo_selected_actual_spans": [
+    {
+      "search_result": {
+        "traceID": "2bef5e12adc3d8d041fbad059ec8efc4",
+        "rootServiceName": "rl_insight_monitor",
+        "rootTraceName": "agent_session",
+        "startTimeUnixNano": "1790693334358909726",
+        "durationMs": 312403
+      },
+      "actual_spans": [
+        {
+          "traceId": "K+9eEq3D2NBB+60FnsjvxA==",
+          "spanId": "gjHZQCboR6Y=",
+          "name": "agent_session",
+          "kind": "SPAN_KIND_INTERNAL",
+          "startTimeUnixNano": "1790693334358909726",
+          "endTimeUnixNano": "1790693646762409210",
+          "attributes": [
+            {
+              "key": "process_id",
+              "value": {
+                "stringValue": "313786"
+              }
+            },
+            {
+              "key": "project",
+              "value": {
+                "stringValue": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+              }
+            },
+            {
+              "key": "experiment_name",
+              "value": {
+                "stringValue": "mimo9b-001661-r12"
+              }
+            },
+            {
+              "key": "sample",
+              "value": {
+                "stringValue": "0"
+              }
+            },
+            {
+              "key": "session",
+              "value": {
+                "stringValue": "3"
+              }
+            },
+            {
+              "key": "traj",
+              "value": {
+                "stringValue": "0"
+              }
+            },
+            {
+              "key": "state_lane_id",
+              "value": {
+                "stringValue": "experiment=mimo9b-001661-r12/sample=0/session=3/traj=0"
+              }
+            },
+            {
+              "key": "uid",
+              "value": {
+                "stringValue": "04be6628-ec14-4bbf-af5b-ab9db3a73b8e"
+              }
+            },
+            {
+              "key": "global_steps",
+              "value": {
+                "intValue": "4"
+              }
+            },
+            {
+              "key": "session_id",
+              "value": {
+                "stringValue": "session-sample-0-rollout-3-16b2bd1aa1604562830220503819ad7f"
+              }
+            },
+            {
+              "key": "monitor.trace_source",
+              "value": {
+                "stringValue": "session"
+              }
+            },
+            {
+              "key": "runner_name",
+              "value": {
+                "stringValue": "task"
+              }
+            },
+            {
+              "key": "status",
+              "value": {
+                "stringValue": "success"
+              }
+            },
+            {
+              "key": "num_trajectories",
+              "value": {
+                "intValue": "1"
+              }
+            },
+            {
+              "key": "reward_source",
+              "value": {
+                "stringValue": "agent_runner"
+              }
+            },
+            {
+              "key": "finished",
+              "value": {
+                "boolValue": false
+              }
+            }
+          ],
+          "status": {}
+        }
+      ]
+    },
+    {
+      "search_result": {
+        "traceID": "985331c2a3a9a5ebd5b245838eae60b7",
+        "rootServiceName": "rl_insight_monitor",
+        "rootTraceName": "agent_task",
+        "startTimeUnixNano": "1790693334367653031",
+        "durationMs": 312240
+      },
+      "actual_spans": [
+        {
+          "traceId": "mFMxwqOppevVskWDjq5gtw==",
+          "spanId": "NTQ+8z0Xhbc=",
+          "name": "agent_task",
+          "kind": "SPAN_KIND_INTERNAL",
+          "startTimeUnixNano": "1790693334367653031",
+          "endTimeUnixNano": "1790693646608370558",
+          "attributes": [
+            {
+              "key": "process_id",
+              "value": {
+                "stringValue": "302447"
+              }
+            },
+            {
+              "key": "project",
+              "value": {
+                "stringValue": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+              }
+            },
+            {
+              "key": "experiment_name",
+              "value": {
+                "stringValue": "mimo9b-001661-r12"
+              }
+            },
+            {
+              "key": "sample",
+              "value": {
+                "stringValue": "0"
+              }
+            },
+            {
+              "key": "session",
+              "value": {
+                "stringValue": "3"
+              }
+            },
+            {
+              "key": "traj",
+              "value": {
+                "stringValue": "0"
+              }
+            },
+            {
+              "key": "state_lane_id",
+              "value": {
+                "stringValue": "experiment=mimo9b-001661-r12/sample=0/session=3/traj=0"
+              }
+            },
+            {
+              "key": "uid",
+              "value": {
+                "stringValue": "04be6628-ec14-4bbf-af5b-ab9db3a73b8e"
+              }
+            },
+            {
+              "key": "global_steps",
+              "value": {
+                "intValue": "4"
+              }
+            },
+            {
+              "key": "session_id",
+              "value": {
+                "stringValue": "session-sample-0-rollout-3-16b2bd1aa1604562830220503819ad7f"
+              }
+            },
+            {
+              "key": "monitor.trace_source",
+              "value": {
+                "stringValue": "task"
+              }
+            },
+            {
+              "key": "task_name",
+              "value": {
+                "stringValue": "harbor_dsh"
+              }
+            },
+            {
+              "key": "image_ref",
+              "value": {
+                "stringValue": ""
+              }
+            },
+            {
+              "key": "prompt_hash",
+              "value": {
+                "stringValue": "0a619fbf84c8aa883050d60e2f7579caf790c0adf0592bcf74f42e975660f5b2"
+              }
+            },
+            {
+              "key": "status",
+              "value": {
+                "stringValue": "success"
+              }
+            },
+            {
+              "key": "reward",
+              "value": {
+                "doubleValue": 1
+              }
+            },
+            {
+              "key": "accuracy",
+              "value": {
+                "stringValue": ""
+              }
+            },
+            {
+              "key": "finished",
+              "value": {
+                "boolValue": false
+              }
+            },
+            {
+              "key": "reward_posted",
+              "value": {
+                "boolValue": false
+              }
+            },
+            {
+              "key": "error",
+              "value": {
+                "stringValue": ""
+              }
+            }
+          ],
+          "status": {}
+        }
+      ]
+    },
+    {
+      "search_result": {
+        "traceID": "f58356aa7de9a7da6bd762644b57f097",
+        "rootServiceName": "rl_insight_monitor",
+        "rootTraceName": "gateway_generation",
+        "startTimeUnixNano": "1790693751307101737",
+        "durationMs": 4430
+      },
+      "actual_spans": [
+        {
+          "traceId": "9YNWqn3pp9pr12JkS1fwlw==",
+          "spanId": "5IMGnq8JlaI=",
+          "name": "gateway_generation",
+          "kind": "SPAN_KIND_INTERNAL",
+          "startTimeUnixNano": "1790693751307101737",
+          "endTimeUnixNano": "1790693755737162400",
+          "attributes": [
+            {
+              "key": "process_id",
+              "value": {
+                "stringValue": "313315"
+              }
+            },
+            {
+              "key": "project",
+              "value": {
+                "stringValue": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+              }
+            },
+            {
+              "key": "experiment_name",
+              "value": {
+                "stringValue": "mimo9b-001661-r12"
+              }
+            },
+            {
+              "key": "sample",
+              "value": {
+                "stringValue": "0"
+              }
+            },
+            {
+              "key": "session",
+              "value": {
+                "stringValue": "0"
+              }
+            },
+            {
+              "key": "traj",
+              "value": {
+                "stringValue": "0"
+              }
+            },
+            {
+              "key": "state_lane_id",
+              "value": {
+                "stringValue": "experiment=mimo9b-001661-r12/sample=0/session=0/traj=0"
+              }
+            },
+            {
+              "key": "uid",
+              "value": {
+                "stringValue": "c5ebadc9-4ca2-417e-9ca4-f6bf51cbf4cf"
+              }
+            },
+            {
+              "key": "global_steps",
+              "value": {
+                "intValue": "4"
+              }
+            },
+            {
+              "key": "session_id",
+              "value": {
+                "stringValue": "session-sample-0-rollout-0-3f4ee42576554bf981083bc89c235400"
+              }
+            },
+            {
+              "key": "monitor.trace_source",
+              "value": {
+                "stringValue": "gateway"
+              }
+            },
+            {
+              "key": "status",
+              "value": {
+                "stringValue": "success"
+              }
+            },
+            {
+              "key": "error",
+              "value": {
+                "stringValue": ""
+              }
+            },
+            {
+              "key": "finish_reason",
+              "value": {
+                "stringValue": "tool_calls"
+              }
+            },
+            {
+              "key": "turn",
+              "value": {
+                "intValue": "17"
+              }
+            },
+            {
+              "key": "type",
+              "value": {
+                "stringValue": "tool"
+              }
+            },
+            {
+              "key": "tools",
+              "value": {
+                "stringValue": "[\"bash\"]"
+              }
+            },
+            {
+              "key": "tool_args",
+              "value": {
+                "stringValue": "[\"{\\\"command\\\": \\\"cd /workspace/repo && python -c \\\\\\\"import django.db.models.signals as s; print([n for n in dir(s) if not n.startswith('_')])\\\\\\\"\\\"}\"]"
+              }
+            },
+            {
+              "key": "reasoning",
+              "value": {
+                "stringValue": ""
+              }
+            },
+            {
+              "key": "content",
+              "value": {
+                "stringValue": ""
+              }
+            },
+            {
+              "key": "prompt_tokens",
+              "value": {
+                "intValue": "11341"
+              }
+            },
+            {
+              "key": "completion_tokens",
+              "value": {
+                "intValue": "260"
+              }
+            },
+            {
+              "key": "chain_id",
+              "value": {
+                "intValue": "1"
+              }
+            }
+          ],
+          "status": {}
+        }
+      ]
+    }
+  ],
+  "native_step_timings_seconds": {
+    "timing_s/switch_to_trainer": 0.16241588769480586,
+    "timing_s/gen": 1135.0643684226088,
+    "timing_s/old_log_prob": 29.632017605006695,
+    "timing_s/adv": 0.044242559000849724,
+    "timing_s/update_actor": 59.72064545098692,
+    "timing_s/save_checkpoint": 22.8856407571584,
+    "timing_s/update_weights": 10.54383668070659,
+    "timing_s/step": 1258.0801058951765
+  },
+  "supervisor": {
+    "run_id": "mimo9b-001661-r12",
+    "started_at": 1790691041.158591,
+    "wall_clock_seconds": 18196,
+    "status": "exited",
+    "supervisor_pid": 296872,
+    "exit_code": 0,
+    "finished_at": 1790693783.3679073
+  },
+  "scope": "Actual native RLInsight scalar and trace proof; W&B API and checkpoint integrity separately audited.",
+  "phase_timestamps_utc": {
+    "supervisor_started": "2026-09-29T14:10:41.158591Z",
+    "ray_started": "2026-09-29T14:13:09.462Z",
+    "actor_engine_initialized": "2026-09-29T14:18:29.317Z",
+    "checkpoint_engine_manager_initialized": "2026-09-29T14:24:33.478Z",
+    "base_all_initialize_finished": "2026-09-29T14:25:59.436Z",
+    "standalone_vllm_spawn_warning": "2026-09-29T14:28:46Z",
+    "standalone_vllm_sampling_configuration": "2026-09-29T14:32:26Z",
+    "wandb_run_directory_timestamp": "2026-09-29T14:35:10Z",
+    "checkpoint_save_started": "2026-09-29T14:55:37.695Z",
+    "terminal_prometheus_ack": "2026-09-29T14:56:12.938843Z",
+    "supervisor_exited": "2026-09-29T14:56:23.367907Z"
+  },
+  "latency_explanation": "Approximately 24m29s from supervisor start to W&B run directory creation, including native base and standalone rollout initialization. Native one-step timing is 1258.08s, of which generation is 1135.06s. Step scalars are emitted only after generation, log-probabilities, update and checkpoint. W&B directory time identifies native logger creation, not the exact first sample time.",
+  "trace_interpretation": "Returned selected latest agent_session/agent_task spans have status=success but finished=false; these traces prove transport/identity and are not sufficient episode completion evidence. Training-consumed trajectory receipts require separate audit."
+}
