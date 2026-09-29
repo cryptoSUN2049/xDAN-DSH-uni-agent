@@ -8,7 +8,7 @@
 trainer:
   logger: [console, wandb, rl_insight]
   project_name: xDAN-Verl-Uni-agent-Harbor-rl-opd
-  experiment_name: mimo9b-001661-r13
+  experiment_name: mimo9b-001661-r14
   nnodes: 1
   n_gpus_per_node: 2
   # World-size-1 checkpoints cannot be resumed as native world-size-2 shards.

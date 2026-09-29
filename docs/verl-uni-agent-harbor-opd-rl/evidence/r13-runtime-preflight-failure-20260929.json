@@ -1,0 +1,25 @@
+{
+  "schema": "mimo.r13-runtime-preflight-failure.v1",
+  "status": "failed",
+  "source_commit": "83dd8f76270421f0127892400949797d4eb03898",
+  "exit_code": 1,
+  "pid": 327916,
+  "started_at": 1790699400.1100628,
+  "finished_at": 1790699429.7669895,
+  "cuda_visible_devices": "",
+  "training_started": false,
+  "error": "Fresh dual colocate contract failed: two sessions",
+  "prepared_max_concurrent_sessions": "1",
+  "required_max_concurrent_sessions": 2,
+  "run_spec_sha256": "sha256:a0294dbe38c3cf6bce0244efc3f7c84bfcf45ffe1807374df34468891ee1f1e2",
+  "log": {
+    "path": "/root/mimo-private/preflight-r13.log",
+    "sha256": "e9c58503cba6cafe5d83beaa850215eceda2b04f7853a51f8c2f86bc4d305dbf",
+    "bytes": 549
+  },
+  "launch": {
+    "path": "/root/mimo-private/launch-r13/launch.json",
+    "sha256": "01711d3662b00f3ceb730392ab8ae10f743d10fbec33d9be4f2751ceeaf8a2f2"
+  },
+  "explanation": "The inherited r12 preparation template explicitly passes max_concurrent_sessions=1 at prepare-r13.py line89. This writes prepared MAX_CONCURRENT_SESSIONS=1, which build_overrides correctly gives precedence over recipe 2. No training was launched."
+}

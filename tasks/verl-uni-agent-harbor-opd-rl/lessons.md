@@ -33,3 +33,5 @@
 - 用户追问“到底问题出在哪里”时，不能用进程存活、无traceback或初始化快照回答训练健康。每次状态核验必须同时读取当前operator终态、日志时间、最新step/checkpoint和API；标注查询时间。r12实际25分钟冷启动、单步1135秒采样/60秒更新，原生logger在整步结束才写history；无history不能推断卡死，也不能宣称正常。训练结束后空GPU与启动期空GPU必须明确区分。
 
 - 用户明确A5是错字后立即取消该澄清依赖。双卡目标不能悄悄降成单卡对照；先查项目memory与实跑证据，区分学生+教师双卡、actor+rollout分卡、FSDP双rank。模式切换失败与旧链路成功须分开报告；已有C4不跨rank强行resume，独立fresh测试要明确告知。
+
+- recipe中的runner参数可能被prepared launch.environment覆盖。r13虽通过配置fixture测试，实际prepare继承max_concurrent_sessions=1使最终并发仍为1；预检正确拦住。修改吞吐参数时必须核实际prepare输出→build_overrides→最终compose整个绑定链，不能只测缺少覆盖字段的手写launch fixture。

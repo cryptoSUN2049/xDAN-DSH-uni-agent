@@ -40,7 +40,7 @@ def test_dual_colocate_is_fresh_and_preserves_native_observation_and_concurrency
     # Rank-1 C3/C4 cannot be resumed as rank-2 checkpoints; runtime admission also guards this.
     assert cfg.trainer.resume_mode == "disable" and cfg.trainer.resume_from_path is None
     assert cfg.trainer.total_training_steps == 2 and cfg.trainer.save_freq == 1
-    assert cfg.trainer.experiment_name == "mimo9b-001661-r13"
+    assert cfg.trainer.experiment_name == "mimo9b-001661-r14"
     assert cfg.trainer.project_name == "xDAN-Verl-Uni-agent-Harbor-rl-opd"
     assert list(cfg.trainer.logger) == ["console", "wandb", "rl_insight"]
     assert cfg.transfer_queue.metrics.enabled and cfg.transfer_queue.metrics.port == 0

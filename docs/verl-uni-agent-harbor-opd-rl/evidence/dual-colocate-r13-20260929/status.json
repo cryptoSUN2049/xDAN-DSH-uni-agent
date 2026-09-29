@@ -1,0 +1,80 @@
+{
+  "schema": "mimo.dual-colocate-ipc.v1",
+  "status": "passed",
+  "mode": "colocate_async",
+  "backend": "naive",
+  "gpu_indexes": [
+    0,
+    1
+  ],
+  "started_at": 1790698798.5124953,
+  "deadline_unix": 1790709401,
+  "budget_seconds": 480,
+  "operator_sha256": "adf2516ac6ca755b5a45689bef4bcf0505e5dadb33a5dc613ccdd688386bfff5",
+  "source_sha256": {
+    "verl/tests/utils/test_bucketed_weight_transfer.py": "b17b021edd3703f2c2cde80e4ee5652fa22004dc4105a081e5572b5d48e43800",
+    "verl/verl/workers/rollout/vllm_rollout/bucketed_weight_transfer.py": "bafd173610e57321d3096c9bdb960fb7d8e4a37f08a4c49d1bbcde6542e7a89a",
+    "verl/verl/workers/engine_workers.py": "1d9be0846e70bf1c668776f7ff3403bb420171e6b42766c27f5a1261ac94a52b",
+    "verl/verl/checkpoint_engine/base.py": "cdbfccaf6aca586e250ce25327ca181d53ff3acaa1f3f0ebef0651b815fc05b1",
+    "verl/verl/trainer/ppo/v1/trainer_base.py": "e2ca9b9af567fbd0c99224475fafec7c881bc3e3ff730fdc6e8825c844b34e58",
+    "verl/verl/trainer/ppo/v1/trainer_colocate_async.py": "efc3fa946cfb24ce4727b5ad92d6ac7ecffd961c5afd0d9d605436c7dbf7a025"
+  },
+  "tests": 4,
+  "skipped": 0,
+  "failures": 0,
+  "errors": 0,
+  "scope": "Two per-device native sender/receiver IPC lanes; names, shapes, dtypes and checksums checked. Not elementwise, FSDP world2, LoRA merge or model-training proof.",
+  "lane_pids": [
+    327389,
+    327390
+  ],
+  "lanes": [
+    {
+      "gpu_index": 0,
+      "gpu_uuid": "GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94",
+      "torch_device_uuid": "f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94",
+      "pid": 327389,
+      "cases": [
+        {
+          "name": "test_large_weight",
+          "status": "passed",
+          "seconds": 66.23656368255615
+        },
+        {
+          "name": "test_mixed_dtypes",
+          "status": "passed",
+          "seconds": 78.65831017494202
+        }
+      ],
+      "status": "passed",
+      "tests": 2,
+      "skipped": 0,
+      "errors": 0,
+      "failures": 0
+    },
+    {
+      "gpu_index": 1,
+      "gpu_uuid": "GPU-2676ad09-5ff2-cb59-a4bd-9c516041194b",
+      "torch_device_uuid": "2676ad09-5ff2-cb59-a4bd-9c516041194b",
+      "pid": 327390,
+      "cases": [
+        {
+          "name": "test_large_weight",
+          "status": "passed",
+          "seconds": 66.23096418380737
+        },
+        {
+          "name": "test_mixed_dtypes",
+          "status": "passed",
+          "seconds": 78.66180109977722
+        }
+      ],
+      "status": "passed",
+      "tests": 2,
+      "skipped": 0,
+      "errors": 0,
+      "failures": 0
+    }
+  ],
+  "finished_at": 1790698987.1395397
+}

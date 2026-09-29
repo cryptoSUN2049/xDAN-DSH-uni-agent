@@ -1,0 +1,23 @@
+{
+  "gpu_index": 0,
+  "gpu_uuid": "GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94",
+  "torch_device_uuid": "f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94",
+  "pid": 327389,
+  "cases": [
+    {
+      "name": "test_large_weight",
+      "status": "passed",
+      "seconds": 66.23656368255615
+    },
+    {
+      "name": "test_mixed_dtypes",
+      "status": "passed",
+      "seconds": 78.65831017494202
+    }
+  ],
+  "status": "passed",
+  "tests": 2,
+  "skipped": 0,
+  "errors": 0,
+  "failures": 0
+}

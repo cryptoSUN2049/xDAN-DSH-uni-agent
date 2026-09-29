@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/mimo-dsh-rl-20260928/integration-check/mimo_dual_colocate_probe.py", line 167, in <module>
+    main()
+  File "/workspace/mimo-dsh-rl-20260928/integration-check/mimo_dual_colocate_probe.py", line 77, in main
+    lane(args.source, args.output, args.lane)
+  File "/workspace/mimo-dsh-rl-20260928/integration-check/mimo_dual_colocate_probe.py", line 44, in lane
+    assert gpu_uuid == expected_uuid, "CUDA visibility does not match intended physical GPU"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CUDA visibility does not match intended physical GPU

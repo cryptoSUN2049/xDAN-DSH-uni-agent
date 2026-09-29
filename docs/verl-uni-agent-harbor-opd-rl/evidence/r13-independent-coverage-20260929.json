@@ -1,0 +1,169 @@
+{
+  "checked_at": "2026-09-29T16:32:07.243056+00:00",
+  "scope": "Independent CPU unit coverage of complete r13 preparation and preflight modules; actual GPU/entry probe evidence is separate",
+  "coverage_version": "7.16.2",
+  "branch_coverage": true,
+  "config_file": "/dev/null",
+  "shared_environment_modified": false,
+  "coverage_package_source": "/root/.cache/uv/archive-v0/DphmuN8KOyo19O-bhuSIe",
+  "pytest_result": "52 passed in 25.16s",
+  "coverage_total": {
+    "covered_lines": 145,
+    "num_statements": 195,
+    "percent_covered": 74.22222222222223,
+    "percent_covered_display": "74",
+    "missing_lines": 50,
+    "excluded_lines": 0,
+    "percent_statements_covered": 74.35897435897436,
+    "percent_statements_covered_display": "74",
+    "num_branches": 30,
+    "num_partial_branches": 2,
+    "covered_branches": 22,
+    "missing_branches": 8,
+    "percent_branches_covered": 73.33333333333333,
+    "percent_branches_covered_display": "73"
+  },
+  "threshold_percent": 80,
+  "full_module_threshold_passed": false,
+  "files": {
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r13_preflight.py": {
+      "sha256": "4c02d112277637b709ec3ed494aa4236f986fd8f5094fe67b267b6dd3fcc7a58",
+      "summary": {
+        "covered_lines": 17,
+        "num_statements": 66,
+        "percent_covered": 28.205128205128204,
+        "percent_covered_display": "28",
+        "missing_lines": 49,
+        "excluded_lines": 0,
+        "percent_statements_covered": 25.757575757575758,
+        "percent_statements_covered_display": "26",
+        "num_branches": 12,
+        "num_partial_branches": 1,
+        "covered_branches": 5,
+        "missing_branches": 7,
+        "percent_branches_covered": 41.666666666666664,
+        "percent_branches_covered_display": "42"
+      },
+      "missing_lines": [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        70,
+        74,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        88,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        108,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        150,
+        151,
+        155
+      ],
+      "missing_branches": [
+        [
+          54,
+          55
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          78,
+          79
+        ],
+        [
+          78,
+          85
+        ],
+        [
+          80,
+          81
+        ],
+        [
+          80,
+          82
+        ],
+        [
+          154,
+          155
+        ]
+      ]
+    },
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r13_preparation.py": {
+      "sha256": "dab467e758aa87807d042e85993067ec13ab36d5c81aed327bca5a5bb9e467ec",
+      "summary": {
+        "covered_lines": 128,
+        "num_statements": 129,
+        "percent_covered": 98.63945578231292,
+        "percent_covered_display": "99",
+        "missing_lines": 1,
+        "excluded_lines": 0,
+        "percent_statements_covered": 99.2248062015504,
+        "percent_statements_covered_display": "99",
+        "num_branches": 18,
+        "num_partial_branches": 1,
+        "covered_branches": 17,
+        "missing_branches": 1,
+        "percent_branches_covered": 94.44444444444444,
+        "percent_branches_covered_display": "94"
+      },
+      "missing_lines": [
+        256
+      ],
+      "missing_branches": [
+        [
+          255,
+          256
+        ]
+      ]
+    }
+  },
+  "interpretation": "Preparation is highly covered. Preflight main orchestration is largely unexecuted by this focused unit suite. Missing lines are retained in the denominator; passing the real entry probe separately does not retroactively add coverage measurements.",
+  "raw_evidence": {
+    "r13-independent-coverage.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r13-preparation-tests/r13-independent-coverage.json",
+      "sha256": "499f5c2f3017dff3fb6ee7aedaa79be133d22d67eee8b2a3dfe8636a632306c8"
+    },
+    "r13-independent-coverage-tests.log": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r13-preparation-tests/r13-independent-coverage-tests.log",
+      "sha256": "cefa546b4ff625300d257ce7687f456b965599a4903e3ee648eda78c0cf6acfc"
+    }
+  }
+}

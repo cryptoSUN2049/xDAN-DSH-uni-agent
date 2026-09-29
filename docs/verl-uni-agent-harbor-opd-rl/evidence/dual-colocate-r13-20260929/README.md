@@ -1,0 +1,11 @@
+# Dual-device native colocated CUDA IPC preflight
+
+This operator runs the pinned VERL `TestBucketedWeightTransferIPC.test_large_weight` and `test_mixed_dtypes` on each of GPU0 and GPU1 concurrently. Both tests create distinct spawned native sender and receiver processes, use CUDA IPC (`use_shm=False`), and check names, shapes, dtypes and checksums. It reuses the upstream test code unchanged except its process timeout is increased from 60 to 300 seconds for cold imports. The operator's overall budget is 480 seconds, clipped to the existing absolute authorization deadline minus 180 seconds.
+
+The lane's actual Torch device UUID must match the requested nvidia-smi physical device UUID, and the two lanes must have distinct UUIDs. Torch represents UUIDs without the nvidia-smi `GPU-` prefix; the first attempt rejected this formatting difference before running any IPC case. The corrected comparison parses both as UUID values and preserves both raw strings. The failed first attempt is retained separately.
+
+This is a native transport preflight for two same-device colocated IPC lanes. It is not an elementwise comparison, world-size-2 FSDP test, LoRA merge test, 9B model load, optimizer update, or proof of training acceptance. Those remain checks on the real r13 run. No shared Python environment or frozen VERL source was modified.
+
+The corrected real run passed all four native cases in 188.63 seconds, with driver exit code 0. `status.json` SHA256 is `af735bc6c641b66acf8c1bdaadf6ab3cca5247ee73d766338854def70b6b971b`; executed operator SHA256 is `adf2516ac6ca755b5a45689bef4bcf0505e5dadb33a5dc613ccdd688386bfff5`. Six native source hashes are included and must match the eventual r13 frozen source. Both per-device reports retain the actual CUDA/nvidia-smi UUIDs and individual case durations. `cleanup.json` independently confirms no lane processes or GPU compute applications remain and both GPUs have 0 MiB allocated.
+
+Cloud original artifacts are `/workspace/mimo-dsh-rl-20260928/integration-check/dual-colocate-r13-v2/`; the driver exit code is in adjacent `dual-colocate-r13-v2.exit`. The first rejected attempt remains under `dual-colocate-r13/`, summarized locally in `attempt1-failure.json`. No failed attempt is counted as an executed IPC test.

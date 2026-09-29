@@ -1,3 +1,10 @@
+## 2026-09-29 16:36 UTC：r13准入拒绝，最小修正转r14
+
+- r13训练未启动。CPU prepare exit0；GPU-host CPU-only preflight因最终sessions=1退出1。根因旧prepare模板显式max_concurrent_sessions=1经launch.environment覆盖recipe2，不是GPU或依赖故障。失败报告已落evidence/r13-runtime-preflight-failure-20260929.json。
+- r14实施同一用户授权双卡fresh方案；只修prepare参数2并断言输出，独立身份ports38700–38703。原r13freeze83dd8f7/e3cb358c、inputs和失败证据保留。当前R14代码/真实prepare回归正在测试，尚无R14freeze或GPU训练。
+- 双GPU native naive IPC v2已4case PASS/188.63秒，源文件与operatorhash固定，清理后两GPU0MiB；无需为r14重复跑同一未改transport测试。
+- r13模块unit覆盖率实际74.22%：helper99%、preflight28%，不能冒充80%以上。r14将对实际CPU-only preflight入口测量coverage，独立工具包不改273环境；此前全仓Ruff646文件通过、运行代码83dd8f7已push。
+
 ## 2026-09-29 16:17 UTC：用户已授权双卡 colocate，新r13准备中
 
 - A5是用户错字，已明确忽略，不再等待该澄清。用户要求尽快双卡正常运行，并回查历史经验；按最新指定colocate_async落实。

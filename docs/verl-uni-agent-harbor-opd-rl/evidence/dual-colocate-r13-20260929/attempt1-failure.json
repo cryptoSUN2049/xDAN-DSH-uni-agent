@@ -1,0 +1,34 @@
+{
+  "schema": "mimo.dual-colocate-ipc.v1",
+  "status": "failed",
+  "mode": "colocate_async",
+  "backend": "naive",
+  "gpu_indexes": [
+    0,
+    1
+  ],
+  "started_at": 1790698651.123964,
+  "deadline_unix": 1790709401,
+  "budget_seconds": 480,
+  "operator_sha256": "85f54e72000fdfa724d8d391793776d8d41026a424dd4c9d29ab37440846fecf",
+  "source_sha256": {
+    "verl/tests/utils/test_bucketed_weight_transfer.py": "b17b021edd3703f2c2cde80e4ee5652fa22004dc4105a081e5572b5d48e43800",
+    "verl/verl/workers/rollout/vllm_rollout/bucketed_weight_transfer.py": "bafd173610e57321d3096c9bdb960fb7d8e4a37f08a4c49d1bbcde6542e7a89a",
+    "verl/verl/workers/engine_workers.py": "1d9be0846e70bf1c668776f7ff3403bb420171e6b42766c27f5a1261ac94a52b",
+    "verl/verl/checkpoint_engine/base.py": "cdbfccaf6aca586e250ce25327ca181d53ff3acaa1f3f0ebef0651b815fc05b1",
+    "verl/verl/trainer/ppo/v1/trainer_base.py": "e2ca9b9af567fbd0c99224475fafec7c881bc3e3ff730fdc6e8825c844b34e58",
+    "verl/verl/trainer/ppo/v1/trainer_colocate_async.py": "efc3fa946cfb24ce4727b5ad92d6ac7ecffd961c5afd0d9d605436c7dbf7a025"
+  },
+  "tests": 0,
+  "skipped": 0,
+  "failures": 0,
+  "errors": 1,
+  "scope": "Two per-device native sender/receiver IPC lanes; names, shapes, dtypes and checksums checked. Not elementwise, FSDP world2, LoRA merge or model-training proof.",
+  "lane_pids": [
+    327236,
+    327237
+  ],
+  "error_type": "AssertionError",
+  "error": "native lane exited 1",
+  "finished_at": 1790698692.399033
+}
