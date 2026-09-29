@@ -1,3 +1,11 @@
+## 2026-09-29 15:28 UTC：r12已exit0，此前初始化状态已过期
+
+- 真实终态：14:56:23UTC退出0，C4已保存；不是仍在初始化。GPU两卡0MiB，Pod保留、不自动关闭。
+- W&B API已确认finished、完整history一行step4；grad0.1513671875、pg_loss -0.3034908869303763、reward mean0.5、lr1e-6。RL-Insight真实Prom回执passed，Tempo真实run trace已检出，最终公开审计待agent落盘。
+- 耗时根因：启动至采样约25分钟（含trainer后standalone rollout/Gateway）；单步1258秒中gen1135秒占90.22%，更新60秒、保存23秒。原生logger仅整步结束后上报，产生长时间无指标窗口。详见docs同名r12-diagnosis-20260929.md。
+- 本轮正在补model/optimizer/effective/resume验收及所属controller/Modal/archive清理；不得在报告返回前宣称这些已经通过。专项agent separate_preparation负责参数验收、separate_recipe负责W&B对账、separate_review负责观测与所属资源清理。
+- 不改只读run-src-r12、不动共享uv/其他业务、不启动新付费训练。19:16:41UTC预算上限仍保留，但当前验收运行提前正常完成，预算上限不是要求持续跑满。
+
 ## 2026-09-29 14:11 UTC：r12 已启动，等待实际训练验收
 
 - 当前运行：mimo9b-001661-r12，controller105384、driver296871、supervisor296872、archiver105400；controller健康及spec身份已校验，尚在初始化。

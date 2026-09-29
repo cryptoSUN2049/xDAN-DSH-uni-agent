@@ -29,3 +29,5 @@
 - rl-insight0.3.0的finish仅清理进程内state，且Hub实际并非detached；不能据过时docstring推断它会存活。真实CPU Ray探针证明保留TaskRunner仍可能丢失最后Hub handle、导致首次Prometheus scrape前actor消失。必须保留原生Hub handle跨越finish，并以唯一preflight实验的真实Prom/Tempo回执验证，不靠sleep或端口健康推定通过。
 
 - 冻结源码必须保持只读；Hydra会在进入用户entry之前创建日志目录，compose/tokenizer预检不覆盖这一步。launcher应显式配置独立私有hydra.run.dir，并验证实际只读cwd入口、日志元数据及pre-Ray guard，避免仅凭配置组合测试推断训练能启动。
+
+- 用户追问“到底问题出在哪里”时，不能用进程存活、无traceback或初始化快照回答训练健康。每次状态核验必须同时读取当前operator终态、日志时间、最新step/checkpoint和API；标注查询时间。r12实际25分钟冷启动、单步1135秒采样/60秒更新，原生logger在整步结束才写history；无history不能推断卡死，也不能宣称正常。训练结束后空GPU与启动期空GPU必须明确区分。
