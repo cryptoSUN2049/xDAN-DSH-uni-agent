@@ -1,0 +1,93 @@
+{
+  "schema": "mimo.r8-terminal-summary.v1",
+  "run_id": "mimo9b-001661-r8",
+  "controller_exited": true,
+  "archiver_exited": true,
+  "jobs": [
+    {
+      "job_id": "job-a12d04947d294716b6f7a819eb4ce8fd",
+      "status": "succeeded",
+      "error_code": null
+    },
+    {
+      "job_id": "job-5de8b6cb46034832bf9d5e712da271ae",
+      "status": "succeeded",
+      "error_code": null
+    },
+    {
+      "job_id": "job-059b9f7dc1a445d7b53e7f6b9289513e",
+      "status": "succeeded",
+      "error_code": null
+    },
+    {
+      "job_id": "job-b8f13276ef1d492586189f13850ccb2e",
+      "status": "succeeded",
+      "error_code": null
+    },
+    {
+      "job_id": "job-f8d9b1c87dd249f5a2b479f7fae909b2",
+      "status": "cancelled",
+      "error_code": "evidence-rejected-after-cleanup"
+    }
+  ],
+  "controller_cleanup_errors": [],
+  "modal_sandboxes": 10,
+  "modal_active": 0,
+  "modal_all_terminated": true,
+  "archive": {
+    "files": 61,
+    "bytes": 1522656,
+    "errors": [],
+    "hash_mismatches": 0,
+    "mode_mismatches": 0,
+    "source_missing": [],
+    "pending": [
+      "job-f8d9b1c87dd249f5a2b479f7fae909b2"
+    ]
+  },
+  "trajectories": [
+    {
+      "session_index": 0,
+      "group_uid": "f2eca8dd-cfb2-44a6-a674-2c904f1d99aa",
+      "reward": 0.0,
+      "finished": true,
+      "termination_kind": "completed",
+      "stage": "dump_complete"
+    },
+    {
+      "session_index": 1,
+      "group_uid": "f2eca8dd-cfb2-44a6-a674-2c904f1d99aa",
+      "reward": 1.0,
+      "finished": true,
+      "termination_kind": "completed",
+      "stage": "dump_complete"
+    },
+    {
+      "session_index": 2,
+      "group_uid": "f2eca8dd-cfb2-44a6-a674-2c904f1d99aa",
+      "reward": 1.0,
+      "finished": true,
+      "termination_kind": "completed",
+      "stage": "dump_complete"
+    },
+    {
+      "session_index": 3,
+      "group_uid": "f2eca8dd-cfb2-44a6-a674-2c904f1d99aa",
+      "reward": 0.0,
+      "finished": true,
+      "termination_kind": "completed",
+      "stage": "dump_complete"
+    }
+  ],
+  "source_evidence": {
+    "close-result.json": "86e9ef7683b4956383b9483af5b08deac1fd3cea98fc43c53ed1d6c8366a2d0b",
+    "modal-live-poll.json": "fd6bd4d443765ef1ab9acdca7e2dc15f76337d014577bf5e9bc3f45172d82ec3",
+    "archiver-stop.json": "c1a516eb2f595a7d7095abcddbd17de12a4ad9f6c9a06859f86bc64b97811014",
+    "final-evidence-check.json": "21ad24ca6a16184b0f826d534025afee1a6e0406d39554e6a6ce08f071720f73"
+  },
+  "checked_unix": 1790671875.609684,
+  "training_acceptance": false,
+  "checkpoint_count": 0,
+  "reason": "r8 trainer compute_log_prob/dense entropy CUDA OOM before first optimizer update",
+  "pod_deleted": false
+}

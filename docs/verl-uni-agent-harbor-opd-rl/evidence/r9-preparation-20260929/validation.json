@@ -1,0 +1,46 @@
+{
+  "schema": "mimo.r9-stage-validation.v1",
+  "training_started": false,
+  "prepared_run": false,
+  "source_sha256": "de25ebfc09fb5f7de6b3deb95307792ea97623bbbbba47ba19aa0eaae141c6c7",
+  "tests_sha256": "f52d4ec2d4b7052e4f80f55bc500a61ba26dd5ae91700537cc2029cfddcfd5ad",
+  "old_bundle_preserved": "/workspace/mimo-dsh-rl-20260928/audit-code/r9-preparation-draft-20260929T084811Z",
+  "bundle": "/workspace/mimo-dsh-rl-20260928/audit-code/r9-preparation",
+  "rendered": {
+    "schema": "mimo.r9-script-preparation.v1",
+    "files": {
+      "prepare-r9.py": "548fcb17c01665b3f49b06f8a626bc9edeb72193577710f72733efc71f757d44",
+      "launch-r9-driver.py": "76da14b7c58695b144dcb2e7a2cbc9d5ce13206f27e3c411c51b494638642561",
+      "mimo-supervised-native-r9.py": "6404ff6a74ba3cc70ab57fb69b95554705896791c2e380c504de06acde5d372d",
+      "mimo_r9_preparation.py": "de25ebfc09fb5f7de6b3deb95307792ea97623bbbbba47ba19aa0eaae141c6c7"
+    },
+    "training_started": false,
+    "templates": {
+      "prepare": "edd2de0905abe6d3b2aa96e8581dc23272f264b76b5ff70fa77ba4b9175ce565",
+      "driver": "6c53a616e3248e09823efd3419059c78ff7a372155d5cd13b93cf3c8ff6c4521",
+      "wrapper": "67d393bc04915e92d50fc8a788a2edc7cc678635f6bca56465f849c1b56fdf48"
+    }
+  },
+  "private_absence": {
+    "run-spec-r9.json": true,
+    "registration-token-r9": true,
+    "worker-token-r9": true,
+    "launch-r9": true,
+    "controller-r9": true
+  },
+  "runs_r9_absent": true,
+  "inner_gpu_script_ast_valid": true,
+  "coverage": {
+    "covered_lines": 93,
+    "num_statements": 94,
+    "percent_covered": 98.21428571428571,
+    "percent_covered_display": "98",
+    "missing_lines": 1,
+    "excluded_lines": 0,
+    "num_branches": 18,
+    "num_partial_branches": 1,
+    "covered_branches": 17,
+    "missing_branches": 1
+  },
+  "test_count": 25
+}

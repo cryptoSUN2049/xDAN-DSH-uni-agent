@@ -81,3 +81,12 @@ Goal API当前仍报告paused，工具没有resume接口；用户已在会话明
 - 原始launch/task/receipts及privateproof在GPU /root/mimo-private/launch-r8；公开operator状态/log在 /workspace/mimo-dsh-rl-20260928/runs/r8/operator；controller logs/jobs在CPU /root/mimo-private/controller-r8。
 - 暂未启动旧v1 archiver（不能直接用于新receipt）。保留GPU私有原件；需补v2证据归档或运行后有界复制并校验hash。
 - 后续：实际group/reward/梯度/checkpoints → audit_m2_training --train-n4 --no-validation → C1/C2参数与optimizer差异 → 新r9 controller/session/Ray重载C2再有效更新。尚未验收训练成功。
+
+## 2026-09-29 r8终态与固定五小时新窗口
+
+- 用户08:16:41UTC要求五小时后终止；绝对截止13:16:41UTC / 新加坡21:16:41，重启不得顺延。r8内存4800秒限制未热改；新controller显式max-run-seconds18000（默认14400保持），46云端回归通过。
+- e4db0e8已commit/push，精确提交干净worktree全仓Ruff双门通过621文件；包含窗口、有效更新审计37例、v2字节归档29例。各自规则测试不替代真实训练验收。
+- r8于08:29:23UTC exit1：四条同组自然完成，奖励[0,1,1,0]，但compute_old_log_prob进入dense entropy后OOM，请求21.91GiB而仅20.45GiB可用。零checkpoint，未完成optimizer更新；不是预算样本拒绝。
+- controller98563、archiver99526身份核对后SIGINT退出，cleanup_errors=[]；ledger4succeeded/1cancelled无活跃任务，10个Modal实时poll终态137。归档61文件1522656字节，hash/权限差异0。pending仅无训练receipt的已取消预取request。公开摘要evidence/r8-termination-20260929.json，私有原件CPU evidence-r8/worker-final。
+- 两GPU显存0MiB已实测，现有Pod保留/计费；不触碰其他服务器。r9脚本staged，尚未训练；r8无C2，因此下一轮必须fresh2steps，不能使用resume。
+- dense路径忽略既有entropy分块开关，最小MiMo overlay在独立副本验证；不改冻结r8或VERL gitlink，不关闭entropy。通过后冻结r9、固定截止启动；仍32K/20480。

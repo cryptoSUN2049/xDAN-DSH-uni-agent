@@ -1,0 +1,278 @@
+FFFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+_______________ test_fresh_has_no_resume_and_absolute_two_steps ________________
+
+frozen = PosixPath('/tmp/pytest-of-root/pytest-106/test_fresh_has_no_resume_and_a0')
+
+    def test_fresh_has_no_resume_and_absolute_two_steps(frozen):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:15: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e5cefcef4a0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+__________ test_resume_requires_complete_c2_and_absolute_three_steps ___________
+
+frozen = PosixPath('/tmp/pytest-of-root/pytest-106/test_resume_requires_complete_0')
+
+    def test_resume_requires_complete_c2_and_absolute_three_steps(frozen):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:15: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e5cefcf35c0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+_______________ test_invalid_freeze_or_window_fails_closed[mode] _______________
+
+frozen = PosixPath('/tmp/pytest-of-root/pytest-106/test_invalid_freeze_or_window_0')
+attack = 'mode'
+
+    @pytest.mark.parametrize("attack", ["mode", "commit", "hash", "traversal", "late", "too-early", "missing-file"])
+    def test_invalid_freeze_or_window_fails_closed(frozen, attack):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:15: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e5cefcf4260>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+______________ test_invalid_freeze_or_window_fails_closed[commit] ______________
+
+frozen = PosixPath('/tmp/pytest-of-root/pytest-106/test_invalid_freeze_or_window_1')
+attack = 'commit'
+
+    @pytest.mark.parametrize("attack", ["mode", "commit", "hash", "traversal", "late", "too-early", "missing-file"])
+    def test_invalid_freeze_or_window_fails_closed(frozen, attack):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:15: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e5cefcf54c0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+_______________ test_invalid_freeze_or_window_fails_closed[hash] _______________
+
+frozen = PosixPath('/tmp/pytest-of-root/pytest-106/test_invalid_freeze_or_window_2')
+attack = 'hash'
+
+    @pytest.mark.parametrize("attack", ["mode", "commit", "hash", "traversal", "late", "too-early", "missing-file"])
+    def test_invalid_freeze_or_window_fails_closed(frozen, attack):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:15: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e5cefcf6c00>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+____________ test_invalid_freeze_or_window_fails_closed[traversal] _____________
+
+frozen = PosixPath('/tmp/pytest-of-root/pytest-106/test_invalid_freeze_or_window_3')
+attack = 'traversal'
+
+    @pytest.mark.parametrize("attack", ["mode", "commit", "hash", "traversal", "late", "too-early", "missing-file"])
+    def test_invalid_freeze_or_window_fails_closed(frozen, attack):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:15: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e5cefcbb7d0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+_______________ test_invalid_freeze_or_window_fails_closed[late] _______________
+
+frozen = PosixPath('/tmp/pytest-of-root/pytest-106/test_invalid_freeze_or_window_4')
+attack = 'late'
+
+    @pytest.mark.parametrize("attack", ["mode", "commit", "hash", "traversal", "late", "too-early", "missing-file"])
+    def test_invalid_freeze_or_window_fails_closed(frozen, attack):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:15: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e5cefcf57f0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+____________ test_invalid_freeze_or_window_fails_closed[too-early] _____________
+
+frozen = PosixPath('/tmp/pytest-of-root/pytest-106/test_invalid_freeze_or_window_5')
+attack = 'too-early'
+
+    @pytest.mark.parametrize("attack", ["mode", "commit", "hash", "traversal", "late", "too-early", "missing-file"])
+    def test_invalid_freeze_or_window_fails_closed(frozen, attack):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:15: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e5cefcf3ef0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+___________ test_invalid_freeze_or_window_fails_closed[missing-file] ___________
+
+frozen = PosixPath('/tmp/pytest-of-root/pytest-106/test_invalid_freeze_or_window_6')
+attack = 'missing-file'
+
+    @pytest.mark.parametrize("attack", ["mode", "commit", "hash", "traversal", "late", "too-early", "missing-file"])
+    def test_invalid_freeze_or_window_fails_closed(frozen, attack):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:15: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e5cefc5b7d0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+_____________ test_fixed_template_identity_rejects_modified_source _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-106/test_fixed_template_identity_r0')
+
+    def test_fixed_template_identity_rejects_modified_source(tmp_path):
+>       m = module()
+            ^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_r9_preparation.py:15: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e5cefcb9bb0>
+path = '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mimo-dsh-rl-20260928/integration-check/effective-update-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r9_preparation.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/uni_agent/deployment/test_mimo_r9_preparation.py::test_fresh_has_no_resume_and_absolute_two_steps
+FAILED tests/uni_agent/deployment/test_mimo_r9_preparation.py::test_resume_requires_complete_c2_and_absolute_three_steps
+FAILED tests/uni_agent/deployment/test_mimo_r9_preparation.py::test_invalid_freeze_or_window_fails_closed[mode]
+FAILED tests/uni_agent/deployment/test_mimo_r9_preparation.py::test_invalid_freeze_or_window_fails_closed[commit]
+FAILED tests/uni_agent/deployment/test_mimo_r9_preparation.py::test_invalid_freeze_or_window_fails_closed[hash]
+FAILED tests/uni_agent/deployment/test_mimo_r9_preparation.py::test_invalid_freeze_or_window_fails_closed[traversal]
+FAILED tests/uni_agent/deployment/test_mimo_r9_preparation.py::test_invalid_freeze_or_window_fails_closed[late]
+FAILED tests/uni_agent/deployment/test_mimo_r9_preparation.py::test_invalid_freeze_or_window_fails_closed[too-early]
+FAILED tests/uni_agent/deployment/test_mimo_r9_preparation.py::test_invalid_freeze_or_window_fails_closed[missing-file]
+FAILED tests/uni_agent/deployment/test_mimo_r9_preparation.py::test_fixed_template_identity_rejects_modified_source
+10 failed in 0.42s
