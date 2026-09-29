@@ -1,0 +1,122 @@
+{
+  "schema": "dsh.bounded-worker-concurrency-tests.v1",
+  "created_utc": "2026-09-29T18:04:37.350642+00:00",
+  "tests": 68,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 2.48,
+  "coverage": {
+    "covered_lines": 496,
+    "num_statements": 558,
+    "percent_covered": 86.50137741046832,
+    "percent_covered_display": "87",
+    "missing_lines": 62,
+    "excluded_lines": 0,
+    "percent_statements_covered": 88.88888888888889,
+    "percent_statements_covered_display": "89",
+    "num_branches": 168,
+    "num_partial_branches": 34,
+    "covered_branches": 132,
+    "missing_branches": 36,
+    "percent_branches_covered": 78.57142857142857,
+    "percent_branches_covered_display": "79"
+  },
+  "file_coverage": {
+    "deployment/services/harbor_run_controller.py": {
+      "covered_lines": 274,
+      "num_statements": 322,
+      "percent_covered": 83.01435406698565,
+      "percent_covered_display": "83",
+      "missing_lines": 48,
+      "excluded_lines": 0,
+      "percent_statements_covered": 85.09316770186335,
+      "percent_statements_covered_display": "85",
+      "num_branches": 96,
+      "num_partial_branches": 21,
+      "covered_branches": 73,
+      "missing_branches": 23,
+      "percent_branches_covered": 76.04166666666667,
+      "percent_branches_covered_display": "76"
+    },
+    "uni_agent/tasks/harbor_dsh/ledger.py": {
+      "covered_lines": 89,
+      "num_statements": 94,
+      "percent_covered": 92.06349206349206,
+      "percent_covered_display": "92",
+      "missing_lines": 5,
+      "excluded_lines": 0,
+      "percent_statements_covered": 94.68085106382979,
+      "percent_statements_covered_display": "95",
+      "num_branches": 32,
+      "num_partial_branches": 5,
+      "covered_branches": 27,
+      "missing_branches": 5,
+      "percent_branches_covered": 84.375,
+      "percent_branches_covered_display": "84"
+    },
+    "uni_agent/tasks/harbor_dsh/worker.py": {
+      "covered_lines": 133,
+      "num_statements": 142,
+      "percent_covered": 90.65934065934066,
+      "percent_covered_display": "91",
+      "missing_lines": 9,
+      "excluded_lines": 0,
+      "percent_statements_covered": 93.66197183098592,
+      "percent_statements_covered_display": "94",
+      "num_branches": 40,
+      "num_partial_branches": 8,
+      "covered_branches": 32,
+      "missing_branches": 8,
+      "percent_branches_covered": 80.0,
+      "percent_branches_covered_display": "80"
+    }
+  },
+  "files": {
+    "uni_agent/tasks/harbor_dsh/ledger.py": {
+      "sha256": "d474ea39303fc6a46d7480480f3d01ffa8b7225fdb1abcae6bcbeaa464fa358d",
+      "bytes": 6791
+    },
+    "uni_agent/tasks/harbor_dsh/worker.py": {
+      "sha256": "995dabff0d64eecac0277670b89181bdaf1284313bec9a4c192fb3d0fbab5be3",
+      "bytes": 10229
+    },
+    "deployment/services/harbor_run_controller.py": {
+      "sha256": "536900837580e52e314544cd7504aa7e9c911fdb9cd3e1834faf7b66fd896910",
+      "bytes": 18774
+    },
+    "tests/uni_agent/tasks/test_harbor_dsh_ledger.py": {
+      "sha256": "0a957f0e8a65d92a19357a91ee7304c0e7b5eb357827d5cbc9e61ed77e318d38",
+      "bytes": 7455
+    },
+    "tests/uni_agent/tasks/test_harbor_dsh_worker.py": {
+      "sha256": "092a767fb993328655fd655dd41f443c86237f43b03cce497ff336d2c02c6736",
+      "bytes": 12267
+    },
+    "tests/uni_agent/tasks/test_harbor_dsh_worker_http.py": {
+      "sha256": "390b363b303c01e6b11b40eb5354a6314f191b5104a83162fa1d2d6af19846c4",
+      "bytes": 6991
+    },
+    "tests/uni_agent/deployment/test_harbor_run_controller.py": {
+      "sha256": "631f1129c91495112ef49c511e5556fa4b50cfc36ea8f206e0bc88edbf948c96",
+      "bytes": 15914
+    },
+    "red.log": {
+      "sha256": "c1a784a1b1affbc431f5c90a50b3b69d21f741d2794d5319dfc44ea72bcd7d95",
+      "bytes": 5512
+    },
+    "green.log": {
+      "sha256": "e7aded5db5526db989f1b8f36633be1f5393804f9a49c4f345525fa52d8ae842",
+      "bytes": 29501
+    },
+    "green-v2.log": {
+      "sha256": "a5297ffb7a4bafefc2775d3b3d74935f9d591ea26b7f415285aa2de083f694ef",
+      "bytes": 99
+    },
+    "coverage.json": {
+      "sha256": "c8e12d0f85c458f327673b83d8206b0e77a860b8a1fd5c3a75891a8f1c61471c",
+      "bytes": 51193
+    }
+  },
+  "scope": "Cloud CPU real aiohttp+HarborWorker+SQLite regression. Fake executor only; no actual Modal/GPU training claimed. Initial green.log reflects staging readonly-copy failure; green-v2.log is final source tested."
+}

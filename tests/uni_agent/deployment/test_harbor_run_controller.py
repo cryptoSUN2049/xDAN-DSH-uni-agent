@@ -269,7 +269,8 @@ async def test_reused_root_is_not_modified_on_failed_start_or_close(tmp_path):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("registry_secret", [None, "mimo-dsh-ghcr"])
-async def test_real_factory_binds_run_and_closes_listener_before_worker(monkeypatch, tmp_path, registry_secret):
+@pytest.mark.parametrize("cap", [1, 2])
+async def test_real_factory_binds_run_and_closes_listener_before_worker(monkeypatch, tmp_path, registry_secret, cap):
     from deployment.services.harbor_run_controller import start_worker
     from uni_agent.tasks.harbor_dsh import worker as worker_module
 
@@ -309,7 +310,7 @@ async def test_real_factory_binds_run_and_closes_listener_before_worker(monkeypa
     monkeypatch.setattr(worker_module, "HarborWorker", Worker)
     monkeypatch.setattr("deployment.services.harbor_run_controller.web.AppRunner", Runner)
     monkeypatch.setattr("deployment.services.harbor_run_controller.web.TCPSite", Site)
-    spec = make_spec(tmp_path)
+    spec = RunSpec.model_validate({**make_spec(tmp_path).model_dump(), "max_concurrent_jobs": cap})
     if registry_secret is not None:
         spec = RunSpec.model_validate(
             {
@@ -324,6 +325,7 @@ async def test_real_factory_binds_run_and_closes_listener_before_worker(monkeypa
             }
         )
     service = await start_worker(spec, policy(payload()))
+    assert service.worker.kwargs["ledger"].max_active_jobs == cap
     assert service.worker.kwargs.get("registry_secret") == registry_secret
     assert service.worker.submit({"run_id": "run-1"}) == {"run_id": "run-1"}
     with pytest.raises(ValueError, match="controller run"):
@@ -418,3 +420,17 @@ async def test_failure_records_observed_time_and_owned_ssh_exitcode(tmp_path):
     assert failure["failure_observed_at_unix"] == 1000
     assert failure["ssh_exit_codes"] == {"control": 255, "model": None}
     assert "rrrrrrrr" not in json.dumps(failure)
+
+
+@pytest.mark.parametrize("cap", [0, 3, True, 1.5, "2"])
+def test_run_spec_rejects_invalid_job_capacity(tmp_path, cap):
+    with pytest.raises(ValueError):
+        RunSpec.model_validate({**make_spec(tmp_path).model_dump(), "max_concurrent_jobs": cap})
+
+
+def test_run_spec_capacity_default_preserves_hash_and_two_is_explicit(tmp_path):
+    spec = make_spec(tmp_path)
+    assert spec.max_concurrent_jobs == 1
+    assert "max_concurrent_jobs" not in spec.model_dump()
+    two = RunSpec.model_validate({**spec.model_dump(), "max_concurrent_jobs": 2})
+    assert two.model_dump()["max_concurrent_jobs"] == 2

@@ -87,6 +87,7 @@ class RunSpec(BaseModel):
     remote_worker_port: Port
     modal_ingress: ModalIngressConfig | None = None
     registry_secret: str | None = None
+    max_concurrent_jobs: Annotated[int, Field(strict=True, ge=1, le=2)] = 1
 
     @model_serializer(mode="wrap")
     def _serialize(self, handler):
@@ -95,6 +96,8 @@ class RunSpec(BaseModel):
             result.pop("modal_ingress", None)
         if self.registry_secret is None:
             result.pop("registry_secret", None)
+        if self.max_concurrent_jobs == 1:
+            result.pop("max_concurrent_jobs", None)
         return result
 
     @field_validator("ssh_host")
@@ -169,7 +172,7 @@ async def start_worker(spec, policy):
     from uni_agent.tasks.harbor_dsh.worker import HarborWorker
     from uni_agent.tasks.harbor_dsh.worker_http import create_app as worker_app
 
-    ledger = JobLedger(spec.root / "jobs.sqlite")
+    ledger = JobLedger(spec.root / "jobs.sqlite", max_active_jobs=spec.max_concurrent_jobs)
 
     class RunWorker(HarborWorker):
         def submit(self, data):

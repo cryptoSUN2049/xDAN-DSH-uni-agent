@@ -16,7 +16,10 @@ from .protocol import JobRequest, RequestPolicy, validate_manifest, validate_req
 
 
 class JobLedger:
-    def __init__(self, path: Path):
+    def __init__(self, path: Path, *, max_active_jobs: int = 1):
+        if type(max_active_jobs) is not int or not 1 <= max_active_jobs <= 64:
+            raise ValueError("max_active_jobs must be an integer between 1 and 64")
+        self.max_active_jobs = max_active_jobs
         path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
         self.db = sqlite3.connect(path, isolation_level=None, timeout=10)
         path.chmod(0o600)
@@ -55,6 +58,14 @@ class JobLedger:
             "manifest": json.loads(row["manifest"]) if row["manifest"] else None,
         }
 
+    def active_job_ids(self) -> set[str]:
+        return {
+            row[0]
+            for row in self.db.execute(
+                "SELECT job_id FROM jobs WHERE status IN ('queued','running','verifying','cancelling')"
+            )
+        }
+
     def submit(self, data: dict, *, policy: RequestPolicy, now_unix: float) -> dict:
         request = JobRequest.model_validate(data)
         with self._transaction():
@@ -69,7 +80,7 @@ class JobLedger:
                 # A published request stays inspectable after its deadline.
                 return self.get(rows[0]["job_id"])
             validate_request(data, policy=policy, now_unix=now_unix)
-            if self.db.execute("SELECT 1 FROM jobs WHERE status IN ('running','verifying','cancelling')").fetchone():
+            if len(self.active_job_ids()) >= self.max_active_jobs:
                 raise ValueError("Worker already has an active or unconfirmed job")
             self.db.execute(
                 "INSERT INTO jobs VALUES (?,?,?,?,?,?,?,NULL)",
@@ -94,7 +105,10 @@ class JobLedger:
                 raise ValueError("Queued job deadline expired")
             if job["status"] != "queued":
                 raise ValueError("Only a queued job can start")
-            if self.db.execute("SELECT 1 FROM jobs WHERE status IN ('running','verifying','cancelling')").fetchone():
+            active = self.db.execute(
+                "SELECT COUNT(*) FROM jobs WHERE status IN ('running','verifying','cancelling')"
+            ).fetchone()[0]
+            if active >= self.max_active_jobs:
                 raise ValueError("Worker already has an active or unconfirmed job")
             self.db.execute("UPDATE jobs SET status='running' WHERE job_id=?", (job_id,))
             return self.get(job_id)

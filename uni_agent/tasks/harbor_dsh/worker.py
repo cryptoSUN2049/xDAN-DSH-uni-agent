@@ -1,4 +1,4 @@
-"""Single-job orchestration over the durable ledger and real Harbor executor."""
+"""Bounded job orchestration over the durable ledger and real Harbor executor."""
 
 from __future__ import annotations
 
@@ -65,8 +65,9 @@ class HarborWorker:
             existed = True
         except KeyError:
             existed = False
-        if not existed and any(not task.done() for task in self.tasks.values()):
-            raise ValueError("Worker is busy")
+        occupied = self.ledger.active_job_ids() | {job_id for job_id, task in self.tasks.items() if not task.done()}
+        if not existed and len(occupied) >= self.ledger.max_active_jobs:
+            raise ValueError("Worker is busy: active or unconfirmed job limit")
         job = self.ledger.submit(data, policy=self.policy, now_unix=self.clock())
         if not existed:
             directory = self.root / request.job_id

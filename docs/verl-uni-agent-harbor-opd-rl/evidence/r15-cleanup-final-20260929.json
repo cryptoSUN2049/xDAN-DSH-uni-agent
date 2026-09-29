@@ -1,0 +1,113 @@
+{
+  "schema": "mimo-r15-cleanup-final.v1",
+  "run_id": "mimo9b-001661-r15",
+  "source_commit": "9a133cd548cdf864de0005814b472793a3fa6909",
+  "observed_at_utc": "2026-09-29T18:05:14Z",
+  "acceptance": {
+    "training_passed": false,
+    "optimizer_steps": 0,
+    "checkpoint_count": 0,
+    "two_replica_request_routing_proven": false,
+    "reason": "Downstream Harbor worker and ledger admitted only one active job while launcher requested two concurrent sessions; repeated HTTP 409 prevented a complete four-session group."
+  },
+  "controller": {
+    "pid": 107570,
+    "verified_starttime": "312516342",
+    "verified_cwd": "/workspace/mimo-dsh-rl-20260928/run-src-r15",
+    "verified_spec": "/root/mimo-private/run-spec-r15.json",
+    "signal": "SIGINT",
+    "signal_unix": 1790704921.1116629,
+    "alive_after": false,
+    "cleanup_errors": []
+  },
+  "gpu_supervisor": {
+    "driver_pid": 344153,
+    "timeline_pid": 344154,
+    "training_pid": 344221,
+    "exit_code": -15,
+    "reason": "controller-health-failed",
+    "health_failure_unix": 1790705012.521784,
+    "driver_alive_after": false,
+    "timeline_alive_after": false,
+    "gpu_memory_used_mib": [
+      0,
+      0
+    ],
+    "gpu_utilization_percent": [
+      0,
+      0
+    ],
+    "compute_processes": [],
+    "checkpoint_directory_exists": false,
+    "pod_stopped_or_deleted": false
+  },
+  "worker_jobs": [
+    {
+      "job_id": "job-b391baa7007c49f28bbe457b4982710f",
+      "state": "succeeded"
+    },
+    {
+      "job_id": "job-75eb59f9932c4e8b95ce94a02ea41425",
+      "state": "cancelled"
+    }
+  ],
+  "modal": {
+    "independent_api_poll_unix": 1790705011.532993,
+    "resources": [
+      {
+        "sandbox_id": "sb-0reDGlzgJMDdQO2zk2GM3O",
+        "returncode": 137
+      },
+      {
+        "sandbox_id": "sb-a6XlrGT50rzowmMWXOBDwH",
+        "returncode": 137
+      },
+      {
+        "sandbox_id": "sb-vSxQ0yLROsBPRBKZK1UnA0",
+        "returncode": 137
+      }
+    ],
+    "errors": [],
+    "note": "Existing per-trial termination receipts independently confirmed by Sandbox.poll; no additional terminate call needed. Exit 137 is not evidence of OOM."
+  },
+  "archive": {
+    "private_root": "/root/mimo-private/evidence-r15",
+    "files": 861,
+    "bytes": 1848741,
+    "complete_jobs": 1,
+    "pending_incomplete_artifacts": 843,
+    "readback_hash_and_permission_errors": [],
+    "transport_errors": [],
+    "worker_final_files": 50,
+    "worker_final_bytes": 7871191,
+    "worker_final_manifest_sha256": "b084566adff529d57f30c90afc11ab5d5beef8f100164d6636d5e7fbc772955d",
+    "status_sha256": "ed95bebee25eb4101bb2feb5cc46001bb5530b056fc8e9157d41075603c24c41",
+    "archiver_pid": 107586,
+    "archiver_verified_starttime": "312538261",
+    "archiver_sigint_after_readback_unix": 1790705084.8429368,
+    "archiver_alive_after": false,
+    "archiver_state": "stopped"
+  },
+  "wandb": {
+    "url": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/mimo9b001661r15",
+    "api_observed_unix": 1790705056.664387,
+    "state": "running",
+    "unsampled_history_rows": 0,
+    "query": "list(run.scan_history())",
+    "mutation_performed": false,
+    "note": "API terminal state had not converged after forced process termination; do not label this finished or healthy."
+  },
+  "limitations": [
+    "One verifier-success job does not constitute a complete GRPO group or optimizer step.",
+    "843 pending artifacts are retained failed/incomplete requests, not successful episodes.",
+    "Two GPUs initialized; prior Prometheus snapshot had positive requests on replica 1 and zero on replica 0, so both-replica routing acceptance failed."
+  ],
+  "private_evidence": [
+    "/root/mimo-private/r15-cleanup-signal.json",
+    "/root/mimo-private/r15-modal-final-poll.json",
+    "/root/mimo-private/evidence-r15/worker-final/final-evidence-check.json",
+    "/root/mimo-private/evidence-r15/worker-final/final-files.json",
+    "/root/mimo-private/r15-readonly-audit/gpu-final.json",
+    "/root/mimo-private/r15-readonly-audit/wandb-final.json"
+  ]
+}

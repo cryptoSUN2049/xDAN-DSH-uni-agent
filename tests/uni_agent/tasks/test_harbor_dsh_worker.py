@@ -286,3 +286,43 @@ async def test_timeout_preserves_clean_rejection_from_executor_unwind(tmp_path):
         assert status["status"] == "cancelled"
         assert status["manifest"]["artifacts"] == []
         assert "unconfirmed" not in status
+
+
+@pytest.mark.asyncio
+async def test_unconfirmed_plus_sealed_finalizer_both_occupy_capacity(tmp_path):
+    from tests.uni_agent.tasks.test_harbor_dsh_ledger import second
+    from tests.uni_agent.tasks.test_harbor_dsh_protocol import manifest
+    from uni_agent.tasks.harbor_dsh.protocol import JobRequest, request_sha256
+
+    data = payload()
+    other = second(data)
+    third = second(other)
+    third["nonce"] = "ef" * 16
+    third["request_sha256"] = request_sha256(third)
+    release = asyncio.Event()
+    with JobLedger(tmp_path / "ledger.sqlite", max_active_jobs=2) as ledger:
+        ledger.submit(data, policy=policy(data), now_unix=1000)
+        ledger.start(data["job_id"], now_unix=1000)
+        ledger.submit(other, policy=policy(data), now_unix=1000)
+        ledger.start(other["job_id"], now_unix=1000)
+        ledger.verifying(other["job_id"])
+        ledger.seal(other["job_id"], manifest(JobRequest.model_validate(other)), worker_id="worker-1")
+        worker = HarborWorker(
+            ledger=ledger,
+            policy=policy(data),
+            worker_id="worker-1",
+            task_dir=tmp_path,
+            root=tmp_path / "worker",
+            gateway_base_url="http://host.docker.internal:45678",
+            executor=lambda: None,
+            clock=lambda: 1000.0,
+        )
+        finalizer = asyncio.create_task(release.wait())
+        worker.tasks[other["job_id"]] = finalizer
+        try:
+            with pytest.raises(ValueError, match="busy"):
+                worker.submit(third)
+            assert not (worker.root / third["job_id"]).exists()
+        finally:
+            release.set()
+            await finalizer

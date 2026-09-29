@@ -4,7 +4,7 @@
 
 用户明确“测试colocate_async”并纠正A5为错字，要求尽快双卡正常运行、复用此前经验。此设计落实已授权模式与双卡测试；原C4及全部证据保留，不做未经验证的rank1→rank2恢复。
 
-目标：固定MiMo9B初始模型、真实Code001661、DSH/Harbor/Modal、native VERL GRPO，在两张RTX PRO6000上共享采样/训练池，完成两步有界功能测试。它是fresh拓扑验证，不声称从C4续训或严格复现r12性能。
+目标：固定MiMo9B初始模型、真实Code001661、DSH/Harbor/Modal、native VERL GRPO，在两张RTX PRO6000上共享采样/训练池，完成三步有界功能测试（当前 R17）。它是fresh拓扑验证，不声称从C4续训或严格复现r12性能。
 
 ## 架构
 
@@ -64,3 +64,20 @@ R14 exposed a missing `cloudflared` executable on the controller's PATH. The app
 新schema `mimo.world2-effective-update.v1`：先重新绑定batch/receipt审计与4个消费TQ keys；同step唯一console metrics须有reward方差、正负advantage、finite非零grad。双rank报告须绑定已审核checker源码SHA、world2 config、rank0/1全部model/optim/extra原始文件路径与SHA；重新验证全局分片边界/无重叠/完整覆盖、所有finite、base不变而LoRA变化、各rank optimizer绝对步数前后相邻且非零moments变化。不得改schema伪装single-rank或仅依赖passed字段。
 
 测试覆盖真实临时证据文件的正常组合及假SHA、缺rank、错run/step/key、恒定奖励、零梯度、base改变、optimizer全零、分片缺失/重叠、伪造summary、重复metrics等拒绝路径。全部测试在云端CPU执行；C2生成后才读取真实checkpoint。验收输出明确fresh训练未做独立resume验证、未证明exact异步重放、未证明能力提升；W&B/RLInsight与GPU实际映射分别保留独立证据，不替代有效更新门禁。
+
+## 条件性 R16 同 world-size-two 续训（未执行，R15 无 C2）
+
+R16只在R15的C2实际完成并经operator发布稳定manifest后准备：同双卡colocate/naive、并发2、TP1双replica、32K/20480、原MiMo模型与固定DSH，原生恢复C2并训练至绝对step3。新run/spec/controller/W&B/Ray身份与38720–38723端口，绝不跨world size恢复或覆盖R15 checkpoint。
+
+准入要求：`integration-check/r15-c2-resume-manifest.json` schema `mimo.native-checkpoint-manifest.v1`，绑定R15 run/spec、训练源码9a133cd、step2/world_size2及C2绝对路径；逐文件验证data.pt、FSDP配置、rank0/1 model/optim/extra_state的SHA与长度、非symlink、latest iteration=2。该manifest只能在C2完成后显式发布，prepare不会自动制造或回退fresh。R16自己的checkpoint目录必须尚不存在。deadline仍为1790709401，每次实际prepare/driver admission剩余至少2700秒，结束前180秒预留；时间不足报告未执行，不延长截止。
+
+完成标准独立于R15有效更新：真实日志加载两rank model/optimizer/rng/lr_scheduler与C2；原生数据状态路径与版本证据、后续step3真实receipt/消费/metrics、两rank C2→C3参数及optimizer更新；native W&B完整history和RLInsight终态另审。恢复证据与有效GRPO更新分别报告，不能用checkpoint对比替代实际重载。代码、CPU测试与stage先完成，实际prepare/训练必须等C2和主线程授权。
+# Bounded worker concurrency (R17 repair)
+
+The two rollout sessions reached a worker that still admitted only one job. The approved repair binds `RunSpec.max_concurrent_jobs` (strict integer 1–2, default 1) to `JobLedger.max_active_jobs` (strict integer 1–64). SQLite admission counts queued/running/verifying/cancelling atomically; starting a queued job counts only already active execution states. Idempotent replays remain inspectable. The worker counts the union of durable unconfirmed jobs and unfinished orchestration tasks, so a terminal seal cannot release a slot before its finalizer exits. Each job retains its own directory, cancellation and cleanup. Default serialized specs omit the default concurrency field to preserve old run hashes. Tests cover two real simultaneous executor coroutines, third-job rejection, cross-connection admission, unconfirmed retention, per-job close, and the seal/finalizer boundary. No shared environment mutation or unrelated cancellation is introduced.
+
+### R17 bounded capacity retry
+
+R15 revealed that framework sessions=2 still reached a worker and ledger capped at one active job. R17 uses a new fresh identity, ports 38730–38733 and explicit top-level `RunSpec.max_concurrent_jobs=2`; that field participates in the canonical spec digest. The actual preparation call sets sessions=2, and admission compares the parsed spec, launch digest and composed framework capacity. Controller/worker/ledger capacity must agree before training starts. Legacy omitted/default capacity remains one with unchanged historical digests.
+
+R17 runs three steps with save frequency one so an initial constant-reward group does not make the only adjacent checkpoint pair unusable for strict optimizer auditing. Constant rewards or zero gradients still fail effective-update acceptance; a later genuine nonconstant group is required. Model, DSH, dual colocate topology, n=4, 32K context, original deadline 1790709401, 45-minute admission and 180-second cleanup reserve remain fixed. Changes are new R17 helper/preflight and tests, plus the separately reviewed worker/ledger capacity fix. R16 remains a conditional uncommitted draft and is excluded from the R17 source freeze. Tests cover actual preparation → canonical RunSpec → launch → native config, default capacity rejection, digest/identity mismatch and malformed capacity rejection.

@@ -33,10 +33,11 @@ def test_two_connections_cannot_start_two_jobs_or_reuse_nonce(tmp_path):
     with JobLedger(tmp_path / "jobs.sqlite") as one, JobLedger(tmp_path / "jobs.sqlite") as two:
         one.submit(data, policy=policy(data), now_unix=1000)
         other = second(data)
-        two.submit(other, policy=policy(data), now_unix=1000)
-        one.start(data["job_id"], now_unix=1000)
         with pytest.raises(ValueError):
-            two.start(other["job_id"], now_unix=1000)
+            two.submit(other, policy=policy(data), now_unix=1000)
+        one.start(data["job_id"], now_unix=1000)
+        with pytest.raises(KeyError):
+            two.get(other["job_id"])
         other["job_id"] += "-3"
         other["request_sha256"] = request_sha256(other)
         with pytest.raises(ValueError):
@@ -102,7 +103,7 @@ def test_parallel_start_claims_only_one_slot(tmp_path):
     path = tmp_path / "jobs.sqlite"
     data = payload()
     other = second(data)
-    with JobLedger(path) as jobs:
+    with JobLedger(path, max_active_jobs=2) as jobs:
         jobs.submit(data, policy=policy(data), now_unix=1000)
         jobs.submit(other, policy=policy(data), now_unix=1000)
     barrier = Barrier(2)
@@ -135,3 +136,34 @@ def test_submit_rejects_busy_ledger_before_insert_across_connections(tmp_path, s
             two.submit(second(data), policy=policy(data), now_unix=1000)
         assert two.db.execute("SELECT count(*) FROM jobs").fetchone()[0] == 1
         assert two.submit(data, policy=policy(data), now_unix=1200)["status"] == state
+
+
+@pytest.mark.parametrize("cap", [0, -1, 65, True, 1.5, "2"])
+def test_invalid_capacity_does_not_create_database(tmp_path, cap):
+    path = tmp_path / "invalid.sqlite"
+    with pytest.raises(ValueError, match="max_active_jobs"):
+        JobLedger(path, max_active_jobs=cap)
+    assert not path.exists()
+
+
+def test_capacity_two_transactional_admission_and_unconfirmed_restart(tmp_path):
+    data, path = payload(), tmp_path / "jobs.sqlite"
+    other = second(data)
+    third = second(other)
+    third["nonce"] = "ef" * 16
+    third["request_sha256"] = request_sha256(third)
+    with JobLedger(path, max_active_jobs=2) as one, JobLedger(path, max_active_jobs=2) as two:
+        one.submit(data, policy=policy(data), now_unix=1000)
+        two.submit(other, policy=policy(data), now_unix=1000)
+        with pytest.raises(ValueError):
+            one.submit(third, policy=policy(data), now_unix=1000)
+        assert one.submit(data, policy=policy(data), now_unix=1200)["status"] == "queued"
+        one.start(data["job_id"], now_unix=1000)
+        two.start(other["job_id"], now_unix=1000)
+        one.cancel(data["job_id"])
+        two.verifying(other["job_id"])
+    with JobLedger(path, max_active_jobs=2) as reopened:
+        assert reopened.active_job_ids() == {data["job_id"], other["job_id"]}
+        with pytest.raises(ValueError):
+            reopened.submit(third, policy=policy(data), now_unix=1000)
+        assert reopened.get(data["job_id"])["status"] == "cancelling"

@@ -1,0 +1,87 @@
+{
+  "schema": "mimo.r15-error-window-audit.v1",
+  "checked_at": "2026-09-29T17:57:49.686699+00:00",
+  "scope": "Read-only error-window snapshot, not terminal run audit or training acceptance",
+  "runtime_commit": "9a133cd",
+  "wandb_last_checked": "2026-09-29T17:55:06.951370+00:00",
+  "wandb": {
+    "exists": true,
+    "url": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/mimo9b001661r15",
+    "state": "running",
+    "created_at": "2026-09-29T17:52:53Z",
+    "history_rows": 0,
+    "history": []
+  },
+  "config_subset": {
+    "trainer.experiment_name": "mimo9b-001661-r15",
+    "trainer.v1.trainer_mode": "colocate_async",
+    "trainer.n_gpus_per_node": 2,
+    "trainer.resume_mode": "disable",
+    "trainer.total_training_steps": 2,
+    "trainer.logger": [
+      "console",
+      "wandb",
+      "rl_insight"
+    ],
+    "actor_rollout_ref.rollout.nnodes": 0,
+    "actor_rollout_ref.rollout.n_gpus_per_node": 2,
+    "actor_rollout_ref.rollout.n": 4,
+    "actor_rollout_ref.rollout.max_num_seqs": 2,
+    "actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.max_concurrent_sessions": 2
+  },
+  "first_error_at": "2026-09-29T17:54:37Z",
+  "observed_error": "HarborDshClientError: Unexpected worker HTTP status: 409 while POST /v1/jobs",
+  "framework_observation": "Repeated whole-group rejection at global_steps=1; worker cancellation could not be confirmed.",
+  "worker_source_gate": {
+    "source": "uni_agent/tasks/harbor_dsh/worker.py:68",
+    "behavior": "A new job is rejected with ValueError('Worker is busy') while any existing worker task is unfinished.",
+    "root_cause_status": "Strong source-level explanation for observed concurrency=2 failure; controller/ledger correlation is audited separately by parent."
+  },
+  "routing_counter_snapshot": {
+    "checked_at": "2026-09-29T17:56:42.850499+00:00",
+    "replicas": {
+      "1": {
+        "instance": "172.24.0.2:34761",
+        "generation_tokens": 3905.0,
+        "successful_stop_requests": 6.0
+      },
+      "0": {
+        "instance": "172.24.0.2:41995",
+        "generation_tokens": 0.0,
+        "successful_stop_requests": 0.0
+      }
+    },
+    "scope": "Live Prometheus vllm targets; project/experiment labels are absent, so PID/socket binding is still needed for standalone provenance.",
+    "both_replicas_have_positive_generation": false
+  },
+  "console": {
+    "sha256": "a1a8c28b51904c944c65c54bdd5cf803d089d9c7819da57e8945a2d6d0e31107",
+    "bytes": 1683427,
+    "traceback_count": 339,
+    "completed_step_metric_lines": []
+  },
+  "acceptance": {
+    "native_training_steps_verified": 0,
+    "dual_replica_request_routing_verified": false,
+    "complete_training_verified": false
+  },
+  "watchers": "Both owned read-only watchers exited normally after fit/fatal detection; no training/controller/service mutation was performed.",
+  "private_evidence": {
+    "observability-latest.json": {
+      "path": "/root/mimo-private/r15-readonly-audit/observability-latest.json",
+      "sha256": "30dbcde94057d40e1bea4070f74b9f74457108f73a867766065dbad9ec35fad6"
+    },
+    "wandb-config.json": {
+      "path": "/root/mimo-private/r15-readonly-audit/wandb-config.json",
+      "sha256": "bd39a5c0a4f76fee211dd1839f8243af06133adac4b8e9534279413c803a413f"
+    },
+    "replica-counters-error-window.json": {
+      "path": "/root/mimo-private/r15-readonly-audit/replica-counters-error-window.json",
+      "sha256": "8a9659bfd9cd89da0e7236aa8291609201d580e75e56995169f3ad2d70c30fc4"
+    },
+    "replica-targets.json": {
+      "path": "/root/mimo-private/r15-readonly-audit/replica-targets.json",
+      "sha256": "02fca302a471c33a74fa9fb104b64528b895cd3a892b79706e0583146082ee20"
+    }
+  }
+}

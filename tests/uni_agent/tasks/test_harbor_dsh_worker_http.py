@@ -73,3 +73,84 @@ async def test_http_uses_real_ledger_and_returns_only_sealed_artifacts(tmp_path)
             object_id = manifest["artifacts"][0]["id"]
             response = await client.get("/v1/jobs/job-1/artifacts/" + object_id, headers=headers)
             assert await response.read() == b"bytes"
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("release_mode", ["success", "cancel"])
+async def test_two_http_jobs_real_worker_third_rejected_and_slot_released(tmp_path, release_mode):
+    import asyncio
+    import json
+    from types import SimpleNamespace
+
+    from tests.uni_agent.tasks.test_harbor_dsh_ledger import second
+    from tests.uni_agent.tasks.test_harbor_dsh_protocol import payload, policy
+    from uni_agent.tasks.harbor_dsh.execution_outcome import CleanExecutionRejected
+    from uni_agent.tasks.harbor_dsh.ledger import JobLedger
+    from uni_agent.tasks.harbor_dsh.protocol import request_sha256
+    from uni_agent.tasks.harbor_dsh.worker import HarborWorker
+
+    data = payload()
+    other = second(data)
+    third = second(other)
+    third["nonce"] = "ef" * 16
+    third["request_sha256"] = request_sha256(third)
+    entered, releases, cleaned, routes = {}, {}, set(), {}
+    for item in [data, other, third]:
+        entered[item["job_id"]] = asyncio.Event()
+        releases[item["job_id"]] = asyncio.Event()
+
+    async def execute(request, **kwargs):
+        routes[request.job_id] = kwargs["gateway_base_url"]
+        entered[request.job_id].set()
+        try:
+            await releases[request.job_id].wait()
+            await kwargs["on_verifying"]()
+            return SimpleNamespace(
+                trial_id="trial-" + request.job_id,
+                cleanup_confirmed=True,
+                artifacts={
+                    kind: request.job_id.encode()
+                    for kind in ("dsh_trace", "dsh_result", "harbor_result", "verifier_log", "reward")
+                },
+            )
+        except asyncio.CancelledError:
+            raise CleanExecutionRejected(trial_id="trial-" + request.job_id) from None
+        finally:
+            cleaned.add(request.job_id)
+
+    with JobLedger(tmp_path / "ledger.sqlite", max_active_jobs=2) as ledger:
+        worker = HarborWorker(
+            ledger=ledger,
+            policy=policy(data),
+            worker_id="worker-1",
+            task_dir=tmp_path,
+            root=tmp_path / "worker",
+            gateway_base_url="http://host.docker.internal:45678",
+            executor=execute,
+            clock=lambda: 1000.0,
+        )
+        async with TestClient(TestServer(create_app(worker, token="a" * 32))) as client:
+            headers = {"Authorization": "Bearer " + "a" * 32}
+            responses = await asyncio.gather(
+                *(client.post("/v1/jobs", json=item, headers=headers) for item in [data, other])
+            )
+            assert [r.status for r in responses] == [202, 202]
+            await asyncio.wait_for(asyncio.gather(entered[data["job_id"]].wait(), entered[other["job_id"]].wait()), 2)
+            assert (await client.post("/v1/jobs", json=third, headers=headers)).status == 409
+            assert (await client.post("/v1/jobs", json=data, headers=headers)).status == 202
+            assert len(set(routes.values())) == 2
+            for item in [data, other]:
+                persisted = json.loads((worker.root / item["job_id"] / "request.json").read_text())
+                assert persisted["nonce"] == item["nonce"]
+                assert persisted["gateway_session_id"] == item["gateway_session_id"]
+            if release_mode == "success":
+                releases[data["job_id"]].set()
+                await worker.wait(data["job_id"])
+            else:
+                assert (await client.post("/v1/jobs/" + data["job_id"] + "/cancel", headers=headers)).status == 200
+            assert ledger.get(other["job_id"])["status"] == "running"
+            assert (await client.post("/v1/jobs", json=third, headers=headers)).status == 202
+            await asyncio.wait_for(entered[third["job_id"]].wait(), 2)
+            await worker.close()
+            assert cleaned == {data["job_id"], other["job_id"], third["job_id"]}
+            assert ledger.active_job_ids() == set()
