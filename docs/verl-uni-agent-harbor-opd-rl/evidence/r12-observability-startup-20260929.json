@@ -1,0 +1,74 @@
+{
+  "schema": "mimo.observability-startup.v1",
+  "run_id": "mimo9b-001661-r12",
+  "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+  "checked_at": 1790691337.92767,
+  "status": "native_ray_and_hub_started",
+  "training_acceptance": false,
+  "source_commit_prefix": "29c0cf7",
+  "driver_pid": 296871,
+  "supervisor_pid": 296872,
+  "native_runner_pid": 301710,
+  "monitor_hub_pid": 301709,
+  "ray_job_id": "01000000",
+  "ray_started_at_utc": "2026-09-29 14:13:09.462",
+  "hydra_metadata_files": [
+    "config.yaml",
+    "hydra.yaml",
+    "overrides.yaml"
+  ],
+  "actual_native_loggers": [
+    "console",
+    "wandb",
+    "rl_insight"
+  ],
+  "targets": [
+    {
+      "scrape_url": "http://172.24.0.2:19093/metrics",
+      "health": "down",
+      "labels": {
+        "instance": "172.24.0.2:19093",
+        "job": "trainer_metrics"
+      },
+      "last_scrape": "2026-09-29T14:15:31.579699372Z",
+      "last_error": "Get \"http://172.24.0.2:19093/metrics\": dial tcp 172.24.0.2:19093: connect: connection refused"
+    },
+    {
+      "scrape_url": "http://172.24.0.2:9092/metrics",
+      "health": "up",
+      "labels": {
+        "instance": "172.24.0.2:9092",
+        "job": "trainer_metrics"
+      },
+      "last_scrape": "2026-09-29T14:15:31.401437251Z",
+      "last_error": ""
+    },
+    {
+      "scrape_url": "http://172.24.0.2:19092/metrics",
+      "health": "down",
+      "labels": {
+        "instance": "172.24.0.2:19092",
+        "job": "trainer_metrics"
+      },
+      "last_scrape": "2026-09-29T14:15:37.382497998Z",
+      "last_error": "Get \"http://172.24.0.2:19092/metrics\": dial tcp 172.24.0.2:19092: connect: connection refused"
+    }
+  ],
+  "exact_run_metric_query": "{project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-001661-r12\"}",
+  "exact_run_metrics": {
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": []
+    }
+  },
+  "exact_run_tempo_search": {
+    "traces": [],
+    "metrics": {
+      "completedJobs": 1,
+      "totalJobs": 1
+    }
+  },
+  "synthetic_preflight_excluded": true,
+  "raw_target_correlation": "Only trainer_metrics hub registered at this startup snapshot; legacy19092/19093 excluded. vLLM/TQ runtime targets and per-experiment spans still pending."
+}
