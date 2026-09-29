@@ -1,3 +1,19 @@
+## 2026-09-29 14:11 UTC：r12 已启动，等待实际训练验收
+
+- 当前运行：mimo9b-001661-r12，controller105384、driver296871、supervisor296872、archiver105400；controller健康及spec身份已校验，尚在初始化。
+- source29c0cf7，859文件manifest f085c12...；r12真实preflight exit0（SHAf5c658dc...），C3→4；W&B预期xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b001661r12。W&B只在fit之后创建，初始化期无run不是学习失败证据。
+- 日志：GPU /root/mimo-private/launch-r12/train.log、supervised-r12*、ray-r12/ray/session_latest/logs；shared runs/r12/operator/status.json；CPU controller-r12与evidence-r12。
+- 待验收：真实C3恢复、两卡资源映射、消费policy v3、step4有效更新/C4；原生W&B完整history与console一致、RL-Insight实际metrics/trace。不要拿synthetic probe或r10结果替代。
+- 截止仍19:16:41UTC/翌日03:16:41新加坡，GPU服务器不自动关闭；结束后只清理所属进程/沙盒并保留Pod。
+
+## 2026-09-29 14:02 UTC：r11 启动失败已修复，r12 冻结完成
+
+- 当前不能称r11正常训练：13:44:57UTC exit1，Hydra向只读source写outputs触发PermissionError；Ray/模型/新checkpoint/W&B均未开始。controller104848与archiver104864已清理，0worker jobs，GPU服务器保留。
+- 修复：显式private launch/hydra输出；90云端回归和真实0555 cwd入口验证通过。RL-Insight Hub保留修复已通过真实CPU Ray/Prom/Tempo synthetic probe；该探针不是训练。
+- 最新已推送commit `29c0cf73502fdd6d7778f5abfeb0f6eed84d6a49`，Ruff双门禁639文件通过。r12新frozen source859文件，manifest `f085c12d986513c76427ace010db1cfd2b70f33a1fb7e096d9bee258430666a0`。
+- r12：`run-src-r12` / `audit-code/r12-preparation`，ports38680–38683，W&B ID `mimo9b001661r12`；仍r10 C3→绝对step4。当前正在CPU prepare/preflight，尚未启动controller/GPU。
+- 现行deadline仍1790709401 /19:16:41UTC /翌日03:16:41新加坡；不因失败重计，不自动关闭Pod。下一步先核真实preflight exit0和hash再启动，随后原生W&B/Prom/Tempo/参数更新对账。
+
 ## 2026-09-29 13:08 UTC 用户授权更新：继续六小时，保留GPU服务器
 
 用户已明确追加六小时。**现行固定截止1790709401 / 19:16:41UTC / 翌日03:16:41新加坡**；替代下文旧截止，不改旧运行证据。不自动关闭或删除Runpod Pod。r11 C3→C4使用新`audit-code/r11-preparation-v2`，旧v1 stage及13:03准入拒绝记录保留。controller仍有21600秒per-run上限，最早13:16:41UTC可启动；重启不延后新绝对截止。
