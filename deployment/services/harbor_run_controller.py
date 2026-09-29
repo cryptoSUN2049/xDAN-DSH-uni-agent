@@ -408,10 +408,12 @@ def create_app(controller):
     return app
 
 
-async def main(path):
+async def main(path, max_run_seconds=14400):
+    if type(max_run_seconds) is not int or not 1 <= max_run_seconds <= 21600:
+        raise ValueError("max_run_seconds must be an integer between 1 and 21600")
     spec = RunSpec.model_validate_json(path.read_bytes())
-    if not 0 < spec.deadline_unix - time.time() <= 14400:
-        raise ValueError("Run must have a future deadline within four hours")
+    if not 0 < spec.deadline_unix - time.time() <= max_run_seconds:
+        raise ValueError(f"Run must have a future deadline within {max_run_seconds} seconds")
     controller = HarborRunController(spec)
     runner = web.AppRunner(create_app(controller), access_log=None, shutdown_timeout=2)
     try:
@@ -428,7 +430,17 @@ async def main(path):
         await controller.close()
 
 
-if __name__ == "__main__":
+def cli(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-spec", type=Path, required=True)
-    asyncio.run(main(parser.parse_args().run_spec))
+    parser.add_argument(
+        "--max-run-seconds", type=int, default=14400, help="Maximum future deadline distance, 1..21600 (default: 14400)"
+    )
+    args = parser.parse_args(argv)
+    if not 1 <= args.max_run_seconds <= 21600:
+        parser.error("max-run-seconds must be between 1 and 21600")
+    asyncio.run(main(args.run_spec, max_run_seconds=args.max_run_seconds))
+
+
+if __name__ == "__main__":
+    cli()

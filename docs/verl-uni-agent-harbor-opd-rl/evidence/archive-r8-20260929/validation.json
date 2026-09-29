@@ -1,0 +1,106 @@
+{
+  "schema": "mimo-private-evidence-transport-validation.v1",
+  "date_utc": "2026-09-29",
+  "run_id": "mimo9b-001661-r8",
+  "scope": "Private raw byte preservation only; does not establish training admission, policy update, checkpoint, or resume acceptance",
+  "source": {
+    "script": "docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py",
+    "script_sha256": "ffd23f8b186c0d5ed163b25bdeb1b72b4ef1c57c300819e11429b7e8de32fe01",
+    "tests": "tests/uni_agent/deployment/test_mimo_evidence_transport.py",
+    "tests_sha256": "97a81b6bdeac57396845552d43eec22d6dbc0be5a30a74c85e498ce30e7231d6",
+    "local_remote_equal": true,
+    "remote_checkout": "/workspace/mimo-dsh-rl-20260928/integration-check/archive-r8",
+    "shared_environment_modified": false,
+    "active_training_source_modified": false
+  },
+  "cpu_verification": {
+    "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+    "coverage_tool_path": "/workspace/mimo-dsh-rl-20260928/integration-check/test-tools",
+    "command": "PYTHONPATH=/workspace/mimo-dsh-rl-20260928/integration-check/test-tools PYTHONPYCACHEPREFIX=/root/mimo-private/pycache-archive-r8-green-02 PYTHONDONTWRITEBYTECODE=1 /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python -m coverage run --branch --include='*/mimo-evidence-transport.py' -m pytest -q tests/uni_agent/deployment/test_mimo_evidence_transport.py",
+    "red_failed": 13,
+    "first_implementation": {
+      "passed": 14,
+      "failed": 4,
+      "cause": "Test fixture intermediate directory was 0755; reader correctly rejected it. Fixture corrected to real private directory permissions."
+    },
+    "final_passed": 29,
+    "final_failed": 0,
+    "final_seconds": 0.77,
+    "pytest_exit_code": 0,
+    "ruff_check_exit_code": 0,
+    "ruff_format_check_exit_code": 0,
+    "project_configuration_recheck": {
+      "remote_checkout": "/workspace/mimo-dsh-rl-20260928/integration-check/archive-r8-project",
+      "pyproject_sha256": "7ff9c6c941206945b2bbd6607d9b27b08ca03d474a8c3f3da607d06b0684f247",
+      "local_remote_config_equal": true,
+      "ruff_check_exit_code": 0,
+      "ruff_format_check_exit_code": 0,
+      "source_files_changed": false,
+      "pytest_passed": 29,
+      "pytest_failed": 0,
+      "pytest_seconds": 0.61,
+      "distinct_tests_total": 29,
+      "cache_prefix": "/root/mimo-private/pycache-archive-r8-project-final",
+      "note": "Final quality check explicitly used the project configuration including line-length=120 and E/F/UP/B/I/G rules. Original executed helper bytes remained unchanged."
+    },
+    "coverage": {
+      "covered_lines": 357,
+      "num_statements": 412,
+      "percent_statements_covered": 86.6504854368932,
+      "covered_branches": 125,
+      "num_branches": 172,
+      "percent_branches_covered": 72.67441860465117,
+      "combined_percent_covered": 82.53424657534246
+    }
+  },
+  "once": {
+    "exit_code": 0,
+    "stdout": "{\"state\": \"once_finished\", \"files\": 33, \"jobs\": 2, \"pending\": 1, \"errors\": []}",
+    "source_launch_root": "/root/mimo-private/launch-r8",
+    "source_agent_root": "/workspace/mimo-dsh-rl-20260928/runs/r8/rl-training/agent",
+    "destination": "/root/mimo-private/evidence-r8",
+    "files": 33,
+    "bytes": 726697,
+    "stage_counts": {"dump_complete": 2},
+    "npz_files": 2,
+    "metadata_files": 2,
+    "pending_jobs": 1,
+    "hash_mismatches": 0,
+    "mode_mismatches": 0,
+    "source_missing": [],
+    "errors": [],
+    "gpu_writes": false,
+    "training_process_actions": false,
+    "pod_actions": false
+  },
+  "watch": {
+    "started": true,
+    "authorization": "Parent reviewed actual once output and independently checked zero hash/mode differences before explicit watch approval",
+    "pid": 99526,
+    "started_unix": 1790670278.5369198,
+    "status_path": "/root/mimo-private/evidence-r8/status.json",
+    "log_path": "/root/mimo-private/evidence-r8/watcher.log",
+    "first_observed_status": {
+      "state": "watching",
+      "pid": 99526,
+      "cycles": 1,
+      "files": 47,
+      "jobs": 3,
+      "stage_counts": {"dump_complete": 3},
+      "pending_count": 1,
+      "errors": []
+    },
+    "interval_seconds": 30,
+    "source_window": "/root/mimo-private/shared-run-window-r8.json",
+    "source_deadline_unix": 1790674087.546294,
+    "archive_deadline_unix": 1790674027.546294
+  },
+  "raw_reports": {
+    "archive-r8-red.log": "9f0b6de8d8e2f21375b1a94fbd2329f2d5499d8b80f3b27797471bec0bfe23da",
+    "archive-r8-green-01.log": "ffd403daad14f2a690ca9e6ebeb022f761860d103c8778d7eb19ff76ef5f0a6d",
+    "archive-r8-green-02.log": "e038867d0b1827030244e6d95853ffc4901dc0c83bf04534832f9efe574ba172",
+    "archive-r8-coverage.json": "2da4ac88d8fe3251dea0caad8b7f7e8f35349bd821757a2173ebb189fec940e7",
+    "archive-r8-project-final.log": "7f504c0fe8a1fc26f13cbcea7a2ba104c8c3cef8b24e55edaf0e773689565f04",
+    "archive-r8-project-coverage.json": "6d705153e6d66dfb3d2507f95c0afd43024bb03b3825a6c8f174aa0a607faf52"
+  }
+}

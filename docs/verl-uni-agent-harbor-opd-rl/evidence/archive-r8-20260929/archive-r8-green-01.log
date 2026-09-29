@@ -1,0 +1,92 @@
+FFF..........F....                                                       [100%]
+=================================== FAILURES ===================================
+____ test_v2_candidate_is_preserved_without_fake_completion_or_credentials _____
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-100/test_v2_candidate_is_preserved0/launch'), 'agent': PosixPath('/tm...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+
+    def test_v2_candidate_is_preserved_without_fake_completion_or_credentials(case):
+        snapshot = collect(case)
+        report = module.archive(snapshot, case["target"])
+>       assert report["jobs"][JOB]["stage"] == "candidate"
+               ^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'job-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:150: KeyError
+________ test_receipt_does_not_seal_out_later_admission_and_dump_files _________
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-100/test_receipt_does_not_seal_out0/launch'), 'agent': PosixPath('/tm...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+
+    def test_receipt_does_not_seal_out_later_admission_and_dump_files(case):
+        first = module.archive(collect(case), case["target"])
+        add_chain(case)
+        second = module.archive(collect(case, first["files"]), case["target"])
+>       assert second["jobs"][JOB]["stage"] == "dump_complete"
+               ^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'job-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:163: KeyError
+______ test_dump_binding_before_npz_is_pending_and_can_be_completed_later ______
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-100/test_dump_binding_before_npz_i0/launch'), 'agent': PosixPath('/tm...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+
+    def test_dump_binding_before_npz_is_pending_and_can_be_completed_later(case):
+        add_chain(case, npz=False)
+        result = module.archive(collect(case), case["target"])
+>       assert result["jobs"][JOB]["stage"] == "admitted"
+               ^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'job-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:171: KeyError
+_________ test_once_cli_only_runs_ssh_read_and_persists_private_status _________
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-100/test_once_cli_only_runs_ssh_re0/launch'), 'agent': PosixPath('/tm...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e9886189670>
+capsys = <_pytest.capture.CaptureFixture object at 0x7e988618b740>
+
+    def test_once_cli_only_runs_ssh_read_and_persists_private_status(case, monkeypatch, capsys):
+        import subprocess
+        import time
+        from types import SimpleNamespace
+    
+        def remote(command, **kwargs):
+            assert command[0] == "ssh"
+            assert "--remote-read" in command[-1]
+            assert kwargs["stderr"] == subprocess.DEVNULL
+            previous = json.loads(kwargs["input"])
+            snapshot = module.wire(collect(case, previous), True)
+            return SimpleNamespace(stdout=raw(snapshot), returncode=0)
+    
+        monkeypatch.setattr(subprocess, "run", remote)
+        args = [
+            "--run-id",
+            RUN,
+            "--launch-root",
+            str(case["launch"]),
+            "--agent-log-root",
+            str(case["agent"]),
+            "--destination",
+            str(case["target"]),
+            "--deadline",
+            str(time.time() + 60),
+            "--gpu-host",
+            "127.0.0.1",
+            "--ssh-key",
+            "/private/key",
+            "--known-hosts",
+            "/private/known-hosts",
+            "--once",
+        ]
+>       assert module.main(args) == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = <function main at 0x7e9885e98180>(['--run-id', 'mimo9b-001661-r8', '--launch-root', '/tmp/pytest-of-root/pytest-100/test_once_cli_only_runs_ssh_re0/launch', '--agent-log-root', '/tmp/pytest-of-root/pytest-100/test_once_cli_only_runs_ssh_re0/agent', ...])
+E        +    where <function main at 0x7e9885e98180> = module.main
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:264: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"state": "once_finished", "files": 1, "jobs": 0, "pending": 3, "errors": [{"code": "unsafe_artifact_root"}]}
+=========================== short test summary info ============================
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_v2_candidate_is_preserved_without_fake_completion_or_credentials
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_receipt_does_not_seal_out_later_admission_and_dump_files
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_dump_binding_before_npz_is_pending_and_can_be_completed_later
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_once_cli_only_runs_ssh_read_and_persists_private_status
+4 failed, 14 passed in 0.73s

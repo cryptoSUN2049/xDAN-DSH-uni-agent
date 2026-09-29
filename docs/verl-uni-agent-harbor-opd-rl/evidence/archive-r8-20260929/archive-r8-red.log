@@ -1,0 +1,382 @@
+FFFFFFFFFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+____ test_v2_candidate_is_preserved_without_fake_completion_or_credentials _____
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_v2_candidate_is_preserved0/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+
+    def test_v2_candidate_is_preserved_without_fake_completion_or_credentials(case):
+>       snapshot = collect(case)
+                   ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_v2_candidate_is_preserved0/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_v2_candidate_is_preserved0/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+________ test_receipt_does_not_seal_out_later_admission_and_dump_files _________
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_receipt_does_not_seal_out0/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+
+    def test_receipt_does_not_seal_out_later_admission_and_dump_files(case):
+>       first = module.archive(collect(case), case["target"])
+                               ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_receipt_does_not_seal_out0/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_receipt_does_not_seal_out0/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+______ test_dump_binding_before_npz_is_pending_and_can_be_completed_later ______
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_dump_binding_before_npz_i0/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+
+    def test_dump_binding_before_npz_is_pending_and_can_be_completed_later(case):
+        add_chain(case, npz=False)
+>       result = module.archive(collect(case), case["target"])
+                                ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_dump_binding_before_npz_i0/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_dump_binding_before_npz_i0/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+______ test_digest_mismatch_is_not_archived_as_a_complete_chain[artifact] ______
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar0/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+attack = 'artifact'
+
+    @pytest.mark.parametrize("attack", ["artifact", "admission", "npz", "metadata"])
+    def test_digest_mismatch_is_not_archived_as_a_complete_chain(case, attack):
+        add_chain(case)
+        path = {"artifact": case["launch"]/f"artifacts/{JOB}/object-0", "admission": case["launch"]/f"artifacts/{JOB}/admission-chain-0.json", "npz": case["agent"]/"step_0/session-1/trajectory.npz", "metadata": case["agent"]/"step_0/session-1/trajectory.json"}[attack]
+        path.write_bytes(path.read_bytes()+b"bad")
+>       snapshot = collect(case)
+                   ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar0/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar0/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+_____ test_digest_mismatch_is_not_archived_as_a_complete_chain[admission] ______
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar1/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+attack = 'admission'
+
+    @pytest.mark.parametrize("attack", ["artifact", "admission", "npz", "metadata"])
+    def test_digest_mismatch_is_not_archived_as_a_complete_chain(case, attack):
+        add_chain(case)
+        path = {"artifact": case["launch"]/f"artifacts/{JOB}/object-0", "admission": case["launch"]/f"artifacts/{JOB}/admission-chain-0.json", "npz": case["agent"]/"step_0/session-1/trajectory.npz", "metadata": case["agent"]/"step_0/session-1/trajectory.json"}[attack]
+        path.write_bytes(path.read_bytes()+b"bad")
+>       snapshot = collect(case)
+                   ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar1/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar1/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+________ test_digest_mismatch_is_not_archived_as_a_complete_chain[npz] _________
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar2/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+attack = 'npz'
+
+    @pytest.mark.parametrize("attack", ["artifact", "admission", "npz", "metadata"])
+    def test_digest_mismatch_is_not_archived_as_a_complete_chain(case, attack):
+        add_chain(case)
+        path = {"artifact": case["launch"]/f"artifacts/{JOB}/object-0", "admission": case["launch"]/f"artifacts/{JOB}/admission-chain-0.json", "npz": case["agent"]/"step_0/session-1/trajectory.npz", "metadata": case["agent"]/"step_0/session-1/trajectory.json"}[attack]
+        path.write_bytes(path.read_bytes()+b"bad")
+>       snapshot = collect(case)
+                   ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar2/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar2/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+______ test_digest_mismatch_is_not_archived_as_a_complete_chain[metadata] ______
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar3/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+attack = 'metadata'
+
+    @pytest.mark.parametrize("attack", ["artifact", "admission", "npz", "metadata"])
+    def test_digest_mismatch_is_not_archived_as_a_complete_chain(case, attack):
+        add_chain(case)
+        path = {"artifact": case["launch"]/f"artifacts/{JOB}/object-0", "admission": case["launch"]/f"artifacts/{JOB}/admission-chain-0.json", "npz": case["agent"]/"step_0/session-1/trajectory.npz", "metadata": case["agent"]/"step_0/session-1/trajectory.json"}[attack]
+        path.write_bytes(path.read_bytes()+b"bad")
+>       snapshot = collect(case)
+                   ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar3/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_digest_mismatch_is_not_ar3/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+_______________ test_unsafe_private_source_is_rejected[symlink] ________________
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_0/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+attack = 'symlink'
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_0')
+
+    @pytest.mark.parametrize("attack", ["symlink", "hardlink", "public-private-source"])
+    def test_unsafe_private_source_is_rejected(case, attack, tmp_path):
+        path = case["launch"] / f"artifacts/{JOB}/receipt.json"
+        if attack == "symlink":
+            outside = put(tmp_path, "outside", path.read_bytes())
+            path.unlink()
+            path.symlink_to(outside)
+        elif attack == "hardlink":
+            os.link(path, tmp_path/"other")
+        else:
+            path.chmod(0o644)
+>       snapshot = collect(case)
+                   ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_0/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_0/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+_______________ test_unsafe_private_source_is_rejected[hardlink] _______________
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_1/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+attack = 'hardlink'
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_1')
+
+    @pytest.mark.parametrize("attack", ["symlink", "hardlink", "public-private-source"])
+    def test_unsafe_private_source_is_rejected(case, attack, tmp_path):
+        path = case["launch"] / f"artifacts/{JOB}/receipt.json"
+        if attack == "symlink":
+            outside = put(tmp_path, "outside", path.read_bytes())
+            path.unlink()
+            path.symlink_to(outside)
+        elif attack == "hardlink":
+            os.link(path, tmp_path/"other")
+        else:
+            path.chmod(0o644)
+>       snapshot = collect(case)
+                   ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_1/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_1/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+________ test_unsafe_private_source_is_rejected[public-private-source] _________
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_2/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+attack = 'public-private-source'
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_2')
+
+    @pytest.mark.parametrize("attack", ["symlink", "hardlink", "public-private-source"])
+    def test_unsafe_private_source_is_rejected(case, attack, tmp_path):
+        path = case["launch"] / f"artifacts/{JOB}/receipt.json"
+        if attack == "symlink":
+            outside = put(tmp_path, "outside", path.read_bytes())
+            path.unlink()
+            path.symlink_to(outside)
+        elif attack == "hardlink":
+            os.link(path, tmp_path/"other")
+        else:
+            path.chmod(0o644)
+>       snapshot = collect(case)
+                   ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_2/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_unsafe_private_source_is_2/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+_____________ test_existing_archive_conflict_is_never_overwritten ______________
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_existing_archive_conflict0/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+
+    def test_existing_archive_conflict_is_never_overwritten(case):
+>       snapshot = collect(case)
+                   ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_existing_archive_conflict0/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_existing_archive_conflict0/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+_____________ test_missing_roots_are_pending_without_side_effects ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-97/test_missing_roots_are_pending0')
+
+    def test_missing_roots_are_pending_without_side_effects(tmp_path):
+>       result = module.collect(tmp_path/"missing", tmp_path/"agent", RUN)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_missing_roots_are_pending0/missing')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_missing_roots_are_pending0/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+______________ test_receiver_rejects_path_traversal_before_writes ______________
+
+case = {'launch': PosixPath('/tmp/pytest-of-root/pytest-97/test_receiver_rejects_path_tra0/launch'), 'agent': PosixPath('/tmp...er-receipt.v2', 'run_id': 'mimo9b-001661-r8', 'finished': False, 'termination_policy': 'budget-terminal-v1', ...}, ...}
+
+    def test_receiver_rejects_path_traversal_before_writes(case):
+>       snapshot = collect(case)
+                   ^^^^^^^^^^^^^
+
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/uni_agent/deployment/test_mimo_evidence_transport.py:74: in collect
+    return module.collect(case["launch"], case["agent"], RUN, previous)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+launch_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_receiver_rejects_path_tra0/launch')
+agent_log_root = PosixPath('/tmp/pytest-of-root/pytest-97/test_receiver_rejects_path_tra0/agent')
+run_id = 'mimo9b-001661-r8', previous_file_hashes = None
+
+    def collect(launch_root, agent_log_root, run_id, previous_file_hashes=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py:5: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_v2_candidate_is_preserved_without_fake_completion_or_credentials
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_receipt_does_not_seal_out_later_admission_and_dump_files
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_dump_binding_before_npz_is_pending_and_can_be_completed_later
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_digest_mismatch_is_not_archived_as_a_complete_chain[artifact]
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_digest_mismatch_is_not_archived_as_a_complete_chain[admission]
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_digest_mismatch_is_not_archived_as_a_complete_chain[npz]
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_digest_mismatch_is_not_archived_as_a_complete_chain[metadata]
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_unsafe_private_source_is_rejected[symlink]
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_unsafe_private_source_is_rejected[hardlink]
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_unsafe_private_source_is_rejected[public-private-source]
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_existing_archive_conflict_is_never_overwritten
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_missing_roots_are_pending_without_side_effects
+FAILED tests/uni_agent/deployment/test_mimo_evidence_transport.py::test_receiver_rejects_path_traversal_before_writes
+13 failed in 1.07s
