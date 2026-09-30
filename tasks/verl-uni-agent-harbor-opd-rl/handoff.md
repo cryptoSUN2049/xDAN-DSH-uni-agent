@@ -1,3 +1,14 @@
+## 2026-09-30：R18失败，R19同机控制器恢复进行中
+
+- 完整goal保持active。R17三步/双rank更新通过；R18在fit前control-health-failed，operator exit1，无C4/journal/W&B，不算续训成功。
+- Runpod 01:38UTC权威查询：原控制宿主769tt1sxhn6bpj EXITED、runtime=null；训练宿主db7kewdkd71js6 RUNNING/SSH11403。停止发起者未知，不复活原实验Pod。GPU当前无训练。
+- 新方案：GPU Pod的CPU运行controller/worker，模型仍双卡colocate_async，DSH工具与verifier仍Modal。原production API与认证不变，用严格scoped loopback SSH；local38860/61/62/63、remote38760/61，Gateway实际172.24.0.2。
+- 固定截止1790752269（07:11:09UTC /15:11:09SGT）不重计；Pod保留。R19仍R17原C3→绝对step4/world2/FSDP1，不fresh回退。
+- R18 runtime12aa0ca6bc51fa4c5d125e89bdfc61ee554fa905已push/freeze989files；manifest8645830a64a8e60e845ccdc96b43c09d5d05807dc161a6f9d2ce860fa2c62192。后续docs commit cac4c07。完整273env不改。
+- prep负责R19四个helper/preflight/test文件与同机CPUprepare；recipe负责Modal/CF凭据、loopbackSSH及真实生产HTTP full model-path probe。凭据均GPU私有，Mac无模型/依赖/训练。
+- 先读 docs/verl-uni-agent-harbor-opd-rl/r19-cohost-recovery-design.md、evidence/r18-terminal-observability-20260930.json与r18-controller-host-state-20260930.json，再读R19最新actual产物；不可从历史running快照推断当前状态。
+- 下一步：cohost prerequisites/fullpath HTTP/云CPU增量回归→精确commit/Ruff/push/freeze→实际R19prepare/preflight→同机controller+双卡driver+local archive→两rank原生恢复/policy3/step4真实有效更新/C4/token/W&B验收→所属清理/成本/最终交接。
+
 ## 2026-09-30 08:25 SGT：R18 同双卡恢复准备中，尚未启动训练
 
 - 用户继续授权11403同机器；23:51:31UTC实际两GPU0MiB/无compute。用户最新要求7小时，固定deadline1790752269（07:11:09UTC /15:11:09SGT），最多25200秒、180秒清理预留，Pod保留，不能重计。

@@ -1,0 +1,50 @@
+{
+  "schema": "mimo.r18-preparation-evidence.v1",
+  "prepared": {
+    "schema": "xdan.mimo-prepared-run.v1",
+    "run_id": "mimo9b-001661-r18",
+    "task_ref": {
+      "id": "mimo-code-format-code-task-001661",
+      "version": "v1",
+      "sha256": "sha256:603c1f65f95a2e6b89716a618713f683b1fc9072386002eb014fb9b0ccb878e2"
+    },
+    "run_spec_sha256": "sha256:92154424fff6fee0a29cf0887355583682377be820f9438700a180e4a03e9719",
+    "history_policy": "strip",
+    "gpu_preparation": {
+      "prepared": true,
+      "task_sha256": "sha256:603c1f65f95a2e6b89716a618713f683b1fc9072386002eb014fb9b0ccb878e2"
+    },
+    "training_started": false
+  },
+  "process": {
+    "schema": "mimo.operator-process.v1",
+    "stage": "prepare-r18",
+    "pid": 113204,
+    "started_at": 1790728923.1848488,
+    "status": "passed",
+    "gpu_training_started": false,
+    "exit_code": 0,
+    "finished_at": 1790729089.3934693
+  },
+  "scripts": {
+    "schema": "mimo.r18-script-preparation.v1",
+    "files": {
+      "prepare-r18.py": "1c46066dff1fbc7de1b7fe293db051d7d8e38ec10d7cff5aaa9392c826277733",
+      "launch-r18-driver.py": "71be3e23f379b54527cc93d668e6028114c69a697cfc14458adbfdfe503661a9",
+      "mimo-supervised-native-r18.py": "62f1ed9e7880c0be2f1c6ec9685f084edfa45bed63f50f63e2bab127b3442e06",
+      "mimo_r18_preparation.py": "506476efeb67409aefed880f6e2489c8af98c15a4b916767cf907f5b5f987be6",
+      "preflight-r18.py": "87bee1c1bd9f59171db9ce6373f3f4da67bee7b1d28197a85a7609bdab4de6c9"
+    },
+    "training_started": false,
+    "templates": {
+      "prepare": "9cf593482a12aceb24c0bcbe7c051429482da3fcd0e3d322dac6e3a20b004074",
+      "driver": "575d5e4a91378cb23522b4411dbbbe116940b5173cca4eddb361671b13a40196",
+      "wrapper": "5a90973107bf13f9ab97273aa504844702b1db836192d899bbc8bdd5fc551600"
+    }
+  },
+  "source_commit": "12aa0ca6bc51fa4c5d125e89bdfc61ee554fa905",
+  "source_manifest_sha256": "8645830a64a8e60e845ccdc96b43c09d5d05807dc161a6f9d2ce860fa2c62192",
+  "checkpoint_manifest_sha256": "8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706",
+  "deadline_unix": 1790752269,
+  "gpu_training_started": false
+}

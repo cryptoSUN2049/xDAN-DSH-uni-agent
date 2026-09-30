@@ -1,0 +1,135 @@
+{
+  "schema": "mimo.r18-real-preflight-validation.v1",
+  "status": "passed",
+  "scope": "Completed CPU preflight and coverage; not a training or restore acceptance",
+  "source_commit": "12aa0ca6bc51fa4c5d125e89bdfc61ee554fa905",
+  "source_sha256": {
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r18_preparation.py": "506476efeb67409aefed880f6e2489c8af98c15a4b916767cf907f5b5f987be6",
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r18_preflight.py": "87bee1c1bd9f59171db9ce6373f3f4da67bee7b1d28197a85a7609bdab4de6c9"
+  },
+  "source_manifest_sha256": "8645830a64a8e60e845ccdc96b43c09d5d05807dc161a6f9d2ce860fa2c62192",
+  "process": {
+    "schema": "mimo.operator-process.v1",
+    "stage": "preflight-r18",
+    "pid": 409481,
+    "started_at": 1790729244.3822381,
+    "status": "passed",
+    "gpu_training_started": false,
+    "cuda_visible_devices": "",
+    "exit_code": 0,
+    "finished_at": 1790729400.2633908
+  },
+  "preflight": {
+    "status": "passed",
+    "source_commit": "12aa0ca6bc51fa4c5d125e89bdfc61ee554fa905",
+    "package_constraints_verified": 273,
+    "report": {
+      "train_rows": 1,
+      "validation_rows": 1,
+      "steps_per_epoch": 1,
+      "total_training_steps": 4,
+      "total_epochs": 4,
+      "save_freq": 1,
+      "backend_validation": {
+        "attention": [
+          {
+            "backend": "sdpa",
+            "validation": "torch_sdpa_operator"
+          }
+        ],
+        "checkpoint_backend": "naive",
+        "gpu_execution_validated": false
+      }
+    },
+    "cuda_initialized": false,
+    "finished_at": 1790729397.2114136,
+    "resume_from_path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3",
+    "resume_manifest_sha256": "8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706",
+    "checkpoint_world_size": 2,
+    "checkpoint_fsdp_version": 1,
+    "deadline_unix": 1790752269,
+    "token_journal_dir": "/root/mimo-private/launch-r18/token-journal",
+    "resume_mode": "resume_path",
+    "total_training_steps": 4,
+    "mode": "colocate_async",
+    "backend": "naive",
+    "actor_world_size": 2,
+    "capacity": {
+      "max_concurrent_jobs": 2,
+      "max_concurrent_sessions": 2,
+      "run_spec_sha256": "sha256:92154424fff6fee0a29cf0887355583682377be820f9438700a180e4a03e9719"
+    },
+    "rollout_replicas": 2,
+    "gpu_transport_scope": "two native IPC lanes; FSDP training remains unverified until actual run",
+    "training_started": false,
+    "observability_entrypoint": [
+      "/workspace/mimo-dsh-rl-20260928/run-src-r18/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py"
+    ],
+    "hydra_run_dir": "/root/mimo-private/launch-r18/hydra",
+    "hydra_entry_executed": false,
+    "hydra_readonly_entry_probe": {
+      "path": "/root/mimo-private/observability-hydra-bootstrap-r18-v2-20260930/status.json",
+      "sha256": "f8affd7393f8577c916072d0b0b2de5fcd41d71e90e84c8360b6b9dab3a55cfd",
+      "helper_sha256": "0c89268f0e5357317a8fafb46d619cee4502bc41ec236ad6159baf7adaf23b62",
+      "status": "passed",
+      "scope": "Actual entry reached deliberate guard after private Hydra metadata creation",
+      "training_acceptance": false
+    },
+    "observability_environment": {
+      "WANDB_MODE": "online",
+      "WANDB_ENTITY": "xdan-ai",
+      "WANDB_PROJECT": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+      "WANDB_NAME": "mimo9b-001661-r18",
+      "WANDB_RUN_ID": "mimo9b001661r18",
+      "WANDB_RESUME": "never",
+      "WANDB_DIR": "/root/mimo-private/wandb-r18",
+      "VERL_RL_INSIGHT_ENABLE": "1",
+      "RL_INSIGHT_SERVER_URL": "http://127.0.0.1:18080",
+      "MIMO_PROMETHEUS_URL": "http://127.0.0.1:9090"
+    }
+  },
+  "coverage": {
+    "/workspace/mimo-dsh-rl-20260928/run-src-r18/docs/verl-uni-agent-harbor-opd-rl/mimo_r18_preflight.py": {
+      "covered_lines": 87,
+      "num_statements": 88,
+      "percent_covered": 98.21428571428571,
+      "percent_covered_display": "98",
+      "missing_lines": 1,
+      "excluded_lines": 0,
+      "percent_statements_covered": 98.86363636363636,
+      "percent_statements_covered_display": "99",
+      "num_branches": 24,
+      "num_partial_branches": 1,
+      "covered_branches": 23,
+      "missing_branches": 1,
+      "percent_branches_covered": 95.83333333333333,
+      "percent_branches_covered_display": "96"
+    },
+    "/workspace/mimo-dsh-rl-20260928/run-src-r18/docs/verl-uni-agent-harbor-opd-rl/mimo_r18_preparation.py": {
+      "covered_lines": 170,
+      "num_statements": 171,
+      "percent_covered": 98.95287958115183,
+      "percent_covered_display": "99",
+      "missing_lines": 1,
+      "excluded_lines": 0,
+      "percent_statements_covered": 99.41520467836257,
+      "percent_statements_covered_display": "99",
+      "num_branches": 20,
+      "num_partial_branches": 1,
+      "covered_branches": 19,
+      "missing_branches": 1,
+      "percent_branches_covered": 95.0,
+      "percent_branches_covered_display": "95"
+    }
+  },
+  "coverage_merge": {
+    "method": "Union actual branch arcs only after exact frozen-source SHA matching; no excluded lines",
+    "coverage_version": "7.16.2",
+    "unit": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-reviewed-v2.coverage",
+    "unit_sha256": "d1b38968885c79b85d06ec55df58a611aa8cf28edcfbb847801f681de961cd3a",
+    "actual": "/root/mimo-private/r18-preflight.coverage",
+    "actual_sha256": "96bfa75bc02a2147a56252a0864cd6b89e315dbaa92b245ad175856d14797594",
+    "combined_report": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-combined-coverage.json"
+  },
+  "finished_at": 1790729554.0426054
+}

@@ -1,0 +1,202 @@
+{
+  "schema": "mimo.r19-cohost-readiness.v1",
+  "status": "passed",
+  "at": 1790732839.375828,
+  "training_acceptance": false,
+  "reports": {
+    "prerequisites": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-cohost-prerequisites.json",
+      "sha256": "c530cb0a6ed544f12c4eca2aba32093542a282d69905b2dbd11318c7b6a368dd",
+      "data": {
+        "schema": "mimo.r19-cohost-prerequisites.v1",
+        "status": "passed",
+        "at": 1790732278.8835537,
+        "node_ip": "172.24.0.2",
+        "ssh_host": "127.0.0.1",
+        "ssh_port": 22,
+        "ssh_key": "/root/mimo-private/cohost-r19/loopback-key",
+        "known_hosts": "/root/mimo-private/cohost-r19/known_hosts",
+        "key_fingerprint": "256 SHA256:J3+QCDkBSasbRt7ZVLZVGqNj7vvN+prMIjFrYRyixbo mimo-r19-loopback-only (ED25519)",
+        "host_key_fingerprint": "256 SHA256:Scc1w8/j/lKjjMc3/nbOrvHlSDebl/y5+9JH5WlMa6M root@d9fbe30bc515 (ED25519)",
+        "authorized_key_options": "from=\"127.0.0.1\",restrict,port-forwarding,permitopen=\"172.24.0.2:*\",permitlisten=\"127.0.0.1:38760\",permitlisten=\"127.0.0.1:38761\",command=\"/bin/false\"",
+        "authorized_key_added": true,
+        "prior_authorized_keys_sha256": "121daba15443590661d2d379370880b17ec64b0df01a945172e084c3d376edd8",
+        "modal_auth": {
+          "at": 1790730923.428406,
+          "credential_path": "/root/mimo-private/modal.toml",
+          "mode": "0o600",
+          "exit_code": 0,
+          "mutation": false,
+          "authenticated": true,
+          "app_count": 26,
+          "response_type": "list"
+        },
+        "cloudflared": {
+          "path": "/root/mimo-private/bin/cloudflared",
+          "sha256": "77e26d8d900e0b8469f416239d14b5f296525fdf79fee6f511ef55609e3fbac2",
+          "version": "cloudflared version 2026.9.3 (built 2026-09-24-16:07 UTC)",
+          "credential_path": "/root/mimo-private/cloudflared.json",
+          "credential_mode": "0o600",
+          "tunnel_id": "04729718-cb6b-40bd-ab74-72967ce77abf"
+        },
+        "forwarding_verified": true,
+        "cleanup": {
+          "remove_only_authorized_key_with_comment": "mimo-r19-loopback-only",
+          "private_files": [
+            "/root/mimo-private/cohost-r19/loopback-key",
+            "/root/mimo-private/cohost-r19/loopback-key.pub",
+            "/root/mimo-private/cohost-r19/known_hosts"
+          ],
+          "do_not_remove_other_authorized_keys": true
+        },
+        "verified_at": 1790732784.5133734,
+        "full_http_probe_path": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-cohost-http-probe.json",
+        "full_http_probe_sha256": "c8ebc73210c433c5b22be9116c8eadf7854e34564da32610b32711f13815796e",
+        "probe_services_started_and_cleaned_up": true,
+        "services_running": false,
+        "forced_shell_rejected": true,
+        "unapproved_reverse_port_rejected": true,
+        "known_hosts_sha256": "1713b5f13a0eee60d07fad9de5cd1ac099855fadcada95dc29e812099ba7d793",
+        "ssh": {
+          "path": "/usr/bin/ssh",
+          "sha256": "ffc312252dd2756e3346f1fd5a680486a4073abef452d44939351742d9b4bba0",
+          "version": "OpenSSH_9.6p1 Ubuntu-3ubuntu13.14, OpenSSL 3.0.13 30 Jan 2024"
+        }
+      }
+    },
+    "full_http_probe": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-cohost-http-probe.json",
+      "sha256": "c8ebc73210c433c5b22be9116c8eadf7854e34564da32610b32711f13815796e",
+      "data": {
+        "schema": "mimo.r19-cohost-http-probe.v1",
+        "status": "passed",
+        "started_at": 1790732579.6570482,
+        "gateway_host": "172.24.0.2",
+        "ssh_host": "127.0.0.1",
+        "ssh_port": 22,
+        "ports": {
+          "control": 38860,
+          "worker": 38861,
+          "model": 38862,
+          "ingress": 38863,
+          "remote_control": 38760,
+          "remote_worker": 38761
+        },
+        "ssh_key": "/root/mimo-private/cohost-r19/loopback-key",
+        "known_hosts": "/root/mimo-private/cohost-r19/known_hosts",
+        "run_spec_sha256": "sha256:0234a21906be0a3d0aab348d460bc8f3053cb066b9407e4c4a9a28a43368521c",
+        "training_started": false,
+        "jobs_submitted": 0,
+        "checks": {
+          "control_no_auth_401": true,
+          "control_wrong_auth_401": true,
+          "control_authenticated_health": true,
+          "registration_wrong_sha_409": true,
+          "registration_accepted": true,
+          "worker_no_auth_401": true,
+          "worker_wrong_auth_401": true,
+          "worker_authenticated_missing_job_404": true,
+          "public_forbidden_path_404": true,
+          "public_wrong_session_404": true,
+          "public_nonce_roundtrip": true,
+          "body_preserved": true,
+          "authorization_preserved": true,
+          "public_model_forward": true,
+          "reverse_control_auth": true,
+          "reverse_worker_auth": true,
+          "bad_token_rejected": true,
+          "unknown_session_rejected": true,
+          "disabled_path_rejected": true
+        },
+        "source_sha256": {
+          "deployment/services/harbor_run_controller.py": "59dd703672919f4eadaaffb24b766b1dd4e82f922c8cee2c88884a5ba8c2bb50",
+          "deployment/services/harbor_tunnel.py": "c51ddf1c7501c540be9ece5b770bb3af4d5c73ad8a7e003e546d8eae9f8fac21",
+          "deployment/services/harbor_modal_ingress.py": "a126455fdaf8c85c000389b4e01b43eae423f793bac9a5d2321f96b6e3c92afd",
+          "uni_agent/tasks/harbor_dsh/worker_http.py": "1ae882be2cbfb0386ea1f785705b97b12440963535d0638cf97351e4559d1b22",
+          "uni_agent/tasks/harbor_dsh/worker.py": "995dabff0d64eecac0277670b89181bdaf1284313bec9a4c192fb3d0fbab5be3",
+          "uni_agent/tasks/harbor_dsh/ledger.py": "d474ea39303fc6a46d7480480f3d01ffa8b7225fdb1abcae6bcbeaa464fa358d"
+        },
+        "fixed_training_deadline_unix": 1790752269,
+        "synthetic_upstream_port": 42795,
+        "model_hop_chain": "public HTTPS -> 38863 proxy -> 38862 SSH -L -> 172.24.0.2 dynamic HTTP upstream",
+        "counters": {
+          "upstream_http_requests": 2,
+          "accepted_model_requests": 1,
+          "rejected_session_requests": 1
+        },
+        "control_worker_hop_chain": "127.0.0.1 sshd22 -> SSH -R 38760/38761 -> 38860/38861",
+        "owned_processes": [
+          {
+            "pid": 416587,
+            "returncode": 0
+          },
+          {
+            "pid": 416600,
+            "returncode": 0
+          },
+          {
+            "pid": 416613,
+            "returncode": 0
+          }
+        ],
+        "owned_processes_terminated": true,
+        "cleanup_ports_occupied": [],
+        "cleanup_ports_free": true,
+        "cleanup_errors": [],
+        "cleaned_up": true,
+        "finished_at": 1790732583.977288,
+        "probe_script_sha256": "80f38db88c70f58b3b59bbcda647372fe7bf031f8b8b7eb3df57d2140e8a7422"
+      }
+    },
+    "hydra_entry_probe": {
+      "path": "/root/mimo-private/observability-hydra-bootstrap-r19-20260930/status.json",
+      "sha256": "a4e778be3300e22430c036badbfc1c9d46441184b1aefaf22649b40402b84795",
+      "data": {
+        "schema": "mimo.hydra-entry-preflight.v1",
+        "started_at": 1790732353.7627037,
+        "finished_at": 1790732399.960121,
+        "helper_sha256": "0c89268f0e5357317a8fafb46d619cee4502bc41ec236ad6159baf7adaf23b62",
+        "helper_path": "/root/mimo-private/observability-hydra-bootstrap-r19-20260930/helper/mimo_observability.py",
+        "source_cwd": "/workspace/mimo-dsh-rl-20260928/run-src-r18",
+        "source_mode": "0o555",
+        "argv": [
+          "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+          "/root/mimo-private/observability-hydra-bootstrap-r19-20260930/helper/mimo_observability.py",
+          "--config-name=ppo_trainer",
+          "trainer.use_v1=false",
+          "trainer.experiment_name=mimo9b-r19-hydra-bootstrap-20260930",
+          "++trainer.observability_deadline_unix=1790752269",
+          "++ray_kwargs.ray_init.runtime_env.env_vars.UNI_AGENT_TOKEN_JOURNAL_DIR=/root/mimo-private/launch-r19/token-journal",
+          "hydra.run.dir=/root/mimo-private/observability-hydra-bootstrap-r19-20260930/hydra",
+          "hydra.job.chdir=false"
+        ],
+        "expected_exit_code": 1,
+        "observed_exit_code": 1,
+        "expected_error": "Observed entry requires native V1 with wandb and rl_insight",
+        "observed_guard_error": "Observed entry requires native V1 with wandb and rl_insight",
+        "hydra_metadata_created": true,
+        "native_ray_not_started": true,
+        "gpu_training_started": false,
+        "training_acceptance": false,
+        "gpu_compute_apps_before": "",
+        "gpu_compute_apps_after": "",
+        "observability_deadline_unix": 1790752269,
+        "token_journal_dir": "/root/mimo-private/launch-r19/token-journal",
+        "experiment_name": "mimo9b-r19-hydra-bootstrap-20260930",
+        "log_sha256": "d9d769c239365dae8fc03d92588bc506a5628200e630da1a8e791ade587be86c",
+        "status": "passed"
+      }
+    }
+  },
+  "notes": [
+    "Uses the existing GPU Pod only; no new paid Pod, public DNS mutation, model training, submitted job or Modal sandbox.",
+    "Modal authentication was read-only; existing Cloudflare tunnel credentials were recovered using the existing local account certificate without uploading the account certificate.",
+    "Production native control/worker/auth/tunnel/ingress code was used; only the model upstream was an explicitly synthetic CPU nonce echo.",
+    "Two upstream HTTP requests: one invalid session rejected404, one accepted model-path request with nonce/body/authorization verified.",
+    "External operator SSH banner intermittently timed out; proof executed detached and was read back by exact identity, never restarted to conceal a failure."
+  ],
+  "documentation": [
+    "https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/create-local-tunnel.mdx",
+    "https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/partials/cloudflare-one/tunnel/locally-managed/local-tunnel-terms.mdx"
+  ]
+}

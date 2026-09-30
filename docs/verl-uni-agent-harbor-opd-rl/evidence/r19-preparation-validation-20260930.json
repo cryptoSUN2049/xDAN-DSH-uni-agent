@@ -1,0 +1,70 @@
+{
+  "schema": "mimo.r19-preparation-validation.v1",
+  "status": "passed",
+  "scope": "Cloud CPU operator unit tests; actual runtime preflight and training not executed by this report",
+  "tests": {
+    "tests": "116",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "time": "73.552"
+  },
+  "execution": {
+    "exit_code": 0,
+    "started_at": 1790732807.4455566,
+    "finished_at": 1790732884.0787914,
+    "before": {
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r19_preparation.py": "9f13bbf3571d33d307918833cf035125865d168a332d934123c47fb55fbba88b",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r19_preflight.py": "2efecd3496dd0a3903e080fc7de961a342bdf0a15ae537aa186c4981a2be7ad8"
+    },
+    "after": {
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r19_preparation.py": "9f13bbf3571d33d307918833cf035125865d168a332d934123c47fb55fbba88b",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r19_preflight.py": "2efecd3496dd0a3903e080fc7de961a342bdf0a15ae537aa186c4981a2be7ad8"
+    },
+    "cuda_visible_devices": ""
+  },
+  "coverage": {
+    "mimo_r19_preflight.py": {
+      "covered_lines": 63,
+      "num_statements": 117,
+      "percent_covered": 61.0062893081761,
+      "percent_covered_display": "61",
+      "missing_lines": 54,
+      "excluded_lines": 0,
+      "percent_statements_covered": 53.84615384615385,
+      "percent_statements_covered_display": "54",
+      "num_branches": 42,
+      "num_partial_branches": 2,
+      "covered_branches": 34,
+      "missing_branches": 8,
+      "percent_branches_covered": 80.95238095238095,
+      "percent_branches_covered_display": "81"
+    },
+    "mimo_r19_preparation.py": {
+      "covered_lines": 191,
+      "num_statements": 192,
+      "percent_covered": 99.06542056074767,
+      "percent_covered_display": "99",
+      "missing_lines": 1,
+      "excluded_lines": 0,
+      "percent_statements_covered": 99.47916666666667,
+      "percent_statements_covered_display": "99",
+      "num_branches": 22,
+      "num_partial_branches": 1,
+      "covered_branches": 21,
+      "missing_branches": 1,
+      "percent_branches_covered": 95.45454545454545,
+      "percent_branches_covered_display": "95"
+    }
+  },
+  "raw_artifacts": {
+    "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review-v4.log": "31232652b7e05edaa36dbb45e71527a0364bdb95784806ed93991200e1e73eec",
+    "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review-v4.xml": "bc025bbc8708e20bd4c1acaa761659d0f44c753fb76b664cafdc37c4d0d0a28e",
+    "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review-v4-status.json": "ebafc7a9ca1b15291305d3d7a2ceef32ec972ec0e726760f505bcc9c69c321ff",
+    "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review-v4-coverage.json": "2ffe8e55906075edabcf76764731f7e7f47eb50436f02f64c387abade8a1fa72"
+  },
+  "http_probe_sha256": "c8ebc73210c433c5b22be9116c8eadf7854e34564da32610b32711f13815796e",
+  "hydra_probe_sha256": "a4e778be3300e22430c036badbfc1c9d46441184b1aefaf22649b40402b84795",
+  "deadline_unix": 1790752269,
+  "runtime_modified": false
+}

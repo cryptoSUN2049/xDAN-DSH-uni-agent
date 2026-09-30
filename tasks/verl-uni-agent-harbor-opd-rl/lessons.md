@@ -48,3 +48,6 @@
 - 双卡 colocate 成功不意味着持续两卡100%利用率，也不证明恢复或能力提升。R17 实测三步/12轨迹/参数更新/原生观测通过；world2独立恢复与留出评测仍需分别验收。
 
 - DTensor 是分布式张量格式，不等于 FSDP2。R17 C3 的 fsdp_config 明确 FSDP_version=1；版本声明必须读实际配置，不得从序列化类型推断。
+
+- 用户再次强调“完全真实跑通”时，完成门固定为原生恢复、真实消费轨迹/独立verifier、有效GRPO参数更新、checkpoint及W&B API全对账；启动/单元测试/CPU探针只作为各自阶段证据。
+- SSH路径应按当前网络重新验证：2026-09-30旧nc/en0代理上传277KB包超时，去掉ProxyCommand后直连legacy SCP成功。handle失踪先核云端文件size/SHA，避免重复传输；共享volume实测fsync正常，不能误诊磁盘故障。

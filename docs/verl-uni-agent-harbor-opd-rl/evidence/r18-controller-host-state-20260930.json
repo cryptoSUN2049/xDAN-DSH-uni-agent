@@ -1,0 +1,42 @@
+{
+  "schema": "mimo.r18-control-host-failure.v1",
+  "observed_at": "2026-09-30 01:38:00 UTC",
+  "pods": [
+    {
+      "id": "769tt1sxhn6bpj",
+      "name": "performance-9b-eval-5000",
+      "status": "EXITED",
+      "runtime_present": false,
+      "ports": null
+    },
+    {
+      "id": "db7kewdkd71js6",
+      "name": "high-performance-9b-double",
+      "status": "RUNNING",
+      "runtime_present": true,
+      "ports": [
+        {
+          "ip": "100.65.32.242",
+          "private": 19123,
+          "public": 60014,
+          "type": "http"
+        },
+        {
+          "ip": "157.157.221.177",
+          "private": 22,
+          "public": 11403,
+          "type": "tcp"
+        },
+        {
+          "ip": "100.65.32.242",
+          "private": 8888,
+          "public": 60013,
+          "type": "http"
+        }
+      ]
+    }
+  ],
+  "r18_training_acceptance": false,
+  "stop_initiator_known": false,
+  "action": "Use existing GPU Pod CPU for R19 controller; retain failed R18 evidence and do not revive other experiment Pod"
+}

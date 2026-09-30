@@ -1,0 +1,96 @@
+{
+  "schema": "mimo.r18-controller-archive-startup.v1",
+  "checked_at": 1790729939.7917993,
+  "controller": {
+    "component": "controller",
+    "argv": [
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+      "-m",
+      "deployment.services.harbor_run_controller",
+      "--run-spec",
+      "/root/mimo-private/run-spec-r18.json",
+      "--max-run-seconds",
+      "25200"
+    ],
+    "cwd": "/workspace/mimo-dsh-rl-20260928/run-src-r18",
+    "source_commit": "12aa0ca6bc51fa4c5d125e89bdfc61ee554fa905",
+    "source_manifest_sha256": "8645830a64a8e60e845ccdc96b43c09d5d05807dc161a6f9d2ce860fa2c62192",
+    "run_spec_sha256": "sha256:92154424fff6fee0a29cf0887355583682377be820f9438700a180e4a03e9719",
+    "deadline_unix": 1790752269,
+    "executed": true,
+    "pid": 113443,
+    "started_at": 1790729508.3788319
+  },
+  "archive": {
+    "component": "archive",
+    "argv": [
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/archive-r8/docs/verl-uni-agent-harbor-opd-rl/mimo-evidence-transport.py",
+      "--run-id",
+      "mimo9b-001661-r18",
+      "--launch-root",
+      "/root/mimo-private/launch-r18",
+      "--agent-log-root",
+      "/workspace/mimo-dsh-rl-20260928/runs/r18/rl-training/agent",
+      "--deadline",
+      "1790752269",
+      "--destination",
+      "/root/mimo-private/evidence-r18",
+      "--gpu-host",
+      "157.157.221.177",
+      "--gpu-port",
+      "11403",
+      "--ssh-key",
+      "/root/mimo-private/controller-key",
+      "--known-hosts",
+      "/root/mimo-private/gpu-known-hosts-r8",
+      "--watch"
+    ],
+    "cwd": "/workspace/mimo-dsh-rl-20260928/run-src-r18",
+    "source_commit": "12aa0ca6bc51fa4c5d125e89bdfc61ee554fa905",
+    "source_manifest_sha256": "8645830a64a8e60e845ccdc96b43c09d5d05807dc161a6f9d2ce860fa2c62192",
+    "run_spec_sha256": "sha256:92154424fff6fee0a29cf0887355583682377be820f9438700a180e4a03e9719",
+    "deadline_unix": 1790752269,
+    "executed": true,
+    "pid": 113495,
+    "started_at": 1790729868.2616005
+  },
+  "archive_snapshot": {
+    "state": "watching",
+    "file_count": 3,
+    "errors": [],
+    "readback_errors": [],
+    "helper_sha256": "sha256:ffd23f8b186c0d5ed163b25bdeb1b72b4ef1c57c300819e11429b7e8de32fe01",
+    "pending": [
+      "registrations/mimo9b-001661-r18/registration.json",
+      "artifacts",
+      "agent_log_root"
+    ]
+  },
+  "private_operator_sha256": "c29ddec17f8311ff43fb91d0485f591dccc7dc48a70aad192fee8698c3de0551",
+  "raw_artifacts": {
+    "controller-r18-start.json": "de2312f77f7dc76bcaa3b538f2d06316a85f6b0f762afb92a3976bba3b3f1155",
+    "archive-r18-start.json": "53b95855fd815998797fa6760dadbfcedbe907933909785d1da5da7abe444d2c",
+    "mimo-r18-launch-support.py": "c29ddec17f8311ff43fb91d0485f591dccc7dc48a70aad192fee8698c3de0551"
+  },
+  "training_acceptance": false,
+  "notes": [
+    "Original dry-run stopped before any process because archive helper is not in the selected training freeze; used the exact R17 archive tool with independently pinned SHA instead.",
+    "Archive helper is separate from training runtime12aa0ca. No training source or shared service modified."
+  ],
+  "authenticated_gpu_reverse_tunnel_health": {
+    "at": 1790729526.3796175,
+    "scope": "GPU reverse-tunnel authenticated controller health",
+    "http_status": 200,
+    "response": {
+      "run_id": "mimo9b-001661-r18",
+      "controller_id": "mimo-controller-r18",
+      "run_spec_sha256": "sha256:92154424fff6fee0a29cf0887355583682377be820f9438700a180e4a03e9719",
+      "state": "unregistered",
+      "healthy": true
+    },
+    "spec_bound_max_concurrent_jobs": 2,
+    "deadline_unix": 1790752269.0
+  },
+  "health_sha256": "d99ce0f21f1facf07802202b09d898f20ff3ce62de21c08bbd7301f53ce3585a"
+}

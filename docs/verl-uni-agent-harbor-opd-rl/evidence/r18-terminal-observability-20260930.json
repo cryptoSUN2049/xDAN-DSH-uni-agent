@@ -1,0 +1,62 @@
+{
+  "schema": "mimo.r18-terminal-observability.v1",
+  "run_id": "mimo9b-001661-r18",
+  "source_commit": "12aa0ca6bc51fa4c5d125e89bdfc61ee554fa905",
+  "observed_at": 1790730372.6275709,
+  "operator": {
+    "status": "exited",
+    "exit_code": 1,
+    "finished_at": 1790730218.7257779,
+    "driver_pid": 409749,
+    "supervisor_pid": 409795
+  },
+  "native_child": {
+    "pid": 409840,
+    "exit_code": -15,
+    "reason": "controller-health-failed",
+    "elapsed_seconds": 255.192,
+    "transient_health_failures": 18,
+    "recovered_health_windows": 0,
+    "error_class": "URLError",
+    "reason_type": "ConnectionRefusedError"
+  },
+  "final_gpu_observation": {
+    "at": 1790730309.036858,
+    "driver_exists": false,
+    "gpu_memory_mib": [
+      0,
+      0
+    ],
+    "compute_processes": [],
+    "fit_seen": false,
+    "checkpoint_marker": null,
+    "journal_files": 0,
+    "snapshot_private_path": "/root/mimo-private/r18-readonly-audit/snapshot-1790730309.json",
+    "snapshot_sha256": "fff0eb4c8a38fc06e18a9a934ce8344ab819a734ff78409574fe3d1c8d51d455"
+  },
+  "wandb_api": {
+    "path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b001661r18",
+    "error_class": "CommError",
+    "not_found": true,
+    "history_audited": false
+  },
+  "prometheus_exact_experiment": {
+    "status": "success",
+    "result_type": "vector",
+    "result": []
+  },
+  "tempo_exact_experiment": {
+    "traces": []
+  },
+  "raw_audit_private_path": "/root/mimo-private/r18-readonly-audit/terminal-audit.json",
+  "raw_audit_sha256": "8dce5224fa7fdc36a92980e1b1bd38b58dbf657dcd3d054385ed16adccd1354b",
+  "training_acceptance": false,
+  "resource_cleanup_complete": false,
+  "notes": [
+    "GPU reverse control port38740 disappeared after initially authenticated health200; supervisor terminated its child through existing health-failure policy. No agent sent a stop to training.",
+    "CPU11621 SSH was closed by peer during diagnosis; controller113443/archive113495 state and precise tunnel failure cause were not yet verified.",
+    "No fit/checkpoint/token-journal observed; exact W&B run absent, so no live history was invented or backfilled.",
+    "This is a controller connectivity failure before training, not evidence of a dual-GPU optimizer or model failure.",
+    "Observer naturally exited after driver disappeared. A stalled local SCP for the private observer script was terminated by exact local PIDs; no training/cloud service process was stopped."
+  ]
+}

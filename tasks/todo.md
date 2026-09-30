@@ -1,3 +1,14 @@
+## R19 同机控制器恢复（2026-09-30）
+
+- [x] 真实核R18终态及CPU宿主EXITED，明确无训练验收。
+- [x] cohost设计落盘，保留双卡/DSH/Modal与固定截止1790752269。
+- [ ] GPU私有依赖与凭据/严格loopbackSSH、完整公网model path真HTTP预检。
+- [ ] R19增量CPU回归/源码commit Ruff push freeze/实际prepare与preflight。
+- [ ] 同机controller+真实双rank恢复、step4有效更新、C4/token/W&B完整对账。
+- [ ] 所属资源清理/成本/失败与未覆盖/完整交接；GPU Pod保留。
+
+Review：R18失败保留，不用startup/CPU探针作为恢复训练成功证明。
+
 ## R18 同双卡独立恢复（2026-09-30）
 
 - [x] 用户授权继续使用11403；实际两GPU空闲，按用户最新7小时要求固定新截止1790752269（15:11:09 SGT）。
