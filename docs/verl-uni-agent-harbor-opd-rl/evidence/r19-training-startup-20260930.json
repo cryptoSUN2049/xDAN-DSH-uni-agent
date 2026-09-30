@@ -1,0 +1,55 @@
+{
+  "schema": "mimo.r19-training-startup.v1",
+  "run_id": "mimo9b-001661-r19",
+  "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+  "source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+  "run_spec_sha256": "sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+  "deadline_unix": 1790752269,
+  "driver": {
+    "pid": 417300,
+    "started_at": 1790734793.0402296,
+    "metadata_private_path": "/root/mimo-private/gpu-start-r19.json",
+    "metadata_sha256": "36ce5fb715723d25f272a566a99ed8d3c0f42c66d3f5c4c88a2db4398e1b0059"
+  },
+  "timeline_pid": 417301,
+  "operator_snapshot": {
+    "run_id": "mimo9b-001661-r19",
+    "started_at": 1790734902.2959173,
+    "wall_clock_seconds": 17201,
+    "status": "running",
+    "supervisor_pid": 417367
+  },
+  "operator_snapshot_sha256": "41cf7e9b474bf964850289a24e80c9991b051f515f6514a720771595b9ae0287",
+  "archive_once": {
+    "pid": 417198,
+    "files": 3,
+    "errors": [],
+    "source_missing": [],
+    "pending": [
+      "registrations/mimo9b-001661-r19/registration.json",
+      "artifacts",
+      "agent_log_root"
+    ],
+    "private_path": "/root/mimo-private/evidence-r19/local-once.json",
+    "sha256": "0b61d582cf70aea4c59f6d4694875aa8f0b7e2383d8033ffe0758db7932433cf"
+  },
+  "initial_observation": {
+    "at": 1790734837.2870946,
+    "private_path": "/root/mimo-private/r19-readonly-audit/snapshot-1790734837.json",
+    "sha256": "c951c2554ebe6d48a37c6b80a6fd84d12c3d20fb7f539682f1162388437b0174",
+    "gpu_memory_mib": [
+      0,
+      0
+    ],
+    "fit_seen": false,
+    "checkpoint_marker": null,
+    "journal_files": 0
+  },
+  "training_acceptance": false,
+  "pod_auto_stop": false,
+  "notes": [
+    "Driver is detached and alive; this is startup evidence, not proof of model restoration or effective training.",
+    "SSH support-start response was lost; existing metadata was read back and no duplicate start was performed.",
+    "GPU Pod kept; immutable authorization deadline was not reset."
+  ]
+}

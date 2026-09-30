@@ -1,3 +1,12 @@
+## 2026-09-30 R19 已启动，验收继续
+
+- [x] 同机生产HTTP/认证/SSH预检、冻结源码、116云CPU回归、实际prepare/preflight、全Ruff与push。
+- [x] controller healthy；driver/timeline/localarchive/observer均后台启动，deadline不重计、Pod保留。
+- [ ] 两rank原生C3重载、真实policy3轨迹、绝对step4奖励有效更新与C4。
+- [ ] 消费tokenjournal/NPZ语义重放、C3→C4参数与optimizer变化、W&B完整API/Prom/Tempo对账。
+- [ ] 所属清理/成本/失败边界、最终commit/push/handoff与goal完成判定。
+- Review：启动不等于训练验收；初始GPU0MiB/fitfalse仅作为带时间快照保留。
+
 ## R19 同机控制器恢复（2026-09-30）
 
 - [x] 真实核R18终态及CPU宿主EXITED，明确无训练验收。

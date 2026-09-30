@@ -1,0 +1,158 @@
+{
+  "schema": "mimo.r19-real-preflight-evidence.v1",
+  "process": {
+    "schema": "mimo.operator-process.v1",
+    "stage": "preflight-r19",
+    "status": "passed",
+    "started_at": 1790734387.9486082,
+    "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+    "source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+    "gpu_training_started": false,
+    "pid": 417107,
+    "exit_code": 0,
+    "finished_at": 1790734535.4001467
+  },
+  "preflight": {
+    "status": "passed",
+    "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+    "package_constraints_verified": 273,
+    "report": {
+      "train_rows": 1,
+      "validation_rows": 1,
+      "steps_per_epoch": 1,
+      "total_training_steps": 4,
+      "total_epochs": 4,
+      "save_freq": 1,
+      "backend_validation": {
+        "attention": [
+          {
+            "backend": "sdpa",
+            "validation": "torch_sdpa_operator"
+          }
+        ],
+        "checkpoint_backend": "naive",
+        "gpu_execution_validated": false
+      }
+    },
+    "cuda_initialized": false,
+    "finished_at": 1790734532.2909696,
+    "resume_from_path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3",
+    "resume_manifest_sha256": "8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706",
+    "checkpoint_world_size": 2,
+    "checkpoint_fsdp_version": 1,
+    "deadline_unix": 1790752269,
+    "token_journal_dir": "/root/mimo-private/launch-r19/token-journal",
+    "resume_mode": "resume_path",
+    "total_training_steps": 4,
+    "mode": "colocate_async",
+    "backend": "naive",
+    "actor_world_size": 2,
+    "capacity": {
+      "max_concurrent_jobs": 2,
+      "max_concurrent_sessions": 2,
+      "run_spec_sha256": "sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+      "cohost": {
+        "ssh_host": "127.0.0.1",
+        "ssh_port": 22,
+        "ssh_user": "root",
+        "ssh_key": "/root/mimo-private/cohost-r19/loopback-key",
+        "known_hosts": "/root/mimo-private/cohost-r19/known_hosts",
+        "control_port": 38860,
+        "worker_port": 38861,
+        "model_port": 38862,
+        "remote_control_port": 38760,
+        "remote_worker_port": 38761,
+        "ingress_port": 38863,
+        "gateway_host": "172.24.0.2"
+      }
+    },
+    "cohost_http_proof": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-cohost-http-probe.json",
+      "sha256": "c8ebc73210c433c5b22be9116c8eadf7854e34564da32610b32711f13815796e",
+      "status": "passed"
+    },
+    "rollout_replicas": 2,
+    "gpu_transport_scope": "two native IPC lanes; FSDP training remains unverified until actual run",
+    "training_started": false,
+    "observability_entrypoint": [
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py"
+    ],
+    "hydra_run_dir": "/root/mimo-private/launch-r19/hydra",
+    "hydra_entry_executed": false,
+    "hydra_readonly_entry_probe": {
+      "path": "/root/mimo-private/observability-hydra-bootstrap-r19-20260930/status.json",
+      "sha256": "a4e778be3300e22430c036badbfc1c9d46441184b1aefaf22649b40402b84795",
+      "helper_sha256": "0c89268f0e5357317a8fafb46d619cee4502bc41ec236ad6159baf7adaf23b62",
+      "status": "passed",
+      "scope": "Actual entry reached deliberate guard after private Hydra metadata creation",
+      "training_acceptance": false
+    },
+    "observability_environment": {
+      "WANDB_MODE": "online",
+      "WANDB_ENTITY": "xdan-ai",
+      "WANDB_PROJECT": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+      "WANDB_NAME": "mimo9b-001661-r19",
+      "WANDB_RUN_ID": "mimo9b001661r19",
+      "WANDB_RESUME": "never",
+      "WANDB_DIR": "/root/mimo-private/wandb-r19",
+      "VERL_RL_INSIGHT_ENABLE": "1",
+      "RL_INSIGHT_SERVER_URL": "http://127.0.0.1:18080",
+      "MIMO_PROMETHEUS_URL": "http://127.0.0.1:9090"
+    }
+  },
+  "coverage": {
+    "mimo_r19_preflight.py": {
+      "covered_lines": 116,
+      "num_statements": 117,
+      "percent_covered": 98.74213836477988,
+      "percent_covered_display": "99",
+      "missing_lines": 1,
+      "excluded_lines": 0,
+      "percent_statements_covered": 99.14529914529915,
+      "percent_statements_covered_display": "99",
+      "num_branches": 42,
+      "num_partial_branches": 1,
+      "covered_branches": 41,
+      "missing_branches": 1,
+      "percent_branches_covered": 97.61904761904762,
+      "percent_branches_covered_display": "98"
+    },
+    "mimo_r19_preparation.py": {
+      "covered_lines": 191,
+      "num_statements": 192,
+      "percent_covered": 99.06542056074767,
+      "percent_covered_display": "99",
+      "missing_lines": 1,
+      "excluded_lines": 0,
+      "percent_statements_covered": 99.47916666666667,
+      "percent_statements_covered_display": "99",
+      "num_branches": 22,
+      "num_partial_branches": 1,
+      "covered_branches": 21,
+      "missing_branches": 1,
+      "percent_branches_covered": 95.45454545454545,
+      "percent_branches_covered_display": "95"
+    }
+  },
+  "coverage_tool_version": "7.16.2",
+  "unit_status": {
+    "exit_code": 0,
+    "started_at": 1790732807.4455566,
+    "finished_at": 1790732884.0787914,
+    "before": {
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r19_preparation.py": "9f13bbf3571d33d307918833cf035125865d168a332d934123c47fb55fbba88b",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r19_preflight.py": "2efecd3496dd0a3903e080fc7de961a342bdf0a15ae537aa186c4981a2be7ad8"
+    },
+    "after": {
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r19_preparation.py": "9f13bbf3571d33d307918833cf035125865d168a332d934123c47fb55fbba88b",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review/docs/verl-uni-agent-harbor-opd-rl/mimo_r19_preflight.py": "2efecd3496dd0a3903e080fc7de961a342bdf0a15ae537aa186c4981a2be7ad8"
+    },
+    "cuda_visible_devices": ""
+  },
+  "raw_coverage": {
+    "unit": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-preparation-review-v4.coverage",
+    "actual": "/root/mimo-private/r19-preflight.coverage",
+    "combined": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-combined-coverage.json"
+  },
+  "scope": "Single actual CPU-only preflight; coverage merges exact identical source; not training acceptance"
+}

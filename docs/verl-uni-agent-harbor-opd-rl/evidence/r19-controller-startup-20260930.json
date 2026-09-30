@@ -1,0 +1,74 @@
+{
+  "schema": "mimo.r19-controller-startup.v1",
+  "at": 1790734907.0087643,
+  "reports": {
+    "controller_start": {
+      "path": "/root/mimo-private/controller-r19-start.json",
+      "sha256": "4eaf76ba37c53005d22a2e57d5e3cae871bbec0bb5ee954a910c7905329eee61",
+      "data": {
+        "run_id": "mimo9b-001661-r19",
+        "argv": [
+          "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+          "-m",
+          "deployment.services.harbor_run_controller",
+          "--run-spec",
+          "/root/mimo-private/run-spec-r19.json",
+          "--max-run-seconds",
+          "25200"
+        ],
+        "cwd": "/workspace/mimo-dsh-rl-20260928/run-src-r19",
+        "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+        "source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+        "run_spec_sha256": "sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+        "deadline_unix": 1790752269,
+        "preflight_result_sha256": "6ac3d1eddb7fccdb849af85f84889996d9c1ecf7a4334a9a128c8b6361d1ffe1",
+        "preflight_status_sha256": "a51a50b13be02f919656cde4143b779c5d3be0f8eb51214b4673d2e029024b83",
+        "cohost_http_probe_sha256": "c8ebc73210c433c5b22be9116c8eadf7854e34564da32610b32711f13815796e",
+        "operator_sha256": "08b56afb85c0b683dde6bdebe5d28963a69a0da2ff4ce30af6864265a958519c",
+        "cuda_visible_devices": "",
+        "executed": true,
+        "pid": 417223,
+        "started_at": 1790734745.63373
+      }
+    },
+    "initial_authenticated_health": {
+      "path": "/root/mimo-private/controller-r19-authenticated-health.json",
+      "sha256": "f1e2b379aa4ccc2d09339c7121574508a828d6c38e2567604c01571939619c0b",
+      "data": {
+        "at": 1790734767.176623,
+        "pid": 417223,
+        "http_status": 200,
+        "health": {
+          "run_id": "mimo9b-001661-r19",
+          "controller_id": "mimo-controller-r19",
+          "run_spec_sha256": "sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+          "state": "unregistered",
+          "healthy": true
+        },
+        "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+        "source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+        "actual_cwd": "/workspace/mimo-dsh-rl-20260928/run-src-r19",
+        "controller_cuda_empty": true,
+        "max_concurrent_jobs": 2,
+        "deadline_unix": 1790752269.0
+      }
+    },
+    "background_support": {
+      "path": "/root/mimo-private/r19-background-support-start.json",
+      "sha256": "2f25785c21647b7410adbf88412000207de61f9d5e7adf71cd90d9bf04c4ced9",
+      "data": {
+        "archive": {
+          "pid": 417335
+        },
+        "observer": {
+          "pid": 417336
+        },
+        "started_at": 1790734837.1902676,
+        "run_id": "mimo9b-001661-r19",
+        "deadline_unix": 1790752269
+      }
+    }
+  },
+  "training_acceptance": false,
+  "controller_cuda_scope": "controller and its child workers only; no global driver environment export"
+}

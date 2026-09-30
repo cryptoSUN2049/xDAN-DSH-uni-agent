@@ -1,0 +1,52 @@
+{
+  "schema": "mimo.r19-preparation-evidence.v1",
+  "prepared": {
+    "schema": "xdan.mimo-prepared-run.v1",
+    "run_id": "mimo9b-001661-r19",
+    "task_ref": {
+      "id": "mimo-code-format-code-task-001661",
+      "version": "v1",
+      "sha256": "sha256:603c1f65f95a2e6b89716a618713f683b1fc9072386002eb014fb9b0ccb878e2"
+    },
+    "run_spec_sha256": "sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+    "history_policy": "strip",
+    "gpu_preparation": {
+      "prepared": true,
+      "task_sha256": "sha256:603c1f65f95a2e6b89716a618713f683b1fc9072386002eb014fb9b0ccb878e2"
+    },
+    "training_started": false
+  },
+  "process": {
+    "schema": "mimo.operator-process.v1",
+    "stage": "prepare-r19",
+    "status": "passed",
+    "started_at": 1790734241.1516404,
+    "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+    "source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+    "gpu_training_started": false,
+    "pid": 416954,
+    "exit_code": 0,
+    "finished_at": 1790734372.70257
+  },
+  "scripts": {
+    "schema": "mimo.r19-script-preparation.v1",
+    "files": {
+      "prepare-r19.py": "b139310186b6e509ee37f37f15a552c7263d7718274b63485ab91a469b4fcffd",
+      "launch-r19-driver.py": "f0eb61afdd3fb17ef3c3c7893079f72fd40c9b5431b59e93566880e7ef3cae62",
+      "mimo-supervised-native-r19.py": "f60157165e83d115a7b287c6aaaf7876b89d054861be0d982556aa2f9cd0a459",
+      "mimo_r19_preparation.py": "9f13bbf3571d33d307918833cf035125865d168a332d934123c47fb55fbba88b",
+      "preflight-r19.py": "2efecd3496dd0a3903e080fc7de961a342bdf0a15ae537aa186c4981a2be7ad8"
+    },
+    "training_started": false,
+    "templates": {
+      "prepare": "9cf593482a12aceb24c0bcbe7c051429482da3fcd0e3d322dac6e3a20b004074",
+      "driver": "575d5e4a91378cb23522b4411dbbbe116940b5173cca4eddb361671b13a40196",
+      "wrapper": "5a90973107bf13f9ab97273aa504844702b1db836192d899bbc8bdd5fc551600"
+    }
+  },
+  "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+  "source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+  "deadline_unix": 1790752269,
+  "deployment": "cohost GPU server; CPU-only preparation; no external CPU Pod",
+  "scope": "Preparation only; this report does not attest training or restoration"
+}

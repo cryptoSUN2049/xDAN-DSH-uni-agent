@@ -1,0 +1,18 @@
+{
+  "schema": "mimo.r19-initial-wandb-feedback.v1",
+  "queried_at": 1790735138.771,
+  "path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b001661r19",
+  "read_only": true,
+  "found": false,
+  "error_class": "CommError",
+  "not_found": true,
+  "history_audited": false,
+  "operator": {
+    "status": "running",
+    "supervisor_pid": 417367
+  },
+  "evidence_private_path": "/root/mimo-private/r19-wandb-feedback/query-1790735138.json",
+  "evidence_sha256": "165cb124271ab9f9a46efd0e858d3cca2380d6a4bdac5f8269b7f924d00fd85a",
+  "training_acceptance": false,
+  "scope": "Exact R19 API query during initialization; no historical run substitution or metric backfill."
+}
