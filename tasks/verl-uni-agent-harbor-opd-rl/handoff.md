@@ -1,3 +1,58 @@
+## 2026-09-30 R20e：第二个Code任务真实续训已启动，未完成验收
+
+### TL;DR
+
+- R19单任务001661工程闭环已通过；本次新增002549，独立run `mimo9b-002549-r20e`，C4→目标C5。
+- 原始Python3.10生产CLI无shim校准0/0/1；117项当前云CPU测试、实际prepare/preflight通过，代码5037e97已push。
+- 同机CPUcontroller446363、supervisor446676独立后台；07:22UTC原生新dataset/Ray启动，参数更新/W&B未验收。
+- 当前范围是Code功能适配；Cyber/General/Visual/Music尚无真实训练验收，不是MiMo五域原配方完整复刻。
+
+### 本轮交付物
+
+- `docs/verl-uni-agent-harbor-opd-rl/mimo_r20_operator.py`（904行）、`mimo_r20_cpu_prepare.py`（64行）、`mimo_r20_calibration_admission.py`（287行）：有界顺序课程准入与监督。
+- `tests/uni_agent/deployment/test_mimo_r20_operator.py`（908行）、`test_mimo_r20_calibration_admission.py`（251行）：当前云CPU99+18通过。
+- 同docs目录 `r20-operator-validation.md`（69行）、`r20-original-python-compat-design.md`、`mimo-domain-coverage-20260930.md`：实际验证与未覆盖边界。
+- 同docs evidence：`r20-current-actual-cloud-validation.json`、`r20-current-tested-bundle-manifest.json`、`r20-runtime-source-manifest-20260930.json`、`r20e-actual-{prepare,preflight}.json`、`r20e-production-calibration-admission.json`及002549生产校准/原Python证明；详细文件数/行数见commit5037e97。
+
+### 设计约束
+
+- Mac仅轻量编辑/Git/Ruff/SSH；模型、测试、训练留云端。11403服务器独占授权，213.192.2.76:40171禁止操作。
+- 固定截止1790759992=09:19:52UTC/17:19:52SGT，训练预留清理至09:16:52UTC；不重计、不自动关闭Pod。
+- runtime独立组装run-src-r20：已验R19 base4dbd87/04fb + commit1ccc两个精确兼容blob；1003文件manifest99ac03f5…ca0591f。不能称新commit完整checkout。
+- 当前273环境、DSH b236969/0.1.3a2、模型2367e865、数据639865fd、32K/20480、world2/FSDP1/colocate_async不改。
+- 一run固定一task/image；checkpoint顺序恢复不是单run混合采样。私有凭据只按明确文件allowlist读取，绝不private JSON glob。
+
+### 已踩坑/真实行为
+
+- 新任务原Python3.9/3.10不支持hashlib.file_digest/旧union isinstance；已以流式SHA及tuple修复，不升级原任务Python。
+- 002857/000466候选0/0/0，不放行；002549旧私有shim校准被新实际生产无shim报告替代，旧失败保留。
+- task_ref不覆盖注入workspace helper，因此单独绑定helper/source manifest。DSH测量指纹与RunSpec artifact release不是同一字段namespace，准入明确交叉映射。
+- readonly base复制后的兼容blob不能直接覆写；只在新incoming验证旧SHA后替换两个自有文件，原R19未改。
+- Supervisor仅管理自己fork的训练组；自然exit0不代替controller/Modal/Ray/端口清理验收，controller优雅SIGINT才执行finally。
+
+### 下一里程碑任务清单
+
+- [ ] 原生两个rank C4 model/optimizer/RNG/scheduler恢复及fit。
+- [ ] 新002549四条实际消费/policy4/独立reward/有符号advantage/非零gradient/C5/双rank参数和optimizer4→5。
+- [ ] Token合同、W&B finished实际step5对账、当前scope Prom/Tempo。
+- [ ] 所属资源精确回收/SSH授权项清理/端口/GPU终态；Pod和共享观测保留。
+- [ ] 记录未完成数据范围/成本边界，更新最后验收与交接；不宣称能力提升或五领域完成。
+
+### 分支/部署状态
+
+- worktree/branch `verl-uni-agent-harbor-opd-rl`；5037e976ae3f58f78f807ebfcef8b8ecbdc0bfb3已push，精确干净commit Ruff check与format685文件均通过。
+- Pod db7kewdkd71js6/157.157.221.177:11403保留计费；专用local38880–83/reverse38780–81。
+- GPU监督器PID446676/startticks342773096，controller446363/startticks342688298；只依据当前/proc和结果文件操作，历史PID不直接当授权。
+- 原生启动确认不等于更新通过；07:23 W&B首次只读查询CommError/未确认新run，不回填。
+
+### 冷启动 checklist
+
+1. 读当前handoff、domain coverage、r20-operator-validation及r20-current-actual-cloud-validation。
+2. 核Git/保留其他会话dirty；SSH11403读ROOT/integration-check/r20e-{supervisor-startup,supervisor-result}.json与PRIVATE/launch-r20e/train.log。
+3. BASE=/workspace/mimo-dsh-rl-20260928，PRIVATE=/root/mimo-private；实际plan PRIVATE/stage-plan-r20e-supervise.json、spec PRIVATE/run-spec-r20e.json，只读非敏感字段。
+4. checkpoint ROOT/runs/r19/rl-training/checkpoints/global_step_4 → ROOT/runs/r20e/rl-training/checkpoints/global_step_5；不移动大文件到Mac。
+5. 按r20e-readonly-acceptance-plan执行当前run验收，W&B path xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20e；禁止旧R19证据替代新run。
+
 ## 2026-09-30：MiMo 9B Code 工程闭环最终验收
 
 ### TL;DR

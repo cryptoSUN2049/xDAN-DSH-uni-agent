@@ -1,0 +1,9 @@
+{
+  "schema": "mimo.r20-wandb-readonly-status.v1",
+  "queried_at": 1790753016.3490825,
+  "run_path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20e",
+  "read_only": true,
+  "history_backfilled": false,
+  "state": "not_yet_confirmed",
+  "error_type": "CommError"
+}
