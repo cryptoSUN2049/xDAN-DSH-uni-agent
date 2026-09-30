@@ -1,4 +1,4 @@
-## 2026-09-30 R20：固定四小时窗口 Code 续训
+## 2026-09-30 R20：Code续训已按用户要求暂停
 
 - [x] 确认R19/C4实物；预算截止1790759992（09:19:52UTC/17:19:52SGT），清理预留180秒。
 - [x] 固定数据、模型、DSH版本；构建3个新任务镜像并保存实际构建并发/清理证据。
@@ -11,6 +11,8 @@
 - [ ] Token/W&B原生API/Insight联合验收、所属资源回收、成本边界和最终交接。
 
 Review：07:38UTC原生两rank恢复、W&B API running及2running任务；尚无本轮更新验收。多Code任务不是五领域复刻；其他四域未验收，Pod保留计费。
+
+暂停：用户确认账户无余额。W&B新run crashed/history0；step5/C5与所属清理未验收，停止监测/校准/新云资源推进。恢复先核账户/存储/checkpoint及新预算，见docs/verl-uni-agent-harbor-opd-rl/r20-paused-status-20260930.md。
 
 ## 2026-09-30 R19 最终验收（当前目标）
 

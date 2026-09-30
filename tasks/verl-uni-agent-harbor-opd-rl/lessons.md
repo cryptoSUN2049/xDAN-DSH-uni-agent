@@ -62,3 +62,5 @@
 - R20 原任务镜像的 Python3.9/3.10与训练宿主3.12不同：必须验证实际原镜像CLI，不能用私有兼容注入通过的校准替代生产源码验证。helper在sandbox执行时优先使用最小标准库API，兼容修复须保持SHA/归档/评分语义。
 - R20 frozen base1003清单含生成文件及组装VERL，不等于Git完整树；只将精确审核Git blob覆盖独立incoming，manifest明确base与overlay来源。不得用git archive缺失的生成文件或新commit标签冒充完整checkout；原freeze保持原字节。
 - R20 校准测量指纹与RunSpec artifact-release字段不同：先读实际JSON结构，严格建立来源/版本/镜像/工件SHA交叉映射，不凭fixture猜namespace、不在不存在字段上放宽准入。实际配置门与单元测试门分别记录。
+
+- 用户因余额不足暂停时，立即停止监测/重启/校准和新资源推进，保留原始失败与未验收范围。训练时间上限不等于全账户资金充足；后续新启动前应核余额与所有资源总支出。Pod404/SSH断连和W&B crashed不能证明C5保存、原生成功退出或Modal全部回收；恢复先核实际存储和checkpoint。

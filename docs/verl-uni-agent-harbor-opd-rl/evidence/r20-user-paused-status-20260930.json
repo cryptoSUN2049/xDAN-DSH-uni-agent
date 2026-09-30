@@ -1,0 +1,46 @@
+{
+  "schema": "mimo.r20-user-paused-status.v1",
+  "recorded_unix": 1790755001.20106,
+  "user_paused": true,
+  "pause_reason": "User confirmed Runpod account has no money",
+  "run_id": "mimo9b-002549-r20e",
+  "last_pushed_commit_before_pause": "3264525",
+  "old_goal_status": "complete",
+  "current_extension_status": "paused",
+  "gpu_pod": "db7kewdkd71js6",
+  "last_ssh": "157.157.221.177:11403",
+  "mcp_get_pod_status": 404,
+  "mcp_list_pods_count": 0,
+  "cli_get_pod_exit_code": 1,
+  "cli_get_pod_status": 404,
+  "cli_account_client_balance_usd": -0.5895114386,
+  "cli_account_total_spend_per_hour_usd": 0.347,
+  "account_spend_is_not_training_gpu_rate": true,
+  "this_session_stopped_or_deleted_pod": false,
+  "observed_training": {
+    "native_c4_model_optimizer_rng_scheduler_restore_both_ranks": true,
+    "policy4_backend_events_observed": 17,
+    "first_two_independent_rewards": [
+      0.0,
+      0.0
+    ],
+    "remaining_two_rewards": "unknown",
+    "four_consumed_trajectories": "not_verified",
+    "step5_effective_update": "not_verified",
+    "c5_checkpoint": "not_verified",
+    "wandb_after_ssh_loss_state": "crashed",
+    "wandb_after_ssh_loss_history_rows": 0
+  },
+  "monitoring_interrupted": true,
+  "further_cloud_allocation_or_restart": false,
+  "native_remote_stop_signal_delivered": false,
+  "remote_stop_signal_limitation": "SSH unavailable before authentication",
+  "modal_terminal_cleanup": "not_verified",
+  "cloud_checkpoint_storage_persistence": "not_verified",
+  "next_resume_requires": [
+    "Verify funded account and exact Pod/storage identity",
+    "Verify actual C4/C5 files and hashes before selecting parent",
+    "Reconcile owned Modal resources and scoped R20 SSH key",
+    "Create new authorized fixed window and new run identity; do not reuse expired authorization"
+  ]
+}

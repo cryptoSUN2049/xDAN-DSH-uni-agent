@@ -1,0 +1,18 @@
+{
+  "schema": "mimo.r20-wandb-readonly-status.v1",
+  "queried_at": 1790754863.8306508,
+  "run_path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20e",
+  "read_only": true,
+  "history_backfilled": false,
+  "gpu_liveness_confirmed_by_this_read": false,
+  "state": "crashed",
+  "history_rows_count": 0,
+  "history_rows": [],
+  "summary": {},
+  "config": {
+    "experiment_name": "mimo9b-002549-r20e",
+    "n_gpus_per_node": 2,
+    "total_training_steps": 5,
+    "resume_from_path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4"
+  }
+}

@@ -1,10 +1,11 @@
-## 2026-09-30 R20e：第二个Code任务真实续训已启动，未完成验收
+## 2026-09-30 R20e：用户因账户无余额暂停；新更新未验收
 
 ### TL;DR
 
 - R19单任务001661工程闭环已通过；本次新增002549，独立run `mimo9b-002549-r20e`，C4→目标C5。
 - 原始Python3.10生产CLI无shim校准0/0/1；117项当前云CPU测试、实际prepare/preflight通过，代码5037e97已push。
-- 同机CPUcontroller446363、supervisor446676独立后台；07:38UTC原生两rank恢复完成、2任务真实采样；W&B API running，step5参数更新未验收。
+- 最后证实两rank C4恢复、policy4真实采样；前2条独立评分0，后2条结果未知；step5/C5未验收。
+- 用户明确暂停；SSH不可达、Pod查询404/列表0、CLI余额-$0.5895；新W&B API crashed/history0。没有本会话Pod停止/删除动作。
 - 当前范围是Code功能适配；Cyber/General/Visual/Music尚无真实训练验收，不是MiMo五域原配方完整复刻。
 
 ### 本轮交付物
@@ -41,17 +42,19 @@
 ### 分支/部署状态
 
 - worktree/branch `verl-uni-agent-harbor-opd-rl`；5037e976ae3f58f78f807ebfcef8b8ecbdc0bfb3已push，精确干净commit Ruff check与format685文件均通过。
-- Pod db7kewdkd71js6/157.157.221.177:11403保留计费；专用local38880–83/reverse38780–81。
+- Pod db7kewdkd71js6/157.157.221.177:11403目前不可访问，CLI/MCP404；存储及剩余资源状态未核实。专用local38880–83/reverse38780–81仍需以后核回收。
 - GPU监督器PID446676/startticks342773096，controller446363/startticks342688298；只依据当前/proc和结果文件操作，历史PID不直接当授权。
 - 原生启动确认不等于更新通过；07:23 W&B首次查询尚无新run；07:37第二次API已running，两卡/C4/target5匹配，history仍0，不回填。
 
 ### 冷启动 checklist
 
-1. 读当前handoff、domain coverage、r20-operator-validation及r20-current-actual-cloud-validation。
+1. 先读r20-paused-status-20260930.md和暂停JSON；用户未恢复前不继续云端任务。恢复时先确认账户/存储/C4或C5实物，再读本handoff和实际gate证明。
 2. 核Git/保留其他会话dirty；SSH11403读ROOT/integration-check/r20e-{supervisor-startup,supervisor-result}.json与PRIVATE/launch-r20e/train.log。
 3. BASE=/workspace/mimo-dsh-rl-20260928，PRIVATE=/root/mimo-private；实际plan PRIVATE/stage-plan-r20e-supervise.json、spec PRIVATE/run-spec-r20e.json，只读非敏感字段。
 4. checkpoint ROOT/runs/r19/rl-training/checkpoints/global_step_4 → ROOT/runs/r20e/rl-training/checkpoints/global_step_5；不移动大文件到Mac。
 5. 按r20e-readonly-acceptance-plan执行当前run验收，W&B path xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20e；禁止旧R19证据替代新run。
+
+暂停收尾：持续监测已interrupt；备用001661新包仅prepared-only，未分配校准Modal。旧R19 goal保持complete，当前续训扩展paused。当前无法发送远程停止命令；不声明本轮nativeexit/Modal全部终止。
 
 ## 2026-09-30：MiMo 9B Code 工程闭环最终验收
 
