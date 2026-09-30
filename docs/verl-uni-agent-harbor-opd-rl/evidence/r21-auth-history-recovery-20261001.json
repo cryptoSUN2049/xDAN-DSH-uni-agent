@@ -1,0 +1,123 @@
+{
+  "schema": "mimo.r21-auth-history-recovery.v1",
+  "pod_id": "vo6u0t8x398bnm",
+  "host": "157.157.221.30",
+  "ssh_port": 51913,
+  "allocation_unix": 1790791473,
+  "fixed_deadline_unix": 1790813073,
+  "cleanup_reserve_seconds": 180,
+  "status": "authentication-and-historical-api-read-passed",
+  "credential_transfer": {
+    "network_volume_plaintext_written": false,
+    "private_directory": "/root/mimo-private",
+    "private_directory_root_owned": true,
+    "private_directory_mode": "0700",
+    "private_directory_symlink": false,
+    "files": [
+      {
+        "path": "/root/mimo-private/modal.toml",
+        "mode": "0600",
+        "root_owned": true
+      },
+      {
+        "path": "/root/.modal.toml",
+        "mode": "0600",
+        "root_owned": true
+      },
+      {
+        "path": "/root/.netrc",
+        "mode": "0600",
+        "root_owned": true,
+        "selected_machine": "api.wandb.ai"
+      }
+    ],
+    "credential_values_or_hashes_in_report": false
+  },
+  "fixed_python": {
+    "path": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+    "version": "3.12.3",
+    "dependencies": {
+      "modal": "1.5.5",
+      "wandb": "0.30.0",
+      "rl-insight": "0.3.0"
+    },
+    "environment_changed": false
+  },
+  "modal_owned_calibration_repoll": {
+    "observed_unix": 1790792102.3712578,
+    "api": "Sandbox.from_id/poll",
+    "new_sandboxes_created": false,
+    "resources": [
+      {
+        "sandbox_id": "sb-eJgfAfvJbojpsjqjZmpIsz",
+        "returncode": 137
+      },
+      {
+        "sandbox_id": "sb-aEbHD41HvtWg4oRWsxWhKt",
+        "returncode": 137
+      },
+      {
+        "sandbox_id": "sb-03vOL4XEXQeTjzotSwX15o",
+        "returncode": 137
+      }
+    ],
+    "active_in_this_known_set": 0,
+    "all_old_run_resources_discovered": false
+  },
+  "wandb_historical_read": {
+    "observed_unix": 1790792205.2236347,
+    "read_only": true,
+    "history_mutated": false,
+    "full_scan_history": true,
+    "run_scope": [
+      {
+        "path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b001661r19",
+        "state": "finished",
+        "native_history_rows": 1,
+        "history_steps": [
+          4
+        ],
+        "native_step4_scalars": {
+          "training/global_step": 4,
+          "actor/grad_norm": 0.13671875,
+          "actor/pg_loss": -0.16066483408212662,
+          "critic/rewards/mean": 0.5,
+          "critic/score/min": 0,
+          "critic/score/max": 1,
+          "critic/advantages/min": -0.8660238981246948,
+          "critic/advantages/max": 0.8660238981246948
+        }
+      },
+      {
+        "path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20e",
+        "state": "crashed",
+        "native_history_rows": 0,
+        "history_steps": [],
+        "native_exit_or_c5_verified_by_this_report": false
+      }
+    ]
+  },
+  "initial_observability": {
+    "observed_unix": 1790791824.5320592,
+    "ports_listening": {
+      "18080": false,
+      "9090": false,
+      "3200": false
+    },
+    "services_restored_by_this_report": false
+  },
+  "operation_boundaries": {
+    "cloud_cpu_only": true,
+    "gpu_or_training_started": false,
+    "shared_credentials_changed": false,
+    "modal_global_cleanup": false,
+    "private_json_glob": false,
+    "pod_stop_or_delete": false
+  },
+  "limits": [
+    "Historical API facts do not attest new r20f/C5 training acceptance.",
+    "W&B crashed is not proof of native exit or checkpoint absence.",
+    "Known sandbox poll scope contains only three explicitly identified owned production-calibration boxes; it does not discover all old R20e boxes.",
+    "Credential files remain local to this container; encrypted persistence is root-owned work."
+  ]
+}

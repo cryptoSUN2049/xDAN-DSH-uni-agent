@@ -1,6 +1,20 @@
 # 充值后恢复方案（2026-10-01 SGT）
 
-状态：只读调查完成，训练未恢复；实施等待用户确认。本文的新窗口为提议，不是已经授权的截止时间。
+## 已批准实施：双卡六小时（更新）
+
+用户明确“好的 买双卡 跑6小时”，并要求完整真实闭环验收；覆盖下方原四小时提案。新建owned Pod `vo6u0t8x398bnm`，实际价格$4.18/h、2×RTX PRO 6000 96GB、原卷72jdno5cuk，同区EUR-IS-1。
+
+固定allocation1790791473=2026-09-30 18:04:33UTC，截止1790813073=2026-10-01 00:04:33UTC/08:04:33SGT，21600秒，清理预留180秒；重启不重计。成本守护器只可停止该Pod，不能操作用户新A100或其他会话机器；网络卷保留。六小时GPU约$25.08，不含账户其他资源/存储/Modal。
+
+新SSH157.157.221.30:51913；实际gateway172.25.0.2、driver595.91.07、CUDA主机支持13.2。固定uv环境metadata实查Python3.12.3/Torch2.11/vLLM0.23/Transformers5.8/Ray2.54.1/Modal1.5.5/W&B0.30，不重新安装。新host真实双GPU IPC四用例exit0，不代替9B原生恢复。
+
+发现MFS忽略chmod：network路径仍0777。已撤销private symlink，/root/mimo-private恢复真实root-owned0700，凭据0600且从未写入网络明文；持久私有恢复包采用AES-256-GCM，专用备份key仅Mac私有目录与当前Pod本地保存，不随密文归档。旧错误方案保留为发现记录，不继续采用。
+
+新增实施文件：mimo_r21_cost_guard.py及对应云CPU17tests（96.67%覆盖）；mimo_r21_private_backup.py用于本轮加密备份。operator/transport使用显式SHA绑定的新授权、新hostkey和新base spec，冻结训练runtime99ac及273依赖不改。
+
+以下为历史恢复调查及原始提案；预算/截止和权限以后续本节为准，当前训练仍待真正prepare/preflight与原生启动。
+
+
 
 ## 目标与范围
 
