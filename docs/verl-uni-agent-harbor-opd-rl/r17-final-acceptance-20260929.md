@@ -48,7 +48,7 @@
 2. R14：手动 controller PATH 错误，首次注册无法找到已有 cloudflared；修正路径并加入实际二进制/HTTPS 预检。
 3. R15：训练并发2，但 worker/SQLite ledger 仍单任务，第二请求 HTTP409；修复端到端有界容量，真实 HTTP 两接受、第三拒绝、取消/清理隔离回归通过。
 4. R17 审计：旧同步 auditor 错把采样 step 当消费 step；增加显式 async v2，以唯一 TQ key 关联真实消费并保留两个时间轴。旧默认同步行为保留。
-5. R17 参数检查：旧工具仅支持 ShardedTensor，实际 FSDP2 为 DTensor；新增严格原生格式支持，保留第一次 unsupported-type 失败证据，未降低数值判断标准。
+5. R17 参数检查：旧工具仅支持 ShardedTensor，实际 FSDP v1（`FSDP_version=1`）保存 DTensor；新增严格原生格式支持，保留第一次 unsupported-type 失败证据，未降低数值判断标准。
 
 最后一批云端 CPU 回归：async/world2 **87 tests** 通过，两个文件覆盖率分别 **82.91% / 98.44%**；原生双 rank checkpoint **17 tests** 通过，checker 覆盖率 **89.88%**。覆盖率包含分支且无排除行。证据：[回归报告](evidence/r17-async-world2-audit-validation-20260929.json)、[checkpoint 测试](evidence/r17-sharded-checkpoint-audit/dtensor-fixture-status.json)。源码 SHA 与本地待提交文件逐一一致；提交后推送前在该精确 commit 的干净 worktree 执行全仓 Ruff 双门禁。
 
@@ -59,3 +59,9 @@
 训练在既定截止前自然结束，未因完成而新开 GPU 运行。两个 qwen3coder malformed XML 解析异常由框架处理，未导致训练失败；原始错误仍保留用于后续协议质量分析。
 
 **未验收：** 新 R17 world2 独立重启恢复、精确恢复在途队列、64K、完整2698条 Code 数据训练、其他四领域、能力提升。历史 R12 separate_async 独立恢复已通过，但不能替代本轮 world2 恢复。下一步优先在相同 world2 上做一次有界独立恢复及多任务留出评测，再考虑长程训练；不以更高 GPU 利用率单独判定训练质量。
+
+## 2026-09-30 复核补充
+
+真实 C3 fsdp_config.json 为 `{"FSDP_version":1,"world_size":2}`；DTensor checkpoint 格式不能用来推断 FSDP2。原文版本标注已纠正，不影响实际分片/数值审计结果。
+
+[Runpod 成本回执](evidence/r17-cost-reconciliation-20260930.json)：当前双卡报价 $4.18/h；R17 3375.206 秒训练对应约 $3.92 GPU 时间分摊估算。覆盖训练的18–20UTC两个整小时账单合计 $8.4048，包含非R17时间，不能全部计作R17训练成本。CPU/Modal/网络卷未归集，不能填零或宣称完整项目账单。

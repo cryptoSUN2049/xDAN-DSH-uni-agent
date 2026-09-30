@@ -1,0 +1,88 @@
+{
+  "schema": "mimo.r17-cost-reconciliation.v1",
+  "queried_at_utc": "2026-09-29T23:50:52Z",
+  "pod": {
+    "id": "db7kewdkd71js6",
+    "status": "RUNNING",
+    "cost_per_hour_usd": 4.18,
+    "started_at": "2026-09-25T02:47:42.274Z",
+    "observed_gpu_utilization": [
+      {
+        "memoryUtil": 0,
+        "util": 0
+      },
+      {
+        "memoryUtil": 0,
+        "util": 0
+      }
+    ]
+  },
+  "source": "Runpod MCP get_pod and list_pod_billing; read-only",
+  "billing_query": {
+    "bucketSize": "hour",
+    "endTime": "2026-09-30T00:00:00Z",
+    "podId": "db7kewdkd71js6",
+    "startTime": "2026-09-29T00:00:00Z"
+  },
+  "provider_reported_totals_for_returned_records": {
+    "cpuAmount": 0,
+    "diskAmount": 0.4774305591126904,
+    "gpuAmount": 95.78499856591225,
+    "totalAmount": 96.26242912502494
+  },
+  "returned_record_count": 23,
+  "r17_overlapping_hour_buckets": [
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.020833333488553762,
+      "endTime": "2026-09-29T19:00:00Z",
+      "gpuAmount": 4.178151547908783,
+      "podId": "db7kewdkd71js6",
+      "startTime": "2026-09-29T18:00:00Z",
+      "totalAmount": 4.198984881397337
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.020833333488553762,
+      "endTime": "2026-09-29T20:00:00Z",
+      "gpuAmount": 4.184944033622742,
+      "podId": "db7kewdkd71js6",
+      "startTime": "2026-09-29T19:00:00Z",
+      "totalAmount": 4.2057773671112955
+    }
+  ],
+  "r17_overlapping_hour_buckets_total_usd": 8.404762248508632,
+  "r17_supervised_training_seconds": 3375.206,
+  "r17_gpu_runtime_allocation_estimate_usd": 3.918989188888889,
+  "estimate_basis": "Observed current $4.18/hour rate multiplied by recorded supervised training duration; estimate, not exact per-run invoice. Hour buckets also include startup/other run/idle time.",
+  "cpu_pod_cost_usd": null,
+  "modal_cost_usd": null,
+  "network_volume_cost_usd": null,
+  "complete_project_cost_known": false,
+  "limitations": [
+    "Returned billing has 23 buckets; final bucket may be partial. Not a complete settled day invoice.",
+    "Shared existing GPU Pod started before this experiment. Do not attribute all daily spend to R17.",
+    "CPU, Modal and network-volume costs not yet reconciled; null means unknown, not zero.",
+    "Pod retained by user request and remains billable while idle; no stop/delete issued.",
+    "Historical CPU host label refers to CPU-only workload on SSH11621; platform billing identifies it as an existing single-GPU Pod."
+  ],
+  "controller_host": {
+    "pod_id": "769tt1sxhn6bpj",
+    "ssh_port": 11621,
+    "pod_name": "performance-9b-eval-5000",
+    "current_hourly_usd": 2.09,
+    "actual_compute_type": "Existing GPU Pod; this task uses CPU only",
+    "billing_window_utc": [
+      "2026-09-29T18:00:00Z",
+      "2026-09-29T20:00:00Z"
+    ],
+    "billing_totals_usd": {
+      "cpuAmount": 0,
+      "gpuAmount": 4.181547790765762,
+      "diskAmount": 0.041666666977107525,
+      "totalAmount": 4.22321445774287
+    },
+    "attributable_to_r17_usd": null,
+    "attribution_note": "Shared existing host with unrelated responsibilities; no new CPU pod provisioned and no GPU work by this audit. Full host bill is not attributable to R17."
+  }
+}

@@ -1,3 +1,14 @@
+## R18 同双卡独立恢复（2026-09-30）
+
+- [x] 用户授权继续使用11403；实际两GPU空闲，固定新截止1790733089。
+- [x] 恢复方案落盘 docs/verl-uni-agent-harbor-opd-rl/r18-resume-acceptance-plan.md。
+- [ ] C3稳定manifest、SHA与固定源码/环境准入。
+- [ ] 云端CPU回归、精确commit全仓Ruff、push与实际prepare/preflight。
+- [ ] 新身份恢复C3至C4、双rank参数/optimizer与真实轨迹有效更新。
+- [ ] W&B API/原始console/Prom/Tempo对账、资源清理与成本、完整交接。
+
+Review：R17 fresh三步通过；R18尚未启动，不以历史分卡恢复代替本次验收。Pod保留。
+
 ## R17 双卡全链路验收（2026-09-29 18:13 UTC）
 
 - [x] 定位R15 HTTP409，保留原始失败与清理证据。

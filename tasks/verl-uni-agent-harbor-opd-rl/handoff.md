@@ -46,7 +46,7 @@
 
 - R13覆盖sessions、R14 PATH、R15下游单任务HTTP409已修复；非双卡模式不可行的证据。
 - 显式step的W&B原生缓冲到后续step/finish；最终API对账无补写。主train.log延迟时核原始Ray worker。
-- 实际FSDP2模型为DTensor，optimizer为plain Tensor；严格CPU审计支持真实格式，保留首次失败。
+- 实际FSDP v1（FSDP_version=1）模型checkpoint为DTensor，optimizer为plain Tensor；严格CPU审计支持真实格式，保留首次失败。
 - 两次malformed XML由框架处理。12条消费之外1完成预取和2取消预取，不能计作训练样本。
 
 ### 下一里程碑任务清单

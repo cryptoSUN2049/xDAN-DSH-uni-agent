@@ -1,0 +1,36 @@
+{
+  "schema": "mimo.r18-host-readiness.v1",
+  "checked_at_utc": "2026-09-29T23:51:31Z",
+  "ssh_host": "157.157.221.177",
+  "ssh_port": 11403,
+  "read_only": true,
+  "gpu_count": 2,
+  "gpus": [
+    {
+      "index": 0,
+      "uuid": "GPU-f3d0b2c7-a90f-ffa9-eb70-d9d2dea39d94",
+      "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "memory_total_mib": 97887,
+      "memory_used_mib": 0,
+      "utilization_percent": 0
+    },
+    {
+      "index": 1,
+      "uuid": "GPU-2676ad09-5ff2-cb59-a4bd-9c516041194b",
+      "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "memory_total_mib": 97887,
+      "memory_used_mib": 0,
+      "utilization_percent": 0
+    }
+  ],
+  "compute_processes": [],
+  "checkpoint_marker": 3,
+  "fsdp_config": {
+    "FSDP_version": 1,
+    "world_size": 2
+  },
+  "authorized_deadline_unix": 1790733089,
+  "authorized_deadline_utc": "2026-09-30T01:51:29Z",
+  "training_started": false,
+  "next_gate": "Source/manifest/env/prepare preflight and recheck GPU ownership immediately before launch; this snapshot is not a reservation"
+}
