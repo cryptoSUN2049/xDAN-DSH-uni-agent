@@ -1,3 +1,12 @@
+## R21 当前执行状态（2026-10-01 03:31 SGT）
+
+- [x] 当前b053bde控制代码 full Ruff691双门/push及cloud exact freeze。
+- [x] 实际prepare/preflight通过；273依赖、新002549 Parquet与原生C4 loader状态核实。
+- [x] controller10217认证健康；supervisor11436/startticks355636029后台启动。
+- [ ] 当前native双rank恢复、真实四条评分消费与有效C5/W&B/Insight验收。
+
+Review：后台监督已启动，不能据此宣称模型已恢复/有效更新完成。
+
 ## 2026-10-01 R21 双卡六小时恢复（当前）
 
 - [x] 用户批准双卡六小时；新专属Pod vo6u0t8x398bnm，SSH157.157.221.30:51913，固定截止2026-10-01 08:04:33 SGT。

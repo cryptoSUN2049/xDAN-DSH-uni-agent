@@ -1,0 +1,91 @@
+{
+  "schema": "mimo.r20f-readonly-observation.v1",
+  "observed_unix": 1790795942.7347882,
+  "pod_id": "vo6u0t8x398bnm",
+  "run_id": "mimo9b-002549-r20f",
+  "wandb_api_path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20f",
+  "deadline_unix": 1790813073,
+  "processes": [
+    {
+      "name": "prometheus",
+      "pid": 5401,
+      "start_ticks": "355265361",
+      "identity_matches": true,
+      "state": "S"
+    },
+    {
+      "name": "tempo",
+      "pid": 5425,
+      "start_ticks": "355265391",
+      "identity_matches": true,
+      "state": "S"
+    },
+    {
+      "name": "rl_insight",
+      "pid": 5499,
+      "start_ticks": "355265421",
+      "identity_matches": true,
+      "state": "S"
+    },
+    {
+      "name": "cost_guard",
+      "pid": 5571,
+      "start_ticks": "355278877",
+      "identity_matches": true,
+      "state": "S"
+    },
+    {
+      "name": "encrypted_backup",
+      "pid": 8370,
+      "start_ticks": "355382868",
+      "identity_matches": true,
+      "state": "S"
+    }
+  ],
+  "health": [
+    {
+      "url": "http://127.0.0.1:18080/healthz",
+      "http_status": 200
+    },
+    {
+      "url": "http://127.0.0.1:9090/-/ready",
+      "http_status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3200/ready",
+      "http_status": 200
+    }
+  ],
+  "frozen_source_refs": [
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r20/verl/verl/trainer/main_ppo.py",
+      "sha256": "270ffe0d0f5ddbc4e9af8d0f6eece5d11b1a6d6d76166603b5ebac81345dd5cc"
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r20/verl/verl/trainer/constants_ppo.py",
+      "sha256": "a3be88dac14464216b4ec937baa776366c55d3e224b3c27957308792cb26c1e5"
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/r21-operator-runtime/mimo_r20_operator.py",
+      "sha256": "a74b3e94f9d2934982529aa1d27f6739af937940db6d5251c52a3bba5b480d4e"
+    }
+  ],
+  "launch_file_exists": false,
+  "runtime_env_audit": {
+    "main_ppo_merges_default_and_explicit_config": true,
+    "default_explicitly_forwards_enable": true,
+    "default_explicitly_forwards_server_url": false,
+    "operator_outer_enable": "1",
+    "operator_outer_server_url": "http://127.0.0.1:18080",
+    "operator_explicit_ray_server_url_override_present": false,
+    "current_worker_server_url_verified": false,
+    "local_ray_inheritance_possible_but_not_verified": true
+  },
+  "training_acceptance": false,
+  "boundaries": [
+    "Read-only current Pod identity/service audit",
+    "CPU transport preflight not reused as current training proof",
+    "No GPU work, Modal creation, configuration change or process stop",
+    "Current worker propagation and native step5 remain unverified"
+  ]
+}

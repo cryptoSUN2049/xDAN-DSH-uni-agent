@@ -1,0 +1,39 @@
+{
+  "authorization_sha256": "e45736ba0f833f3388ab468ea81dff530eb1580069cd8a5b51ffc7f5ea7dd704",
+  "command": [
+    "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+    "/workspace/mimo-dsh-rl-20260928/audit-code/r21-operator-runtime/mimo_r20_operator.py",
+    "supervise",
+    "--plan",
+    "/root/mimo-private/stage-plan-r20f-supervise.json",
+    "--output",
+    "/workspace/mimo-dsh-rl-20260928/integration-check/r20f-supervisor-result.json"
+  ],
+  "control_bundle_sha256": "6c2d5175c12f07699761dada2716ad210b9a18165598f504e2fcfff788314504",
+  "deadline_unix": 1790813073,
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "0,1",
+    "PYTHONPATH": "/workspace/mimo-dsh-rl-20260928/env-overlays/r10-cupy/packages:/workspace/mimo-dsh-rl-20260928/run-src-r20:/workspace/mimo-dsh-rl-20260928/run-src-r20/verl",
+    "PYTHON_BIN": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+    "RAY_TMPDIR": "/root/mimo-private/ray-r20f",
+    "RL_INSIGHT_SERVER_URL": "http://127.0.0.1:18080",
+    "RUNPOD_POD_ID": "vo6u0t8x398bnm",
+    "VERL_RL_INSIGHT_ENABLE": "1",
+    "WANDB_ENTITY": "xdan-ai",
+    "WANDB_MODE": "online",
+    "WANDB_NAME": "mimo9b-002549-r20f",
+    "WANDB_PROJECT": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+    "WANDB_RESUME": "never",
+    "WANDB_RUN_ID": "mimo9b002549r20f"
+  },
+  "native_training_started": false,
+  "pgid": 11436,
+  "pid": 11436,
+  "pod_id": "vo6u0t8x398bnm",
+  "preflight_sha256": "c8aa4b6a14f8c82b8ca94ec9adb77368f11a496d3ad8bac12de2a7d8e563f59f",
+  "run_id": "mimo9b-002549-r20f",
+  "schema": "mimo.owned-supervisor-startup.v1",
+  "stage_plan_sha256": "c2619166c82daf92331cbe3206746e3e6bb943c49d8ba031b6a94828b107e31e",
+  "started_at": 1790796645.4525838,
+  "startticks": 355636029
+}

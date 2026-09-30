@@ -1,0 +1,34 @@
+{
+  "files": {
+    "mimo_curriculum_data_probe.py": {
+      "bytes": 7969,
+      "sha256": "228457d8796a6f5f0ad7f2067f6d1073f7326ebffdb235e761a064ba0edad7ec"
+    },
+    "mimo_r20_calibration_admission.py": {
+      "bytes": 15196,
+      "sha256": "6e70997e9270fd8298a63a190996350702c61f00f8c2760fe79484f389771b19"
+    },
+    "mimo_r20_cpu_prepare.py": {
+      "bytes": 2649,
+      "sha256": "370fb362eb319f1227e3e46d6a4d8e8e8f3927910c66e00ce2ed6a91d77c35e4"
+    },
+    "mimo_r20_operator.py": {
+      "bytes": 43210,
+      "sha256": "a74b3e94f9d2934982529aa1d27f6739af937940db6d5251c52a3bba5b480d4e"
+    },
+    "mimo_r20_transport.py": {
+      "bytes": 19829,
+      "sha256": "8bfd1889cac5099b2420122e54fa89c2db1140a7dc03830f189c0e75302fcd97"
+    },
+    "mimo_r21_calibration.py": {
+      "bytes": 21995,
+      "sha256": "80b3a3be7946ce30288eb154380855bf15dbc3707095772b677ebaf7da47ff74"
+    }
+  },
+  "git_commit": "b053bde7b9c052044e8d9f2ec63fbf4a7ae6ab99",
+  "schema": "mimo.tested-control-bundle.v1",
+  "source_manifest_sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "source_runtime_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+  "status": "frozen",
+  "tests_proof_sha256": "bd03e934169b31dd2255d941e9e38c9b1e811b4f88ddc57b247ba847acc3bc9d"
+}

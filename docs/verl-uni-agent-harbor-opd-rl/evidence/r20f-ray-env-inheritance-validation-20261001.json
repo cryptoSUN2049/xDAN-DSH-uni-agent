@@ -1,0 +1,127 @@
+{
+  "schema": "mimo.r20f-ray-env-inheritance-validation.v1",
+  "observed_unix": 1790796197.3931382,
+  "status": "passed",
+  "pod_id": "vo6u0t8x398bnm",
+  "run_id": "mimo9b-002549-r20f",
+  "deadline_unix": 1790813073,
+  "probe": {
+    "schema": "mimo.r20f-ray-observability-env-inheritance.v1",
+    "started_unix": 1790796053.9930341,
+    "status": "passed",
+    "url_runtime_env_injected": false,
+    "cpu_only": true,
+    "training_acceptance": false,
+    "pid": 10258,
+    "outer_environment": {
+      "VERL_RL_INSIGHT_ENABLE": "1",
+      "RL_INSIGHT_SERVER_URL": "http://127.0.0.1:18080"
+    },
+    "runtime_env_allowlist": {
+      "VERL_RL_INSIGHT_ENABLE": "1",
+      "RL_INSIGHT_SERVER_URL": null
+    },
+    "ray_temp_root": "/root/mimo-private/re-10258",
+    "cuda_initialized_before": false,
+    "phase": "actor_readback",
+    "worker_environment": {
+      "VERL_RL_INSIGHT_ENABLE": "1",
+      "RL_INSIGHT_SERVER_URL": "http://127.0.0.1:18080"
+    },
+    "worker_matches_outer": true,
+    "cuda_initialized_after": false,
+    "finished_unix": 1790796132.1758657
+  },
+  "process": {
+    "schema": "mimo.r20f-ray-env-probe-process.v1",
+    "started_unix": 1790796053.8237226,
+    "budget_seconds": 120,
+    "operator_path": "/workspace/mimo-dsh-rl-20260928/audit-code/r21-operator-runtime/mimo_r20_operator.py",
+    "operator_sha256": "a74b3e94f9d2934982529aa1d27f6739af937940db6d5251c52a3bba5b480d4e",
+    "plan_path": "/root/mimo-private/stage-plan-r20f.json",
+    "plan_sha256": "c58657c284f180bc3b377daff45a9f868b16bbe96feb6214b26052c497753a39",
+    "probe_path": "/root/mimo-private/observability-r21/ray-env-inheritance-probe.py",
+    "probe_sha256": "cfddffe39156e0c93be839d4913c5715deb317e6496a4b27d019c56baf48637d",
+    "environment_source": "actual frozen operator.environment(plan,cpu=True)",
+    "allowed_outer_environment": {
+      "VERL_RL_INSIGHT_ENABLE": "1",
+      "RL_INSIGHT_SERVER_URL": "http://127.0.0.1:18080"
+    },
+    "extra_runtime_env_url_injection": false,
+    "gpu_work_started": false,
+    "pid": 10258,
+    "pgid": 10258,
+    "returncode": 0,
+    "finished_unix": 1790796134.7863026
+  },
+  "shared_services_and_guards": [
+    {
+      "name": "prometheus",
+      "pid": 5401,
+      "start_ticks": "355265361",
+      "matches_expected_identity": true,
+      "state": "S"
+    },
+    {
+      "name": "tempo",
+      "pid": 5425,
+      "start_ticks": "355265391",
+      "matches_expected_identity": true,
+      "state": "S"
+    },
+    {
+      "name": "rl_insight",
+      "pid": 5499,
+      "start_ticks": "355265421",
+      "matches_expected_identity": true,
+      "state": "S"
+    },
+    {
+      "name": "cost_guard",
+      "pid": 5571,
+      "start_ticks": "355278877",
+      "matches_expected_identity": true,
+      "state": "S"
+    },
+    {
+      "name": "encrypted_backup",
+      "pid": 8370,
+      "start_ticks": "355382868",
+      "matches_expected_identity": true,
+      "state": "S"
+    }
+  ],
+  "cleanup": {
+    "observed_unix": 1790796197.3931386,
+    "owned_probe_pid": 10258,
+    "owned_ray_temp_root": "/root/mimo-private/re-10258",
+    "owned_ray_processes": [],
+    "verified_zero": true,
+    "global_stop_used": false
+  },
+  "artifact_refs": [
+    {
+      "path": "/root/mimo-private/observability-r21/ray-env-inheritance-status.json",
+      "sha256": "6de98df290d45578f9c328eacecc14f056db9a6dc839161e25765551bab56166",
+      "bytes": 793
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/ray-env-inheritance-process.json",
+      "sha256": "c1d69910bedddd8d62e2fcb43767a72e0f4a3c38e032bbc789504cb71064a8d4",
+      "bytes": 994
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/ray-env-inheritance-probe.py",
+      "sha256": "cfddffe39156e0c93be839d4913c5715deb317e6496a4b27d019c56baf48637d",
+      "bytes": 2346
+    }
+  ],
+  "boundaries": [
+    "Used actual frozen operator.environment(plan,cpu=True) without edits or extra URL injection",
+    "Merged frozen get_ppo_ray_runtime_env with equivalent journal-only config override",
+    "Runtime env dictionary URL absent; actual local Ray worker inherited outer URL",
+    "Single CPU actor readback only: no MonitorHub, no metrics or trace generated, no W&B init/model requests",
+    "No GPU/training/configuration work or other-process cleanup",
+    "Current r20f training step5/history/native observability remain unverified"
+  ]
+}

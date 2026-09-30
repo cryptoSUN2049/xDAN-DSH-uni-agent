@@ -1,3 +1,11 @@
+## R21 最新状态：后台监督已启动（03:31 SGT）
+
+- 当前控制commit b053bde已push，full Ruff691通过；cloud bundle audit-code/r21-operator-runtime manifest6c2d5175。
+- 当前CPU实际prepare c1aba583、preflight c8aa4b6a通过；当前002549 uid/Parquet be5a3e73和native loader4→5均验证。
+- 新supervise plan c2619166；controller10217/PG10217/startticks355574636认证healthy unregistered，supervisor11436/PG11436/startticks355636029后台运行。
+- 日志PRIVATE/operator-r20f.log和launch-r20f/train.log；目前原生模型恢复/有效C5尚未验收，先实读明确日志，不信旧状态。
+- 本轮allocation固定截止08:04:33 SGT，训练清理预留08:01:33；guard/备份/观测服务仍运行。详细7section和约束见下一段，禁止重计窗口。
+
 ## 2026-10-01 R21 当前恢复进展（优先读）
 
 ### TL;DR
