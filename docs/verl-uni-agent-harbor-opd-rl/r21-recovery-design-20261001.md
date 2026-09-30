@@ -1,0 +1,59 @@
+# 充值后恢复方案（2026-10-01 SGT）
+
+状态：只读调查完成，训练未恢复；实施等待用户确认。本文的新窗口为提议，不是已经授权的截止时间。
+
+## 目标与范围
+
+从已验收的 R19 C4 继续 Code 002549 的一次有效 GRPO 更新至 C5，保持固定 MiMo 9B、DSH、Harbor/Modal、双卡 colocate_async。先完成这一个恢复验收，再讨论其他 Code 任务及其他四领域；不升级模型或重装现有依赖。
+
+## 实际恢复基础
+
+- Runpod CLI 查询余额约 $2,996.29；原 Pod db7kewdkd71js6 查询404，旧11403连接不可用。
+- 原4TB网络卷72jdno5cuk仍在EUR-IS-1。用户在调查过程中创建的单卡A100 Pod owb1q1vidflfhp挂此卷；本会话未创建它，其用途已询问，未操作其服务/GPU。
+- 新只读连接157.157.221.29:12096：A100-SXM4-80GB，81920MiB，0MiB/0%。
+- R19/R20源码各1003文件存在及大小匹配；manifest SHA为04fb0fcd…946564af、99ac03f5…ca0591f。没有声称本轮已全量重算源码内容SHA。
+- C4的15文件共19,151,369,958字节，与40f25db0…bb1270清单大小匹配；FSDP1/world2、latest=4。未重读19GB张量；下一阶段完整SHA及原生恢复仍必需。C5目录不存在。
+- 原uv环境纯Python3.12.3可启动，prefix正确；273依赖freeze SHA e9f87349…4dc7、CuPy清单、最终r20-operator-runtime五文件SHA匹配。未导入Torch/vLLM，未验证新主机GPU运行兼容性。
+- 原/root/mimo-private已不存在；指定备份候选未发现。旧任务包、校准raw、spec/plan、凭据、journal原路径缺失；公开摘要不能代替这些实物。
+
+## 架构
+
+```mermaid
+flowchart LR
+  V[原4TB卷：模型 / 固定uv环境 / C4] --> G[同区双RTX PRO 6000 96GB]
+  G --> C[同机CPU controller / worker]
+  C --> M[Modal：DSH任务与独立verifier]
+  M --> Q[TransferQueue：新policy4轨迹]
+  Q --> G
+  G --> O[有效更新 / C5 / 原生W&B及RL-Insight]
+```
+
+同一个训练Pod的CPU承载控制器；不另租专用控制器，不在Mac加载模型。原单卡A100不改变world2目标，不停止或替换用途未确认的机器。
+
+## 硬件与成本
+
+17:31:27UTC附近的Runpod实时查询：SECURE/POD/count=2/minCudaVersion=13.0/country=IS，RTX PRO 6000 96GB在EUR-IS-1库存LOW，返回主机CUDA13.2。目录价格$2.09/卡小时，双卡GPU估算$4.18/小时；4小时GPU约$16.72，另计磁盘/CPU附加价格、Modal及账户其他资源。库存LOW不等于已经分配成功，创建前重新核价/归属及实际总价。
+
+推荐先批准最长4小时的恢复窗口；首次付费创建/开始云端校准时记录绝对起点，controller/supervisor/transport/preflight共享唯一截止，180秒清理预留，不因重启重新计时。Pod是否停止计费须明确约定；停止训练不会自动停止Pod。优先先恢复CPU前置材料再申请双卡，减少空租。
+
+## 拟修改文件与API合同
+
+- docs/本worktree/mimo_r20_operator.py、mimo_r20_transport.py：移除旧1790759992的本轮截止绑定，显式绑定批准的新窗口；到期、缺窗口、不一致、超上限均拒绝。只调整恢复控制层，不改已冻结训练源码。
+- 对应operator/transport测试：覆盖旧窗口拒绝、新窗口一致性、启动/清理预留、不重计、不同主机SSH身份。
+- 新身份暂用r20f；新run/spec/数据文件/journal/W&B ID，不复用crashed r20e，也不回填旧history。
+- 云端私有配置按明确凭据来源重建，权限0600，绝不进入Git。持久恢复包分别保存非敏感材料及受保护凭据；公开报告只放SHA/版本。
+- 002549从固定数据rev639865fd与固定派生镜像重新建立真实task包、task_ref和独立baseline/restored/candidate校准。原Python生产CLI无shim；不放宽准入以迎合摘要。
+- 新主机loopback SSH gateway/host key实测，严格scoped授权，实际HTTPS完整model-path nonce检查；不复用旧主机授权指纹。
+
+## 验证和执行顺序
+
+1. 确认单卡Pod用途与恢复窗口；只读核账户总支出，保留其他会话工作。
+2. 在允许使用的云CPU上重建缺失私有材料、真正校准task，核所属Modal残留；完整验证源码/C4 SHA，保留原C4不改。
+3. 云端有针对性的operator/transport回归、当前API实测；精确commit通过全仓Ruff双门并push。新控制层另冻结，训练runtime仍99ac清单。
+4. 分配同区双卡挂原卷，核实际型号/驱动/两卡空闲/现有uv环境GPU兼容性；CPU实际prepare/preflight和完整生产HTTP检查通过后才启动。
+5. 后台同机controller+双rank训练：原生加载model/optimizer/RNG/scheduler，policy4四条实际消费、独立reward、正负advantage、有限非零梯度、参数变化、optimizer4→5、原生C5。
+6. 原生W&B API真实step5及console对账，token合同和当前scope RL-Insight；只回收本轮进程/Modal/SSH授权项，记录Pod计费终态及交接。
+
+## 完成门
+
+CPU启动、GPU利用率或历史C4报告均不等于恢复成功。只有本轮真实更新、完整C5和原生W&B/Insight对账才能宣布续训通过。五领域复刻及能力提升仍未完成。

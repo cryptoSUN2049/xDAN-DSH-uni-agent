@@ -1,3 +1,48 @@
+## 2026-10-01 充值恢复：只读基础已确认，训练未启动
+
+### TL;DR
+
+- 用户充值后询问恢复；余额约$2996.29。原训练Pod404，旧SSH不可用。
+- 原72jdno5cuk/4TB卷保留；新用户单A100 owb1q1vidflfhp挂原卷，SSH157.157.221.29:12096可只读访问，用途待确认。
+- C4十五文件大小匹配、无C5；固定uv Python可启动和清单SHA匹配，未占GPU/做原生恢复。
+- 原/root/mimo-private丢失；新窗口与私有材料重建待批准。同区双6000实时LOW，目录GPU估算$4.18/h。
+
+### 本轮交付物
+
+- docs/verl-uni-agent-harbor-opd-rl/r21-recovery-design-20261001.md：恢复基础、架构/文件/API/云端测试计划及待确认预算。
+- tasks/todo.md：仅本轮前置计划新增，保留其他会话工作。
+
+### 设计约束
+
+- 固定DSH/模型/273依赖/32K/world2/FSDP1/colocate_async；Mac只轻量操作。
+- 新A100用途未知，不停止/改写/启动；其他会话213.192.2.76禁止操作。
+- 旧1790759992窗口已过期；任何新启动须一致的新绝对截止。不把已丢失raw以公开摘要替代。
+
+### 已踩坑/真实行为
+
+- 网络卷保留/workspace，而原/root私有配置随旧Pod丢失；充值不自动重建原Pod或私有材料。
+- 当前r20-operator-runtime才是最终测试bundle；旧r20-operator不要误用。
+- 当前只是checkpoint size和manifest SHA匹配；19GB完整hash及新GPU原生恢复尚未执行。
+
+### 下一里程碑任务清单
+
+- [ ] 确认机器用途/窗口并批准具体设计。
+- [ ] 真正恢复task包/raw校准/安全凭据/新SSH传输及云CPU前置验收。
+- [ ] 双卡原生C4→C5及W&B/Insight/所属回收。
+
+### 分支/部署状态
+
+- 当前分支verl-uni-agent-harbor-opd-rl，本轮只写设计和计划，未部署新服务或创建付费资源。
+- 新单卡只读检查时GPU0MiB；旧R20e仍历史crashed/history0，不能称当前训练正常。
+
+### 冷启动 checklist
+
+1. 先读r21-recovery-design-20261001.md及本段，再核用户对机器/窗口的答复。
+2. 实查账户和Pod，不能凭历史SSH/PID启动/停止；确认卷72jdno5cuk。
+3. BASE=/workspace/mimo-dsh-rl-20260928，parent runs/r19/rl-training/checkpoints/global_step_4；原/root/mimo-private不再存在。
+4. runtime run-src-r20/1003files/99ac，bundle audit-code/r20-operator-runtime；不要重装/升级。
+5. 实施前human gate；旧R19已完成的goal不回退，也不自行创建新goal。
+
 ## 2026-09-30 R20e：用户因账户无余额暂停；新更新未验收
 
 ### TL;DR
