@@ -1,0 +1,60 @@
+{
+  "schema": "mimo.r21-r19-policy-allowlist-recovery.v1",
+  "observed_unix": 1790793654.5395038,
+  "api_run_path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b001661r19",
+  "api_read_only": true,
+  "history_or_config_mutated": false,
+  "selection": "exact named noncredential fields from W&B config; no full config output",
+  "config_policy_path": "actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_kwargs.policy_template",
+  "historical_policy_fields": {
+    "model_name": "mimo-9b-dsh-rl",
+    "tunnel_alias": "mimo-cloud-r19",
+    "max_wall_time_seconds": 1800,
+    "max_cpus": 2,
+    "max_memory_mb": 4096,
+    "max_tokens": 4096,
+    "max_artifact_bytes": 16777216,
+    "termination_policy": "budget-terminal-v1",
+    "budget_limits": {
+      "max_generated_tokens": 20480,
+      "trajectory_capacity": 32768
+    }
+  },
+  "crossfield_observations": {
+    "runner_model_name": {
+      "config_path": "actor_rollout_ref.rollout.custom.agent_framework.agent_runners.task.runner_kwargs.model_name",
+      "value": "mimo-9b-dsh-rl"
+    },
+    "framework_termination_policy": {
+      "config_path": "actor_rollout_ref.rollout.custom.agent_framework.termination_policy",
+      "value": "budget-terminal-v1"
+    },
+    "postprocessor_termination_policy": {
+      "config_path": "actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_kwargs.termination_policy",
+      "value": "budget-terminal-v1"
+    },
+    "postprocessor_budget_limits": {
+      "config_path": "actor_rollout_ref.rollout.custom.agent_framework.trajectory_postprocessor_kwargs.budget_limits",
+      "value": {
+        "max_generated_tokens": 20480,
+        "trajectory_capacity": 32768
+      }
+    }
+  },
+  "absent_named_fields": [
+    "RequestPolicy",
+    "UNI_AGENT_REQUEST_POLICY"
+  ],
+  "scope_boundaries": {
+    "historical_model_crossfield_matches": true,
+    "new_r20f_policy_or_runner_verified": false,
+    "old_policy_sha_reused": false,
+    "new_tunnel_alias_asserted": false,
+    "credential_values_or_hashes_in_report": false
+  },
+  "limits": [
+    "Historical resource values are recovered facts; new r20f run needs a new actual policy identity and receipt.",
+    "Historical tunnel_alias mimo-cloud-r19 is not evidence of the new r20f tunnel.",
+    "Final new runner/final policy crossfield consistency must be read back from actual new configuration."
+  ]
+}

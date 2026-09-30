@@ -1,0 +1,7 @@
+{
+  "exit_code": 0,
+  "started_at": 1790793322.3112745,
+  "finished_at": 1790793328.6954143,
+  "scope": "synthetic files only; no actual private credentials read",
+  "source_sha256": "8cf5da97f78fb416d6eee39f113caae2a32186a8076b7e4e68ad025d3b85ca47"
+}

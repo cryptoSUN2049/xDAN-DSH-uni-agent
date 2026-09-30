@@ -1,0 +1,16 @@
+{
+  "schema": "mimo.r21-private-backup-execution.v1",
+  "exit_code": 0,
+  "source_sha256": "8cf5da97f78fb416d6eee39f113caae2a32186a8076b7e4e68ad025d3b85ca47",
+  "started_at": 1790793375.4296756,
+  "finished_at": 1790793375.8589857,
+  "ciphertext_path": "/workspace/mimo-dsh-rl-20260928/recovery-encrypted-r21/private-1790793375832874234.aesgcm",
+  "ciphertext_sha256": "0c45e0a02ada874b53d3663e58be3b8fc071847ea2b5c439bd4af0a3479eabb7",
+  "ciphertext_bytes": 112257,
+  "files": 110,
+  "authentication_roundtrip_passed": true,
+  "key_in_archive": false,
+  "plaintext_on_network_volume": false,
+  "tar_contents_printed": false,
+  "helper_report_sha256": "d696941fa60f89b156270edd71c63c443f6d93dcec6f473a389605b2f62f37e7"
+}

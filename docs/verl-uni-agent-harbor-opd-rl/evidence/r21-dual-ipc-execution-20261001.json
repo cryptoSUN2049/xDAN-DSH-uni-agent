@@ -1,0 +1,26 @@
+{
+  "schema": "mimo.r21-dual-ipc-execution.v1",
+  "authorization_sha256": "e45736ba0f833f3388ab468ea81dff530eb1580069cd8a5b51ffc7f5ea7dd704",
+  "pod_id": "vo6u0t8x398bnm",
+  "deadline_unix": 1790813073,
+  "launcher_sha256": "8ba72c56fe9cfe8ad53ab59e949580f305dd2631fc7ffa820471eda5b9d58ebb",
+  "operator_sha256": "adf2516ac6ca755b5a45689bef4bcf0505e5dadb33a5dc613ccdd688386bfff5",
+  "source_manifest_sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "before_devices": "0, GPU-58d4b896-34a9-51f1-116c-0f33db86dbe5, NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 0 MiB\n1, GPU-556a3a64-45d3-cebd-472a-7666c4f6d571, NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 0 MiB",
+  "started_at": 1790792574.1269028,
+  "training_started": false,
+  "model_loaded": false,
+  "deadline_injection": "main.__globals__[DEADLINE] only; frozen file unchanged",
+  "exit_code": 0,
+  "finished_at": 1790792814.026086,
+  "operator_unchanged": true,
+  "after_devices": "0, GPU-58d4b896-34a9-51f1-116c-0f33db86dbe5, NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 0 MiB\n1, GPU-556a3a64-45d3-cebd-472a-7666c4f6d571, NVIDIA RTX PRO 6000 Blackwell Server Edition, 595.91.07, 0 MiB",
+  "compute_pids_after": "",
+  "status_sha256": "d8db533b28c5022a78da1125172908a5dbde23e811657e074e41833fd01ce3a3",
+  "lane_pids": [
+    4983,
+    4984
+  ],
+  "lane_processes_gone": true,
+  "cleanup_passed": true
+}

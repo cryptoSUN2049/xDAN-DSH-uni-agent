@@ -1,0 +1,75 @@
+{
+  "schema": "mimo.recovery-c4-storage-integrity.v1",
+  "pod_id": "vo6u0t8x398bnm",
+  "started_at": 1790793229.692168,
+  "finished_at": 1790793319.456018,
+  "passed": true,
+  "manifest_sha256": "40f25db06843bc9400f7f4fbe82eea46e7dcae8fffa9c5d383cf1ded40bb1270",
+  "checkpoint": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4",
+  "files": {
+    "actor/extra_state_world_size_2_rank_0.pt": {
+      "bytes": 15141,
+      "sha256": "49cf16588609b5b58f427e970059ddb04151de64f44a2e291204df56ce06b411"
+    },
+    "actor/extra_state_world_size_2_rank_1.pt": {
+      "bytes": 15141,
+      "sha256": "3225a899b8dcfb289614fee2f7332acada7a7c18a25badfa3459543a1f4f2aab"
+    },
+    "actor/fsdp_config.json": {
+      "bytes": 46,
+      "sha256": "1df34c1f433cd641f48d99b3981b311f0362bfcfd4c4e1f727301e3b50cf03bf"
+    },
+    "actor/huggingface/chat_template.jinja": {
+      "bytes": 3916,
+      "sha256": "59a64ebb4df6d1489d09a91267cf3ceb106162d4a893c4f84833cfb8c897ff63"
+    },
+    "actor/huggingface/config.json": {
+      "bytes": 2940,
+      "sha256": "18806177b62b88e6c7aa722ed8800ba70aefc1e7496997524af8ccd0ea6b4e50"
+    },
+    "actor/huggingface/generation_config.json": {
+      "bytes": 161,
+      "sha256": "d3da82f136b1207aaefcf57b0464bfdce75d0cb034cfcbc56e5b95c5b2f68aac"
+    },
+    "actor/huggingface/processor_config.json": {
+      "bytes": 1191,
+      "sha256": "d89ef49ce9cd37fbf510158e13c1ef063d9286411c1ec9049932dbe0487143b1"
+    },
+    "actor/huggingface/tokenizer.json": {
+      "bytes": 19989325,
+      "sha256": "06b9509352d2af50381ab2247e083b80d32d5c0aba91c272ca9ff729b6a0e523"
+    },
+    "actor/huggingface/tokenizer_config.json": {
+      "bytes": 1165,
+      "sha256": "792fa3f0cb88b111e54ef3134c873531008c4df471d108da17903426e308aa7b"
+    },
+    "actor/lora_train_meta.json": {
+      "bytes": 67,
+      "sha256": "82c99ce144bb1153a915c91b27ccf741f35dcdfc4aa85f9f6034d12667732b35"
+    },
+    "actor/model_world_size_2_rank_0.pt": {
+      "bytes": 9462526476,
+      "sha256": "0b34544a4ae49bc5bf7bbfca02e108fefef2767d16f7399de1df0bd80e403d09"
+    },
+    "actor/model_world_size_2_rank_1.pt": {
+      "bytes": 9462526476,
+      "sha256": "fce54f49d7a3e8b4b4e03b43619b1d73f855b7669c7dc714a4e9af6f32b06fde"
+    },
+    "actor/optim_world_size_2_rank_0.pt": {
+      "bytes": 103143207,
+      "sha256": "c120e1d969f1ca2d585a599ba623081f10c6f7df54d94bc0bea0f570b2be54e4"
+    },
+    "actor/optim_world_size_2_rank_1.pt": {
+      "bytes": 103143207,
+      "sha256": "be8eab22ec77562d6ea12113cd1ea9687a3da65cea825a22bea55afaf25b653b"
+    },
+    "data.pt": {
+      "bytes": 1499,
+      "sha256": "58f16b6036f8994e9b19abde895b0a7969dbba54365747f210e577ebd0368d37"
+    }
+  },
+  "total_bytes": 19151369958,
+  "model_loaded": false,
+  "cuda_initialized": false,
+  "scope": "Actual fifteen checkpoint files fully hashed; not tensor semantics or native model restore"
+}

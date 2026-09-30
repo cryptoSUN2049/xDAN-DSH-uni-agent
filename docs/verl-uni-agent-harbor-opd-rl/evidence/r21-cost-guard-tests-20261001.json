@@ -1,0 +1,8 @@
+{
+  "exit_code": 0,
+  "started_at": 1790792786.8934631,
+  "finished_at": 1790792793.0748773,
+  "actual_stop_called": false,
+  "cuda_visible": "",
+  "source_sha256": "88cb80d1ec1bfd24e9da29200aa8a1083453d938bebaf359aac37860ec47f04c"
+}

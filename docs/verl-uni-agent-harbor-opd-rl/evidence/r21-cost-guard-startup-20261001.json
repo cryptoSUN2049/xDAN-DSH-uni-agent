@@ -1,0 +1,13 @@
+{
+  "schema": "mimo.recovery-cost-guard-startup.v1",
+  "at": 1790793073.9275522,
+  "pod_id": "vo6u0t8x398bnm",
+  "pid": 5571,
+  "pgid": 5571,
+  "start_ticks": "355278877",
+  "source_sha256": "88cb80d1ec1bfd24e9da29200aa8a1083453d938bebaf359aac37860ec47f04c",
+  "authorization_sha256": "e45736ba0f833f3388ab468ea81dff530eb1580069cd8a5b51ffc7f5ea7dd704",
+  "deadline_unix": 1790813073,
+  "early_stop_allowed": false,
+  "volume_delete_allowed": false
+}
