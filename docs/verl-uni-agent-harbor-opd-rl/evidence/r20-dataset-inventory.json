@@ -1,0 +1,420 @@
+{
+  "schema": "mimo.r20-code-dataset-inventory.v1",
+  "at": 1790745917.681379,
+  "status": "inventory_passed_new_tasks_not_runtime_admitted",
+  "fixed_deadline_unix": 1790759992,
+  "source": {
+    "repository": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+    "revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+    "parquet_path": "/workspace/mimo-dsh-rl-20260928/source/code.parquet",
+    "parquet_bytes": 13314620,
+    "rows_read_on_cloud_cpu": 2698,
+    "existing_parquet_lock": "sha256:e15733cf2451cfbc5492a4120f7f8cfddbad818aa9f0b324c79888dd1fece161",
+    "existing_image_mapping_lock": "sha256:704ad2716d746430a805b9b1ac7c6725aea2117fd8e4823ebe9d339d0313ad58",
+    "large_source_rehash_this_audit": false,
+    "audit_reference": {
+      "private_path": "/workspace/mimo-dsh-rl-20260928/audit-code/full-code-audit.json",
+      "sha256": "sha256:3651b5dbfbae96050312293362746cc6de2c14ded87299d3c96418f4f297f29b",
+      "bytes": 5931
+    },
+    "mapping_reference": {
+      "private_path": "/workspace/mimo-dsh-rl-20260928/source/image-mapping.jsonl",
+      "sha256": "sha256:704ad2716d746430a805b9b1ac7c6725aea2117fd8e4823ebe9d339d0313ad58",
+      "bytes": 495593
+    },
+    "fixed_readme_reference": {
+      "private_path": "/workspace/mimo-dsh-rl-20260928/source/README.md",
+      "sha256": "sha256:a7a6216652a80d91a9dbbc558a406bb3344abdc462e850707477c8a7fb8b3ba9",
+      "bytes": 790
+    }
+  },
+  "domains_from_existing_fixed_readme": [
+    {
+      "hf_config": "code",
+      "domain": "Code",
+      "verifier": "Executable tests",
+      "same_harness_candidate": true
+    },
+    {
+      "hf_config": "cyber",
+      "domain": "Cyber",
+      "verifier": "Rule checks",
+      "same_harness_candidate": false
+    },
+    {
+      "hf_config": "general",
+      "domain": "General",
+      "verifier": "Rubric-based judging",
+      "same_harness_candidate": false
+    },
+    {
+      "hf_config": "webdev",
+      "domain": "Visual/web development",
+      "verifier": "Visual grading",
+      "same_harness_candidate": false
+    },
+    {
+      "hf_config": "music",
+      "domain": "Music",
+      "verifier": "Rule checks",
+      "same_harness_candidate": false
+    }
+  ],
+  "inventory": {
+    "task_id_prefix": "format-code-task",
+    "unique_source_task_ids": 2698,
+    "language_family_counts_by_test_patch_suffix_heuristic": {
+      "JS/TS": 550,
+      "C/C++": 20,
+      "Go": 722,
+      "Python": 1152,
+      "JVM": 31,
+      "Other": 223
+    },
+    "cwd_counts": {
+      "/testbed": 2179,
+      "/workspace/repo": 519
+    },
+    "native_verifier_commands": {
+      "bash /testbed/mimo_test_command.sh": 1903,
+      "bash /workspace/repo/mimo_test_command.sh": 519,
+      "bash /testbed/mimo_test_command.sh base && bash /testbed/mimo_test_command.sh new": 276
+    },
+    "embedded_build_environment_patch_rows": 843,
+    "small_python_no_embedded_build_env_single_command_candidates": 686,
+    "unique_dataset_image_tags": 2698,
+    "exact_tag_reuse_group_size_histogram": {
+      "1": 2698
+    },
+    "mapping_repository_group": {
+      "docker.io/xiaomimimo/mimo-v2.6-rl-oss": 2698
+    },
+    "mapping_missing": 0
+  },
+  "selection": {
+    "mode": "stratified purposeful pilot, not uniform random dataset sample",
+    "criteria": [
+      "Four train source tasks across four inferred repository/behavior families; two unseen source tasks from different inferred repository families for heldout.",
+      "Prefer small Python test patches, exact pytest/unittest targets, no encoded build environment and no base&&new two-phase grading.",
+      "Preserve one verified001661 anchor; explicitly exclude its score from unseen/generalization claims.",
+      "Resolve per-task original digest and exact repository identity before treating candidates as admitted."
+    ],
+    "selected": [
+      {
+        "split": "train",
+        "task_id": "format-code-task-001661",
+        "source_row_index": 7,
+        "source_repository": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+        "source_revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+        "source_row_sha256": "sha256:5ce55aa05e87a954d5f4f7dd3fe1eeb8490bf61eb7cc7ec360776bd0f0c195ec",
+        "problem_statement_sha256": "sha256:8a0bda0463eb3755eb6fee93c59e101ca66cc9a287d213d7685b843247030646",
+        "test_patch_sha256": "sha256:360a18133cef1e7ddfeb405352639c0037c7087de532189cb75464d6088e8625",
+        "test_patch_bytes": 8396,
+        "cwd": "/workspace/repo",
+        "repository_family": "Django friendship",
+        "repository_identity_method": "source statement and test-path inference; exact image git remote not yet checked",
+        "selection_reason": "已验证的管线锚点，曾在R17/R19训练，不计独立泛化",
+        "dataset_image": "format-code-task-001661:latest",
+        "mapped_original_image_tag": "docker.io/xiaomimimo/mimo-v2.6-rl-oss:format-code-task-001661",
+        "original_image_digest": "sha256:38280116603fd55e56437bcd7c089f3915a6df8a7ed335bb6935503ffb77f475",
+        "derived_dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-001661@sha256:15f588d627ce06e17d2904193c07100aa0b73c883269d70565ab59f36f6f2952",
+        "image_reuse_group": "verified-task-001661",
+        "native_verifier_command": "bash /workspace/repo/mimo_test_command.sh",
+        "verifier_timeout_source_seconds": 1800,
+        "underlying_test_commands": [
+          "exec /usr/local/bin/python -m pytest /workspace/repo/usercase-test-coderl/test_bidirectional_friendship.py -v"
+        ],
+        "verifier_patch_paths": [
+          "usercase-test-coderl/test_bidirectional_friendship.py",
+          "mimo_test_command.sh"
+        ],
+        "mimo_test_script_added_lines_sha256": "sha256:290f7a1092f55363cb7ef782e839d1be487895ffecf4fad24b6554aa79f78b55",
+        "embedded_build_env": false,
+        "base_and_new_dual_test": false,
+        "prior_real_modal_verification": true,
+        "training_ready": true,
+        "new_image_and_verifier_admission_required": false
+      },
+      {
+        "split": "train",
+        "task_id": "format-code-task-002549",
+        "source_row_index": 243,
+        "source_repository": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+        "source_revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+        "source_row_sha256": "sha256:ec5abcb5567240983c489dc90be4fd50260efc0a1e9916e0d0dfd7177037ab0a",
+        "problem_statement_sha256": "sha256:ad2a60c521fb07a8fb99a667824255d3b07a300d2ff45213de89ec455aa5a31a",
+        "test_patch_sha256": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+        "test_patch_bytes": 2271,
+        "cwd": "/testbed",
+        "repository_family": "Python Result error handling",
+        "repository_identity_method": "source statement and test-path inference; exact image git remote not yet checked",
+        "selection_reason": "Err到Exception/unwrap_or_raise；确切remote repo待原图核验",
+        "dataset_image": "format-code-task-002549:latest",
+        "mapped_original_image_tag": "docker.io/xiaomimimo/mimo-v2.6-rl-oss:format-code-task-002549",
+        "original_image_digest": "sha256:4a04d1bbe8d8edf0f29d13325bdb7bdf838c6b1474374b8e59a59e584b3b906c",
+        "derived_dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-002549@sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf",
+        "image_reuse_group": "unresolved-task-specific-format-code-task-002549",
+        "native_verifier_command": "bash /testbed/mimo_test_command.sh",
+        "verifier_timeout_source_seconds": 1800,
+        "underlying_test_commands": [
+          "PYTHONPATH=src python -m pytest tests/test_result.py -k unwrap_or_raise -v"
+        ],
+        "verifier_patch_paths": [
+          "test_commands.json",
+          "tests/test_result.py",
+          "mimo_test_command.sh"
+        ],
+        "mimo_test_script_added_lines_sha256": "sha256:001ef2ab7bcd0224b5a4f053b715a36f597e65e36ee5fc78c738c9909e661625",
+        "embedded_build_env": false,
+        "base_and_new_dual_test": false,
+        "prior_real_modal_verification": false,
+        "training_ready": false,
+        "new_image_and_verifier_admission_required": true,
+        "original_registry_resolution_reference": {
+          "private_path": "/root/mimo-private/r20-data-audit/r20-original-image-resolution.json",
+          "sha256": "sha256:db49322345f74d4054957a16aa2f0f9d0c77b7f221a54ac00c4b60832939ec2a"
+        },
+        "actual_task_ref": {
+          "id": "mimo-code-format-code-task-002549",
+          "version": "v1",
+          "sha256": "sha256:5e0139cb221a87bcb85bc388d5f2b3bc3759561e5466e957dcf86f7b0070d07d"
+        },
+        "immutable_task_dir": "/root/mimo-private/r20-data-audit/format-code-task-002549/immutable-package/task",
+        "image_sdk_readback_verified": true,
+        "private_package_confirmed": true,
+        "verifier_calibration_pending": true
+      },
+      {
+        "split": "train",
+        "task_id": "format-code-task-002857",
+        "source_row_index": 510,
+        "source_repository": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+        "source_revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+        "source_row_sha256": "sha256:e73a0b2acddaec41232be5cdf08abc1e6de136b63c5802c9cc32afd39901919d",
+        "problem_statement_sha256": "sha256:24c252f26e8cbd6de8a8c4c20484e690c7203a31505b04c231043dfc18ad62fb",
+        "test_patch_sha256": "sha256:f5cb7292a7466c6b52706ceec2f53a5765318ab3189f0d424f553126240cb647",
+        "test_patch_bytes": 1615,
+        "cwd": "/testbed",
+        "repository_family": "SQLGlot SQL parser",
+        "repository_identity_method": "source statement and test-path inference; exact image git remote not yet checked",
+        "selection_reason": "MySQL unsigned类型；源问题显式import sqlglot",
+        "dataset_image": "format-code-task-002857:latest",
+        "mapped_original_image_tag": "docker.io/xiaomimimo/mimo-v2.6-rl-oss:format-code-task-002857",
+        "original_image_digest": "sha256:3b1927ce98db3a3ae9de1926554ded22e6b039bafe0b5a45b919bedbc17a7875",
+        "derived_dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-002857@sha256:5d4f272377bf0fa45cddab83a78312e61dad708e5e3d3d95ac93e140338167a5",
+        "image_reuse_group": "unresolved-task-specific-format-code-task-002857",
+        "native_verifier_command": "bash /testbed/mimo_test_command.sh",
+        "verifier_timeout_source_seconds": 1800,
+        "underlying_test_commands": [
+          "python -m unittest tests.dialects.test_mysql.TestMySQL.test_unsigned_int_types -v"
+        ],
+        "verifier_patch_paths": [
+          "test_commands.json",
+          "tests/dialects/test_mysql.py",
+          "mimo_test_command.sh"
+        ],
+        "mimo_test_script_added_lines_sha256": "sha256:f3240a3dcb34473c8e156c768b4580983a496472a9fe245839f74845502b4d0b",
+        "embedded_build_env": false,
+        "base_and_new_dual_test": false,
+        "prior_real_modal_verification": false,
+        "training_ready": false,
+        "new_image_and_verifier_admission_required": true,
+        "original_registry_resolution_reference": {
+          "private_path": "/root/mimo-private/r20-data-audit/r20-original-image-resolution.json",
+          "sha256": "sha256:db49322345f74d4054957a16aa2f0f9d0c77b7f221a54ac00c4b60832939ec2a"
+        },
+        "actual_task_ref": {
+          "id": "mimo-code-format-code-task-002857",
+          "version": "v1",
+          "sha256": "sha256:67a70df544b16732aa4da24c0ede443fe3251970abcd2521240911210f8f09fb"
+        },
+        "immutable_task_dir": "/root/mimo-private/r20-data-audit/format-code-task-002857/immutable-package/task",
+        "image_sdk_readback_verified": true,
+        "private_package_confirmed": true,
+        "verifier_calibration_pending": true
+      },
+      {
+        "split": "train",
+        "task_id": "format-code-task-000466",
+        "source_row_index": 1396,
+        "source_repository": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+        "source_revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+        "source_row_sha256": "sha256:2a313976ca4a7d9761a467b049a57bdc3430fd0255a4ce069cd43ae028f66535",
+        "problem_statement_sha256": "sha256:b0935d4b290e5be766d8cfb863f73d812f85ed87a4f114c2e97a7ad1a32f2937",
+        "test_patch_sha256": "sha256:3482f7596e1b9f3647a7e9f0e303db647339d574e6f9ce781663863f8bb6dbdb",
+        "test_patch_bytes": 2356,
+        "cwd": "/testbed",
+        "repository_family": "pyupgrade source transformation",
+        "repository_identity_method": "source statement and test-path inference; exact image git remote not yet checked",
+        "selection_reason": "TypedDict/NamedTuple重写；源问题显式pyupgrade",
+        "dataset_image": "format-code-task-000466:latest",
+        "mapped_original_image_tag": "docker.io/xiaomimimo/mimo-v2.6-rl-oss:format-code-task-000466",
+        "original_image_digest": "sha256:c93e43db97e0b036710d2d71f23d287d4e4847ac56feb8c5eaafbcf8a279e03c",
+        "derived_dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-000466@sha256:e5ba6e4ceb1a0deda7d7bb81fd331a9e9cd6b55e27d742b4dea9686e32aa2f3b",
+        "image_reuse_group": "unresolved-task-specific-format-code-task-000466",
+        "native_verifier_command": "bash /testbed/mimo_test_command.sh",
+        "verifier_timeout_source_seconds": 1800,
+        "underlying_test_commands": [
+          "python -m pytest tests/typing_typed_dict_test.py tests/typing_named_tuple_test.py -v"
+        ],
+        "verifier_patch_paths": [
+          "test_commands.json",
+          "tests/typing_named_tuple_test.py",
+          "tests/typing_typed_dict_test.py",
+          "mimo_test_command.sh"
+        ],
+        "mimo_test_script_added_lines_sha256": "sha256:8096ac49010b12530f1dadb6f51a9349e738648add713d8d56426fe0c9a38694",
+        "embedded_build_env": false,
+        "base_and_new_dual_test": false,
+        "prior_real_modal_verification": false,
+        "training_ready": false,
+        "new_image_and_verifier_admission_required": true,
+        "original_registry_resolution_reference": {
+          "private_path": "/root/mimo-private/r20-data-audit/r20-original-image-resolution.json",
+          "sha256": "sha256:db49322345f74d4054957a16aa2f0f9d0c77b7f221a54ac00c4b60832939ec2a"
+        },
+        "actual_task_ref": {
+          "id": "mimo-code-format-code-task-000466",
+          "version": "v1",
+          "sha256": "sha256:9745f4ccb99eafdab749264a1936002b8ae71c7540da69a9911e20dd8bdf9193"
+        },
+        "immutable_task_dir": "/root/mimo-private/r20-data-audit/format-code-task-000466/immutable-package/task",
+        "image_sdk_readback_verified": true,
+        "private_package_confirmed": true,
+        "verifier_calibration_pending": true
+      },
+      {
+        "split": "heldout",
+        "task_id": "format-code-task-000164",
+        "source_row_index": 1740,
+        "source_repository": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+        "source_revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+        "source_row_sha256": "sha256:6bb41c7e4cb7d2b8c66a60c70857f5b9af95c2c8c704ec0a82706b9678f22ac4",
+        "problem_statement_sha256": "sha256:8f3783b79849cabc8b8bbb48114e5990748be70da16e3d144f6ab3d0c0b6e074",
+        "test_patch_sha256": "sha256:b16364045fb1fefc4c223ba64c0e9f9ea09cdd2670c2f8fd95fc02c5c1efa4e1",
+        "test_patch_bytes": 1786,
+        "cwd": "/testbed",
+        "repository_family": "duckdb_engine SQLAlchemy adapter",
+        "repository_identity_method": "source statement and test-path inference; exact image git remote not yet checked",
+        "selection_reason": "UUID roundtrip；test路径duckdb_engine/tests",
+        "dataset_image": "format-code-task-000164:latest",
+        "mapped_original_image_tag": "docker.io/xiaomimimo/mimo-v2.6-rl-oss:format-code-task-000164",
+        "original_image_digest": null,
+        "derived_dsh_image": null,
+        "image_reuse_group": "unresolved-task-specific-format-code-task-000164",
+        "native_verifier_command": "bash /testbed/mimo_test_command.sh",
+        "verifier_timeout_source_seconds": 1800,
+        "underlying_test_commands": [
+          "python -m pytest duckdb_engine/tests/test_datatypes.py::test_uuid_roundtrip -v"
+        ],
+        "verifier_patch_paths": [
+          "duckdb_engine/tests/test_datatypes.py",
+          "test_commands.json",
+          "mimo_test_command.sh"
+        ],
+        "mimo_test_script_added_lines_sha256": "sha256:a6c12d01d1f13fcc8168d34ce34fe147a7a7e5670398c27e8a8af07ea0fde9c9",
+        "embedded_build_env": false,
+        "base_and_new_dual_test": false,
+        "prior_real_modal_verification": false,
+        "training_ready": false,
+        "new_image_and_verifier_admission_required": true
+      },
+      {
+        "split": "heldout",
+        "task_id": "format-code-task-002374",
+        "source_row_index": 2166,
+        "source_repository": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+        "source_revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+        "source_row_sha256": "sha256:064f85ce8f018e0aef19aca1f42bd953a11e356dc26f7118e1d151051f381421",
+        "problem_statement_sha256": "sha256:a8a4be313000754573994e306dc4e609200728653eeb5cfee4466bf96d4d82e6",
+        "test_patch_sha256": "sha256:48b2f69d0753441eab98a1145073cbbffe3e0f315b79861189fb4071c6adbbb7",
+        "test_patch_bytes": 2431,
+        "cwd": "/testbed",
+        "repository_family": "Pydantic data validation",
+        "repository_identity_method": "source statement and test-path inference; exact image git remote not yet checked",
+        "selection_reason": "frozen模型属性删除；源问题显式Pydantic V2",
+        "dataset_image": "format-code-task-002374:latest",
+        "mapped_original_image_tag": "docker.io/xiaomimimo/mimo-v2.6-rl-oss:format-code-task-002374",
+        "original_image_digest": null,
+        "derived_dsh_image": null,
+        "image_reuse_group": "unresolved-task-specific-format-code-task-002374",
+        "native_verifier_command": "bash /testbed/mimo_test_command.sh",
+        "verifier_timeout_source_seconds": 1800,
+        "underlying_test_commands": [
+          "python -m pytest tests/test_main.py -k \"frozen_model_delattr or frozen_field_delattr or frozen_model_delattr_hash_preserved or non_frozen_delattr_still_works\" -v"
+        ],
+        "verifier_patch_paths": [
+          "test_commands.json",
+          "tests/test_main.py",
+          "mimo_test_command.sh"
+        ],
+        "mimo_test_script_added_lines_sha256": "sha256:7ba9f90552866e7e8bee66ec869ba5c6795df2ede15abbde340ea2576bfd2b9b",
+        "embedded_build_env": false,
+        "base_and_new_dual_test": false,
+        "prior_real_modal_verification": false,
+        "training_ready": false,
+        "new_image_and_verifier_admission_required": true
+      }
+    ],
+    "total_tasks": 6,
+    "new_original_digest_resolutions_required": 5,
+    "new_derived_dsh_images_required": 0,
+    "currently_runtime_admitted_tasks": 1,
+    "heldout_train_task_ids_overlap": false,
+    "heldout_problem_sha_overlap": false,
+    "repository_disjointness": "Source-inferred distinct families; exact image git-remote/base-tree verification remains required.",
+    "heldout_scope": "Frozen candidates only; no heldout capability evaluation promised in this window",
+    "new_verifier_calibrations_required": 3,
+    "image_build_report_reference": {
+      "private_path": "/root/mimo-private/r20-data-audit/r20-task-images-build-final.json",
+      "sha256": "sha256:23a733f31604d717474437543350082558627a9b838df432f7bf9cbad6a2ba7b"
+    }
+  },
+  "estimated_4h_schedule_minutes": {
+    "CPU_image_and_verifier_admission": 60,
+    "native_resume_and_readonly_preflight": 20,
+    "four_ordered_training_updates": 130,
+    "checkpoint_audit_archive_cleanup": 30
+  },
+  "training_scale_proposal": {
+    "train_task_count": 4,
+    "heldout_task_count": 2,
+    "train_batch_size": 1,
+    "rollout_n": 4,
+    "max_concurrent_jobs": 2,
+    "max_concurrent_sessions": 2,
+    "updates": 4,
+    "consumed_training_episodes_target": 16,
+    "one_distinct_train_task_per_update": true,
+    "native_checkpoint_goal_if_C4_resume": "absolute step8",
+    "heldout_before_and_after": {
+      "planned_this_window": false,
+      "scope": "freeze candidates; future actual admission/evaluation requires remaining budget"
+    },
+    "duration_estimate_not_guarantee": true,
+    "sampling_requirement": "Fixed seed and deterministic four-task ordering without replacement; separate heldout manifest; never let async prefetch or restored single-task loader state substitute sampling."
+  },
+  "required_admission_gates": [
+    "Resolve each selected source tag to immutable linux/amd64 original digest and record original image config/RootFS and git remote/base tree.",
+    "Build/verify fixed sdk-minimal DSH0.1.3a2 overlay for each unique original digest; reuse existing image only after actual original digest/config equivalence, never because registry repository matches.",
+    "Calibrate baseline original test and public-only candidate so unrelated pre-existing failures cannot masquerade as informative reward; preserve real separate original-image verifier.",
+    "Bind real per-task manifests into task registry and per-row requests; current one-task prepare_training/run-spec allowlist cannot admit this six-task set unchanged.",
+    "Verify new four-row loader sampling and checkpoint data.pt semantics. Do not silently restore old single-row iterator over new data.",
+    "Keep two heldout tasks completely out of training/prefetch requests and produce baseline/after scores plus actual failure reasons.",
+    "Abort new GPU launches at original fixed cutoff reserve; archive/terminate only owned resources and keep Pod/shared services."
+  ],
+  "limits": [
+    "Language/repository labels are source-derived heuristics, not actual image provenance until admission.",
+    "Five new task images/verifiers are not built or executed by this inventory; training_ready remains false for them.",
+    "No other domain data downloaded, no GPU/model load, no dependencies installed, no large data/model rehash, no credential/private-content output, no runtime code change or commit."
+  ],
+  "readme_domain_content_acquisition": "Existing fixed-revision README bytes already present on cloud; no network/API/browser was needed.",
+  "build_concurrency_incident": {
+    "requested": 2,
+    "observed": 3,
+    "passed": false,
+    "all_owned_builders_terminated_via_API": true,
+    "cause": "shared atomic report temp-path race before child wait",
+    "helper_guards_corrected": true
+  }
+}

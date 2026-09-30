@@ -1,0 +1,30 @@
+{
+  "schema": "mimo.r20-transport-import-provenance.v1",
+  "passed": true,
+  "scope": "Independent CPU import with the same fixed PYTHONPATH as the successful real HTTP probe; not a retroactive capture of that exited process",
+  "checked_at_unix": 1790747866.8149283,
+  "runtime_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+  "modules": [
+    {
+      "module": "deployment.services.harbor_run_controller",
+      "imported_file": "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/services/harbor_run_controller.py",
+      "sha256": "59dd703672919f4eadaaffb24b766b1dd4e82f922c8cee2c88884a5ba8c2bb50"
+    },
+    {
+      "module": "deployment.services.harbor_tunnel",
+      "imported_file": "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/services/harbor_tunnel.py",
+      "sha256": "c51ddf1c7501c540be9ece5b770bb3af4d5c73ad8a7e003e546d8eae9f8fac21"
+    },
+    {
+      "module": "deployment.services.harbor_modal_ingress",
+      "imported_file": "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/services/harbor_modal_ingress.py",
+      "sha256": "a126455fdaf8c85c000389b4e01b43eae423f793bac9a5d2321f96b6e3c92afd"
+    },
+    {
+      "module": "uni_agent.tasks.harbor_dsh.worker_http",
+      "imported_file": "/workspace/mimo-dsh-rl-20260928/run-src-r19/uni_agent/tasks/harbor_dsh/worker_http.py",
+      "sha256": "1ae882be2cbfb0386ea1f785705b97b12440963535d0638cf97351e4559d1b22"
+    }
+  ],
+  "gpu_or_controller_started": false
+}

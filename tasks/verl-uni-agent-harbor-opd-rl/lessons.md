@@ -54,3 +54,7 @@
 
 - R19 收尾误用私有目录 JSON glob 导致 Cloudflare TunnelSecret 进入子代理工具输出。只允许读取已列明的具体证据文件及非敏感字段；不得为找运行记录遍历 private/*.json 内容。公共报告/Git 扫描通过不等于操作过程从未泄露；保存事件范围、禁止再打印值，凭据轮换先核使用归属与影响。
 - R19 同机 CPU controller + 原双卡 colocate_async 完成 C3→C4：原控制 Pod EXITED 是部署依赖故障，不能归因双卡不适合。训练结束后空 GPU 是正确回收结果。恢复、policy版本、token合同、有效更新与原生W&B必须分别提供真实证据再组合。
+
+- R20 镜像构建共享 `.tmp` 元数据发生竞争，线程提前失败但所属子进程仍存活，实际并发达到3而非设计2。线程池大小不是资源并发证明；必须用唯一临时文件/锁，并在异常的 finally 中等待或精确回收所属子进程，独立 API 核实际终止。保留原失败和实际峰值，不修饰成始终并发2。
+- R20 初次 transport probe 未显式指定冻结 PYTHONPATH，导入旧 installed RunSpec，配置校验在创建 controller 前失败。所有云端 operator 必须核实际 import 路径/源码SHA，并复用冻结运行环境；不能把模块路径漂移归因双卡模式。
+- MiMo Code 单任务工程闭环不等于五领域复刻。用户追问全类型覆盖时，逐域列实际 harness/verifier/训练消费/参数更新验收状态，新增 Code 镜像和 CPU 校准不能填补其他领域训练证据。

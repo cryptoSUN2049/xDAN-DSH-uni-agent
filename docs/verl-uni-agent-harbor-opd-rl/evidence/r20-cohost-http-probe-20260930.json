@@ -1,0 +1,56 @@
+{
+  "schema": "mimo.r20-cohost-http-probe.v1",
+  "status": "passed",
+  "started_at": 1790747740.7281106,
+  "finished_at": 1790747744.7027016,
+  "checks": {
+    "control_no_auth": true,
+    "control_wrong_auth": true,
+    "control_auth": true,
+    "registration_wrong_sha": true,
+    "registration_accepted": true,
+    "worker_no_auth": true,
+    "worker_wrong_auth": true,
+    "worker_auth_missing_job": true,
+    "public_disabled_path": true,
+    "public_unknown_session": true,
+    "public_model_body_auth_roundtrip": true,
+    "public_model_forward": true,
+    "reverse_control_auth": true,
+    "reverse_worker_auth": true,
+    "bad_token_rejected": true,
+    "unknown_session_rejected": true,
+    "disabled_path_rejected": true
+  },
+  "counters": {
+    "upstream_requests": 2,
+    "accepted": 1,
+    "invalid_session": 1
+  },
+  "ports": {
+    "control": 38880,
+    "worker": 38881,
+    "model": 38882,
+    "ingress": 38883,
+    "remote_control": 38780,
+    "remote_worker": 38781
+  },
+  "actual_stage_spec_sha256": "17152080fedb242e268d65a9b2cb1c65a3149cbe8af88517c21596fed7d2103c",
+  "probe_spec_sha256": "sha256:a04c30374697102336ee6e3548c077799abba5dbb898c4fcd7498e3ea239bfb3",
+  "gateway_host": "172.24.0.2",
+  "ssh_host": "127.0.0.1",
+  "ssh_port": 22,
+  "deadline_unix": 1790759992,
+  "cleanup_ports_occupied": [],
+  "cleaned_up": true,
+  "jobs_submitted": 0,
+  "gpu_training_started": false,
+  "training_started": false,
+  "synthetic_upstream": true,
+  "source_sha256": {
+    "deployment/services/harbor_run_controller.py": "59dd703672919f4eadaaffb24b766b1dd4e82f922c8cee2c88884a5ba8c2bb50",
+    "deployment/services/harbor_tunnel.py": "c51ddf1c7501c540be9ece5b770bb3af4d5c73ad8a7e003e546d8eae9f8fac21",
+    "deployment/services/harbor_modal_ingress.py": "a126455fdaf8c85c000389b4e01b43eae423f793bac9a5d2321f96b6e3c92afd",
+    "uni_agent/tasks/harbor_dsh/worker_http.py": "1ae882be2cbfb0386ea1f785705b97b12440963535d0638cf97351e4559d1b22"
+  }
+}
