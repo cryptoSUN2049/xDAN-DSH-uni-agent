@@ -1,3 +1,53 @@
+## 2026-10-01 R21 当前恢复进展（优先读）
+
+### TL;DR
+
+- 用户批准双RTX PRO6000六小时；专属Pod vo6u0t8x398bnm，SSH157.157.221.30:51913，原卷72jdno5cuk。
+- 分配18:04:33 UTC，固定截止2026-10-01 00:04:33 UTC/08:04:33 SGT；成本守护PID5571/startticks355278877已armed，不重计六小时。
+- C4完整19GB哈希/双卡4项IPC/任务评分0/0/1/HTTP17/云CPU控制136和校准35/原生Prom+Tempo CPU预检通过。
+- 当前R20f plan已生成；GPU尚未启动，待精确控制commit冻结及实际prepare/preflight。
+
+### 本轮交付物
+
+- docs/verl-uni-agent-harbor-opd-rl/mimo_r21_cost_guard.py、mimo_r21_private_backup.py：固定专属Pod截止与AES-GCM加密备份；云CPU17/18 tests通过。
+- 同目录mimo_r20_operator.py、mimo_r20_transport.py、mimo_r21_calibration.py及对应3 tests：新授权窗口、严格实际传输、新生产校准；当前云端覆盖分别86.32%/91.56%/94.19%。
+- 同目录evidence/r21-*：当前完整C4/双卡IPC/评分/HTTP/测试/观测与加密备份回执；详见当前commit文件清单。
+
+### 设计约束
+
+- 固定原273依赖、DSH b236969/0.1.3a2、32K/20480、world2/FSDP1/colocate_async；Mac仅轻量操作。
+- runtime仍run-src-r20/1003文件，manifest99ac03f5；控制helper另冻，不能把新commit称完整训练源码树。
+- root私有真实0700非symlink。MFS忽略chmod，只允许密文/公共证据入网盘；外部密钥在Mac ~/.codex/private/mimo-r21-backup-key.bin。
+- 用户A100 owb1q1vidflfhp用途未知禁止停止或占GPU；213.192.2.76禁止操作；只管理新owned Pod与进程身份。
+
+### 已踩坑/已发现的真实行为
+
+- 网盘uv：/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1；Torch2.11/vLLM0.23，freeze e9f87349，无需重装。
+- 旧/root丢失；新任务候选重新按公开source生成2c13daad，不能贴旧8e29哈希。当前生产原Python3.10.18评分0/0/1且三个校准沙盒API终止137。
+- RL-Insight需要VERL_RL_INSIGHT_ENABLE=1与RL_INSIGHT_SERVER_URL=http://127.0.0.1:18080；CPU原生3指标和Tempo已验证，实际训练还须核。
+- 新spec /root/mimo-private/run-spec-r20f.json SHA06d4bed5；plan stage-plan-r20f.json SHAc58657c2；authorization recovery-authorization-r21.json SHAe45736ba。
+- 补丁证据中的空白context是原diff语法；保留精确字节而不修改SHA。
+
+### 下一里程碑任务清单
+
+- [ ] 精确push/freeze当前控制bundle、真实新Parquet恢复probe与preflight。
+- [ ] controller与后台supervisor、两rank原生C4恢复及有效C5/token/W&B/Insight验证。
+- [ ] 合法范围内继续训练、所属清理、最终加密备份与固定截止Pod停止核验。
+
+### 分支/部署状态
+
+- worktree/branch verl-uni-agent-harbor-opd-rl；此前e1046e3已push，当前控制与证据待commit；其他会话dirty保留。
+- Prom5401/Tempo5425/RLI5499运行；备份daemon8370/startticks355382868每300秒；成本守护5571固定截止。
+- 旧R19 finished/step4仅历史；新R20f未启动，旧R20e crashed不能当本轮状态。
+
+### 冷启动 checklist
+
+1. 先读本段和r21-recovery-design-20261001.md；新授权已批准，不再要求确认。
+2. SSH当前51913核exactPod/时间/守护和进程startticks，只读明确allowlist，禁止private JSON glob。
+3. BASE=/workspace/mimo-dsh-rl-20260928；parent runs/r19/rl-training/checkpoints/global_step_4。控制bundle audit-code/r21-operator-runtime待冻。
+4. 使用原uv/frozen PYTHONPATH/CuPy，显式RUNPOD_POD_ID及Insight双变量、PATH私有cloudflared；WANDB_RESUME=never。
+5. 新run mimo9b-002549-r20f，W&B xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20f；真正C5与API证明才算成功。
+
 ## 2026-10-01 充值恢复：只读基础已确认，训练未启动
 
 ### TL;DR

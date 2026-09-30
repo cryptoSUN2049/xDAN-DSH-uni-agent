@@ -6,6 +6,7 @@ commands are CPU-only. ``supervise`` is the sole command that may start training
 
 import argparse
 import hashlib
+import ipaddress
 import json
 import math
 import os
@@ -157,10 +158,62 @@ def seal_parent(checkpoint, output, provenance):
     return report
 
 
-def validate_window(deadline, now):
-    require(type(deadline) is int and deadline == DEADLINE, "Fixed four-hour authorization required")
+def load_authorization(path, expected_sha256):
+    """Read one externally approved immutable allocation; never derive a window from now."""
+    path = Path(path)
+    require(path.is_absolute() and not path.stat().st_mode & 0o222, "Authorization must be absolute and read-only")
+    value = read_bound(path, expected_sha256)
+    require(value.get("schema") == "mimo.recovery-authorization.v1", "Authorization schema differs")
+    for key in ("allocated_at_unix", "deadline_unix", "max_run_seconds", "cleanup_reserve_seconds"):
+        require(type(value.get(key)) is int, "Authorization epoch and budget must be integers")
+    require(
+        0 < value["max_run_seconds"] <= 21600
+        and value["allocated_at_unix"] > 0
+        and value["deadline_unix"] == value["allocated_at_unix"] + value["max_run_seconds"]
+        and value["cleanup_reserve_seconds"] == RESERVE,
+        "Authorization duration or cleanup reserve differs",
+    )
+    require(isinstance(value.get("pod_id"), str) and re.fullmatch(r"[a-z0-9]+", value["pod_id"]), "Owned Pod required")
+    require(
+        isinstance(value.get("stage"), str) and re.fullmatch(r"r20[a-z]", value["stage"]), "Authorization stage differs"
+    )
+    address = ipaddress.ip_address(value["gateway_host"])
+    require(
+        address.version == 4 and address.is_private and not address.is_loopback and not address.is_unspecified,
+        "Specific private Gateway IPv4 required",
+    )
+    known = Path(value["known_hosts_path"])
+    require(
+        known.is_absolute() and file_identity(known)["sha256"] == value["known_hosts_sha256"],
+        "Fresh host key binding differs",
+    )
+    return value
+
+
+def plan_authorization(plan):
+    if "authorization_path" not in plan and "authorization_sha256" not in plan:
+        return None  # Historical callers retain their expired original window.
+    value = load_authorization(plan["authorization_path"], plan["authorization_sha256"])
+    require(
+        value["stage"] == plan["stage"] and value["deadline_unix"] == plan["deadline_unix"],
+        "Plan and shared authorization differ",
+    )
+    return value
+
+
+def plan_deadline(plan):
+    authorization = plan_authorization(plan)
+    return DEADLINE if authorization is None else authorization["deadline_unix"]
+
+
+def validate_window(deadline, now, authorization=None):
+    expected = DEADLINE if authorization is None else authorization["deadline_unix"]
+    maximum = 14400 if authorization is None else authorization["max_run_seconds"]
+    require(type(deadline) is int and deadline == expected, "Fixed authorization required")
     require(type(now) in (int, float) and math.isfinite(now), "Invalid clock")
-    require(2400 <= deadline - now - RESERVE <= 14400, "Insufficient or unauthorized remaining window")
+    if authorization is not None:
+        require(now >= authorization["allocated_at_unix"], "Allocation has not started")
+    require(2400 <= deadline - now - RESERVE <= maximum, "Insufficient or unauthorized remaining window")
     return int(deadline - now - RESERVE)
 
 
@@ -174,7 +227,7 @@ def validate_plan(plan, *, now=None):
         plan["model_revision"] == MODEL_REVISION and plan["data_revision"] == DATA_REVISION,
         "Fixed model/data revisions required",
     )
-    wall = validate_window(plan["deadline_unix"], time.time() if now is None else now)
+    wall = validate_window(plan["deadline_unix"], time.time() if now is None else now, plan_authorization(plan))
     require(
         isinstance(SOURCE_MANIFEST_SHA, str)
         and re.fullmatch(r"[0-9a-f]{64}", SOURCE_MANIFEST_SHA)
@@ -334,16 +387,21 @@ def validate_inputs(plan):
         "Actual authorized RunSpec bytes differ",
     )
     spec = RunSpec.model_validate_json(Path(plan["spec_path"]).read_bytes())
+    authorization = plan_authorization(plan)
+    gateway = "172.24.0.2" if authorization is None else authorization["gateway_host"]
+    cohost = "cohost-r20" if authorization is None else "cohost-r21"
+    if authorization is not None:
+        require(os.environ.get("RUNPOD_POD_ID") == authorization["pod_id"], "Current Pod differs from allocation")
     require(
-        spec.run_id == plan["run_id"] and spec.deadline_unix == DEADLINE and spec.max_concurrent_jobs == 2,
+        spec.run_id == plan["run_id"] and spec.deadline_unix == plan_deadline(plan) and spec.max_concurrent_jobs == 2,
         "Actual RunSpec identity/deadline/capacity differs",
     )
     expected = {
         "ssh_host": "127.0.0.1",
         "ssh_port": 22,
         "ssh_user": "root",
-        "ssh_key": str(PRIVATE / "cohost-r20/loopback-key"),
-        "known_hosts": str(PRIVATE / "cohost-r20/known_hosts"),
+        "ssh_key": str(PRIVATE / cohost / "loopback-key"),
+        "known_hosts": str(PRIVATE / cohost / "known_hosts"),
         "control_port": 38880,
         "worker_port": 38881,
         "model_port": 38882,
@@ -352,10 +410,15 @@ def validate_inputs(plan):
     }
     value = spec.model_dump(mode="json")
     require(all(str(value[k]) == str(v) for k, v in expected.items()), "R20 cohost contract differs")
+    if authorization is not None:
+        require(
+            file_identity(spec.known_hosts)["sha256"] == authorization["known_hosts_sha256"],
+            "Active SSH host key differs",
+        )
     require(spec.modal_ingress is not None and spec.modal_ingress.listen_port == 38883, "R20 ingress port differs")
     template = spec.policy_template
     require(
-        template["gateway_host"] == "172.24.0.2" and "gateway_port" not in template,
+        template["gateway_host"] == gateway and "gateway_port" not in template,
         "Native dynamic Gateway port required",
     )
     refs = template["task_refs"]
@@ -423,12 +486,18 @@ def validate_inputs(plan):
         "Transport/authentication checks incomplete",
     )
     require(
-        proof["gateway_host"] == "172.24.0.2"
+        proof["gateway_host"] == gateway
         and proof["ssh_host"] == "127.0.0.1"
         and proof["ports"]
         == dict(control=38880, worker=38881, model=38882, ingress=38883, remote_control=38780, remote_worker=38781),
         "Transport proof ports differ",
     )
+    if authorization is not None:
+        require(
+            proof.get("authorization_sha256") == plan["authorization_sha256"]
+            and proof.get("actual_stage_spec_sha256") == plan["spec_raw_sha256"],
+            "Recovery requires a fresh host and actual stage transport proof",
+        )
     calibration = read_bound(plan["calibration_path"], plan["calibration_sha256"])
     require(
         calibration["status"] == "passed"
@@ -555,7 +624,7 @@ def command(plan, parent):
         plan["run_id"],
         "--observability-wrapper",
         "--observability-deadline-unix",
-        str(DEADLINE),
+        str(plan_deadline(plan)),
         "--token-journal-dir",
         str(PRIVATE / f"launch-{stage}/token-journal"),
         "--total-training-steps",
@@ -596,6 +665,7 @@ def prepare(plan):
         "total_training_steps": parent["step"] + 1,
         "training_started": False,
         "validation_is_independent_holdout": False,
+        "authorization_sha256": plan.get("authorization_sha256"),
     }
 
 
@@ -645,7 +715,7 @@ def preflight(plan):
         "trainer.save_freq=1",
         "trainer.resume_mode=resume_path",
         "trainer.resume_from_path=" + json.dumps(parent["checkpoint"]),
-        f"++trainer.observability_deadline_unix={DEADLINE}",
+        f"++trainer.observability_deadline_unix={plan_deadline(plan)}",
         "++ray_kwargs.ray_init.runtime_env.env_vars.UNI_AGENT_TOKEN_JOURNAL_DIR=" + json.dumps(info["journal"]),
         "hydra.run.dir=" + json.dumps(str(launch_path.parent / "hydra")),
     ]
@@ -663,6 +733,7 @@ def preflight(plan):
         "source_manifest_sha256": SOURCE_MANIFEST_SHA,
         "run_spec_sha256": spec_sha,
         "parent_manifest_sha256": plan["parent_manifest_sha256"],
+        "authorization_sha256": plan.get("authorization_sha256"),
         "parent_step": parent["step"],
         "target_step": parent["step"] + 1,
         "launch_sha256": file_identity(launch_path)["sha256"],
@@ -800,7 +871,7 @@ def validate_training_config(config, plan, launch, parent):
         and trainer.resume_from_path == parent["checkpoint"]
         and trainer.total_training_steps == parent["step"] + 1
         and trainer.save_freq == 1
-        and trainer.observability_deadline_unix == DEADLINE
+        and trainer.observability_deadline_unix == plan_deadline(plan)
         and trainer.experiment_name == plan["run_id"]
         and list(trainer.logger) == ["console", "wandb", "rl_insight"]
         and config.ray_kwargs.ray_init.runtime_env.env_vars.UNI_AGENT_TOKEN_JOURNAL_DIR
@@ -838,6 +909,7 @@ def supervise(plan):
         and proof["parent_manifest_sha256"] == plan["parent_manifest_sha256"],
         "Actual preflight binding differs",
     )
+    require(proof.get("authorization_sha256") == plan.get("authorization_sha256"), "Preflight authorization differs")
     env = environment(plan, cpu=False)
     Path(env["WANDB_DIR"]).mkdir(mode=0o700, exist_ok=False)
     launch = json.loads(launch_path.read_bytes())
@@ -862,7 +934,7 @@ def supervise(plan):
         env,
         launch_path.parent,
         health,
-        wall_seconds=validate_window(plan["deadline_unix"], time.time()),
+        wall_seconds=validate_window(plan["deadline_unix"], time.time(), plan_authorization(plan)),
     )
     return {
         **result,
@@ -872,7 +944,8 @@ def supervise(plan):
         "target_step": parent["step"] + 1,
         "started_at": started_at,
         "finished_at": time.time(),
-        "deadline_unix": DEADLINE,
+        "deadline_unix": plan_deadline(plan),
+        "authorization_sha256": plan.get("authorization_sha256"),
         "source_commit": SOURCE_COMMIT,
         "source_manifest_sha256": SOURCE_MANIFEST_SHA,
         "parent_manifest_sha256": plan["parent_manifest_sha256"],

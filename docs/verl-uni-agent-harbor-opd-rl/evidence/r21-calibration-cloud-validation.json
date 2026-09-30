@@ -1,0 +1,162 @@
+{
+  "schema": "mimo.r21-current-cloud-calibration-validation.v1",
+  "status": "passed",
+  "observed_unix": 1790794261.723365,
+  "runtime_source_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+  "runtime_source_manifest_sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "authorization_sha256": "e45736ba0f833f3388ab468ea81dff530eb1580069cd8a5b51ffc7f5ea7dd704",
+  "current_code": {
+    "path": "/workspace/mimo-dsh-rl-20260928/audit-code/r21-calibration/mimo_r21_calibration.py",
+    "sha256": "80b3a3be7946ce30288eb154380855bf15dbc3707095772b677ebaf7da47ff74",
+    "bytes": 21995
+  },
+  "current_test_code": {
+    "path": "/workspace/mimo-dsh-rl-20260928/audit-code/r21-calibration/test_mimo_r21_calibration.py",
+    "sha256": "3963d243fe70d946a93809e94467b656f6c133700a695b7fdc0cf1160c15e009",
+    "bytes": 5986
+  },
+  "test_junit": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r21-calibration-contract-tests.xml",
+    "sha256": "e236483d93f6d4794b48c668ad7f1f34db01f1ae92811bba13757347da28a955",
+    "bytes": 5523
+  },
+  "test_summary": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "35",
+    "time": "0.462",
+    "timestamp": "2026-09-30T18:38:35.379449+00:00",
+    "hostname": "7f76df688e5e"
+  },
+  "coverage": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r21-calibration-combined-coverage.json",
+    "sha256": "3ddfbcfd54bd3539a8f5f474e368931345155e16d995bba6ddc47a63e52955b5",
+    "bytes": 9757
+  },
+  "coverage_summary": {
+    "covered_lines": 227,
+    "num_statements": 241,
+    "percent_covered": 94.19087136929461,
+    "percent_covered_display": "94",
+    "missing_lines": 14,
+    "excluded_lines": 0,
+    "percent_statements_covered": 94.19087136929461,
+    "percent_statements_covered_display": "94"
+  },
+  "configuration": {
+    "path": "/root/mimo-private/r21-data-audit/format-code-task-002549/calibration-config-r21.json",
+    "sha256": "abb9a2c7487dd5f8ff5f06a702f014fa63179911fbb6b1ece8b41e94e47f132e",
+    "bytes": 1571
+  },
+  "package_recovery": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r21-002549-package-recovery.json",
+    "sha256": "0defb9f9ed39a6deaeae3e7263f9887a52f7ac061a6a8a7a3c1314ab957056bf",
+    "bytes": 2783
+  },
+  "raw_calibration": {
+    "path": "/root/mimo-private/r21-data-audit/format-code-task-002549/production-compatible-package/calibration-attempt-r21-1/status.json",
+    "sha256": "d1c02e0653e0d2c16a405b8aade89b33df7af14804d3a50ea91fcf4686429d82",
+    "bytes": 17527
+  },
+  "public_calibration": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r21-002549-production-calibration-public.json",
+    "sha256": "cbb86a791a0ab9953ac31be0daa543bc30cdc38f07eae5007d3e21831a56dacb",
+    "bytes": 7151
+  },
+  "admission": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r21-002549-production-calibration-admission.json",
+    "sha256": "bdc7c64eade7fb5880b7b3e9af13f3ee8f9b4ebe7b1ff301cf1220fa284c9782",
+    "bytes": 7290
+  },
+  "public_source_collection": {
+    "path": "/root/mimo-private/r21-data-audit/format-code-task-002549/public-source-collection-r21/status.json",
+    "sha256": "7ae854e8e4663d0a9018ef5c7450f8e3664275e33643dcf511899c7401175ffa",
+    "bytes": 1315
+  },
+  "source_collection_cleanup": [
+    {
+      "role": "public-source-only",
+      "sandbox_id": "sb-LFCG8TG6j9V2yNH2XmJC0j",
+      "image": "ghcr.io/cryptosun2049/mimo-dsh-code-002549@sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf",
+      "terminated": true,
+      "independent_modal_poll_returncode": 137,
+      "observed_unix": 1790792373.8242974
+    }
+  ],
+  "candidate": {
+    "path": "/root/mimo-private/r21-data-audit/format-code-task-002549/public-only-candidate-r21.patch",
+    "sha256": "2c13daad55ab194732852a9a9de0847495221d451d094894b5f14df9544c26c8",
+    "bytes": 778
+  },
+  "candidate_provenance": {
+    "path": "/root/mimo-private/r21-data-audit/format-code-task-002549/public-candidate-provenance-r21.json",
+    "sha256": "fb54712343e2a04570f5f01b6f48e2c7e015a647cd742bcf54d02e4f63b5d65f",
+    "bytes": 1819
+  },
+  "candidate_authorship_inputs": "Actual public instruction and production src only; neither hidden-test files nor verifier outputs",
+  "candidate_is_training_demonstration": false,
+  "superseded_base": {
+    "path": "/root/mimo-private/run-spec-r21-base.json",
+    "sha256": "60896a88c6129745dc7e14d5d961d6cbc883a2e724f3c832c8e507a48cac932f",
+    "bytes": 1848
+  },
+  "current_base": {
+    "path": "/root/mimo-private/run-spec-r21-base-v2.json",
+    "sha256": "06d4bed5e29dc6a8a9da77f2184c8ca304fd7d9954264fb55687e4fbfc97ca12",
+    "bytes": 1850
+  },
+  "current_base_provenance": "Fresh current resources and root-supplied actual R19 W&B model_name measurement; not recovered private bytes",
+  "model_requests": 0,
+  "gpu_started": false,
+  "controller_started": false,
+  "resources_all_terminated": true,
+  "actual_calibration_results": {
+    "baseline-direct": {
+      "status": "graded",
+      "reward": 0.0,
+      "resolved": false,
+      "verifier_returncode": 1,
+      "test_duration": 0.5791197740000003
+    },
+    "baseline-restored": {
+      "status": "graded",
+      "reward": 0.0,
+      "resolved": false,
+      "verifier_returncode": 1,
+      "test_duration": 1.0319290140000001
+    },
+    "candidate-restored": {
+      "status": "graded",
+      "reward": 1.0,
+      "resolved": true,
+      "verifier_returncode": 0,
+      "test_duration": 0.6742761389999998
+    }
+  },
+  "actual_calibration_resources": [
+    {
+      "role": "source",
+      "sandbox_id": "sb-3K2vSFcIFDa3WIo5X5ZTlP",
+      "returncode": 137,
+      "termination_confirmed": true,
+      "observed_unix": 1790794059.082667
+    },
+    {
+      "role": "baseline-original",
+      "sandbox_id": "sb-tFVFl3xOAYixC56dBUtJeP",
+      "returncode": 137,
+      "termination_confirmed": true,
+      "observed_unix": 1790794059.3478608
+    },
+    {
+      "role": "restored-original",
+      "sandbox_id": "sb-DeQF0idl6CApydv0d5jHqi",
+      "returncode": 137,
+      "termination_confirmed": true,
+      "observed_unix": 1790794059.6072497
+    }
+  ],
+  "scope": "CPU original-Python production CLI task calibration/admission only; does not certify GPU training, C5 or W&B training"
+}

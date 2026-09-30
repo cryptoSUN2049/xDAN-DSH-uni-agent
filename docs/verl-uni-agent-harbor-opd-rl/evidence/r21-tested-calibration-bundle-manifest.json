@@ -1,0 +1,22 @@
+{
+  "schema": "mimo.r21-tested-calibration-bundle.v1",
+  "files": {
+    "mimo_r21_calibration.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/r21-calibration/mimo_r21_calibration.py",
+      "sha256": "80b3a3be7946ce30288eb154380855bf15dbc3707095772b677ebaf7da47ff74",
+      "bytes": 21995
+    },
+    "test_mimo_r21_calibration.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/r21-calibration/test_mimo_r21_calibration.py",
+      "sha256": "3963d243fe70d946a93809e94467b656f6c133700a695b7fdc0cf1160c15e009",
+      "bytes": 5986
+    }
+  },
+  "validation": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r21-calibration-cloud-validation.json",
+    "sha256": "15b63c21ed2df666987c0727c605ce0cad498adfe56641ce0b143a4d44058f04",
+    "bytes": 6295
+  },
+  "runtime_source_manifest_sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "calibration_config_sha256": "abb9a2c7487dd5f8ff5f06a702f014fa63179911fbb6b1ece8b41e94e47f132e"
+}

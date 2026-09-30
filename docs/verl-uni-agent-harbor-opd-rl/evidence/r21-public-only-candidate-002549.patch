@@ -1,0 +1,24 @@
+--- a/src/result/result.py
++++ b/src/result/result.py
+@@ -105,6 +105,10 @@
+         """
+         return self._value
+ 
++    def unwrap_or_raise(self, exception: Callable[[E], TBE]) -> T:
++        """Return the success value without constructing an exception."""
++        return self._value
++
+     def unwrap_err(self) -> NoReturn:
+         """
+         Raise an UnwrapError since this type is `Ok`
+@@ -233,6 +237,10 @@
+         Raises an `UnwrapError`.
+         """
+         raise UnwrapError(self, "Called `Result.unwrap()` on an `Err` value")
++
++    def unwrap_or_raise(self, exception: Callable[[E], TBE]) -> NoReturn:
++        """Raise an exception constructed from the contained error."""
++        raise exception(self._value)
+ 
+     def unwrap_err(self) -> E:
+         """

@@ -3,6 +3,7 @@
 import hashlib
 import importlib.util
 import json
+import runpy
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -192,3 +193,93 @@ def test_existing_controller_root_rejected_before_tokens(operator, prepared, tmp
     with pytest.raises(ValueError, match="already exists"):
         operator.prepare_spec("r20-a", prepared, "sha256:" + "b" * 64)
     assert not (tmp_path / "registration-token-r20-a").exists()
+
+
+def test_explicit_new_base_spec_is_not_misrepresented_as_old_sha(operator, prepared, tmp_path, monkeypatch):
+    original = json.loads((tmp_path / "run-spec-r19.json").read_bytes())
+    original["policy_template"]["gateway_host"] = "172.25.0.2"
+    helper = runpy.run_path(str(Path(operator.__file__).with_name("mimo_r20_operator.py")))
+    original["policy_template"]["dsh_release"].update(
+        source_sha=helper["DSH_SOURCE"],
+        sdk_sha256=helper["SDK_SHA"],
+        runtime_sha256=helper["RUNTIME_SHA"],
+        patch_sha256s=[],
+        platform="linux/amd64",
+        profile="sdk-minimal",
+    )
+    base = tmp_path / "recovered-base.json"
+    base.write_text(json.dumps(original))
+    auth = dict(
+        deadline_unix=1790813073,
+        allocated_at_unix=1790791473,
+        max_run_seconds=21600,
+        cleanup_reserve_seconds=180,
+        stage="r20f",
+        gateway_host="172.25.0.2",
+    )
+    monkeypatch.setattr(operator.time, "time", lambda: auth["allocated_at_unix"] + 60)
+    result = operator.prepare_spec(
+        "r20f",
+        prepared,
+        "sha256:" + "b" * 64,
+        authorization=auth,
+        base_spec_path=base,
+        base_spec_sha256=operator.sha(base),
+    )
+    value = json.loads(Path(result["spec_path"]).read_bytes())
+    assert value["deadline_unix"] == auth["deadline_unix"]
+    assert value["policy_template"]["gateway_host"] == auth["gateway_host"]
+    assert value["ssh_key"].endswith("cohost-r21/loopback-key")
+    assert result["base_spec_sha256"] == operator.sha(base)
+    assert value["run_id"] == "mimo9b-002857-r20f"
+    original["policy_template"]["dsh_release"]["source_sha"] = "0" * 40
+    base.write_text(json.dumps(original))
+    with pytest.raises(ValueError, match="pinned DSH provenance"):
+        operator.prepare_spec(
+            "r20f",
+            prepared,
+            "sha256:" + "b" * 64,
+            authorization=auth,
+            base_spec_path=base,
+            base_spec_sha256=operator.sha(base),
+        )
+
+
+def test_changed_new_base_rejected_before_token_write(operator, prepared, tmp_path):
+    with pytest.raises(ValueError, match="base spec|Base spec"):
+        operator.prepare_spec(
+            "r20f",
+            prepared,
+            "sha256:" + "b" * 64,
+            authorization={"stage": "r20f"},
+            base_spec_path=tmp_path / "run-spec-r19.json",
+            base_spec_sha256="0" * 64,
+        )
+    assert not (tmp_path / "registration-token-r20f").exists()
+
+
+def test_new_host_identity_rejects_wrong_known_key_before_authorization(operator, tmp_path):
+    known = tmp_path / "fresh-known-hosts"
+    known.write_text("127.0.0.1 ssh-ed25519 copied-old-host\n")
+    key = tmp_path / "actual-host.pub"
+    key.write_text("ssh-ed25519 current-host\n")
+    with pytest.raises(ValueError, match="host key"):
+        operator.validate_local_host(
+            {"known_hosts_path": str(known), "known_hosts_sha256": operator.sha(known), "gateway_host": "172.25.0.2"},
+            host_public_key=key,
+        )
+
+
+def test_current_host_key_and_local_gateway_are_both_required(operator, tmp_path):
+    known = tmp_path / "verified-hosts"
+    known.write_text("127.0.0.1 ssh-ed25519 current-key\n")
+    key = tmp_path / "host.pub"
+    key.write_text("ssh-ed25519 current-key host-comment\n")
+    auth = dict(known_hosts_path=str(known), known_hosts_sha256=operator.sha(known), gateway_host="127.0.0.1")
+    operator.validate_local_host(auth, host_public_key=key)
+    auth["gateway_host"] = "192.0.2.199"
+    with pytest.raises(OSError):
+        operator.validate_local_host(auth, host_public_key=key)
+    auth["known_hosts_sha256"] = "0" * 64
+    with pytest.raises(ValueError, match="host key SHA"):
+        operator.validate_local_host(auth, host_public_key=key)

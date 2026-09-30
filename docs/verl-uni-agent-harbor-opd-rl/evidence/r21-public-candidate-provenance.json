@@ -1,0 +1,29 @@
+{
+  "schema": "mimo.public-only-calibration-candidate.v1",
+  "created_at_unix": 1790792546.5920594,
+  "task_id": "format-code-task-002549",
+  "base_ref": "b9e33ad0984421931f91d47a32474712d6c67e69",
+  "purpose": "Independent positive-control only; never student rollout, training demonstration or reward correction",
+  "allowed_inputs": "Actual original production src tree plus public problem_statement",
+  "public_source_path": "/root/mimo-private/r21-data-audit/format-code-task-002549/public-source-collection-r21/public-source.json",
+  "public_source_sha256": "b2248e00bd37d30243ad69319d914d6f314262fa87fcd799a2fc2ede21f909a3",
+  "problem_statement_sha256": "ad2a60c521fb07a8fb99a667824255d3b07a300d2ff45213de89ec455aa5a31a",
+  "source_files_sha256": {
+    "src/result/__init__.py": "a6df2be3f7324f300843402e13bb0b74654461c6f27edb0fea2058b925cef15f",
+    "src/result/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/result/result.py": "b4fa00602ab117d8f8cb258a636ea4c40e4f79eddd90caa9b61e40c7808d12e9"
+  },
+  "patch_path": "/root/mimo-private/r21-data-audit/format-code-task-002549/public-only-candidate-r21.patch",
+  "patch_sha256": "2c13daad55ab194732852a9a9de0847495221d451d094894b5f14df9544c26c8",
+  "modified_files": [
+    "src/result/result.py"
+  ],
+  "updated_source_sha256": "867d2318b6ffd45db0a6c1301a41c4ad13f2381968637a3347e8643ec5d9a01e",
+  "implementation": "Add Result-style unwrap_or_raise callable exception conversion: Ok returns contained value, Err constructs and raises from contained error.",
+  "python_ast_parse": "passed",
+  "hidden_test_patch_read_for_authorship": false,
+  "hidden_test_files_read_for_authorship": false,
+  "verifier_output_read_for_authorship": false,
+  "actual_image_calibration": "pending",
+  "old_candidate_8e29_restored": false
+}

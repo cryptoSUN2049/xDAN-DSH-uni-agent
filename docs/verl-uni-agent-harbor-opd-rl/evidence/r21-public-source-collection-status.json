@@ -1,0 +1,28 @@
+{
+  "schema": "mimo.r21-public-production-source-collection.v1",
+  "started_unix": 1790792369.4824111,
+  "authorization_sha256": "e45736ba0f833f3388ab468ea81dff530eb1580069cd8a5b51ffc7f5ea7dd704",
+  "purpose": "Independent positive-control authorship: only public instruction and production src tree, no tests/verifier-output input",
+  "model_requests": 0,
+  "gpu_started": false,
+  "resources": [
+    {
+      "role": "public-source-only",
+      "sandbox_id": "sb-LFCG8TG6j9V2yNH2XmJC0j",
+      "image": "ghcr.io/cryptosun2049/mimo-dsh-code-002549@sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf",
+      "terminated": true,
+      "independent_modal_poll_returncode": 137,
+      "observed_unix": 1790792373.8242974
+    }
+  ],
+  "public_source_sha256": "b2248e00bd37d30243ad69319d914d6f314262fa87fcd799a2fc2ede21f909a3",
+  "source_files_sha256": {
+    "src/result/__init__.py": "a6df2be3f7324f300843402e13bb0b74654461c6f27edb0fea2058b925cef15f",
+    "src/result/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/result/result.py": "b4fa00602ab117d8f8cb258a636ea4c40e4f79eddd90caa9b61e40c7808d12e9"
+  },
+  "base_ref": "b9e33ad0984421931f91d47a32474712d6c67e69",
+  "status": "collected",
+  "cleanup_confirmed": true,
+  "finished_unix": 1790792373.8243015
+}

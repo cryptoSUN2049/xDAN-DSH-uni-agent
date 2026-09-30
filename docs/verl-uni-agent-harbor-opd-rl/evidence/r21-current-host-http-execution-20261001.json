@@ -1,0 +1,20 @@
+{
+  "schema": "mimo.r21-transport-actual-execution.v1",
+  "source_sha256": "8bfd1889cac5099b2420122e54fa89c2db1140a7dc03830f189c0e75302fcd97",
+  "started_at": 1790794102.849499,
+  "cuda_visible": "",
+  "pod_id": "vo6u0t8x398bnm",
+  "authorization_sha256": "e45736ba0f833f3388ab468ea81dff530eb1580069cd8a5b51ffc7f5ea7dd704",
+  "base_spec_sha256": "06d4bed5e29dc6a8a9da77f2184c8ca304fd7d9954264fb55687e4fbfc97ca12",
+  "package_manifest_sha256": "ba39e23d204beae1b5ba756add09f51bda02e98afaf72d26574ad92b4eab8622",
+  "commands_completed": [
+    "authorize",
+    "prepare-spec",
+    "probe"
+  ],
+  "status": "passed",
+  "exit_code": 0,
+  "spec_sha256": "06d4bed5e29dc6a8a9da77f2184c8ca304fd7d9954264fb55687e4fbfc97ca12",
+  "proof_sha256": "7c2af96d3e1e81e8aeb22cc0eb847d218adb0e8ca78d8f71d8e855c750fdea51",
+  "finished_at": 1790794194.1166024
+}

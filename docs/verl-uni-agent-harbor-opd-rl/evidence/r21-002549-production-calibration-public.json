@@ -1,0 +1,142 @@
+{
+  "status": "calibration_passed",
+  "baseline": "passed",
+  "positive_control": "passed",
+  "current_runtime_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+  "source_manifest_sha256": "sha256:99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "workspace_helper_sha256": "sha256:faba54386d324f0fc25b76bed6f0d81aa8f03cf926ad9c542214a6ae71b4409d",
+  "packaged_verifier_sha256": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371",
+  "no_shim": true,
+  "private_compatibility_injection": false,
+  "task_ref": {
+    "id": "mimo-code-format-code-task-002549",
+    "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979",
+    "version": "v1"
+  },
+  "immutable_package_manifest_sha256": "ba39e23d204beae1b5ba756add09f51bda02e98afaf72d26574ad92b4eab8622",
+  "data_revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+  "original_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:4a04d1bbe8d8edf0f29d13325bdb7bdf838c6b1474374b8e59a59e584b3b906c",
+  "dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-002549@sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf",
+  "original_python_version": "3.10.18",
+  "packaged_test_patch_sha256": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+  "candidate_patch_sha256": "sha256:2c13daad55ab194732852a9a9de0847495221d451d094894b5f14df9544c26c8",
+  "dsh_release": {
+    "dsh_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+    "profile": "sdk-minimal",
+    "python_distribution_version": "0.1.3a2",
+    "runner_sha256": "a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+    "runtime_binary_sha256": "d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "runtime_rg_sha256": "193906679498de4d939345b937fa24e0e69a03c244bd70c859f5e41232713f21",
+    "source_commit": "c51f6fc7dad24fd03fdc090741bc30d07488b574"
+  },
+  "source_hashes": {
+    "/root/mimo-private/r21-data-audit/format-code-task-002549/source-row.json": "sha256:2e3627b3cde31b96c15d3d78230bac1f979bbdbf64123b2b65d0c1ed55670f27",
+    "/workspace/mimo-dsh-rl-20260928/audit-code/r21-calibration/mimo_r21_calibration.py": "sha256:80b3a3be7946ce30288eb154380855bf15dbc3707095772b677ebaf7da47ff74",
+    "/workspace/mimo-dsh-rl-20260928/run-src-r20/examples/mimo_dsh_rl/verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371",
+    "/workspace/mimo-dsh-rl-20260928/run-src-r20/uni_agent/tasks/harbor_dsh/mimo_workspace.py": "sha256:faba54386d324f0fc25b76bed6f0d81aa8f03cf926ad9c542214a6ae71b4409d"
+  },
+  "packaged_file_readback": {
+    "baseline-direct": {
+      "executable": "/usr/local/bin/python3",
+      "files": {
+        "test.patch": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+        "test.sh": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338",
+        "verification.json": "sha256:54bafc5262721727c042a9cec7edee60e951809efa4f0d492fc1c8b9e870f55d",
+        "verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "version": "3.10.18"
+    },
+    "baseline-restored": {
+      "executable": "/usr/local/bin/python3",
+      "files": {
+        "test.patch": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+        "test.sh": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338",
+        "verification.json": "sha256:54bafc5262721727c042a9cec7edee60e951809efa4f0d492fc1c8b9e870f55d",
+        "verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "version": "3.10.18"
+    },
+    "candidate-restored": {
+      "executable": "/usr/local/bin/python3",
+      "files": {
+        "test.patch": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+        "test.sh": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338",
+        "verification.json": "sha256:54bafc5262721727c042a9cec7edee60e951809efa4f0d492fc1c8b9e870f55d",
+        "verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "version": "3.10.18"
+    }
+  },
+  "grade_execution": "exact packaged /tests/test.sh -> python3 /tests/verifier.py CLI, original image",
+  "attempt_started_unix": 1790793657.363426,
+  "absolute_deadline_unix": 1790794257.363426,
+  "finished_unix": 1790793684.7240086,
+  "authorization_path": "/root/mimo-private/recovery-authorization-r21.json",
+  "authorization_sha256": "e45736ba0f833f3388ab468ea81dff530eb1580069cd8a5b51ffc7f5ea7dd704",
+  "public_source_sha256": "b2248e00bd37d30243ad69319d914d6f314262fa87fcd799a2fc2ede21f909a3",
+  "candidate_provenance_sha256": "fb54712343e2a04570f5f01b6f48e2c7e015a647cd742bcf54d02e4f63b5d65f",
+  "model_requests": 0,
+  "schema": "mimo.r20-production-task-calibration.v1",
+  "task_calibration_gate_passed": true,
+  "cleanup_api": {
+    "all_terminated": true,
+    "resources": [
+      {
+        "role": "source",
+        "sandbox_id": "sb-3K2vSFcIFDa3WIo5X5ZTlP",
+        "returncode": 137,
+        "termination_confirmed": true,
+        "observed_unix": 1790794059.082667
+      },
+      {
+        "role": "baseline-original",
+        "sandbox_id": "sb-tFVFl3xOAYixC56dBUtJeP",
+        "returncode": 137,
+        "termination_confirmed": true,
+        "observed_unix": 1790794059.3478608
+      },
+      {
+        "role": "restored-original",
+        "sandbox_id": "sb-DeQF0idl6CApydv0d5jHqi",
+        "returncode": 137,
+        "termination_confirmed": true,
+        "observed_unix": 1790794059.6072497
+      }
+    ]
+  },
+  "package_test_files_sha256": {
+    "task/tests/test.patch": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+    "task/tests/test.sh": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338",
+    "task/tests/verification.json": "sha256:54bafc5262721727c042a9cec7edee60e951809efa4f0d492fc1c8b9e870f55d",
+    "task/tests/verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+  },
+  "raw_report_private_path": "/root/mimo-private/r21-data-audit/format-code-task-002549/production-compatible-package/calibration-attempt-r21-1/status.json",
+  "raw_report_sha256": "sha256:d1c02e0653e0d2c16a405b8aade89b33df7af14804d3a50ea91fcf4686429d82",
+  "results": {
+    "baseline-direct": {
+      "status": "graded",
+      "reward": 0.0,
+      "resolved": false,
+      "verifier_returncode": 1,
+      "test_duration": 0.5791197740000003
+    },
+    "baseline-restored": {
+      "status": "graded",
+      "reward": 0.0,
+      "resolved": false,
+      "verifier_returncode": 1,
+      "test_duration": 1.0319290140000001
+    },
+    "candidate-restored": {
+      "status": "graded",
+      "reward": 1.0,
+      "resolved": true,
+      "verifier_returncode": 0,
+      "test_duration": 0.6742761389999998
+    }
+  },
+  "historical_evidence_reused": false,
+  "calibration_executed_in_current_window": true,
+  "maximum_actual_live_sandboxes": 2,
+  "scope": "Fresh R21 actual production CLI controls, raw receipts and independent API terminal polls; no GPU or model requests"
+}

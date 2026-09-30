@@ -1,0 +1,335 @@
+{
+  "schema": "mimo.r21-observability-recovery-preflight.v1",
+  "observed_unix": 1790794702.6840937,
+  "pod_id": "vo6u0t8x398bnm",
+  "allocation_unix": 1790791473,
+  "deadline_unix": 1790813073,
+  "cleanup_reserve_seconds": 180,
+  "runtime_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+  "source_manifest_sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "status": "passed",
+  "synthetic_preflight": true,
+  "training_acceptance": false,
+  "project": "mimo-observability-preflight",
+  "experiment_name": "mimo9b-observability-preflight-20261001-r21-v4",
+  "services": [
+    {
+      "name": "prometheus",
+      "pid": 5401,
+      "pgid": 5401,
+      "start_ticks": 355265361,
+      "executable": "/root/mimo-private/observability-r21/services/prometheus/2.54.1/prometheus-2.54.1.linux-amd64/prometheus",
+      "executable_sha256": "300e3d0c27c23d0e02b0e86cc9cfd4723a29bd9ec7249118b2f7889633acf24b"
+    },
+    {
+      "name": "tempo",
+      "pid": 5425,
+      "pgid": 5425,
+      "start_ticks": 355265391,
+      "executable": "/root/mimo-private/observability-r21/services/tempo/2.6.1/tempo",
+      "executable_sha256": "81f7d8b8e90120f2e159bf3b71a9efc266b855795beb54088cc4409d445733b2"
+    },
+    {
+      "name": "rl_insight_http",
+      "pid": 5499,
+      "pgid": 5499,
+      "start_ticks": 355265421,
+      "executable": "/usr/bin/python3.12",
+      "executable_sha256": "1d3cf64f97cadc79fdc6fe2496a21b7b456cb94211978cfef5a65f616af74fd5"
+    }
+  ],
+  "versions": {
+    "prometheus": "2.54.1",
+    "tempo": "2.6.1",
+    "rl_insight": "0.3.0"
+  },
+  "explicit_environment": {
+    "outer": {
+      "VERL_RL_INSIGHT_ENABLE": "1",
+      "RL_INSIGHT_SERVER_URL": "http://127.0.0.1:18080"
+    },
+    "ray_runtime_env": {
+      "VERL_RL_INSIGHT_ENABLE": "1",
+      "RL_INSIGHT_SERVER_URL": "http://127.0.0.1:18080"
+    },
+    "trainer_rl_insight_server_url": "http://127.0.0.1:18080"
+  },
+  "native_probe": {
+    "schema": "mimo.observability-preflight.v1",
+    "status": "passed",
+    "synthetic_preflight": true,
+    "training_acceptance": false,
+    "project": "mimo-observability-preflight",
+    "experiment_name": "mimo9b-observability-preflight-20261001-r21-v4",
+    "started_at": 1790794456.431714,
+    "helper_sha256": "0c89268f0e5357317a8fafb46d619cee4502bc41ec236ad6159baf7adaf23b62",
+    "ack": {
+      "schema": "mimo.native-observability-ack.v1",
+      "status": "passed",
+      "project": "mimo-observability-preflight",
+      "experiment_name": "mimo9b-observability-preflight-20261001-r21-v4",
+      "step": 4,
+      "training_started_at": 1790794537.4341867,
+      "budget_seconds": 45,
+      "deadline_unix": 1790813073,
+      "query": "{__name__=~\"rl_insight_monitor_training_global_step|rl_insight_monitor_actor_grad_norm|rl_insight_monitor_critic_rewards_mean\",project=\"mimo-observability-preflight\",experiment_name=\"mimo9b-observability-preflight-20261001-r21-v4\"}",
+      "backend_response": {
+        "status": "success",
+        "data": {
+          "resultType": "vector",
+          "result": [
+            {
+              "metric": {
+                "__name__": "rl_insight_monitor_training_global_step",
+                "experiment_name": "mimo9b-observability-preflight-20261001-r21-v4",
+                "instance": "172.25.0.2:9092",
+                "job": "trainer_metrics",
+                "project": "mimo-observability-preflight"
+              },
+              "value": [
+                1790794590.314,
+                "4"
+              ]
+            },
+            {
+              "metric": {
+                "__name__": "rl_insight_monitor_actor_grad_norm",
+                "experiment_name": "mimo9b-observability-preflight-20261001-r21-v4",
+                "instance": "172.25.0.2:9092",
+                "job": "trainer_metrics",
+                "project": "mimo-observability-preflight"
+              },
+              "value": [
+                1790794590.314,
+                "0.125"
+              ]
+            },
+            {
+              "metric": {
+                "__name__": "rl_insight_monitor_critic_rewards_mean",
+                "experiment_name": "mimo9b-observability-preflight-20261001-r21-v4",
+                "instance": "172.25.0.2:9092",
+                "job": "trainer_metrics",
+                "project": "mimo-observability-preflight"
+              },
+              "value": [
+                1790794590.314,
+                "0.75"
+              ]
+            }
+          ]
+        }
+      },
+      "values": {
+        "training_global_step": 4.0,
+        "actor_grad_norm": 0.125,
+        "critic_rewards_mean": 0.75
+      },
+      "finished_at": 1790794590.314696
+    },
+    "tempo_search": {
+      "traces": [
+        {
+          "traceID": "a11cfdd1e73737cf81129d99350893c7",
+          "rootServiceName": "rl_insight_monitor",
+          "rootTraceName": "synthetic_observability_preflight",
+          "startTimeUnixNano": "1790794584257181948"
+        }
+      ],
+      "metrics": {
+        "inspectedTraces": 1,
+        "inspectedBytes": "17956",
+        "completedJobs": 1,
+        "totalJobs": 1
+      }
+    },
+    "finished_at": 1790794592.2980454
+  },
+  "independent_client_receipts": {
+    "observed_unix": 1790794702.6361518,
+    "api_services": {
+      "status": "ok",
+      "otlp_port": 4318,
+      "prometheus_port": 9090,
+      "grafana_port": null
+    },
+    "tempo_search_request": {
+      "tags": "project=\"mimo-observability-preflight\" experiment_name=\"mimo9b-observability-preflight-20261001-r21-v4\"",
+      "start": 1790794451,
+      "end": 1790794597,
+      "limit": 20
+    },
+    "tempo_search_response": {
+      "traces": [
+        {
+          "traceID": "a11cfdd1e73737cf81129d99350893c7",
+          "rootServiceName": "rl_insight_monitor",
+          "rootTraceName": "synthetic_observability_preflight",
+          "startTimeUnixNano": "1790794584257181948"
+        }
+      ],
+      "metrics": {
+        "inspectedTraces": 1,
+        "inspectedBytes": "17956",
+        "completedJobs": 1,
+        "totalJobs": 1
+      }
+    },
+    "trace_readback": {
+      "trace_id": "a11cfdd1e73737cf81129d99350893c7",
+      "selected_attributes": [
+        {
+          "key": "project",
+          "value": {
+            "stringValue": "mimo-observability-preflight"
+          }
+        },
+        {
+          "key": "experiment_name",
+          "value": {
+            "stringValue": "mimo9b-observability-preflight-20261001-r21-v4"
+          }
+        },
+        {
+          "key": "synthetic_preflight",
+          "value": {
+            "boolValue": true
+          }
+        }
+      ]
+    }
+  },
+  "probe_process": {
+    "schema": "mimo.r21-native-observability-probe-process.v1",
+    "attempt": "v4",
+    "started_unix": 1790794398.613941,
+    "cpu_only": true,
+    "new_gpu_training": false,
+    "fixed_deadline_unix": 1790813073,
+    "enable_env": "1",
+    "server_url": "http://127.0.0.1:18080",
+    "ray_runtime_env_enable": "1",
+    "ray_runtime_env_server_url": "http://127.0.0.1:18080",
+    "budget_seconds": 420,
+    "synthetic_project": "mimo-observability-preflight",
+    "synthetic_experiment": "mimo9b-observability-preflight-20261001-r21-v4",
+    "pid": 8566,
+    "pgid": 8566,
+    "returncode": 0,
+    "finished_unix": 1790794595.0875313
+  },
+  "cleanup": {
+    "observed_unix": 1790794702.6841366,
+    "owned_probe_pid": 8566,
+    "owned_ray_temp_root": "/root/mimo-private/robs-8566",
+    "owned_ray_processes": [],
+    "verified_zero": true,
+    "shared_services_retained": true,
+    "global_stop_used": false
+  },
+  "failed_attempts": [
+    {
+      "started_unix": 1790793091.2516475,
+      "finished_unix": 1790793291.37294
+    },
+    {
+      "attempt": "v2",
+      "started_unix": 1790793511.3881276,
+      "finished_unix": 1790793511.5048156
+    },
+    {
+      "attempt": "v3",
+      "started_unix": 1790793774.8241045,
+      "finished_unix": 1790794032.1540494,
+      "budget_seconds": 420
+    }
+  ],
+  "failure_boundaries": [
+    "v1 omitted enable ENV and exceeded outer budget; final probe status remained running and is not rewritten",
+    "v2 upload guard rejected its own source-string match; subsequent launch exited2 without Ray allocation",
+    "v3 explicit enable ENV but missing RL_INSIGHT_SERVER_URL; hub refused Prom target registration and disabled OTLP",
+    "v4 changed only private probe connection configuration; runtime source unchanged"
+  ],
+  "artifact_refs": [
+    {
+      "path": "/root/mimo-private/observability-r21/config.yaml",
+      "bytes": 1506,
+      "sha256": "6171d75ed43967fd4f3543ad5277fdeeebb4732e5aab965dd9380cfe67560f11"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/install-result.json",
+      "bytes": 656,
+      "sha256": "2ce4867e64c429e5cce4cff027862ffe70d90cc5d376afc2a179cea63f695c8d"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/start-result.json",
+      "bytes": 1026,
+      "sha256": "cc84c220519035657d5d855398ead088da1e5c0f26b7b1ba6f9ea4398ec6c973"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/native-preflight-process.json",
+      "bytes": 427,
+      "sha256": "c071eb010b70734ec710243c27ff7166d358a867759c49fadf3ab47c658d74a3"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/native-preflight-process-v2.json",
+      "bytes": 503,
+      "sha256": "7fd6162a6961710dcfe1dad8674f2acf71a3fe02c2d7f6092a55bde6e2fcf9d5"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/native-preflight-process-v3.json",
+      "bytes": 528,
+      "sha256": "d319f84af5eacf169d5bf622834310a0400de32c2f90b4cee5dcc2d941f8391c"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/native-preflight-process-v4.json",
+      "bytes": 606,
+      "sha256": "82b451b663614036c9dc294c295aec3a1736025d814f145451949863bb97d94f"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/native-preflight-probe-v3.py",
+      "bytes": 3970,
+      "sha256": "321a6f79a39d98d3cf5743ffddc7c1134a7658f0306645ebc8c015413fdee5f2"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/native-preflight-probe-v4.py",
+      "bytes": 4102,
+      "sha256": "0389d663af1519102c978f8004ae0a0d46a11e9c672c287ce636976e7d23d376"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/native-preflight/status.json",
+      "bytes": 372,
+      "sha256": "eaa4bc17c136476ea0d8c39e84cc4f0f3bfb3af4db24e7e2ee939fedca91ba86"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/native-preflight-v3/status.json",
+      "bytes": 1503,
+      "sha256": "bdaa1efb75ae965af25c604cf988762a8a9eee93e91220c94e5623f2fb33cf1a"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/native-preflight-v3/observability-ack.json",
+      "bytes": 714,
+      "sha256": "aefe0c492b0f5365681d959e9cf6d640c8c46dab65279b4aecd9c26e33b865db"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/native-preflight-v4/status.json",
+      "bytes": 3040,
+      "sha256": "bae61eeedcce3c98f3a4e2756492c93c54e48b9af044a2f62b47fd638ac350a1"
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/native-preflight-v4/observability-ack.json",
+      "bytes": 2082,
+      "sha256": "330d5f2bacde5e2d6bec62b8b9bee89ee4335827104ed7e74ba7d492311a12d2"
+    }
+  ],
+  "operation_boundaries": {
+    "credentials_in_report": false,
+    "gpu_work_started": false,
+    "training_or_model_requests": 0,
+    "training_source_modified": false,
+    "new_training_step5_verified": false,
+    "wandb_new_run_verified": false,
+    "network_plaintext_credentials_written": false,
+    "other_resources_stopped": false
+  }
+}

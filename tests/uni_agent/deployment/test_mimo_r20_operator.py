@@ -119,6 +119,85 @@ def test_no_restart_of_authorization_window(module, now):
 
 
 @pytest.fixture
+def recovery_authorization(module, tmp_path):
+    known = tmp_path / "fresh-known-hosts"
+    known.write_text("127.0.0.1 ssh-ed25519 new-host-key\n")
+    value = dict(
+        schema="mimo.recovery-authorization.v1",
+        pod_id="vo6u0t8x398bnm",
+        allocated_at_unix=1790791473,
+        deadline_unix=1790813073,
+        max_run_seconds=21600,
+        cleanup_reserve_seconds=180,
+        stage="r20f",
+        gateway_host="172.25.0.2",
+        known_hosts_path=str(known),
+        known_hosts_sha256=module.file_identity(known)["sha256"],
+    )
+    path = tmp_path / "authorization.json"
+    path.write_text(json.dumps(value))
+    path.chmod(0o444)
+    return path, module.file_identity(path)["sha256"], value
+
+
+def test_recovery_explicit_shared_window_drives_plan_and_actual_command(module, plan, recovery_authorization):
+    path, sha, value = recovery_authorization
+    plan.update(
+        stage="r20f",
+        run_id="mimo9b-001661-r20f",
+        spec_path=str(module.PRIVATE / "run-spec-r20f.json"),
+        authorization_path=str(path),
+        authorization_sha256=sha,
+        deadline_unix=value["deadline_unix"],
+    )
+    result = module.validate_plan(plan, now=value["allocated_at_unix"] + 60)
+    assert result["wall_clock_seconds"] == 21360
+    command = module.command(plan, {"step": 4, "checkpoint": "/native/global_step_4"})
+    assert command[command.index("--observability-deadline-unix") + 1] == str(value["deadline_unix"])
+    with pytest.raises(ValueError):
+        module.validate_plan(plan, now=value["deadline_unix"])
+
+
+@pytest.mark.parametrize(
+    "fault",
+    ["wrong_hash", "writable", "rolling_deadline", "seven_hours", "bool_epoch", "wrong_stage", "hostkey_changed"],
+)
+def test_recovery_authorization_rejects_unbound_or_reset_window(module, recovery_authorization, fault):
+    path, sha, value = recovery_authorization
+    if fault == "wrong_hash":
+        sha = "0" * 64
+    elif fault == "writable":
+        path.chmod(0o644)
+    elif fault == "hostkey_changed":
+        Path(value["known_hosts_path"]).write_text("different host\n")
+    else:
+        if fault == "rolling_deadline":
+            value["deadline_unix"] += 60
+        if fault == "seven_hours":
+            value["max_run_seconds"] = 25200
+            value["deadline_unix"] = value["allocated_at_unix"] + 25200
+        if fault == "bool_epoch":
+            value["allocated_at_unix"] = True
+        if fault == "wrong_stage":
+            value["stage"] = "../old"
+        path.chmod(0o644)
+        path.write_text(json.dumps(value))
+        path.chmod(0o444)
+        sha = module.file_identity(path)["sha256"]
+    with pytest.raises(ValueError):
+        module.load_authorization(path, sha)
+
+
+def test_recovery_does_not_accept_future_allocation_or_legacy_expired_window(module, recovery_authorization):
+    path, sha, value = recovery_authorization
+    authorization = module.load_authorization(path, sha)
+    with pytest.raises(ValueError):
+        module.validate_window(value["deadline_unix"], value["allocated_at_unix"] - 1, authorization)
+    with pytest.raises(ValueError):
+        module.validate_window(module.DEADLINE, value["allocated_at_unix"])
+
+
+@pytest.fixture
 def checkpoint(module, tmp_path):
     checkpoint = tmp_path / "checkpoints/global_step_4"
     for name in module.CHECKPOINT_FILES:
@@ -596,6 +675,56 @@ def test_actual_prepare_binds_mimo_spec_and_single_task_parquet(module, admitted
     assert report["validation_is_independent_holdout"] is False
     with pytest.raises(FileExistsError):
         module.prepare(plan)
+
+
+@pytest.mark.parametrize("fault", [None, "old_http_proof", "wrong_pod", "changed_active_hostkey"])
+def test_recovery_actual_spec_requires_current_allocation_host_and_http(
+    module, admitted, recovery_authorization, monkeypatch, fault
+):
+    plan, spec = admitted
+    path, _, authorization = recovery_authorization
+    authorization["stage"] = plan["stage"]
+    path.chmod(0o644)
+    path.write_text(json.dumps(authorization))
+    path.chmod(0o444)
+    plan.update(
+        authorization_path=str(path),
+        authorization_sha256=module.file_identity(path)["sha256"],
+        deadline_unix=authorization["deadline_unix"],
+    )
+    monkeypatch.setattr(module.time, "time", lambda: authorization["allocated_at_unix"] + 60)
+    monkeypatch.setenv("RUNPOD_POD_ID", authorization["pod_id"] if fault != "wrong_pod" else "anotherpod")
+    known = module.PRIVATE / "cohost-r21/known_hosts"
+    known.parent.mkdir()
+    known.write_bytes(Path(authorization["known_hosts_path"]).read_bytes())
+    raw = spec.model_dump(mode="json")
+    raw.update(
+        deadline_unix=authorization["deadline_unix"], known_hosts=str(known), ssh_key=str(known.parent / "loopback-key")
+    )
+    raw["policy_template"]["gateway_host"] = authorization["gateway_host"]
+    Path(plan["spec_path"]).write_text(json.dumps(raw))
+    plan["spec_raw_sha256"] = module.file_identity(plan["spec_path"])["sha256"]
+    proof_path = Path(plan["http_proof_path"])
+    proof = json.loads(proof_path.read_bytes())
+    proof.update(
+        gateway_host=authorization["gateway_host"],
+        authorization_sha256=plan["authorization_sha256"],
+        actual_stage_spec_sha256=plan["spec_raw_sha256"],
+    )
+    if fault == "old_http_proof":
+        proof.pop("authorization_sha256")
+    if fault == "changed_active_hostkey":
+        known.write_text("wrong host\n")
+    proof_path.write_text(json.dumps(proof))
+    plan["http_proof_sha256"] = module.file_identity(proof_path)["sha256"]
+    if fault is not None:
+        with pytest.raises(ValueError):
+            module.prepare(plan)
+        assert not (module.PRIVATE / "launch-r20a").exists()
+    else:
+        result = module.prepare(plan)
+        assert result["authorization_sha256"] == plan["authorization_sha256"]
+        assert result["total_training_steps"] == 5
 
 
 @pytest.mark.parametrize(

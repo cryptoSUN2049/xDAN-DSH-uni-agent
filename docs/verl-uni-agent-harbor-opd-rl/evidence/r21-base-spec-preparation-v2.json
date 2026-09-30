@@ -1,0 +1,58 @@
+{
+  "schema": "mimo.r21-new-base-spec-preparation.v1",
+  "status": "prepared-not-started",
+  "created_at_unix": 1790793887.2006664,
+  "base_spec_path": "/root/mimo-private/run-spec-r21-base-v2.json",
+  "base_spec_sha256": "06d4bed5e29dc6a8a9da77f2184c8ca304fd7d9954264fb55687e4fbfc97ca12",
+  "canonical_run_spec_sha256": "sha256:06d4bed5e29dc6a8a9da77f2184c8ca304fd7d9954264fb55687e4fbfc97ca12",
+  "preserved_previous_base_path": "/root/mimo-private/run-spec-r21-base.json",
+  "preserved_previous_base_sha256": "60896a88c6129745dc7e14d5d961d6cbc883a2e724f3c832c8e507a48cac932f",
+  "previous_base_superseded": true,
+  "changed_field": "policy_template.model_name",
+  "model_name": "mimo-9b-dsh-rl",
+  "tunnel_alias": "mimo-cloud-r20f",
+  "source": "Fresh current spec; model_name corrected from root-reported actual R19 W&B allowlist measurement observed_unix1790793654.5395038. No original private spec byte recovery claim.",
+  "authorization_sha256": "e45736ba0f833f3388ab468ea81dff530eb1580069cd8a5b51ffc7f5ea7dd704",
+  "task_manifest_sha256": "ba39e23d204beae1b5ba756add09f51bda02e98afaf72d26574ad92b4eab8622",
+  "task_ref": {
+    "id": "mimo-code-format-code-task-002549",
+    "version": "v1",
+    "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979"
+  },
+  "run_id": "mimo9b-002549-r20f",
+  "policy_template_nonsecret": {
+    "termination_policy": "budget-terminal-v1",
+    "budget_limits": {
+      "max_generated_tokens": 20480,
+      "trajectory_capacity": 32768
+    },
+    "task_refs": [
+      {
+        "id": "mimo-code-format-code-task-002549",
+        "version": "v1",
+        "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979"
+      }
+    ],
+    "dsh_release": {
+      "source_sha": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+      "sdk_sha256": "sha256:6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
+      "runtime_sha256": "sha256:59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+      "image_digest": "sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf",
+      "platform": "linux/amd64",
+      "profile": "sdk-minimal",
+      "patch_sha256s": []
+    },
+    "gateway_host": "172.25.0.2",
+    "model_name": "mimo-9b-dsh-rl",
+    "tunnel_alias": "mimo-cloud-r20f",
+    "max_wall_time_seconds": 1800.0,
+    "max_cpus": 2.0,
+    "max_memory_mb": 4096,
+    "max_tokens": 4096,
+    "max_artifact_bytes": 16777216
+  },
+  "transport_authorized": false,
+  "tokens_created": false,
+  "controller_started": false,
+  "gpu_started": false
+}
