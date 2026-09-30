@@ -1,3 +1,11 @@
+## R21 当前原生运行与交接入口（03:40 SGT）
+
+- 原生训练链已实际启动：sup11436 → launcher11494 → native11566；Ray actor ObservedTaskRunner15385、MonitorHub15961实际继承Insight双变量。
+- 当前仍初始化，未证明C4已恢复或C5有效更新。evidence/r20f-native-runtime-observation-20261001.json只作为本轮初始化证据。
+- 正确网盘环境与overlay/source绑定见 docs/verl-uni-agent-harbor-opd-rl/r21-uv-runtime-reuse-20261001.md；ws1历史目录名不决定world2训练。
+- r20_operator继续本轮当前scope云端实际batch/token/参数/optimizer/W&B/Insight验收，失败保留；观测agent持续只读。不要重启、并行另起GPU或复制历史PASS。
+- deadline仍08:04:33 SGT；只清本轮owned进程/Modal，不能提前关闭其他Pod；其他约束见下方7sections。
+
 ## R21 最新状态：后台监督已启动（03:31 SGT）
 
 - 当前控制commit b053bde已push，full Ruff691通过；cloud bundle audit-code/r21-operator-runtime manifest6c2d5175。
