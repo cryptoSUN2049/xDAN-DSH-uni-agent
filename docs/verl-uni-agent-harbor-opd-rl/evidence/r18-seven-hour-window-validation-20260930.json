@@ -1,0 +1,162 @@
+{
+  "schema": "mimo.r18-seven-hour-window-validation.v1",
+  "status": "passed",
+  "deadline_unix": 1790752269,
+  "max_run_seconds": 25200,
+  "tests_passed": 72,
+  "pytest_seconds": 2.12,
+  "execution": {
+    "started_at": 1790728066.5478294,
+    "finished_at": 1790728070.6209733,
+    "exit_code": 0,
+    "argv": [
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+      "-c",
+      "import sys;sys.path.insert(0,'/workspace/mimo-dsh-rl-20260928/integration-check/coverage-r14');from coverage.cmdline import main;sys.exit(main())",
+      "run",
+      "--rcfile=/dev/null",
+      "--branch",
+      "--data-file=/workspace/mimo-dsh-rl-20260928/integration-check/r18-window-tests/window.coverage",
+      "--include=*/deployment/services/harbor_run_controller.py,*/mimo_gpu_timeline.py",
+      "-m",
+      "pytest",
+      "-p",
+      "pytest_asyncio.plugin",
+      "-p",
+      "no:cacheprovider",
+      "tests/uni_agent/deployment/test_harbor_controller_run_window.py",
+      "tests/uni_agent/deployment/test_harbor_run_controller.py",
+      "tests/uni_agent/deployment/test_mimo_gpu_timeline.py",
+      "--junitxml=/workspace/mimo-dsh-rl-20260928/integration-check/r18-window-tests/coverage.xml",
+      "-q"
+    ],
+    "CUDA_VISIBLE_DEVICES": "",
+    "source_sha256": {
+      "deployment/services/harbor_run_controller.py": "59dd703672919f4eadaaffb24b766b1dd4e82f922c8cee2c88884a5ba8c2bb50",
+      "docs/verl-uni-agent-harbor-opd-rl/mimo_gpu_timeline.py": "98cf89cd08cc3308d8528f2593b34a5c4d739cdab34e5f59cedbe630ac26cd6e",
+      "tests/uni_agent/deployment/test_harbor_controller_run_window.py": "992bc395e841c92ad1b97a1dc40cc284732dad884786c908d58753644d6cc384",
+      "tests/uni_agent/deployment/test_harbor_run_controller.py": "631f1129c91495112ef49c511e5556fa4b50cfc36ea8f206e0bc88edbf948c96",
+      "tests/uni_agent/deployment/test_mimo_gpu_timeline.py": "6861f0963ab69a2fa0d9a73b212fba0869b75c6500891fdbafd7fa0b0847f639"
+    }
+  },
+  "coverage": {
+    "meta": {
+      "format": 3,
+      "version": "7.16.2",
+      "timestamp": "2026-09-30T00:27:50.957630",
+      "branch_coverage": true,
+      "show_contexts": false
+    },
+    "totals": {
+      "covered_lines": 337,
+      "num_statements": 369,
+      "percent_covered": 88.35758835758836,
+      "percent_covered_display": "88",
+      "missing_lines": 32,
+      "excluded_lines": 0,
+      "percent_statements_covered": 91.32791327913279,
+      "percent_statements_covered_display": "91",
+      "num_branches": 112,
+      "num_partial_branches": 24,
+      "covered_branches": 88,
+      "missing_branches": 24,
+      "percent_branches_covered": 78.57142857142857,
+      "percent_branches_covered_display": "79"
+    },
+    "files": {
+      "deployment/services/harbor_run_controller.py": {
+        "covered_lines": 292,
+        "num_statements": 322,
+        "percent_covered": 88.27751196172248,
+        "percent_covered_display": "88",
+        "missing_lines": 30,
+        "excluded_lines": 0,
+        "percent_statements_covered": 90.6832298136646,
+        "percent_statements_covered_display": "91",
+        "num_branches": 96,
+        "num_partial_branches": 19,
+        "covered_branches": 77,
+        "missing_branches": 19,
+        "percent_branches_covered": 80.20833333333333,
+        "percent_branches_covered_display": "80"
+      },
+      "docs/verl-uni-agent-harbor-opd-rl/mimo_gpu_timeline.py": {
+        "covered_lines": 45,
+        "num_statements": 47,
+        "percent_covered": 88.88888888888889,
+        "percent_covered_display": "89",
+        "missing_lines": 2,
+        "excluded_lines": 0,
+        "percent_statements_covered": 95.74468085106383,
+        "percent_statements_covered_display": "96",
+        "num_branches": 16,
+        "num_partial_branches": 5,
+        "covered_branches": 11,
+        "missing_branches": 5,
+        "percent_branches_covered": 68.75,
+        "percent_branches_covered_display": "69"
+      }
+    }
+  },
+  "original_green": {
+    "started_at": 1790727870.763594,
+    "phase": "green",
+    "pid": 408991,
+    "CUDA_VISIBLE_DEVICES": "",
+    "exit_code": 0,
+    "finished_at": 1790727873.735504
+  },
+  "red": {
+    "status": {
+      "started_at": 1790727513.9113395,
+      "phase": "red-v2",
+      "pid": 408912,
+      "CUDA_VISIBLE_DEVICES": "",
+      "exit_code": 1,
+      "finished_at": 1790727517.1833968
+    },
+    "summary": "3 failed, 66 passed in 2.18s"
+  },
+  "artifacts": {
+    "green.log": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-window-tests/green.log",
+      "sha256": "71d77a053580617796b4e79aa150a3ec16fff7f68eec3266d5318f5e1904c231"
+    },
+    "green-status.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-window-tests/green-status.json",
+      "sha256": "bea5c7c85087559106fa9f6cf149d0859d4ae2d43397141898baa68927a27fec"
+    },
+    "red-v2.log": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-window-tests/red-v2.log",
+      "sha256": "a2a42475a13d8ef35f4bb3d30b7a663c069df30d5c6b9ee3b4e10bd5bbd6b1b8"
+    },
+    "red-v2-status.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-window-tests/red-v2-status.json",
+      "sha256": "67b0335d24c52383774f55b7391a0907d3500ef30472f3ca362bfe2faeda535b"
+    },
+    "coverage.log": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-window-tests/coverage.log",
+      "sha256": "0e6c8b9328ad25597d8a5f4acaf02db0e5e0b617f1f073873907cbb746dd7829"
+    },
+    "coverage.xml": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-window-tests/coverage.xml",
+      "sha256": "73086a4907830db10e7f16a016c2fae3c5a68405706d66cc29fee16d36f0a4b7"
+    },
+    "coverage.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-window-tests/coverage.json",
+      "sha256": "0be9cfad7d8b257abc1c457e2ad38e7855b9524dd9957fed2010f8125d5c7eea"
+    },
+    "coverage-status.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-window-tests/coverage-status.json",
+      "sha256": "ae26fe8b679b1dbb5157d9134cf2560606bfb7be18fdbbbfcdea6bc5dab636b6"
+    }
+  },
+  "gpu_training_started": false,
+  "runtime_changed_by_audit": false,
+  "notes": [
+    "Coverage uses existing coverage-r14 package through process-local sys.path; shared fixed uv environment unchanged.",
+    "Full controller/timeline module scope with branch coverage, no added exclusions.",
+    "These tests establish explicit seven-hour upper bound, default-window compatibility and rejection beyond the bound; they do not establish training acceptance."
+  ],
+  "local_source_hash_match": true
+}
