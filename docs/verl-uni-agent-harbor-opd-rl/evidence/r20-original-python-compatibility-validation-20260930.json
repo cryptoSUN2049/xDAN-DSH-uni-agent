@@ -1,0 +1,15 @@
+{
+  "pytest_exitcode": 0,
+  "coverage_percent": 86.53846153846153,
+  "coverage_version": "7.16.2",
+  "coverage_branch_enabled": true,
+  "source_sha256": {
+    "uni_agent/tasks/harbor_dsh/mimo_workspace.py": "faba54386d324f0fc25b76bed6f0d81aa8f03cf926ad9c542214a6ae71b4409d",
+    "examples/mimo_dsh_rl/verifier.py": "12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371",
+    "tests/uni_agent/tasks/test_mimo_workspace.py": "49ce9184ae87083b18636f9e85d8467d54e373c4fe69cff2fa62d723d896cfda",
+    "tests/uni_agent/examples/test_mimo_verifier.py": "eb2d9b0f26e8f8cb0f9d475ac101161d93e79ee2fecff3b04f916773f02679ed"
+  },
+  "python38_syntax_parse": true,
+  "coverage_raw_path": "/root/mimo-private/r20-python-compat/coverage-final.json",
+  "coverage_raw_sha256": "3a8c327d976f602290d71c6483d8abf2beb1d72b1a5b64d461e615714e436f8c"
+}

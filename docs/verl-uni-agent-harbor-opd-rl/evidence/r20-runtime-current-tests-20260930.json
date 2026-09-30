@@ -1,0 +1,56 @@
+{
+  "schema": "mimo.r20-current-operator-tests.v1",
+  "training_started": false,
+  "gpu_started": false,
+  "current_bundle_path": "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime",
+  "current_file_sha256": {
+    "mimo_r20_operator.py": "1dc5a32017f46173088a658d4536a4af356bd0ada170987d28897e16f78f41ac",
+    "mimo_r20_calibration_admission.py": "6e70997e9270fd8298a63a190996350702c61f00f8c2760fe79484f389771b19",
+    "mimo_r20_cpu_prepare.py": "370fb362eb319f1227e3e46d6a4d8e8e8f3927910c66e00ce2ed6a91d77c35e4",
+    "test_mimo_r20_operator.py": "56a2a6b76a6427618265c167e670a8671c84efb18cefa0782c550c6381757906",
+    "test_mimo_r20_calibration_admission.py": "8cb6ee621910209e563a006ba86b838ff5dc0d76e1559f315e616b262a768120"
+  },
+  "test_sets": [
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-runtime-operator-tests-v3.xml",
+      "sha256": "2d7a061eac5427efd6103c0cc8e0a8573f46f5854db10c79e3d32c98dd4f534e",
+      "selected_classname": "test_mimo_r20_operator",
+      "selected_tests": 99,
+      "failures_errors_skips": [],
+      "total_xml_tests": 117,
+      "suite_attributes": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "117",
+          "time": "119.875",
+          "timestamp": "2026-09-30T06:55:28.044429+00:00",
+          "hostname": "d9fbe30bc515"
+        }
+      ]
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-runtime-admission-tests-v4.xml",
+      "sha256": "384c3f11d8b34205a8fa68d05433cfcf4febc604e37b74f70c3aa558223dd1cb",
+      "selected_classname": null,
+      "selected_tests": 18,
+      "failures_errors_skips": [],
+      "total_xml_tests": 18,
+      "suite_attributes": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "18",
+          "time": "0.213",
+          "timestamp": "2026-09-30T06:59:54.577066+00:00",
+          "hostname": "d9fbe30bc515"
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,90 @@
+{
+  "schema": "mimo.r20-tested-operator-bundle.v1",
+  "created_at": 1790752322.187833,
+  "bundle_path": "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime",
+  "files": {
+    "mimo_r20_operator.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime/mimo_r20_operator.py",
+      "sha256": "1dc5a32017f46173088a658d4536a4af356bd0ada170987d28897e16f78f41ac",
+      "bytes": 39364
+    },
+    "mimo_r20_calibration_admission.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime/mimo_r20_calibration_admission.py",
+      "sha256": "6e70997e9270fd8298a63a190996350702c61f00f8c2760fe79484f389771b19",
+      "bytes": 15196
+    },
+    "mimo_r20_cpu_prepare.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime/mimo_r20_cpu_prepare.py",
+      "sha256": "370fb362eb319f1227e3e46d6a4d8e8e8f3927910c66e00ce2ed6a91d77c35e4",
+      "bytes": 2649
+    },
+    "test_mimo_r20_operator.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime/test_mimo_r20_operator.py",
+      "sha256": "56a2a6b76a6427618265c167e670a8671c84efb18cefa0782c550c6381757906",
+      "bytes": 38678
+    },
+    "test_mimo_r20_calibration_admission.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime/test_mimo_r20_calibration_admission.py",
+      "sha256": "8cb6ee621910209e563a006ba86b838ff5dc0d76e1559f315e616b262a768120",
+      "bytes": 9884
+    }
+  },
+  "runtime": {
+    "source_root": "/workspace/mimo-dsh-rl-20260928/run-src-r20",
+    "source_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+    "source_manifest": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/source-r20-manifest.json",
+      "sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+      "bytes": 172828
+    },
+    "source_count": 1003,
+    "assembly_mode": "verified-r19-runtime-plus-two-git-blobs",
+    "base_source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+    "base_source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af"
+  },
+  "tested_artifacts": {
+    "r20-runtime-current-tests-report.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-runtime-current-tests-report.json",
+      "sha256": "bd380104c9dfc37dab327c4ce6a58d078c3a2a07162fe823c851bbc1975ccfe1",
+      "bytes": 2080
+    },
+    "r20-current-coverage-validation.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-current-coverage-validation.json",
+      "sha256": "f50142f19b2a8881702dad64f28899f71b885893540cc664f5e4ee400a92805f",
+      "bytes": 3985
+    },
+    "r20-current-combined-coverage.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-current-combined-coverage.json",
+      "sha256": "f1326c788791fce29ea6f94f19c62bdaa3eb2fd2ebc59cc26eee0e50ce8f0891",
+      "bytes": 20507
+    },
+    "r20e-production-calibration-admission.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20e-production-calibration-admission.json",
+      "sha256": "28f77e026c5c6fee396733669f3354df3ecf50ff2712bc05383e3166835c9cfa",
+      "bytes": 7266
+    },
+    "r20e-actual-prepare.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20e-actual-prepare.json",
+      "sha256": "ab4de11152cc1c2aefab0db84d81ce74f615f95a6ee4668de58b50dffaca1ad5",
+      "bytes": 1293
+    },
+    "r20e-actual-preflight.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20e-actual-preflight.json",
+      "sha256": "49d081a1e2b8f7b2d3fab11593caaf538bde56b2ca845c5d3de2d6b1aff12b08",
+      "bytes": 5164
+    }
+  },
+  "stage_plan": {
+    "path": "/root/mimo-private/stage-plan-r20e.json",
+    "sha256": "c1bc62ac91ba035dbcd8226192e7b5b95eefb636c5510fae4352de627de7248f",
+    "bytes": 2028
+  },
+  "raw_run_spec": {
+    "path": "/root/mimo-private/run-spec-r20e.json",
+    "sha256": "55cca9bd79d4192b0e15acd5c484946727f9f7af7b6ecda49ed251d8078c38ae",
+    "bytes": 1849
+  },
+  "source_commit_scope": "Runtime compatibility commit; helpers are pending final review commit, their exact tested bytes are bound above.",
+  "training_started": false,
+  "gpu_start_authorized_by_this_report": false
+}

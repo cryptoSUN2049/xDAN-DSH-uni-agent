@@ -1,0 +1,176 @@
+{
+  "actual_calibration": {
+    "path": "/root/mimo-private/r20-data-audit/format-code-task-002549/production-compatible-package/calibration-public.json",
+    "sha256": "9fd8ad8f52c93f19d6e23f8bb1a9189bad27cfdf538ad164281171abd6e34b92"
+  },
+  "actual_calibration_results": {
+    "baseline-direct": {
+      "resolved": false,
+      "reward": 0.0,
+      "status": "graded",
+      "test_duration": 0.52020336,
+      "verifier_returncode": 1
+    },
+    "baseline-restored": {
+      "resolved": false,
+      "reward": 0.0,
+      "status": "graded",
+      "test_duration": 0.6388441200000003,
+      "verifier_returncode": 1
+    },
+    "candidate-restored": {
+      "resolved": true,
+      "reward": 1.0,
+      "status": "graded",
+      "test_duration": 0.5227204160000003,
+      "verifier_returncode": 0
+    }
+  },
+  "actual_raw_verifier_receipts": {
+    "baseline-direct": {
+      "base_ref": "b9e33ad0984421931f91d47a32474712d6c67e69",
+      "gateway_session_id": "operator-production-calibration-002549",
+      "resolved": false,
+      "reward": 0.0,
+      "schema": "dsh.mimo-verifier-receipt.v1",
+      "snapshot_sha256": "sha256:c54523c37912401fa39d09a2784f459a1d729d32c4b44bf81c33d244f290214a",
+      "status": "graded",
+      "test_duration": 0.52020336,
+      "test_patch_sha256": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+      "verifier_returncode": 1
+    },
+    "baseline-restored": {
+      "base_ref": "b9e33ad0984421931f91d47a32474712d6c67e69",
+      "gateway_session_id": "operator-production-calibration-002549",
+      "resolved": false,
+      "reward": 0.0,
+      "schema": "dsh.mimo-verifier-receipt.v1",
+      "snapshot_sha256": "sha256:c54523c37912401fa39d09a2784f459a1d729d32c4b44bf81c33d244f290214a",
+      "status": "graded",
+      "test_duration": 0.6388441200000003,
+      "test_patch_sha256": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+      "verifier_returncode": 1
+    },
+    "candidate-restored": {
+      "base_ref": "b9e33ad0984421931f91d47a32474712d6c67e69",
+      "gateway_session_id": "operator-production-calibration-002549",
+      "resolved": true,
+      "reward": 1.0,
+      "schema": "dsh.mimo-verifier-receipt.v1",
+      "snapshot_sha256": "sha256:15e2ca7514cb157faae3e8c4da333678ae44802181a8be6e73cd618e17bcc5ff",
+      "status": "graded",
+      "test_duration": 0.5227204160000003,
+      "test_patch_sha256": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+      "verifier_returncode": 0
+    }
+  },
+  "actual_resources": [
+    {
+      "observed_unix": 1790750720.2577136,
+      "returncode": 137,
+      "role": "source",
+      "sandbox_id": "sb-eJgfAfvJbojpsjqjZmpIsz",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790750720.498228,
+      "returncode": 137,
+      "role": "baseline-original",
+      "sandbox_id": "sb-aEbHD41HvtWg4oRWsxWhKt",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790750720.7295876,
+      "returncode": 137,
+      "role": "restored-original",
+      "sandbox_id": "sb-03vOL4XEXQeTjzotSwX15o",
+      "termination_confirmed": true
+    }
+  ],
+  "adapter_sha256": "6e70997e9270fd8298a63a190996350702c61f00f8c2760fe79484f389771b19",
+  "calibration_executed_in_current_window": true,
+  "cleanup_confirmed": true,
+  "dsh_release": {
+    "image_digest": "sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf",
+    "patch_sha256s": [],
+    "platform": "linux/amd64",
+    "profile": "sdk-minimal",
+    "runtime_sha256": "sha256:59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+    "sdk_sha256": "sha256:6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
+    "source_sha": "b2369692ea530007075ebcd18d39fdba0bbd3982"
+  },
+  "gpu_start_authorized_by_this_report": false,
+  "historical_evidence_reused": false,
+  "model_request_count_scope": "Verifier-only operator path; no model runner invoked",
+  "model_requests": 0,
+  "original_python_version": "3.10.18",
+  "packaged_file_readback": {
+    "baseline-direct": {
+      "executable": "/usr/local/bin/python3",
+      "files": {
+        "test.patch": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+        "test.sh": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338",
+        "verification.json": "sha256:54bafc5262721727c042a9cec7edee60e951809efa4f0d492fc1c8b9e870f55d",
+        "verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "version": "3.10.18"
+    },
+    "baseline-restored": {
+      "executable": "/usr/local/bin/python3",
+      "files": {
+        "test.patch": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+        "test.sh": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338",
+        "verification.json": "sha256:54bafc5262721727c042a9cec7edee60e951809efa4f0d492fc1c8b9e870f55d",
+        "verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "version": "3.10.18"
+    },
+    "candidate-restored": {
+      "executable": "/usr/local/bin/python3",
+      "files": {
+        "test.patch": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+        "test.sh": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338",
+        "verification.json": "sha256:54bafc5262721727c042a9cec7edee60e951809efa4f0d492fc1c8b9e870f55d",
+        "verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "version": "3.10.18"
+    }
+  },
+  "production_verifier_compatibility_verified_by_this_adapter": true,
+  "raw_execution_report": {
+    "path": "/root/mimo-private/r20-data-audit/format-code-task-002549/production-compatible-package/calibration-attempt-1/status.json",
+    "sha256": "50a9f9f248e183be15adae5ea9294d9536dd121a55367a9149d140e844ebc2a6"
+  },
+  "raw_receipts_verified": [
+    "baseline-direct",
+    "baseline-restored",
+    "candidate-restored"
+  ],
+  "resource_returncode_137_means": "terminated, not an OOM claim",
+  "rewards": [
+    0.0,
+    1.0
+  ],
+  "runtime_bindings": {
+    "current_runtime_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+    "immutable_package_manifest_sha256": "84430b7cbd2316011cdf33723a06d53bdb0787beebcc047a37a76f7582ea5030",
+    "no_shim": true,
+    "packaged_verifier_sha256": "12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371",
+    "private_compatibility_injection": false,
+    "source_manifest_sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+    "task_ref": {
+      "id": "mimo-code-format-code-task-002549",
+      "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979",
+      "version": "v1"
+    },
+    "workspace_helper_sha256": "faba54386d324f0fc25b76bed6f0d81aa8f03cf926ad9c542214a6ae71b4409d"
+  },
+  "schema": "mimo.r20-task-calibration-admission.v1",
+  "scope": "Task-specific original-Python packaged production CLI, raw receipts and independent cleanup",
+  "status": "passed",
+  "task_ref": {
+    "id": "mimo-code-format-code-task-002549",
+    "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979",
+    "version": "v1"
+  }
+}

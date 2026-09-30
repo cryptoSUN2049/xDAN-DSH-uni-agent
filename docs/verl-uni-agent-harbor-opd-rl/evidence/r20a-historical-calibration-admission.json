@@ -1,0 +1,79 @@
+{
+  "adapter_sha256": "b39d33c5eb1607f7488b719ca9e2e3469ae9d242cb19984524e5b90daa50db93",
+  "cleanup_confirmed": true,
+  "dsh_release": {
+    "image_digest": "sha256:15f588d627ce06e17d2904193c07100aa0b73c883269d70565ab59f36f6f2952",
+    "patch_sha256s": [],
+    "platform": "linux/amd64",
+    "profile": "sdk-minimal",
+    "runtime_sha256": "sha256:59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+    "sdk_sha256": "sha256:6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
+    "source_sha": "b2369692ea530007075ebcd18d39fdba0bbd3982"
+  },
+  "historical_evidence_reused": true,
+  "historical_native_resources": [
+    {
+      "returncode": 137,
+      "sandbox_id": "sb-djJW8UH7RmWwXqC0TsKbJq",
+      "session_id": "mimo-verifier-injection-baseline__env"
+    },
+    {
+      "returncode": 137,
+      "sandbox_id": "sb-muSvCvRDWhONJ1FBgr7bSU",
+      "session_id": "mimo-verifier-injection-baseline__verifier__trial"
+    },
+    {
+      "returncode": 137,
+      "sandbox_id": "sb-s1NxFyOyU8cws7aBArJhuT",
+      "session_id": "mimo-verifier-injection-candidate__env"
+    },
+    {
+      "returncode": 137,
+      "sandbox_id": "sb-v1ittQCR8Ribg2NbnYNky0",
+      "session_id": "mimo-verifier-injection-candidate__verifier__trial"
+    }
+  ],
+  "historical_source_resources": [
+    {
+      "image": "ghcr.io/cryptosun2049/mimo-dsh-code-001661@sha256:15f588d627ce06e17d2904193c07100aa0b73c883269d70565ab59f36f6f2952",
+      "role": "source",
+      "sandbox_id": "sb-ncESZJDkIMyghwAdNg8Z0p",
+      "terminated": true
+    },
+    {
+      "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:38280116603fd55e56437bcd7c089f3915a6df8a7ed335bb6935503ffb77f475",
+      "role": "baseline-original",
+      "sandbox_id": "sb-FwvbLsS0RilrS3nscu5WCz",
+      "terminated": true
+    },
+    {
+      "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:38280116603fd55e56437bcd7c089f3915a6df8a7ed335bb6935503ffb77f475",
+      "role": "restored-original",
+      "sandbox_id": "sb-pvcJQBiOZ5XRJigEbcgaSz",
+      "terminated": true
+    }
+  ],
+  "model_requests": 0,
+  "native_verifier_calibration": {
+    "path": "/workspace/mimo-dsh-rl-20260928/verifier-injection-native-20260928-v2/status.json",
+    "sha256": "112dfbbb86fe99fd27ac5b48b089eae50b00743636615ecd64116a1c111b7ff1"
+  },
+  "new_calibration_executed": false,
+  "original_calibration": {
+    "path": "/workspace/mimo-dsh-rl-20260928/verifier-calibration-r2/status.json",
+    "sha256": "4e4f3832b73dfb2abce4d490ea419cc6e1274ab4a1348964f70ef13bb7d9e10f"
+  },
+  "resource_returncode_137_means": "terminated, not an OOM claim",
+  "rewards": [
+    0.0,
+    1.0
+  ],
+  "schema": "mimo.r20-task-calibration-admission.v1",
+  "scope": "Identical frozen task, immutable images and verifier files; historical native calibration reused",
+  "status": "passed",
+  "task_ref": {
+    "id": "mimo-code-format-code-task-001661",
+    "sha256": "sha256:603c1f65f95a2e6b89716a618713f683b1fc9072386002eb014fb9b0ccb878e2",
+    "version": "v1"
+  }
+}

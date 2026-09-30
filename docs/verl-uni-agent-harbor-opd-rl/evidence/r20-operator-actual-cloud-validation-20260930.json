@@ -1,0 +1,181 @@
+{
+  "actual_preflight": {
+    "actual_prepared_dataset": {
+      "actual_training_consumption_verified": false,
+      "cuda_initialized": false,
+      "data_source": "harbor/mimo-code-format-code-task-001661/train",
+      "epoch_plan": {
+        "first_training_step": 5,
+        "initial_epoch": 4,
+        "save_freq": 1,
+        "steps_per_epoch": 1,
+        "total_epochs": 5,
+        "total_training_steps": 5,
+        "train_rows": 1,
+        "validation_rows": 1
+      },
+      "full_bitwise_data_replay_claimed": false,
+      "helper_sha256": "228457d8796a6f5f0ad7f2067f6d1073f7326ebffdb235e761a064ba0edad7ec",
+      "model_loaded": false,
+      "native_source_sha256": {
+        "/workspace/mimo-dsh-rl-20260928/run-src-r19/verl/verl/trainer/ppo/utils.py": "7756cf5005e7e72cbc78cb82872e6a6f4df3de0f0f98e22b82f795db62c3ad9a",
+        "/workspace/mimo-dsh-rl-20260928/run-src-r19/verl/verl/trainer/ppo/v1/trainer_base.py": "e2ca9b9af567fbd0c99224475fafec7c881bc3e3ff730fdc6e8825c844b34e58",
+        "/workspace/mimo-dsh-rl-20260928/run-src-r19/verl/verl/utils/dataset/rl_dataset.py": "8571ff8527a0a8c5aa0951f248052e3ea7a8386cc236c1324c81e764d5b1ff65",
+        "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torchdata/stateful_dataloader/stateful_dataloader.py": "426c3ef475481165f9a7d44238040f81de213a4e8ee58ad8fe734e52a2717830"
+      },
+      "parent_data_sha256": "58f16b6036f8994e9b19abde895b0a7969dbba54365747f210e577ebd0368d37",
+      "parent_unchanged": true,
+      "parquet": "/root/mimo-private/launch-r20a/train.parquet",
+      "parquet_sha256": "50906ecec618ce09aad4d5c15f975f6027574b26a6f0149e8976d7fd78463d41",
+      "prompt_sha256": "8a0bda0463eb3755eb6fee93c59e101ca66cc9a287d213d7685b843247030646",
+      "rows": 1,
+      "run_id": "mimo9b-001661-r20a",
+      "schema": "mimo.actual-prepared-dataset-resume.v1",
+      "status": "passed",
+      "task_id": "001661",
+      "uid": "mimo9b-001661-r20a-train-0"
+    },
+    "command": [
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+      "-m",
+      "examples.harbor_opd_rl.launch",
+      "--mode",
+      "rl",
+      "--launch",
+      "/root/mimo-private/launch-r20a/launch.json",
+      "--recipe-config",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/examples/mimo_dsh_rl/mimo-9b-dual-colocate-observed.yaml",
+      "--experiment-name",
+      "mimo9b-001661-r20a",
+      "--observability-wrapper",
+      "--observability-deadline-unix",
+      "1790759992",
+      "--token-journal-dir",
+      "/root/mimo-private/launch-r20a/token-journal",
+      "--total-training-steps",
+      "5",
+      "--save-freq",
+      "1",
+      "--resume-from-path",
+      "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4"
+    ],
+    "cpu_runner_sha256": "8919d46d2418d93be1bd863a2e118ff89f454e65e683cd6f39d40148d6f39fb1",
+    "cuda_initialized": false,
+    "finished_at": 1790748995.3658726,
+    "import_provenance": {
+      "deployment/services/harbor_run_controller.py": {
+        "path": "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/services/harbor_run_controller.py",
+        "sha256": "59dd703672919f4eadaaffb24b766b1dd4e82f922c8cee2c88884a5ba8c2bb50"
+      },
+      "examples/harbor/prepare_m2_training.py": {
+        "path": "/workspace/mimo-dsh-rl-20260928/run-src-r19/examples/harbor/prepare_m2_training.py",
+        "sha256": "777c92bf5949a65837ad11433a98bdc642a119064b26d8d0b747265e6e37e432"
+      },
+      "examples/harbor_opd_rl/launch.py": {
+        "path": "/workspace/mimo-dsh-rl-20260928/run-src-r19/examples/harbor_opd_rl/launch.py",
+        "sha256": "f172b0fb5fb2d8331955c53a5830b4c489af58afdff0c242a6d861f819cdae2e"
+      }
+    },
+    "inflight_tq_replay_available": false,
+    "journal": "/root/mimo-private/launch-r20a/token-journal",
+    "launch_root": "/root/mimo-private/launch-r20a",
+    "launch_sha256": "61fe245fd0db39617e5950ca51b5ed2b60e33d7035c6308a00078d124f87d290",
+    "operator_sha256": "8252c9f6dbaf1f8f4505b7c2fef84556ec8f5d28bdccc8946b393acea14c11d4",
+    "package_constraints_verified": 273,
+    "parent_manifest_sha256": "40f25db06843bc9400f7f4fbe82eea46e7dcae8fffa9c5d383cf1ded40bb1270",
+    "parent_step": 4,
+    "recipe_sha256": "244c1eb109b58c672f05516809307df9873d86c29b2198396a0445bfda35d94c",
+    "report": {
+      "backend_validation": {
+        "attention": [
+          {
+            "backend": "sdpa",
+            "validation": "torch_sdpa_operator"
+          }
+        ],
+        "checkpoint_backend": "naive",
+        "gpu_execution_validated": false
+      },
+      "save_freq": 1,
+      "steps_per_epoch": 1,
+      "total_epochs": 5,
+      "total_training_steps": 5,
+      "train_rows": 1,
+      "validation_rows": 1
+    },
+    "run_id": "mimo9b-001661-r20a",
+    "run_root": "/workspace/mimo-dsh-rl-20260928/runs/r20a",
+    "run_spec_sha256": "sha256:17152080fedb242e268d65a9b2cb1c65a3149cbe8af88517c21596fed7d2103c",
+    "schema": "mimo.r20-stage-preflight.v1",
+    "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+    "source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+    "stage": "r20a",
+    "stage_plan_sha256": "a24f29f3770b3336c4065effbdfe56104152738ecced1b7a319be688c96110c2",
+    "status": "passed",
+    "target_step": 5,
+    "task_id": "001661",
+    "training_started": false,
+    "wall_clock_seconds": 10985
+  },
+  "anchor_is_historical_calibration_reuse": true,
+  "artifacts": {
+    "r19-c4-resume-manifest-r20.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-c4-resume-manifest-r20.json",
+      "sha256": "40f25db06843bc9400f7f4fbe82eea46e7dcae8fffa9c5d383cf1ded40bb1270"
+    },
+    "r20-cohost-http-probe.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-cohost-http-probe.json",
+      "sha256": "d0ec7e28cb6c205f907d27cbbe5c875864b35bc4cb1544d400f46b81bf67865f"
+    },
+    "r20-operator-combined-coverage.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-operator-combined-coverage.json",
+      "sha256": "b5489172e04b005a4591d59649032606c745c3a78603f541b7126ed624ace0b6"
+    },
+    "r20-operator-tests-v6.xml": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-operator-tests-v6.xml",
+      "sha256": "b6b60e7808793647230d4bc1b25891003e389ef3ae95b3b677a8f80b040323ec"
+    },
+    "r20a-actual-preflight.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20a-actual-preflight.json",
+      "sha256": "f10fa56f717d1985724e82774ceb7c5a60cb5f773f9be47f9e7e13940d131492"
+    },
+    "r20a-actual-prepare.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20a-actual-prepare.json",
+      "sha256": "5a44b9453522b7fd8387642af734f5e084b1ad32a2a9e15011cf150b228aa7a3"
+    },
+    "r20a-historical-calibration-admission.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20a-historical-calibration-admission.json",
+      "sha256": "c1853775cf133abeab518d438d2c4259886d4eadd6b282416791d63111638b06"
+    }
+  },
+  "core_source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+  "core_source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+  "coverage": {
+    "covered_lines": 260,
+    "excluded_lines": 0,
+    "missing_lines": 17,
+    "num_statements": 277,
+    "percent_covered": 93.86281588447653,
+    "percent_covered_display": "94",
+    "percent_statements_covered": 93.86281588447653,
+    "percent_statements_covered_display": "94"
+  },
+  "coverage_scope": "Exact same operator bytes, 72 cloud CPU tests plus actual R20a prepare/preflight; zero excluded lines",
+  "cuda_initialized": false,
+  "new_task_training_verified": false,
+  "operator_sha256": "8252c9f6dbaf1f8f4505b7c2fef84556ec8f5d28bdccc8946b393acea14c11d4",
+  "schema": "mimo.r20-operator-cloud-validation.v1",
+  "status": "passed",
+  "test_source_sha256": "70846eede0a442cc76035ac05d634edd8b5031b0ae8b7e71887628d1429198d4",
+  "tests": {
+    "errors": "0",
+    "failures": "0",
+    "hostname": "d9fbe30bc515",
+    "name": "pytest",
+    "skipped": "0",
+    "tests": "72",
+    "time": "94.144",
+    "timestamp": "2026-09-30T05:55:05.080276+00:00"
+  },
+  "training_started": false
+}

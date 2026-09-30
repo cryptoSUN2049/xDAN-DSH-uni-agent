@@ -1,0 +1,26 @@
+{
+  "cpu_runner_sha256": "370fb362eb319f1227e3e46d6a4d8e8e8f3927910c66e00ce2ed6a91d77c35e4",
+  "import_provenance": {
+    "deployment/services/harbor_run_controller.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r20/deployment/services/harbor_run_controller.py",
+      "sha256": "59dd703672919f4eadaaffb24b766b1dd4e82f922c8cee2c88884a5ba8c2bb50"
+    },
+    "examples/harbor/prepare_m2_training.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r20/examples/harbor/prepare_m2_training.py",
+      "sha256": "777c92bf5949a65837ad11433a98bdc642a119064b26d8d0b747265e6e37e432"
+    },
+    "examples/harbor_opd_rl/launch.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r20/examples/harbor_opd_rl/launch.py",
+      "sha256": "f172b0fb5fb2d8331955c53a5830b4c489af58afdff0c242a6d861f819cdae2e"
+    }
+  },
+  "launch_sha256": "1cbcf9fbe757edd28f2e75b8d683fc5501829363a587694c17cff1bcdbeb0025",
+  "parent_step": 4,
+  "run_id": "mimo9b-002549-r20e",
+  "run_spec_sha256": "sha256:55cca9bd79d4192b0e15acd5c484946727f9f7af7b6ecda49ed251d8078c38ae",
+  "stage_plan_sha256": "c1bc62ac91ba035dbcd8226192e7b5b95eefb636c5510fae4352de627de7248f",
+  "status": "prepared",
+  "total_training_steps": 5,
+  "training_started": false,
+  "validation_is_independent_holdout": false
+}

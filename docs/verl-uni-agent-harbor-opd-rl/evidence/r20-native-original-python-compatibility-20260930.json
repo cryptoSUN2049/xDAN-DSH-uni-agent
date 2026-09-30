@@ -1,0 +1,160 @@
+{
+  "schema": "dsh.r20.native-python-compat.v1",
+  "started_unix": 1790749149.226493,
+  "gpu": null,
+  "max_actual_live_sandboxes": 1,
+  "results": [
+    {
+      "task_id": "format-code-task-002857",
+      "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:3b1927ce98db3a3ae9de1926554ded22e6b039bafe0b5a45b919bedbc17a7875",
+      "status": "passed",
+      "python_version": "3.11.13 (main, Aug 12 2025, 23:09:33) [GCC 14.2.0]",
+      "version_info": [
+        3,
+        11,
+        13
+      ],
+      "python_executable": "/usr/local/bin/python3",
+      "has_hashlib_file_digest": true,
+      "has_path_is_relative_to": true,
+      "source_sha256": {
+        "workspace": "sha256:faba54386d324f0fc25b76bed6f0d81aa8f03cf926ad9c542214a6ae71b4409d",
+        "verifier": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "results": {
+        "baseline-direct": {
+          "status": "graded",
+          "reward": 0.0,
+          "resolved": false,
+          "verifier_returncode": 1
+        },
+        "baseline-restored": {
+          "status": "graded",
+          "reward": 0.0,
+          "resolved": false,
+          "verifier_returncode": 1
+        },
+        "candidate-restored": {
+          "status": "graded",
+          "reward": 1.0,
+          "resolved": true,
+          "verifier_returncode": 0
+        }
+      },
+      "actual_exact_files_no_shim": true,
+      "test_scope": "synthetic stdlib CLI transport/reset/grading regression; not MiMo task capability",
+      "snapshot_inside_workspace_rejected": true
+    },
+    {
+      "task_id": "format-code-task-002549",
+      "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:4a04d1bbe8d8edf0f29d13325bdb7bdf838c6b1474374b8e59a59e584b3b906c",
+      "status": "passed",
+      "python_version": "3.10.18 (main, Aug 12 2025, 23:08:06) [GCC 14.2.0]",
+      "version_info": [
+        3,
+        10,
+        18
+      ],
+      "python_executable": "/usr/local/bin/python3",
+      "has_hashlib_file_digest": false,
+      "has_path_is_relative_to": true,
+      "source_sha256": {
+        "workspace": "sha256:faba54386d324f0fc25b76bed6f0d81aa8f03cf926ad9c542214a6ae71b4409d",
+        "verifier": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "results": {
+        "baseline-direct": {
+          "status": "graded",
+          "reward": 0.0,
+          "resolved": false,
+          "verifier_returncode": 1
+        },
+        "baseline-restored": {
+          "status": "graded",
+          "reward": 0.0,
+          "resolved": false,
+          "verifier_returncode": 1
+        },
+        "candidate-restored": {
+          "status": "graded",
+          "reward": 1.0,
+          "resolved": true,
+          "verifier_returncode": 0
+        }
+      },
+      "actual_exact_files_no_shim": true,
+      "test_scope": "synthetic stdlib CLI transport/reset/grading regression; not MiMo task capability",
+      "snapshot_inside_workspace_rejected": true
+    },
+    {
+      "task_id": "format-code-task-000466",
+      "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:c93e43db97e0b036710d2d71f23d287d4e4847ac56feb8c5eaafbcf8a279e03c",
+      "status": "passed",
+      "python_version": "3.9.23 (main, Aug 12 2025, 23:06:01) \n[GCC 14.2.0]",
+      "version_info": [
+        3,
+        9,
+        23
+      ],
+      "python_executable": "/usr/local/bin/python3",
+      "has_hashlib_file_digest": false,
+      "has_path_is_relative_to": true,
+      "source_sha256": {
+        "workspace": "sha256:faba54386d324f0fc25b76bed6f0d81aa8f03cf926ad9c542214a6ae71b4409d",
+        "verifier": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "results": {
+        "baseline-direct": {
+          "status": "graded",
+          "reward": 0.0,
+          "resolved": false,
+          "verifier_returncode": 1
+        },
+        "baseline-restored": {
+          "status": "graded",
+          "reward": 0.0,
+          "resolved": false,
+          "verifier_returncode": 1
+        },
+        "candidate-restored": {
+          "status": "graded",
+          "reward": 1.0,
+          "resolved": true,
+          "verifier_returncode": 0
+        }
+      },
+      "actual_exact_files_no_shim": true,
+      "test_scope": "synthetic stdlib CLI transport/reset/grading regression; not MiMo task capability",
+      "snapshot_inside_workspace_rejected": true
+    }
+  ],
+  "resources": [
+    {
+      "task_id": "format-code-task-002857",
+      "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:3b1927ce98db3a3ae9de1926554ded22e6b039bafe0b5a45b919bedbc17a7875",
+      "sandbox_id": "sb-O0BvzBPNgIxnBG517TqhlY",
+      "terminated": true,
+      "independent_poll_returncode": 137
+    },
+    {
+      "task_id": "format-code-task-002549",
+      "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:4a04d1bbe8d8edf0f29d13325bdb7bdf838c6b1474374b8e59a59e584b3b906c",
+      "sandbox_id": "sb-VL6UkCPaIAQKishwCqpYa9",
+      "terminated": true,
+      "independent_poll_returncode": 137
+    },
+    {
+      "task_id": "format-code-task-000466",
+      "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:c93e43db97e0b036710d2d71f23d287d4e4847ac56feb8c5eaafbcf8a279e03c",
+      "sandbox_id": "sb-ZD1AcxYzinwJRUFWDS1Vw9",
+      "terminated": true,
+      "independent_poll_returncode": 137
+    }
+  ],
+  "source_sha256": {
+    "workspace": "sha256:faba54386d324f0fc25b76bed6f0d81aa8f03cf926ad9c542214a6ae71b4409d",
+    "verifier": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+  },
+  "finished_unix": 1790749162.5101953,
+  "status": "passed"
+}

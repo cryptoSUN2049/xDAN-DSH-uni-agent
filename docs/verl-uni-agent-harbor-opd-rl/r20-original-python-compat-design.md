@@ -21,6 +21,8 @@ flowchart LR
 
 R19 runtime/manifest/任务包保持原字节，不原地修改。提交经过测试的兼容代码后，生成独立 R20 runtime/manifest，记录真实 commit。新 verifier 文件改变任务树 SHA，因此生成新的 task package、task_ref、spec/stage；旧未启动 spec 和失败校准保留。C4 parent 原来来自4dbd87a，准入显式允许该已验收父版本，不把旧 checkpoint 伪称新源码产物。
 
+冻结产物的实际组装合同：R19 的1003文件清单含已固定的 VERL 目录与生成文件，不是当前 Git 的完整树。R20 逐字节核对并复制该已验收 base，再应用兼容 commit `1ccc1640c0f34ba5f515d3613fac6a278bd38f4c` 的两个精确 Git blob。新 manifest 明确记录 base commit/SHA、兼容 commit/两个 blob SHA、实际组装模式及1003文件 SHA；不得称全部文件来自新 commit 的完整 checkout，也不重新拉取或升级 VERL。
+
 ## 文件与合同
 
 - `uni_agent/tasks/harbor_dsh/mimo_workspace.py`：用流式 SHA256 支持旧 Python，核路径 API 的实际最低版本。保持 digest、归档字节、安全校验与 max_files/max_bytes 含义。

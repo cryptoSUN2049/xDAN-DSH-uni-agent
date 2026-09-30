@@ -1,0 +1,100 @@
+{
+  "schema": "mimo.r20-current-byte-coverage.v1",
+  "training_started": false,
+  "coverage_json_path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-current-combined-coverage.json",
+  "coverage_json_sha256": "f1326c788791fce29ea6f94f19c62bdaa3eb2fd2ebc59cc26eee0e50ce8f0891",
+  "input_provenance": [
+    {
+      "coverage_path": "/workspace/mimo-dsh-rl-20260928/integration-check/.coverage-r20-runtime-tests-v3",
+      "sha256": "62a81368c7b19cc0dde73c92145d844b8d5db72f8b650a23ae7f5d1647e01b0e",
+      "selected_current_files": [
+        "mimo_r20_operator.py"
+      ]
+    },
+    {
+      "coverage_path": "/workspace/mimo-dsh-rl-20260928/integration-check/.coverage-r20-runtime-admission-tests-v4",
+      "sha256": "38287c3b4da009987938a82b6b045de1a70bbb3f30ae7d712226e75c82c4e478",
+      "selected_current_files": [
+        "mimo_r20_calibration_admission.py"
+      ]
+    },
+    {
+      "coverage_path": "/workspace/mimo-dsh-rl-20260928/integration-check/.coverage-r20e-current-admission-v3",
+      "sha256": "07dad1ae862c4f24e693e2fb8f214b30ce4a605742a08f31e87c1d1e52b95f24",
+      "selected_current_files": [
+        "mimo_r20_calibration_admission.py"
+      ]
+    },
+    {
+      "coverage_path": "/workspace/mimo-dsh-rl-20260928/integration-check/.coverage-r20-current-adapter-anchor",
+      "sha256": "9fa029fa78b0cf590a9bd49e8df65d8e2d23f282162cb8173adbaef2629a158d",
+      "selected_current_files": [
+        "mimo_r20_calibration_admission.py"
+      ]
+    },
+    {
+      "coverage_path": "/workspace/mimo-dsh-rl-20260928/integration-check/.coverage-r20e-actual-prepare",
+      "sha256": "4bd4b70e8013364abf8802c571d536c6d62ecad7cb178b157a99d54ee01f524c",
+      "selected_current_files": [
+        "mimo_r20_operator.py",
+        "mimo_r20_cpu_prepare.py"
+      ]
+    },
+    {
+      "coverage_path": "/workspace/mimo-dsh-rl-20260928/integration-check/.coverage-r20e-actual-preflight",
+      "sha256": "1a4fe0c41ece13073c44d7b8d5b402d5aac20a272cb97693f0fe4ab0ac03f668",
+      "selected_current_files": [
+        "mimo_r20_operator.py",
+        "mimo_r20_cpu_prepare.py"
+      ]
+    }
+  ],
+  "current_file_sha256": {
+    "mimo_r20_operator.py": "1dc5a32017f46173088a658d4536a4af356bd0ada170987d28897e16f78f41ac",
+    "mimo_r20_calibration_admission.py": "6e70997e9270fd8298a63a190996350702c61f00f8c2760fe79484f389771b19",
+    "mimo_r20_cpu_prepare.py": "370fb362eb319f1227e3e46d6a4d8e8e8f3927910c66e00ce2ed6a91d77c35e4"
+  },
+  "files": {
+    "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime/mimo_r20_calibration_admission.py": {
+      "covered_lines": 106,
+      "num_statements": 115,
+      "percent_covered": 92.17391304347827,
+      "percent_covered_display": "92",
+      "missing_lines": 9,
+      "excluded_lines": 0,
+      "percent_statements_covered": 92.17391304347827,
+      "percent_statements_covered_display": "92"
+    },
+    "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime/mimo_r20_cpu_prepare.py": {
+      "covered_lines": 36,
+      "num_statements": 41,
+      "percent_covered": 87.8048780487805,
+      "percent_covered_display": "88",
+      "missing_lines": 5,
+      "excluded_lines": 0,
+      "percent_statements_covered": 87.8048780487805,
+      "percent_statements_covered_display": "88"
+    },
+    "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime/mimo_r20_operator.py": {
+      "covered_lines": 316,
+      "num_statements": 333,
+      "percent_covered": 94.89489489489489,
+      "percent_covered_display": "95",
+      "missing_lines": 17,
+      "excluded_lines": 0,
+      "percent_statements_covered": 94.89489489489489,
+      "percent_statements_covered_display": "95"
+    }
+  },
+  "totals": {
+    "covered_lines": 458,
+    "num_statements": 489,
+    "percent_covered": 93.66053169734151,
+    "percent_covered_display": "94",
+    "missing_lines": 31,
+    "excluded_lines": 0,
+    "percent_statements_covered": 93.66053169734151,
+    "percent_statements_covered_display": "94"
+  },
+  "passed": true
+}

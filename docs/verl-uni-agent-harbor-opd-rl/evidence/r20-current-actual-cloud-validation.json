@@ -1,0 +1,191 @@
+{
+  "schema": "mimo.r20-current-actual-cloud-validation.v1",
+  "status": "passed",
+  "created_at": 1790752322.1999438,
+  "run_id": "mimo9b-002549-r20e",
+  "task_id": "002549",
+  "runtime": {
+    "source_root": "/workspace/mimo-dsh-rl-20260928/run-src-r20",
+    "source_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+    "source_manifest": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/source-r20-manifest.json",
+      "sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+      "bytes": 172828
+    },
+    "source_count": 1003,
+    "assembly_mode": "verified-r19-runtime-plus-two-git-blobs",
+    "base_source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+    "base_source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af"
+  },
+  "tested_bundle_manifest": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-current-tested-bundle-manifest.json",
+    "sha256": "dbfe88642bd9c4aa5b618ab865a0967302cf22918d8d8d3fdc8a75eebb83e685",
+    "bytes": 4263
+  },
+  "artifacts": {
+    "r20-runtime-current-tests-report.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-runtime-current-tests-report.json",
+      "sha256": "bd380104c9dfc37dab327c4ce6a58d078c3a2a07162fe823c851bbc1975ccfe1",
+      "bytes": 2080
+    },
+    "r20-current-coverage-validation.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-current-coverage-validation.json",
+      "sha256": "f50142f19b2a8881702dad64f28899f71b885893540cc664f5e4ee400a92805f",
+      "bytes": 3985
+    },
+    "r20-current-combined-coverage.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-current-combined-coverage.json",
+      "sha256": "f1326c788791fce29ea6f94f19c62bdaa3eb2fd2ebc59cc26eee0e50ce8f0891",
+      "bytes": 20507
+    },
+    "r20e-production-calibration-admission.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20e-production-calibration-admission.json",
+      "sha256": "28f77e026c5c6fee396733669f3354df3ecf50ff2712bc05383e3166835c9cfa",
+      "bytes": 7266
+    },
+    "r20e-actual-prepare.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20e-actual-prepare.json",
+      "sha256": "ab4de11152cc1c2aefab0db84d81ce74f615f95a6ee4668de58b50dffaca1ad5",
+      "bytes": 1293
+    },
+    "r20e-actual-preflight.json": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20e-actual-preflight.json",
+      "sha256": "49d081a1e2b8f7b2d3fab11593caaf538bde56b2ca845c5d3de2d6b1aff12b08",
+      "bytes": 5164
+    }
+  },
+  "parent_manifest": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-c4-resume-manifest-r20.json",
+    "sha256": "40f25db06843bc9400f7f4fbe82eea46e7dcae8fffa9c5d383cf1ded40bb1270",
+    "bytes": 3196
+  },
+  "raw_run_spec": {
+    "path": "/root/mimo-private/run-spec-r20e.json",
+    "sha256": "55cca9bd79d4192b0e15acd5c484946727f9f7af7b6ecda49ed251d8078c38ae",
+    "bytes": 1849
+  },
+  "stage_plan": {
+    "path": "/root/mimo-private/stage-plan-r20e.json",
+    "sha256": "c1bc62ac91ba035dbcd8226192e7b5b95eefb636c5510fae4352de627de7248f",
+    "bytes": 2028
+  },
+  "qualified_task_package_manifest": {
+    "path": "/root/mimo-private/r20-data-audit/format-code-task-002549/production-compatible-package/manifest.json",
+    "sha256": "84430b7cbd2316011cdf33723a06d53bdb0787beebcc047a37a76f7582ea5030",
+    "bytes": 2447
+  },
+  "actual_current_calibration_report": {
+    "path": "/root/mimo-private/r20-data-audit/format-code-task-002549/production-compatible-package/calibration-public.json",
+    "sha256": "9fd8ad8f52c93f19d6e23f8bb1a9189bad27cfdf538ad164281171abd6e34b92",
+    "bytes": 8229
+  },
+  "actual_current_calibration_raw_report": {
+    "path": "/root/mimo-private/r20-data-audit/format-code-task-002549/production-compatible-package/calibration-attempt-1/status.json",
+    "sha256": "50a9f9f248e183be15adae5ea9294d9536dd121a55367a9149d140e844ebc2a6",
+    "bytes": 18017
+  },
+  "actual_legacy_transport_proof": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-cohost-http-probe.json",
+    "sha256": "d0ec7e28cb6c205f907d27cbbe5c875864b35bc4cb1544d400f46b81bf67865f",
+    "bytes": 1956
+  },
+  "transport_proof_scope": "Prior R20a actual HTTP probe reused only for byte-identical transport modules in the explicit two-blob runtime assembly; this report does not claim a new R20e probe.",
+  "native_dataset_probe": {
+    "actual_training_consumption_verified": false,
+    "cuda_initialized": false,
+    "data_source": "harbor/mimo-code-format-code-task-002549/train",
+    "epoch_plan": {
+      "first_training_step": 5,
+      "initial_epoch": 4,
+      "save_freq": 1,
+      "steps_per_epoch": 1,
+      "total_epochs": 5,
+      "total_training_steps": 5,
+      "train_rows": 1,
+      "validation_rows": 1
+    },
+    "full_bitwise_data_replay_claimed": false,
+    "helper_sha256": "228457d8796a6f5f0ad7f2067f6d1073f7326ebffdb235e761a064ba0edad7ec",
+    "model_loaded": false,
+    "native_source_sha256": {
+      "/workspace/mimo-dsh-rl-20260928/run-src-r20/verl/verl/trainer/ppo/utils.py": "7756cf5005e7e72cbc78cb82872e6a6f4df3de0f0f98e22b82f795db62c3ad9a",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r20/verl/verl/trainer/ppo/v1/trainer_base.py": "e2ca9b9af567fbd0c99224475fafec7c881bc3e3ff730fdc6e8825c844b34e58",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r20/verl/verl/utils/dataset/rl_dataset.py": "8571ff8527a0a8c5aa0951f248052e3ea7a8386cc236c1324c81e764d5b1ff65",
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torchdata/stateful_dataloader/stateful_dataloader.py": "426c3ef475481165f9a7d44238040f81de213a4e8ee58ad8fe734e52a2717830"
+    },
+    "parent_data_sha256": "58f16b6036f8994e9b19abde895b0a7969dbba54365747f210e577ebd0368d37",
+    "parent_unchanged": true,
+    "parquet": "/root/mimo-private/launch-r20e/train.parquet",
+    "parquet_sha256": "8b4eb2ddc392b8b8349ecff2d8214840b857c1adcc4c824ac55bb051954af44c",
+    "prompt_sha256": "0d879cec927ac55afc4091e4ff90c1077990fff31f1aaeffbba8884a3de693eb",
+    "rows": 1,
+    "run_id": "mimo9b-002549-r20e",
+    "schema": "mimo.actual-prepared-dataset-resume.v1",
+    "status": "passed",
+    "task_id": "002549",
+    "uid": "mimo9b-002549-r20e-train-0"
+  },
+  "actual_import_provenance": {
+    "deployment/services/harbor_run_controller.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r20/deployment/services/harbor_run_controller.py",
+      "sha256": "59dd703672919f4eadaaffb24b766b1dd4e82f922c8cee2c88884a5ba8c2bb50"
+    },
+    "examples/harbor/prepare_m2_training.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r20/examples/harbor/prepare_m2_training.py",
+      "sha256": "777c92bf5949a65837ad11433a98bdc642a119064b26d8d0b747265e6e37e432"
+    },
+    "examples/harbor_opd_rl/launch.py": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r20/examples/harbor_opd_rl/launch.py",
+      "sha256": "f172b0fb5fb2d8331955c53a5830b4c489af58afdff0c242a6d861f819cdae2e"
+    }
+  },
+  "package_constraints_verified": 273,
+  "recipe_sha256": "244c1eb109b58c672f05516809307df9873d86c29b2198396a0445bfda35d94c",
+  "parent_step": 4,
+  "target_step": 5,
+  "inflight_tq_replay_available": false,
+  "training_started": false,
+  "gpu_initialized": false,
+  "model_loaded": false,
+  "actual_training_consumption_verified": false,
+  "native_optimizer_update_verified": false,
+  "wandb_training_api_verified": false,
+  "failed_candidates_not_admitted": [
+    "002857",
+    "000466"
+  ],
+  "coverage_summary": {
+    "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime/mimo_r20_calibration_admission.py": {
+      "covered_lines": 106,
+      "num_statements": 115,
+      "percent_covered": 92.17391304347827,
+      "percent_covered_display": "92",
+      "missing_lines": 9,
+      "excluded_lines": 0,
+      "percent_statements_covered": 92.17391304347827,
+      "percent_statements_covered_display": "92"
+    },
+    "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime/mimo_r20_cpu_prepare.py": {
+      "covered_lines": 36,
+      "num_statements": 41,
+      "percent_covered": 87.8048780487805,
+      "percent_covered_display": "88",
+      "missing_lines": 5,
+      "excluded_lines": 0,
+      "percent_statements_covered": 87.8048780487805,
+      "percent_statements_covered_display": "88"
+    },
+    "/workspace/mimo-dsh-rl-20260928/audit-code/r20-operator-runtime/mimo_r20_operator.py": {
+      "covered_lines": 316,
+      "num_statements": 333,
+      "percent_covered": 94.89489489489489,
+      "percent_covered_display": "95",
+      "missing_lines": 17,
+      "excluded_lines": 0,
+      "percent_statements_covered": 94.89489489489489,
+      "percent_statements_covered_display": "95"
+    }
+  },
+  "test_cases_current_exact_bytes": 117,
+  "next_gate": "Root final code review/commit/push, then separately authorized supervised GPU stage and actual native/W&B acceptance."
+}

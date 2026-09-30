@@ -1,0 +1,154 @@
+{
+  "absolute_deadline_unix": 1790751175.4741576,
+  "attempt_started_unix": 1790750575.4741576,
+  "baseline": "passed",
+  "boundaries": [
+    "New taskref binds new packaged verifier; previous taskref control results are not reused",
+    "Candidate patch remains the original public-only SHA, with no hidden-feedback revision",
+    "Historical failed SQLGlot/pyupgrade 0/0/0 controls are unchanged",
+    "Runtime helper is executed from frozen run-src-r20, and each verifier phase uploaded/read back the exact new packaged test files before the real CLI"
+  ],
+  "candidate_patch_sha256": "sha256:8e29f7566710760b6cfbf8e32e3a0c753e1eeb10f74212ff7693202df45ba6c1",
+  "cleanup_api": {
+    "all_terminated": true,
+    "resources": [
+      {
+        "observed_unix": 1790750720.2577136,
+        "returncode": 137,
+        "role": "source",
+        "sandbox_id": "sb-eJgfAfvJbojpsjqjZmpIsz",
+        "termination_confirmed": true
+      },
+      {
+        "observed_unix": 1790750720.498228,
+        "returncode": 137,
+        "role": "baseline-original",
+        "sandbox_id": "sb-aEbHD41HvtWg4oRWsxWhKt",
+        "termination_confirmed": true
+      },
+      {
+        "observed_unix": 1790750720.7295876,
+        "returncode": 137,
+        "role": "restored-original",
+        "sandbox_id": "sb-03vOL4XEXQeTjzotSwX15o",
+        "termination_confirmed": true
+      }
+    ]
+  },
+  "current_runtime_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+  "data_revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+  "dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-002549@sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf",
+  "dsh_release": {
+    "dsh_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+    "profile": "sdk-minimal",
+    "python_distribution_version": "0.1.3a2",
+    "runner_sha256": "a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732",
+    "runtime_binary_sha256": "d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+    "runtime_rg_sha256": "193906679498de4d939345b937fa24e0e69a03c244bd70c859f5e41232713f21",
+    "source_commit": "c51f6fc7dad24fd03fdc090741bc30d07488b574"
+  },
+  "finished_unix": 1790750596.6976604,
+  "gateway_receipt_scope": "Operator-controlled verification receipt identity; not a live model Gateway session",
+  "grade_execution": "exact packaged /tests/test.sh -> python3 /tests/verifier.py CLI, original image",
+  "historical_reports_preserved": [
+    "/root/mimo-private/r20-data-audit/r20-task-calibration-final-20260930.json",
+    "/root/mimo-private/r20-data-audit/format-code-task-002549/calibration-attempt-v2/status.json",
+    "/root/mimo-private/r20-data-audit/format-code-task-002549/calibration-attempt-v3/status.json"
+  ],
+  "image_binding_sha256": "sha256:49a9f82755ad6d910218550add50abd627344132da04712a3e74bfc6918843ed",
+  "immutable_package_manifest_private_path": "/root/mimo-private/r20-data-audit/format-code-task-002549/production-compatible-package/manifest.json",
+  "immutable_package_manifest_sha256": "sha256:84430b7cbd2316011cdf33723a06d53bdb0787beebcc047a37a76f7582ea5030",
+  "maximum_actual_live_sandboxes": 2,
+  "no_shim": true,
+  "observed_unix": 1790750719.7247353,
+  "original_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:4a04d1bbe8d8edf0f29d13325bdb7bdf838c6b1474374b8e59a59e584b3b906c",
+  "original_python_version": "3.10.18",
+  "package_test_files_sha256": {
+    "task/tests/test.patch": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+    "task/tests/test.sh": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338",
+    "task/tests/verification.json": "sha256:54bafc5262721727c042a9cec7edee60e951809efa4f0d492fc1c8b9e870f55d",
+    "task/tests/verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+  },
+  "packaged_file_readback": {
+    "baseline-direct": {
+      "executable": "/usr/local/bin/python3",
+      "files": {
+        "test.patch": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+        "test.sh": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338",
+        "verification.json": "sha256:54bafc5262721727c042a9cec7edee60e951809efa4f0d492fc1c8b9e870f55d",
+        "verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "version": "3.10.18"
+    },
+    "baseline-restored": {
+      "executable": "/usr/local/bin/python3",
+      "files": {
+        "test.patch": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+        "test.sh": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338",
+        "verification.json": "sha256:54bafc5262721727c042a9cec7edee60e951809efa4f0d492fc1c8b9e870f55d",
+        "verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "version": "3.10.18"
+    },
+    "candidate-restored": {
+      "executable": "/usr/local/bin/python3",
+      "files": {
+        "test.patch": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+        "test.sh": "sha256:03f567aea9faa22a385374f70a1670ebf1cda5755ee4b7b414cec6585aba8338",
+        "verification.json": "sha256:54bafc5262721727c042a9cec7edee60e951809efa4f0d492fc1c8b9e870f55d",
+        "verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371"
+      },
+      "version": "3.10.18"
+    }
+  },
+  "packaged_test_patch_sha256": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+  "packaged_verifier_sha256": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371",
+  "positive_control": "passed",
+  "private_compatibility_injection": false,
+  "raw_report_private_path": "/root/mimo-private/r20-data-audit/format-code-task-002549/production-compatible-package/calibration-attempt-1/status.json",
+  "raw_report_sha256": "sha256:50a9f9f248e183be15adae5ea9294d9536dd121a55367a9149d140e844ebc2a6",
+  "results": {
+    "baseline-direct": {
+      "resolved": false,
+      "reward": 0.0,
+      "status": "graded",
+      "test_duration": 0.52020336,
+      "verifier_returncode": 1
+    },
+    "baseline-restored": {
+      "resolved": false,
+      "reward": 0.0,
+      "status": "graded",
+      "test_duration": 0.6388441200000003,
+      "verifier_returncode": 1
+    },
+    "candidate-restored": {
+      "resolved": true,
+      "reward": 1.0,
+      "status": "graded",
+      "test_duration": 0.5227204160000003,
+      "verifier_returncode": 0
+    }
+  },
+  "schema": "mimo.r20-production-task-calibration.v1",
+  "scope": "Real fixed MiMo 002549 hidden-test/package CLI controls; no training, model/Gateway request, or capability claim",
+  "source_hashes": {
+    "/root/mimo-private/r20-data-audit/format-code-task-002549/calibrate-production-package.py": "sha256:000ba8f0436fb6aa4e657174cafeea90553291d5ab803fc1e37e3f20367768a3",
+    "/root/mimo-private/r20-data-audit/format-code-task-002549/source-row.json": "sha256:2e3627b3cde31b96c15d3d78230bac1f979bbdbf64123b2b65d0c1ed55670f27",
+    "/workspace/mimo-dsh-rl-20260928/run-src-r20/examples/mimo_dsh_rl/verifier.py": "sha256:12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371",
+    "/workspace/mimo-dsh-rl-20260928/run-src-r20/uni_agent/tasks/harbor_dsh/mimo_workspace.py": "sha256:faba54386d324f0fc25b76bed6f0d81aa8f03cf926ad9c542214a6ae71b4409d"
+  },
+  "source_manifest_private_path": "/workspace/mimo-dsh-rl-20260928/integration-check/source-r20-manifest.json",
+  "source_manifest_sha256": "sha256:99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "source_root": "/workspace/mimo-dsh-rl-20260928/run-src-r20",
+  "source_row_hash": "sha256:ec5abcb5567240983c489dc90be4fd50260efc0a1e9916e0d0dfd7177037ab0a",
+  "status": "calibration_passed",
+  "task_calibration_gate_passed": true,
+  "task_package_dir": "/root/mimo-private/r20-data-audit/format-code-task-002549/production-compatible-package/task",
+  "task_ref": {
+    "id": "mimo-code-format-code-task-002549",
+    "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979",
+    "version": "v1"
+  },
+  "workspace_helper_sha256": "sha256:faba54386d324f0fc25b76bed6f0d81aa8f03cf926ad9c542214a6ae71b4409d"
+}
