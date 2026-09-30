@@ -58,3 +58,7 @@
 - R20 镜像构建共享 `.tmp` 元数据发生竞争，线程提前失败但所属子进程仍存活，实际并发达到3而非设计2。线程池大小不是资源并发证明；必须用唯一临时文件/锁，并在异常的 finally 中等待或精确回收所属子进程，独立 API 核实际终止。保留原失败和实际峰值，不修饰成始终并发2。
 - R20 初次 transport probe 未显式指定冻结 PYTHONPATH，导入旧 installed RunSpec，配置校验在创建 controller 前失败。所有云端 operator 必须核实际 import 路径/源码SHA，并复用冻结运行环境；不能把模块路径漂移归因双卡模式。
 - MiMo Code 单任务工程闭环不等于五领域复刻。用户追问全类型覆盖时，逐域列实际 harness/verifier/训练消费/参数更新验收状态，新增 Code 镜像和 CPU 校准不能填补其他领域训练证据。
+
+- R20 原任务镜像的 Python3.9/3.10与训练宿主3.12不同：必须验证实际原镜像CLI，不能用私有兼容注入通过的校准替代生产源码验证。helper在sandbox执行时优先使用最小标准库API，兼容修复须保持SHA/归档/评分语义。
+- R20 frozen base1003清单含生成文件及组装VERL，不等于Git完整树；只将精确审核Git blob覆盖独立incoming，manifest明确base与overlay来源。不得用git archive缺失的生成文件或新commit标签冒充完整checkout；原freeze保持原字节。
+- R20 校准测量指纹与RunSpec artifact-release字段不同：先读实际JSON结构，严格建立来源/版本/镜像/工件SHA交叉映射，不凭fixture猜namespace、不在不存在字段上放宽准入。实际配置门与单元测试门分别记录。

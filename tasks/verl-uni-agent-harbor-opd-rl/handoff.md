@@ -4,7 +4,7 @@
 
 - R19单任务001661工程闭环已通过；本次新增002549，独立run `mimo9b-002549-r20e`，C4→目标C5。
 - 原始Python3.10生产CLI无shim校准0/0/1；117项当前云CPU测试、实际prepare/preflight通过，代码5037e97已push。
-- 同机CPUcontroller446363、supervisor446676独立后台；07:22UTC原生新dataset/Ray启动，参数更新/W&B未验收。
+- 同机CPUcontroller446363、supervisor446676独立后台；07:38UTC原生两rank恢复完成、2任务真实采样；W&B API running，step5参数更新未验收。
 - 当前范围是Code功能适配；Cyber/General/Visual/Music尚无真实训练验收，不是MiMo五域原配方完整复刻。
 
 ### 本轮交付物
@@ -32,7 +32,7 @@
 
 ### 下一里程碑任务清单
 
-- [ ] 原生两个rank C4 model/optimizer/RNG/scheduler恢复及fit。
+- [x] 原生两个rank C4 model/optimizer/RNG/scheduler恢复及fit；W&B API running、配置身份核对。
 - [ ] 新002549四条实际消费/policy4/独立reward/有符号advantage/非零gradient/C5/双rank参数和optimizer4→5。
 - [ ] Token合同、W&B finished实际step5对账、当前scope Prom/Tempo。
 - [ ] 所属资源精确回收/SSH授权项清理/端口/GPU终态；Pod和共享观测保留。
@@ -43,7 +43,7 @@
 - worktree/branch `verl-uni-agent-harbor-opd-rl`；5037e976ae3f58f78f807ebfcef8b8ecbdc0bfb3已push，精确干净commit Ruff check与format685文件均通过。
 - Pod db7kewdkd71js6/157.157.221.177:11403保留计费；专用local38880–83/reverse38780–81。
 - GPU监督器PID446676/startticks342773096，controller446363/startticks342688298；只依据当前/proc和结果文件操作，历史PID不直接当授权。
-- 原生启动确认不等于更新通过；07:23 W&B首次只读查询CommError/未确认新run，不回填。
+- 原生启动确认不等于更新通过；07:23 W&B首次查询尚无新run；07:37第二次API已running，两卡/C4/target5匹配，history仍0，不回填。
 
 ### 冷启动 checklist
 

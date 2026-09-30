@@ -1,0 +1,65 @@
+{
+  "schema": "mimo.r20e-native-restore-observation.v1",
+  "run_id": "mimo9b-002549-r20e",
+  "observed_unix": 1790753829.1077187,
+  "status": "native-two-rank-restore-markers-observed",
+  "run_spec_sha256": "sha256:55cca9bd79d4192b0e15acd5c484946727f9f7af7b6ecda49ed251d8078c38ae",
+  "source_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+  "source_manifest_sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "native_log": {
+    "private_path": "/root/mimo-private/launch-r20e/train.log",
+    "observed_bytes": 188286,
+    "mutable": true,
+    "complete_log_audit": false
+  },
+  "parent_checkpoint": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4",
+  "runner": {
+    "pid": 451537,
+    "resume_marker_utc": "2026-09-30 07:35:01.481",
+    "resumed_global_step": 4
+  },
+  "ranks": [
+    {
+      "rank": 0,
+      "pid": 453157,
+      "model_loaded_utc": "2026-09-30 07:35:45.557",
+      "optimizer_loaded_utc": "2026-09-30 07:35:46.079",
+      "rng_loaded_utc": "2026-09-30 07:35:46.110",
+      "lr_scheduler_loaded_utc": "2026-09-30 07:35:46.110"
+    },
+    {
+      "rank": 1,
+      "pid": 453158,
+      "model_loaded_utc": "2026-09-30 07:35:45.558",
+      "optimizer_loaded_utc": "2026-09-30 07:35:46.132",
+      "rng_loaded_utc": "2026-09-30 07:35:46.163",
+      "lr_scheduler_loaded_utc": "2026-09-30 07:35:46.163"
+    }
+  ],
+  "progress": {
+    "completed_step": 4,
+    "target_step": 5,
+    "display": "4/5",
+    "current_run_job_db_exists": false
+  },
+  "claims": {
+    "native_restore_markers_observed": true,
+    "checkpoint_hashes_verified_by_this_report": false,
+    "effective_update_verified": false,
+    "step5_completed": false,
+    "capability_improvement_verified": false
+  },
+  "operation_boundaries": {
+    "read_only": true,
+    "resources_operated": false,
+    "gpu_operated": false,
+    "wandb_api_called": false,
+    "controller_or_key_cleanup": false,
+    "private_json_glob": false
+  },
+  "limitations": [
+    "Running native log is mutable; this is a selected-marker observation, not terminal log byte sealing.",
+    "Parent checkpoint identity/hashes remain bound by root/operator preflight evidence; this report does not rehash checkpoint tensors.",
+    "Training Progress 4/5 is restored progress and does not prove a new update."
+  ]
+}

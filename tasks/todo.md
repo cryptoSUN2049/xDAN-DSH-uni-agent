@@ -6,10 +6,11 @@
 - [x] 兼容修复62项云CPU回归；原3.9/3.10/3.11合成CLI验证；冻结独立1003文件R20组装产物。
 - [x] 当前operator99项+当前adapter18项云CPU回归，三个helper覆盖均≥80%；实际新任务prepare/preflight通过。
 - [x] 精确commit5037e97/Ruff全仓685文件双门/push；同机controller认证健康，后台supervisor启动原生双卡入口。
-- [ ] 两rank C4原生恢复、新002549真实消费及非恒定奖励、有效参数更新和C5。
+- [x] 两rank原生加载C4 model/optimizer/RNG/scheduler；W&B API running且配置来源匹配，当前两任务真实采样。
+- [ ] 新002549四条真实消费及非恒定奖励、有效参数更新和C5。
 - [ ] Token/W&B原生API/Insight联合验收、所属资源回收、成本边界和最终交接。
 
-Review：07:22UTC日志确认新数据/Ray启动；尚无本轮更新验收。多Code任务不是五领域复刻；其他四域未验收，Pod保留计费。
+Review：07:38UTC原生两rank恢复、W&B API running及2running任务；尚无本轮更新验收。多Code任务不是五领域复刻；其他四域未验收，Pod保留计费。
 
 ## 2026-09-30 R19 最终验收（当前目标）
 
