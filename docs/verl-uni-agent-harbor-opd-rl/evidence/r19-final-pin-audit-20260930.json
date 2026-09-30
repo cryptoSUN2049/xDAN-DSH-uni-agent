@@ -1,0 +1,369 @@
+{
+  "schema": "mimo.r19-final-pin-audit.v1",
+  "run_id": "mimo9b-001661-r19",
+  "at": 1790743895.8838875,
+  "status": "passed_declared_pins_and_small_file_bytechecks",
+  "execution": {
+    "host": "db7kewdkd71js6 CPU only over11403",
+    "new_dependencies": false,
+    "model_loaded": false,
+    "new_gpu_task": false,
+    "runtime_source_changed": false
+  },
+  "dsh": {
+    "declared_release": {
+      "image_digest": "sha256:15f588d627ce06e17d2904193c07100aa0b73c883269d70565ab59f36f6f2952",
+      "patch_sha256s": [],
+      "platform": "linux/amd64",
+      "profile": "sdk-minimal",
+      "runtime_sha256": "sha256:59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+      "sdk_sha256": "sha256:6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
+      "source_sha": "b2369692ea530007075ebcd18d39fdba0bbd3982"
+    },
+    "consumed_requests": [
+      {
+        "job_id": "job-fe66853d327b43fab5cdd74ef1a0df88",
+        "dsh_release_matches_spec": true,
+        "task_ref_matches_spec": true,
+        "reference": {
+          "private_path": "/root/mimo-private/launch-r19/artifacts/job-fe66853d327b43fab5cdd74ef1a0df88/request.json",
+          "sha256": "f7b540daace6212751cbff8c839faec22af6799a064b178bd59055ca133a9dcb",
+          "bytes": 1524
+        }
+      },
+      {
+        "job_id": "job-3c688eca150343918a6f7d8f1670200a",
+        "dsh_release_matches_spec": true,
+        "task_ref_matches_spec": true,
+        "reference": {
+          "private_path": "/root/mimo-private/launch-r19/artifacts/job-3c688eca150343918a6f7d8f1670200a/request.json",
+          "sha256": "64fd8620c9e5502fb4cde77161bb144ab9d78c83d4a58e65c04a92327f9cd1f3",
+          "bytes": 1524
+        }
+      },
+      {
+        "job_id": "job-61974894728442739a8d637c2aeff20f",
+        "dsh_release_matches_spec": true,
+        "task_ref_matches_spec": true,
+        "reference": {
+          "private_path": "/root/mimo-private/launch-r19/artifacts/job-61974894728442739a8d637c2aeff20f/request.json",
+          "sha256": "f57d63e4a345dbd6598487f1cf78089bbca41bdbdc3603aaac90ca6fc60253a1",
+          "bytes": 1524
+        }
+      },
+      {
+        "job_id": "job-b693515872e44371aa5efdcba54f39b9",
+        "dsh_release_matches_spec": true,
+        "task_ref_matches_spec": true,
+        "reference": {
+          "private_path": "/root/mimo-private/launch-r19/artifacts/job-b693515872e44371aa5efdcba54f39b9/request.json",
+          "sha256": "847523d4ba7fa6c46b00c7fb71005f770b80e73be62183562764f99a6648c058",
+          "bytes": 1524
+        }
+      }
+    ],
+    "declared_wheel_shas_match_existing_release_lock": true,
+    "existing_release_lock": {
+      "repository_path": "deployment/harbor/mimo/dsh-release-lock.json",
+      "local_file_sha256": "4b2b6d1244b4fe34d001e52ae677ebd8ab3ebbfa8bdc0132fd63d7bcfb8b02c9",
+      "note": "Existing repository lock; not part of selected frozen run-src-r19 files. Values independently compared with current spec and consumed requests.",
+      "cloud_reference": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/builder-src/deployment/harbor/mimo/dsh-release-lock.json",
+        "sha256": "4b2b6d1244b4fe34d001e52ae677ebd8ab3ebbfa8bdc0132fd63d7bcfb8b02c9",
+        "bytes": 1875
+      },
+      "cloud_bytecheck_matches_local_lock": true
+    },
+    "prior_verified_image": {
+      "reference": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/image-verify-20260928-r1/image-binding.json",
+        "sha256": "7f17b474e368cd09ef5287aefe99f72af4bda484a6ee85728c2d7fb9551367df",
+        "bytes": 1242
+      },
+      "verification_scope": "original layers/config execution semantics preserved; fixed DSH identity and offline SDK boot",
+      "source_sha": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+      "derived_image": "ghcr.io/cryptosun2049/mimo-dsh-code-001661@sha256:15f588d627ce06e17d2904193c07100aa0b73c883269d70565ab59f36f6f2952",
+      "distribution_version": "0.1.3a2"
+    },
+    "prior_runtime_smoke": {
+      "reference": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/image-verify-20260928-r1/keyless-readback.json",
+        "sha256": "a6945fa801098d5f793c61521d3af2ac68c99996caccee6ed5c88118a52d71d8",
+        "bytes": 673
+      },
+      "scope": "initialize-shutdown-only",
+      "status": "passed",
+      "versions": {
+        "deepseek-harness-runtime-bin": "0.1.3a2",
+        "deepseek-harness-sdk": "0.1.3a2",
+        "pydantic": "2.12.5"
+      },
+      "runtime_binary_sha256": "d1a467a9c14a38ad5f01591d2cdb125852cb1a1d3b0ecb678dfde383404e80cb",
+      "runtime_rg_sha256": "193906679498de4d939345b937fa24e0e69a03c244bd70c859f5e41232713f21",
+      "runner_sha256": "a122de903b1775231f6ff6f70762b78500819d6c9ce8a3323b729dac64468732"
+    },
+    "r19_in_sandbox_binary_rehash": false,
+    "wheel_artifact_rehash_this_audit": false
+  },
+  "task": {
+    "task_ref": {
+      "id": "mimo-code-format-code-task-001661",
+      "sha256": "sha256:603c1f65f95a2e6b89716a618713f683b1fc9072386002eb014fb9b0ccb878e2",
+      "version": "v1"
+    },
+    "recomputed_tree_digest": "sha256:603c1f65f95a2e6b89716a618713f683b1fc9072386002eb014fb9b0ccb878e2",
+    "manifest_files_verified": 8,
+    "binding_file_sha256": "sha256:72da5c8e56f0336b98f908d411a11ba1bfaf54e4fb8dcf189d0338c3a991ee6d",
+    "binding": {
+      "artifact_contract": "mimo-code-workspace-v1",
+      "base_ref_capture": "before_agent",
+      "cwd": "/workspace/repo",
+      "history_policy": "strip",
+      "image_binding": {
+        "dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-001661@sha256:15f588d627ce06e17d2904193c07100aa0b73c883269d70565ab59f36f6f2952",
+        "original_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:38280116603fd55e56437bcd7c089f3915a6df8a7ed335bb6935503ffb77f475",
+        "verifier_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:38280116603fd55e56437bcd7c089f3915a6df8a7ed335bb6935503ffb77f475"
+      },
+      "runner_python": "/opt/dsh/bin/python",
+      "schema": "dsh.mimo-code-binding.v1",
+      "task_id": "format-code-task-001661"
+    },
+    "separate_verifier_images_and_task_toml_match": true,
+    "instruction_equals_selected_source_problem": true,
+    "test_patch_equals_selected_source_patch": true,
+    "verifier_revision": "467f0a19016f0ac4d63b8d17a1f0da9ba07f232c",
+    "test_patch_sha256": "sha256:360a18133cef1e7ddfeb405352639c0037c7087de532189cb75464d6088e8625",
+    "references": {
+      "task_manifest": {
+        "private_path": "/root/mimo-private/task-001661-r19/manifest.json",
+        "sha256": "54264e2e32620fc04bb54c158efbdfb485fc58bfe34c31cdfb3a86b3bbfb0a02",
+        "bytes": 2401
+      },
+      "mimo_binding": {
+        "private_path": "/root/mimo-private/task-001661-r19/task/mimo-binding.json",
+        "sha256": "72da5c8e56f0336b98f908d411a11ba1bfaf54e4fb8dcf189d0338c3a991ee6d",
+        "bytes": 645
+      },
+      "task_toml": {
+        "private_path": "/root/mimo-private/task-001661-r19/task/task.toml",
+        "sha256": "98f393f417c36e80c7f16fa3be24fdaa887b8e70fdecebfc648ceaca90a7fabc",
+        "bytes": 722
+      }
+    }
+  },
+  "data": {
+    "repository": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+    "revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+    "existing_source_parquet_lock": "sha256:e15733cf2451cfbc5492a4120f7f8cfddbad818aa9f0b324c79888dd1fece161",
+    "existing_image_mapping_lock": "sha256:704ad2716d746430a805b9b1ac7c6725aea2117fd8e4823ebe9d339d0313ad58",
+    "existing_full_source_rows": 2698,
+    "full_source_parquet_rehash_this_audit": false,
+    "source_row_hash": "sha256:5ce55aa05e87a954d5f4f7dd3fe1eeb8490bf61eb7cc7ec360776bd0f0c195ec",
+    "selected_row_hash_recomputed": true,
+    "cache_metadata": {
+      "code.parquet": {
+        "revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+        "etag": "e15733cf2451cfbc5492a4120f7f8cfddbad818aa9f0b324c79888dd1fece161",
+        "metadata_reference": {
+          "private_path": "/workspace/mimo-dsh-rl-20260928/source/.cache/huggingface/download/code.parquet.metadata",
+          "sha256": "7d5362b28d7afc12db7a4385f6ea5d758e66368e8185a5bd0c9a3c52d76c9388",
+          "bytes": 122
+        }
+      },
+      "image-mapping.jsonl": {
+        "revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+        "etag": "a0f45b884f6266a4e3d064a41d2345c3982ea1ce",
+        "metadata_reference": {
+          "private_path": "/workspace/mimo-dsh-rl-20260928/source/.cache/huggingface/download/image-mapping.jsonl.metadata",
+          "sha256": "7302104e6e17af0001d22445d5411a9260c5059683f5e5faa5e41a08ec2ed695",
+          "bytes": 101
+        }
+      }
+    },
+    "r19_engineering_parquets": [
+      {
+        "split": "train",
+        "rows": 1,
+        "prompt_matches_frozen_task_instruction": true,
+        "data_source": "harbor/mimo-code-format-code-task-001661/train",
+        "evaluation_scope": "same-task-engineering-evaluation-not-generalization",
+        "reference": {
+          "private_path": "/root/mimo-private/launch-r19/train.parquet",
+          "sha256": "6a341061fa64a0b06d4034edc858a25b5be47e4c56dbce57d0dc81294d561c5c",
+          "bytes": 12341
+        }
+      },
+      {
+        "split": "heldout",
+        "rows": 1,
+        "prompt_matches_frozen_task_instruction": true,
+        "data_source": "harbor/mimo-code-format-code-task-001661/heldout",
+        "evaluation_scope": "same-task-engineering-evaluation-not-generalization",
+        "reference": {
+          "private_path": "/root/mimo-private/launch-r19/heldout.parquet",
+          "sha256": "ef852fee6c543e3e870ee8230c37c0b37a7c2589dc53fc40e570a006dab80749",
+          "bytes": 12381
+        }
+      }
+    ],
+    "references": {
+      "selected_row": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/audit-code/selected/format-code-task-001661.row.json",
+        "sha256": "9fbd981fd6b50ad0c5ff3bd02ef75bd6d02e770aabf0f8c57ccd17d24e11368f",
+        "bytes": 13884
+      },
+      "existing_full_contract_audit": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/audit-code/full-code-audit.json",
+        "sha256": "3651b5dbfbae96050312293362746cc6de2c14ded87299d3c96418f4f297f29b",
+        "bytes": 5931
+      }
+    }
+  },
+  "model": {
+    "repository": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+    "revision": "2367e865d009c13ac81713a2878291d33ab28177",
+    "native_hydra_model_path": "/workspace/models/MiMo-V2.6-Distill-Qwen-9B",
+    "architecture": [
+      "Qwen3_5ForConditionalGeneration"
+    ],
+    "model_type": "qwen3_5",
+    "files": [
+      {
+        "file": "model-00001-of-00004.safetensors",
+        "bytes": 5276436216,
+        "cached_revision": "2367e865d009c13ac81713a2878291d33ab28177",
+        "cached_etag": "aab052180118aee34abc3029b54eaa49096aac606b97d703866b420dceb703c3",
+        "metadata_reference": {
+          "private_path": "/workspace/models/MiMo-V2.6-Distill-Qwen-9B/.cache/huggingface/download/model-00001-of-00004.safetensors.metadata",
+          "sha256": "64359c970c75431390135f5d3397ef81afd9fe210f2724795a8c009571377ea1",
+          "bytes": 125
+        },
+        "file_bytes_rehashed": false
+      },
+      {
+        "file": "model-00002-of-00004.safetensors",
+        "bytes": 5033171280,
+        "cached_revision": "2367e865d009c13ac81713a2878291d33ab28177",
+        "cached_etag": "7a0486565f06d25ac4628e9dba470dc3f604353471d240d5a0bf7128f64df396",
+        "metadata_reference": {
+          "private_path": "/workspace/models/MiMo-V2.6-Distill-Qwen-9B/.cache/huggingface/download/model-00002-of-00004.safetensors.metadata",
+          "sha256": "a809932ee6091790aba22d77f002dfafa91c6cba300e9f8650dd38307562fc28",
+          "bytes": 125
+        },
+        "file_bytes_rehashed": false
+      },
+      {
+        "file": "model-00003-of-00004.safetensors",
+        "bytes": 5234499504,
+        "cached_revision": "2367e865d009c13ac81713a2878291d33ab28177",
+        "cached_etag": "6c73207563d1879bfd6c143a028cc70be68edff56280458c71a43df4240300f4",
+        "metadata_reference": {
+          "private_path": "/workspace/models/MiMo-V2.6-Distill-Qwen-9B/.cache/huggingface/download/model-00003-of-00004.safetensors.metadata",
+          "sha256": "5ae46d47c4a4bbc65e15ae2b9c3dfdd8d5f80b1f8e34c4a5a13fa345f3162015",
+          "bytes": 124
+        },
+        "file_bytes_rehashed": false
+      },
+      {
+        "file": "model-00004-of-00004.safetensors",
+        "bytes": 3275613848,
+        "cached_revision": "2367e865d009c13ac81713a2878291d33ab28177",
+        "cached_etag": "1379a7cf8c0b8555a39ab65a47e830e0eb45e776b46045734da3afd73c09eea2",
+        "metadata_reference": {
+          "private_path": "/workspace/models/MiMo-V2.6-Distill-Qwen-9B/.cache/huggingface/download/model-00004-of-00004.safetensors.metadata",
+          "sha256": "e4d3efbbd1d6cb086a393e60236da3b71126fd361e20779f11686bcda9d641ff",
+          "bytes": 125
+        },
+        "file_bytes_rehashed": false
+      },
+      {
+        "file": "config.json",
+        "bytes": 2784,
+        "cached_revision": "2367e865d009c13ac81713a2878291d33ab28177",
+        "cached_etag": "007c2eb8c73b9295f22491b1e4ab29d8b10f6e05",
+        "metadata_reference": {
+          "private_path": "/workspace/models/MiMo-V2.6-Distill-Qwen-9B/.cache/huggingface/download/config.json.metadata",
+          "sha256": "d56cad8578b14672529914ce7917e07a2b9523757e764f8548928580bd986877",
+          "bytes": 100
+        },
+        "file_bytes_rehashed": true,
+        "actual_sha256": "407c46388b8fa2ae9bf69fe27d40af236d373e86a6b48f5284c86df5cd183633",
+        "actual_git_blob_etag": "007c2eb8c73b9295f22491b1e4ab29d8b10f6e05",
+        "etag_matches_cache_metadata": true
+      },
+      {
+        "file": "chat_template.jinja",
+        "bytes": 3916,
+        "cached_revision": "2367e865d009c13ac81713a2878291d33ab28177",
+        "cached_etag": "c6a37693fc7d9b48122182931a59f436e21b577a",
+        "metadata_reference": {
+          "private_path": "/workspace/models/MiMo-V2.6-Distill-Qwen-9B/.cache/huggingface/download/chat_template.jinja.metadata",
+          "sha256": "793f8fc7c723d856b3972960a83c6dea930e6f0b7360874ba94ff8befe1b4e1c",
+          "bytes": 101
+        },
+        "file_bytes_rehashed": true,
+        "actual_sha256": "59a64ebb4df6d1489d09a91267cf3ceb106162d4a893c4f84833cfb8c897ff63",
+        "actual_git_blob_etag": "c6a37693fc7d9b48122182931a59f436e21b577a",
+        "etag_matches_cache_metadata": true
+      },
+      {
+        "file": "tokenizer_config.json",
+        "bytes": 1165,
+        "cached_revision": "2367e865d009c13ac81713a2878291d33ab28177",
+        "cached_etag": "1d134cd298be1e3be25db393d93a1cefe80e3214",
+        "metadata_reference": {
+          "private_path": "/workspace/models/MiMo-V2.6-Distill-Qwen-9B/.cache/huggingface/download/tokenizer_config.json.metadata",
+          "sha256": "4ad54f4517ddc4975a1e6745fa40bc6236dbd7cbe229e83e96ed9593ce226f21",
+          "bytes": 101
+        },
+        "file_bytes_rehashed": true,
+        "actual_sha256": "792fa3f0cb88b111e54ef3134c873531008c4df471d108da17903426e308aa7b",
+        "actual_git_blob_etag": "1d134cd298be1e3be25db393d93a1cefe80e3214",
+        "etag_matches_cache_metadata": true
+      },
+      {
+        "file": "model.safetensors.index.json",
+        "bytes": 69217,
+        "cached_revision": "2367e865d009c13ac81713a2878291d33ab28177",
+        "cached_etag": "be2a44ec6dc7004e51e648b5e2cf8c32cee42c79",
+        "metadata_reference": {
+          "private_path": "/workspace/models/MiMo-V2.6-Distill-Qwen-9B/.cache/huggingface/download/model.safetensors.index.json.metadata",
+          "sha256": "64e96639837b7cd07bc0e45bfe9aec0290fbb3ea2387b2d4cf770ea3ef9767be",
+          "bytes": 101
+        },
+        "file_bytes_rehashed": true,
+        "actual_sha256": "4a24d25e902169c0393a2ca58b697c03b27efc40dcddbc2b59c42e5e1e2b1d90",
+        "actual_git_blob_etag": "be2a44ec6dc7004e51e648b5e2cf8c32cee42c79",
+        "etag_matches_cache_metadata": true
+      }
+    ],
+    "all_selected_cache_revisions_match_pin": true,
+    "small_config_template_and_index_actual_bytes_match_cached_git_blob_etag": true,
+    "weight_bytes_rehashed_this_audit": false,
+    "weight_tensor_values_loaded_this_audit": false,
+    "hydra_reference": {
+      "private_path": "/root/mimo-private/launch-r19/hydra/.hydra/config.yaml",
+      "sha256": "2b89d170f045952766e63796e6321701d5c1d4f9b2c5356197f5f39899040ea6",
+      "bytes": 41335
+    }
+  },
+  "references": {
+    "run_spec": {
+      "private_path": "/root/mimo-private/run-spec-r19.json",
+      "sha256": "5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+      "bytes": 1790
+    },
+    "actual_launch": {
+      "private_path": "/root/mimo-private/launch-r19/launch.json",
+      "sha256": "55e116aaae6fd95527f43c39a506cb87aa1ce2045222aa5098f4fcb50efd9c93",
+      "bytes": 5145
+    }
+  },
+  "limits": [
+    "Consumed request/spec equality proves declared R19 pins. Terminated sandbox executables/wheels were not rehashed by this final audit. Existing immutable-image initialize/shutdown smoke is prior runtime evidence.",
+    "Four model weight revisions/SHA etags and full source parquet/image-map SHAs are existing cache/lock records; large model/source bytes were not rehashed. Small task/config/template/index bytes were independently verified.",
+    "Train and heldout each use the same frozen task. Heldout is an engineering transport sample, not independent generalization evidence.",
+    "Only four consumed requests were audited; full2698 source task execution and model capability improvement are not claimed."
+  ],
+  "operation_boundary": "Explicit allowlist safe paths/fields only; no private JSON content enumeration or credential output; no new dependency/model/GPU work, service/Pod mutation, code change, stage or commit."
+}

@@ -1,0 +1,384 @@
+{
+  "schema": "mimo.r19-resource-cleanup-final.v1",
+  "run_id": "mimo9b-001661-r19",
+  "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+  "source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+  "run_spec_sha256": "5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+  "at": 1790737475.8907218,
+  "status": "passed",
+  "native_training_exit": {
+    "exit_code": 0,
+    "reason": "training-exited",
+    "elapsed_seconds": 1801.145,
+    "pid": 417398,
+    "transient_health_failures": 0,
+    "recovered_health_windows": 0
+  },
+  "operator": {
+    "run_id": "mimo9b-001661-r19",
+    "started_at": 1790734902.2959173,
+    "wall_clock_seconds": 17201,
+    "status": "exited",
+    "supervisor_pid": 417367,
+    "exit_code": 0,
+    "finished_at": 1790736721.7740762
+  },
+  "controller_signal": {
+    "at": 1790737148.5414872,
+    "pid": 417223,
+    "signal_sent": true,
+    "verified_cwd": "/workspace/mimo-dsh-rl-20260928/run-src-r19",
+    "verified_spec": "/root/mimo-private/run-spec-r19.json",
+    "starttime": "340976732",
+    "signal": "SIGINT"
+  },
+  "controller_stop": {
+    "cleanup_errors": [],
+    "docker_cleanup_proven": false
+  },
+  "owned_processes": {
+    "417300": {
+      "alive": false
+    },
+    "417301": {
+      "alive": false
+    },
+    "417367": {
+      "alive": false
+    },
+    "417223": {
+      "alive": false
+    },
+    "417335": {
+      "alive": false
+    },
+    "417336": {
+      "alive": false
+    },
+    "421970": {
+      "alive": false
+    }
+  },
+  "naturally_exited_pids": [
+    417300,
+    417301,
+    417367,
+    417335,
+    417336,
+    421970
+  ],
+  "controller_exit_after_precise_sigint": true,
+  "owned_process_command_matches": [],
+  "live_ray_executable_pids": [],
+  "modal": {
+    "independent_api_method": "modal.Sandbox.from_id.aio + poll.aio bounded30s; terminate only if poll None",
+    "resources": [
+      {
+        "job_id": "job-fe66853d327b43fab5cdd74ef1a0df88",
+        "trial_id": "9cb3db63-3296-4780-a840-eda467a7a715",
+        "sandbox_id": "sb-Qlvoi2ZV3uPdfmq6d75F3S",
+        "role": "primary",
+        "cleanup_returncode": 137,
+        "extra_terminate": false,
+        "at": 1790737259.7377114,
+        "api_returncode": 137,
+        "status": "terminated"
+      },
+      {
+        "job_id": "job-fe66853d327b43fab5cdd74ef1a0df88",
+        "trial_id": "9cb3db63-3296-4780-a840-eda467a7a715",
+        "sandbox_id": "sb-Cr7dgT4wV7XBneXw10BDJN",
+        "role": "verifier",
+        "cleanup_returncode": 137,
+        "extra_terminate": false,
+        "at": 1790737259.7382483,
+        "api_returncode": 137,
+        "status": "terminated"
+      },
+      {
+        "job_id": "job-3c688eca150343918a6f7d8f1670200a",
+        "trial_id": "963cbcf0-c9a5-4589-a6af-d672b918122a",
+        "sandbox_id": "sb-HmESDKJFm8qpntoAKe4Ei3",
+        "role": "primary",
+        "cleanup_returncode": 137,
+        "extra_terminate": false,
+        "at": 1790737259.7388365,
+        "api_returncode": 137,
+        "status": "terminated"
+      },
+      {
+        "job_id": "job-3c688eca150343918a6f7d8f1670200a",
+        "trial_id": "963cbcf0-c9a5-4589-a6af-d672b918122a",
+        "sandbox_id": "sb-wrDbLVpnXg1ioVR6vbKPWl",
+        "role": "verifier",
+        "cleanup_returncode": 137,
+        "extra_terminate": false,
+        "at": 1790737259.7389941,
+        "api_returncode": 137,
+        "status": "terminated"
+      },
+      {
+        "job_id": "job-61974894728442739a8d637c2aeff20f",
+        "trial_id": "4cb1a4cf-6779-46cf-8293-b45338becd2a",
+        "sandbox_id": "sb-QZR2rmkA5rT02vfOLB7SYm",
+        "role": "primary",
+        "cleanup_returncode": 137,
+        "extra_terminate": false,
+        "at": 1790737259.739035,
+        "api_returncode": 137,
+        "status": "terminated"
+      },
+      {
+        "job_id": "job-61974894728442739a8d637c2aeff20f",
+        "trial_id": "4cb1a4cf-6779-46cf-8293-b45338becd2a",
+        "sandbox_id": "sb-Zihuh9McdJzdFJ7HCJ4Dje",
+        "role": "verifier",
+        "cleanup_returncode": 137,
+        "extra_terminate": false,
+        "at": 1790737259.7390666,
+        "api_returncode": 137,
+        "status": "terminated"
+      },
+      {
+        "job_id": "job-b693515872e44371aa5efdcba54f39b9",
+        "trial_id": "9a364319-d340-4880-8bc5-1f7508ff2160",
+        "sandbox_id": "sb-l3A5NBo19RXkltbVBLqY0q",
+        "role": "primary",
+        "cleanup_returncode": 137,
+        "extra_terminate": false,
+        "at": 1790737259.739095,
+        "api_returncode": 137,
+        "status": "terminated"
+      },
+      {
+        "job_id": "job-b693515872e44371aa5efdcba54f39b9",
+        "trial_id": "9a364319-d340-4880-8bc5-1f7508ff2160",
+        "sandbox_id": "sb-OUAFMsumrMvwhIOG0ybSAp",
+        "role": "verifier",
+        "cleanup_returncode": 137,
+        "extra_terminate": false,
+        "at": 1790737259.7391222,
+        "api_returncode": 137,
+        "status": "terminated"
+      },
+      {
+        "job_id": "job-a500eee91b7444bb828ba966bc563529",
+        "trial_id": "04e4fc3d-7bcb-43d3-b0ee-aa55134eda39",
+        "sandbox_id": "sb-ojCe7j30kM2A43tcsJOWpN",
+        "role": "primary",
+        "cleanup_returncode": 137,
+        "extra_terminate": false,
+        "at": 1790737259.7391925,
+        "api_returncode": 137,
+        "status": "terminated"
+      },
+      {
+        "job_id": "job-f70eabe956f54aa4a5a8ba1b06b67968",
+        "trial_id": "d580506f-79ae-4643-a594-95ede58bc43f",
+        "sandbox_id": "sb-KA1jtuK5JGVcfa1A2VSOuj",
+        "role": "primary",
+        "cleanup_returncode": 137,
+        "extra_terminate": false,
+        "at": 1790737259.739222,
+        "api_returncode": 137,
+        "status": "terminated"
+      }
+    ],
+    "terminated_count": 10,
+    "primary_count": 6,
+    "verifier_count": 4,
+    "additional_terminate_count": 0
+  },
+  "ledger": {
+    "job_counts": {
+      "succeeded": 4,
+      "cancelled": 2
+    },
+    "jobs": [
+      {
+        "job_id": "job-fe66853d327b43fab5cdd74ef1a0df88",
+        "status": "succeeded"
+      },
+      {
+        "job_id": "job-3c688eca150343918a6f7d8f1670200a",
+        "status": "succeeded"
+      },
+      {
+        "job_id": "job-61974894728442739a8d637c2aeff20f",
+        "status": "succeeded"
+      },
+      {
+        "job_id": "job-b693515872e44371aa5efdcba54f39b9",
+        "status": "succeeded"
+      },
+      {
+        "job_id": "job-a500eee91b7444bb828ba966bc563529",
+        "status": "cancelled"
+      },
+      {
+        "job_id": "job-f70eabe956f54aa4a5a8ba1b06b67968",
+        "status": "cancelled"
+      }
+    ],
+    "consumption_scope_note": "Four succeeded consumed episodes; two cancelled prefetched episodes are not training samples. Ledger status was not used as proof of Modal termination."
+  },
+  "archive": {
+    "state": "exited",
+    "polls": 64,
+    "finished_snapshot_unix": 1790736727.3487787,
+    "files": 62,
+    "completed_jobs": 4,
+    "pending": [
+      "job-a500eee91b7444bb828ba966bc563529",
+      "job-f70eabe956f54aa4a5a8ba1b06b67968"
+    ],
+    "errors": [],
+    "byte_readback": {
+      "at": 1790737540.5495071,
+      "checked": 62,
+      "errors": [],
+      "archive_report_errors": [],
+      "archive_report_pending": [
+        "job-a500eee91b7444bb828ba966bc563529",
+        "job-f70eabe956f54aa4a5a8ba1b06b67968"
+      ]
+    },
+    "worker_and_archive_manifest_files": 190,
+    "worker_and_archive_manifest_bytes": 5484802
+  },
+  "observer": {
+    "pid": 417336,
+    "naturally_exited": true,
+    "last_snapshot_at": 1790736802.863159,
+    "last_driver_exists": false,
+    "last_operator": {
+      "run_id": "mimo9b-001661-r19",
+      "started_at": 1790734902.2959173,
+      "wall_clock_seconds": 17201,
+      "status": "exited",
+      "supervisor_pid": 417367,
+      "exit_code": 0,
+      "finished_at": 1790736721.7740762
+    },
+    "last_checkpoint_marker": "4",
+    "reference": {
+      "private_path": "/root/mimo-private/r19-readonly-audit/snapshot-1790736802.json",
+      "sha256": "76475bb2ece94898151dfc4ea5c1d9ef2105a0884778371987a119846456c927",
+      "bytes": 57156
+    }
+  },
+  "authorized_keys_cleanup": {
+    "at": 1790737413.9615235,
+    "before_sha256": "12d8f2c4ad079d39382faecb30612f6b0672844371b8a8829af198e30dc1d21d",
+    "after_sha256": "121daba15443590661d2d379370880b17ec64b0df01a945172e084c3d376edd8",
+    "match_count": 1,
+    "removed_entries": 1,
+    "other_bytes_preserved": true,
+    "public_key_sha256": "1b6d54f9fb9004d691759097f742c4adbf1d1851e1728bcc3554e9c0248e89f2",
+    "removed_entry_sha256": "674eb49868ef3b803c73ed089f077e3d9bbf7c31dd1ae4a45166eb1d1b842c85",
+    "backup_private_path": "/root/mimo-private/r19-resource-final/authorized_keys-before.private",
+    "private_key_retained": true
+  },
+  "gpu": {
+    "snapshot_at": 1790737475.8907218,
+    "query": "0, 0 MiB, 0 %\n1, 0 MiB, 0 %\n",
+    "compute_processes": ""
+  },
+  "ports_listening": {
+    "38860": false,
+    "38861": false,
+    "38862": false,
+    "38863": false,
+    "38760": false,
+    "38761": false,
+    "18080": true,
+    "9090": true,
+    "3200": true
+  },
+  "pod_id": "db7kewdkd71js6",
+  "pod_retained": true,
+  "fixed_deadline_unix": 1790752269,
+  "shared_observability_services_operated": false,
+  "private_credentials_modified": false,
+  "references": {
+    "operator": {
+      "private_path": "/workspace/mimo-dsh-rl-20260928/runs/r19/operator/status.json",
+      "sha256": "8e9730ea4e0bd4b9d1bf0159080a47d44dc5b6ebec580b4d4bc96fd691a47301",
+      "bytes": 208
+    },
+    "supervisor": {
+      "private_path": "/root/mimo-private/launch-r19/supervisor-result.json",
+      "sha256": "91ba56620a3c533653aafc9585d13fac127bbdd8f93737594c12574ed9a001c2",
+      "bytes": 167
+    },
+    "controller_stop": {
+      "private_path": "/root/mimo-private/controller-r19/controller-stop.json",
+      "sha256": "294ff842991d881ac743179e7599d270304fa99f5beb12b4f09977b3adc412b3",
+      "bytes": 51
+    },
+    "controller_signal": {
+      "private_path": "/root/mimo-private/r19-resource-final/controller-signal.json",
+      "sha256": "186cf82c62b3326fee7bf15951f7eb6f720ca5eeacce219db6df7e9894f66871",
+      "bytes": 245
+    },
+    "modal_api": {
+      "private_path": "/root/mimo-private/r19-resource-final/modal-api-final.json",
+      "sha256": "a8428b4d5ffbed8f0d399cdc3dd66e02fd21d3ceb10d4bd792bb7fc36b305995",
+      "bytes": 3704
+    },
+    "modal_sources": {
+      "private_path": "/root/mimo-private/r19-resource-final/modal-source-manifests.json",
+      "sha256": "973dc8552ea8f5563a78f130b308e5814dda741ac3faa61c3a6cd7109c580388",
+      "bytes": 4233
+    },
+    "key_removal": {
+      "private_path": "/root/mimo-private/r19-resource-final/authorized-key-removal.json",
+      "sha256": "563ac1cc65de43bfc23d4873e716728a471990ed42b65741d035db55666f2821",
+      "bytes": 837
+    },
+    "archive_status": {
+      "private_path": "/root/mimo-private/evidence-r19/local-watch-status.json",
+      "sha256": "5e6cc616d01ef04c4b5f9f97f93cb7ed840c5d3018f872aa99f96ae48a0c04a2",
+      "bytes": 1234
+    },
+    "archive_report": {
+      "private_path": "/root/mimo-private/evidence-r19/local-watch-report.json",
+      "sha256": "40d1aafb256dd9ace7a60af6acec324bad88f07b66700197b9de931f1cd8c48a",
+      "bytes": 21357
+    },
+    "native_ack": {
+      "private_path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/observability-ack.json",
+      "sha256": "782175a6955ae30122589f24dd766f53a54793beb3492d3c4d1708be13e61013",
+      "bytes": 1969
+    },
+    "worker_archive_manifest": {
+      "private_path": "/root/mimo-private/r19-resource-final/worker-archive-file-manifest.json",
+      "sha256": "22a5e83ae1e83e40ee5cfc596175d6b1c07bc688b61292783ab78e514fc517a5",
+      "bytes": 49516
+    },
+    "resource_snapshot": {
+      "private_path": "/root/mimo-private/r19-resource-final/resource-final-snapshot.json",
+      "sha256": "2c428573ab333d651bfea4317d0d9eef335a8d4ef26b11399f2a9ebdbdd0f232",
+      "bytes": 5991
+    },
+    "archive_readback": {
+      "private_path": "/root/mimo-private/r19-resource-final/archive-byte-readback.json",
+      "sha256": "bc6c39c8bc6669152ae4a0315e7adec3d1967a38f76d496cf48e82680ada9e04",
+      "bytes": 217
+    }
+  },
+  "unknowns": [
+    "controller_stop.docker_cleanup_proven=false is retained; this run used real Modal and its 10 owned sandboxes were independently verified. No claim of generic Docker cleanup is made.",
+    "No evidence identifies who stopped the old independent CPU Pod; it remains outside this cleanup scope."
+  ],
+  "operation_boundaries": [
+    "Only controller PID417223 received SIGINT after exact spec/cwd/starttime verification; all other owned PIDs had exited naturally.",
+    "Only the exact R19 authorized_keys public key plus fully matched loopback/options entry was removed; all other bytes were preserved.",
+    "No GPU Pod stop/delete, old control Pod restart, other session/server mutation, pkill, ray stop, shared service stop, Modal config/netrc/Cloudflare credential edit, or token rotation occurred.",
+    "One private Cloudflare tunnel credentials file was inadvertently included in an earlier tool read; its content was not written to repository/public artifacts/external messages. Subsequent reads used explicit allowlists."
+  ],
+  "notes": [
+    "API returncode137 is a termination result and does not establish OOM.",
+    "Cancelled prefetch archives stay pending because there are no accepted consumed artifacts; original files and private auditing keys were retained."
+  ]
+}

@@ -1,0 +1,363 @@
+{
+  "schema": "mimo.world2-effective-update.v1",
+  "world_size": 2,
+  "passed": true,
+  "effective_update_verified": true,
+  "resume_verified": false,
+  "exact_inflight_replay_verified": false,
+  "capability_improvement_verified": false,
+  "restore_evidence": "not-tested; checkpoint comparison is not independent restore",
+  "errors": [],
+  "inputs": {
+    "launch": {
+      "path": "/root/mimo-private/launch-r19/launch.json",
+      "sha256": "55e116aaae6fd95527f43c39a506cb87aa1ce2045222aa5098f4fcb50efd9c93",
+      "bytes": 5145
+    },
+    "batch_audit": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-final-batch-audit-v2/batch-audit.json",
+      "sha256": "fefc4e0d333c16a25aed9db57806dd4684fb567204607203e649b32d65f17746",
+      "bytes": 3255
+    },
+    "console_metrics": {
+      "path": "/root/mimo-private/r19-readonly-audit/c4-console.txt",
+      "sha256": "cca8104db2b8f864232c00a217a4f185d442d91315d519974bb7d697259ef60a",
+      "bytes": 111246
+    },
+    "sharded_delta": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-c3-c4-checkpoint-audit.json",
+      "sha256": "a55bb74c2d2515f2b131ffaaea2fb96b3d1013be61f3ec800b7d6f34f5dee139",
+      "bytes": 4894409
+    },
+    "checkpoint_checker": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/sharded_checkpoint_delta.py",
+      "sha256": "ea9055884d8474bb511f0e8593dcee3fd9769714244deacd4d9c1c3017ff05a6",
+      "bytes": 14769
+    },
+    "optimizer_checker": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/optimizer_delta.py",
+      "sha256": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee",
+      "bytes": 6573
+    }
+  },
+  "parent_checkpoint": {
+    "manifest": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r17-c3-resume-manifest.json",
+      "sha256": "8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706",
+      "bytes": 6955
+    },
+    "run_id": "mimo9b-001661-r17",
+    "source_commit": "4a499cfcf8e5fa361b20f009d2c1472e7b49dd73",
+    "run_spec_sha256": "sha256:cba3a3b4dfb5454b0533169588be1b4ef7b11aaedff01f3c1a7a5fb1ca07cf8c",
+    "checkpoint": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3",
+    "step": 3,
+    "world_size": 2,
+    "fsdp_version": 1,
+    "files": {
+      "actor/extra_state_world_size_2_rank_0.pt": {
+        "bytes": 15141,
+        "sha256": "e239e6beb1be07fc68291eecab84eaed8bd85f8186e4674ba37544b3985cce56"
+      },
+      "actor/extra_state_world_size_2_rank_1.pt": {
+        "bytes": 15141,
+        "sha256": "af24ff0ee14b375f1d4381b04c47b74e7810187970ede3aa3a2a731032ec6772"
+      },
+      "actor/fsdp_config.json": {
+        "bytes": 46,
+        "sha256": "1df34c1f433cd641f48d99b3981b311f0362bfcfd4c4e1f727301e3b50cf03bf"
+      },
+      "actor/huggingface/chat_template.jinja": {
+        "bytes": 3916,
+        "sha256": "59a64ebb4df6d1489d09a91267cf3ceb106162d4a893c4f84833cfb8c897ff63"
+      },
+      "actor/huggingface/config.json": {
+        "bytes": 2940,
+        "sha256": "18806177b62b88e6c7aa722ed8800ba70aefc1e7496997524af8ccd0ea6b4e50"
+      },
+      "actor/huggingface/generation_config.json": {
+        "bytes": 161,
+        "sha256": "d3da82f136b1207aaefcf57b0464bfdce75d0cb034cfcbc56e5b95c5b2f68aac"
+      },
+      "actor/huggingface/processor_config.json": {
+        "bytes": 1191,
+        "sha256": "d89ef49ce9cd37fbf510158e13c1ef063d9286411c1ec9049932dbe0487143b1"
+      },
+      "actor/huggingface/tokenizer.json": {
+        "bytes": 19989325,
+        "sha256": "06b9509352d2af50381ab2247e083b80d32d5c0aba91c272ca9ff729b6a0e523"
+      },
+      "actor/huggingface/tokenizer_config.json": {
+        "bytes": 1165,
+        "sha256": "792fa3f0cb88b111e54ef3134c873531008c4df471d108da17903426e308aa7b"
+      },
+      "actor/lora_train_meta.json": {
+        "bytes": 67,
+        "sha256": "82c99ce144bb1153a915c91b27ccf741f35dcdfc4aa85f9f6034d12667732b35"
+      },
+      "actor/model_world_size_2_rank_0.pt": {
+        "bytes": 9462526476,
+        "sha256": "57cb9f00c1542f15775e85f3e55e8e9f757bcb1a90f1d8b30b2cf8f29b11e50c"
+      },
+      "actor/model_world_size_2_rank_1.pt": {
+        "bytes": 9462526476,
+        "sha256": "5a85a11d2d5efc61cc45beb6908230c797347739e04358d2b0d9c0b8a8ba134c"
+      },
+      "actor/optim_world_size_2_rank_0.pt": {
+        "bytes": 103143207,
+        "sha256": "792c6c5ca0efb7a10886c43d0183ea6fc33702a0598098a62fa721dc5f2cd1c9"
+      },
+      "actor/optim_world_size_2_rank_1.pt": {
+        "bytes": 103143207,
+        "sha256": "603a73d638ce51a019fa439811078fee87ae262df331ddeecff787e14d64ce81"
+      },
+      "data.pt": {
+        "bytes": 1499,
+        "sha256": "58f16b6036f8994e9b19abde895b0a7969dbba54365747f210e577ebd0368d37"
+      }
+    },
+    "scope": "parent-bound checkpoint comparison; native restore remains separately unverified"
+  },
+  "identity": {
+    "run_id": "mimo9b-001661-r19",
+    "run_spec_sha256": "sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+    "step": 4,
+    "group_uid": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a"
+  },
+  "consumed_group": {
+    "consumed_rows": [
+      {
+        "reward": 0.0,
+        "training_global_steps": 4,
+        "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_0_0"
+      },
+      {
+        "reward": 1.0,
+        "training_global_steps": 4,
+        "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_1_0"
+      },
+      {
+        "reward": 1.0,
+        "training_global_steps": 4,
+        "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_2_0"
+      },
+      {
+        "reward": 0.0,
+        "training_global_steps": 4,
+        "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_3_0"
+      }
+    ],
+    "consumed_transfer_queue_keys": [
+      "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_0_0",
+      "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_1_0",
+      "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_2_0",
+      "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_3_0"
+    ],
+    "generation_global_steps": 4,
+    "global_steps": 4,
+    "group_uid": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a",
+    "has_reward_variance": true,
+    "partition_id": "train",
+    "rewards": [
+      0.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "session_indexes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "status": "admitted-and-training-batch-matched",
+    "termination_kinds": [
+      "completed",
+      "budget_exhausted",
+      "budget_exhausted",
+      "completed"
+    ],
+    "training_global_steps": 4,
+    "transfer_queue_keys": [
+      "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_0_0",
+      "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_1_0",
+      "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_2_0",
+      "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_3_0"
+    ],
+    "version_evidence": [
+      {
+        "generation_count": 35,
+        "max_global_steps": 3,
+        "min_global_steps": 3,
+        "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_0_0",
+        "version_evidence_complete": true,
+        "versioned_generation_count": 35
+      },
+      {
+        "generation_count": 44,
+        "max_global_steps": 3,
+        "min_global_steps": 3,
+        "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_1_0",
+        "version_evidence_complete": true,
+        "versioned_generation_count": 44
+      },
+      {
+        "generation_count": 43,
+        "max_global_steps": 3,
+        "min_global_steps": 3,
+        "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_2_0",
+        "version_evidence_complete": true,
+        "versioned_generation_count": 43
+      },
+      {
+        "generation_count": 21,
+        "max_global_steps": 3,
+        "min_global_steps": 3,
+        "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_3_0",
+        "version_evidence_complete": true,
+        "versioned_generation_count": 21
+      }
+    ]
+  },
+  "metrics": {
+    "critic/score/min": 0.0,
+    "critic/score/max": 1.0,
+    "critic/advantages/min": -0.8660238981246948,
+    "critic/advantages/max": 0.8660238981246948,
+    "actor/grad_norm": 0.13671875,
+    "actor/pg_loss": -0.16066483408212662
+  },
+  "model": {
+    "base_count": 760,
+    "base_changed": 0,
+    "adapter_count": 716,
+    "adapter_changed": 496,
+    "all_finite": true,
+    "passed": true
+  },
+  "ranks": [
+    {
+      "rank": 0,
+      "files": {
+        "before_model": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3/actor/model_world_size_2_rank_0.pt",
+          "sha256": "57cb9f00c1542f15775e85f3e55e8e9f757bcb1a90f1d8b30b2cf8f29b11e50c",
+          "bytes": 9462526476
+        },
+        "after_model": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/model_world_size_2_rank_0.pt",
+          "sha256": "0b34544a4ae49bc5bf7bbfca02e108fefef2767d16f7399de1df0bd80e403d09",
+          "bytes": 9462526476
+        },
+        "before_optimizer": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3/actor/optim_world_size_2_rank_0.pt",
+          "sha256": "792c6c5ca0efb7a10886c43d0183ea6fc33702a0598098a62fa721dc5f2cd1c9"
+        },
+        "before_extra": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3/actor/extra_state_world_size_2_rank_0.pt",
+          "sha256": "e239e6beb1be07fc68291eecab84eaed8bd85f8186e4674ba37544b3985cce56",
+          "bytes": 15141
+        },
+        "after_optimizer": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/optim_world_size_2_rank_0.pt",
+          "sha256": "c120e1d969f1ca2d585a599ba623081f10c6f7df54d94bc0bea0f570b2be54e4"
+        },
+        "after_extra": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/extra_state_world_size_2_rank_0.pt",
+          "sha256": "49cf16588609b5b58f427e970059ddb04151de64f44a2e291204df56ce06b411",
+          "bytes": 15141
+        }
+      },
+      "optimizer": {
+        "schema": "dsh.native-optimizer-delta.v1",
+        "passed": true,
+        "errors": [],
+        "before": {
+          "steps": [
+            3
+          ],
+          "active_state_count": 716,
+          "empty_state_count": 60,
+          "tensor_count": 2148,
+          "all_finite": true,
+          "nonzero_moment_tensors": 992
+        },
+        "after": {
+          "steps": [
+            4
+          ],
+          "active_state_count": 716,
+          "empty_state_count": 60,
+          "tensor_count": 2148,
+          "all_finite": true,
+          "nonzero_moment_tensors": 992
+        },
+        "active_state_count": 716,
+        "empty_state_count": 60,
+        "changed_moment_tensors": 992,
+        "optimizer_step_advanced": true
+      }
+    },
+    {
+      "rank": 1,
+      "files": {
+        "before_model": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3/actor/model_world_size_2_rank_1.pt",
+          "sha256": "5a85a11d2d5efc61cc45beb6908230c797347739e04358d2b0d9c0b8a8ba134c",
+          "bytes": 9462526476
+        },
+        "after_model": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/model_world_size_2_rank_1.pt",
+          "sha256": "fce54f49d7a3e8b4b4e03b43619b1d73f855b7669c7dc714a4e9af6f32b06fde",
+          "bytes": 9462526476
+        },
+        "before_optimizer": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3/actor/optim_world_size_2_rank_1.pt",
+          "sha256": "603a73d638ce51a019fa439811078fee87ae262df331ddeecff787e14d64ce81"
+        },
+        "before_extra": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3/actor/extra_state_world_size_2_rank_1.pt",
+          "sha256": "af24ff0ee14b375f1d4381b04c47b74e7810187970ede3aa3a2a731032ec6772",
+          "bytes": 15141
+        },
+        "after_optimizer": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/optim_world_size_2_rank_1.pt",
+          "sha256": "be8eab22ec77562d6ea12113cd1ea9687a3da65cea825a22bea55afaf25b653b"
+        },
+        "after_extra": {
+          "path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/extra_state_world_size_2_rank_1.pt",
+          "sha256": "3225a899b8dcfb289614fee2f7332acada7a7c18a25badfa3459543a1f4f2aab",
+          "bytes": 15141
+        }
+      },
+      "optimizer": {
+        "schema": "dsh.native-optimizer-delta.v1",
+        "passed": true,
+        "errors": [],
+        "before": {
+          "steps": [
+            3
+          ],
+          "active_state_count": 716,
+          "empty_state_count": 60,
+          "tensor_count": 2148,
+          "all_finite": true,
+          "nonzero_moment_tensors": 992
+        },
+        "after": {
+          "steps": [
+            4
+          ],
+          "active_state_count": 716,
+          "empty_state_count": 60,
+          "tensor_count": 2148,
+          "all_finite": true,
+          "nonzero_moment_tensors": 992
+        },
+        "active_state_count": 716,
+        "empty_state_count": 60,
+        "changed_moment_tensors": 992,
+        "optimizer_step_advanced": true
+      }
+    }
+  ]
+}

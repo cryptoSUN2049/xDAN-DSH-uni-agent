@@ -1,0 +1,82 @@
+{
+  "schema": "mimo.r19-effective-audit-execution.v1",
+  "passed": true,
+  "process": {
+    "schema": "mimo.cpu-effective-audit-process.v1",
+    "status": "passed",
+    "started_at": 1790737615.1416812,
+    "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+    "command": [
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/docs/verl-uni-agent-harbor-opd-rl/mimo_world2_acceptance.py",
+      "--expected-run",
+      "mimo9b-001661-r19",
+      "--expected-spec",
+      "sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+      "--step",
+      "4",
+      "--launch",
+      "/root/mimo-private/launch-r19/launch.json",
+      "--batch-audit",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-final-batch-audit-v2/batch-audit.json",
+      "--console-metrics",
+      "/root/mimo-private/r19-readonly-audit/c4-console.txt",
+      "--sharded-delta",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-c3-c4-checkpoint-audit.json",
+      "--checkpoint-checker",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/sharded_checkpoint_delta.py",
+      "--optimizer-checker",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/optimizer_delta.py",
+      "--resume-manifest",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r17-c3-resume-manifest.json",
+      "--resume-manifest-sha256",
+      "8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706",
+      "--output",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-step4-world2-effective-update.json"
+    ],
+    "before_sha256": {
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-final-batch-audit-v2/batch-audit.json": "fefc4e0d333c16a25aed9db57806dd4684fb567204607203e649b32d65f17746",
+      "/root/mimo-private/r19-readonly-audit/c4-console.txt": "cca8104db2b8f864232c00a217a4f185d442d91315d519974bb7d697259ef60a",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-c3-c4-checkpoint-audit.json": "a55bb74c2d2515f2b131ffaaea2fb96b3d1013be61f3ec800b7d6f34f5dee139",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r17-c3-resume-manifest.json": "8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/source-r19-manifest.json": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/sharded_checkpoint_delta.py": "ea9055884d8474bb511f0e8593dcee3fd9769714244deacd4d9c1c3017ff05a6",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/optimizer_delta.py": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/docs/verl-uni-agent-harbor-opd-rl/mimo_world2_acceptance.py": "33cd6593eb0982a232db49bc8889e28047f691c314994d000508895e160f9558",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-consumed-token-audit.json": "be6922e94662550e83bfc9e2d25f77172d54216c6501a7e0ac7138b4e67abdf4",
+      "/root/mimo-private/r19-native-resume-proof/report.json": "294c93309211b054ac54e35d41e5d897d35af8d1e203ce6e67ddd8c95fce8738"
+    },
+    "launch_sha256": "55e116aaae6fd95527f43c39a506cb87aa1ce2045222aa5098f4fcb50efd9c93",
+    "gpu_training_started": false,
+    "environment": {
+      "CUDA_VISIBLE_DEVICES": "",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2",
+      "PYTHONPATH": "/workspace/mimo-dsh-rl-20260928/run-src-r19:/workspace/mimo-dsh-rl-20260928/run-src-r19/verl",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "pid": 439367,
+    "child_exit_code": 0,
+    "after_sha256": {
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-final-batch-audit-v2/batch-audit.json": "fefc4e0d333c16a25aed9db57806dd4684fb567204607203e649b32d65f17746",
+      "/root/mimo-private/r19-readonly-audit/c4-console.txt": "cca8104db2b8f864232c00a217a4f185d442d91315d519974bb7d697259ef60a",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-c3-c4-checkpoint-audit.json": "a55bb74c2d2515f2b131ffaaea2fb96b3d1013be61f3ec800b7d6f34f5dee139",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r17-c3-resume-manifest.json": "8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/source-r19-manifest.json": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/sharded_checkpoint_delta.py": "ea9055884d8474bb511f0e8593dcee3fd9769714244deacd4d9c1c3017ff05a6",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/optimizer_delta.py": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/docs/verl-uni-agent-harbor-opd-rl/mimo_world2_acceptance.py": "33cd6593eb0982a232db49bc8889e28047f691c314994d000508895e160f9558",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-consumed-token-audit.json": "be6922e94662550e83bfc9e2d25f77172d54216c6501a7e0ac7138b4e67abdf4",
+      "/root/mimo-private/r19-native-resume-proof/report.json": "294c93309211b054ac54e35d41e5d897d35af8d1e203ce6e67ddd8c95fce8738"
+    },
+    "exit_code": 0,
+    "finished_at": 1790737696.8360379,
+    "report_sha256": "c4dffe88138cdbab01841b0208b499dd437b8be411af8b1f98a68c89174b2f16"
+  },
+  "report": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-step4-world2-effective-update.json",
+    "sha256": "c4dffe88138cdbab01841b0208b499dd437b8be411af8b1f98a68c89174b2f16",
+    "bytes": 13335
+  },
+  "scope": "Actual CPU-only cross-run effective-update audit; independent restore and token evidence retain their own claims"
+}

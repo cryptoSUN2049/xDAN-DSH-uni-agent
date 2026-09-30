@@ -1,0 +1,118 @@
+{
+  "schema": "mimo.r19-consumed-token-operator.v1",
+  "passed": true,
+  "run_id": "mimo9b-001661-r19",
+  "expected_frozen_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+  "frozen_auditor_sha256": "e59c1b64aea81fcc8ac3541ee874d7bff758803442fe064ea0387820993507c9",
+  "operator_sha256": "d9958eb9edd7327ce9445b9984a38ce16878417310c5f58a582ac8457515038b",
+  "spec_sha256": "sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+  "launch_sha256": "55e116aaae6fd95527f43c39a506cb87aa1ce2045222aa5098f4fcb50efd9c93",
+  "batch_report_sha256": "fefc4e0d333c16a25aed9db57806dd4684fb567204607203e649b32d65f17746",
+  "rollout_sha256": {
+    "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/rollout/4.jsonl": "da1915bfe0a45e0a5404a96b98d34fcb0483f667dc022615a1828a2b05ca9cd8"
+  },
+  "consumed_trajectory_count": 4,
+  "consumed_session_count": 4,
+  "unconsumed_dump_tq_keys": [],
+  "sessions": [
+    {
+      "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_0_0",
+      "training_global_steps": 4,
+      "generation_global_steps": 4,
+      "reward": 0.0,
+      "policy_min": 3,
+      "policy_max": 3,
+      "artifacts": {
+        "/root/mimo-private/launch-r19/token-journal/2fe335788096b19ea4f5b1dd399f989cff65043aa789a6d2ecb9d8a563e8fa3f.jsonl": "58ccc0dcd3f1ec5c6a0ba71779143e5b2bff954b2d671e83aa365e4faebf2723",
+        "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/agent/step_4/session-sample-0-rollout-0-ecc772f1c0f544658c6bb1c35c04159d/trajectory.json": "7d188ad5b23002991d584d8f207ea822670798813acef3d990ef74a10e1c97e2",
+        "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/agent/step_4/session-sample-0-rollout-0-ecc772f1c0f544658c6bb1c35c04159d/trajectory.npz": "f6772692fa1a641b2145889fd28b15e702e93cbd94d2530d2fe2fb067013436b"
+      },
+      "token_audit": {
+        "passed": true,
+        "session_id": "session-sample-0-rollout-0-ecc772f1c0f544658c6bb1c35c04159d",
+        "commits": 35,
+        "backend_tokens": 17270,
+        "context_tokens": 9545,
+        "events": 106,
+        "journal_sha256": "58ccc0dcd3f1ec5c6a0ba71779143e5b2bff954b2d671e83aa365e4faebf2723",
+        "metadata_sha256": "7d188ad5b23002991d584d8f207ea822670798813acef3d990ef74a10e1c97e2",
+        "npz_sha256": "f6772692fa1a641b2145889fd28b15e702e93cbd94d2530d2fe2fb067013436b"
+      }
+    },
+    {
+      "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_1_0",
+      "training_global_steps": 4,
+      "generation_global_steps": 4,
+      "reward": 1.0,
+      "policy_min": 3,
+      "policy_max": 3,
+      "artifacts": {
+        "/root/mimo-private/launch-r19/token-journal/cf96dd92e0b18680686e811ed2b7dd475d9781daf8f00db17a11de99b49889a5.jsonl": "56f6a6cb3930822c2febf7c329ad19a46c2581f6d09a067a5df01ebbb56475e5",
+        "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/agent/step_4/session-sample-0-rollout-1-a80af856d01e4c7c8f73aa7325fb3560/trajectory.json": "9e8471ced6c9558415e009667fe9e89af2b3e0e8bcfae932a839fef0ca75b85b",
+        "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/agent/step_4/session-sample-0-rollout-1-a80af856d01e4c7c8f73aa7325fb3560/trajectory.npz": "234b5ef38df9e7d30c054b5ecc8226cc22d7dc3e417371641d88c9231363b199"
+      },
+      "token_audit": {
+        "passed": true,
+        "session_id": "session-sample-0-rollout-1-a80af856d01e4c7c8f73aa7325fb3560",
+        "commits": 44,
+        "backend_tokens": 20179,
+        "context_tokens": 11090,
+        "events": 133,
+        "journal_sha256": "56f6a6cb3930822c2febf7c329ad19a46c2581f6d09a067a5df01ebbb56475e5",
+        "metadata_sha256": "9e8471ced6c9558415e009667fe9e89af2b3e0e8bcfae932a839fef0ca75b85b",
+        "npz_sha256": "234b5ef38df9e7d30c054b5ecc8226cc22d7dc3e417371641d88c9231363b199"
+      }
+    },
+    {
+      "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_2_0",
+      "training_global_steps": 4,
+      "generation_global_steps": 4,
+      "reward": 1.0,
+      "policy_min": 3,
+      "policy_max": 3,
+      "artifacts": {
+        "/root/mimo-private/launch-r19/token-journal/29847aaa954c7061fb56f99c201498118b3545a3bcdbfc495f413b5f921778ba.jsonl": "1c8a6b309e7ac8d6bf216f2403141c02cbb59fd5ad5d8ac7518032c8b4579610",
+        "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/agent/step_4/session-sample-0-rollout-2-3c8d339e99a04a9c885329756e5f978b/trajectory.json": "00730a2deb6ff22a531f005682612b796e07d61e95f70df009d77a5f1360815f",
+        "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/agent/step_4/session-sample-0-rollout-2-3c8d339e99a04a9c885329756e5f978b/trajectory.npz": "dbde0e92731622dbf118946939af56e67f64d542a4a34a962d630ba576a0f187"
+      },
+      "token_audit": {
+        "passed": true,
+        "session_id": "session-sample-0-rollout-2-3c8d339e99a04a9c885329756e5f978b",
+        "commits": 43,
+        "backend_tokens": 15485,
+        "context_tokens": 15784,
+        "events": 130,
+        "journal_sha256": "1c8a6b309e7ac8d6bf216f2403141c02cbb59fd5ad5d8ac7518032c8b4579610",
+        "metadata_sha256": "00730a2deb6ff22a531f005682612b796e07d61e95f70df009d77a5f1360815f",
+        "npz_sha256": "dbde0e92731622dbf118946939af56e67f64d542a4a34a962d630ba576a0f187"
+      }
+    },
+    {
+      "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_3_0",
+      "training_global_steps": 4,
+      "generation_global_steps": 4,
+      "reward": 0.0,
+      "policy_min": 3,
+      "policy_max": 3,
+      "artifacts": {
+        "/root/mimo-private/launch-r19/token-journal/5ec2d9df67467d712b799aa2be2305da2f94fe0dbd7ddf2af5b3353ed9376487.jsonl": "eebdf8d6befd87829a101ca72dc4229e39e5e4541ecc141181abe1c78a2e339d",
+        "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/agent/step_4/session-sample-0-rollout-3-b5cf8f9f3caa49f09dbf44a8831992ce/trajectory.json": "2acdf02a1b8b7c150754d89cde6b102c0a65ff1c1e27149e7f4ee039c9dd54d7",
+        "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/agent/step_4/session-sample-0-rollout-3-b5cf8f9f3caa49f09dbf44a8831992ce/trajectory.npz": "6fc86d41a6f04c9a8761bffbfb435ca69d3540c5ebe7b228a3039581879f36af"
+      },
+      "token_audit": {
+        "passed": true,
+        "session_id": "session-sample-0-rollout-3-b5cf8f9f3caa49f09dbf44a8831992ce",
+        "commits": 21,
+        "backend_tokens": 7232,
+        "context_tokens": 5516,
+        "events": 64,
+        "journal_sha256": "eebdf8d6befd87829a101ca72dc4229e39e5e4541ecc141181abe1c78a2e339d",
+        "metadata_sha256": "2acdf02a1b8b7c150754d89cde6b102c0a65ff1c1e27149e7f4ee039c9dd54d7",
+        "npz_sha256": "6fc86d41a6f04c9a8761bffbfb435ca69d3540c5ebe7b228a3039581879f36af"
+      }
+    }
+  ],
+  "policy3_sampling_verified": true,
+  "checkpoint_restore_verified_by_this_report": false,
+  "model_forward_logprob_recomputation": false
+}

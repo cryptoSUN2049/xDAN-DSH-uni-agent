@@ -1,3 +1,66 @@
+## 2026-09-30：MiMo 9B Code 工程闭环最终验收
+
+### TL;DR
+
+- R19 独立身份从 R17 原生 world2/FSDP1 C3 恢复，真实采样与有效 GRPO 更新至 C4，exit 0。
+- 4 条消费轨迹、policy 3、奖励 [0,1,1,0]；496 项 LoRA 变化，两 rank optimizer 3→4；W&B finished、step4 88/88 对账。
+- Token IDs/mask/logprob 重放及 RL-Insight 终态审计通过。10 个所属 Modal sandbox 已终止，所属进程/端口回收；GPU Pod 保留计费。
+- 本阶段只证明 Code 单任务小样本工程链路；能力提升/多领域/在途队列精确重放未验收。下方各轮运行中/待验收条目均为历史记录。
+
+### 本轮交付物
+
+- `docs/verl-uni-agent-harbor-opd-rl/r19-final-acceptance-20260930.md` — 39 行；最终验收入口、结果/边界/云端复查路径。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r19-final-joint-acceptance-20260930.json` — 130 行；恢复/采样/参数/监控/回收联合验收与输入SHA。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r19-final-pin-audit-20260930.json` — 369 行；release/模型/数据/任务固定来源审计。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r19-cleanup-final-20260930.json` — 384 行；原字节证据/摘要，SHA 由 final joint 报告绑定。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r19-consumed-token-audit-20260930.json` — 118 行；原字节证据/摘要，SHA 由 final joint 报告绑定。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r19-cost-reconciliation-20260930.json` — 40 行；原字节证据/摘要，SHA 由 final joint 报告绑定。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r19-effective-update-execution-20260930.json` — 82 行；原字节证据/摘要，SHA 由 final joint 报告绑定。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r19-final-batch-audit-20260930.json` — 107 行；原字节证据/摘要，SHA 由 final joint 报告绑定。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r19-native-checkpoint-audit-20260930.json` — 144 行；原字节证据/摘要，SHA 由 final joint 报告绑定。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r19-native-observability-final-20260930.json` — 184 行；原字节证据/摘要，SHA 由 final joint 报告绑定。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r19-wandb-final-20260930.json` — 253 行；原字节证据/摘要，SHA 由 final joint 报告绑定。
+- `docs/verl-uni-agent-harbor-opd-rl/evidence/r19-world2-acceptance-20260930.json` — 363 行；原字节证据/摘要，SHA 由 final joint 报告绑定。
+- `tasks/verl-uni-agent-harbor-opd-rl/lessons.md` — 新增 3 行，本轮隐私读取边界及部署故障诊断。
+- 本 handoff 与 tasks/todo.md — 最新结果前置；保留既有其他会话改动。完整历史过长，后续可单独整理至 notes；本次不移动混合未提交段落。
+
+### 设计约束
+
+- Mac 仅编辑/Git/轻量回读，依赖/模型/测试/训练留云端。所有改动在当前 worktree，保留其他会话未提交变化。
+- 冻结 runtime commit 4dbd87ad4f6123f99a1f715a6637322a44cff6a5、1003files manifest04fb0fcd...946564af、273环境不改。spec5951ccbe...e1e33，parent manifest8046c24e...1706。
+- GPU Pod db7kewdkd71js6/157.157.221.177:11403 保留；不得操作213.192.2.76:40171。授权训练截止07:11:09UTC/15:11:09SGT不重计，本轮已自然结束。
+- 私有凭据只做精确字段allowlist；不得遍历private JSON内容或把token写入公共报告。
+
+### 已踩坑/真实行为
+
+- R18旧控制宿主EXITED导致fit前失败；R19同机CPU控制器解决部署依赖，双卡模式本身已实跑通过。
+- 四条轨迹两条completed、两条budget_exhausted；正奖励来自真实独立verifier。另两条取消预取不计训练样本。
+- W&B一个原生step4历史行，先前step1–3属R17；finish缓冲落盘后88/88对账，无回填。
+- Prom仅一次实际终态scrape；Tempo166限定trace、三类型代表payload复核。Token重放不等于独立forward概率重算；DTensor不等于FSDP2。
+- 安全事件：子代理private JSON glob误读CF TunnelSecret进入工具输出，未入公共报告/Git；保持记录，后续scoped轮换需核共享影响。
+
+### 下一里程碑任务清单
+
+- [x] 当前goal要求的有效更新、独立恢复、C4、W&B/Insight、token合同、所属回收与成本边界全部有真实证据。
+- [ ] 后续独立目标：冻结多任务训练/留出集，比较原版、SFT及RL checkpoint；再判断能力提升。
+- [ ] 如加入terminus-2，沿同一DSH harness验证任务/独立verifier适配后混合采样。
+- [ ] 按共享隧道影响安排Cloudflare凭据轮换；不要全局盲改其他会话凭据。
+
+### 分支/部署状态
+
+- 当前worktree/branch均 `verl-uni-agent-harbor-opd-rl`，最终文档提交会沿本分支推送；每次push必须在精确干净commit通过全仓Ruff check与format检查。
+- Runpod训练约02:52UTC exit0；约03:04UTC两GPU0MiB、专用端口空，10 Modal sandbox API确认终止。共享18080/9090/3200保留。
+- 当前新Runpod API读因网络传输失败；不能把历史RUNNING快照当当前GPU活动。Pod不被本会话停止，仍可能继续按分配收费。
+- 云CPU回归116通过、helper99.07%/preflight98.74%；真实CPU checkpoint/token/composite审计exit0。没有声称GitHub CI已运行。
+
+### 冷启动 checklist
+
+1. 先读 `docs/verl-uni-agent-harbor-opd-rl/r19-final-acceptance-20260930.md` 与 final-joint JSON，检查其SHA引用；旧段落只作失败/演进历史。
+2. 核git status/HEAD/upstream，保留其他会话改动；先读同目录lessons.md，所有报告按明确allowlist打开。
+3. 如需云端复查，只读现有11403：`/workspace/mimo-dsh-rl-20260928/runs/r19/operator/status.json` 与 integration-check/r19-*。不要自动重启训练。
+4. C3在runs/r17/rl-training/checkpoints/global_step_3，C4在runs/r19/rl-training/checkpoints/global_step_4；原始token journal/console在GPU私有，禁止下载到Mac或公开。
+5. 新GPU工作须独立预算/截止/数据设计；本次训练已完成，不沿历史进程PID发停止命令。
+
 ## 2026-09-30 10:46 SGT：R19 原生恢复通过，真实任务执行中
 
 - goal保持active；R18失败保留。R19原生两rank C3 model/optimizer/RNG/scheduler重载与fit已实证；有效更新/C4/token/W&B完整history尚待验收。

@@ -1,0 +1,107 @@
+{
+  "errors": [],
+  "groups": [
+    {
+      "consumed_rows": [
+        {
+          "reward": 0.0,
+          "training_global_steps": 4,
+          "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_0_0"
+        },
+        {
+          "reward": 1.0,
+          "training_global_steps": 4,
+          "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_1_0"
+        },
+        {
+          "reward": 1.0,
+          "training_global_steps": 4,
+          "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_2_0"
+        },
+        {
+          "reward": 0.0,
+          "training_global_steps": 4,
+          "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_3_0"
+        }
+      ],
+      "consumed_transfer_queue_keys": [
+        "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_0_0",
+        "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_1_0",
+        "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_2_0",
+        "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_3_0"
+      ],
+      "generation_global_steps": 4,
+      "global_steps": 4,
+      "group_uid": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a",
+      "has_reward_variance": true,
+      "partition_id": "train",
+      "rewards": [
+        0.0,
+        1.0,
+        1.0,
+        0.0
+      ],
+      "session_indexes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "status": "admitted-and-training-batch-matched",
+      "termination_kinds": [
+        "completed",
+        "budget_exhausted",
+        "budget_exhausted",
+        "completed"
+      ],
+      "training_global_steps": 4,
+      "transfer_queue_keys": [
+        "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_0_0",
+        "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_1_0",
+        "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_2_0",
+        "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_3_0"
+      ],
+      "version_evidence": [
+        {
+          "generation_count": 35,
+          "max_global_steps": 3,
+          "min_global_steps": 3,
+          "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_0_0",
+          "version_evidence_complete": true,
+          "versioned_generation_count": 35
+        },
+        {
+          "generation_count": 44,
+          "max_global_steps": 3,
+          "min_global_steps": 3,
+          "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_1_0",
+          "version_evidence_complete": true,
+          "versioned_generation_count": 44
+        },
+        {
+          "generation_count": 43,
+          "max_global_steps": 3,
+          "min_global_steps": 3,
+          "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_2_0",
+          "version_evidence_complete": true,
+          "versioned_generation_count": 43
+        },
+        {
+          "generation_count": 21,
+          "max_global_steps": 3,
+          "min_global_steps": 3,
+          "transfer_queue_key": "2f3cc4a0-8b81-413c-9692-9c94d8f9519a_3_0",
+          "version_evidence_complete": true,
+          "versioned_generation_count": 21
+        }
+      ]
+    }
+  ],
+  "launch_sha256": "sha256:55e116aaae6fd95527f43c39a506cb87aa1ce2045222aa5098f4fcb50efd9c93",
+  "mode": "training-only",
+  "optimizer_update_verified": false,
+  "passed": true,
+  "schema": "dsh.harbor-training-batch-audit.v2",
+  "unconsumed_groups": [],
+  "unconsumed_trajectory_count": 0
+}

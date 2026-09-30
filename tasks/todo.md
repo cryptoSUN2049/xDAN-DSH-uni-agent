@@ -1,3 +1,14 @@
+## 2026-09-30 R19 最终验收（当前目标）
+
+- [x] 新身份原生双 rank C3恢复、policy3真实采样、4条实际消费TQ轨迹。
+- [x] Token IDs/mask/原始logprob一致审计；有差异奖励/非零advantage与梯度/真实LoRA参数及optimizer更新；保存C4。
+- [x] 原生W&B finished，step4 88/88日志对账；RL-Insight真实Prom终态/Tempo限定trace。
+- [x] 10所属Modal sandbox API确认终止、所属进程/端口/SSH授权项回收，GPU Pod与共享观测保留。
+- [x] 固定版本来源、成本估算及未知账单、失败与未覆盖边界、最终交接归档。
+- [x] 最终交付限定本轮文件；commit/push采用精确提交全仓Ruff双门禁，实际回执见最终Git/工具结果。
+
+Review：当前小样本Code工程目标通过；旧轮次未勾选项保留历史失败，不表示已用新结果重写旧运行。多任务能力提升不在本阶段验收范围。
+
 ## 2026-09-30 R19 已启动，验收继续
 
 - [x] 同机生产HTTP/认证/SSH预检、冻结源码、116云CPU回归、实际prepare/preflight、全Ruff与push。

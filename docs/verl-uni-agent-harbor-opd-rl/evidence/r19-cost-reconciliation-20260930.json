@@ -1,0 +1,40 @@
+{
+  "schema": "mimo.r19-cost-reconciliation.v1",
+  "run_id": "mimo9b-001661-r19",
+  "pod_id": "db7kewdkd71js6",
+  "basis": "Previous live Runpod read recorded in this session; latest API attempts failed at transport. Not a per-run invoice.",
+  "gpu_hourly_usd": 4.18,
+  "rate_observed_at_utc": "2026-09-30T02:22:45Z",
+  "native_training_seconds": 1801.145,
+  "native_window_gpu_allocation_estimate_usd": 2.091329472222222,
+  "driver_to_operator_finish_seconds": 1928.7338466644287,
+  "driver_window_gpu_allocation_estimate_usd": 2.239474299738142,
+  "previous_provider_billing_query": {
+    "startTime": "2026-09-30T00:00:00Z",
+    "endTime": "2026-09-30T04:00:00Z",
+    "bucketSize": "hour",
+    "returned_bucket_intervals": [
+      "00:00\u201301:00 UTC",
+      "01:00\u201302:00 UTC"
+    ],
+    "gpu_usd": 8.006438165903091,
+    "disk_usd": 0.03993055585306138,
+    "cpu_usd": 0,
+    "total_usd": 8.046368721756153,
+    "source": "Earlier tool response, preserved here from session record; raw response not separately archived.",
+    "covers_r19_training": false,
+    "attribution": "Shared Pod historical buckets precede R19; do not attribute to this run."
+  },
+  "latest_provider_read": "transport failure; no newer billing confirmed",
+  "modal_compute_usd": null,
+  "network_storage_transfer_usd": null,
+  "complete_project_cost_known": false,
+  "separate_controller_pod_created": false,
+  "pod_retained": true,
+  "post_training_idle_billing_continues": true,
+  "limits": [
+    "Hourly GPU allocation estimates exclude disk, Modal and transfers.",
+    "Driver and native estimates are overlapping windows; do not add them.",
+    "Retained GPU Pod continues billing. No claim that current bill equals the training estimate."
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "schema": "mimo.r19-native-observability-final.v1",
+  "run_id": "mimo9b-001661-r19",
+  "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+  "status": "passed_terminal_scalars_and_scoped_traces",
+  "at": 1790737701.2900324,
+  "native_ack": {
+    "status": "passed",
+    "step": 4,
+    "values": {
+      "actor_grad_norm": 0.13671875,
+      "training_global_step": 4.0,
+      "critic_rewards_mean": 0.5
+    },
+    "finished_at": 1790736711.547267,
+    "reference": {
+      "private_path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/observability-ack.json",
+      "sha256": "782175a6955ae30122589f24dd766f53a54793beb3492d3c4d1708be13e61013",
+      "bytes": 1969
+    }
+  },
+  "prometheus": {
+    "exact_project_and_experiment_selector": "{__name__=~\"rl_insight_monitor_training_global_step|rl_insight_monitor_actor_grad_norm|rl_insight_monitor_critic_rewards_mean\",project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-001661-r19\"}",
+    "historical_api": "/api/v1/query range-vector expression at run finish; actual scrape timestamps retained",
+    "history_arguments": {
+      "query": "{__name__=~\"rl_insight_monitor_training_global_step|rl_insight_monitor_actor_grad_norm|rl_insight_monitor_critic_rewards_mean\",project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-001661-r19\"}[1929s]",
+      "time": 1790736722
+    },
+    "status": "success",
+    "metrics": [
+      {
+        "metric": "rl_insight_monitor_actor_grad_norm",
+        "labels": {
+          "__name__": "rl_insight_monitor_actor_grad_norm",
+          "experiment_name": "mimo9b-001661-r19",
+          "instance": "172.24.0.2:9092",
+          "job": "trainer_metrics",
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+        },
+        "raw_scrape_count": 1,
+        "raw_samples": [
+          [
+            1790736711.401,
+            "0.13671875"
+          ]
+        ]
+      },
+      {
+        "metric": "rl_insight_monitor_critic_rewards_mean",
+        "labels": {
+          "__name__": "rl_insight_monitor_critic_rewards_mean",
+          "experiment_name": "mimo9b-001661-r19",
+          "instance": "172.24.0.2:9092",
+          "job": "trainer_metrics",
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+        },
+        "raw_scrape_count": 1,
+        "raw_samples": [
+          [
+            1790736711.401,
+            "0.5"
+          ]
+        ]
+      },
+      {
+        "metric": "rl_insight_monitor_training_global_step",
+        "labels": {
+          "__name__": "rl_insight_monitor_training_global_step",
+          "experiment_name": "mimo9b-001661-r19",
+          "instance": "172.24.0.2:9092",
+          "job": "trainer_metrics",
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+        },
+        "raw_scrape_count": 1,
+        "raw_samples": [
+          [
+            1790736711.401,
+            "4"
+          ]
+        ]
+      }
+    ],
+    "terminal_values": {
+      "training_global_step": 4,
+      "actor_grad_norm": 0.13671875,
+      "critic_rewards_mean": 0.5
+    },
+    "range_evaluation_points_per_series": 2,
+    "actual_scrapes_per_series": 1,
+    "note": "query_range yielded two evaluation points reusing one real scrape. This report counts only actual timestamp1790736711.401; earlier per-step scalar curve coverage is not proven."
+  },
+  "tempo": {
+    "api": "/api/search",
+    "arguments": {
+      "tags": "project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\" experiment_name=\"mimo9b-001661-r19\"",
+      "start": 1790734793,
+      "end": 1790736722,
+      "limit": 1000
+    },
+    "exact_tags": {
+      "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+      "experiment_name": "mimo9b-001661-r19"
+    },
+    "trace_count": 166,
+    "root_names": {
+      "gateway_generation": 158,
+      "agent_task": 4,
+      "agent_session": 4
+    },
+    "search_limit": 1000,
+    "search_limit_hit": false,
+    "earliest_trace_start_unix": 1790735866.175412,
+    "latest_trace_start_unix": 1790736707.841385,
+    "search_metrics": {
+      "inspectedTraces": 296,
+      "inspectedBytes": "1370088",
+      "totalBlocks": 1,
+      "completedJobs": 2,
+      "totalJobs": 2,
+      "totalBlockBytes": "30664"
+    },
+    "readback_by_root_type": [
+      {
+        "trace_id": "c95bf555c1497ee4855971b33ebcbe58",
+        "root_name": "agent_session",
+        "verified_tags": {
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+          "experiment_name": "mimo9b-001661-r19"
+        }
+      },
+      {
+        "trace_id": "db564dbd86005f444c6ccf18e876ab9c",
+        "root_name": "agent_task",
+        "verified_tags": {
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+          "experiment_name": "mimo9b-001661-r19"
+        }
+      },
+      {
+        "trace_id": "dd9f9b5b1e02a22420653f89b0c2c953",
+        "root_name": "gateway_generation",
+        "verified_tags": {
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+          "experiment_name": "mimo9b-001661-r19"
+        }
+      }
+    ],
+    "reference": {
+      "private_path": "/root/mimo-private/r19-resource-final/tempo-trace-samples.json",
+      "sha256": "51617e38c7667277fa98e892c70113747bc95f6e0e952dbdfe9d631fe5db5c3a",
+      "bytes": 18314
+    }
+  },
+  "scope": {
+    "start_unix": 1790734793,
+    "operator_finished_unix": 1790736721.7740762,
+    "backend_integer_end_unix": 1790736722,
+    "synthetic_preflight_included": false,
+    "other_runs_included": false,
+    "shared_services_operated": false
+  },
+  "references": {
+    "backend_raw": {
+      "private_path": "/root/mimo-private/r19-resource-final/native-backend-raw.json",
+      "sha256": "8a502a21b3e0cbd92b675fe6fb214274e2e50294f8204ad6f72e46373e13b9aa",
+      "bytes": 48611
+    },
+    "prometheus_raw_scrape_history": {
+      "private_path": "/root/mimo-private/r19-resource-final/prometheus-raw-scrape-history.json",
+      "sha256": "06dbd67077bd9725c793d32f3d1ab523f0c8e598c29b6ac01395af228ae3e5b8",
+      "bytes": 1714
+    },
+    "tempo_trace_samples": {
+      "private_path": "/root/mimo-private/r19-resource-final/tempo-trace-samples.json",
+      "sha256": "51617e38c7667277fa98e892c70113747bc95f6e0e952dbdfe9d631fe5db5c3a",
+      "bytes": 18314
+    }
+  },
+  "limits": [
+    "Prometheus preserved one terminal scrape per required scalar, not a complete earlier update history.",
+    "Tempo search uses exact project/run tags and bounded run time; one representative trace per each of three root types was fetched for attribute readback, not all166 payloads.",
+    "Trace search data proves observed scoped traces; it is not a proof of model capability improvement or checkpoint parameter delta."
+  ]
+}

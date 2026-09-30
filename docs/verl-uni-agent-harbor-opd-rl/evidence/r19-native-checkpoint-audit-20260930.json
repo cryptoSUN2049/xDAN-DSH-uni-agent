@@ -1,0 +1,144 @@
+{
+  "schema": "mimo.r19-native-checkpoint-audit-evidence.v1",
+  "passed": true,
+  "report": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-c3-c4-checkpoint-audit.json",
+    "bytes": 4894409,
+    "sha256": "a55bb74c2d2515f2b131ffaaea2fb96b3d1013be61f3ec800b7d6f34f5dee139",
+    "schema": "dsh.native-sharded-checkpoint-delta.v1"
+  },
+  "execution": {
+    "schema": "mimo.cpu-audit-process.v1",
+    "status": "passed",
+    "started_at": 1790736888.0768785,
+    "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+    "command": [
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/sharded_checkpoint_delta.py",
+      "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3/actor",
+      "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor",
+      "--output",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-c3-c4-checkpoint-audit.json"
+    ],
+    "environment": {
+      "CUDA_VISIBLE_DEVICES": "",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2",
+      "PYTHONPATH": "/workspace/mimo-dsh-rl-20260928/run-src-r19:/workspace/mimo-dsh-rl-20260928/run-src-r19/verl",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "source_sha256": {
+      "deployment/checks/sharded_checkpoint_delta.py": "ea9055884d8474bb511f0e8593dcee3fd9769714244deacd4d9c1c3017ff05a6",
+      "deployment/checks/optimizer_delta.py": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee"
+    },
+    "gpu_training_started": false,
+    "pid": 438888,
+    "exit_code": 0,
+    "finished_at": 1790736986.6191988,
+    "report_sha256": "a55bb74c2d2515f2b131ffaaea2fb96b3d1013be61f3ec800b7d6f34f5dee139"
+  },
+  "model": {
+    "base_count": 760,
+    "base_changed": 0,
+    "adapter_count": 716,
+    "adapter_changed": 496,
+    "all_finite": true,
+    "passed": true
+  },
+  "ranks": [
+    {
+      "rank": 0,
+      "passed": true,
+      "cuda_initialized": false,
+      "model_kinds": [
+        "dtensor"
+      ],
+      "model_tensor_entries": 1476,
+      "optimizer": {
+        "schema": "dsh.native-optimizer-delta.v1",
+        "passed": true,
+        "errors": [],
+        "before": {
+          "steps": [
+            3
+          ],
+          "active_state_count": 716,
+          "empty_state_count": 60,
+          "tensor_count": 2148,
+          "all_finite": true,
+          "nonzero_moment_tensors": 992
+        },
+        "after": {
+          "steps": [
+            4
+          ],
+          "active_state_count": 716,
+          "empty_state_count": 60,
+          "tensor_count": 2148,
+          "all_finite": true,
+          "nonzero_moment_tensors": 992
+        },
+        "active_state_count": 716,
+        "empty_state_count": 60,
+        "changed_moment_tensors": 992,
+        "optimizer_step_advanced": true
+      },
+      "errors": []
+    },
+    {
+      "rank": 1,
+      "passed": true,
+      "cuda_initialized": false,
+      "model_kinds": [
+        "dtensor"
+      ],
+      "model_tensor_entries": 1476,
+      "optimizer": {
+        "schema": "dsh.native-optimizer-delta.v1",
+        "passed": true,
+        "errors": [],
+        "before": {
+          "steps": [
+            3
+          ],
+          "active_state_count": 716,
+          "empty_state_count": 60,
+          "tensor_count": 2148,
+          "all_finite": true,
+          "nonzero_moment_tensors": 992
+        },
+        "after": {
+          "steps": [
+            4
+          ],
+          "active_state_count": 716,
+          "empty_state_count": 60,
+          "tensor_count": 2148,
+          "all_finite": true,
+          "nonzero_moment_tensors": 992
+        },
+        "active_state_count": 716,
+        "empty_state_count": 60,
+        "changed_moment_tensors": 992,
+        "optimizer_step_advanced": true
+      },
+      "errors": []
+    }
+  ],
+  "configs": {
+    "before": {
+      "sha256": "1df34c1f433cd641f48d99b3981b311f0362bfcfd4c4e1f727301e3b50cf03bf",
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3/actor/fsdp_config.json"
+    },
+    "after": {
+      "sha256": "1df34c1f433cd641f48d99b3981b311f0362bfcfd4c4e1f727301e3b50cf03bf",
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/fsdp_config.json"
+    }
+  },
+  "checker_sha256": "ea9055884d8474bb511f0e8593dcee3fd9769714244deacd4d9c1c3017ff05a6",
+  "optimizer_checker_sha256": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee",
+  "world_size": 2,
+  "scope": "Trusted native CPU shards; exact comparison and strict per-rank optimizer; not restore proof",
+  "resume_verified": false,
+  "effective_update_verified": false
+}

@@ -1,0 +1,130 @@
+{
+  "schema": "mimo.r19-final-joint-engineering-acceptance.v1",
+  "assembled_at_utc": "2026-09-30T05:01:07.616300+00:00",
+  "run_id": "mimo9b-001661-r19",
+  "passed": true,
+  "scope": "Single frozen MiMo Code task engineering closure, native dual-rank LoRA C3 reload and C4 continuation; no model capability claim.",
+  "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+  "source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+  "run_spec_sha256": "sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+  "checks": {
+    "native_exit_zero": true,
+    "independent_world2_c3_restore": true,
+    "parent_manifest_bound": true,
+    "four_unique_consumed_trajectories": true,
+    "real_reward_variance": true,
+    "policy3_sampling": true,
+    "token_ids_masks_backend_logprobs_replayed": true,
+    "actual_effective_update": true,
+    "both_optimizer_steps_advanced": true,
+    "native_c4_two_rank_files": true,
+    "wandb_finished_88_of_88_native_metrics": true,
+    "dual_colocate_native_config": true,
+    "same_batch_bytes": true,
+    "same_native_checkpoint_audit": true,
+    "same_console_bytes": true,
+    "same_launch_bytes": true,
+    "same_spec_bytes": true,
+    "cpu_execution_sha_stability": true,
+    "rl_insight_real_terminal_metrics_traces": true,
+    "owned_modal_api_terminated": true,
+    "owned_processes_ports_released": true,
+    "scoped_ssh_key_removed_other_bytes_preserved": true,
+    "gpu_pod_shared_services_retained": true,
+    "fixed_dsh_release_consumed": true,
+    "fixed_task_model_data_provenance": true,
+    "cost_estimate_and_unknowns_recorded": true
+  },
+  "input_reports": {
+    "native-resume-proof": {
+      "path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r19-native-resume-proof-20260930.json",
+      "sha256": "294c93309211b054ac54e35d41e5d897d35af8d1e203ce6e67ddd8c95fce8738",
+      "bytes": 6749
+    },
+    "final-batch-audit": {
+      "path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r19-final-batch-audit-20260930.json",
+      "sha256": "fefc4e0d333c16a25aed9db57806dd4684fb567204607203e649b32d65f17746",
+      "bytes": 3255
+    },
+    "consumed-token-audit": {
+      "path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r19-consumed-token-audit-20260930.json",
+      "sha256": "be6922e94662550e83bfc9e2d25f77172d54216c6501a7e0ac7138b4e67abdf4",
+      "bytes": 6721
+    },
+    "native-checkpoint-audit": {
+      "path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r19-native-checkpoint-audit-20260930.json",
+      "sha256": "d738adfaae62ade15354a972a5d4a2db90ac79a60649bdbd6eddeb57af08fb7c",
+      "bytes": 4762
+    },
+    "world2-acceptance": {
+      "path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r19-world2-acceptance-20260930.json",
+      "sha256": "c4dffe88138cdbab01841b0208b499dd437b8be411af8b1f98a68c89174b2f16",
+      "bytes": 13335
+    },
+    "effective-update-execution": {
+      "path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r19-effective-update-execution-20260930.json",
+      "sha256": "958f1b40652db25cbf3c82609c9697570c222cfa7e4ec8410ade0938e7bbc49e",
+      "bytes": 5788
+    },
+    "wandb-final": {
+      "path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r19-wandb-final-20260930.json",
+      "sha256": "174baf30c681c076f7cc8c8d6bd0c5adebfb20e41bd627b883aacc46eeb18da8",
+      "bytes": 10402
+    },
+    "native-observability-final": {
+      "path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r19-native-observability-final-20260930.json",
+      "sha256": "5f7a64f8551fc193ffdcd3d38831989a4781fb5f7f170be8dc5cc77cfd8d339f",
+      "bytes": 6611
+    },
+    "cleanup-final": {
+      "path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r19-cleanup-final-20260930.json",
+      "sha256": "aab197d04772e8df25b34b5b82b3715b2a74aafa5afc5d12325a95a7557981f8",
+      "bytes": 13423
+    },
+    "final-pin-audit": {
+      "path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r19-final-pin-audit-20260930.json",
+      "sha256": "10ca1aaf1603fc9e716202a3918ac0a67ab4e3c3c6064e48c4b7ef3d2ff726d7",
+      "bytes": 17656
+    },
+    "cost-reconciliation": {
+      "path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r19-cost-reconciliation-20260930.json",
+      "sha256": "786b9a392ef3c246139b4d544f02a0dc6fe5ce45a7f921d979ce68ad09fe1069",
+      "bytes": 1736
+    }
+  },
+  "independent_resume_verified": true,
+  "effective_update_verified": true,
+  "native_c4_saved": true,
+  "reward_vector": [
+    0.0,
+    1.0,
+    1.0,
+    0.0
+  ],
+  "termination_kinds": [
+    "completed",
+    "budget_exhausted",
+    "budget_exhausted",
+    "completed"
+  ],
+  "unconsumed_cancelled_prefetch_jobs": 2,
+  "wandb_url": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/mimo9b001661r19",
+  "native_history_rows": 1,
+  "matched_metrics": 88,
+  "pod_retained": true,
+  "public_security_incident": {
+    "category": "Cloudflare TunnelSecret accidentally read into a subagent tool output by private JSON glob",
+    "value_in_public_reports_or_git": false,
+    "credential_rotated": false,
+    "followup": "Scope tunnel consumers before credential rotation. Do not print value or scan private JSON contents."
+  },
+  "limitations": [
+    "Two of four consumed trajectories are genuine budget terminal states; not four completed episodes.",
+    "Checkpoint comparison alone retains resume_verified false; independent actual loader proof is combined here.",
+    "No exact TransferQueue inflight replay, independent model-forward logprob recomputation, five-domain training or capability evaluation.",
+    "Prometheus one real terminal scrape; Tempo166 scoped search results and representative readback, not all payloads audited.",
+    "Model weight/source Parquet bytes not rehashed by final pin audit; cache/previous-lock provenance explicitly retained.",
+    "Current provider API unavailable; costs are allocation estimates and historical bucket context, full Modal/storage invoice unknown.",
+    "Public pattern scans cannot erase earlier credential tool-output incident."
+  ]
+}
