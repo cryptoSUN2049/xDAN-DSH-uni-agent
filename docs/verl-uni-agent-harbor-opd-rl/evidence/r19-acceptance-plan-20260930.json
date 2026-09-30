@@ -1,0 +1,89 @@
+{
+  "schema": "mimo.r19-acceptance-plan.v1",
+  "status": "prepared-not-executed",
+  "training_acceptance": false,
+  "source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+  "source_manifest_sha256": "04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af",
+  "deadline_unix": 1790752269,
+  "expected_run": "mimo9b-001661-r19",
+  "expected_spec": "sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/mimo-dsh-rl-20260928/run-src-r19:/workspace/mimo-dsh-rl-20260928/run-src-r19/verl"
+  },
+  "cwd": "/workspace/mimo-dsh-rl-20260928/run-src-r19",
+  "admission": "Parent GO, or stable native C4/latest=4 together with native operator exit 0; never read tensors during initialization",
+  "schemas": {
+    "checkpoint": "dsh.native-sharded-checkpoint-delta.v1",
+    "batch": "dsh.harbor-training-batch-audit.v2",
+    "effective_update": "mimo.world2-effective-update.v1"
+  },
+  "source_sha256": {
+    "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/sharded_checkpoint_delta.py": "ea9055884d8474bb511f0e8593dcee3fd9769714244deacd4d9c1c3017ff05a6",
+    "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/optimizer_delta.py": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee",
+    "/workspace/mimo-dsh-rl-20260928/run-src-r19/docs/verl-uni-agent-harbor-opd-rl/mimo_world2_acceptance.py": "33cd6593eb0982a232db49bc8889e28047f691c314994d000508895e160f9558"
+  },
+  "commands": [
+    [
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/sharded_checkpoint_delta.py",
+      "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3/actor",
+      "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor",
+      "--output",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-c3-c4-checkpoint-audit.json"
+    ],
+    [
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/docs/verl-uni-agent-harbor-opd-rl/mimo_world2_acceptance.py",
+      "--expected-run",
+      "mimo9b-001661-r19",
+      "--expected-spec",
+      "sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33",
+      "--step",
+      "4",
+      "--launch",
+      "/root/mimo-private/launch-r19/launch.json",
+      "--batch-audit",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-final-batch-audit-v2/batch-audit.json",
+      "--console-metrics",
+      "/root/mimo-private/r19-readonly-audit/c4-console.txt",
+      "--sharded-delta",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-c3-c4-checkpoint-audit.json",
+      "--checkpoint-checker",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/sharded_checkpoint_delta.py",
+      "--optimizer-checker",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/checks/optimizer_delta.py",
+      "--resume-manifest",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r17-c3-resume-manifest.json",
+      "--resume-manifest-sha256",
+      "8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706",
+      "--output",
+      "/workspace/mimo-dsh-rl-20260928/integration-check/r19-step4-world2-effective-update.json"
+    ]
+  ],
+  "pending_inputs": {
+    "batch": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r19-final-batch-audit-v2/batch-audit.json",
+      "producer": "root; final path and SHA must be confirmed before execution"
+    },
+    "console": {
+      "path": "/root/mimo-private/r19-readonly-audit/c4-console.txt",
+      "producer": "root/recipe; genuine unique TaskRunner step4 line; final path and SHA must be confirmed"
+    }
+  },
+  "checks": [
+    "Actual world_size=2 and FSDP_version=1, retaining DTensor local CPU representation and strict mesh/coverage checks",
+    "Both model ranks, optimizer ranks and extra states are matched to original R17 C3 and new R19 C4 paths",
+    "Base unchanged, LoRA changed, finite values, genuine optimizer moments and adjacent optimizer steps",
+    "Full unique n=4 async consumer step4 group, nonconstant verifier rewards, signed advantages and nonzero gradient",
+    "Parent manifest hash, every file size/hash and data.pt are independently bound; no checkpoint copy or fresh fallback"
+  ],
+  "limitations": [
+    "Effective-update report intentionally retains resume_verified=false; native independent loading proof is separate",
+    "Token journal semantic replay and native W&B/Prometheus history are independently audited",
+    "The plan is not evidence of completed training or model capability improvement"
+  ]
+}

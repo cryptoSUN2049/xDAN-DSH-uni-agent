@@ -1,0 +1,31 @@
+{
+  "schema": "mimo.r19-wandb-feedback.v1",
+  "queried_at": 1790735969.1223269,
+  "path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b001661r19",
+  "read_only": true,
+  "found": true,
+  "state": "running",
+  "name": "mimo9b-001661-r19",
+  "url": "https://wandb.ai/xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/runs/mimo9b001661r19",
+  "trainer": {
+    "experiment_name": "mimo9b-001661-r19",
+    "logger": [
+      "console",
+      "wandb",
+      "rl_insight"
+    ],
+    "resume_mode": "resume_path",
+    "resume_from_path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3",
+    "total_training_steps": 4,
+    "n_gpus_per_node": 2
+  },
+  "history_rows": 0,
+  "history": [],
+  "operator": {
+    "run_id": "mimo9b-001661-r19",
+    "started_at": 1790734902.2959173,
+    "wall_clock_seconds": 17201,
+    "status": "running",
+    "supervisor_pid": 417367
+  }
+}

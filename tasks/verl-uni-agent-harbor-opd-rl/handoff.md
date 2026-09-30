@@ -1,14 +1,15 @@
-## 2026-09-30 10:23 SGT：R19 同机控制器与双卡驱动已后台启动
+## 2026-09-30 10:46 SGT：R19 原生恢复通过，真实任务执行中
 
-- goal保持active；R18失败保留，R19尚无恢复/有效更新/C4验收。不能将启动或历史R17结果当本轮成功。
+- goal保持active；R18失败保留。R19原生两rank C3 model/optimizer/RNG/scheduler重载与fit已实证；有效更新/C4/token/W&B完整history尚待验收。
 - runtime4dbd87ad4f6123f99a1f715a6637322a44cff6a5已push；frozen run-src-r19/1003files，manifest04fb0fcd1eb0b62aa89dce193211080ce4b6000f8df6a97a225a027c946564af。精确commit Ruff676files双门通过。
 - 实际prepare131.55s/preflight147.45s均exit0、CUDAfalse；116云CPU测试通过，helper99.07%/preflight98.74%覆盖，无exclude。spec sha256:5951ccbe2ab4c29705bed8655a949efafa598c16cd26670c2791b0544e6e1e33。
 - GPU Pod11403/157.157.221.177保留；原CPU769tt1sxhn6bpj EXITED，不复活。新controller417223同GPU宿主CPU/无CUDA，auth38760 healthy=true。
 - driver417300于02:19:53UTC启动，timeline417301，supervisor417367；后台archive417335、observer417336。启动后首快照仍GPU0MiB、fitfalse，这是初始化前状态。
 - 原world2/FSDP1 C3→绝对step4，deadline1790752269=07:11:09UTC/15:11:09SGT不重计；273环境与模型/data/DSH/32K不改。
 - 私有监测：/root/mimo-private/{observer-r19-support.log,r19-readonly-audit,gpu-timeline-r19.jsonl,evidence-r19}；训练状态shared runs/r19/operator/status.json；原Ray worker优先于缓冲train.log。
-- 下一步：实际两rank model/optim/rng/scheduler重载与policy3→4条消费/真实Modal verifier→非恒定reward/有符号advantage/非零梯度/参数变化→C4/tokenjournal离线重放→真实W&B完整API/Prom/Tempo对账→所属回收/成本/最终交接。
-- 最新公共证据：docs/verl-uni-agent-harbor-opd-rl/evidence/r19-{prepared,real-preflight-validation,controller-startup,training-startup}-20260930.json。用户W&B反馈请求正在查本轮精确run，未拿R17替代。
+- 02:39:29UTC真实W&B API running/双卡/resume_path C3/目标4、history0；02:43GPU86%/85%，真实两任务running/verifying，controller ready。native-resume-proof已核10项原生成功日志，public原字节SHA294c933...8738。
+- 下一步：实际policy3→4条消费/真实Modal verifier→非恒定reward/有符号advantage/非零梯度/参数变化→C4/tokenjournal离线重放→W&B完整API/Prom/Tempo对账→所属回收/成本/最终交接。
+- 最新公共证据：docs/verl-uni-agent-harbor-opd-rl/evidence/r19-{prepared,real-preflight-validation,controller-startup,training-startup}-20260930.json。新证据另见r19-native-resume-proof与r19-wandb-running；未拿R17替代本轮。
 
 ## 2026-09-30：R18失败，R19同机控制器恢复进行中
 
