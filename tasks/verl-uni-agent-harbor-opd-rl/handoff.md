@@ -1,3 +1,13 @@
+## 2026-09-30 08:25 SGT：R18 同双卡恢复准备中，尚未启动训练
+
+- 用户继续授权11403同机器；23:51:31UTC实际两GPU0MiB/无compute。用户最新要求7小时，固定deadline1790752269（07:11:09UTC /15:11:09SGT），最多25200秒、180秒清理预留，Pod保留，不能重计。
+- C3→绝对step4，同world2/FSDP_version1、双TP1 replicas、并发2、原DSH/模型/32K/20480不变。新run mimo9b-001661-r18/W&B mimo9b001661r18，ports38740–43。
+- 真实C3 manifest15files19.151GB、SHA8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706已提交9501e75并push，Ruff663文件双门通过。CPU再次hash校验通过，不等于GPU恢复。
+- prep负责新helper/preflight最终测试；recipe修观测旧deadline和真实launcher参数/新Hydra probe；review补默认关闭的token journal及离线语义审计。运行源码尚未freeze，绝不可从未测试工作树直接启动。
+- 新Hydra readonly probe实测PASS，status SHAf8affd7393f8577c916072d0b0b2de5fcd41d71e90e84c8360b6b9dab3a55cfd、helperSHA0c89268f0e5357317a8fafb46d619cee4502bc41ec236ad6159baf7adaf23b62；预检已绑定。R18必须传观测deadline及UNI_AGENT_TOKEN_JOURNAL_DIR到实际Ray env。
+- 下一步：三组云CPU回归→精确commit/Ruff/push→基于R17 parent manifest698a954...冻结R18→stage/实际prepare/preflight→正确privatebin PATH controller(max25200)/GPU driver/timeline/archive→真实恢复与C4/token/W&B验收→所属资源清理。原R16草稿不动。
+- 详细计划：docs/verl-uni-agent-harbor-opd-rl/r18-resume-acceptance-plan.md。完整目标保持active，不能用R12分卡恢复冒充本轮world2恢复；不宣称能力提升。
+
 ## 2026-09-30 03:30 SGT：R17 双卡全链路真实验收通过
 
 ### TL;DR

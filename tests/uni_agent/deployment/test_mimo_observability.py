@@ -92,6 +92,7 @@ def test_ack_polls_and_keeps_backend_evidence(tmp_path):
         query=lambda query, timeout: next(replies),
         clock=lambda: next(times),
         sleep=lambda _: None,
+        wall_clock=lambda: 0,
     )
     assert report["status"] == "passed"
     assert report["backend_response"] == response()
@@ -111,6 +112,7 @@ def test_timeout_writes_failure_and_does_not_claim_ack(tmp_path):
             query=lambda query, timeout: response(step=3),
             clock=lambda: next(times),
             sleep=lambda _: None,
+            wall_clock=lambda: 0,
         )
     assert json.loads((tmp_path / "ack.json").read_text())["status"] == "failed"
 
@@ -132,6 +134,7 @@ def test_transport_error_is_bounded_and_recorded(tmp_path):
             query=unavailable,
             clock=lambda: next(times),
             sleep=lambda _: None,
+            wall_clock=lambda: 0,
         )
     assert json.loads((tmp_path / "ack.json").read_text())["last_error_type"] == "TimeoutError"
 
@@ -192,7 +195,8 @@ def test_http_query_uses_real_read_endpoint(monkeypatch):
     assert calls == [("http://127.0.0.1:9090/api/v1/query?query=a%7Bb%3D1%7D", 3)]
 
 
-def test_composition_retains_native_actor_through_ack(monkeypatch, tmp_path):
+@pytest.mark.parametrize("configured_deadline", [None, 1790752269])
+def test_composition_retains_native_actor_through_ack(monkeypatch, tmp_path, configured_deadline):
     from types import SimpleNamespace
 
     m = module()
@@ -211,14 +215,84 @@ def test_composition_retains_native_actor_through_ack(monkeypatch, tmp_path):
             default_local_dir=str(tmp_path / "checkpoints"),
         )
     )
+    if configured_deadline is not None:
+        config.trainer.observability_deadline_unix = configured_deadline
 
-    def acknowledge(*args):
+    def acknowledge(*args, **kwargs):
         assert runner.native_runner is handle
         assert runner.monitor_hub is hub
         events.append("ack")
         assert args[:3] == ("project", "r11", 4)
+        assert kwargs == {"deadline_unix": configured_deadline or m.DEADLINE}
         return "passed"
 
     monkeypatch.setattr(m, "wait_for_ack", acknowledge)
     assert runner.run(config) == "passed"
     assert events == ["retain_hub", "native", "ack"]
+
+
+def test_run_deadline_preserves_legacy_default_and_reads_hydra_config():
+    from omegaconf import OmegaConf
+
+    m = module()
+    assert m.resolve_deadline(OmegaConf.create({"trainer": {}})) == m.DEADLINE
+    config = OmegaConf.create({"trainer": {"observability_deadline_unix": 1790752269}})
+    assert m.resolve_deadline(config) == 1790752269
+
+
+def test_new_run_can_ack_after_legacy_deadline(tmp_path):
+    m = module()
+    report = m.wait_for_ack(
+        "project",
+        "r11",
+        4,
+        99,
+        tmp_path / "ack.json",
+        deadline_unix=1790752269,
+        query=lambda *_: response(),
+        clock=lambda: 0,
+        wall_clock=lambda: 1790726000,
+    )
+    assert report["status"] == "passed"
+    assert report["deadline_unix"] == 1790752269
+    assert report["budget_seconds"] == 45
+
+
+def test_explicit_deadline_reserves_cleanup_without_extending(tmp_path):
+    m = module()
+    with pytest.raises(TimeoutError):
+        m.wait_for_ack(
+            "project",
+            "r11",
+            4,
+            99,
+            tmp_path / "ack.json",
+            deadline_unix=1790752269,
+            query=lambda *_: pytest.fail("must not query inside cleanup reserve"),
+            clock=lambda: 1,
+            wall_clock=lambda: 1790752269 - 179,
+        )
+    report = json.loads((tmp_path / "ack.json").read_text())
+    assert report["deadline_unix"] == 1790752269
+    assert report["budget_seconds"] == 0
+
+
+@pytest.mark.parametrize("value", [True, False, None, 0, -1, "1790752269", float("nan"), float("inf")])
+def test_invalid_run_deadline_fails_before_native_or_query(tmp_path, value):
+    from types import SimpleNamespace
+
+    m = module()
+    config = SimpleNamespace(trainer=SimpleNamespace(observability_deadline_unix=value))
+    with pytest.raises(ValueError, match="deadline"):
+        m.resolve_deadline(config)
+    with pytest.raises(ValueError, match="deadline"):
+        m.wait_for_ack(
+            "project",
+            "r11",
+            4,
+            99,
+            tmp_path / "ack.json",
+            deadline_unix=value,
+            query=lambda *_: pytest.fail("invalid deadline must not reach the backend"),
+        )
+    assert not (tmp_path / "ack.json").exists()

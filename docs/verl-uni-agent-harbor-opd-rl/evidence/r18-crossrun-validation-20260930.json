@@ -1,0 +1,32 @@
+{
+  "schema": "mimo.crossrun-acceptance-cpu-validation.v1",
+  "status": "passed",
+  "exit_code": 0,
+  "finished_at": 1790727903.4180918,
+  "source_sha256": "33cd6593eb0982a232db49bc8889e28047f691c314994d000508895e160f9558",
+  "tests": {
+    "tests": 76,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coverage": {
+    "covered_lines": 250,
+    "num_statements": 251,
+    "percent_covered": 98.67986798679868,
+    "percent_covered_display": "99",
+    "missing_lines": 1,
+    "excluded_lines": 0,
+    "percent_statements_covered": 99.60159362549801,
+    "percent_statements_covered_display": "99",
+    "num_branches": 52,
+    "num_partial_branches": 3,
+    "covered_branches": 49,
+    "missing_branches": 3,
+    "percent_branches_covered": 94.23076923076923,
+    "percent_branches_covered_display": "94"
+  },
+  "raw_prefix": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-crossrun",
+  "training_started": false,
+  "actual_crossrun_training_audited": false
+}

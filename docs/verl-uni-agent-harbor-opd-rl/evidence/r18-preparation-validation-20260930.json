@@ -1,0 +1,69 @@
+{
+  "schema": "mimo.r18-operator-cpu-validation.v1",
+  "status": "passed",
+  "exit_code": 0,
+  "finished_at": 1790727346.8219266,
+  "deadline_unix": 1790752269,
+  "max_run_seconds": 25200,
+  "tests": {
+    "tests": 88,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "source_sha256": {
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r18_preparation.py": "506476efeb67409aefed880f6e2489c8af98c15a4b916767cf907f5b5f987be6",
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r18_preflight.py": "87bee1c1bd9f59171db9ce6373f3f4da67bee7b1d28197a85a7609bdab4de6c9"
+  },
+  "coverage_version": "7.16.2",
+  "unit_coverage": {
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r18_preflight.py": {
+      "covered_lines": 35,
+      "num_statements": 88,
+      "percent_covered": 45.535714285714285,
+      "percent_covered_display": "46",
+      "missing_lines": 53,
+      "excluded_lines": 0,
+      "percent_statements_covered": 39.77272727272727,
+      "percent_statements_covered_display": "40",
+      "num_branches": 24,
+      "num_partial_branches": 2,
+      "covered_branches": 16,
+      "missing_branches": 8,
+      "percent_branches_covered": 66.66666666666667,
+      "percent_branches_covered_display": "67"
+    },
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_r18_preparation.py": {
+      "covered_lines": 170,
+      "num_statements": 171,
+      "percent_covered": 98.95287958115183,
+      "percent_covered_display": "99",
+      "missing_lines": 1,
+      "excluded_lines": 0,
+      "percent_statements_covered": 99.41520467836257,
+      "percent_statements_covered_display": "99",
+      "num_branches": 20,
+      "num_partial_branches": 1,
+      "covered_branches": 19,
+      "missing_branches": 1,
+      "percent_branches_covered": 95.0,
+      "percent_branches_covered_display": "95"
+    }
+  },
+  "actual_preflight_pending": true,
+  "gpu_training_started": false,
+  "resume_verified": false,
+  "raw_prefix": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-reviewed-v2",
+  "checkpoint_readiness": {
+    "schema": "mimo.r18-resume-cpu-readiness.v1",
+    "status": "passed",
+    "checkpoint": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3",
+    "manifest_sha256": "8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706",
+    "world_size": 2,
+    "fsdp_version": 1,
+    "started_at": 1790726245.9617412,
+    "finished_at": 1790726281.478391,
+    "training_started": false,
+    "resume_verified": false
+  }
+}

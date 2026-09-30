@@ -1,5 +1,13 @@
 # MiMo 原生 W&B 与 RL-Insight 接入
 
+## R18：运行级绝对截止修正
+
+R18 最新授权窗口为 2026-09-30 00:11:09UTC 至 07:11:09UTC（1790752269，共 7 小时）；最初 2 小时窗口及其真实 probe 保留为历史证据，不作为当前准入。旧 helper 内固定的 1790709401 已过期，会令终态回执预算为零。launcher 新增明确参数 `--observability-deadline-unix 1790752269`，仅允许与 `--observability-wrapper` 一起使用，并写入实际子进程覆盖项 `++trainer.observability_deadline_unix=1790752269`。R18 preparation/preflight 必须与 run-spec 截止一致。helper 验证有限正数并跨 Ray 配置传递给 `wait_for_ack(deadline_unix=...)`，仍保留 45 秒上限和 180 秒清理预留；不随重启重计。
+
+缺少新字段的历史运行保持旧默认截止，不改已冻结历史源码。launcher 同时增加显式 opt-in `--token-journal-dir <absolute-private-path>`，通过 `++ray_kwargs.ray_init.runtime_env.env_vars.UNI_AGENT_TOKEN_JOURNAL_DIR` 传播给原生 Ray workers，默认不开。journal hook 独立负责私有目录权限与脱敏；不改变生成和奖励语义。
+
+本 slice 修改 `mimo_observability.py`、`examples/harbor_opd_rl/launch.py` 及两者已有测试；R18 preparation 与 journal hook 由独立 slice 接入。云 CPU 回归覆盖旧默认、晚于旧截止的新窗口、清理边界、非法值、Ray runner 参数传递及实际子进程命令重新组合。新 helper 使用独立身份在只读源码目录执行实际 Hydra bootstrap，证明真实配置包含截止和 journal 路径，元数据写到私有目录且在明确 CPU guard 处退出；不启动 GPU、Ray 训练或重启共享观测服务。
+
 用户明确要求用 W&B API 客观检查本会话训练，并补充「要注意集成 wandb verl-insight」。项目实际模块名为 `rl_insight`。本计划落实该要求，沿用已批准的双卡 separate_async、真实数据与固定截止，不扩大模型或训练预算。
 
 ## 13:08 UTC 用户追加六小时授权

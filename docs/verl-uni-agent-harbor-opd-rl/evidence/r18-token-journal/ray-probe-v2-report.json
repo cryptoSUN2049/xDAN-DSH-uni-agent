@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "synthetic_preflight_only": true,
+  "actual_training_verified": false,
+  "actual_gateway_actor": true,
+  "ray_job_env_propagated": true,
+  "tokenizer_path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3/actor/huggingface",
+  "cuda_initialized": false,
+  "session_id": "synthetic-token-journal-preflight",
+  "commits": 2,
+  "backend_tokens": 2,
+  "context_tokens": 12,
+  "events": 7,
+  "journal_sha256": "543953faa58e25446567d818db44858b992aac6300b33c546ffdaf28962f81a7"
+}

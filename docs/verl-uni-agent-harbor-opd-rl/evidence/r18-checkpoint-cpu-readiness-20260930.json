@@ -1,0 +1,12 @@
+{
+  "schema": "mimo.r18-resume-cpu-readiness.v1",
+  "status": "passed",
+  "checkpoint": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3",
+  "manifest_sha256": "8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706",
+  "world_size": 2,
+  "fsdp_version": 1,
+  "started_at": 1790726245.9617412,
+  "finished_at": 1790726281.478391,
+  "training_started": false,
+  "resume_verified": false
+}

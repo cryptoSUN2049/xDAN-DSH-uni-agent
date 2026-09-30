@@ -415,3 +415,165 @@ def test_dtensor_contract_rejects_forged_metadata(tmp_path, fault):
             value["local"][0]["box"]["offsets"][0] = 2 - value["local"][0]["box"]["offsets"][0]
     with pytest.raises(ValueError):
         m.model_summary(ranks)
+
+
+def cross_run_fixture(tmp_path):
+    m, args = fixture(tmp_path, step=4)
+    launch = json.loads(args["launch"].read_text())
+    launch["postprocessor"]["run_id"] = args["expected_run"] = "r18"
+    write(args["launch"], launch)
+    batch = json.loads(args["batch_audit"].read_text())
+    batch["launch_sha256"] = "sha256:" + m.digest(args["launch"])
+    write(args["batch_audit"], batch)
+    root = Path(launch["environment"]["RUN_ROOT"])
+    old = root / "rl-training/checkpoints/global_step_3"
+    parent = tmp_path / "parent-run/rl-training/checkpoints/global_step_3"
+    parent.parent.mkdir(parents=True)
+    old.rename(parent)  # Temporary fixture files only; production checkpoints stay in place.
+    (parent / "data.pt").write_bytes(b"trusted native dataloader state")
+    delta = json.loads(args["sharded_delta"].read_text())
+    for label, folder in (("before", parent), ("after", root / "rl-training/checkpoints/global_step_4")):
+        path = write(folder / "actor/fsdp_config.json", {"FSDP_version": 1, "world_size": 2})
+        delta["configs"][label] = file_info(path)
+    for rank in delta["ranks"]:
+        for key, prefix in (("model", "model"), ("optimizer", "optim"), ("extra", "extra_state")):
+            rank["files"]["before_" + key] = file_info(parent / f"actor/{prefix}_world_size_2_rank_{rank['rank']}.pt")
+    write(args["sharded_delta"], delta)
+    files = {
+        str(p.relative_to(parent)): {k: v for k, v in file_info(p).items() if k != "path"}
+        for p in parent.rglob("*")
+        if p.is_file()
+    }
+    manifest = write(
+        tmp_path / "resume-manifest.json",
+        {
+            "schema": "mimo.native-checkpoint-manifest.v1",
+            "run_id": "r17",
+            "source_commit": "b" * 40,
+            "run_spec_sha256": "sha256:" + "2" * 64,
+            "step": 3,
+            "world_size": 2,
+            "checkpoint": str(parent),
+            "files": files,
+        },
+    )
+    args.update(resume_manifest=manifest, resume_manifest_sha256=m.digest(manifest))
+    return m, args, parent
+
+
+def test_cross_run_parent_bound_update_does_not_claim_restore(tmp_path):
+    m, args, parent = cross_run_fixture(tmp_path)
+    result = m.audit(**args)
+    assert result["passed"], result["errors"]
+    assert result["parent_checkpoint"]["checkpoint"] == str(parent)
+    assert result["parent_checkpoint"]["manifest"]["sha256"] == args["resume_manifest_sha256"]
+    assert result["parent_checkpoint"]["run_id"] == "r17"
+    assert result["effective_update_verified"] and not result["resume_verified"]
+
+
+@pytest.mark.parametrize(
+    "attack",
+    [
+        "no-manifest",
+        "no-sha",
+        "orphan-sha",
+        "fake-sha",
+        "parent-is-current",
+        "source",
+        "spec",
+        "schema",
+        "wrong-path",
+        "traversal",
+        "same-root",
+        "wrong-step",
+        "wrong-world",
+        "wrong-fsdp",
+        "missing-rank",
+        "manifest-rank",
+        "corrupt-data",
+        "missing-data",
+        "bytes",
+        "file-sha",
+        "file-traversal",
+        "symlink",
+        "after-parent",
+    ],
+)
+def test_cross_run_rejects_unbound_or_incomplete_parent(tmp_path, attack):
+    m, args, parent = cross_run_fixture(tmp_path)
+    manifest = json.loads(args["resume_manifest"].read_text())
+    if attack == "no-manifest":
+        args.pop("resume_manifest")
+        args.pop("resume_manifest_sha256")
+    elif attack == "no-sha":
+        args.pop("resume_manifest_sha256")
+    elif attack == "orphan-sha":
+        args.pop("resume_manifest")
+    elif attack == "fake-sha":
+        args["resume_manifest_sha256"] = "0" * 64
+    elif attack == "parent-is-current":
+        manifest["run_id"] = "r18"
+    elif attack == "source":
+        manifest["source_commit"] = "unbound"
+    elif attack == "spec":
+        manifest["run_spec_sha256"] = "unbound"
+    elif attack == "schema":
+        manifest["schema"] = "other"
+    elif attack == "wrong-path":
+        manifest["checkpoint"] = str(parent.with_name("global_step_2"))
+    elif attack == "traversal":
+        manifest["checkpoint"] = str(parent / "../global_step_3")
+    elif attack == "same-root":
+        manifest["checkpoint"] = str(tmp_path / "run/rl-training/checkpoints/global_step_3")
+    elif attack == "wrong-step":
+        manifest["step"] = 2
+    elif attack == "wrong-world":
+        manifest["world_size"] = 1
+    elif attack == "wrong-fsdp":
+        path = write(parent / "actor/fsdp_config.json", {"FSDP_version": 2, "world_size": 2})
+        manifest["files"]["actor/fsdp_config.json"] = {k: v for k, v in file_info(path).items() if k != "path"}
+    elif attack == "missing-rank":
+        (parent / "actor/model_world_size_2_rank_1.pt").unlink()
+    elif attack == "manifest-rank":
+        manifest["files"].pop("actor/extra_state_world_size_2_rank_1.pt")
+    elif attack == "corrupt-data":
+        (parent / "data.pt").write_bytes(b"changed")
+    elif attack == "missing-data":
+        manifest["files"].pop("data.pt")
+    elif attack == "bytes":
+        manifest["files"]["data.pt"]["bytes"] += 1
+    elif attack == "file-sha":
+        manifest["files"]["data.pt"]["sha256"] = "0" * 64
+    elif attack == "file-traversal":
+        manifest["files"]["../outside"] = manifest["files"]["data.pt"]
+    elif attack == "symlink":
+        path = parent / "data.pt"
+        outside = tmp_path / "outside.pt"
+        path.rename(outside)
+        path.symlink_to(outside)
+    elif attack == "after-parent":
+        delta = json.loads(args["sharded_delta"].read_text())
+        delta["ranks"][0]["files"]["after_model"] = delta["ranks"][0]["files"]["before_model"]
+        write(args["sharded_delta"], delta)
+    if "resume_manifest" in args:
+        write(args["resume_manifest"], manifest)
+        if attack not in {"fake-sha", "no-sha"}:
+            args["resume_manifest_sha256"] = m.digest(args["resume_manifest"])
+    result = m.audit(**args)
+    assert not result["passed"], attack
+    assert result["errors"], attack
+
+
+def test_cross_run_cli_preserves_explicit_manifest_binding(tmp_path, monkeypatch, capsys):
+    m, args, parent = cross_run_fixture(tmp_path)
+    output = tmp_path / "cross-run-report.json"
+    argv = ["audit", "--output", str(output)]
+    for key, value in args.items():
+        argv += ["--" + key.replace("_", "-"), str(value)]
+    monkeypatch.setattr("sys.argv", argv)
+    assert m.main() == 0
+    assert json.loads(capsys.readouterr().out)["passed"] is True
+    result = json.loads(output.read_text())
+    assert result["parent_checkpoint"]["checkpoint"] == str(parent)
+    assert result["parent_checkpoint"]["manifest"]["sha256"] == args["resume_manifest_sha256"]
+    assert result["resume_verified"] is False

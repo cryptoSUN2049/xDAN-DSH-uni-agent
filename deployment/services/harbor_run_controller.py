@@ -413,8 +413,8 @@ def create_app(controller):
 
 
 async def main(path, max_run_seconds=14400):
-    if type(max_run_seconds) is not int or not 1 <= max_run_seconds <= 21600:
-        raise ValueError("max_run_seconds must be an integer between 1 and 21600")
+    if type(max_run_seconds) is not int or not 1 <= max_run_seconds <= 25200:
+        raise ValueError("max_run_seconds must be an integer between 1 and 25200")
     spec = RunSpec.model_validate_json(path.read_bytes())
     if not 0 < spec.deadline_unix - time.time() <= max_run_seconds:
         raise ValueError(f"Run must have a future deadline within {max_run_seconds} seconds")
@@ -442,11 +442,11 @@ def cli(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-spec", type=Path, required=True)
     parser.add_argument(
-        "--max-run-seconds", type=int, default=14400, help="Maximum future deadline distance, 1..21600 (default: 14400)"
+        "--max-run-seconds", type=int, default=14400, help="Maximum future deadline distance, 1..25200 (default: 14400)"
     )
     args = parser.parse_args(argv)
-    if not 1 <= args.max_run_seconds <= 21600:
-        parser.error("max-run-seconds must be between 1 and 21600")
+    if not 1 <= args.max_run_seconds <= 25200:
+        parser.error("max-run-seconds must be between 1 and 25200")
     asyncio.run(main(args.run_spec, max_run_seconds=args.max_run_seconds))
 
 

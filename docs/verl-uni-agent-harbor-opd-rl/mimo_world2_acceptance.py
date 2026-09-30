@@ -17,6 +17,15 @@ from deployment.checks.effective_update_audit import parse_console_metrics
 
 CHECKER_SHA = "ea9055884d8474bb511f0e8593dcee3fd9769714244deacd4d9c1c3017ff05a6"
 OPTIMIZER_SHA = "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee"
+RESUME_FILES = {
+    "data.pt",
+    "actor/fsdp_config.json",
+    *(
+        f"actor/{prefix}_world_size_2_rank_{rank}.pt"
+        for rank in range(2)
+        for prefix in ("model", "optim", "extra_state")
+    ),
+}
 
 
 def require(condition, message):
@@ -76,6 +85,75 @@ def bind_file(item, expected):
     require(digest(expected) == item["sha256"], "Checkpoint SHA mismatch")
     if "bytes" in item:
         require(type(item["bytes"]) is int and item["bytes"] == expected.stat().st_size, "File size mismatch")
+
+
+def bind_parent_checkpoint(path, expected_sha, *, current_root, current_run, step):
+    """Bind an independent parent checkpoint without treating comparison as restore."""
+    require(
+        isinstance(expected_sha, str) and re.fullmatch(r"[0-9a-f]{64}", expected_sha), "Expected parent manifest SHA"
+    )
+    manifest_identity = identity(path)
+    require(manifest_identity["sha256"] == expected_sha, "Parent manifest SHA mismatch")
+    manifest = read_json(path)
+    require(manifest["schema"] == "mimo.native-checkpoint-manifest.v1", "Parent manifest schema differs")
+    require(
+        isinstance(manifest["run_id"], str) and manifest["run_id"] and manifest["run_id"] != current_run,
+        "Parent and current run identities must differ",
+    )
+    require(
+        isinstance(manifest["source_commit"], str)
+        and re.fullmatch(r"[0-9a-f]{40}", manifest["source_commit"])
+        and isinstance(manifest["run_spec_sha256"], str)
+        and re.fullmatch(r"sha256:[0-9a-f]{64}", manifest["run_spec_sha256"]),
+        "Parent source/spec identity malformed",
+    )
+    require(integer(manifest["step"], 1) and manifest["step"] == step - 1, "Parent checkpoint step differs")
+    require(type(manifest["world_size"]) is int and manifest["world_size"] == 2, "Parent checkpoint world size differs")
+    checkpoint = absolute(manifest["checkpoint"])
+    require(
+        checkpoint.name == f"global_step_{step - 1}"
+        and checkpoint.parent.name == "checkpoints"
+        and checkpoint.parent.parent.name == "rl-training"
+        and checkpoint.parents[2] != current_root
+        and checkpoint.is_dir(),
+        "Parent checkpoint path must identify an independent native run",
+    )
+    files = manifest["files"]
+    require(isinstance(files, dict) and RESUME_FILES <= files.keys(), "Incomplete parent checkpoint manifest")
+    for name, item in files.items():
+        relative = Path(name)
+        require(not relative.is_absolute() and ".." not in relative.parts, "Invalid parent checkpoint file path")
+        target = checkpoint / relative
+        require(target.resolve().is_relative_to(checkpoint), "Parent checkpoint file escapes root")
+        require(integer(item["bytes"], 1), "Invalid parent file size")
+        before = target.stat()
+        bind_file({**item, "path": str(target)}, target)
+        after = target.stat()
+        require(
+            (before.st_size, before.st_mtime_ns, before.st_ino) == (after.st_size, after.st_mtime_ns, after.st_ino),
+            "Parent checkpoint changed during hashing",
+        )
+    config = read_json(checkpoint / "actor/fsdp_config.json")
+    require(
+        type(config["world_size"]) is int
+        and config["world_size"] == 2
+        and type(config.get("FSDP_version")) is int
+        and config["FSDP_version"] == 1,
+        "Parent checkpoint requires native FSDP version one/world two",
+    )
+    require(digest(path) == expected_sha, "Parent manifest changed during validation")
+    return checkpoint, {
+        "manifest": manifest_identity,
+        "run_id": manifest["run_id"],
+        "source_commit": manifest["source_commit"],
+        "run_spec_sha256": manifest["run_spec_sha256"],
+        "checkpoint": str(checkpoint),
+        "step": manifest["step"],
+        "world_size": 2,
+        "fsdp_version": 1,
+        "files": files,
+        "scope": "parent-bound checkpoint comparison; native restore remains separately unverified",
+    }
 
 
 def validate_coverage(shape, boxes):
@@ -203,6 +281,8 @@ def audit(
     sharded_delta,
     checkpoint_checker,
     optimizer_checker,
+    resume_manifest=None,
+    resume_manifest_sha256=None,
 ):
     report = {
         "schema": "mimo.world2-effective-update.v1",
@@ -216,6 +296,10 @@ def audit(
         "errors": [],
     }
     try:
+        require(
+            (resume_manifest is None) == (resume_manifest_sha256 is None),
+            "Parent manifest and its expected SHA must be supplied together",
+        )
         require(integer(step, 2), "Expected absolute step >= 2")
         require(isinstance(expected_run, str) and expected_run, "Expected run required")
         require(re.fullmatch(r"sha256:[0-9a-f]{64}", expected_spec) is not None, "Expected spec SHA required")
@@ -352,12 +436,22 @@ def audit(
             and [row["rank"] for row in ranks] == [0, 1],
             "Missing/duplicate rank",
         )
-        root = absolute(launch["environment"]["RUN_ROOT"]) / "rl-training/checkpoints"
+        run_root = absolute(launch["environment"]["RUN_ROOT"])
+        root = run_root / "rl-training/checkpoints"
         checkpoints = {"before": root / f"global_step_{step - 1}/actor", "after": root / f"global_step_{step}/actor"}
+        if resume_manifest is not None:
+            parent, parent_report = bind_parent_checkpoint(
+                resume_manifest, resume_manifest_sha256, current_root=run_root, current_run=expected_run, step=step
+            )
+            checkpoints["before"] = parent / "actor"
+            report["parent_checkpoint"] = parent_report
         for label, folder in checkpoints.items():
             bind_file(delta["configs"][label], folder / "fsdp_config.json")
-            world_size = read_json(folder / "fsdp_config.json")["world_size"]
+            config = read_json(folder / "fsdp_config.json")
+            world_size = config["world_size"]
             require(type(world_size) is int and world_size == 2, "FSDP config is not world2")
+            if resume_manifest is not None:
+                require(type(config.get("FSDP_version")) is int and config["FSDP_version"] == 1, "FSDP version differs")
             for rank in ranks:
                 require(rank["passed"] is True and rank["errors"] == [], "Rank audit failed")
                 for key, prefix in (("model", "model"), ("optimizer", "optim"), ("extra", "extra_state")):
@@ -387,6 +481,8 @@ def main():
     parser.add_argument("--expected-run", default="mimo9b-001661-r15")
     parser.add_argument("--expected-spec", required=True)
     parser.add_argument("--step", type=int, default=2)
+    parser.add_argument("--resume-manifest", type=Path, help="Explicit independent parent checkpoint manifest")
+    parser.add_argument("--resume-manifest-sha256", help="Expected SHA256 of the parent manifest")
     for name in (
         "launch",
         "batch-audit",

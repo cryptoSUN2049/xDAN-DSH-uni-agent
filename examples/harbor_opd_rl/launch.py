@@ -324,6 +324,10 @@ def main() -> None:
     parser.add_argument(
         "--observability-wrapper", action="store_true", help="Use the fixed MiMo native monitoring lifecycle wrapper"
     )
+    parser.add_argument(
+        "--observability-deadline-unix", type=_positive_int, help="Explicit absolute cutoff for the monitoring wrapper"
+    )
+    parser.add_argument("--token-journal-dir", type=Path, help="Opt-in absolute private token-journal directory")
     parser.add_argument("--print-config", action="store_true", help="Compose only; no Ray/GPU/controller requests")
     parser.add_argument("--preflight-only", action="store_true", help="Check tokenizer and filtered data; no training")
     parser.add_argument(
@@ -334,6 +338,10 @@ def main() -> None:
     )
     parser.add_argument("--resume-from-path", type=Path, help="Explicit native global_step_N checkpoint to restore")
     args = parser.parse_args()
+    if args.observability_deadline_unix is not None and not args.observability_wrapper:
+        parser.error("--observability-deadline-unix requires --observability-wrapper")
+    if args.token_journal_dir is not None and not args.token_journal_dir.is_absolute():
+        parser.error("--token-journal-dir must be an absolute private path")
     overrides = build_overrides(
         args.mode,
         json.loads(args.launch.read_bytes()),
@@ -344,6 +352,13 @@ def main() -> None:
     # Hydra writes logs/metadata before entering the trainer; source may be read-only.
     hydra_run_dir = args.launch.resolve().parent / "hydra"
     overrides.append(f"hydra.run.dir={_hydra(str(hydra_run_dir))}")
+    if args.observability_deadline_unix is not None:
+        overrides.append(f"++trainer.observability_deadline_unix={args.observability_deadline_unix}")
+    if args.token_journal_dir is not None:
+        overrides.append(
+            "++ray_kwargs.ray_init.runtime_env.env_vars.UNI_AGENT_TOKEN_JOURNAL_DIR="
+            + _hydra(str(args.token_journal_dir))
+        )
     for key, value in [("total_training_steps", args.total_training_steps), ("save_freq", args.save_freq)]:
         if value is not None:
             overrides.append(f"trainer.{key}={value}")

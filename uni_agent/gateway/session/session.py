@@ -14,6 +14,7 @@ from typing import Any
 from fastapi import HTTPException
 
 from uni_agent.gateway.session.codec import MessageCodec
+from uni_agent.gateway.session.token_journal import TokenJournal, snapshot
 from uni_agent.gateway.session.types import (
     InternalGenerationRequest,
     SessionHandle,
@@ -215,6 +216,7 @@ class GatewaySession:
         self._budget_exhaustion_events: list[dict[str, Any]] = []
 
         self.handle = handle
+        self._token_journal = TokenJournal.from_env(handle.session_id)
         self._codec = codec
         # Provider adapters merge these trusted defaults before calling the
         # session; the total trajectory capacity is enforced during preparation.
@@ -277,6 +279,7 @@ class GatewaySession:
         # completion order. That order also determines which trajectory an optional
         # RewardLoopWorker treats as the session's final scoring input.
         reserved_chain_id: int | None = None
+        journal_request = None
         generation_span = start_generation_span(self._trace_identity)
         try:
             async with self.request_lock:
@@ -288,6 +291,11 @@ class GatewaySession:
                 # Prepare can touch codec and multimodal extractor state, so only
                 # backend generation runs outside the session lock.
                 encoded = await self._prepare_generation_inputs(request)
+                if self._token_journal is not None:
+                    previous = next((c for c in self.active_chains if c.chain_id == encoded.chain_id), None)
+                    journal_request = self._token_journal.prepare(
+                        encoded, previous, self._codec.turn_separator + self._codec.generation_prompt
+                    )
                 exhaustion_reason = "max_trajectory_length"
                 if self._max_generated_tokens is not None:
                     remaining = self._max_generated_tokens - self._generated_tokens
@@ -299,6 +307,8 @@ class GatewaySession:
                             encoded.sampling_params.get("max_tokens", remaining), remaining
                         )
                 if encoded.capacity_exhausted:
+                    if self._token_journal is not None:
+                        self._token_journal.write("denied", request=journal_request)
                     if self._max_generated_tokens is not None:
                         # A denied new chain has no trajectory of its own, but
                         # still prevents claiming that the episode completed.
@@ -343,6 +353,17 @@ class GatewaySession:
                 self._generated_tokens += len(output.token_ids)
                 if len(output.token_ids) > requested_cap:
                     raise HTTPException(status_code=500, detail="Backend exceeded the session generation budget cap")
+
+            if self._token_journal is not None:
+                self._token_journal.write(
+                    "backend",
+                    request=journal_request,
+                    token_ids=list(output.token_ids),
+                    log_probs=list(output.log_probs) if output.log_probs is not None else None,
+                    min_global_steps=output.extra_fields.get("min_global_steps"),
+                    max_global_steps=output.extra_fields.get("max_global_steps"),
+                    stop_reason=output.stop_reason,
+                )
 
             # This is the final backend outcome, after any FullyAsync client
             # internal partial-rollout recovery. Do not turn terminal cancellation
@@ -408,6 +429,10 @@ class GatewaySession:
                     stop_reason=output.stop_reason,
                 )
                 chain_id = self._commit_generation_to_chain(encoded, assistant_msg)
+                if self._token_journal is not None:
+                    self._token_journal.write(
+                        "commit", request=journal_request, chain_id=chain_id, state=snapshot(encoded.buffer)
+                    )
                 if (
                     finish_reason == "length"
                     and self._max_generated_tokens is not None
@@ -450,6 +475,8 @@ class GatewaySession:
                     completion_tokens=len(response_ids),
                 )
         except Exception as exc:
+            if self._token_journal is not None:
+                self._token_journal.write("failure", request=journal_request, error_type=type(exc).__name__)
             generation_span.failure(exc)
             raise
         finally:
@@ -485,6 +512,11 @@ class GatewaySession:
                 proof = self._budget_proof(ordered_trajectories)
                 for trajectory in ordered_trajectories:
                     trajectory.extra_fields["gateway_budget_proof"] = deepcopy(proof)
+            if self._token_journal is not None:
+                self._token_journal.write(
+                    "finalize",
+                    trajectories=[{"chain_id": t.chain_id, "state": snapshot(t)} for t in ordered_trajectories],
+                )
             return ordered_trajectories
 
     def _record_budget_exhaustion(

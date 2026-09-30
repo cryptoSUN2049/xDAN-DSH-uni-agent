@@ -1,0 +1,199 @@
+{
+  "schema": "mimo.r18-observability-validation.v1",
+  "status": "passed",
+  "authorized_deadline_unix": 1790752269,
+  "runtime_source_sha256": {
+    "docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py": "0c89268f0e5357317a8fafb46d619cee4502bc41ec236ad6159baf7adaf23b62",
+    "examples/harbor_opd_rl/launch.py": "f172b0fb5fb2d8331955c53a5830b4c489af58afdff0c242a6d861f819cdae2e"
+  },
+  "hydra_entry_probe": {
+    "schema": "mimo.hydra-entry-preflight.v1",
+    "started_at": 1790727148.313184,
+    "finished_at": 1790727195.7734215,
+    "helper_sha256": "0c89268f0e5357317a8fafb46d619cee4502bc41ec236ad6159baf7adaf23b62",
+    "helper_path": "/root/mimo-private/observability-hydra-bootstrap-r18-v2-20260930/helper/mimo_observability.py",
+    "source_cwd": "/workspace/mimo-dsh-rl-20260928/run-src-r17",
+    "source_mode": "0o555",
+    "argv": [
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+      "/root/mimo-private/observability-hydra-bootstrap-r18-v2-20260930/helper/mimo_observability.py",
+      "--config-name=ppo_trainer",
+      "trainer.use_v1=false",
+      "trainer.experiment_name=mimo9b-r18-hydra-bootstrap-v2-20260930",
+      "++trainer.observability_deadline_unix=1790752269",
+      "++ray_kwargs.ray_init.runtime_env.env_vars.UNI_AGENT_TOKEN_JOURNAL_DIR=/root/mimo-private/launch-r18/token-journal",
+      "hydra.run.dir=/root/mimo-private/observability-hydra-bootstrap-r18-v2-20260930/hydra",
+      "hydra.job.chdir=false"
+    ],
+    "expected_exit_code": 1,
+    "observed_exit_code": 1,
+    "expected_error": "Observed entry requires native V1 with wandb and rl_insight",
+    "observed_guard_error": "Observed entry requires native V1 with wandb and rl_insight",
+    "hydra_metadata_created": true,
+    "native_ray_not_started": true,
+    "gpu_training_started": false,
+    "training_acceptance": false,
+    "gpu_compute_apps_before": "",
+    "gpu_compute_apps_after": "",
+    "observability_deadline_unix": 1790752269,
+    "token_journal_dir": "/root/mimo-private/launch-r18/token-journal",
+    "experiment_name": "mimo9b-r18-hydra-bootstrap-v2-20260930",
+    "log_sha256": "6f15b8167b39bdc02d16098588103d9641b5d914d17fdabcf3d6fffe6f40f911",
+    "status": "passed"
+  },
+  "hydra_entry_probe_private_path": "/root/mimo-private/observability-hydra-bootstrap-r18-v2-20260930/status.json",
+  "hydra_entry_probe_sha256": "f8affd7393f8577c916072d0b0b2de5fcd41d71e90e84c8360b6b9dab3a55cfd",
+  "superseded_two_hour_probe": {
+    "private_path": "/root/mimo-private/observability-hydra-bootstrap-r18-20260930/status.json",
+    "sha256": "848dc519c33c17b7bd591a09716ec48dfa143dac20e04ccdc30872607662011a",
+    "deadline_unix": 1790733089,
+    "status": "passed",
+    "current_authorization": false
+  },
+  "gpu_training_started": false,
+  "training_acceptance": false,
+  "notes": [
+    "Probe is the actual new helper from frozen read-only source cwd; the expected pre-Ray guard rejects use_v1=false after Hydra writes actual config.",
+    "No shared uv environment, service, GPU training process, or historical source was modified.",
+    "Initial RED:13 failed/20 passed against old helper. Initial GREEN collection failed because the frozen source snapshot omitted committed fixture files. First complete regression:92 passed/1 new test failed because default runtime_env does not contain env_vars; corrected negative assertion without changing runtime. All failures preserved privately."
+  ],
+  "cpu_regression": {
+    "status": {
+      "started_at": 1790727277.5840054,
+      "argv": [
+        "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+        "-m",
+        "coverage",
+        "run",
+        "--branch",
+        "--rcfile=/dev/null",
+        "--include=*/mimo_observability.py,*/examples/harbor_opd_rl/launch.py",
+        "-m",
+        "pytest",
+        "--noconftest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=green.xml",
+        "tests/uni_agent/deployment/test_mimo_observability.py",
+        "tests/uni_agent/examples/test_mimo_observed_recipe.py",
+        "tests/uni_agent/examples/test_harbor_launch_preflight.py",
+        "tests/uni_agent/examples/test_harbor_opd_rl_recipe.py"
+      ],
+      "finished_at": 1790727384.5110095,
+      "exit_code": 0,
+      "source_sha256": {
+        "docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py": "0c89268f0e5357317a8fafb46d619cee4502bc41ec236ad6159baf7adaf23b62",
+        "examples/harbor_opd_rl/launch.py": "f172b0fb5fb2d8331955c53a5830b4c489af58afdff0c242a6d861f819cdae2e",
+        "tests/uni_agent/deployment/test_mimo_observability.py": "401a13c1d56f3acbaa3df66cda524d1c08aa28c46f835cbc0b02e77419d78ac2",
+        "tests/uni_agent/examples/test_mimo_observed_recipe.py": "04e3512383d555bfbff96ea5d7648fdc499a6af8e23605f633c41eed69986392"
+      }
+    },
+    "coverage": {
+      "meta": {
+        "format": 3,
+        "version": "7.16.2",
+        "timestamp": "2026-09-30T00:16:25.037951",
+        "branch_coverage": true,
+        "show_contexts": false
+      },
+      "totals": {
+        "covered_lines": 337,
+        "num_statements": 363,
+        "percent_covered": 90.6930693069307,
+        "percent_covered_display": "91",
+        "missing_lines": 26,
+        "excluded_lines": 22,
+        "percent_statements_covered": 92.8374655647383,
+        "percent_statements_covered_display": "93",
+        "num_branches": 142,
+        "num_partial_branches": 19,
+        "covered_branches": 121,
+        "missing_branches": 21,
+        "percent_branches_covered": 85.21126760563381,
+        "percent_branches_covered_display": "85"
+      },
+      "files": {
+        "docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py": {
+          "covered_lines": 93,
+          "num_statements": 97,
+          "percent_covered": 95.86776859504133,
+          "percent_covered_display": "96",
+          "missing_lines": 4,
+          "excluded_lines": 22,
+          "percent_statements_covered": 95.87628865979381,
+          "percent_statements_covered_display": "96",
+          "num_branches": 24,
+          "num_partial_branches": 1,
+          "covered_branches": 23,
+          "missing_branches": 1,
+          "percent_branches_covered": 95.83333333333333,
+          "percent_branches_covered_display": "96"
+        },
+        "examples/harbor_opd_rl/launch.py": {
+          "covered_lines": 244,
+          "num_statements": 266,
+          "percent_covered": 89.0625,
+          "percent_covered_display": "89",
+          "missing_lines": 22,
+          "excluded_lines": 0,
+          "percent_statements_covered": 91.72932330827068,
+          "percent_statements_covered_display": "92",
+          "num_branches": 118,
+          "num_partial_branches": 18,
+          "covered_branches": 98,
+          "missing_branches": 20,
+          "percent_branches_covered": 83.05084745762711,
+          "percent_branches_covered_display": "83"
+        }
+      }
+    },
+    "artifacts": {
+      "green.log": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-observability-tests/green.log",
+        "sha256": "3b3d58ec8988d545a326e4edc99f20c41a9256e2e1cf4c5c27212488aa8f16e8"
+      },
+      "green.xml": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-observability-tests/green.xml",
+        "sha256": "4c77130888584ee8f4e16edcb65de8a3c006319fdb780381fd5003cf7813b26c"
+      },
+      "coverage.json": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-observability-tests/coverage.json",
+        "sha256": "cf5b9bf43fbb57664fb63208044faabee8d68077df7c9ff41d3a31e851f0e3ca"
+      },
+      "validation-status.json": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-observability-tests/validation-status.json",
+        "sha256": "f936c22f2b728908ab4a4699f82da38e5aa5a3537cad37384f58fd3aca91a2a7"
+      },
+      "red.log": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-observability-tests/red.log",
+        "sha256": "6bf1b0b5c847950e7ec89cb12bd00c5d555906d45e41a52cd441cf5b4b71c6f3"
+      },
+      "collection-failure-green.log": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-observability-tests/collection-failure-green.log",
+        "sha256": "527da1060fd4df24990af896bb52a69edd058f2e42c143910fe452e07cc084ae"
+      },
+      "first-regression-green.log": {
+        "private_path": "/workspace/mimo-dsh-rl-20260928/integration-check/r18-observability-tests/first-regression-green.log",
+        "sha256": "ee06c946e2500da8e1d3d2ec0a36a113401310a4adc3552d333cb662f6c526d6"
+      }
+    }
+  },
+  "tests_passed": 93,
+  "pytest_seconds": 102.95,
+  "local_static_checks": {
+    "ruff_check": "passed",
+    "ruff_format_check": "passed",
+    "scope": [
+      "docs/verl-uni-agent-harbor-opd-rl/mimo_observability.py",
+      "examples/harbor_opd_rl/launch.py",
+      "tests/uni_agent/deployment/test_mimo_observability.py",
+      "tests/uni_agent/examples/test_mimo_observed_recipe.py"
+    ]
+  },
+  "coverage_scope": "Complete helper/launcher modules as included; existing helper main pragma remains, covered separately by the actual read-only Hydra guard probe. No new exclusions.",
+  "runtime_limitations": [
+    "Ray native worker runtime env delivery is wired through exact composed runtime_env, but live R18 token journal writing remains to be verified during training.",
+    "No claim of independent C3 resume or optimizer update is made by this bootstrap/CPU validation."
+  ]
+}

@@ -27,8 +27,8 @@ def main():
     parser.add_argument("--deadline", type=float, required=True)
     args = parser.parse_args()
     start = time.time()
-    if not start < args.deadline <= start + 21600:
-        raise ValueError("Require a future deadline within six hours")
+    if not start < args.deadline <= start + 25200:
+        raise ValueError("Require a future deadline within seven hours")
     descriptor = os.open(args.output, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     with os.fdopen(descriptor, "w") as stream:
         while time.time() < args.deadline:

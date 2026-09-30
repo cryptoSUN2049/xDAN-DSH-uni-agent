@@ -1,0 +1,77 @@
+{
+  "schema": "mimo.token-journal-readiness.v1",
+  "passed": true,
+  "actual_training_verified": false,
+  "created_at_unix": 1790727841.3753252,
+  "source_sha256": {
+    "uni_agent/gateway/session/session.py": "ed9909b7aee175e333dc63c4b743d7d9796cd903b7f79637131300c5339a57cc",
+    "uni_agent/gateway/session/token_journal.py": "55fcec96d380bc5fb9cf001047e2beaede620793445901e2c84079cc005a7e48",
+    "deployment/checks/token_journal_audit.py": "e59c1b64aea81fcc8ac3541ee874d7bff758803442fe064ea0387820993507c9",
+    "tests/uni_agent/gateway/test_token_journal.py": "9da1a99b27523f61274b26074a93e20e114725d5e9a9334d496a74bbf011653c",
+    "tests/uni_agent/gateway/test_token_journal_ray.py": "193600360b510ea81c95dde91e51fed0ca7c699481487f5cfb093d41f3143b1c"
+  },
+  "session_regression": {
+    "passed": 145,
+    "failed": 0,
+    "seconds": 40.47,
+    "log": "test-v6-coverage-path.log"
+  },
+  "focused_final": {
+    "passed": 23,
+    "failed": 0,
+    "seconds": 37.92,
+    "log": "test-v8-cli-coverage.log",
+    "coverage": {
+      "covered_lines": 225,
+      "num_statements": 228,
+      "percent_covered": 98.6842105263158,
+      "percent_covered_display": "99",
+      "missing_lines": 3,
+      "excluded_lines": 0,
+      "percent_statements_covered": 98.6842105263158,
+      "percent_statements_covered_display": "99"
+    }
+  },
+  "ray_native_gateway_probe": {
+    "passed": true,
+    "synthetic_preflight_only": true,
+    "actual_training_verified": false,
+    "actual_gateway_actor": true,
+    "ray_job_env_propagated": true,
+    "tokenizer_path": "/workspace/mimo-dsh-rl-20260928/runs/r17/rl-training/checkpoints/global_step_3/actor/huggingface",
+    "cuda_initialized": false,
+    "session_id": "synthetic-token-journal-preflight",
+    "commits": 2,
+    "backend_tokens": 2,
+    "context_tokens": 12,
+    "events": 7,
+    "journal_sha256": "543953faa58e25446567d818db44858b992aac6300b33c546ffdaf28962f81a7"
+  },
+  "own_ray_processes_remaining": [],
+  "probe_cleanup_check": "/proc scan for owned /tmp/r18-tj- roots after both probes completed: no processes",
+  "environment": {
+    "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2",
+    "cuda_uninitialized_assertions": "GPU host CPU unit runner before and after pytest; native probe parent and every backend call"
+  },
+  "log_sha256": {
+    "test.log": "6ae93bc8ad6f4c17f98ec1b96f407cac541498b57c8d21ff9b2a9b8433008d5f",
+    "test-v2.log": "220a6921097fe9fe3d45846ee70bdbf4c2d742d58868355252524793cf4436de",
+    "test-v3.log": "91672b05127e9a1c77826153373736d96a33acf1fc750127296425da857873c9",
+    "test-v4-gpuhost-cpu.log": "402f7c3b447de84dab9d91e42b8d91a06cfd0b21c4d643a339e19a1454290989",
+    "test-v5-plain.log": "a1cf5b8809e52cd8672bb0a41d2750527616e316a635b9a9b648dd697e1beac7",
+    "test-v6-coverage-path.log": "7f6e2265462e33d7bf68225a90b6973ac84502b742d39cb104197e98ec0202ad",
+    "test-v7-coverage.log": "355ed08c22d93809a0bec28853056325c717aea70c052a376fe2ea1b35fe714b",
+    "test-v8-cli-coverage.log": "b9f41a5176a3a00c821650eb89dba6ea08808cec786609b16f5031d24f622526",
+    "ray-probe.log": "f55155e91daee0b056cbcf7673e51663aa3fe560f599c9e1d2ea1e6fc3d8d866",
+    "ray-probe-v2.log": "d2c52bdcc82ddba1b274f6c14ccc3db2e79f7573b0c3dda73c6de929dd235503"
+  },
+  "preserved_failure_notes": [
+    "Initial frozen test slice omitted existing session test dependency; full source overlaid into isolated test stage.",
+    "Dotted --cov module imported Torch while coverage enumerated source and then restored sys.modules; repeated C-extension registration rejected collection. Coverage run with path include resolved; no package/environment changes.",
+    "First native Ray probe could not import pytest basename module for synthetic backend; explicit test directory in probe runtime PYTHONPATH fixed it, production code unchanged."
+  ],
+  "scope": "Raw backend token/logprob transport, assistant versus continuation/boundary mask semantics, rollback/denied/commit/finalize, exact float32 NPZ equality. Not forward recomputation or R18 training proof."
+}

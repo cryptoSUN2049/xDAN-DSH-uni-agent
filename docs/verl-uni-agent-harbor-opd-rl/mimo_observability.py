@@ -8,12 +8,22 @@ from urllib.error import URLError
 from urllib.parse import urlencode
 from urllib.request import urlopen
 
-# User-authorized extension: original cutoff + six hours, never relative to restart.
+# Historical default only; new runs pass their explicitly authorized absolute cutoff.
 DEADLINE = 1790709401
 CLEANUP_RESERVE = 180
 PREFIX = "rl_insight_monitor_"
 METRICS = ("training_global_step", "actor_grad_norm", "critic_rewards_mean")
 PROMETHEUS = "http://127.0.0.1:9090"
+
+
+def validate_deadline(value):
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value <= 0:
+        raise ValueError("Observability deadline must be a finite positive Unix timestamp")
+    return value
+
+
+def resolve_deadline(config):
+    return validate_deadline(getattr(config.trainer, "observability_deadline_unix", DEADLINE))
 
 
 def metric_query(project, experiment):
@@ -73,12 +83,14 @@ def wait_for_ack(
     started_at,
     output,
     *,
+    deadline_unix=DEADLINE,
     query=query_prometheus,
     clock=time.monotonic,
     sleep=time.sleep,
     wall_clock=time.time,
 ):
-    budget = max(0, min(45, DEADLINE - CLEANUP_RESERVE - wall_clock()))
+    deadline_unix = validate_deadline(deadline_unix)
+    budget = max(0, min(45, deadline_unix - CLEANUP_RESERVE - wall_clock()))
     end = clock() + budget
     expression = metric_query(project, experiment)
     report = {
@@ -89,7 +101,7 @@ def wait_for_ack(
         "step": step,
         "training_started_at": started_at,
         "budget_seconds": budget,
-        "deadline_unix": DEADLINE,
+        "deadline_unix": deadline_unix,
         "query": expression,
     }
     while (remaining := end - clock()) > 0:
@@ -134,6 +146,7 @@ def make_observed_runner(ray, native_runner):
     @ray.remote(num_cpus=1)
     class ObservedTaskRunner:
         def run(self, config):
+            deadline_unix = resolve_deadline(config)
             self.monitor_hub = retain_monitor_hub(config)
             self.native_runner = native_runner.remote()
             trainer = config.trainer
@@ -145,6 +158,7 @@ def make_observed_runner(ray, native_runner):
                     trainer.total_training_steps,
                     started,
                     Path(trainer.default_local_dir).parent / "observability-ack.json",
+                    deadline_unix=deadline_unix,
                 ),
             )
 
@@ -159,6 +173,7 @@ def main():  # pragma: no cover - exercised by the real native training entry, n
 
     @hydra.main(config_path=str(Path(native.__file__).parent / "config"), config_name="ppo_trainer", version_base=None)
     def entry(config):
+        resolve_deadline(config)
         if not config.trainer.use_v1 or not {"wandb", "rl_insight"}.issubset(config.trainer.logger):
             raise ValueError("Observed entry requires native V1 with wandb and rl_insight")
         native.auto_set_device(config)

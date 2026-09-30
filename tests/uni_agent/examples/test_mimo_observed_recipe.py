@@ -103,7 +103,10 @@ def test_observability_entrypoint_rejects_unprepared_inputs(tmp_path, monkeypatc
         launch._training_entrypoint(cfg, observability_wrapper=True)
 
 
-def test_cli_observability_flag_selects_child_without_changing_overrides(tmp_path, monkeypatch):
+@pytest.mark.parametrize("explicit_runtime_options", [False, True])
+def test_cli_observability_flag_selects_child_without_changing_overrides(
+    tmp_path, monkeypatch, explicit_runtime_options
+):
     from hydra.core.override_parser.overrides_parser import OverridesParser
 
     prepared = prepared_budget_launch()
@@ -123,6 +126,16 @@ def test_cli_observability_flag_selects_child_without_changing_overrides(tmp_pat
             "--recipe-config",
             str(RECIPE),
             "--observability-wrapper",
+            *(
+                [
+                    "--observability-deadline-unix",
+                    "1790752269",
+                    "--token-journal-dir",
+                    str(tmp_path / "private journal"),
+                ]
+                if explicit_runtime_options
+                else []
+            ),
         ],
     )
     selections = []
@@ -147,3 +160,27 @@ def test_cli_observability_flag_selects_child_without_changing_overrides(tmp_pat
     cfg = launch.compose_config(commands[0][3:])
     assert cfg.trainer.experiment_name == "mimo9b-001661-r11"
     assert list(cfg.trainer.logger) == ["console", "wandb", "rl_insight"]
+    if explicit_runtime_options:
+        assert cfg.trainer.observability_deadline_unix == 1790752269
+        assert cfg.ray_kwargs.ray_init.runtime_env.env_vars.UNI_AGENT_TOKEN_JOURNAL_DIR == str(
+            tmp_path / "private journal"
+        )
+    else:
+        assert "observability_deadline_unix" not in cfg.trainer
+        assert OmegaConf.select(cfg, "ray_kwargs.ray_init.runtime_env.env_vars.UNI_AGENT_TOKEN_JOURNAL_DIR") is None
+
+
+@pytest.mark.parametrize(
+    "options",
+    [
+        ["--observability-deadline-unix", "1790752269"],
+        ["--observability-wrapper", "--observability-deadline-unix", "0"],
+        ["--token-journal-dir", "relative/path"],
+    ],
+)
+def test_runtime_options_reject_invalid_cli_before_loading_launch(tmp_path, monkeypatch, options):
+    monkeypatch.setattr("sys.argv", ["launch", "--mode", "rl", "--launch", str(tmp_path / "missing.json"), *options])
+    monkeypatch.setattr(launch.subprocess, "run", lambda *_args, **_kwargs: pytest.fail("must not launch"))
+    with pytest.raises(SystemExit) as error:
+        launch.main()
+    assert error.value.code == 2

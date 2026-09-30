@@ -93,3 +93,25 @@ Tests first reproduce generation step1 → consumption step2 with policy version
 Native ordering is source-verified: fresh load sets `global_steps=0`; `on_init_end` publishes that version; fit increments before consuming step1; `on_step_end` publishes the completed update version before the next increment. Therefore every consumed trajectory must have `max_global_steps < training_global_steps`. Both v2 batch audit and effective-update gate reject same-step/future policy claims, while allowing actual mixed0→1 at consumer2. Unconsumed prefetched trajectories have no invented consumer bound.
 
 The first real C1→C2 checkpoint audit rejected the native DTensor representation; that failure is retained. The independent checker gains an exact DTensor branch after inspecting both ranks, while the R17 effective-update operator explicitly requires `kind=dtensor`, verifies its `representation=DTensor`, CUDA mesh ranks `[0,1]`, dimension name `fsdp`, `Shard(0)` placement and stride metadata. Both ranks must report plain local `torch.Tensor` on CPU and `cuda_initialized=false`; a `sharded` record cannot conceal a DTensor representation. It independently reconstructs the expected rank-owned boxes before applying the existing full-coverage, no-overlap, finite-state, unchanged-base and changed-LoRA gates. Synthetic forged mesh/placement/stride/unknown-representation cases first reproduced the missing validation, then passed only after these checks. Final acceptance must bind the new reviewed checker SHA; model-only success never substitutes for optimizer verification.
+
+### R18：独立同 world-size 恢复（2026-09-30）
+
+目标：从已验收 R17 的真实 C3（两 rank model/optimizer/extra_state、data.pt）重新启动独立 R18，完成绝对 step 4，证明 model、optimizer、RNG、scheduler 与数据状态恢复。保持 colocate_async、两卡 actor、两 TP1 rollout、sessions/jobs capacity=2、原模型与固定 DSH；真实 fsdp_config 为 FSDP_version=1/world_size=2，DTensor 不代表 FSDP2。
+
+实现仅新增 `mimo_r18_preparation.py`、`mimo_r18_preflight.py` 与两组 tests。沿用 SHA 固定的 R12 operator 模板和 R17 已修复 capacity 合同；新 run/spec/目录/W&B r18、ports 38740–38743，绝不复用 R17 身份。预检明确 resume_path=C3/total_training_steps=4/save_freq=1，禁止 fresh fallback、跨 world-size 或旧 R18 checkpoint。
+
+截止时间必须显式传入 `MIMO_R18_DEADLINE_UNIX`，并匹配本次授权的 2026-09-30 07:11:09 UTC；controller 最多 25200 秒，准入至少 2700 秒，清理保留 180 秒。CPU→GPU 准备及 driver 子进程完整传播该值，没有 now+budget 默认。C3 manifest 必须独立生成且通过显式 `MIMO_R18_RESUME_MANIFEST_SHA256` 绑定，逐文件验证大小、SHA、路径安全、两 rank 完整性、原 run/source/spec、latest=3 与 FSDP 配置。源码 freeze、273 依赖、overlay、原生 IPC 证据和 DSH 绑定保持不变。
+
+测试在现有云 CPU 上运行：缺/过期/滚动 deadline、错误 manifest SHA、缺 rank、损坏文件、world/FSDP 错误、错误源/spec、污染的新目录均拒绝；真实 prepare→compose 验证容量、恢复路径和绝对 step 4。CPU 准备与预检不是恢复成功；最后仍须独立 GPU 运行、C3→C4 严格 delta、原始恢复日志、async v2 trajectory/reward 与 native W&B/Prometheus 回执。
+
+跨进程合同补充：operator 明确传 `--observability-deadline-unix 1790752269` 与 `--token-journal-dir /root/mimo-private/launch-r18/token-journal`；launcher 将其转为 Hydra `trainer.observability_deadline_unix` 和 Ray job `runtime_env.env_vars.UNI_AGENT_TOKEN_JOURNAL_DIR`，CPU preflight 复核最终 compose，监控截止必须等于真实 RunSpec。新只读 Hydra proof 按新 helper SHA 绑定，禁止沿用旧封装的过期截止。Gateway 私有 journal 用于独立核对真实 backend tokens/logprobs 与训练 mask，不改变生成或奖励。
+
+授权更新：用户在 2026-09-30 00:11:09 UTC 明确改为七小时，固定截止 epoch 1790752269；此前两小时截止和86项测试保留作历史证据，不能作为新截止的最终验收。新 controller 上限与观测 Hydra proof 必须同步复验，重启仍不重新计算七小时。
+
+### R18 跨 run 离线有效更新验收
+
+`mimo_world2_acceptance.audit` 新增可选 `resume_manifest`/`resume_manifest_sha256`（CLI 同名连字符参数）。两者必须同时提供；缺省保留旧的同 run C(step-1)→Cstep 行为。启用时，显式预期 SHA 绑定独立 manifest，核 schema、父 run 不同于当前 run、完整 source/spec 格式、step=目标step-1、world_size=2/FSDP_version=1、规范绝对 checkpoint 路径，以及 data.pt/FSDP 配置/两 rank model+optimizer+extra 全部实际文件 SHA 与尺寸。R18 输入为已发布 R17 C3 manifest SHA `8046c24e335682ec67fdf71b1c3f1fc0dc05e016ee17246950858ef5f9001706`；不复制或移动 C3。
+
+delta 的 before 文件必须精确位于 manifest 的父 checkpoint，after 必须精确位于当前 launch.RUN_ROOT 的 C4。所有现有非恒定 reward、有符号 advantage、非零 gradient、全量两 rank 模型/优化器及 checker SHA 门禁保留；报告增加父 checkpoint 身份与 manifest hash，`resume_verified` 仍为 false。原生加载 model/optimizer/RNG/scheduler/data 的证明由独立恢复日志验收提供。
+
+CPU 测试使用真实临时文件构造跨 run 路径；正常 C3→C4 通过，未提供 manifest、假 SHA、错路径、缺 rank、错误 step/world/FSDP、损坏 data、同父子身份与源/spec格式错误全部拒绝。该修改仅离线 operator，不进入已运行的冻结源码或改写 checkpoint。

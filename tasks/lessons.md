@@ -378,3 +378,8 @@
 - 训练报告必须把 W&B、本地 `metrics.jsonl`、`train.log`、checkpoint 与 Ray/OTel trace 分开列证据；没有后端事件就标记“服务可用、trace 未验收”，不能用服务启动代替数据到达。
 
 - 2026-09-29 Modal 清理纠偏：用户按“创建超过两天”要求清理时，以平台 created_at 和实际活动/服务状态为准，不额外要求名称含日期。此前因此漏掉 tinker-eval-n100-staged 等旧实验 App；用户明确点名 verl-crossbench 后应重新核验并执行，不把之前自行设定的共享名称保护当作用户禁令。当前训练依赖和部署函数服务仍需单独识别。
+
+## R18 七小时窗口与覆盖率（2026-09-30）
+
+- 用户更新时限时，以新的绝对截止统一 controller、driver、timeline、archive 与观测 wrapper；不得在重启时重算七小时。
+- pytest-cov dotted module 可能提前导入 Torch 再触发扩展重复注册；用独立 coverage 的文件 include 模式，不修改固定依赖环境。

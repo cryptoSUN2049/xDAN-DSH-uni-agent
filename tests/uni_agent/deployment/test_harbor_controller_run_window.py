@@ -60,7 +60,7 @@ def runtime(tmp_path, monkeypatch):
     return write, calls
 
 
-@pytest.mark.parametrize("limit", [1, 14400, 18000, 21600])
+@pytest.mark.parametrize("limit", [1, 14400, 18000, 21600, 25200])
 def test_explicit_window_accepts_boundary_without_rewriting_spec(runtime, limit):
     write, calls = runtime
     path = write(limit)
@@ -82,7 +82,7 @@ def test_default_four_hour_window_remains_compatible(runtime, remaining, accepte
         assert calls == []
 
 
-@pytest.mark.parametrize("limit", [0, -1, 21601, True, 18000.0, float("inf"), float("nan"), "18000"])
+@pytest.mark.parametrize("limit", [0, -1, 25201, True, 18000.0, float("inf"), float("nan"), "18000"])
 def test_direct_main_rejects_invalid_limit_before_start(runtime, limit):
     write, calls = runtime
     with pytest.raises(ValueError, match="max_run_seconds"):
@@ -104,10 +104,19 @@ def test_cli_five_hour_flag_reaches_real_main(runtime):
     assert calls == ["created", "started", "monitored", "closed"]
 
 
-@pytest.mark.parametrize("value", ["0", "-1", "21601", "18000.0", "nan"])
+@pytest.mark.parametrize("value", ["0", "-1", "25201", "18000.0", "nan"])
 def test_cli_invalid_window_is_parser_error_before_start(runtime, value):
     write, calls = runtime
     with pytest.raises(SystemExit) as exc:
         module.cli(["--run-spec", str(write(100)), "--max-run-seconds", value])
     assert exc.value.code == 2
     assert calls == []
+
+
+def test_cli_seven_hour_flag_keeps_fixed_deadline(runtime):
+    write, calls = runtime
+    path = write(25200)
+    original = path.read_bytes()
+    module.cli(["--run-spec", str(path), "--max-run-seconds", "25200"])
+    assert calls == ["created", "started", "monitored", "closed"]
+    assert path.read_bytes() == original
