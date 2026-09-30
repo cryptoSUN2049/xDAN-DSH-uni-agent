@@ -1,0 +1,60 @@
+{
+  "schema": "mimo.curriculum-data-resume-probe.v1",
+  "passed": true,
+  "scope": "Synthetic distinct-task mechanism probe using real parent data.pt; not training consumption or full model resume",
+  "started_at_unix": 1790746211.3827538,
+  "parent_step": 4,
+  "checkpoint": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4",
+  "data_sha256": "58f16b6036f8994e9b19abde895b0a7969dbba54365747f210e577ebd0368d37",
+  "old_parquet_sha256": "6a341061fa64a0b06d4034edc858a25b5be47e4c56dbce57d0dc81294d561c5c",
+  "new_parquet_sha256": "cc18b484b5ccdbbae6b0a1c34e7b97c4f766959636661ccb00d39bb2eb07114b",
+  "loader_state": {
+    "_index_sampler_state": null,
+    "_sampler_iter_state": {
+      "samples_yielded": 1
+    },
+    "_sampler_iter_yielded": 1,
+    "_num_yielded": 1,
+    "_IterableDataset_len_called": null,
+    "_shared_seed": null,
+    "fetcher_state": null,
+    "dataset_state": null,
+    "_iterator_finished": false
+  },
+  "transfer_queue_exists": false,
+  "fsdp": {
+    "FSDP_version": 1,
+    "world_size": 2
+  },
+  "native": {
+    "raw_prompt": [
+      {
+        "role": "user",
+        "content": "R20 distinct task CPU mechanism probe: write a new result file."
+      }
+    ],
+    "data_source": "harbor/r20-distinct-mechanism-probe/train",
+    "rows": 1,
+    "cuda_initialized": false,
+    "native_source_sha256": {
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/verl/verl/trainer/ppo/v1/trainer_base.py": "e2ca9b9af567fbd0c99224475fafec7c881bc3e3ff730fdc6e8825c844b34e58",
+      "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torchdata/stateful_dataloader/stateful_dataloader.py": "426c3ef475481165f9a7d44238040f81de213a4e8ee58ad8fe734e52a2717830",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/verl/verl/trainer/ppo/utils.py": "7756cf5005e7e72cbc78cb82872e6a6f4df3de0f0f98e22b82f795db62c3ad9a",
+      "/workspace/mimo-dsh-rl-20260928/run-src-r19/verl/verl/utils/dataset/rl_dataset.py": "8571ff8527a0a8c5aa0951f248052e3ea7a8386cc236c1324c81e764d5b1ff65"
+    }
+  },
+  "plan": {
+    "train_rows": 1,
+    "validation_rows": 1,
+    "steps_per_epoch": 1,
+    "total_training_steps": 5,
+    "total_epochs": 5,
+    "save_freq": 1,
+    "initial_epoch": 4,
+    "first_training_step": 5
+  },
+  "original_parent_unchanged": true,
+  "full_bitwise_data_replay_claimed": false,
+  "model_loaded": false,
+  "finished_at_unix": 1790746222.639569
+}

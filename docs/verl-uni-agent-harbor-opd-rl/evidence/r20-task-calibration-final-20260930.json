@@ -1,0 +1,569 @@
+{
+  "all_selected_tasks_calibrated": false,
+  "anchor_historical_calibration": {
+    "private_path": "/workspace/mimo-dsh-rl-20260928/verifier-calibration-r2/status.json",
+    "results": {
+      "baseline-direct": {
+        "resolved": false,
+        "reward": 0.0,
+        "status": "graded",
+        "test_duration": 0.7736149830000001,
+        "verifier_returncode": 2
+      },
+      "baseline-restored": {
+        "resolved": false,
+        "reward": 0.0,
+        "status": "graded",
+        "test_duration": 0.6207955190000001,
+        "verifier_returncode": 2
+      },
+      "candidate-restored": {
+        "resolved": true,
+        "reward": 1.0,
+        "status": "graded",
+        "test_duration": 0.7234059879999997,
+        "verifier_returncode": 0
+      }
+    },
+    "scope": "Historical control reference; not repeated in this attempt",
+    "sha256": "sha256:4e4f3832b73dfb2abce4d490ea419cc6e1274ab4a1348964f70ef13bb7d9e10f",
+    "status": "calibration_passed",
+    "task_id": "format-code-task-001661"
+  },
+  "boundaries": [
+    "SQLGlot first independent public candidate was an actual graded failure and remains gated",
+    "Original-image older Python lacked hashlib.file_digest; private operator wrapper supplies equivalent streaming SHA while frozen helper and verifier source bytes remain unchanged",
+    "Preparation collection windows and actual verification attempts are separately recorded; expired records are retained",
+    "Hidden test bytes remained confined to private trusted original-image verifier execution",
+    "Public-only candidate author completed SQLGlot patch before receipt of a baseline-zero summary; no hidden body or positive-result feedback was used"
+  ],
+  "cleanup_verified": true,
+  "global_deadline_unix": 1790759992,
+  "gpu_used": false,
+  "independent_cleanup_poll": [
+    {
+      "observed_unix": 1790748643.3121738,
+      "returncode": 137,
+      "sandbox_id": "sb-06nv6ecNX6T666kxfDiIUj",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748643.5428367,
+      "returncode": 137,
+      "sandbox_id": "sb-0HdAs06v2JdjXAWop1EsN0",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748643.7717187,
+      "returncode": 137,
+      "sandbox_id": "sb-1Tcsayq6ln4WuKDm86rM44",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748644.0013359,
+      "returncode": 137,
+      "sandbox_id": "sb-6Y4QSVQY0aCW4ghWNMvWVC",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748644.2567806,
+      "returncode": 137,
+      "sandbox_id": "sb-9SheWm0tpfY0Ws76WXSEaP",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748644.4917154,
+      "returncode": 137,
+      "sandbox_id": "sb-D9FQWzfYD38cD7U96J1cov",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748644.7249713,
+      "returncode": 137,
+      "sandbox_id": "sb-GxAYfRdaJPW6MEfpUraOWX",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748644.9584937,
+      "returncode": 137,
+      "sandbox_id": "sb-LSacjuG7ik0o2PJIzoJIlB",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748645.1973886,
+      "returncode": 137,
+      "sandbox_id": "sb-ThEhruf75lUXcykMLQctuL",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748645.4392238,
+      "returncode": 137,
+      "sandbox_id": "sb-Zixk3hXmqNZB8anMhRC8HK",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748645.6802907,
+      "returncode": 137,
+      "sandbox_id": "sb-aE9rKNLwOKY0HmE1MYlYVn",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748645.9168723,
+      "returncode": 137,
+      "sandbox_id": "sb-c6kqQXBl5U4KnNypTg2UBN",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748646.151889,
+      "returncode": 137,
+      "sandbox_id": "sb-cdrU17HOKd62rSzdiuMqZx",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748646.3862681,
+      "returncode": 137,
+      "sandbox_id": "sb-ei6fPtUOaF6DxzTr3ZNSEP",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748646.6189764,
+      "returncode": 137,
+      "sandbox_id": "sb-inVwjCjqc9ofhA30mH6S2G",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748646.849153,
+      "returncode": 137,
+      "sandbox_id": "sb-kqsvqYc6haGCKcIigWfrYW",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748647.082169,
+      "returncode": 137,
+      "sandbox_id": "sb-lraIvIIqEDCQrbgyjD7rxN",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748647.3162017,
+      "returncode": 137,
+      "sandbox_id": "sb-nHZsK5ASoUBdR0SW0wsrQy",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748647.5442195,
+      "returncode": 137,
+      "sandbox_id": "sb-qqdnR8LNCxPULd2QMnwHKN",
+      "termination_confirmed": true
+    },
+    {
+      "observed_unix": 1790748647.7745779,
+      "returncode": 137,
+      "sandbox_id": "sb-yU2m24MQvb6KaE9VgVeYty",
+      "termination_confirmed": true
+    }
+  ],
+  "max_actual_live_calibration_sandboxes": 2,
+  "observed_unix": 1790748642.7820823,
+  "operation_boundary": "CPU-only owned Modal sandboxes; exact private artifact allowlist; no shared credential changes, Pod operations, source-runtime edits, or commits",
+  "schema": "dsh.r20.task-calibration-final.v1",
+  "scope": "Verifier controls only; no training reward or capability claim",
+  "status": "partial_or_failed",
+  "tasks": [
+    {
+      "absolute_deadline_unix": 1790747932.8601327,
+      "actual_report": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002857/calibration-v1/status.json",
+        "sha256": "sha256:cd9f62bf592f5a2695be863edc2420a176135cb4edfeabaf1375f7ceedb5b9d6"
+      },
+      "admitted": false,
+      "attempt": "calibration-v1",
+      "baseline": "passed",
+      "candidate_patch_sha256": "sha256:15d24216d5e884af9f1fcece900374bf8d5688948d76589f70364f9df54b5c68",
+      "candidate_provenance_sha256": "sha256:0c935dc52d269f8435e96b0be35ee5767ae1644941d2df95990add9873ad8e54",
+      "cleanup_verified": true,
+      "dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-002857@sha256:5d4f272377bf0fa45cddab83a78312e61dad708e5e3d3d95ac93e140338167a5",
+      "finished_unix": 1790747650.5018797,
+      "immutable_task_manifest": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002857/immutable-package/manifest.json",
+        "sha256": "sha256:fba08c7a64a53b3479a37b652d667fef3668aed8e060e2fa1e7774be0e42dcf5"
+      },
+      "original_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:3b1927ce98db3a3ae9de1926554ded22e6b039bafe0b5a45b919bedbc17a7875",
+      "original_timeout_seconds": 1800,
+      "positive_control": "candidate_failed",
+      "production_readiness": "not_proven_by_operator_controls; actual runtime requires equivalent interpreter compatibility",
+      "public-candidate-provenance.json": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002857/public-candidate-provenance.json",
+        "sha256": "sha256:ffa7b6c7e14bf5f042616a439b6d28a6f754f0b4abcee5818137e8e878bda8ef"
+      },
+      "public-candidate.patch": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002857/public-candidate.patch",
+        "sha256": "sha256:15d24216d5e884af9f1fcece900374bf8d5688948d76589f70364f9df54b5c68"
+      },
+      "public-source.json": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002857/public-source.json",
+        "sha256": "sha256:2d951f73d841e272d848a227c424320084413f0f234e9d18f842f234632ac8d4"
+      },
+      "resources": [
+        {
+          "image": "ghcr.io/cryptosun2049/mimo-dsh-code-002857@sha256:5d4f272377bf0fa45cddab83a78312e61dad708e5e3d3d95ac93e140338167a5",
+          "independent_modal_poll_returncode": 137,
+          "role": "source",
+          "sandbox_id": "sb-aE9rKNLwOKY0HmE1MYlYVn",
+          "terminated": true
+        },
+        {
+          "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:3b1927ce98db3a3ae9de1926554ded22e6b039bafe0b5a45b919bedbc17a7875",
+          "independent_modal_poll_returncode": 137,
+          "role": "baseline-original",
+          "sandbox_id": "sb-06nv6ecNX6T666kxfDiIUj",
+          "terminated": true
+        },
+        {
+          "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:3b1927ce98db3a3ae9de1926554ded22e6b039bafe0b5a45b919bedbc17a7875",
+          "independent_modal_poll_returncode": 137,
+          "role": "restored-original",
+          "sandbox_id": "sb-6Y4QSVQY0aCW4ghWNMvWVC",
+          "terminated": true
+        }
+      ],
+      "results": {
+        "baseline-direct": {
+          "resolved": false,
+          "reward": 0.0,
+          "status": "graded",
+          "test_duration": 0.2172252779999999,
+          "verifier_returncode": 1
+        },
+        "baseline-restored": {
+          "resolved": false,
+          "reward": 0.0,
+          "status": "graded",
+          "test_duration": 0.26775121400000046,
+          "verifier_returncode": 1
+        },
+        "candidate-restored": {
+          "resolved": false,
+          "reward": 0.0,
+          "status": "graded",
+          "test_duration": 0.2671091130000036,
+          "verifier_returncode": 1
+        }
+      },
+      "source_collection_attempts": [
+        {
+          "boundary": null,
+          "error_type": "AssertionError",
+          "finished_unix": 1790747208.7693188,
+          "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002857/public-source-collection-failed-1.json",
+          "sha256": "sha256:689bd26ddef712d870393e689f676af66adc9b2f9569d4077a9715e97afad5fd",
+          "source_file_count": null,
+          "started_unix": 1790747147.58975,
+          "status": "failed",
+          "whole_task_calibration_deadline": 1790747747.58975
+        },
+        {
+          "boundary": null,
+          "error_type": null,
+          "finished_unix": 1790747336.8309095,
+          "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002857/public-source-collection.json",
+          "sha256": "sha256:0d6abbd7f6570ae04456ecbde5454616eea3e8414d64bbaa542d5de431af5e3b",
+          "source_file_count": 4,
+          "started_unix": 1790747332.8601327,
+          "status": "passed",
+          "whole_task_calibration_deadline": 1790747932.8601327
+        }
+      ],
+      "source_hashes": {
+        "/root/mimo-private/r20-data-audit/calibrate-two-live.py": "sha256:e5ec0cd0bc772ab072e00bf427ccc133d13994e34a76cb579200b7e972cad015",
+        "/root/mimo-private/r20-data-audit/format-code-task-002857/source-row.json": "sha256:35bc52549677c2f59ac1fc924ae7fa6071db5f3ae1e01adf506ac209e985db42",
+        "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2/examples/mimo_dsh_rl/verifier.py": "sha256:d705910bcdf06dbf88f67042c42909c6d7039e90f61ba9f602c11d75308228d2",
+        "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2/uni_agent/tasks/harbor_dsh/mimo_workspace.py": "sha256:a63bb29c3185f1ef15f8e9de8b35930ebaf0426b63d9d2d3cf3d1cb83544ddde"
+      },
+      "status": "controls_incomplete",
+      "task_id": "format-code-task-002857",
+      "test_command": "bash /testbed/mimo_test_command.sh",
+      "test_patch_sha256": "sha256:f5cb7292a7466c6b52706ceec2f53a5765318ab3189f0d424f553126240cb647"
+    },
+    {
+      "absolute_deadline_unix": 1790748671.982645,
+      "actual_report": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002549/calibration-attempt-v3/status.json",
+        "sha256": "sha256:3f51a098c9ff83c4c9a7d4df815b4477278212f8474d6b65e9bf4f6d471c450e"
+      },
+      "admitted": true,
+      "attempt": "calibration-attempt-v3",
+      "attempt_started_unix": 1790748271.2288396,
+      "baseline": "passed",
+      "candidate_patch_sha256": "sha256:8e29f7566710760b6cfbf8e32e3a0c753e1eeb10f74212ff7693202df45ba6c1",
+      "candidate_provenance_sha256": "sha256:10c93fcc2d213f88a1426fa69c78ffce4303b6829e7ad6fead43b2b7ea6a4c37",
+      "cleanup_verified": true,
+      "dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-002549@sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf",
+      "finished_unix": 1790748288.1572614,
+      "immutable_task_manifest": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002549/immutable-package/manifest.json",
+        "sha256": "sha256:530000c2f15f19b3c729e1191662076a5865a0f898b1e930c27032caebc83614"
+      },
+      "original_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:4a04d1bbe8d8edf0f29d13325bdb7bdf838c6b1474374b8e59a59e584b3b906c",
+      "original_timeout_seconds": 1800,
+      "positive_control": "passed",
+      "prior_collection_boundary": "collection preparation window expired; explicit fresh bounded verification attempt; old records preserved",
+      "prior_collection_deadline_unix": 1790747980.4653702,
+      "prior_verification_attempts": [
+        {
+          "absolute_deadline_unix": 1790748671.982645,
+          "attempt_started_unix": 1790748071.982645,
+          "error_type": "RuntimeError",
+          "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002549/calibration-attempt-v2/status.json",
+          "sha256": "sha256:2fc1ad301241340041de1b739487b42a39407430644cb7d5a694a334b9f72d71",
+          "stage": "baseline-capture",
+          "status": "infra_error"
+        }
+      ],
+      "production_readiness": "not_proven_by_operator_controls; actual runtime requires equivalent interpreter compatibility",
+      "public-candidate-provenance.json": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002549/public-candidate-provenance.json",
+        "sha256": "sha256:10c93fcc2d213f88a1426fa69c78ffce4303b6829e7ad6fead43b2b7ea6a4c37"
+      },
+      "public-candidate.patch": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002549/public-candidate.patch",
+        "sha256": "sha256:8e29f7566710760b6cfbf8e32e3a0c753e1eeb10f74212ff7693202df45ba6c1"
+      },
+      "public-source.json": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002549/public-source.json",
+        "sha256": "sha256:f9b5999182007c6b7a9cd316ba65dd5031cd871fb4618f575bdec2cf22ab7ce9"
+      },
+      "resources": [
+        {
+          "image": "ghcr.io/cryptosun2049/mimo-dsh-code-002549@sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf",
+          "independent_modal_poll_returncode": 137,
+          "role": "source",
+          "sandbox_id": "sb-cdrU17HOKd62rSzdiuMqZx",
+          "terminated": true
+        },
+        {
+          "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:4a04d1bbe8d8edf0f29d13325bdb7bdf838c6b1474374b8e59a59e584b3b906c",
+          "independent_modal_poll_returncode": 137,
+          "role": "baseline-original",
+          "sandbox_id": "sb-0HdAs06v2JdjXAWop1EsN0",
+          "terminated": true
+        },
+        {
+          "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:4a04d1bbe8d8edf0f29d13325bdb7bdf838c6b1474374b8e59a59e584b3b906c",
+          "independent_modal_poll_returncode": 137,
+          "role": "restored-original",
+          "sandbox_id": "sb-qqdnR8LNCxPULd2QMnwHKN",
+          "terminated": true
+        }
+      ],
+      "results": {
+        "baseline-direct": {
+          "resolved": false,
+          "reward": 0.0,
+          "status": "graded",
+          "test_duration": 0.519598826,
+          "verifier_returncode": 1
+        },
+        "baseline-restored": {
+          "resolved": false,
+          "reward": 0.0,
+          "status": "graded",
+          "test_duration": 1.588565071,
+          "verifier_returncode": 1
+        },
+        "candidate-restored": {
+          "resolved": true,
+          "reward": 1.0,
+          "status": "graded",
+          "test_duration": 1.1230069470000004,
+          "verifier_returncode": 0
+        }
+      },
+      "source_collection_attempts": [
+        {
+          "boundary": null,
+          "error_type": null,
+          "finished_unix": 1790747410.1292176,
+          "private_path": "/root/mimo-private/r20-data-audit/format-code-task-002549/public-source-collection.json",
+          "sha256": "sha256:e961eaf7ada03572a2b570d4fbfe659f5b5801114efa15e1053e4daa4639ecda",
+          "source_file_count": 2,
+          "started_unix": 1790747380.4653702,
+          "status": "passed",
+          "whole_task_calibration_deadline": 1790747980.4653702
+        }
+      ],
+      "source_hashes": {
+        "/root/mimo-private/r20-data-audit/calibrate-two-live-attempt-v3.py": "sha256:f24a77c8de35658034812c90b53c7ab456395c36fc086505744b5ccb840669a4",
+        "/root/mimo-private/r20-data-audit/format-code-task-002549/source-row.json": "sha256:2e3627b3cde31b96c15d3d78230bac1f979bbdbf64123b2b65d0c1ed55670f27",
+        "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2/examples/mimo_dsh_rl/verifier.py": "sha256:d705910bcdf06dbf88f67042c42909c6d7039e90f61ba9f602c11d75308228d2",
+        "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2/uni_agent/tasks/harbor_dsh/mimo_workspace.py": "sha256:a63bb29c3185f1ef15f8e9de8b35930ebaf0426b63d9d2d3cf3d1cb83544ddde"
+      },
+      "status": "calibration_passed",
+      "task_id": "format-code-task-002549",
+      "test_command": "bash /testbed/mimo_test_command.sh",
+      "test_patch_sha256": "sha256:a07fdcb65ac1ea43f6c25c663021e1b2301b31ebdbf414d1acbf1de193da3cce",
+      "workspace_helper_compatibility": {
+        "reason": "original image Python lacks hashlib.file_digest introduced in Python 3.11",
+        "scope": "operator exec wrapper only; original helper bytes unchanged",
+        "semantic_check": "chunked streaming SHA256 equals hashlib.sha256 over same input bytes",
+        "sha256": "sha256:a7b8e5b31308d53e0dcdd36842f0a50676e2d3a4357f8e59fb5cb204fdf7c9c8"
+      }
+    },
+    {
+      "absolute_deadline_unix": 1790748786.533569,
+      "actual_report": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-000466/calibration-attempt-v4/status.json",
+        "sha256": "sha256:c2cb4d8309d695e98ca8727d38e9f56920eced13521b4a3e9ab22d3e4d61e32a"
+      },
+      "admitted": false,
+      "attempt": "calibration-attempt-v4",
+      "attempt_started_unix": 1790748609.825872,
+      "baseline": "passed",
+      "candidate_patch_sha256": "sha256:ed808d4f4a3d6b4f724bf30a3d6f5f59158d7a508a6f30255befea8aeb869ffd",
+      "candidate_provenance_sha256": "sha256:47185ab72365c9dfecae7a1a42041b707bac4883950b47a197108d9295e90c26",
+      "cleanup_verified": true,
+      "dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-000466@sha256:e5ba6e4ceb1a0deda7d7bb81fd331a9e9cd6b55e27d742b4dea9686e32aa2f3b",
+      "finished_unix": 1790748623.9533656,
+      "immutable_task_manifest": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-000466/immutable-package/manifest.json",
+        "sha256": "sha256:3772cbaff96c21651354f2fb7eec88b82ac50c067d3b9bc7eadca9e91fe81313"
+      },
+      "original_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:c93e43db97e0b036710d2d71f23d287d4e4847ac56feb8c5eaafbcf8a279e03c",
+      "original_timeout_seconds": 1800,
+      "positive_control": "candidate_failed",
+      "prior_collection_boundary": "collection preparation window expired; explicit fresh bounded verification attempt; old records preserved",
+      "prior_collection_deadline_unix": 1790748029.8916578,
+      "prior_verification_attempts": [
+        {
+          "absolute_deadline_unix": 1790748786.533569,
+          "attempt_started_unix": 1790748186.533569,
+          "error_type": "RuntimeError",
+          "private_path": "/root/mimo-private/r20-data-audit/format-code-task-000466/calibration-attempt-v2/status.json",
+          "sha256": "sha256:be7a9d4880d1cb931382a815da479385e240512d5ed5a09691e340f1f29a071f",
+          "stage": "baseline-capture",
+          "status": "infra_error"
+        },
+        {
+          "absolute_deadline_unix": 1790748786.533569,
+          "attempt_started_unix": 1790748343.6857836,
+          "error_type": "RuntimeError",
+          "private_path": "/root/mimo-private/r20-data-audit/format-code-task-000466/calibration-attempt-v3/status.json",
+          "sha256": "sha256:a831f9da2489c35b19551640dd2e9107bfa248b04f91320e0b7200b0850b6794",
+          "stage": "baseline-direct",
+          "status": "infra_error"
+        }
+      ],
+      "production_readiness": "not_proven_by_operator_controls; actual runtime requires equivalent interpreter compatibility",
+      "public-candidate-provenance.json": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-000466/public-candidate-provenance.json",
+        "sha256": "sha256:47185ab72365c9dfecae7a1a42041b707bac4883950b47a197108d9295e90c26"
+      },
+      "public-candidate.patch": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-000466/public-candidate.patch",
+        "sha256": "sha256:ed808d4f4a3d6b4f724bf30a3d6f5f59158d7a508a6f30255befea8aeb869ffd"
+      },
+      "public-source.json": {
+        "private_path": "/root/mimo-private/r20-data-audit/format-code-task-000466/public-source.json",
+        "sha256": "sha256:c0633276d807d2e690b3275220e03c576d656380cd3bd3d8e110f656f65c0133"
+      },
+      "resources": [
+        {
+          "image": "ghcr.io/cryptosun2049/mimo-dsh-code-000466@sha256:e5ba6e4ceb1a0deda7d7bb81fd331a9e9cd6b55e27d742b4dea9686e32aa2f3b",
+          "independent_modal_poll_returncode": 137,
+          "role": "source",
+          "sandbox_id": "sb-GxAYfRdaJPW6MEfpUraOWX",
+          "terminated": true
+        },
+        {
+          "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:c93e43db97e0b036710d2d71f23d287d4e4847ac56feb8c5eaafbcf8a279e03c",
+          "independent_modal_poll_returncode": 137,
+          "role": "baseline-original",
+          "sandbox_id": "sb-kqsvqYc6haGCKcIigWfrYW",
+          "terminated": true
+        },
+        {
+          "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:c93e43db97e0b036710d2d71f23d287d4e4847ac56feb8c5eaafbcf8a279e03c",
+          "independent_modal_poll_returncode": 137,
+          "role": "restored-original",
+          "sandbox_id": "sb-lraIvIIqEDCQrbgyjD7rxN",
+          "terminated": true
+        }
+      ],
+      "results": {
+        "baseline-direct": {
+          "resolved": false,
+          "reward": 0.0,
+          "status": "graded",
+          "test_duration": 0.31925934899999997,
+          "verifier_returncode": 1
+        },
+        "baseline-restored": {
+          "resolved": false,
+          "reward": 0.0,
+          "status": "graded",
+          "test_duration": 0.32014137399999987,
+          "verifier_returncode": 1
+        },
+        "candidate-restored": {
+          "resolved": false,
+          "reward": 0.0,
+          "status": "graded",
+          "test_duration": 0.26946782,
+          "verifier_returncode": 1
+        }
+      },
+      "source_collection_attempts": [
+        {
+          "boundary": "empty source selection: original repo uses root pyupgrade.py",
+          "error_type": null,
+          "finished_unix": 1790747459.7608652,
+          "private_path": "/root/mimo-private/r20-data-audit/format-code-task-000466/public-source-collection-empty-selection.json",
+          "sha256": "sha256:065d1db2b375ee38692853db1209776a0d9de0482d38e42263a5b14d1ae3463d",
+          "source_file_count": 0,
+          "started_unix": 1790747429.8916578,
+          "status": "incomplete",
+          "whole_task_calibration_deadline": 1790748029.8916578
+        },
+        {
+          "boundary": null,
+          "error_type": null,
+          "finished_unix": 1790748015.837533,
+          "private_path": "/root/mimo-private/r20-data-audit/format-code-task-000466/public-source-collection.json",
+          "sha256": "sha256:b1fcf35f058b917cf4933fef8be1aee9faf2ad2ce7e8801e6fb6c68656d1a0bb",
+          "source_file_count": 1,
+          "started_unix": 1790748012.1701913,
+          "status": "passed",
+          "whole_task_calibration_deadline": 1790748029.8916578
+        }
+      ],
+      "source_hashes": {
+        "/root/mimo-private/r20-data-audit/calibrate-two-live-attempt-v4.py": "sha256:a144f6cfe85f222a465aac085beb9bc54395a99464482889af833ffd7267d804",
+        "/root/mimo-private/r20-data-audit/format-code-task-000466/source-row.json": "sha256:b4b5e4abd3c1ae48079eebd24939d11cf91c5f71b4d144a85bd8831b144a37f4",
+        "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2/examples/mimo_dsh_rl/verifier.py": "sha256:d705910bcdf06dbf88f67042c42909c6d7039e90f61ba9f602c11d75308228d2",
+        "/workspace/mimo-dsh-rl-20260928/integration-check/source-v2/uni_agent/tasks/harbor_dsh/mimo_workspace.py": "sha256:a63bb29c3185f1ef15f8e9de8b35930ebaf0426b63d9d2d3cf3d1cb83544ddde"
+      },
+      "status": "controls_incomplete",
+      "task_id": "format-code-task-000466",
+      "test_command": "bash /testbed/mimo_test_command.sh",
+      "test_patch_sha256": "sha256:3482f7596e1b9f3647a7e9f0e303db647339d574e6f9ce781663863f8bb6dbdb",
+      "verifier_execution_compatibility": {
+        "exact_replacement_count": 1,
+        "execution_source_sha256": "sha256:416140c365ac10ec7030fbf1074ffd666ba6e198ec7aed90a7282607b70b0ae2",
+        "production_readiness_boundary": "requires equivalent compatibility in actual original-image verifier path",
+        "reason": "Python older than 3.10 cannot evaluate int | float in isinstance",
+        "scope": "operator execution string only; frozen trusted verifier file unchanged",
+        "semantic_equivalence": "isinstance timeout in int-or-float accepts the same values; bool rejection remains unchanged"
+      },
+      "workspace_helper_compatibility": {
+        "reason": "original image Python lacks hashlib.file_digest introduced in Python 3.11",
+        "scope": "operator exec wrapper only; original helper bytes unchanged",
+        "semantic_check": "chunked streaming SHA256 equals hashlib.sha256 over same input bytes",
+        "sha256": "sha256:a7b8e5b31308d53e0dcdd36842f0a50676e2d3a4357f8e59fb5cb204fdf7c9c8"
+      }
+    }
+  ],
+  "verification_cutoff_unix": 1790759812,
+  "workspace_helper_compatibility_check": {
+    "private_path": "/root/mimo-private/r20-data-audit/hashlib-file-digest-compatibility-check.json",
+    "sha256": "sha256:192d6d5f67da108869b1b8ef7482f2b6fbc91cef742b5ff060e220788cec523a"
+  }
+}

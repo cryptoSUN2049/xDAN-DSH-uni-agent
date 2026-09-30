@@ -1,0 +1,101 @@
+{
+  "schema": "mimo.r20-transport-safety-validation.v1",
+  "passed": true,
+  "cloud_stage": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-transport-review",
+  "tests": 20,
+  "status": {
+    "exit_code": 0,
+    "started_at_unix": 1790748079.4672465,
+    "finished_at_unix": 1790748125.9605181
+  },
+  "helper_sha256": "ec284cc28cedf7f2ddad753b0120ea42314e1da59dc5ad457e638b96f9dfa448",
+  "test_sha256": "5768f67ffcc9b761a87f172011cd13952ad649fdc779d0500d7c1c609ad89a4b",
+  "coverage": {
+    "whole_file": {
+      "covered_lines": 82,
+      "num_statements": 178,
+      "percent_covered": 45.370370370370374,
+      "percent_covered_display": "45",
+      "missing_lines": 96,
+      "excluded_lines": 0,
+      "percent_statements_covered": 46.06741573033708,
+      "percent_statements_covered_display": "46",
+      "num_branches": 38,
+      "num_partial_branches": 2,
+      "covered_branches": 16,
+      "missing_branches": 22,
+      "percent_branches_covered": 42.10526315789474,
+      "percent_branches_covered_display": "42"
+    },
+    "authorize": {
+      "covered_lines": 29,
+      "num_statements": 30,
+      "percent_covered": 94.44444444444444,
+      "percent_covered_display": "94",
+      "missing_lines": 1,
+      "excluded_lines": 0,
+      "percent_statements_covered": 96.66666666666667,
+      "percent_statements_covered_display": "97",
+      "num_branches": 6,
+      "num_partial_branches": 1,
+      "covered_branches": 5,
+      "missing_branches": 1,
+      "percent_branches_covered": 83.33333333333333,
+      "percent_branches_covered_display": "83"
+    },
+    "prepare_spec": {
+      "covered_lines": 25,
+      "num_statements": 25,
+      "percent_covered": 100.0,
+      "percent_covered_display": "100",
+      "missing_lines": 0,
+      "excluded_lines": 0,
+      "percent_statements_covered": 100.0,
+      "percent_statements_covered_display": "100",
+      "num_branches": 10,
+      "num_partial_branches": 0,
+      "covered_branches": 10,
+      "missing_branches": 0,
+      "percent_branches_covered": 100.0,
+      "percent_branches_covered_display": "100"
+    },
+    "write_new": {
+      "covered_lines": 5,
+      "num_statements": 5,
+      "percent_covered": 100.0,
+      "percent_covered_display": "100",
+      "missing_lines": 0,
+      "excluded_lines": 0,
+      "percent_statements_covered": 100.0,
+      "percent_statements_covered_display": "100",
+      "num_branches": 0,
+      "num_partial_branches": 0,
+      "covered_branches": 0,
+      "missing_branches": 0,
+      "percent_branches_covered": 100.0,
+      "percent_branches_covered_display": "100"
+    },
+    "limitation": "The successful actual HTTP probe/main were not measured by this unit coverage. No real tunnel/probe rerun for coverage."
+  },
+  "actual_http_readonly_review": {
+    "proof_sha256": "d0ec7e28cb6c205f907d27cbbe5c875864b35bc4cb1544d400f46b81bf67865f",
+    "checks_passed": 17,
+    "counters": {
+      "upstream_requests": 2,
+      "accepted": 1,
+      "invalid_session": 1
+    },
+    "cleanup_ports_occupied": [],
+    "jobs_submitted": 0,
+    "training_started": false,
+    "four_native_source_hashes_match_independent_import_provenance": true
+  },
+  "import_provenance_sha256": "cfda97a44f0696914bd99163a3cbe5365621e1d58d8311645633e2fdbe875bb5",
+  "scope_limits": [
+    "Tests redirect authorization paths to temporary directories; no actual authorized_keys modified by tests",
+    "No retry of the already-passed public HTTP probe",
+    "Valid but different task selection must still be checked against the curriculum plan by operator/preflight",
+    "No fabricated whole-file 80% coverage claim"
+  ],
+  "gpu_started": false
+}

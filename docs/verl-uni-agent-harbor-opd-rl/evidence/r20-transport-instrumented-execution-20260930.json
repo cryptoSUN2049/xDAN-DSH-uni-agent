@@ -1,0 +1,55 @@
+{
+  "schema": "mimo.r20-instrumented-http-execution.v1",
+  "passed": true,
+  "started_at_unix": 1790748828.730515,
+  "helper_sha256": "ec284cc28cedf7f2ddad753b0120ea42314e1da59dc5ad457e638b96f9dfa448",
+  "spec_sha256": "17152080fedb242e268d65a9b2cb1c65a3149cbe8af88517c21596fed7d2103c",
+  "original_http_report_sha256": "d0ec7e28cb6c205f907d27cbbe5c875864b35bc4cb1544d400f46b81bf67865f",
+  "measurement_private_root": "/root/mimo-private/r20-transport-instrumented",
+  "redirected_report": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-cohost-http-probe-instrumented.json",
+  "instrumentation": "runpy non-main load then original main(); globals PRIVATE isolated, write_new remaps only original public report path; no production auth/route/cleanup substitution",
+  "exit_code": 0,
+  "actual_imports": [
+    {
+      "module": "deployment.services.harbor_run_controller",
+      "actual_imported_file": "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/services/harbor_run_controller.py",
+      "sha256": "59dd703672919f4eadaaffb24b766b1dd4e82f922c8cee2c88884a5ba8c2bb50"
+    },
+    {
+      "module": "deployment.services.harbor_tunnel",
+      "actual_imported_file": "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/services/harbor_tunnel.py",
+      "sha256": "c51ddf1c7501c540be9ece5b770bb3af4d5c73ad8a7e003e546d8eae9f8fac21"
+    },
+    {
+      "module": "deployment.services.harbor_modal_ingress",
+      "actual_imported_file": "/workspace/mimo-dsh-rl-20260928/run-src-r19/deployment/services/harbor_modal_ingress.py",
+      "sha256": "a126455fdaf8c85c000389b4e01b43eae423f793bac9a5d2321f96b6e3c92afd"
+    },
+    {
+      "module": "uni_agent.tasks.harbor_dsh.worker_http",
+      "actual_imported_file": "/workspace/mimo-dsh-rl-20260928/run-src-r19/uni_agent/tasks/harbor_dsh/worker_http.py",
+      "sha256": "1ae882be2cbfb0386ea1f785705b97b12440963535d0638cf97351e4559d1b22"
+    }
+  ],
+  "cuda_initialized": false,
+  "original_spec_and_report_unchanged": true,
+  "actual_report_sha256": "a1d7ee10f0c55a949079637cbd96096151fff5a647c97b42bda48d17e459bd5e",
+  "cleanup_ports_occupied": [],
+  "finished_at_unix": 1790748843.9609244,
+  "coverage": {
+    "covered_lines": 168,
+    "num_statements": 178,
+    "percent_covered": 91.66666666666667,
+    "percent_covered_display": "92",
+    "missing_lines": 10,
+    "excluded_lines": 0,
+    "percent_statements_covered": 94.38202247191012,
+    "percent_statements_covered_display": "94",
+    "num_branches": 38,
+    "num_partial_branches": 8,
+    "covered_branches": 30,
+    "missing_branches": 8,
+    "percent_branches_covered": 78.94736842105263,
+    "percent_branches_covered_display": "79"
+  }
+}

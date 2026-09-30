@@ -1,0 +1,42 @@
+{
+  "schema": "mimo.curriculum-data-probe-validation.v1",
+  "passed": true,
+  "cloud_stage": "/workspace/mimo-dsh-rl-20260928/integration-check/r20-data-resume-review",
+  "runtime_source_commit": "4dbd87ad4f6123f99a1f715a6637322a44cff6a5",
+  "probe_sha256": "228457d8796a6f5f0ad7f2067f6d1073f7326ebffdb235e761a064ba0edad7ec",
+  "tests_sha256": "884d33b7978ac6d6d6d422240487c19f5ca1132502b239d37a5f06819732a618",
+  "red": {
+    "exit_code": 1,
+    "failed": 1,
+    "reason": "Probe module did not exist",
+    "log": "red.log"
+  },
+  "final_tests": {
+    "exit_code": 0,
+    "passed": 15,
+    "duration_seconds": 68.75,
+    "log": "final-tests.log"
+  },
+  "actual_probe": {
+    "exit_code": 0,
+    "report": "actual/report.json",
+    "sha256": "035165d908c630805aac2f55242a24d36bbd5cb0d6db90572b26f96645389d34",
+    "run_count": 1,
+    "parent_data_unchanged": true,
+    "cuda_initialized": false,
+    "model_loaded": false
+  },
+  "coverage": {
+    "scope": "Probe file, combined focused tests and the single actual CLI execution",
+    "report": "coverage.json",
+    "sha256": "8a8d161f48a46f1990fb79bfc2592c1ed873b452c1f73be76013788f69f92861",
+    "covered_lines": 91,
+    "statements": 105,
+    "covered_branches": 21,
+    "branches": 32,
+    "combined_percent": 81.75182481751825,
+    "excluded_lines": 0
+  },
+  "scope_limit": "Synthetic distinct-task mechanism proof using real parent data.pt. Every real stage must additionally compare native next batch with its frozen task instruction and prepared Parquet. This does not prove new-task training consumption or bitwise dataset replay.",
+  "gpu_or_controller_started": false
+}
