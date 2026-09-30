@@ -43,6 +43,23 @@ def test_actual_failure_then_correct_edit_produces_distinct_rewards(tmp_path):
     assert not (repo / "hidden.sh").exists()
 
 
+@pytest.mark.parametrize("timeout", [5, 5.0])
+def test_numeric_timeout_types_keep_completed_failure_as_zero_reward(tmp_path, timeout):
+    repo, base = repository(tmp_path)
+    result = verify(cwd=repo, base_ref=base, test_patch=PATCH, test_command="bash hidden.sh", timeout=timeout)
+    assert result["status"] == "graded" and result["reward"] == 0.0
+    assert not (repo / "hidden.sh").exists()
+
+
+@pytest.mark.parametrize("timeout", [True, False, "5", None, 0, -1])
+def test_invalid_timeout_remains_infrastructure_error_before_hidden_tests(tmp_path, timeout):
+    repo, base = repository(tmp_path)
+    with pytest.raises(VerificationError, match="invalid_verifier_config"):
+        verify(cwd=repo, base_ref=base, test_patch=PATCH, test_command="bash hidden.sh", timeout=timeout)
+    assert not (repo / "hidden.sh").exists()
+    assert (repo / "answer.txt").read_text() == "wrong"
+
+
 def test_agent_cannot_override_test_by_precreating_or_committing_it(tmp_path):
     repo, base = repository(tmp_path)
     (repo / "hidden.sh").write_text("exit 0\n")

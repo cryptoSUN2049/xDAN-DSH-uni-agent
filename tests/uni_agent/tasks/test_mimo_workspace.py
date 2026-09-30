@@ -1,3 +1,4 @@
+import hashlib
 import io
 import json
 import subprocess
@@ -22,6 +23,57 @@ def repository(root):
     git(root, "add", ".")
     git(root, "-c", "user.name=Test", "-c", "user.email=test@example.org", "commit", "-qm", "initial")
     return root
+
+
+@pytest.mark.parametrize("size", [0, 513, 262161, 1048579])
+def test_stream_hash_preserves_exact_sha_with_bounded_reads(size):
+    from uni_agent.tasks.harbor_dsh.mimo_workspace import _sha256_stream
+
+    data = (bytes(range(256)) * ((size + 255) // 256))[:size]
+
+    class BoundedStream(io.BytesIO):
+        def readinto(self, buffer):
+            assert len(buffer) <= 1024 * 1024
+            return super().readinto(buffer)
+
+    assert _sha256_stream(BoundedStream(data)) == hashlib.sha256(data).hexdigest()
+
+
+class LegacyArchivePath:
+    """Expose old pathlib APIs without changing the host's pathlib internals."""
+
+    def __init__(self, path):
+        self.path = path
+
+    def resolve(self):
+        return LegacyArchivePath(self.path.resolve())
+
+    def __getattr__(self, name):
+        if name == "is_relative_to":
+            raise AttributeError(name)
+        return getattr(self.path, name)
+
+
+@pytest.mark.parametrize("relative", [".", "inside.tar", "nested/inside.tar"])
+def test_snapshot_rejects_workspace_output_without_newer_pathlib_api(tmp_path, relative):
+    root = repository(tmp_path / "repo")
+    with pytest.raises(ValueError, match="outside the workspace"):
+        snapshot_workspace(root, LegacyArchivePath(root / relative), max_bytes=100000, max_files=100)
+    assert (root / "old.txt").read_text() == "original"
+
+
+def test_workspace_transport_needs_no_newer_hashlib_or_pathlib_api(tmp_path, monkeypatch):
+    monkeypatch.delattr(hashlib, "file_digest", raising=False)
+    student = repository(tmp_path / "repo")
+    verifier = tmp_path / "verifier"
+    git(student, "clone", "-q", str(student), str(verifier))
+    base = capture_base(student)
+    archive = tmp_path / "repo-sibling" / "snapshot.tar"
+    archive.parent.mkdir()
+    receipt = snapshot_workspace(student, LegacyArchivePath(archive), max_bytes=100000, max_files=100)
+    assert receipt["snapshot_sha256"] == "sha256:" + hashlib.sha256(archive.read_bytes()).hexdigest()
+    restore_workspace(verifier, archive, base_ref=base["base_ref"], max_bytes=100000, max_files=100)
+    assert (verifier / "old.txt").read_text() == "original"
 
 
 def test_workspace_command_interface_captures_transports_and_restores(tmp_path, monkeypatch, capsys):

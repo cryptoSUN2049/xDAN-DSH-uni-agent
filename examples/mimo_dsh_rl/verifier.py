@@ -208,7 +208,7 @@ def verify(*, cwd: Path | str, base_ref: str, test_patch: str, test_command: str
     if (
         not isinstance(test_command, str)
         or not test_command.strip()
-        or not isinstance(timeout, int | float)
+        or not isinstance(timeout, (int, float))
         or isinstance(timeout, bool)
         or timeout <= 0
     ):

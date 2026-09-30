@@ -57,6 +57,16 @@ def _history(root: Path, base: str) -> dict:
     }
 
 
+def _sha256_stream(stream) -> str:
+    """Hash exact bytes with a fixed buffer on stdlib Python 3.8 and later."""
+    digest = hashlib.sha256()
+    buffer = bytearray(256 * 1024)
+    view = memoryview(buffer)
+    while size := stream.readinto(buffer):
+        digest.update(view[:size])
+    return digest.hexdigest()
+
+
 def _worktree_identity(root: Path, *, max_bytes: int, max_files: int) -> str:
     records, total = [], 0
     for name, info in _entries(root, max_files):
@@ -66,7 +76,7 @@ def _worktree_identity(root: Path, *, max_bytes: int, max_files: int) -> str:
             if total > max_bytes:
                 raise ValueError("Workspace byte budget exceeded during history admission")
             with path.open("rb") as stream:
-                identity = hashlib.file_digest(stream, "sha256").hexdigest()
+                identity = _sha256_stream(stream)
         elif stat.S_ISLNK(info.st_mode):
             identity = os.readlink(path)
         else:
@@ -195,7 +205,11 @@ def _identity(info):
 
 def snapshot_workspace(root: Path, output: Path, *, max_bytes: int, max_files: int) -> dict:
     root = root.resolve(strict=True)
-    if output.resolve().is_relative_to(root):
+    try:
+        output.resolve().relative_to(root)
+    except ValueError:
+        pass
+    else:
         raise ValueError("Snapshot output must be outside the workspace")
     if output.exists() or output.is_symlink():
         raise ValueError("Snapshot output already exists")
@@ -235,7 +249,7 @@ def snapshot_workspace(root: Path, output: Path, *, max_bytes: int, max_files: i
         if output.stat().st_size > max_bytes:
             raise ValueError("Workspace archive byte budget exceeded")
         with output.open("rb") as source:
-            digest = hashlib.file_digest(source, "sha256").hexdigest()
+            digest = _sha256_stream(source)
         return {"snapshot_sha256": "sha256:" + digest, "files": len(entries), "bytes": output.stat().st_size}
     except BaseException:
         output.unlink(missing_ok=True)
