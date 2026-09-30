@@ -1,0 +1,75 @@
+{
+  "schema": "mimo.r20-fallback-package-preparation.v1",
+  "status": "prepared-only",
+  "task_id": "format-code-task-001661",
+  "created_at": 1790754048.064092,
+  "current_runtime_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+  "source_manifest": {
+    "path": "/workspace/mimo-dsh-rl-20260928/integration-check/source-r20-manifest.json",
+    "sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+    "bytes": 172828
+  },
+  "current_workspace_helper_sha256": "faba54386d324f0fc25b76bed6f0d81aa8f03cf926ad9c542214a6ae71b4409d",
+  "packaged_verifier_sha256": "12a6f9d3a849ff66168269f800f63325077d76a61942e9315d8335eb6d63c371",
+  "old_manifest": {
+    "path": "/root/mimo-private/task-001661-r19/manifest.json",
+    "sha256": "54264e2e32620fc04bb54c158efbdfb485fc58bfe34c31cdfb3a86b3bbfb0a02",
+    "bytes": 2401
+  },
+  "new_manifest": {
+    "path": "/root/mimo-private/r20-data-audit/format-code-task-001661/production-compatible-package/manifest.json",
+    "sha256": "3a3ee236835d707d8d5604d29b26f59a2adc65ff84440ec59f2c05aa8906a416",
+    "bytes": 2454
+  },
+  "old_task_ref": {
+    "id": "mimo-code-format-code-task-001661",
+    "sha256": "sha256:603c1f65f95a2e6b89716a618713f683b1fc9072386002eb014fb9b0ccb878e2",
+    "version": "v1"
+  },
+  "task_ref": {
+    "id": "mimo-code-format-code-task-001661",
+    "sha256": "sha256:1cbe58ecc0884511c8804aa93557767fc2fd7983ddba670ee99b073ad9280435",
+    "version": "v1"
+  },
+  "changed_task_files": [
+    "tests/verifier.py"
+  ],
+  "unchanged_original_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:38280116603fd55e56437bcd7c089f3915a6df8a7ed335bb6935503ffb77f475",
+  "unchanged_dsh_image": "ghcr.io/cryptosun2049/mimo-dsh-code-001661@sha256:15f588d627ce06e17d2904193c07100aa0b73c883269d70565ab59f36f6f2952",
+  "unchanged_test_patch_sha256": "sha256:360a18133cef1e7ddfeb405352639c0037c7087de532189cb75464d6088e8625",
+  "instruction_sha256": "8a0bda0463eb3755eb6fee93c59e101ca66cc9a287d213d7685b843247030646",
+  "source_revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+  "source_row_hash": "sha256:5ce55aa05e87a954d5f4f7dd3fe1eeb8490bf61eb7cc7ec360776bd0f0c195ec",
+  "historical_status": {
+    "path": "/workspace/mimo-dsh-rl-20260928/verifier-calibration-r2/status.json",
+    "sha256": "4e4f3832b73dfb2abce4d490ea419cc6e1274ab4a1348964f70ef13bb7d9e10f",
+    "bytes": 8914
+  },
+  "historical_rewards": [
+    0,
+    0,
+    1
+  ],
+  "candidate": {
+    "path": "/workspace/mimo-dsh-rl-20260928/public-only-candidate-001661.patch",
+    "sha256": "2229cbd226fa8f2add77b39247ecea70832cdcb748f60239f70e60162d1dfdbc",
+    "bytes": 1932
+  },
+  "candidate_reusable_unchanged": true,
+  "candidate_path_provenance": "tracked public-only-candidate-001661.provenance.json; historical status.source_hashes does not contain candidate path",
+  "candidate_scope": "independently authored positive control only; not rollout/training demonstration",
+  "original_package_unchanged": true,
+  "candidate_unchanged": true,
+  "cpu_verifier_compile_passed": true,
+  "task_digest_verified": true,
+  "new_original_image_calibration_executed": false,
+  "task_calibration_gate_passed": false,
+  "modal_resources_allocated": 0,
+  "gpu_started": false,
+  "controller_started": false,
+  "ports_claimed": false,
+  "run_spec_created": false,
+  "training_deadline_unix": 1790759992,
+  "ready_for_training": false,
+  "next_gate": "Separately authorized fresh original-image no-shim calibration, then actual next-parent seal/mechanism and native prepare/preflight."
+}

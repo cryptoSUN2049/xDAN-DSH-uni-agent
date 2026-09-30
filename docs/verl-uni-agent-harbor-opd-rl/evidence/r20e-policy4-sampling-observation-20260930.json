@@ -1,0 +1,115 @@
+{
+  "schema": "mimo.r20e-policy4-sampling-observation.v1",
+  "run_id": "mimo9b-002549-r20e",
+  "observed_unix": 1790754001.2907891,
+  "run_spec_sha256": "sha256:55cca9bd79d4192b0e15acd5c484946727f9f7af7b6ecda49ed251d8078c38ae",
+  "selection": "exact current run_id in ledger; journal filename SHA256(gateway_session_id), no directory glob",
+  "backend_event_count": 17,
+  "versioned_backend_event_count": 17,
+  "committed_event_count": 17,
+  "all_observed_backend_policy_min_max": [
+    4,
+    4
+  ],
+  "sessions": [
+    {
+      "job_id": "job-a7c029bd03fa42bda9697d62ab1db183",
+      "job_status": "succeeded",
+      "rollout_index": 0,
+      "backend_event_count": 5,
+      "commit_event_count": 5,
+      "observed_backend_tokens": 369,
+      "policy_version_counts": {
+        "4:4": 5
+      },
+      "finalize_observed": true,
+      "journal": {
+        "private_path": "/root/mimo-private/launch-r20e/token-journal/571bfcd94d38e551e2bd6b988bce17fb243ccf88c63fdf144299efc585865743.jsonl",
+        "observed_prefix_bytes": 292854,
+        "observed_prefix_sha256": "945d3722850c5a3d8eeeacf54688fa33425db0da40050626963d7d3681a63fe7",
+        "mutable": true,
+        "identity_matches": true,
+        "partial_json_lines": 0
+      }
+    },
+    {
+      "job_id": "job-c8d4844cabbb4b12a595fab45cb05711",
+      "job_status": "succeeded",
+      "rollout_index": 1,
+      "backend_event_count": 2,
+      "commit_event_count": 2,
+      "observed_backend_tokens": 235,
+      "policy_version_counts": {
+        "4:4": 2
+      },
+      "finalize_observed": true,
+      "journal": {
+        "private_path": "/root/mimo-private/launch-r20e/token-journal/8bb52f2f605c4ff171964de1e717cbe8e73a21609cc00c8f3aa1411e43e7a0c4.jsonl",
+        "observed_prefix_bytes": 114739,
+        "observed_prefix_sha256": "06c1854341604fe234ec33bcfb8abbe61321c4c274db6edfa37f09b5bf5c4608",
+        "mutable": true,
+        "identity_matches": true,
+        "partial_json_lines": 0
+      }
+    },
+    {
+      "job_id": "job-9eca12bd84e443939075df7d6e68574d",
+      "job_status": "running",
+      "rollout_index": 2,
+      "backend_event_count": 5,
+      "commit_event_count": 5,
+      "observed_backend_tokens": 1601,
+      "policy_version_counts": {
+        "4:4": 5
+      },
+      "finalize_observed": false,
+      "journal": {
+        "private_path": "/root/mimo-private/launch-r20e/token-journal/120ad347356ecfda1ae91a74f55251f26bbe4d143aeaa7cb16a61f8bcfc956f6.jsonl",
+        "observed_prefix_bytes": 630473,
+        "observed_prefix_sha256": "3d2e52ec4d504618e8b1c3e7a11e2e66ca5602680f8a4993c11610d8ec567897",
+        "mutable": true,
+        "identity_matches": true,
+        "partial_json_lines": 0
+      }
+    },
+    {
+      "job_id": "job-19e21f7c507547a0867114758990f914",
+      "job_status": "running",
+      "rollout_index": 3,
+      "backend_event_count": 5,
+      "commit_event_count": 5,
+      "observed_backend_tokens": 814,
+      "policy_version_counts": {
+        "4:4": 5
+      },
+      "finalize_observed": false,
+      "journal": {
+        "private_path": "/root/mimo-private/launch-r20e/token-journal/a65b4a22fc581c69da55b8a42592a287044d3b328d1930da5ea9bb1787282e72.jsonl",
+        "observed_prefix_bytes": 750854,
+        "observed_prefix_sha256": "250d5f15e4455cae58e2bee1861e204440f087a7830be717395093b2579f6a64",
+        "mutable": true,
+        "identity_matches": true,
+        "partial_json_lines": 0
+      }
+    }
+  ],
+  "claims": {
+    "current_policy4_sampling_observed": true,
+    "trainer_consumption_verified": false,
+    "step5_completed": false,
+    "capability_improvement_verified": false
+  },
+  "operation_boundaries": {
+    "cloud_cpu_read_only": true,
+    "token_or_request_values_printed": false,
+    "resources_operated": false,
+    "gpu_operated": false,
+    "wandb_api_called": false,
+    "controller_or_key_cleanup": false
+  },
+  "limits": [
+    "Running journal prefix counts; backend event counts may increase.",
+    "succeeded/finalize is not evidence of trainer consumption or remote resource termination.",
+    "Policy4 for all final consumed trajectories requires terminal journal replay and batch correspondence."
+  ]
+}
