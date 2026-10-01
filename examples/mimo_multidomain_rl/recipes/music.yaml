@@ -1,0 +1,104 @@
+# Original Music GRPO/scorer on the pinned MiMo core; reduced two-GPU profile.
+hydra:
+  searchpath: [pkg://verl.trainer.config]
+defaults:
+  - ppo_trainer
+  - _self_
+algorithm:
+  adv_estimator: grpo
+  norm_adv_by_std_in_grpo: true
+  use_kl_in_reward: false
+  filter_groups:
+    enable: false
+    max_inflight_gen_batches: 2
+data:
+  train_files: ???
+  val_files: ???
+  train_batch_size: 1
+  max_prompt_length: 1024
+  max_response_length: 8192
+  return_raw_chat: true
+  filter_overlong_prompts: false
+  truncation: error
+  shuffle: false
+  dataloader_num_workers: 0
+actor_rollout_ref:
+  model:
+    path: ???
+    lora_rank: 0
+    use_remove_padding: false
+    use_fused_kernels: false
+    enable_gradient_checkpointing: true
+    override_config:
+      attn_implementation: sdpa
+  actor:
+    strategy: fsdp
+    ppo_mini_batch_size: 1
+    ppo_micro_batch_size_per_gpu: 1
+    use_dynamic_bsz: false
+    ppo_max_token_len_per_gpu: 9216
+    clip_ratio: 0.2
+    entropy_coeff: 0
+    use_kl_loss: false
+    optim:
+      lr: 1e-6
+    fsdp_config:
+      fsdp_size: 2
+      param_offload: true
+      optimizer_offload: true
+      model_dtype: bfloat16
+      use_torch_compile: false
+      entropy_from_logits_with_chunking: true
+      entropy_from_logits_chunk_size: 256
+  rollout:
+    name: vllm
+    mode: async
+    n: 8
+    tensor_model_parallel_size: 1
+    n_gpus_per_node: 2
+    prompt_length: 1024
+    response_length: 8192
+    max_model_len: 9216
+    max_num_batched_tokens: 4096
+    max_num_seqs: 4
+    gpu_memory_utilization: 0.4
+    enforce_eager: true
+    free_cache_engine: true
+    load_format: safetensors
+    calculate_log_probs: true
+    log_prob_use_dynamic_bsz: false
+    log_prob_micro_batch_size_per_gpu: 1
+    checkpoint_engine:
+      backend: naive
+    agent:
+      num_workers: 2
+      default_agent_loop: single_turn_agent
+    multi_turn:
+      enable: false
+reward:
+  num_workers: 2
+  custom_reward_function:
+    path: pkg://recipes.design.music.scorer
+    name: compute_score
+trainer:
+  nnodes: 1
+  n_gpus_per_node: 2
+  total_epochs: 2
+  total_training_steps: 1
+  logger: [console, wandb, rl_insight]
+  project_name: xDAN-Verl-Uni-agent-Harbor-rl-opd
+  val_before_train: false
+  save_freq: 1
+  test_freq: -1
+  resume_mode: disable
+  max_actor_ckpt_to_keep: 3
+  v1:
+    trainer_mode: colocate_async
+    colocate_async:
+      num_warmup_batches: 1
+    sampler:
+      max_off_policy_threshold: 4
+      max_off_policy_strategy: drop
+ray_kwargs:
+  ray_init:
+    num_cpus: 24

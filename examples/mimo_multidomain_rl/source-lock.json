@@ -1,0 +1,27 @@
+{
+  "schema": "mimo.reference-source-lock.v1",
+  "sources": {
+    "verl": {"repository": "XiaomiMiMo/verl", "revision": "a2ad9f6160b03ff2d47e59832bfb6b289f37c917"},
+    "mimoagent": {"repository": "XiaomiMiMo/MiMo-Agent", "revision": "467f0a19016f0ac4d63b8d17a1f0da9ba07f232c"},
+    "uni_agent": {"repository": "XiaomiMiMo/uni-agent", "revision": "c63e0b01c375ebede95e01fe92bc367df24e5bf3"},
+    "dsh": {"revision": "b2369692ea530007075ebcd18d39fdba0bbd3982", "runtime_version": "0.1.3a2"}
+  },
+  "model": {"repository": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B", "revision": "2367e865d009c13ac81713a2878291d33ab28177"},
+  "dataset": {
+    "repository": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+    "revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+    "files": {
+      "code": {"path": "code.parquet", "rows": 2698, "bytes": 13314620, "sha256": "e15733cf2451cfbc5492a4120f7f8cfddbad818aa9f0b324c79888dd1fece161"},
+      "cyber": {"path": "cyber.parquet", "rows": 1000, "bytes": 227632, "sha256": "9e6e69034f4f3e6cfb5c901de642dddc7f4bacf35ab886b0e8eb53eb03084ba1"},
+      "general": {"path": "general/train.parquet", "rows": 989, "bytes": 3122244, "sha256": "9bfdc8b05d2bf2cb9e89815443d35507e4be30368aebf70928421795c10259b9"},
+      "webdev": {"path": "webdev.parquet", "rows": 2093, "bytes": 4120378, "sha256": "56ca6c96642666a27b756e20694ba60a4386d1761baadae86fd6768553d2cbac"},
+      "music": {"path": "music.parquet", "rows": 1000, "bytes": 135467, "sha256": "8fa2c95fb008df032eae184f3304dd3a73e3d25727e3aac0a715484859fa4856"}
+    }
+  },
+  "music_scorer": {
+    "path": "recipes/design/music/scorer",
+    "baseline": "baselines/ref_full4k.json",
+    "baseline_sha256": "afa0ea0d21745aa2f82bb40812e422d3d583165c0d720d268de4ba20cbbc9ed1"
+  },
+  "selection": {"seed": 20261001, "train_per_domain": 2, "heldout_per_domain": 1}
+}

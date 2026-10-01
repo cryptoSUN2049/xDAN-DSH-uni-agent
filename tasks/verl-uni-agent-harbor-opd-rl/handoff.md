@@ -5,7 +5,7 @@
 - 用户最终要求完整覆盖MiMo Code/Cyber/General/Webdev/Music，数据量可小；Code单域工程完成不是最终目标完成。
 - 新主机SSH157.157.221.177:16160已连通；07:32UTC双RTX PRO6000各97887MiB、0显存/利用率。Mac直连VPN utun4失败，nc -b en0代理成功。
 - 原uv273环境存在，版本metadata一致；原C5十五文件大小存在。本轮未再全hash/加载，不能当作新恢复验收。
-- 当前只读预检完成；Pod digzlnvc92cntc/Harbor-RL-Testing/4.18美元每小时，08:33UTC GET按16160端点确认RUNNING。新/root/mimo-private不存在；设计确认与新窗口待回复，未启动训练。
+- 当前只读预检完成；Pod digzlnvc92cntc/Harbor-RL-Testing/4.18美元每小时，08:33UTC GET按16160端点确认RUNNING。新/root/mimo-private尚待恢复；用户“尽快解决卡住问题”批准实施，固定MiMo reference源码已部署/Hydra CPU解析通过，Music双卡recipe和launch实现中，GPU尚未训练。
 
 ### 本轮交付物
 
@@ -30,7 +30,7 @@
 
 ### 下一里程碑任务清单
 
-- [ ] 先确认五域设计与新主机运行期限/平台身份，继续不依赖回答的只读数据/环境核查。
+- [x] 最新用户明确实施批准；继续执行独立CPU部署，不再重复设计许可。仅owned训练进程单阶段有界，不自动停Pod。
 - [ ] source隔离/实际uv导入指纹与cloud CPU contract回归；冻结10train/5heldout和资产。
 - [ ] 原域grader/权限/infra/真实render/实际music worker评分通过后执行双卡预检。
 - [ ] 逐域有效训练/恢复/API与Insight；每域结果独立，不复用Code旧PASS。
@@ -44,7 +44,7 @@
 ### 冷启动 checklist
 
 1. 读本段→mimo-five-domain-reproduction-design→R21量化报告；读lessons。
-2. 核Git/其他会话dirty，核用户异步设计确认与新运行上限，不能把未回复当批准。
+2. 核Git/其他会话dirty；当前五域设计已获最新明确执行批准。禁止启动旧Pod guard/过期deadline。
 3. 用新16160 SSH及Mac en0路径核两GPU/进程/卷/source/import；恢复凭据只读显式allowlist，秘密不输出不入Git。
 4. 先CPU prerequisites与每域original grader，后GPU实际训练；确认终态自动接续下一域。
 5. 以实际消费/参数/optimizer/checkpoint/当前API验收；只有五域齐全才最终完成。

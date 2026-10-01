@@ -5,9 +5,9 @@
 - [x] 新SSH157.157.221.177:16160与Pod digzlnvc92cntc确认：双96GB RTX PRO6000，原uv/C5存在。
 - [x] 云CPU273依赖pin零差异、真实vision processor；四Parquet SHA/rows与General925资产前缀核查。
 - [x] 五域设计16fd195已push，精确提交Ruff693双门通过；General64 terminal缺registry/verifier需显式兼容。
-- [ ] 新方案设计确认与本次主机身份/运行窗口；不能沿用旧六小时guard。
-- [ ] 云CPU核source/env/数据assets/各域grader；冻结实际抽样manifest和judge身份。
-- [ ] 独立reference运行lane、双卡后端兼容及真实forward/backward/weight-sync预检。
+- [x] 用户“尽快解决卡住问题”批准已呈现设计，开始实施；主机身份已核，新进程单阶段限2h且不自动停止Pod、不沿用旧guard。
+- [x] 固定source/Hydra解析，冻结10train/5heldout与selectedGeneral资产；Music实际Ray scorer和106/172/108token核查通过。其他域grader/judge仍待实测。
+- [ ] 独立reference/Music双卡后台mimor22musica已启动（PID6933），FSDPfullweight/shard2；forward/backward/weight-sync待真实验收。
 - [ ] Music/Code参考/Cyber/General/Webdev逐域真实采样、消费、有效更新与物理恢复。
 - [ ] 五域checkpoint全SHA、原生W&B API/RL-Insight与heldout；失败/成本/清理完整记录。
 - [ ] 精确提交/Ruff双门/push与最终handoff。

@@ -1,0 +1,213 @@
+{
+  "counts": {
+    "code": 3,
+    "cyber": 3,
+    "general": 3,
+    "music": 3,
+    "webdev": 3
+  },
+  "latest_launch_retest": {
+    "owned_process_group_sigterm_verified": true,
+    "passed": 7,
+    "same_source_sha256": "28b7fb34be432411cdd204a8f38c397d13d957948ebdc2c5fa72d265ca7a0850",
+    "unrelated_process_remained_alive": true,
+    "wall_seconds": 0.15
+  },
+  "limitations": [
+    "Four environment domains have no runtime or image-digest acceptance in this report",
+    "CPU scorer calibration is not RL training",
+    "No GPUs or trainer processes started by this preflight"
+  ],
+  "manifest_path": "/workspace/mimo-dsh-rl-20260928/r22/data-prepared/manifest.json",
+  "manifest_sha256": "28728d5cf5b140c009121e4bfa243c429c5d09a3a9f1a8ed3855195ca9aaabfd",
+  "music_worker": {
+    "baseline_sha256": "afa0ea0d21745aa2f82bb40812e422d3d583165c0d720d268de4ba20cbbc9ed1",
+    "binary_sha256": "a80becbbc6fc9eb2f768e596c60c6c37d62d0ee12664def1744b640d7fce8aa3",
+    "status": "cpu-worker-preflight-passed-not-training",
+    "workers": [
+      {
+        "abc2midi": "/root/mimo-r22-public-tools/abcmidi/usr/bin/abc2midi",
+        "bare": 0.198,
+        "fenced": 0.198,
+        "host": "c3f8fba42931",
+        "pid": 5632
+      },
+      {
+        "abc2midi": "/root/mimo-r22-public-tools/abcmidi/usr/bin/abc2midi",
+        "bare": 0.198,
+        "fenced": 0.198,
+        "host": "c3f8fba42931",
+        "pid": 5633
+      }
+    ]
+  },
+  "schema": "mimo.r22-data-music-cpu-acceptance.v1",
+  "status": "cpu-preflight-passed-not-training",
+  "tasks": [
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "music",
+      "image_status": "not-applicable",
+      "row_sha256": "0b4f9495772a8e55f01c5345532c30b9a17cdaaef5a73a3963cae53806bd6df1",
+      "source_row": 752,
+      "split": "train",
+      "task_id": "gK-0294"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "music",
+      "image_status": "not-applicable",
+      "row_sha256": "3e010d1bf34391ec05a544db296b381efe1b6b544822222893fba96923c0dc69",
+      "source_row": 740,
+      "split": "train",
+      "task_id": "gK-0227"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "music",
+      "image_status": "not-applicable",
+      "row_sha256": "648761f33543bdfd78e66152bac8c2666a17332148ff1b712802e8745d84864c",
+      "source_row": 735,
+      "split": "heldout",
+      "task_id": "gK-0592"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "code",
+      "image_status": "unresolved",
+      "row_sha256": "5ce55aa05e87a954d5f4f7dd3fe1eeb8490bf61eb7cc7ec360776bd0f0c195ec",
+      "source_row": 7,
+      "split": "train",
+      "task_id": "format-code-task-001661"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "code",
+      "image_status": "unresolved",
+      "row_sha256": "ec5abcb5567240983c489dc90be4fd50260efc0a1e9916e0d0dfd7177037ab0a",
+      "source_row": 243,
+      "split": "train",
+      "task_id": "format-code-task-002549"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "code",
+      "image_status": "unresolved",
+      "row_sha256": "5c810b2c554ce34def55fd18f780e861b34307f42cad1786492872845bc20183",
+      "source_row": 2298,
+      "split": "heldout",
+      "task_id": "format-code-task-000748"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "cyber",
+      "image_status": "unresolved",
+      "row_sha256": "76b75bec8218e874470609031f04291a3529432f6444b7eec0de8b93988a7bd4",
+      "source_row": 72,
+      "split": "train",
+      "task_id": "arvo_4385"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "cyber",
+      "image_status": "unresolved",
+      "row_sha256": "fd97c72593d855ba4be11db77fdb18e603e13bf38163d0f7125d216a8842ff44",
+      "source_row": 707,
+      "split": "train",
+      "task_id": "arvo_42507587"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "cyber",
+      "image_status": "unresolved",
+      "row_sha256": "5269e5682dd2f013b77a0a50e33d3878285afab0198c82b945ad7e46c51cb685",
+      "source_row": 326,
+      "split": "heldout",
+      "task_id": "arvo_42496599"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "general",
+      "image_status": "unresolved",
+      "row_sha256": "f3128572b5cc7d7c5c550113cb6474c4976f545cde4956d01daa363d8d435267",
+      "source_row": 9,
+      "split": "train",
+      "task_id": "candidate-0688-hardware-rtl"
+    },
+    {
+      "assets_count": 28,
+      "assets_status": "content-hashed-not-runtime-admitted",
+      "domain": "general",
+      "image_status": "unresolved",
+      "row_sha256": "63e7a00c07884d18300692fcc6685ae31804b4bcc7fbed19cb8d0768e8f022ad",
+      "source_row": 265,
+      "split": "train",
+      "task_id": "s3k_0973_finance_insurance_zh_t1_rl_003"
+    },
+    {
+      "assets_count": 44,
+      "assets_status": "content-hashed-not-runtime-admitted",
+      "domain": "general",
+      "image_status": "unresolved",
+      "row_sha256": "68185c01f84b1ad62b09652a1be768eb3a95b6c7f466a51d71950acf9e763fab",
+      "source_row": 894,
+      "split": "heldout",
+      "task_id": "s3k_0255_accounting_audit_tax_zh_t3_rl_003"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "webdev",
+      "image_status": "unresolved",
+      "row_sha256": "43ad6a6acfd49f28cc02c3013f05bd713469a77130d717b99e8189afb3d01972",
+      "source_row": 1941,
+      "split": "train",
+      "task_id": "dasyn_260630_01315"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "webdev",
+      "image_status": "unresolved",
+      "row_sha256": "de0c265362965fc1bf17267b333f0c6c5e5b492b690f0214224ea05488dca493",
+      "source_row": 1890,
+      "split": "train",
+      "task_id": "dasyn_260630_01220"
+    },
+    {
+      "assets_count": 0,
+      "assets_status": "not-applicable",
+      "domain": "webdev",
+      "image_status": "unresolved",
+      "row_sha256": "753034fb71c6412789a1579df189a4338193e2006325084e6f8c6391f0e59b3e",
+      "source_row": 1604,
+      "split": "heldout",
+      "task_id": "dasyn_260630_00672"
+    }
+  ],
+  "tested_files_sha256": {
+    "examples/mimo_multidomain_rl/launch.py": "28b7fb34be432411cdd204a8f38c397d13d957948ebdc2c5fa72d265ca7a0850",
+    "examples/mimo_multidomain_rl/prepare.py": "e8727a95b9ccb5dcdf160d971fd2a6f1176fe5262bfc82c0e93b1f0f2cf27daf",
+    "examples/mimo_multidomain_rl/recipes/music.yaml": "11806f31b6138d374f5894a639f87b6f81ab4baf0955929a971ec82cce641b2d",
+    "examples/mimo_multidomain_rl/source-lock.json": "36b0c89802a386e30632c14ccf38c7fa9acd0a8b2d393c61588a81e71fa2cea1",
+    "tests/uni_agent/examples/test_mimo_multidomain_launch.py": "b0d1edccdbd6cbb330a8bbe35e03fb7f4584409158d9991502739669abaa2144",
+    "tests/uni_agent/examples/test_mimo_multidomain_prepare.py": "adde99db01740f0fb90c60a6c7b7221019901ee471dceb0db5115e06167e39cb"
+  },
+  "tests": {
+    "command": "python -m pytest -q tests/uni_agent/examples/test_mimo_multidomain_prepare.py tests/uni_agent/examples/test_mimo_multidomain_launch.py",
+    "gpu_disabled": true,
+    "passed": 31,
+    "wall_seconds": 5.96
+  },
+  "tokenizer_preflight_report": "r22-music-tokenizer-preflight-20261001.json"
+}

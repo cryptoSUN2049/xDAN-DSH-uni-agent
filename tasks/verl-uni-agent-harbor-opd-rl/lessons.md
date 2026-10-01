@@ -1,5 +1,7 @@
 # MiMo RL 集成经验
 
+- 用户已反复要求继续并在已呈现设计后明确“尽快解决卡住问题”，这是当前实施授权；不能再把同一设计确认作为停工理由。需要新信息时先推进独立CPU部署，当前运行状态按实测报告，禁止让已授权GPU长期空闲而只反复写状态文档。
+
 - 用户明确目标为五类公开任务路线时，最终完成门必须覆盖Code/Cyber/General/Webdev/Music；单Code PASS只是里程碑。核原driver/loss/group reward与harness，不把读入五种Parquet或五次推理冒充训练复现。
 - 用户提供新SSH后先核实际双卡、进程、网盘及uv指纹。2026-10-01 16160直连被VPN utun4关闭，绑定Mac en0后成功；新主机/root私有材料为空，不能凭网盘uv存在假定凭据/控制器仍在。旧guard绑定旧Pod与过期期限，禁止复制启动；新资源期限提前明确。
 - General公开989行包含terminal_bench64与general_agent925；不能把前两行或单一rubric子集视为全类型覆盖。固定467f registry缺terminal_bench、generic无verifier；显式兼容原tests_files/评分协议，不重标签绕过。Music发布schema无agent_name且ability=music_generation，不沿用builder假设。
