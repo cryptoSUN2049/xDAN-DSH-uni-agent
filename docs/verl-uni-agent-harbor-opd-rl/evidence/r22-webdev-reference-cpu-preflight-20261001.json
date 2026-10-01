@@ -1,0 +1,120 @@
+{
+  "schema": "mimo.reference-webdev-cpu-preflight.v1",
+  "status": "prepared-not-training-acceptance",
+  "source_hashes": {
+    "config/agent/design/webdev.yaml": "463329d096e0f6f117ab91624a36ec0267be99e8b9cb8afcc4ec6b28dc9fe787",
+    "recipes/design/config/webdev_agent_loop.yaml": "3a7912521c4e78fce75193d310f79c5312fa006c919000bd555f485e1517b044",
+    "recipes/design/agent_loop.py": "b2cb2c0e94b9efb55764bac224823ea9a8c1736ee191ef68a448864f37d13de8",
+    "recipes/design/webdev/design_mode.py": "5a211cad01fd5236f5ecc095d671d04d297d68d054c5c24e369a0bd61348fa4d",
+    "recipes/design/webdev/group_reward.py": "f42cc7461be88d1eef1b7e999e44442658681fdae81c0d21c592b3aedf9d929f",
+    "recipes/design/webdev/shot.py": "52e838ccb2d29174184fb2dc1ae838e6fdec07cfc99e51642a401cdf315de757",
+    "verl/trainer/ppo/v1/trainer_base.py": "7d36aec878a5086b55a5b425b08951d5c3cacd3d050ad922fe2277dad95b9a77"
+  },
+  "profile_sha256": "af127251eac2e8fa38b5879cd3123c840b426723c6f772b15cf17d56ab4ab2f4",
+  "adapter_sha256": "1c5979358ed6d0d71a5711337b854f16436aa8716d025e761f44c1cae8da6768",
+  "required_semantics": {
+    "actor_rollout_ref.actor.loss_agg_mode": "prompt-mean",
+    "actor_rollout_ref.actor.fsdp_config.model_dtype": "fp32",
+    "actor_rollout_ref.rollout.n": 8,
+    "actor_rollout_ref.rollout.disable_log_stats": false,
+    "algorithm.norm_adv_by_std_in_grpo": true,
+    "algorithm.filter_groups.enable": false,
+    "ray_kwargs.ray_init.runtime_env.env_vars.WEBDEV_GRADE_MODE": "train"
+  },
+  "runtime_environment": {
+    "MIMO_WEBDEV_AGENT_LOOP_CONFIG": "/workspace/mimo-dsh-rl-20260928/r22/webdev-preflight/webdev-agent-loop.yaml",
+    "WEBDEV_DEBUG_DIR": "/workspace/mimo-dsh-rl-20260928/r22/webdev-shots",
+    "DESIGN_GRADER_URL": "",
+    "WEBDEV_GRADE_MODE": "train",
+    "WEBDEV_GRADE_HTTP": "1",
+    "MIMO_EXTRA_PYTHONPATH": "/workspace/mimo-dsh-rl-20260928/r22/reference-a2ad9f6/third_party/mimoagent-osr/src:/workspace/mimo-dsh-rl-20260928/r22/webdev-preflight"
+  },
+  "runtime_parquets": {
+    "train": "/workspace/mimo-dsh-rl-20260928/r22/webdev-preflight/train.parquet",
+    "heldout": "/workspace/mimo-dsh-rl-20260928/r22/webdev-preflight/heldout.parquet"
+  },
+  "agent_dispatch": {
+    "source_agent_name": "mimo_swe_agent",
+    "native_loop_alias": "WebdevAgentLoop"
+  },
+  "data_receipts": {
+    "train": {
+      "source_sha256": "55c73b7d796a4123994110995a997b2bf687c7870819bec3b89e12eb6f46c10c",
+      "runtime_sha256": "6d98eaed3645b3654b86fd97306bc6828b8261bcb46cb7b3157b260aba10a995",
+      "rows": 2,
+      "task_ids": [
+        "dasyn_260630_01315",
+        "dasyn_260630_01220"
+      ]
+    },
+    "heldout": {
+      "source_sha256": "0b0346565c214769f674848bd22442856504c16c91e86cee068d56fde9f6469a",
+      "runtime_sha256": "63620262f5533ae23306e344f29773fc2ea1ca9d81c117746a4a09e7453d24e0",
+      "rows": 1,
+      "task_ids": [
+        "dasyn_260630_00672"
+      ]
+    }
+  },
+  "image_receipts": [
+    {
+      "task_id": "dasyn_260630_01315",
+      "source_image": "webdev-rl-opensource:v2",
+      "mapped_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss:webdev-rl-opensource",
+      "runtime_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:6e30e61bdbe1504470cd1f705b120d317da9e7f57df3ba04a906db6b2e95e14d",
+      "changed_instance_fields": [
+        "docker_image"
+      ]
+    },
+    {
+      "task_id": "dasyn_260630_01220",
+      "source_image": "webdev-rl-opensource:v2",
+      "mapped_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss:webdev-rl-opensource",
+      "runtime_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:6e30e61bdbe1504470cd1f705b120d317da9e7f57df3ba04a906db6b2e95e14d",
+      "changed_instance_fields": [
+        "docker_image"
+      ]
+    },
+    {
+      "task_id": "dasyn_260630_00672",
+      "source_image": "webdev-rl-opensource:v2",
+      "mapped_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss:webdev-rl-opensource",
+      "runtime_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:6e30e61bdbe1504470cd1f705b120d317da9e7f57df3ba04a906db6b2e95e14d",
+      "changed_instance_fields": [
+        "docker_image"
+      ]
+    }
+  ],
+  "grader": {
+    "state": "pending",
+    "reason": "DESIGN_GRADER_URL is missing"
+  },
+  "controller_started": false,
+  "gpu_used": false,
+  "task_pass": false,
+  "runtime_admitted": false,
+  "remaining_gates": [
+    "Native query+eight-sibling group judge must produce real rewards",
+    "Ray workers and driver must independently read the same screenshots",
+    "Actual policy tokens, valid advantages, optimizer and checkpoint verification"
+  ],
+  "renderer_smoke": {
+    "scope": "ordinary-frontend-render-infrastructure-only",
+    "policy_generated": false,
+    "task_pass": false,
+    "judge_called": false,
+    "reward": null,
+    "render_state": "passed",
+    "screenshot_sha256": "7ad34fba027aba6d22a2368394ce902bb9153246462fd0f8624e559d402fb5ce",
+    "screenshot_bytes": 18265,
+    "console_errors": [],
+    "resource": {
+      "run_id": "r22-webdev-cpu-20261001-render",
+      "session_id": "1f3ca9ae1de8436a8212872b250c2681",
+      "sandbox_id": "sb-H6c6VzEsuIzc9t1aFhRd1Q",
+      "allocation_attempted": true,
+      "cleanup_confirmed": true,
+      "returncode": 137
+    }
+  }
+}

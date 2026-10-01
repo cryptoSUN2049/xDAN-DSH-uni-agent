@@ -1,0 +1,25 @@
+{
+  "schema": "mimo.reference-webdev-contract.v1",
+  "timestamp_utc": "2026-10-01T12:06:52.043378+00:00",
+  "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+  "gpu_used": false,
+  "cloud_resources_created": false,
+  "command": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/uni_agent/examples/test_mimo_multidomain_webdev.py"
+  ],
+  "exit_code": 0,
+  "stdout": "...................................                                      [100%]\n35 passed in 0.50s\n",
+  "stderr": "",
+  "source_hashes": {
+    "examples/mimo_multidomain_rl/prepare_webdev.py": "a801437059d3bd871ba92f9b98b1c80991dd9bd28c097e3641500e5f38f6208d",
+    "examples/mimo_multidomain_rl/recipes/webdev.yaml": "af127251eac2e8fa38b5879cd3123c840b426723c6f772b15cf17d56ab4ab2f4",
+    "tests/uni_agent/examples/test_mimo_multidomain_webdev.py": "ad057698bfb59d1c4bdf8242e417258c3e328d6daa4656dffc00507b964bab83"
+  },
+  "provider_smoke_executed_preparer_sha256": "b893101b764fad4af06920a90aad1b8810292ee1460df9881761321972269169",
+  "provider_smoke_resource": "sb-H6c6VzEsuIzc9t1aFhRd1Q",
+  "task_pass": false
+}
