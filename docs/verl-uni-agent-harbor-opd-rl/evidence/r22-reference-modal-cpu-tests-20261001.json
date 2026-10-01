@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "verification_kind": "cloud_cpu_native_source_contract",
+  "pytest_summary": "38 passed, 2 warnings in 2.43s",
+  "pytest_exit_code": 0,
+  "execution_session": "94739",
+  "observed_utc": "2026-10-01T11:11:16.843884+00:00",
+  "provider_calls_in_unit_tests": false,
+  "gpu_used": false,
+  "mimoagent_revision": "467f0a19016f0ac4d63b8d17a1f0da9ba07f232c",
+  "coverage_measured": false,
+  "tested_files": {
+    "uni_agent/tasks/mimo_reference/modal_environment.py": "1c5979358ed6d0d71a5711337b854f16436aa8716d025e761f44c1cae8da6768",
+    "tests/uni_agent/tasks/test_mimo_reference_modal.py": "2e8ede726059e11eab187f929924c5b41ceef2a12a6a6311ebf5b2b0562c5b83"
+  },
+  "skipped_tests": 0,
+  "optional_dependency_behavior": "Only absent mimoagent source skips collection; installed-source internal imports remain failures"
+}

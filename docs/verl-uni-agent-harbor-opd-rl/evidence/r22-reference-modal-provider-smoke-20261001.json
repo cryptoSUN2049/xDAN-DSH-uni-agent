@@ -1,0 +1,57 @@
+{
+  "kind": "ordinary-cpu-provider-contract",
+  "started_utc": "2026-10-01T11:04:24.178591+00:00",
+  "mimoagent_revision": "467f0a19016f0ac4d63b8d17a1f0da9ba07f232c",
+  "native_modal_sha256": "9f987a92323cf5a8e2705c30761981d6f1b3908962a2f733be885a0fbd65a72d",
+  "sandbox_count_requested": 1,
+  "gpu_requested": false,
+  "checks": {
+    "echo": {
+      "output": "ordinary-modal-echo",
+      "returncode": 0,
+      "reason": "ok"
+    },
+    "nonzero": {
+      "output": "ordinary-error",
+      "returncode": 7,
+      "reason": "ok"
+    },
+    "user": {
+      "output": "nobody\n",
+      "returncode": 0,
+      "reason": "ok"
+    },
+    "timeout": {
+      "output": "\nCommand timed out (pod) after 1s",
+      "returncode": 124,
+      "reason": "pod_timeout"
+    },
+    "network_blocked": true,
+    "file_copy": {
+      "exact_bytes_match": true,
+      "bytes": 25,
+      "sha256": "294218a16369fc1dd9d248501c7a617eb60804a38d226bdeabe255170a2b21c7"
+    }
+  },
+  "status": "PASS",
+  "adapter_sha256": "1c5979358ed6d0d71a5711337b854f16436aa8716d025e761f44c1cae8da6768",
+  "resource": {
+    "run_id": "r22-modal-contract-20261001",
+    "session_id": "460509fa7f0245da8c882fed6f1d82ca",
+    "sandbox_id": "sb-vDM9yotahqW6gkQFedco4U",
+    "allocation_attempted": true,
+    "cleanup_confirmed": false,
+    "returncode": null
+  },
+  "checks_pass": true,
+  "resource_final": {
+    "run_id": "r22-modal-contract-20261001",
+    "session_id": "460509fa7f0245da8c882fed6f1d82ca",
+    "sandbox_id": "sb-vDM9yotahqW6gkQFedco4U",
+    "allocation_attempted": true,
+    "cleanup_confirmed": true,
+    "returncode": 137
+  },
+  "elapsed_seconds": 15.561,
+  "finished_utc": "2026-10-01T11:04:39.749972+00:00"
+}
