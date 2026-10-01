@@ -1,0 +1,69 @@
+{
+  "scope": "cloud CPU contract tests and real fixed-data preparation, no GPU/Modal allocation by tests",
+  "passed": 88,
+  "skipped": 0,
+  "exit_code": 0,
+  "elapsed_seconds": 81.09,
+  "coverage": {
+    "uni_agent/tasks/mimo_reference/terminal_bench_environment.py": {
+      "measurement": "stdlib trace executable-line coverage, not branch coverage",
+      "executables": 150,
+      "covered": 141,
+      "percent": 94.0
+    },
+    "uni_agent/tasks/mimo_reference/general_environment.py": {
+      "measurement": "stdlib trace executable-line coverage, not branch coverage",
+      "executables": 379,
+      "covered": 347,
+      "percent": 91.56
+    },
+    "uni_agent/tasks/mimo_reference/general_bootstrap.py": {
+      "measurement": "stdlib trace executable-line coverage, not branch coverage",
+      "executables": 48,
+      "covered": 46,
+      "percent": 95.83
+    },
+    "examples/mimo_multidomain_rl/prepare_general.py": {
+      "measurement": "stdlib trace executable-line coverage, not branch coverage",
+      "executables": 220,
+      "covered": 194,
+      "percent": 88.18
+    }
+  },
+  "files": {
+    "uni_agent/tasks/mimo_reference/terminal_bench_environment.py": {
+      "sha256": "7c86fd628d541d1ac33751e27c63b40cfd483fd18482c2183ccd3a545e1ba0a6",
+      "lines": 202
+    },
+    "uni_agent/tasks/mimo_reference/general_environment.py": {
+      "sha256": "b7215a009fc0ac65e7e122bd9abb8bb0f82a515cb84962d6d0213d4622e89388",
+      "lines": 510
+    },
+    "uni_agent/tasks/mimo_reference/general_bootstrap.py": {
+      "sha256": "0bfc82a931ed349ffeca83020308a6316c71379d91b46726f96511e9702116d8",
+      "lines": 63
+    },
+    "examples/mimo_multidomain_rl/prepare_general.py": {
+      "sha256": "a91dcd04cbf670fea57f9020e2789381af2c6383f3558bd4c689b83125686c0f",
+      "lines": 265
+    },
+    "tests/uni_agent/tasks/test_mimo_reference_general.py": {
+      "sha256": "0bf7f05d51cd27701f4ad70016bad6e2e2d0615a06493ae2270d29fe2d6dd990",
+      "lines": 679
+    },
+    "tests/uni_agent/tasks/test_mimo_reference_general_prepare.py": {
+      "sha256": "14a7f8893ce1d23cc65d56d1cd4e76d2f5cdc6647d94ed6cd42808354de662af",
+      "lines": 134
+    },
+    "examples/mimo_multidomain_rl/recipes/general.yaml": {
+      "sha256": "a9035e4ed65d62f22ea8e84eeed5d5c55a579e017b26c0bf841d7ecddbe5196b",
+      "lines": 138
+    },
+    "examples/mimo_multidomain_rl/general-mcp-runtime-requirements.txt": {
+      "sha256": "bae02ecc011e2df4527686c8a0bf13afb1f083e12f5f7edb2d3335e530ccd836",
+      "lines": 715
+    }
+  },
+  "task_pass": false,
+  "gpu_used": false
+}

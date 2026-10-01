@@ -1,0 +1,166 @@
+{
+  "schema": "mimo.reference-general-cpu-preflight.v1",
+  "status": "prepared-not-training-acceptance",
+  "source_hashes": {
+    "config/agent/general/s3k.yaml": "175df84fccccdcfef256e1f57e6cbf33f20b4f097590aa990770842b59035ab6",
+    "recipes/general/config/general_agent_loop.yaml": "869e4be44d8ba40b954a322652206e23e8bf4ab15778be60c294ba5925ca1d64",
+    "recipes/general/config/general.yaml": "32d1f61fd61b3dc3558442a47e90a1a3a5f2f3da78de02132e3826f6e9919ee8",
+    "recipes/general/env_actor.py": "96096c394c91459f09c25a2866559f39e8c6c34c8cc4f52a123b76d03a4024a2",
+    "recipes/general/general_agent/environment.py": "6a76a5c6ee0e1608fbf204139ec87a5052bdb06ffb40e6d397dfd84fdc2a9a04",
+    "recipes/general/mcp_proxy.py": "68021d566fd59390f083030a8e3ebdb91f862307ced9ccacb2db94fe079820e4"
+  },
+  "image_mapping_sha256": "704ad2716d746430a805b9b1ac7c6725aea2117fd8e4823ebe9d339d0313ad58",
+  "recipe_sha256": "a9035e4ed65d62f22ea8e84eeed5d5c55a579e017b26c0bf841d7ecddbe5196b",
+  "runtime_parquets": {
+    "train": "/workspace/mimo-dsh-rl-20260928/r22/general-prepared/train.parquet",
+    "heldout": "/workspace/mimo-dsh-rl-20260928/r22/general-prepared/heldout.parquet"
+  },
+  "image_asset_receipts": [
+    {
+      "task_id": "candidate-0688-hardware-rtl",
+      "dataset_type": "terminal_bench",
+      "source_image": "general-agent-env-10:oss",
+      "runtime_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:396bc53d212898043d303c8b275d4b16d51a73f37024f7377d9b240fb435e981",
+      "changed_instance_fields": [
+        "docker_image"
+      ],
+      "asset_sha256": {
+        "anti_hack_guard.py": "336149b10b45d03b7774ba589d984e9663135cfc660f3a133fc482a8716d0e3a",
+        "fixtures/expected.json": "154ee9fa9d11ac99dea0b26dc71a0668e13b4f4e8432eca56998ab0bd9430c54",
+        "fixtures/pristine_env_manifest.json": "d8c2008f48c445cab5c65ed07cac29e2faeb30435c2f53bdf7a7daba99aec004",
+        "test.sh": "34de941312d5f271faf2d6b1f257a91a503887334a302ecc08a981f9969b7bf7",
+        "test_outputs.py": "80dea9ad830df8af6513d470cbd098c67ed061c00f4ff7623dc79d2fdd3ecdce"
+      }
+    },
+    {
+      "task_id": "s3k_0973_finance_insurance_zh_t1_rl_003",
+      "dataset_type": "general_agent",
+      "source_image": "general-agent-env-0:oss",
+      "runtime_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:7b59eff30fb4cef86cc6a4e1c278b119c06c7167807ba30983f0346bc2b5d02e",
+      "changed_instance_fields": [
+        "docker_image",
+        "env_task_dir"
+      ],
+      "asset_sha256": {
+        "_helpers.py": "8078e237ab386b039a653722c350b017a2dd05a476ce13f43edc42f5626d55b2",
+        "instruction.md": "2167b6432719cc68367d7793849f15daa08a62b7f5c6c3cc173a31ced765ea92",
+        "manifest.json": "ed2178a50d531dd31bb37d3692818ce893e674da40b8208483d958f1dbfe1bca",
+        "mcp_bridge.py": "c5e1e27cc6c681b8301d78c984646c0055f6749ffe5d836063f988cc3089ed6d",
+        "mcp_http.py": "e2107557b5b930365fd6aa4a42e1449ea535d620605959ff6cf66ca9293d7cda",
+        "run_verify.py": "839c5826eafb0b87d161197b3ad6106aa8eca236ed82f5eda9d67bbe7ae88fb8",
+        "sidecar_entrypoint.py": "8d7d42f0b15d2a22a3e1eb2e1396a9e9663573a06ec57a718db606fc43be988a",
+        "system/cmb_bpm_postloan/schema.sql": "57fd3aa3905c7714eb87f83c223f8fdf2f7cc339747ae4c29f33ac035764bc6b",
+        "system/cmb_bpm_postloan/state.db": "0e06ecff497a5375de24d3184dd49961e8e7215ab226ea935f7992476a8c5aec",
+        "system/cmb_credit_warning/schema.sql": "ab83686117cee9c6c500eb108b794d5550846dc241f37118c7b49f9dedd7529b",
+        "system/cmb_credit_warning/state.db": "495fdfe7b78895aad26150f9710ac0aa6f77e9ef29c205534c415218654f9e14",
+        "system/cmb_postloan_risk/schema.sql": "dd9da5a20c1635f7b468efcf2b0952dbdce95618c557c5e8a49dfc9f5d8f6a11",
+        "system/cmb_postloan_risk/state.db": "668f1737759a85d1ce6a17e4c1dfc6ca5dda02ecf2856b9befbc8cea3d5d15c1",
+        "system/smartstream_cash_monitor/schema.sql": "3273464973df61379d7a7dcceda6934b9a9430b1f2754b6ca201014f70877ee2",
+        "system/smartstream_cash_monitor/state.db": "b813dc0ec5603ca6316b42876c799c28d971bbd24c243b43ca11459f34183d6c",
+        "tools/cmb_bpm_postloan.py": "41870a825ff2941324c2236911edde2cb688aec1d200a7392f8e160bd39d5228",
+        "tools/cmb_credit_warning.py": "1602cf2a19142710b1f71a69f0cd58c643b5b10fe3828cfdd3091dcf055033ca",
+        "tools/cmb_postloan_risk.py": "9de6f9166af6eec6025991c6cb15603a031c189447fadc8421fe7b4d0867233d",
+        "tools/smartstream_cash_monitor.py": "f1bb98439dd47acc1d139a6f5c2d0ecff14deffec97b93b9c573cee438a8cd58",
+        "verifier_meta.json": "e9ac54ce4af4c4980d5123c59114e4bbc8c3c5657f79fc7ae024114207f8b393",
+        "verify.py": "caa22a4c64bea979f2b3bef85d77cab5a78880a4dd9e304b4b4ee2317f48ac13",
+        "workspace/ccb_2024_capital_pillar3.pdf": "ce6b2d8e47743545c0ab154700defb63329c89c0a79d0889793214851ed3921b",
+        "workspace/cmb_2023_annual_report_hk.pdf": "1ba38f09d9e90b326c3d2d985c2b62a0d3d5b743d45c18fc0476428bfd7a3043",
+        "workspace/cmb_2024_interim_report.pdf": "e8a2461f607a3929266d8ea08617155b15e3045769e254cc3d99ae3b647ca773",
+        "workspace/commercial_bank_financial_asset_risk_classification_2023.html": "353f3ecbc7abd066ff76e3a0f91ffb295269b38486c9c81f046e2bf436fc1f9b",
+        "workspace/\u524d\u6d77\u6c47\u6cfd\u4f9b\u5e94\u94fe_20250430\u9884\u8b66\u660e\u7ec6.csv": "8ba91468a397a1788cc5418814708714b13f752c50277cb91f9241e8a0868e80",
+        "workspace/\u524d\u6d77\u6c47\u6cfd\u4f9b\u5e94\u94fe_\u89c2\u5bdf\u540d\u5355\u8c03\u6574\u5efa\u8bae\u53ca\u5904\u7f6e\u8ddf\u8e2a\u5355_20250507.docx": "b6bb3a62eef5cd561420c100c2c35ebf65f99136d6d56a82e470355fe102e3df",
+        "workspace/\u524d\u6d77\u6c47\u6cfd\u4f9b\u5e94\u94fe_\u98ce\u9669\u6838\u67e5\u5de5\u4f5c\u5e95\u7a3f_20250506.xlsx": "9da240abde583fa003ba23250e60340344fd01fcba0abce64e96872849724eb3"
+      }
+    },
+    {
+      "task_id": "s3k_0255_accounting_audit_tax_zh_t3_rl_003",
+      "dataset_type": "general_agent",
+      "source_image": "general-agent-env-0:oss",
+      "runtime_image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:7b59eff30fb4cef86cc6a4e1c278b119c06c7167807ba30983f0346bc2b5d02e",
+      "changed_instance_fields": [
+        "docker_image",
+        "env_task_dir"
+      ],
+      "asset_sha256": {
+        "_helpers.py": "8078e237ab386b039a653722c350b017a2dd05a476ce13f43edc42f5626d55b2",
+        "instruction.md": "59ab942adb5f7367435c83383d7a8da29119aaba3796d60000f46f7d05ed4317",
+        "manifest.json": "81a2aed0df3856fff060a1bcdc394a18b01d5fb9260e7c3c207f31f34158dd0b",
+        "mcp_bridge.py": "c5e1e27cc6c681b8301d78c984646c0055f6749ffe5d836063f988cc3089ed6d",
+        "mcp_http.py": "e2107557b5b930365fd6aa4a42e1449ea535d620605959ff6cf66ca9293d7cda",
+        "run_verify.py": "839c5826eafb0b87d161197b3ad6106aa8eca236ed82f5eda9d67bbe7ae88fb8",
+        "sidecar_entrypoint.py": "8d7d42f0b15d2a22a3e1eb2e1396a9e9663573a06ec57a718db606fc43be988a",
+        "system/aisino_invoice/schema.sql": "323c396569567473a4e9d2d51098db93243ce95296dc89b182f286eb4bc6356a",
+        "system/aisino_invoice/state.db": "2e65effff674ad2828f9fa5ef5d2265fbad0a8760616e602c4cc6172ddd1b7c8",
+        "system/seeyon_remediation/schema.sql": "5c8e125346b41670adf5bf0db802b796434543b158f03a75e96e8309826017ed",
+        "system/seeyon_remediation/state.db": "3d9ba9c67960229efd68f05ec03be1ac631a6d61817f4389fb2b841f665a671d",
+        "system/swfu_audit/schema.sql": "279f9b7e8c2e16ab8faffc68ee4514b77ab4fd795c0990d9514be27fc8422463",
+        "system/swfu_audit/state.db": "0be47fecf18704cc03788ba7004563eb763dc1153d45d2a52659569e38b34be4",
+        "system/tiancai_expense/schema.sql": "de3f6c34b90e2c588d7d9b36d20c9350f58d9671febe5978097cbf37ae76d89f",
+        "system/tiancai_expense/state.db": "09471a2590a977bbd4ec647ef98234b748632d9095aafe32c9a26d0a2ef87c08",
+        "system/unis_archive/schema.sql": "e5c9d54c9119ebec60b75019f1ee099bce82084ada6efb415037dce391f43bd9",
+        "system/unis_archive/state.db": "22ebc5663ef800804d902a1afbe1b3e30dd5807932657d5e23d1f7c5a1d20130",
+        "system/weaver_approval/schema.sql": "704b7c01041b79cdd754bbff38e1bceb45dd0e9f25a9aaaa3ce26bf326c884b5",
+        "system/weaver_approval/state.db": "b613f7767befa7d00f36ae1f19073464b0fd56fbc043335d34e7103839c1ded3",
+        "system/yonyou_nc/schema.sql": "30331ffce5301b2dceb90be4acdcdabe5d98752ea4a21437a60bbde4434a2e65",
+        "system/yonyou_nc/state.db": "95f82a45452cc74ebf277e00dc5c8fb89ee9a45d6d385c810e691358d30df1a5",
+        "tools/aisino_invoice.py": "bb55b05002fa97f1cd45027fe75e50659479035d8cc6d410f63d63738cc0eb9d",
+        "tools/seeyon_remediation.py": "d6ce69ec9daeb5a7377ba6e53a2a20bd6c6cb9e1830c235773603ff8a3037adf",
+        "tools/swfu_audit.py": "8761b4e7e7c0508cad454a9de194f0e1d5f47ac01bde39e6f95e306073922708",
+        "tools/tiancai_expense.py": "4a6fc46512ef373dca0ebc314c86e1bab79cd898d64137158a1694d6cfb28071",
+        "tools/unis_archive.py": "006da28dbd6a9a01e6e9e052798190c6f81c23d01a6d4df06c984969bc587d45",
+        "tools/weaver_approval.py": "7cb1c3ac316ef03a443f7baab8493be54cfeedf628af2546825d00ee9fbadd10",
+        "tools/yonyou_nc.py": "90c90d377438d68554baf96e240cb3f9b6f9e35912e1f4c4c68155f034dda4c9",
+        "verifier_meta.json": "f88a50f2af21ee7cd59bec2915e7daa4f9511790f21a7acf9d40820c867b003a",
+        "verify.py": "caa22a4c64bea979f2b3bef85d77cab5a78880a4dd9e304b4b4ee2317f48ac13",
+        "workspace/01_\u539f\u59cb\u6570\u636e\u4e0e\u89c4\u5219/DA_T95-2022\u884c\u653f\u4e8b\u4e1a\u5355\u4f4d\u8d22\u52a1\u62a5\u9500\u7535\u5b50\u4f1a\u8ba1\u51ed\u8bc1\u6863\u6848\u7ba1\u7406\u6280\u672f\u89c4\u8303_\u955c\u50cf.pdf": "8719f638a33c9773ebd7cc5b2392ef7e4f6d524ec3ec313b8c9db337e5a8420b",
+        "workspace/01_\u539f\u59cb\u6570\u636e\u4e0e\u89c4\u5219/\u4e1c\u5317\u8d22\u7ecf\u5927\u5b66\u5dee\u65c5\u8d39\u62a5\u9500\u5355.xls": "21783db51282e0070e6b3d1fb254fe1b438418ea51037dbd01d4410904a22127",
+        "workspace/01_\u539f\u59cb\u6570\u636e\u4e0e\u89c4\u5219/\u4f1a\u8ba1\u57fa\u7840\u5de5\u4f5c\u89c4\u8303_\u8d22\u653f\u90e8\u4ee4.pdf": "94d9d3e6781cbfa769659a9afa27119e628cf00e8ed52e4e5bc41c7487acfe19",
+        "workspace/01_\u539f\u59cb\u6570\u636e\u4e0e\u89c4\u5219/\u897f\u5357\u6797\u4e1a\u5927\u5b662025\u5e747\u6708\u53d1\u7968\u67e5\u9a8c\u4e0e\u9644\u4ef6\u7d22\u5f15.csv": "42351fd0625c64f60ab7def10b6c6e9306caad917bb6149e2fa935e830f7f25d",
+        "workspace/01_\u539f\u59cb\u6570\u636e\u4e0e\u89c4\u5219/\u897f\u5357\u6797\u4e1a\u5927\u5b662025\u5e747\u6708\u5458\u5de5\u62a5\u9500\u660e\u7ec6\u5bfc\u51fa.csv": "42a243c6efc9ab5a96171d918c1a02f337ed7cd484cb8ca685348837300dfd58",
+        "workspace/01_\u539f\u59cb\u6570\u636e\u4e0e\u89c4\u5219/\u897f\u5357\u6797\u4e1a\u5927\u5b662025\u5e747\u6708\u7ebf\u4e0a\u5ba1\u6279\u65e5\u5fd7\u5bfc\u51fa.csv": "6eba40b8f3ecb0bfa5c5c8c01b1149777a46940ba3475300f5fb1a196d72fa70",
+        "workspace/01_\u539f\u59cb\u6570\u636e\u4e0e\u89c4\u5219/\u897f\u5357\u6797\u4e1a\u5927\u5b66\u62a5\u9500\u5408\u89c4\u63a7\u5236\u77e9\u9635_2025\u7248.xlsx": "f90cb0361f377cf5347451af34d2523b7982c96179e459eed59b4e5c744b6f81",
+        "workspace/01_\u539f\u59cb\u6570\u636e\u4e0e\u89c4\u5219/\u897f\u5357\u6797\u4e1a\u5927\u5b66\u8d22\u52a1\u62a5\u9500\u4e1a\u52a1\u529e\u7406\u6307\u5357_2025.pdf": "ac0cea1bcebf782eda9cc62a8ffac58fd6c9fedf49218d0b3d70415c5f8eea04",
+        "workspace/02_\u5ba1\u6838\u5e95\u7a3f/\u897f\u5357\u6797\u4e1a\u5927\u5b662025\u5e747\u6708\u5458\u5de5\u62a5\u9500\u5ba1\u6838\u5de5\u4f5c\u7c3f.xlsx": "52a61e6a26bca3b2b556603f4b7b770223b064b8d23315368c47d89b6d2261d5",
+        "workspace/02_\u5ba1\u6838\u5e95\u7a3f/\u897f\u5357\u6797\u4e1a\u5927\u5b662025\u5e747\u6708\u5f02\u5e38\u62a5\u9500\u6574\u6539\u901a\u77e5.docx": "bea9fab4ca53cd0bc52f8a295676f6df42cf61077e6455f5cc1b6683c071b267",
+        "workspace/02_\u5ba1\u6838\u5e95\u7a3f/\u897f\u5357\u6797\u4e1a\u5927\u5b662025\u5e747\u6708\u8d39\u7528\u5ba1\u6838\u6e05\u5355.docx": "5187ecc95880fb6348e9df482a2b9400ab342490e9639ad1a891b9e2cddc9c78",
+        "workspace/03_\u5165\u8d26\u51ed\u8bc1/\u897f\u5357\u6797\u4e1a\u5927\u5b662025\u5e747\u6708\u5458\u5de5\u62a5\u9500\u4f1a\u8ba1\u51ed\u8bc1\u518c.docx": "38ec15d39d71f0910a81d5d2561e73bf55d73f651ecbfbc09ef5a2e03ad65426",
+        "workspace/03_\u5165\u8d26\u51ed\u8bc1/\u897f\u5357\u6797\u4e1a\u5927\u5b662025\u5e747\u6708\u8d39\u7528\u5f52\u5c5e\u4e0e\u51ed\u8bc1\u7f16\u5236\u8868.xlsx": "bac59c98e908b90a21f54b0d20880608a05b81568ea48923308a14de49f670ad",
+        "workspace/04_\u6c47\u62a5\u5f52\u6863/\u897f\u5357\u6797\u4e1a\u5927\u5b662025\u5e747\u6708\u5458\u5de5\u62a5\u9500\u5ba1\u6838\u6c47\u62a5.pptx": "61faf5dbe198737917d5d3b9d843ad0efab476e4b5eb43ad232145c7322782e9"
+      }
+    }
+  ],
+  "runtime_environment": {
+    "MIMO_GENERAL_AGENT_LOOP_CONFIG": "/workspace/mimo-dsh-rl-20260928/r22/general-prepared/general-agent-loop.yaml",
+    "MIMO_GENERAL_RUN_ID": "r22-general-reference",
+    "MIMO_EXTRA_PYTHONPATH": "/workspace/mimo-dsh-rl-20260928/r22/operator-contract:/workspace/mimo-dsh-rl-20260928/r22/reference-a2ad9f6/third_party/mimoagent-osr/src"
+  },
+  "judge": {
+    "authenticated": true,
+    "base_url": "https://judge.example/v1",
+    "model": "gpt-5.6-sol-cpa",
+    "api": "chat"
+  },
+  "mcp_runtime": {
+    "version": "1.29.0",
+    "scope": "owned-sidecar-isolated-venv",
+    "lock_sha256": "bae02ecc011e2df4527686c8a0bf13afb1f083e12f5f7edb2d3335e530ccd836"
+  },
+  "required_semantics": {
+    "trainer.v1.trainer_mode": "sync",
+    "actor_rollout_ref.actor.loss_agg_mode": "prompt-mean",
+    "actor_rollout_ref.actor.fsdp_config.model_dtype": "fp32",
+    "actor_rollout_ref.rollout.n": 8,
+    "actor_rollout_ref.rollout.disable_log_stats": false,
+    "algorithm.norm_adv_by_std_in_grpo": false,
+    "algorithm.invalid_reward_value": -999,
+    "algorithm.filter_groups.enable": true,
+    "algorithm.length_penalty.enable": true
+  },
+  "gpu_used": false,
+  "task_pass": false,
+  "remaining_gates": [
+    "Actual MCP discovery and complete rendered policy prompt must fit context",
+    "Real original verifier, non-infra rewards and both-branch valid GRPO updates",
+    "Uniform reward groups may be filtered; no successful update is implied"
+  ]
+}

@@ -164,7 +164,12 @@ class TerminalBenchEnvironment(DatasetEnvironment):
                 local.parent.mkdir(parents=True, exist_ok=True)
                 local.write_bytes(data)
                 trusted.copy_to(str(local), f"/tests/{name}", as_user="root")
-        result = trusted.execute("/bin/sh /tests/test.sh", cwd=self.repo_path, timeout=budget, as_user="root")
+        # Published numeric seconds may be a JSON float, while Modal's exec
+        # timeout field accepts integer seconds. Preserve the source limit at
+        # the provider's whole-second resolution rather than failing grading.
+        result = trusted.execute(
+            "/bin/sh /tests/test.sh", cwd=self.repo_path, timeout=math.ceil(budget), as_user="root"
+        )
         output = result.get("output", "")
         if result.get("reason") not in (None, "", "ok") or result.get("returncode") in (None, 124, 137):
             return self._infra("verifier_incomplete", output, verifier_returncode=result.get("returncode"))

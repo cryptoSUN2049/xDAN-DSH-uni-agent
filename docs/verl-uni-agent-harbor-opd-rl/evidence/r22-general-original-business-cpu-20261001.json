@@ -1,0 +1,80 @@
+{
+  "scope": "original-task-environment CPU preflight, no policy solution or training",
+  "run_id": "r22-general-business-cpu-5eede754a4",
+  "task_id": "s3k_0973_finance_insurance_zh_t1_rl_003",
+  "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:7b59eff30fb4cef86cc6a4e1c278b119c06c7167807ba30983f0346bc2b5d02e",
+  "policy_generated": false,
+  "task_pass": false,
+  "gpu_used": false,
+  "mcp_runtime_version": "1.29.0",
+  "mcp_runtime_lock_sha256": "bae02ecc011e2df4527686c8a0bf13afb1f083e12f5f7edb2d3335e530ccd836",
+  "mcp_server_count": 4,
+  "mcp_tool_count": 22,
+  "read_only_tool_attempts": [
+    {
+      "name": "mcp__cmb_bpm_postloan__get_watchlist_case",
+      "argument_source": "original public workspace CSV \u5ba2\u6237\u7f16\u53f7",
+      "kind": "ok",
+      "success": true
+    }
+  ],
+  "full_initial_prompt_tokens": 7810,
+  "prompt_fits_8192": true,
+  "original_grader": {
+    "reward": 0.0,
+    "continuous_reward": 0.0,
+    "error_category": null,
+    "reward_error": null,
+    "detail_reward_error": null,
+    "verifier_returncode": 0,
+    "extra_keys": [
+      "verifier_returncode",
+      "reward_detail",
+      "model_patch",
+      "reward_continuous"
+    ],
+    "detail_keys": [
+      "reward",
+      "score",
+      "strict_pass",
+      "deterministic_score",
+      "judge_score",
+      "judge_all_passed",
+      "passed",
+      "total",
+      "results"
+    ],
+    "llm_verdict_count": 5,
+    "output_tail": "[judge] chain[0]: model=gpt-5.6-sol-cpa api=chat key=<redacted>\n  [FAIL] pending_action_set: llm 1\u7968\n  [FAIL] responsible_person_mapping: llm 1\u7968\n  [FAIL] acceptance_evidence_mapping: llm 1\u7968\n  [FAIL] current_progress: llm 1\u7968\n  [FAIL] completed_item_exclusion: llm 1\u7968\n[verify] score=0.000\n"
+  },
+  "reward_is_noninfra": true,
+  "trusted_phase_cleared": true,
+  "preflight_pass": true,
+  "environments": {
+    "main": {
+      "run_id": "r22-general-business-cpu-5eede754a4",
+      "session_id": "59d99a17a59743c289fe70b94b1f7e2e-main",
+      "sandbox_id": "sb-TsKfk8VNsV6jz2PzmjI2qV",
+      "allocation_attempted": true,
+      "cleanup_confirmed": true,
+      "returncode": 137
+    },
+    "sidecar": {
+      "run_id": "r22-general-business-cpu-5eede754a4",
+      "session_id": "59d99a17a59743c289fe70b94b1f7e2e-sidecar",
+      "sandbox_id": "sb-8zv37OOsDhopEVX2KOMdr5",
+      "allocation_attempted": true,
+      "cleanup_confirmed": true,
+      "returncode": 137
+    }
+  },
+  "elapsed_seconds": 137.6,
+  "schema": "mimo.reference-general-original-business-cpu.v1",
+  "completed_stage": "original_hidden_verifier",
+  "runtime_adapter_sha256": {
+    "uni_agent/tasks/mimo_reference/general_environment.py": "b7215a009fc0ac65e7e122bd9abb8bb0f82a515cb84962d6d0213d4622e89388",
+    "uni_agent/tasks/mimo_reference/general_bootstrap.py": "0bfc82a931ed349ffeca83020308a6316c71379d91b46726f96511e9702116d8",
+    "uni_agent/tasks/mimo_reference/modal_environment.py": "1c5979358ed6d0d71a5711337b854f16436aa8716d025e761f44c1cae8da6768"
+  },
+  "operator_script_sha256": "874f18cee53c1a60ca28faf2c867021e98249761f05f1d354c73f7cf142b3bc0"
+}

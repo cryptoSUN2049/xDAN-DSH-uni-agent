@@ -11,11 +11,15 @@ from __future__ import annotations
 import functools
 import json
 import math
+import os
 import posixpath
+import re
 import shlex
 import tarfile
 import tempfile
+import time
 import uuid
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -25,6 +29,8 @@ from .terminal_bench_environment import STUDENT, AgentEnvironmentView
 SERVICE = "mimo_service"
 WORKSPACE = "/work/workspace"
 BRIDGE = "/work/_setup/mcp_bridge.py"
+MCP_WHEEL_SHA256 = "f5a075bb611f23d6f4d080c6a1699fa62772eebc562ba9e66b306ddde1c755f7"
+MCP_RUNTIME_LOCK_SHA256 = "bae02ecc011e2df4527686c8a0bf13afb1f083e12f5f7edb2d3335e530ccd836"
 
 
 @dataclass
@@ -38,6 +44,12 @@ class GeneralEnvironmentConfig(ModalEnvironmentConfig):
     sidecars: list = field(default_factory=list)
     mcp_isolation: dict | None = None
     node_selector: dict = field(default_factory=dict)
+    mcp_version: str = "1.29.0"
+    mcp_runtime_lock: str = field(
+        default_factory=lambda: str(
+            Path(__file__).resolve().parents[3] / "examples/mimo_multidomain_rl/general-mcp-runtime-requirements.txt"
+        )
+    )
 
 
 class McpTransportView:
@@ -73,12 +85,16 @@ class GeneralEnvironment:
         self._factory = backend_factory or ModalEnvironment
         self._backends = {}
         self._workspace_initialized = False
+        self._student_enabled = False
+        self._verifier_phase = None
         self.mcp_servers = {}
         self.mcp_transport_view = McpTransportView(self)
         if self.config.cwd != WORKSPACE:
             raise ValueError("General business tasks require the original workspace root")
         if self.config.mcp_isolation is not None:
             raise ValueError("Shared-pod MCP firewall profile cannot be used for isolated Modal environments")
+        if self.config.mcp_version != "1.29.0":
+            raise ValueError("Original General MCP assets require the fixed v1 SDK")
         if any(mount.get("name") != "workspace" for mount in self.config.main_volume_mounts):
             raise ValueError("Main container must never mount sidecar state")
         if len(self.config.sidecars) != 1 or self.config.sidecars[0].get("name") != "sidecar":
@@ -123,10 +139,43 @@ class GeneralEnvironment:
                     script += f"chown {SERVICE}:{SERVICE} /work /logs/verifier\n"
                 result = backend.execute(script, cwd="/", timeout=120, as_user="root")
                 if result.get("returncode") != 0:
-                    raise RuntimeError(f"General {role} privilege setup failed")
+                    raise RuntimeError(
+                        f"General {role} privilege setup failed "
+                        f"(rc={result.get('returncode')}, reason={result.get('reason')}): "
+                        f"{result.get('output', '')[-2000:]}"
+                    )
         except Exception:
             self.cleanup()
             raise
+
+    def prepare_mcp_python(self):
+        """Restore the original assets' v1 runtime inside the owned sidecar only.
+
+        Public env-0 currently ships MCP 2.2, removing FastMCP, and lacks the
+        original hardcoded venv. Keep every task byte unchanged; isolate the
+        compatible SDK from the global interpreter and the trainer's uv env.
+        """
+        import hashlib
+
+        lock = Path(self.config.mcp_runtime_lock)
+        if lock.is_symlink() or hashlib.sha256(lock.read_bytes()).hexdigest() != MCP_RUNTIME_LOCK_SHA256:
+            raise ValueError("Original General MCP runtime lock changed")
+        backend = self._backends["sidecar"]
+        backend.copy_to(str(lock), "/opt/mimo-general-mcp.lock", as_user="root")
+        command = (
+            "set -eu\n"
+            "python3 -m venv /opt/openai-agents-venv\n"
+            "/opt/openai-agents-venv/bin/python -m pip install --no-input --disable-pip-version-check "
+            "--require-hashes -r /opt/mimo-general-mcp.lock\n"
+            "/opt/openai-agents-venv/bin/python -m pip check\n"
+            '/opt/openai-agents-venv/bin/python -c "'
+            "from mcp.server.fastmcp import FastMCP; "
+            "from mcp.client.streamable_http import streamablehttp_client; import requests; "
+            "import importlib.metadata; assert importlib.metadata.version('mcp') == '1.29.0'\"\n"
+        )
+        result = backend.execute(command, cwd="/", timeout=180, as_user="root")
+        if result.get("returncode") != 0 or result.get("reason") not in (None, "ok"):
+            raise RuntimeError("Original General v1 MCP runtime setup failed: " + result.get("output", "")[-2000:])
 
     def execute(self, command, cwd="", timeout=None, *, container=None, as_user=None):
         role = container or "main"
@@ -135,7 +184,67 @@ class GeneralEnvironment:
         if role == "sidecar" and not self._workspace_initialized:
             self.sync_workspace()
         user = as_user or (SERVICE if role == "sidecar" else "root")
+        phase = self._verifier_phase
+        if phase and role == "sidecar" and (command == phase[0] or command.endswith(" " + phase[0])):
+            return self._execute_trusted_verifier(command, cwd or self.config.cwd, timeout, phase[1])
         return self._backends[role].execute(command, cwd=cwd or self.config.cwd, timeout=timeout, as_user=user)
+
+    @contextmanager
+    def verifier_phase(self, command, credentials):
+        """Credentials enter only the exact trusted verifier exec, via stdin."""
+        if self._verifier_phase is not None or not isinstance(command, str) or not command:
+            raise RuntimeError("Invalid or nested trusted verifier phase")
+        if set(credentials) - {"GA_JUDGE_KEY", "JUDGE_API_KEY"}:
+            raise ValueError("Unexpected trusted verifier credential")
+        self._verifier_phase = (command, dict(credentials))
+        try:
+            yield
+        finally:
+            self._verifier_phase = None
+
+    def _execute_trusted_verifier(self, command, cwd, timeout, credentials):
+        backend = self._backends["sidecar"]
+        budget = getattr(backend.config, "max_exec_budget", 0)
+        if budget > 0 and backend._cumulative_exec_time >= budget:
+            return {"output": "Exec time budget exhausted", "returncode": 1, "reason": "budget_exhausted"}
+        timeout = self.config.timeout if timeout is None else timeout
+        if (
+            isinstance(timeout, bool)
+            or not isinstance(timeout, (int, float))
+            or not math.isfinite(timeout)
+            or timeout <= 0
+        ):
+            raise ValueError("Invalid trusted verifier timeout")
+        # No credential is placed in argv, files, public configuration or logs.
+        # The native binary stdin transport is the same one used by file copy.
+        helper = (
+            "import json,os,sys; p=json.load(sys.stdin); os.environ.update(p['env']); "
+            "os.chdir(p['cwd']); os.execvpe('/bin/bash', "
+            "['/bin/bash','-lc','exec 2>&1 </dev/null\\n'+p['command']], os.environ)"
+        )
+        argv = ["timeout", str(timeout), "su", SERVICE, "-s", "/bin/sh", "-c", shlex.join(["python3", "-c", helper])]
+        payload = json.dumps({"command": command, "cwd": cwd, "env": credentials}).encode()
+        started = time.monotonic()
+        try:
+            outcome = backend._exec(argv, timeout=timeout + 5, stdin=payload, max_output_bytes=50 * 1024 * 1024)
+        finally:
+            if hasattr(backend, "_cumulative_exec_time"):
+                backend._cumulative_exec_time += time.monotonic() - started
+        output = (outcome.stdout + outcome.stderr).decode("utf-8", "replace")
+        # Original verify.py prints a truncated judge key in its chain banner.
+        # Sanitize before the unchanged parent grader/actor can log stdout.
+        for key in credentials.values():
+            if key:
+                output = output.replace(key, "<redacted>")
+        output = re.sub(r"(?i)(\bkey=)\S+", r"\1<redacted>", output)
+        reason = "ok"
+        if outcome.returncode == 124:
+            reason = "pod_timeout"
+        elif outcome.returncode == -1:
+            reason = "client_timeout"
+        elif outcome.returncode is None or outcome.stream_error is not None:
+            reason = "transport_error"
+        return {"output": output, "returncode": outcome.returncode, "reason": reason}
 
     def copy_to(self, src_path, dest_path, *, container=None, dereference=False, as_user=None, **kwargs):
         role = container or "main"
@@ -148,7 +257,12 @@ class GeneralEnvironment:
         if source.is_symlink() or (source.is_dir() and any(path.is_symlink() for path in source.rglob("*"))):
             raise ValueError("Task asset symlinks are not accepted")
         backend = self._backends[role]
-        backend.copy_to(str(source), dest_path, as_user=as_user or "root", **kwargs)
+        # Upstream writes a missing final answer from a mode-0600 controller
+        # tempfile during grading. Extract it as the workspace owner, otherwise
+        # the student's snapshot cannot read it and grading becomes infra.
+        workspace = target == WORKSPACE or target.startswith(WORKSPACE + "/")
+        user = as_user or (STUDENT if role == "main" and workspace and self._student_enabled else "root")
+        backend.copy_to(str(source), dest_path, as_user=user, **kwargs)
         if role == "sidecar" and (target == "/work/system" or target.startswith("/work/system/")):
             result = backend.execute(f"chown -R {SERVICE}:{SERVICE} /work/system", cwd="/", timeout=120, as_user="root")
             if result.get("returncode") != 0:
@@ -164,6 +278,7 @@ class GeneralEnvironment:
         result = self.execute(f"chown -R {STUDENT}:{STUDENT} {WORKSPACE}", cwd="/", timeout=120)
         if result.get("returncode") != 0:
             raise RuntimeError("Student workspace ownership failed")
+        self._student_enabled = True
 
     def sync_workspace(self):
         """Mirror readable files; reject links and maintain sidecar read-only mode."""
@@ -235,6 +350,10 @@ def register_general_environment():
     class IsolatedGeneralAgentEnvironment(GeneralAgentEnvironment):
         _mimo_general_reference_compat = True
 
+        def _setup_dataset_specific(self):
+            self.env.prepare_mcp_python()
+            super()._setup_dataset_specific()
+
         def setup_environment(self):
             trusted = self.env
             super().setup_environment()
@@ -247,7 +366,11 @@ def register_general_environment():
             self._trusted_env.sync_workspace()
             self.env = self._trusted_env
             try:
-                return super()._do_calculate_reward(timeout=timeout, model_patch=model_patch)
+                credentials = {
+                    name: os.environ[name] for name in ("GA_JUDGE_KEY", "JUDGE_API_KEY") if os.environ.get(name)
+                }
+                with self._trusted_env.verifier_phase(self.manifest["verifier"]["command"], credentials):
+                    return super()._do_calculate_reward(timeout=timeout, model_patch=model_patch)
             finally:
                 self.env = agent_view
 
@@ -262,7 +385,20 @@ def register_general_environment():
             # Published task verify.py supports these selectors, but upstream's
             # forwarding list omits them. Retain every original default/key;
             # forward only these explicit host-side public judge controls.
-            forward = [*(passthrough or self.VERIFY_ENV_FORWARD), "GA_JUDGE_API", "GA_JUDGE_PHASE_BUDGET"]
+            if any("KEY" in key for key in (explicit or {})):
+                raise ValueError("Judge keys must come from private controller credentials")
+            phase = self._trusted_env._verifier_phase
+            if phase is not None:
+                # Original GA_JUDGE_KEY_FILE fallback runs inside the parent
+                # verifier hook; capture its resolved key only after that hook.
+                phase[1].update(
+                    {name: os.environ[name] for name in ("GA_JUDGE_KEY", "JUDGE_API_KEY") if os.environ.get(name)}
+                )
+            forward = [
+                *(name for name in (passthrough or self.VERIFY_ENV_FORWARD) if "KEY" not in name),
+                "GA_JUDGE_API",
+                "GA_JUDGE_PHASE_BUDGET",
+            ]
             return super()._verify_env_prefix(forward, explicit)
 
     DATASET_REGISTRY["general_agent"] = IsolatedGeneralAgentEnvironment

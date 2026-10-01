@@ -80,6 +80,10 @@ class Transport:
     def copy_to(self, src, dest, **kwargs):
         self.transfers.append((dest, Path(src).read_bytes() if Path(src).is_file() else None, kwargs))
 
+    def _exec(self, argv, *, stdin=None, **kwargs):
+        self.commands.append((argv, {"stdin": stdin, **kwargs}))
+        return SimpleNamespace(returncode=0, stdout=b"contract-verifier", stderr=b"", stream_error=None)
+
     def copy_out(self, src, dest, **kwargs):
         with tarfile.open(dest, "w:gz") as archive:
             entry = tarfile.TarInfo("./answer.md")
@@ -241,6 +245,89 @@ def test_two_environments_keep_hidden_state_separate(tmp_path):
     assert all(backend.closed for backend in environment._backends.values())
 
 
+def test_fixed_mcp_dependency_closure_installs_only_in_trusted_sidecar():
+    environment = GeneralEnvironment(backend_factory=Transport, **general_config())
+    environment.start()
+    main = environment._backends["main"]
+    previous_main_commands = list(main.commands)
+    environment.prepare_mcp_python()
+    assert main.commands == previous_main_commands and not main.transfers
+    sidecar = environment._backends["sidecar"]
+    command, kwargs = sidecar.commands[-1]
+    assert "python3 -m venv /opt/openai-agents-venv" in command
+    assert "--system-site-packages" not in command
+    assert "--require-hashes -r /opt/mimo-general-mcp.lock" in command
+    assert "pip check" in command and "mcp.server.fastmcp" in command
+    assert kwargs["as_user"] == "root" and kwargs["timeout"] == 180
+    assert sidecar.transfers[-1][0] == "/opt/mimo-general-mcp.lock"
+
+
+def test_controller_final_answer_retains_student_readability(tmp_path):
+    answer = tmp_path / "answer"
+    answer.write_text("final reply")
+    answer.chmod(0o600)
+    environment = GeneralEnvironment(backend_factory=Transport, **general_config())
+    environment.start()
+    environment.enable_student()
+    environment.copy_to(str(answer), WORKSPACE + "/answer.md")
+    assert environment._backends["main"].transfers[-1][2]["as_user"] == STUDENT
+    assert not environment._backends["sidecar"].transfers
+
+
+def test_changed_mcp_runtime_lock_is_rejected_before_provider_exec(tmp_path):
+    lock = tmp_path / "runtime.txt"
+    lock.write_text("mcp==2.2.0\n")
+    environment = GeneralEnvironment(backend_factory=Transport, **general_config(mcp_runtime_lock=str(lock)))
+    environment.start()
+    sidecar = environment._backends["sidecar"]
+    commands = list(sidecar.commands)
+    with pytest.raises(ValueError, match="runtime lock changed"):
+        environment.prepare_mcp_python()
+    assert sidecar.commands == commands and not sidecar.transfers
+
+
+def test_mcp_runtime_provider_failure_is_not_mocked_as_ready():
+    class MissingDependency(Transport):
+        def execute(self, command, **kwargs):
+            if "--require-hashes" in command:
+                return {"output": "missing dependency", "returncode": 1, "reason": "ok"}
+            return super().execute(command, **kwargs)
+
+    environment = GeneralEnvironment(backend_factory=MissingDependency, **general_config())
+    environment.start()
+    with pytest.raises(RuntimeError, match="missing dependency"):
+        environment.prepare_mcp_python()
+
+
+def test_mcp_v2_cannot_silently_replace_original_task_runtime():
+    with pytest.raises(ValueError, match="fixed v1 SDK"):
+        GeneralEnvironment(backend_factory=Transport, **general_config(mcp_version="2.2.0"))
+
+
+def test_original_judge_key_banner_is_redacted_before_actor_logging():
+    secret = "contract-key-never-log-this"
+
+    class OriginalBanner(Transport):
+        def _exec(self, argv, **kwargs):
+            output = f"[judge] model=public-model key={secret[:12]}...\nfull={secret}\n[verify] score=0.0"
+            return SimpleNamespace(returncode=0, stdout=output.encode(), stderr=b"", stream_error=None)
+
+    environment = GeneralEnvironment(backend_factory=OriginalBanner, **general_config())
+    environment.start()
+    with environment.verifier_phase("python3 /work/run_verify.py", {"GA_JUDGE_KEY": secret}):
+        result = environment.execute("python3 /work/run_verify.py", container="sidecar", timeout=120)
+    assert secret not in result["output"] and secret[:12] not in result["output"]
+    assert "key=<redacted>" in result["output"] and "[verify] score=0.0" in result["output"]
+
+
+def test_terminal_float_timeout_uses_provider_integer_seconds():
+    transport = Transport()
+    terminal = TerminalBenchEnvironment(transport, instance(verifier_timeout_sec=120.0))
+    terminal._do_calculate_reward(timeout=90.5)
+    _, kwargs = next(item for item in transport.commands if item[0] == "/bin/sh /tests/test.sh")
+    assert type(kwargs["timeout"]) is int and kwargs["timeout"] == 91
+
+
 @pytest.mark.parametrize(
     "changes",
     [{"cwd": "/app"}, {"main_volume_mounts": [{"name": "system-vol"}]}, {"sidecars": []}],
@@ -286,6 +373,8 @@ def test_only_mcp_tool_context_routes_to_sidecar():
 def test_original_general_verifier_stays_sidecar_only(tmp_path, monkeypatch):
     from mimoagent.environments.datasets import DATASET_REGISTRY
     from recipes.general import mcp_proxy
+
+    monkeypatch.delenv("JUDGE_API_KEY", raising=False)
 
     monkeypatch.setitem(DATASET_REGISTRY, "general_agent", object)
     monkeypatch.setattr(mcp_proxy, "discover_mcp_tools", lambda *args, **kwargs: [])
@@ -344,6 +433,13 @@ def test_original_general_verifier_stays_sidecar_only(tmp_path, monkeypatch):
     prefix = business._verify_env_prefix()
     assert "GA_JUDGE_API=chat" in prefix and "GA_JUDGE_PHASE_BUDGET=600" in prefix
     assert "VERIFY_AGENT_JUDGE=1" in prefix and "VERIFY_DETERMINISTIC=1" in prefix
+    assert "GA_JUDGE_KEY" not in prefix and "EMPTY" not in prefix
+    private_exec = next(item for item in transport._backends["sidecar"].commands if isinstance(item[0], list))
+    assert "EMPTY" not in json.dumps(private_exec[0])
+    assert json.loads(private_exec[1]["stdin"])["env"] == {"GA_JUDGE_KEY": "EMPTY"}
+    assert transport._verifier_phase is None
+    with pytest.raises(ValueError):
+        business._verify_env_prefix(explicit={"GA_JUDGE_KEY": "not-real"})
 
 
 def test_partial_start_cleanup_is_not_ignored():
@@ -452,6 +548,50 @@ def test_explicit_general_branches_select_different_execution_profiles():
 def test_shared_pod_firewall_profile_cannot_silently_apply_to_separate_vms():
     with pytest.raises(ValueError, match="Shared-pod"):
         GeneralEnvironment(backend_factory=Transport, **general_config(mcp_isolation={"agent_uid": 500}))
+
+
+@pytest.mark.parametrize(
+    "code,error,expected",
+    [(0, None, "ok"), (124, None, "pod_timeout"), (-1, None, "client_timeout"), (None, None, "transport_error")],
+)
+def test_trusted_verifier_stdin_never_changes_public_argv_or_main_environment(code, error, expected):
+    class Provider(Transport):
+        def _exec(self, argv, *, stdin=None, **kwargs):
+            self.commands.append((argv, {"stdin": stdin, **kwargs}))
+            return SimpleNamespace(returncode=code, stdout=b"out", stderr=b"err", stream_error=error)
+
+    environment = GeneralEnvironment(backend_factory=Provider, **general_config())
+    environment.start()
+    command = "python3 /work/run_verify.py"
+    with environment.verifier_phase(command, {"GA_JUDGE_KEY": "contract-private-value"}):
+        result = environment.execute("VERIFY_AGENT_JUDGE=1 " + command, container="sidecar", timeout=60)
+        assert result["reason"] == expected and result["output"] == "outerr"
+        sidecar = environment._backends["sidecar"]
+        argv, options = sidecar.commands[-1]
+        assert "contract-private-value" not in json.dumps(argv)
+        payload = json.loads(options["stdin"])
+        assert payload["env"] == {"GA_JUDGE_KEY": "contract-private-value"}
+        assert "contract-private-value" not in payload["command"]
+        assert argv[2:4] == ["su", SERVICE]
+        environment.execute("cat /logs/verifier/reward.json", container="sidecar")
+        assert isinstance(sidecar.commands[-1][0], str)
+        environment.execute(command)
+        assert all(isinstance(item[0], str) for item in environment._backends["main"].commands)
+    assert environment._verifier_phase is None
+
+
+def test_trusted_phase_errors_clear_credentials_and_refuse_unknown_credentials():
+    environment = GeneralEnvironment(backend_factory=Transport, **general_config())
+    with pytest.raises(ValueError):
+        with environment.verifier_phase("python3 /work/run_verify.py", {"UNRELATED_KEY": "fake"}):
+            pass
+    with pytest.raises(RuntimeError, match="contract-error"):
+        with environment.verifier_phase("python3 /work/run_verify.py", {"GA_JUDGE_KEY": "fake"}):
+            with pytest.raises(RuntimeError, match="nested"):
+                with environment.verifier_phase("python3 /work/run_verify.py", {}):
+                    pass
+            raise RuntimeError("contract-error")
+    assert environment._verifier_phase is None
 
 
 def test_real_pinned_factory_constructs_both_general_types_without_allocation(tmp_path, monkeypatch):

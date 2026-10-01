@@ -1,0 +1,50 @@
+{
+  "schema": "mimo.reference-general-terminal-cpu.v1",
+  "scope": "original inline test.sh CPU baseline, no policy solution or training",
+  "run_id": "r22-general-terminal-cpu-483b6c5e63",
+  "task_id": "candidate-0688-hardware-rtl",
+  "image": "docker.io/xiaomimimo/mimo-v2.6-rl-oss@sha256:396bc53d212898043d303c8b275d4b16d51a73f37024f7377d9b240fb435e981",
+  "policy_generated": false,
+  "gpu_used": false,
+  "task_pass": false,
+  "stage": "original_inline_verifier",
+  "network_blocked": true,
+  "native_tools": [
+    "Bash",
+    "Read",
+    "Write",
+    "Edit",
+    "Grep",
+    "Glob"
+  ],
+  "full_initial_prompt_tokens": 2890,
+  "prompt_fits_8192": true,
+  "grader": {
+    "reward": 0.0,
+    "reward_protocol": "/logs/verifier/reward.txt",
+    "verifier_returncode": 1,
+    "error_category": null,
+    "reward_error": null,
+    "output_tail": "^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/output.json'\n\n/usr/local/lib/python3.12/pathlib.py:1013: FileNotFoundError\n______________________ test_core_source_contract_is_wired ______________________\n\n    def test_core_source_contract_is_wired():\n        decoder = source(\"rtl/ibex_compressed_decoder.sv\")\n        if_stage = source(\"rtl/ibex_if_stage.sv\")\n>       assert \"input logic flush_expanded_i\" in decoder\nE       assert 'input logic flush_expanded_i' in \"// Copyright lowRISC contributors. // Copyright 2018 ETH Zurich and University of Bologna, see also CREDITS.md. // Li...b10)) |-> !$isunknown(instr_i[15:13])) `ASSERT(IbexPushPopFSMStable, !valid_i |-> cm_state_d == cm_state_q) endmodule \"\n\n/tests/test_outputs.py:38: AssertionError\n______________ test_edge_real_workspace_and_regression_entrypoint ______________\n\n    def test_edge_real_workspace_and_regression_entrypoint():\n        assert (ROOT / \"rtl/ibex_core.f\").is_file()\n        assert (ROOT / \"examples/simple_system/rtl/ibex_simple_system.sv\").is_file()\n        completed = subprocess.run([\"python3\", str(ROOT / \"rtl_regression.py\"), \"--output\", \"/tmp/recomputed.json\"], check=False)\n>       assert completed.returncode == 0\nE       AssertionError: assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', '/app/vendor/project/rtl_regression.py', '--output', '/tmp/recomputed.json'], returncode=1).returncode\n\n/tests/test_outputs.py:52: AssertionError\n=========================== short test summary info ============================\nFAILED ../tests/test_outputs.py::test_gate_artifact_schema_and_status - Asser...\nFAILED ../tests/test_outputs.py::test_core_trace_digest_independent_recompute\nFAILED ../tests/test_outputs.py::test_core_redirect_drops_abandoned_instruction\nFAILED ../tests/test_outputs.py::test_core_source_contract_is_wired - assert ...\nFAILED ../tests/test_outputs.py::test_edge_real_workspace_and_regression_entrypoint\n5 failed, 1 passed in 0.21s\n",
+    "tests_files_sha256": {
+      "anti_hack_guard.py": "336149b10b45d03b7774ba589d984e9663135cfc660f3a133fc482a8716d0e3a",
+      "fixtures/expected.json": "154ee9fa9d11ac99dea0b26dc71a0668e13b4f4e8432eca56998ab0bd9430c54",
+      "fixtures/pristine_env_manifest.json": "d8c2008f48c445cab5c65ed07cac29e2faeb30435c2f53bdf7a7daba99aec004",
+      "test.sh": "34de941312d5f271faf2d6b1f257a91a503887334a302ecc08a981f9969b7bf7",
+      "test_outputs.py": "80dea9ad830df8af6513d470cbd098c67ed061c00f4ff7623dc79d2fdd3ecdce"
+    }
+  },
+  "reward_is_noninfra": true,
+  "preflight_pass": true,
+  "reference_compat": "terminal_bench_v1_missing_registry",
+  "environment": {
+    "run_id": "r22-general-terminal-cpu-483b6c5e63",
+    "session_id": "31d324cc3a52473eb1c20b1329ca30cb",
+    "sandbox_id": "sb-6ygVzArlFstuRYYmDnVjL7",
+    "allocation_attempted": true,
+    "cleanup_confirmed": true,
+    "returncode": 137
+  },
+  "elapsed_seconds": 13.27,
+  "runtime_adapter_sha256": "7c86fd628d541d1ac33751e27c63b40cfd483fd18482c2183ccd3a545e1ba0a6"
+}
