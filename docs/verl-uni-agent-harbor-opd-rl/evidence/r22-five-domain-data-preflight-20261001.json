@@ -1,0 +1,94 @@
+{
+  "schema": "mimo.r22-cloud-data-preflight.v1",
+  "status": "read_only_inventory_not_training_acceptance",
+  "source_repository": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+  "source_revision": "639865fd3374018d6cb29b9fb82dd531406fcf5f",
+  "execution": {
+    "ssh_host": "157.157.221.177",
+    "ssh_port": 16160,
+    "python": "3.12.3",
+    "pyarrow": "25.0.1",
+    "method": "download fixed-revision Parquet into cloud CPU memory and inspect with PyArrow",
+    "reported_by": "five_domain_music",
+    "local_model_or_data_download": false,
+    "gpu_used": false,
+    "environment_assets_fully_downloaded": false
+  },
+  "parquets": [
+    {
+      "domain": "cyber",
+      "path": "cyber.parquet",
+      "bytes": 227632,
+      "rows": 1000,
+      "sha256": "9e6e69034f4f3e6cfb5c901de642dddc7f4bacf35ab886b0e8eb53eb03084ba1",
+      "data_source_counts": {"arvo": 1000},
+      "agent_name_counts": {"mimo_swe_agent": 1000},
+      "sample_ids": ["arvo_35858", "arvo_42513157"]
+    },
+    {
+      "domain": "general",
+      "path": "general/train.parquet",
+      "bytes": 3122244,
+      "rows": 989,
+      "sha256": "9bfdc8b05d2bf2cb9e89815443d35507e4be30368aebf70928421795c10259b9",
+      "data_source_counts": {"mimoagent/terminal_bench": 64, "mimoagent/general_agent": 925},
+      "agent_name_counts": {"mimo_swe_agent": 989},
+      "ability_counts": {"agent": 989},
+      "terminal_instance_dataset_type_counts": {"terminal_bench": 64},
+      "terminal_outer_dataset_type_counts": {"terminal_bench": 64},
+      "terminal_inner_outer_match": 64,
+      "terminal_sample_ids": ["candidate-0036-software-data-engineering", "candidate-0109-science-robotics"],
+      "business_sample_ids": ["s3k_2076_legal_compliance_en_t5_rl_009", "s3k_0052_accounting_audit_tax_en_t2_rl_008"],
+      "first_terminal_tests_files": {
+        "schema_version": "tbench-terminal-bench.v1",
+        "raw_type": "str",
+        "raw_characters": 44194,
+        "decoded_type": "dict",
+        "file_count": 5,
+        "value_types": ["str"],
+        "names": ["anti_hack_guard.py", "fixtures/pristine_env_manifest.json", "fixtures/source_hashes.json", "test.sh", "test_outputs.py"]
+      }
+    },
+    {
+      "domain": "webdev",
+      "path": "webdev.parquet",
+      "bytes": 4120378,
+      "rows": 2093,
+      "sha256": "56ca6c96642666a27b756e20694ba60a4386d1761baadae86fd6768553d2cbac",
+      "data_source_counts": {"blackbox/webdev": 2093},
+      "agent_name_counts": {"mimo_swe_agent": 2093},
+      "ability_counts": {"webdev": 2093},
+      "sample_ids": ["dasyn_260638_00014", "dasyn_260638_00009"]
+    },
+    {
+      "domain": "music",
+      "path": "music.parquet",
+      "bytes": 135467,
+      "rows": 1000,
+      "sha256": "8fa2c95fb008df032eae184f3304dd3a73e3d25727e3aac0a715484859fa4856",
+      "data_source_counts": {"music": 1000},
+      "ability_counts": {"music_generation": 1000},
+      "top_level_keys": ["prompt", "data_source", "ability", "reward_model", "extra_info"],
+      "extra_info_keys": ["src_id", "lang", "tag", "length", "nvoice_want", "bpm", "meter"],
+      "sample_src_ids": ["gK-0768", "gK-1100"]
+    }
+  ],
+  "general_asset_tree": {
+    "method": "fixed-revision recursive Hugging Face tree, every next-page link followed",
+    "pages": 56,
+    "entries": 55256,
+    "files": 41285,
+    "environment_asset_files": 41284,
+    "directories": 13971,
+    "unique_environment_task_prefixes": 925,
+    "parquet_env_task_dir_matches": 925,
+    "missing_task_prefixes": 0,
+    "asset_contents_downloaded_or_executed": false
+  },
+  "limits": [
+    "These are measured source inventory facts, not training, scoring or sandbox execution acceptance.",
+    "Code source was previously audited separately; this read audited the other four Parquets.",
+    "Sample IDs are first-row examples, not the final training/heldout selection.",
+    "Terminal-bench data requires an explicit environment/verifier compatibility adapter at the pinned source revisions."
+  ]
+}

@@ -5,11 +5,12 @@
 - 用户最终要求完整覆盖MiMo Code/Cyber/General/Webdev/Music，数据量可小；Code单域工程完成不是最终目标完成。
 - 新主机SSH157.157.221.177:16160已连通；07:32UTC双RTX PRO6000各97887MiB、0显存/利用率。Mac直连VPN utun4失败，nc -b en0代理成功。
 - 原uv273环境存在，版本metadata一致；原C5十五文件大小存在。本轮未再全hash/加载，不能当作新恢复验收。
-- 当前处于五域设计/只读前置核查；新/root/mimo-private不存在，平台Pod ID与新运行窗口尚未确认，未启动训练。
+- 当前只读预检完成；Pod digzlnvc92cntc/Harbor-RL-Testing/4.18美元每小时，08:33UTC GET按16160端点确认RUNNING。新/root/mimo-private不存在；设计确认与新窗口待回复，未启动训练。
 
 ### 本轮交付物
 
 - docs/verl-uni-agent-harbor-opd-rl/mimo-five-domain-reproduction-design-20261001.md：范围/架构/来源/逐域contracts/文件清单/测试及完成门。
+- 同目录r22-new-host-preflight-20261001.md、evidence/r22-{current-pod-status,uv-and-processor-preflight,five-domain-data-preflight}-20261001.json：真实当前Pod/273锁/processor/四Parquet及925目录映射。
 - tasks/todo.md最新五域清单；本目录lessons.md记录目标范围与新主机停止期限纪律。
 - 上轮量化数据/参数/时间/真实证据仍以r21-training-run-report-20261001.md及19门联合PASS为准。
 
@@ -25,7 +26,7 @@
 - 现主仓没有上游prompt-mean/global权重与Webdev advantage前组reward重写，不能只复制AgentLoop/YAML。
 - General依赖main/sidecar/MCP/SQLite与隐藏rubric隔离；Webdev n8视觉组judge；Music无harness且实际worker须abc2midi。
 - 新主机uv缺SGLang/megatron-core/mbridge；路径ws1不代表卡数，新主机已实测双卡。
-- 当前Runpod MCP/CLI读取遇网络错误，不把读失败当404/停止。旧Pod01:45UTC EXITED是旧已归档事实。
+- 当前Mac Runpod MCP/CLI网络失败，云SSH转发v2只读API成功；旧Pod01:45UTC EXITED不等于新Pod状态。General64条真实terminal_bench在固定registry缺失，不能重标签generic（无verifier）；Music发布schema不同于builder。
 
 ### 下一里程碑任务清单
 
@@ -36,7 +37,7 @@
 
 ### 分支/部署状态
 
-- branch/worktree verl-uni-agent-harbor-opd-rl；上轮0f67f6b已push。本轮文档尚待精确提交/Ruff双门/push。
+- branch/worktree verl-uni-agent-harbor-opd-rl；五域设计16fd195已push、full Ruff693通过。后续真实数据/uv证据提交以当前GitHEAD为准。
 - 新主机仅完成只读预检，不停用户GPU。原Podvo6u0t8x398bnm的六小时窗口已结束，不能用旧SSH51913判断新主机。
 - 其他会话dirty保留；tasks/todo及handoff只把本轮新增prefix写入index。
 

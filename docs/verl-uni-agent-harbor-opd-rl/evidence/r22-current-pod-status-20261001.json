@@ -1,0 +1,65 @@
+{
+  "id": "digzlnvc92cntc",
+  "name": "Harbor-RL-Testing",
+  "status": "RUNNING",
+  "startedAt": "2026-10-01T07:26:54.977Z",
+  "cost": 4.18,
+  "gpu": {
+    "count": 2,
+    "id": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "memory": 377,
+    "vcpuCount": 64
+  },
+  "dataCenterId": "EUR-IS-1",
+  "ports": [
+    "8888/http",
+    "22/tcp"
+  ],
+  "ssh": {
+    "direct": {
+      "command": "ssh root@157.157.221.177 -p 16160",
+      "host": "157.157.221.177",
+      "port": 16160,
+      "username": "root"
+    },
+    "proxy": {
+      "command": "ssh digzlnvc92cntc-64411f09@ssh.runpod.io",
+      "host": "ssh.runpod.io",
+      "port": 22,
+      "username": "digzlnvc92cntc-64411f09"
+    }
+  },
+  "mounts": {
+    "network": [
+      {
+        "path": "/workspace",
+        "volumeId": "72jdno5cuk"
+      }
+    ]
+  },
+  "public_field_names": [
+    "actions",
+    "args",
+    "cloud",
+    "cost",
+    "createdAt",
+    "cudaVersion",
+    "dataCenterId",
+    "disk",
+    "globalNetworking",
+    "gpu",
+    "id",
+    "image",
+    "locked",
+    "mounts",
+    "name",
+    "ports",
+    "registry",
+    "runtime",
+    "ssh",
+    "startedAt",
+    "status",
+    "template"
+  ],
+  "observed_at_utc": "2026-10-01T08:33:06.382437+00:00"
+}

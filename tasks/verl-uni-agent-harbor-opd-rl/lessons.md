@@ -2,6 +2,8 @@
 
 - 用户明确目标为五类公开任务路线时，最终完成门必须覆盖Code/Cyber/General/Webdev/Music；单Code PASS只是里程碑。核原driver/loss/group reward与harness，不把读入五种Parquet或五次推理冒充训练复现。
 - 用户提供新SSH后先核实际双卡、进程、网盘及uv指纹。2026-10-01 16160直连被VPN utun4关闭，绑定Mac en0后成功；新主机/root私有材料为空，不能凭网盘uv存在假定凭据/控制器仍在。旧guard绑定旧Pod与过期期限，禁止复制启动；新资源期限提前明确。
+- General公开989行包含terminal_bench64与general_agent925；不能把前两行或单一rubric子集视为全类型覆盖。固定467f registry缺terminal_bench、generic无verifier；显式兼容原tests_files/评分协议，不重标签绕过。Music发布schema无agent_name且ability=music_generation，不沿用builder假设。
+- 模型型号/参数量不能代替processor核查：固定MiMo9B本地config实际为Qwen3_5ForConditionalGeneration且CPU可加载视觉processor；不能凭“9B”假设text-only。273依赖pin匹配不等于editable源码/revision匹配，启动必须核实际导入路径。
 
 - GPU 库存随时变化：一次区域分配失败不等于 RTX PRO 6000 持续无货；升级到高价 GPU 前重新查询目标区域和规格。用户指定其他会话使用的机器时，只读核对归属，未经明确接管不得停止；2026-09-29 用户明确授权接管 11403，仍须先核对进程身份、优雅退出并验证显存释放，SSH 超时不能当作命令已执行。
 - Mac TCP 已连接但 SSH banner 超时，先查 route 与网络接口；2026-09-29 默认 utun4 路由失败，单次 `ProxyCommand=nc -b en0 -G 8 %h %p` 成功，无需重启 Pod 或修改全局网络。仅对当前网络适用，不能把 Mac en0 参数带入云端控制器。

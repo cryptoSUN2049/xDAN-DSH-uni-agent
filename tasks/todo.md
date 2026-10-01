@@ -2,7 +2,9 @@
 
 - [x] 按用户明确目标纠正Code-only范围；只读核查固定上游五域脚本/harness/奖励/driver差异。
 - [x] 五域设计落盘：10个train/5个heldout，逐域原路线、有效更新/恢复与观测完成门。
-- [x] 新SSH157.157.221.177:16160连通：双96GB RTX PRO6000空闲，原uv与C5十五文件存在。
+- [x] 新SSH157.157.221.177:16160与Pod digzlnvc92cntc确认：双96GB RTX PRO6000，原uv/C5存在。
+- [x] 云CPU273依赖pin零差异、真实vision processor；四Parquet SHA/rows与General925资产前缀核查。
+- [x] 五域设计16fd195已push，精确提交Ruff693双门通过；General64 terminal缺registry/verifier需显式兼容。
 - [ ] 新方案设计确认与本次主机身份/运行窗口；不能沿用旧六小时guard。
 - [ ] 云CPU核source/env/数据assets/各域grader；冻结实际抽样manifest和judge身份。
 - [ ] 独立reference运行lane、双卡后端兼容及真实forward/backward/weight-sync预检。

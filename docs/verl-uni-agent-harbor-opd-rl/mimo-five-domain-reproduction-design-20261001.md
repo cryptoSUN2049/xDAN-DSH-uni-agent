@@ -61,7 +61,7 @@ Code 使用 uni-agent session；其他四域保持上游的原生生成/AgentLoo
 | --- | --- | --- |
 | Code | 2任务，n4；参考四harness各至少一个真实消费组 | 原仓库镜像、隐藏test patch、原test command；同组单harness，记录实际step-hash路由 |
 | Cyber | 2任务，n4，尽量不同项目 | sanitizer crash及function/sanitizer/error_type精确匹配；agent/verify/root权限 |
-| General | 2任务，n8，覆盖文件及业务状态工具 | workspace/tools/system分离、MCP与SQLite隔离、reward阶段上传rubric/answer_key |
+| General | 2任务，n8；terminal_bench与general_agent各1题 | terminal保留tests_files原测试；业务任务保留MCP/SQLite隔离与rubric/answer_key |
 | Webdev | 2任务，n8 | 真build/render/screenshot、query-fit/runtime gate、同题8候选视觉pick |
 | Music | 2短prompt，n8，尽量语言不同 | 原ABC生成与abc2midi转换、固定18特征评分；不修改成Code测试 |
 
@@ -83,7 +83,11 @@ Code 使用 uni-agent session；其他四域保持上游的原生生成/AgentLoo
 
 ### General
 
-入口 scripts/general/general.sh。初始workspace、MCP工具定义与独立SQLite状态全部冻结；agent看不到system/verifier资产。原rubric/answer_key于reward阶段进入可信sidecar。默认将连续分数按1.0阈值二值化，连续分数另存；保留invalid=-999的组处理及infra优势归零，不能改阈值让9B更容易过。
+云CPU实查发布Parquet：989行中mimoagent/terminal_bench64、mimoagent/general_agent925，且64行内外dataset_type均为terminal_bench。两套instance schema不能互换。最低两题分别覆盖这两支；不能只选前两行terminal或只选925行rubric。实际发布数据/资产核查见evidence/r22-five-domain-data-preflight-20261001.json。
+
+入口scripts/general/general.sh的env_actor按真实dataset_type分发，但固定467f registry仅arvo/deepswe/generic/opensource-code，recipe只新增general_agent；terminal_bench尚未注册，是已确认的公开数据/代码兼容缺口。不得重标签成generic（无programmatic verifier）或S3K（缺env_task_dir）。需要显式terminal兼容adapter，完整保留原tests_files/test.sh/reward协议与超时/权限。首行tests_files为JSON字符串，解码为5文件，包括anti_hack_guard、fixtures、test.sh和test_outputs.py；不能仅看文件名推定reward协议。未核完整测试合同前不能启动该分支训练；该结果标reference-compat，不声称未经修改的官方代码原生支持。
+
+925条业务任务：初始workspace、MCP工具定义与独立SQLite状态全部冻结；agent看不到system/verifier资产。原rubric/answer_key于reward阶段进入可信sidecar。默认将连续分数按1.0阈值二值化，连续分数另存；保留invalid=-999的组处理及infra优势归零，不能改阈值让9B更容易过。
 
 judge真实端点/模型/参数与响应元数据冻结，不在Git保存key；gpt-4o-mini只是公开wrapper默认，不代表论文固定judge。配置声明length penalty不等于源码实际执行，实际消费位置必须核实后报告。
 
@@ -99,7 +103,7 @@ judge真实端点/模型/参数与响应元数据冻结，不在Git保存key；g
 
 入口 scripts/design/music.sh，单轮生成ABC，调用原scorer。abc2midi必须在实际Ray reward worker可执行，fenced/bare预检均需0<score<1。原scorer使用18特征/6组、85%基线percentile与15%histogram相似度，再归一化到[0,1]。
 
-直接抽已发布Parquet，避免原builder硬编码N_VAL182与小样本冲突。原reward不读取prompt约束元数据；bpm/声部/长度遵循度作为独立评测，不改主reward。
+直接抽已发布Parquet，避免原builder硬编码N_VAL182与小样本冲突。发布schema没有agent_name/instance_json/index，ability为music_generation，使用src_id作为原始身份；不能以本地builder字段假设拒绝实际数据。原reward不读取prompt约束元数据；bpm/声部/长度遵循度作为独立评测，不改主reward。
 
 ## 算法及双卡环境
 
@@ -124,6 +128,7 @@ judge真实端点/模型/参数与响应元数据冻结，不在Git保存key；g
 | examples/mimo_multidomain_rl/run_all.sh | 顺序五域阶段；成功后接续，异常保存/清理，不只留后台running |
 | uni_agent/tasks/mimo_reference/modal_environment.py | 原execute/copy/as_user/lifecycle接口的Modal适配，Harbor归属与清理 |
 | uni_agent/tasks/mimo_reference/general_environment.py | main/sidecar/MCP/SQLite隔离合同，不暴露隐藏资产 |
+| uni_agent/tasks/mimo_reference/terminal_bench_environment.py | 显式注册缺失terminal分支，原tests_files安装/执行/评分/超时合同，不改成rubric或无verifier generic |
 | examples/mimo_multidomain_rl/acceptance.py | 每域消费/有效更新/恢复/checkpoint/W&B/Insight完整审计 |
 | tests/uni_agent/examples/test_mimo_multidomain_*.py | loss/group/infra/权限/运行终态等必要语义云CPU回归 |
 

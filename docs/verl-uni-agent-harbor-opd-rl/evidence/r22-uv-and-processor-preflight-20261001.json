@@ -1,0 +1,54 @@
+{
+  "schema": "mimo.r22-environment-read-only-preflight.v1",
+  "status": "environment_inventory_not_training_acceptance",
+  "ssh": {"host": "157.157.221.177", "port": 16160, "first_read_at_utc": "2026-10-01T07:32:06Z"},
+  "gpu_snapshot": [
+    {"index": 0, "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition", "memory_total_mib": 97887, "memory_used_mib": 0, "utilization_percent": 0},
+    {"index": 1, "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition", "memory_total_mib": 97887, "memory_used_mib": 0, "utilization_percent": 0}
+  ],
+  "environment": {
+    "prefix": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1",
+    "python": "3.12.3",
+    "metadata_versions": {"torch": "2.11.0", "vllm": "0.23.0", "transformers": "5.8.0", "ray": "2.54.1", "harbor": "0.16.1", "modal": "1.5.5", "wandb": "0.30.0", "rl-insight": "0.3.0"},
+    "absent_distributions": ["sglang", "megatron-core", "mbridge"],
+    "distribution_records": 280,
+    "unique_normalized_distribution_names": 278,
+    "duplicate_metadata": {"verl": ["0.10.0.dev0", "0.10.0.dev0"], "uni-agent": ["0.1.0.dev0", "0.1.0.dev0"]},
+    "freeze_path": "/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/deployment/versions/uv-lanes/ua-verl-py312-vllm023.freeze.txt",
+    "freeze_sha256": "e9f87349997a81b7fbc31ef1ce74f9abb078c37600282d4684c63c75514c4dc7",
+    "strict_name_version_pins_checked": 273,
+    "strict_pin_mismatches": [],
+    "non_standard_requirements_not_validated_by_name_version_check": ["transferqueue source requirement", "uni-agent editable source", "verl editable source"],
+    "default_verl_import_origin": "/workspace/verl-uni-agent-harbor-opd-rl/src/uni-agent/verl/verl/__init__.py"
+  },
+  "model_metadata": {
+    "path": "/workspace/models/MiMo-V2.6-Distill-Qwen-9B",
+    "config_sha256": "407c46388b8fa2ae9bf69fe27d40af236d373e86a6b48f5284c86df5cd183633",
+    "architecture": "Qwen3_5ForConditionalGeneration",
+    "model_type": "qwen3_5",
+    "text_model_type": "qwen3_5_text",
+    "text_hidden_size": 4096,
+    "text_layers": 32,
+    "text_max_position_embeddings": 262144,
+    "vision_config_present": true
+  },
+  "processor_cpu_probe": {
+    "observed_at_utc": "2026-10-01T08:34:04.590241+00:00",
+    "method": "AutoProcessor.from_pretrained local_files_only=True trust_remote_code=False with CUDA_VISIBLE_DEVICES empty",
+    "passed": true,
+    "processor_class": "Qwen3VLProcessor",
+    "image_processor_class": "Qwen2VLImageProcessor",
+    "model_input_names": ["pixel_values", "image_grid_thw", "input_ids", "attention_mask", "pixel_values_videos", "video_grid_thw", "mm_token_type_ids"],
+    "gpu_visible": false,
+    "model_weights_loaded": false,
+    "vision_forward_or_training_verified": false
+  },
+  "recovery": {"c5_directory_exists": true, "c5_files_stat_read": 15, "current_c5_full_sha_or_load_verified": false, "root_mimo_private_exists": false},
+  "limits": [
+    "273 locked name/version requirements match; source requirements need independent revision/import checks.",
+    "Default editable VERL import is the old project, not a deployed MiMo reference source lane.",
+    "Processor CPU loading is not proof of image-conditioned policy generation or training.",
+    "No new native trainer, W&B run or RL-Insight training stream was launched by these preflight reads.",
+    "Old Pod cost guard and deadline must not be reused on this new host."
+  ]
+}
