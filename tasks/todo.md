@@ -6,7 +6,7 @@
 - [x] 独立父SHA表示兼容审计仅一行变化；181项云CPU回归、98.68%覆盖，同实物重审PASS；旧FAIL保留。
 - [x] 23所属Modal sandbox API终止、controller/Ray/key/端口清理；2026-10-01 01:45UTC实时Runpod API EXITED。
 - [x] root重新读取W&B finished/step5/config/summary；本地20引用SHA及审计source/test相同测试字节核验。
-- [ ] 最终精确commit/全Ruff/push（当前进行）。
+- [x] 最终验收代码/证据a41f6f5已push，精确提交全仓Ruff check与format check693文件均通过。
 
 Review：本轮1独立任务、4消费轨迹、1新增更新，监督50分16秒；6h是资源窗口，完成后未接续更多任务，不宣称全量/五域/能力提升。
 

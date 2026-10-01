@@ -38,7 +38,7 @@
 
 ### 分支/部署状态
 
-- worktree/branch verl-uni-agent-harbor-opd-rl，9227b5d已push；当前最终证据与独立审计提交中，最后Git结果为准。
+- worktree/branch verl-uni-agent-harbor-opd-rl，最终验收代码/报告/证据a41f6f5已push；精确提交全仓Ruff693双门通过。最后文档收尾提交以GitHEAD为准。
 - Pod EXITED，本轮23sandbox fresh API active0，owned controller/Ray/端口/key清理已过；不宣称独立确认实际stop时间或实际总账单。
 - C5共享路径/workspace/mimo-dsh-rl-20260928/runs/r20f/rl-training/checkpoints/global_step_5；15文件19,151,369,958B/fullSHA。
 
