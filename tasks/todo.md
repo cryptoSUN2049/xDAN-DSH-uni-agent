@@ -10,7 +10,8 @@
 - [x] Music首轮原生日志/W&B API定位监控开关冲突；fail-fast修复及8项cloud回归通过，失败原件保留。
 - [x] 真实TQ mRoPE回归：baseline15fail/9pass、fixed24pass；独立review与730a017 push。
 - [x] General两支原工具/评分器真实CPU通过、88tests；Webdev渲染/35tests；已commit/push。
-- [ ] 当前Music R22d（mimor22musicd/PID50680/v2-final）双卡初始化已推进；R22b/c均失败，无有效更新，等待R22d实际验收。
+- [x] Music R22d真实首步完成：exit0、W&B finished/step1/grad1.168、reward0..0.74，15 checkpoint文件，Insight ack passed。
+- [ ] C1全hash/optimizer参数审计、恢复消费第二题与heldout；7/8截断须独立解决。
 - [ ] Music/Code参考/Cyber/General/Webdev逐域真实采样、消费、有效更新与物理恢复。
 - [ ] 五域checkpoint全SHA、原生W&B API/RL-Insight与heldout；失败/成本/清理完整记录。
 - [ ] 精确提交/Ruff双门/push与最终handoff。

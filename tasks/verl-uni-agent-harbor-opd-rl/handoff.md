@@ -7,6 +7,14 @@
 - 原uv273环境存在，版本metadata一致；原C5十五文件大小存在。本轮未再全hash/加载，不能当作新恢复验收。
 - 当前Pod digzlnvc92cntc/Harbor-RL-Testing/4.18美元每小时；已复用273uv、恢复W&B/Modal凭据及原生Insight服务。Music首轮mimor22musica因统计配置冲突exit1/W&B run=null；修复后mimor22musicb于11:46:51UTC在update_actor位置张量unbind失败；12:54UTC独立W&B仍failed/history空，双卡0%/3MiB，无有效更新。独立tensor兼容runtime已准备但回归未通过，R22c未启动。
 
+### 当前里程碑：Music 首步成功（2026-10-01 14:32 UTC）
+
+- R22d native exit0，root独立W&B API finished/global_step1，143个summary keys。actor grad_norm1.16801655；reward0..0.74/mean0.0925；正负advantage均存在。
+- 1题8轨迹，7/8达8k上限；update_actor77.66s/save74.48s，整个run24分08秒。15个checkpoint文件存在，约112.9GB正在全SHA/optimizer参数审计。
+- /workspace/mimo-dsh-rl-20260928/r22/runs/music-r22d/checkpoints/global_step_1；原生observability_ack passed。root线上证据 docs/verl-uni-agent-harbor-opd-rl/evidence/r22d-root-wandb-final-20261001.json。
+- 尚未C1恢复、第二题、heldout或五域训练全验收；General原heldout完整prompt11855tokens，8k不够，不能删工具以通过。
+- 当前训练进程已正常结束，Pod保持在线；下一步核checkpoint有效性后执行恢复与剩余样本。
+
 ### 最新运行（2026-10-01 14:18 UTC，覆盖下面历史状态）
 
 - R22d mimor22musicd 已于14:07UTC启动，PID50680；run目录 /workspace/mimo-dsh-rl-20260928/r22/runs/music-r22d，native.log/launch-receipt.json 为实时依据。
