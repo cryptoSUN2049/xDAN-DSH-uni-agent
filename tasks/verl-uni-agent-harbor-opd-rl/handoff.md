@@ -5,7 +5,27 @@
 - 用户最终要求完整覆盖MiMo Code/Cyber/General/Webdev/Music，数据量可小；Code单域工程完成不是最终目标完成。
 - 新主机SSH157.157.221.177:16160已连通；07:32UTC双RTX PRO6000各97887MiB、0显存/利用率。Mac直连VPN utun4失败，nc -b en0代理成功。
 - 原uv273环境存在，版本metadata一致；原C5十五文件大小存在。本轮未再全hash/加载，不能当作新恢复验收。
-- 当前Pod digzlnvc92cntc/Harbor-RL-Testing/4.18美元每小时；已复用273uv、恢复W&B/Modal凭据及原生Insight服务。Music首轮mimor22musica因统计配置冲突exit1/W&B run=null；修复后新mimor22musicb于11:25:03UTC后台启动PID16468，尚无有效更新验收。
+- 当前Pod digzlnvc92cntc/Harbor-RL-Testing/4.18美元每小时；已复用273uv、恢复W&B/Modal凭据及原生Insight服务。Music首轮mimor22musica因统计配置冲突exit1/W&B run=null；修复后mimor22musicb于11:46:51UTC在update_actor位置张量unbind失败；12:54UTC独立W&B仍failed/history空，双卡0%/3MiB，无有效更新。独立tensor兼容runtime已准备但回归未通过，R22c未启动。
+
+### 最新运行（2026-10-01 14:18 UTC，覆盖下面历史状态）
+
+- R22d mimor22musicd 已于14:07UTC启动，PID50680；run目录 /workspace/mimo-dsh-rl-20260928/r22/runs/music-r22d，native.log/launch-receipt.json 为实时依据。
+- runtime /root/mimo-r22/runtime-torch211-v2-final；tuSHA9c840b97，manifest938a370c。真实TQ CPU A/B baseline15fail9pass、fixed24pass，独立review通过；不等于GPU验收。
+- 14:16:27actor/ref及reward manager初始化成功；14:18正在双vLLM初始化，尚无有效更新。7200s仅当前训练进程上限，不自动停Pod。
+- TQ修复730a017、General两支88tests/真实工具与评分器31dc998、Webdev35tests/真实渲染dd74606已push；精确HEAD全仓Ruff710双门通过。
+- General准备后续GPU预检，Webdev原视觉grader CPU实测进行中；二者不得被算作训练完成。
+
+### 历史失败状态（2026-10-01 13:52 UTC）
+
+- R22c 已 failed/exit1，13:52独立 W&B API failed/summary仅runtime266；checkpoint0，双GPU0%/0MiB。运行21分13秒，未产生有效更新。
+- 同一 mRoPE 错误在 TQ 重建后复现，原patch只覆盖padding构造；真实 TransferQueue storage/serial utils 另行 as_nested_tensor，绕过修复。正在独立 runtime 修 worker 接收边界，并补真实TQ pack/retrieve/serialize回归；禁止将旧7case宣称完整链路修复。
+- General两分支CPU真实环境/工具/原评分器均已预检通过，88tests，尚未GPU训练。
+
+### 历史恢复尝试
+
+- Tensor A/B 已复现：reference 2 fail/5 pass，独立 fixed runtime 7/7 pass；证据见 docs/verl-uni-agent-harbor-opd-rl/evidence/tensor-runtime-20261001/。完整 GPU 更新仍待验证。
+- 已启动 mimor22musicc，owned supervisor PID37139，runtime /root/mimo-r22/runtime-torch211，run目录 /workspace/mimo-dsh-rl-20260928/r22/runs/music-r22c。单步、7200秒进程上限，不自动停Pod；必须重新查 receipt/native.log/W&B 才能判断进度。
+- 原测试缺 flash_attn 与 chunk API 拼错均为无效复现；现回归直接执行生产 constructor 与真实 DP/index/serialization 路径，不 mock backend。
 
 ### 本轮交付物
 
@@ -23,6 +43,8 @@
 
 ### 已踩坑/真实行为
 
+- 最新review：docs/verl-uni-agent-harbor-opd-rl/r22-progress-review-20261001.md。R22b发生8条真实生成、7条8k截断后在update_actor minibatch构造失败；不能把rollout吞吐当有效更新。
+
 - 现主仓没有上游prompt-mean/global权重与Webdev advantage前组reward重写，不能只复制AgentLoop/YAML。
 - General依赖main/sidecar/MCP/SQLite与隐藏rubric隔离；Webdev n8视觉组judge；Music无harness且实际worker须abc2midi。
 - 新主机uv缺SGLang/megatron-core/mbridge；路径ws1不代表卡数，新主机已实测双卡。R22首轮的阻断点是disable_log_stats=True与RL-Insight冲突，非双卡模式；新launcher在GPU前检查。
@@ -38,7 +60,7 @@
 ### 分支/部署状态
 
 - branch/worktree verl-uni-agent-harbor-opd-rl；五域设计16fd195已push、full Ruff693通过。后续真实数据/uv证据提交以当前GitHEAD为准。
-- 当前新Music监督PID16468/startticks366972613；单阶段7200秒仅限所属训练进程，未排定自动停Pod。原Pod六小时旧guard不复用。原生Prom9090/Tempo3200/Insight18080运行。
+- 原Music监督PID16468已结束；12:54UTC当前没有GPU训练，单阶段7200秒仅限所属训练进程，未排定自动停Pod。原Pod六小时旧guard不复用。原生Prom9090/Tempo3200/Insight18080运行。
 - 其他会话dirty保留；tasks/todo及handoff只把本轮新增prefix写入index。
 
 ### 冷启动 checklist
