@@ -121,6 +121,12 @@ class ModalEnvironment(NativeModalEnvironment):
         super().start()
 
     def _exec(self, argv, *, timeout, stdin=None, max_output_bytes=None):
+        # Modal's protobuf deadline is integer seconds. Keep native GNU timeout
+        # inside argv unchanged, including subsecond command deadlines.
+        if timeout is not None:
+            if isinstance(timeout, bool) or not math.isfinite(timeout) or timeout <= 0:
+                raise ValueError("Transport timeout must be finite and positive")
+            timeout = math.ceil(timeout)
         user = _COPY_USER.get()
         if user is not None:
             argv = ["su", user, "-s", "/bin/sh", "-c", shlex.join(argv)]

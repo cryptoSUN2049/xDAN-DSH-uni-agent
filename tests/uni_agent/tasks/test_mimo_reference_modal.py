@@ -140,6 +140,16 @@ def test_native_shell_timeout_is_distinct_from_nonzero_reward(env):
     result = env.execute("sleep 1", timeout=0.05)
     assert result["reason"] == "pod_timeout"
     assert result["returncode"] == 124
+    assert type(env.sandbox.calls[-1][1]["timeout"]) is int
+
+
+@pytest.mark.parametrize("timeout", [1.0, 1.25, 120.0])
+def test_float_timeout_reaches_provider_as_integer_without_changing_command(env, timeout):
+    result = env.execute("printf ordinary", timeout=timeout)
+    assert result["returncode"] == 0
+    argv, options = env.sandbox.calls[-1]
+    assert type(options["timeout"]) is int
+    assert str(timeout) in argv
 
 
 @pytest.mark.parametrize("timeout", [0, -1, True, float("inf")])

@@ -1,0 +1,16 @@
+{
+  "schema": "mimo.reference-modal-timeout-contract.v1",
+  "timestamp_utc": "2026-10-01T14:26:09.248900+00:00",
+  "python": "/workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/bin/python",
+  "exit_code": 0,
+  "stdout": ".........................................                                [100%]\n=============================== warnings summary ===============================\ntests/uni_agent/tasks/test_mimo_reference_modal.py::test_ordinary_file_copy_respects_nonroot_permissions\ntests/uni_agent/tasks/test_mimo_reference_modal.py::test_user_applies_to_native_tar_transfers_and_is_reset\n  /usr/lib/python3.12/tarfile.py:2274: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n41 passed, 2 warnings in 2.94s\n",
+  "stderr": "",
+  "source_hashes": {
+    "uni_agent/tasks/mimo_reference/modal_environment.py": "fc93722ad66fcf16182d900f3a8f36d94ef6027d0d4ee39614f89be3f8d2f2d3",
+    "tests/uni_agent/tasks/test_mimo_reference_modal.py": "ed8d1576616a1735c64224ea13682ace4a9efcff9ab6e007954f25b210249a0d"
+  },
+  "mimoagent_revision": "467f0a19016f0ac4d63b8d17a1f0da9ba07f232c",
+  "gpu_used": false,
+  "provider_resources_created": false,
+  "verification": "SDK deadline integer ceiling; original GNU subsecond timeout preserved"
+}
