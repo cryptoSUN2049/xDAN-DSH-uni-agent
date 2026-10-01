@@ -1,3 +1,17 @@
+## 五域复现推进（2026-10-01，当前目标）
+
+- [x] 按用户明确目标纠正Code-only范围；只读核查固定上游五域脚本/harness/奖励/driver差异。
+- [x] 五域设计落盘：10个train/5个heldout，逐域原路线、有效更新/恢复与观测完成门。
+- [x] 新SSH157.157.221.177:16160连通：双96GB RTX PRO6000空闲，原uv与C5十五文件存在。
+- [ ] 新方案设计确认与本次主机身份/运行窗口；不能沿用旧六小时guard。
+- [ ] 云CPU核source/env/数据assets/各域grader；冻结实际抽样manifest和judge身份。
+- [ ] 独立reference运行lane、双卡后端兼容及真实forward/backward/weight-sync预检。
+- [ ] Music/Code参考/Cyber/General/Webdev逐域真实采样、消费、有效更新与物理恢复。
+- [ ] 五域checkpoint全SHA、原生W&B API/RL-Insight与heldout；失败/成本/清理完整记录。
+- [ ] 精确提交/Ruff双门/push与最终handoff。
+
+Review：已验收的只是DSH Code适配；参考五域目前0/5，不把新双卡连通与uv可用称为已启动训练。用户要求继续检查uv、完整启动脚本与观察；待必要前置门完成后按同一目标推进。
+
 ## R21 最终真实验收（2026-10-01）
 
 - [x] 当前任务002549：C4原生双rank恢复→四唯一TQ消费→有效GRPO→原生C5/exit0。
