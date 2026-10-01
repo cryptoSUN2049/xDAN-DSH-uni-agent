@@ -7,7 +7,8 @@
 - [x] 五域设计16fd195已push，精确提交Ruff693双门通过；General64 terminal缺registry/verifier需显式兼容。
 - [x] 用户“尽快解决卡住问题”批准已呈现设计，开始实施；主机身份已核，新进程单阶段限2h且不自动停止Pod、不沿用旧guard。
 - [x] 固定source/Hydra解析，冻结10train/5heldout与selectedGeneral资产；Music实际Ray scorer和106/172/108token核查通过。其他域grader/judge仍待实测。
-- [ ] 独立reference/Music双卡后台mimor22musica已启动（PID6933），FSDPfullweight/shard2；forward/backward/weight-sync待真实验收。
+- [x] Music首轮原生日志/W&B API定位监控开关冲突；fail-fast修复及8项cloud回归通过，失败原件保留。
+- [ ] 独立reference/Music双卡后台mimor22musicb已启动（PID16468），FSDPfullweight/FP32master/shard2；forward/backward/weight-sync待真实验收。
 - [ ] Music/Code参考/Cyber/General/Webdev逐域真实采样、消费、有效更新与物理恢复。
 - [ ] 五域checkpoint全SHA、原生W&B API/RL-Insight与heldout；失败/成本/清理完整记录。
 - [ ] 精确提交/Ruff双门/push与最终handoff。

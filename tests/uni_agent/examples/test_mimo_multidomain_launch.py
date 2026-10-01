@@ -121,7 +121,7 @@ def test_preflight_composes_source_first_and_never_starts_training(tmp_path, mon
 
     def compose(command, **kwargs):
         calls.append((command, kwargs))
-        kwargs["stdout"].write("resolved: true\n")
+        kwargs["stdout"].write("actor_rollout_ref:\n  rollout:\n    disable_log_stats: false\n")
 
     monkeypatch.setattr(module.subprocess, "run", compose)
     monkeypatch.setattr(module.subprocess, "Popen", lambda *a, **k: pytest.fail("preflight must not start training"))
@@ -136,10 +136,30 @@ def test_preflight_composes_source_first_and_never_starts_training(tmp_path, mon
     assert receipt["train_sha256"] == hashlib.sha256(args.train.read_bytes()).hexdigest()
 
 
+def test_incompatible_monitoring_fails_before_model_workers(tmp_path, monkeypatch):
+    args, _ = cli_fixture(tmp_path, monkeypatch)
+
+    def compose(_command, **kwargs):
+        kwargs["stdout"].write("actor_rollout_ref:\n  rollout:\n    disable_log_stats: true\n")
+
+    monkeypatch.setattr(module.subprocess, "run", compose)
+    monkeypatch.setattr(
+        module.subprocess, "Popen", lambda *a, **k: pytest.fail("invalid monitoring must not start training")
+    )
+    with pytest.raises(ValueError, match="RL-Insight requires"):
+        module.main()
+    receipt = json.loads((args.run_dir / "launch-receipt.json").read_text())
+    assert receipt["state"] == "preflight_failed"
+
+
 @pytest.mark.skipif(not hasattr(os, "killpg"), reason="requires POSIX process groups")
 def test_deadline_terminates_only_owned_process_group(tmp_path, monkeypatch):
     args, _ = cli_fixture(tmp_path, monkeypatch)
-    monkeypatch.setattr(module.subprocess, "run", lambda *a, **k: None)
+    monkeypatch.setattr(
+        module.subprocess,
+        "run",
+        lambda *a, **k: k["stdout"].write("actor_rollout_ref:\n  rollout:\n    disable_log_stats: false\n"),
+    )
     real_popen = subprocess.Popen
     owned = []
     sleeper = [sys.executable, "-c", "import time; time.sleep(60)"]

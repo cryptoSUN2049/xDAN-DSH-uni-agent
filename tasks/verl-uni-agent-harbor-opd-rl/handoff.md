@@ -5,12 +5,12 @@
 - 用户最终要求完整覆盖MiMo Code/Cyber/General/Webdev/Music，数据量可小；Code单域工程完成不是最终目标完成。
 - 新主机SSH157.157.221.177:16160已连通；07:32UTC双RTX PRO6000各97887MiB、0显存/利用率。Mac直连VPN utun4失败，nc -b en0代理成功。
 - 原uv273环境存在，版本metadata一致；原C5十五文件大小存在。本轮未再全hash/加载，不能当作新恢复验收。
-- 当前只读预检完成；Pod digzlnvc92cntc/Harbor-RL-Testing/4.18美元每小时，08:33UTC GET按16160端点确认RUNNING。新/root/mimo-private尚待恢复；用户“尽快解决卡住问题”批准实施，固定MiMo reference源码已部署/Hydra CPU解析通过，Music双卡recipe和launch实现中，GPU尚未训练。
+- 当前Pod digzlnvc92cntc/Harbor-RL-Testing/4.18美元每小时；已复用273uv、恢复W&B/Modal凭据及原生Insight服务。Music首轮mimor22musica因统计配置冲突exit1/W&B run=null；修复后新mimor22musicb于11:25:03UTC后台启动PID16468，尚无有效更新验收。
 
 ### 本轮交付物
 
 - docs/verl-uni-agent-harbor-opd-rl/mimo-five-domain-reproduction-design-20261001.md：范围/架构/来源/逐域contracts/文件清单/测试及完成门。
-- 同目录r22-new-host-preflight-20261001.md、evidence/r22-{current-pod-status,uv-and-processor-preflight,five-domain-data-preflight}-20261001.json：真实当前Pod/273锁/processor/四Parquet及925目录映射。
+- 同目录r22-new-host-preflight-20261001.md与公开evidence：当前Pod/273锁/processor、冻结数据、Music CPU scorer、原生Modal普通沙盒往返/终止；r22-music-initialization-repair-20261001.md解释首轮失败、当前新入口与修复。
 - tasks/todo.md最新五域清单；本目录lessons.md记录目标范围与新主机停止期限纪律。
 - 上轮量化数据/参数/时间/真实证据仍以r21-training-run-report-20261001.md及19门联合PASS为准。
 
@@ -25,20 +25,20 @@
 
 - 现主仓没有上游prompt-mean/global权重与Webdev advantage前组reward重写，不能只复制AgentLoop/YAML。
 - General依赖main/sidecar/MCP/SQLite与隐藏rubric隔离；Webdev n8视觉组judge；Music无harness且实际worker须abc2midi。
-- 新主机uv缺SGLang/megatron-core/mbridge；路径ws1不代表卡数，新主机已实测双卡。
+- 新主机uv缺SGLang/megatron-core/mbridge；路径ws1不代表卡数，新主机已实测双卡。R22首轮的阻断点是disable_log_stats=True与RL-Insight冲突，非双卡模式；新launcher在GPU前检查。
 - 当前Mac Runpod MCP/CLI网络失败，云SSH转发v2只读API成功；旧Pod01:45UTC EXITED不等于新Pod状态。General64条真实terminal_bench在固定registry缺失，不能重标签generic（无verifier）；Music发布schema不同于builder。
 
 ### 下一里程碑任务清单
 
 - [x] 最新用户明确实施批准；继续执行独立CPU部署，不再重复设计许可。仅owned训练进程单阶段有界，不自动停Pod。
-- [ ] source隔离/实际uv导入指纹与cloud CPU contract回归；冻结10train/5heldout和资产。
+- [x] source隔离、273uv依赖指纹；冻结10train/5heldout、General72资产；Music CPU scorer与tokenizer、Modal真实普通沙盒往返/清理通过。
 - [ ] 原域grader/权限/infra/真实render/实际music worker评分通过后执行双卡预检。
 - [ ] 逐域有效训练/恢复/API与Insight；每域结果独立，不复用Code旧PASS。
 
 ### 分支/部署状态
 
 - branch/worktree verl-uni-agent-harbor-opd-rl；五域设计16fd195已push、full Ruff693通过。后续真实数据/uv证据提交以当前GitHEAD为准。
-- 新主机仅完成只读预检，不停用户GPU。原Podvo6u0t8x398bnm的六小时窗口已结束，不能用旧SSH51913判断新主机。
+- 当前新Music监督PID16468/startticks366972613；单阶段7200秒仅限所属训练进程，未排定自动停Pod。原Pod六小时旧guard不复用。原生Prom9090/Tempo3200/Insight18080运行。
 - 其他会话dirty保留；tasks/todo及handoff只把本轮新增prefix写入index。
 
 ### 冷启动 checklist

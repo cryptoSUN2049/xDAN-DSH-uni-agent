@@ -1,0 +1,14 @@
+{
+  "observed_at": 1790853755.6222281,
+  "run_id": "mimor22musica",
+  "wandb_api": {
+    "data": {
+      "project": {
+        "run": null
+      }
+    }
+  },
+  "native_exit": 1,
+  "failure": "Metrics monitoring requires disable_log_stats=False, but it is currently True.",
+  "generation_or_update_verified": false
+}

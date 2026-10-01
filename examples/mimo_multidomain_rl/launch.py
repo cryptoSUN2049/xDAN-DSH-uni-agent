@@ -20,6 +20,16 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def validate_monitoring(path: Path) -> None:
+    """Check the composed native config before allocating model workers."""
+    from omegaconf import OmegaConf
+
+    config = OmegaConf.load(path)
+    # This launcher enables native RL-Insight for every run.
+    if OmegaConf.select(config, "actor_rollout_ref.rollout.disable_log_stats") is not False:
+        raise ValueError("RL-Insight requires actor_rollout_ref.rollout.disable_log_stats=false")
+
+
 def command(args: argparse.Namespace) -> list[str]:
     """Use argument vectors: paths never become shell commands."""
     cfg = RECIPE / f"{args.domain}.yaml"
@@ -137,8 +147,14 @@ def main() -> None:
         raise FileExistsError("A run identity cannot overwrite an existing receipt")
     receipt_path.write_text(json.dumps(receipt, indent=2) + "\n")
     # Hydra composition imports the actual source in the child, before GPU launch.
-    with (args.run_dir / "resolved-config.yaml").open("w") as output:
-        subprocess.run(cmd + ["--cfg", "job", "--resolve"], env=env, stdout=output, check=True, timeout=600)
+    try:
+        with (args.run_dir / "resolved-config.yaml").open("w") as output:
+            subprocess.run(cmd + ["--cfg", "job", "--resolve"], env=env, stdout=output, check=True, timeout=600)
+        validate_monitoring(args.run_dir / "resolved-config.yaml")
+    except (subprocess.SubprocessError, ValueError) as error:
+        receipt.update(state="preflight_failed", error_type=type(error).__name__, finished_at=time.time())
+        receipt_path.write_text(json.dumps(receipt, indent=2) + "\n")
+        raise
     if args.preflight_only:
         return
     receipt["state"] = "running"

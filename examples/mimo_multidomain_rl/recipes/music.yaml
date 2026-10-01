@@ -46,12 +46,13 @@ actor_rollout_ref:
       fsdp_size: 2
       param_offload: true
       optimizer_offload: true
-      model_dtype: bfloat16
+      model_dtype: fp32
       use_torch_compile: false
       entropy_from_logits_with_chunking: true
       entropy_from_logits_chunk_size: 256
   rollout:
     name: vllm
+    disable_log_stats: false
     mode: async
     n: 8
     tensor_model_parallel_size: 1
