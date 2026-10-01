@@ -1,0 +1,122 @@
+{
+  "schema": "mimo.r20f-wandb-final-api-reconciliation.v1",
+  "observed_unix": 1790800333.1228719,
+  "pod_id": "vo6u0t8x398bnm",
+  "deadline_unix": 1790813073,
+  "api_path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20f",
+  "state": "finished",
+  "created_at": "2026-09-30T19:59:20Z",
+  "last_history_step": null,
+  "selected_history_rows": [
+    {
+      "_step": 5,
+      "_timestamp": 1790799783.7812572,
+      "training/global_step": 5,
+      "actor/grad_norm": 0.1611328125,
+      "actor/pg_loss": -0.2480442225933075,
+      "actor/lr": 1e-06,
+      "critic/rewards/mean": 0.5,
+      "critic/advantages/min": -0.8660238981246948,
+      "critic/advantages/max": 0.8660238981246948,
+      "critic/score/min": 0,
+      "critic/score/max": 1,
+      "critic/rewards/min": 0,
+      "critic/rewards/max": 1
+    }
+  ],
+  "history_rows_read": 1,
+  "history_read_cap": 32,
+  "trainer_config_allowlist": {
+    "project_name": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+    "experiment_name": "mimo9b-002549-r20f",
+    "n_gpus_per_node": 2,
+    "nnodes": 1,
+    "total_training_steps": 5,
+    "resume_mode": "resume_path",
+    "resume_from_path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4"
+  },
+  "policy_template_allowlist": {
+    "model_name": "mimo-9b-dsh-rl",
+    "tunnel_alias": "mimo-cloud-r20f",
+    "max_wall_time_seconds": 1800,
+    "max_cpus": 2,
+    "max_memory_mb": 4096,
+    "max_tokens": 4096,
+    "max_artifact_bytes": 16777216,
+    "budget_limits": {
+      "max_generated_tokens": 20480,
+      "trajectory_capacity": 32768
+    },
+    "termination_policy": "budget-terminal-v1",
+    "task_refs": [
+      {
+        "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979",
+        "id": "mimo-code-format-code-task-002549",
+        "version": "v1"
+      }
+    ],
+    "dsh_release": {
+      "image_digest": "sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf",
+      "patch_sha256s": [],
+      "platform": "linux/amd64",
+      "profile": "sdk-minimal",
+      "runtime_sha256": "sha256:59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+      "sdk_sha256": "sha256:6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
+      "source_sha": "b2369692ea530007075ebcd18d39fdba0bbd3982"
+    }
+  },
+  "runner_model_name": "mimo-9b-dsh-rl",
+  "summary_allowlist": {
+    "_step": 5,
+    "_timestamp": 1790799783.7812572,
+    "training/global_step": 5,
+    "actor/grad_norm": 0.1611328125,
+    "actor/pg_loss": -0.2480442225933075,
+    "actor/lr": 1e-06,
+    "critic/rewards/mean": 0.5,
+    "critic/advantages/min": -0.8660238981246948,
+    "critic/advantages/max": 0.8660238981246948,
+    "critic/score/min": 0,
+    "critic/score/max": 1,
+    "critic/rewards/min": 0,
+    "critic/rewards/max": 1
+  },
+  "native_ack_ref": {
+    "private_path": "/workspace/mimo-dsh-rl-20260928/runs/r20f/rl-training/observability-ack.json",
+    "sha256": "7263544a8852fd45670a6a5615dc8f1e251cb58358234e9d25afb6920960e3c8",
+    "native_values": {
+      "actor_grad_norm": 0.1611328125,
+      "training_global_step": 5.0,
+      "critic_rewards_mean": 0.5
+    }
+  },
+  "checks": {
+    "state_finished": true,
+    "exact_current_experiment": true,
+    "dual_gpu": true,
+    "target_step5": true,
+    "native_wandb_step5_grad_reward_match": true,
+    "runner_policy_model_alias_equal": true,
+    "independent_current_tunnel_alias": true,
+    "budget32k20480": true
+  },
+  "status": "passed",
+  "claims": {
+    "current_wandb_finished_verified": true,
+    "step5_scalar_match_verified": true,
+    "effective_parameter_delta_verified_by_this_report": false,
+    "actual_consumed_batch_verified_by_this_report": false,
+    "capability_heldout_verified": false
+  },
+  "operation_boundaries": {
+    "read_only_sdk_api": true,
+    "init_log_finish_config_write_used": false,
+    "credentials_or_full_config_printed": false,
+    "historical_or_synthetic_run_merged": false,
+    "gpu_operations": false
+  },
+  "limitations": [
+    "W&B scalar/finished reconciliation does not replace tensor-delta or actual batch UID/reward audit",
+    "Historical R19 and R20e facts remain separate"
+  ]
+}

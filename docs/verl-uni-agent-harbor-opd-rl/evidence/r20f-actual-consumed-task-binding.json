@@ -1,0 +1,93 @@
+{
+  "schema": "mimo.r20f-actual-consumed-task-binding.v1",
+  "passed": true,
+  "run_id": "mimo9b-002549-r20f",
+  "observed_unix": 1790802328.2345102,
+  "parent_task_id": "001661",
+  "current_task_id": "002549",
+  "run_spec_sha256": "06d4bed5e29dc6a8a9da77f2184c8ca304fd7d9954264fb55687e4fbfc97ca12",
+  "launch_sha256": "e28f38e852fbfd909d5135cd00a10dbce7c05b5d49014658b74ff0df2569d442",
+  "train_parquet_sha256": "be5a3e73aec956f6b89bc82b6d46171116d7c95553683dd270f01752ed2a60cb",
+  "dataset_uid": "mimo9b-002549-r20f-train-0",
+  "dataset_data_source": "harbor/mimo-code-format-code-task-002549/train",
+  "prompt_sha256": "0d879cec927ac55afc4091e4ff90c1077990fff31f1aaeffbba8884a3de693eb",
+  "prepared_prompt_equals_immutable_task_instruction": true,
+  "consumed_token_audit_sha256": "d1d422346386d8463bb24902510da79bbf13f40615c9a024b865994ff8473155",
+  "current_task_ref": {
+    "id": "mimo-code-format-code-task-002549",
+    "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979",
+    "version": "v1"
+  },
+  "consumed_job_bindings": [
+    {
+      "session_index": 0,
+      "gateway_session_id": "session-sample-0-rollout-0-a714e3e7f4e44100aadaded9d3d8aa2b",
+      "job_id": "job-c9917e2d84014b9c9dcaac3fc8d45c4d",
+      "job_status": "succeeded",
+      "task_ref": {
+        "id": "mimo-code-format-code-task-002549",
+        "version": "v1",
+        "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979"
+      },
+      "model_name": "mimo-9b-dsh-rl",
+      "request_sha256": "24d387e322c61bde46dce2ea999f3d024693e5beadda0265add1b736b1986195",
+      "manifest_request_sha256": "sha256:38ab59934c27766a47ecd7882487916fa135a9f36736d82e9252933187d74c7e",
+      "source_dsh_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+      "derived_image": "sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf"
+    },
+    {
+      "session_index": 1,
+      "gateway_session_id": "session-sample-0-rollout-1-93979f9702f54a9ba0c03b53d2a1accb",
+      "job_id": "job-48c8c4a275194cd4aeb454158f3a1a23",
+      "job_status": "succeeded",
+      "task_ref": {
+        "id": "mimo-code-format-code-task-002549",
+        "version": "v1",
+        "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979"
+      },
+      "model_name": "mimo-9b-dsh-rl",
+      "request_sha256": "32bf868d2e323222aa19c8d99c1103f22492c3c3438c6d1b6a19a66ec4c11cae",
+      "manifest_request_sha256": "sha256:b9a5c1cf9caf9486e851cee344cc4eae9cce63df2803d1eb3d33a59ca6d9f5c3",
+      "source_dsh_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+      "derived_image": "sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf"
+    },
+    {
+      "session_index": 2,
+      "gateway_session_id": "session-sample-0-rollout-2-a6425a3f852c47118eb78cef9984875b",
+      "job_id": "job-20cfbc8bd4c7433891cee8ee8d0a9caa",
+      "job_status": "succeeded",
+      "task_ref": {
+        "id": "mimo-code-format-code-task-002549",
+        "version": "v1",
+        "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979"
+      },
+      "model_name": "mimo-9b-dsh-rl",
+      "request_sha256": "13569b354d5d03e658f145a4bc685050ed7dd32f0b3f81af65b18c07df1512b3",
+      "manifest_request_sha256": "sha256:4e9c28f78f019892c404bb98aa78b17ed1d2db952283bbe8a394be8ce1d25ff6",
+      "source_dsh_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+      "derived_image": "sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf"
+    },
+    {
+      "session_index": 3,
+      "gateway_session_id": "session-sample-0-rollout-3-33678fecd566434aa5423b2745962bf7",
+      "job_id": "job-2ba8bc34b70b448396338a239b3b136d",
+      "job_status": "succeeded",
+      "task_ref": {
+        "id": "mimo-code-format-code-task-002549",
+        "version": "v1",
+        "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979"
+      },
+      "model_name": "mimo-9b-dsh-rl",
+      "request_sha256": "4975aed335d2da6bceeddb3f7816f2135345fecb28840a082e7c5d0b3a3ca0db",
+      "manifest_request_sha256": "sha256:9868043ce79f5f148efb09d146e63692272b9adbf8a27930bf464da0757e1966",
+      "source_dsh_revision": "b2369692ea530007075ebcd18d39fdba0bbd3982",
+      "derived_image": "sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf"
+    }
+  ],
+  "current_task_verified_by_actual_consumed_jobs": true,
+  "parent_task_not_substituted_for_current_task": true,
+  "limits": [
+    "Dataset identity and actual consumed job TaskRef binding; model-forward probabilities not recomputed",
+    "No hidden test content in public report"
+  ]
+}

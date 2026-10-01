@@ -1,0 +1,87 @@
+{
+  "schema": "mimo.r20f-native-resume-proof.v1",
+  "passed": true,
+  "observed_at": 1790798631.2115707,
+  "run_id": "mimo9b-002549-r20f",
+  "spec_sha256": "sha256:06d4bed5e29dc6a8a9da77f2184c8ca304fd7d9954264fb55687e4fbfc97ca12",
+  "launch_sha256": "e28f38e852fbfd909d5135cd00a10dbce7c05b5d49014658b74ff0df2569d442",
+  "source_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+  "source_manifest_sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "parent_manifest_sha256": "40f25db06843bc9400f7f4fbe82eea46e7dcae8fffa9c5d383cf1ded40bb1270",
+  "parent_checkpoint": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4",
+  "world_size": 2,
+  "native_success_log_evidence": {
+    "step4": {
+      "path": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-0a86d56579343b93df5de3f82f7e7be4485b32100ad8adadc8c60a8a-01000000-15964.err",
+      "line": "INFO:2026-09-30 19:56:22,805:Resuming from /workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4, setting global step to 4"
+    },
+    "fit": {
+      "path": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-0a86d56579343b93df5de3f82f7e7be4485b32100ad8adadc8c60a8a-01000000-15964.err",
+      "line": "INFO:2026-09-30 19:57:34,949:all initialize finished, ready to fit"
+    },
+    "rank0:model": {
+      "path": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-9950ca5f29ebfd11523b87eff45c3d74e93e5251323985604e1e8913-01000000-17895.err",
+      "line": "INFO:2026-09-30 19:57:33,022:[Rank 0] Loaded model from /workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/model_world_size_2_rank_0.pt"
+    },
+    "rank0:optimizer": {
+      "path": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-9950ca5f29ebfd11523b87eff45c3d74e93e5251323985604e1e8913-01000000-17895.err",
+      "line": "INFO:2026-09-30 19:57:33,903:[Rank 0] Loaded optimizer from /workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/optim_world_size_2_rank_0.pt"
+    },
+    "rank0:rng": {
+      "path": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-9950ca5f29ebfd11523b87eff45c3d74e93e5251323985604e1e8913-01000000-17895.err",
+      "line": "INFO:2026-09-30 19:57:33,933:[Rank 0] Loaded rng from /workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/extra_state_world_size_2_rank_0.pt"
+    },
+    "rank0:lr_scheduler": {
+      "path": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-9950ca5f29ebfd11523b87eff45c3d74e93e5251323985604e1e8913-01000000-17895.err",
+      "line": "INFO:2026-09-30 19:57:33,933:[Rank 0] Loaded lr_scheduler from /workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/extra_state_world_size_2_rank_0.pt"
+    },
+    "rank1:model": {
+      "path": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-a9295cc82d67f25a814533d1ede169c52b7e1855c5be82f4c369ad6c-01000000-17896.err",
+      "line": "INFO:2026-09-30 19:57:33,022:[Rank 1] Loaded model from /workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/model_world_size_2_rank_1.pt"
+    },
+    "rank1:optimizer": {
+      "path": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-a9295cc82d67f25a814533d1ede169c52b7e1855c5be82f4c369ad6c-01000000-17896.err",
+      "line": "INFO:2026-09-30 19:57:33,894:[Rank 1] Loaded optimizer from /workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/optim_world_size_2_rank_1.pt"
+    },
+    "rank1:rng": {
+      "path": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-a9295cc82d67f25a814533d1ede169c52b7e1855c5be82f4c369ad6c-01000000-17896.err",
+      "line": "INFO:2026-09-30 19:57:33,922:[Rank 1] Loaded rng from /workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/extra_state_world_size_2_rank_1.pt"
+    },
+    "rank1:lr_scheduler": {
+      "path": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-a9295cc82d67f25a814533d1ede169c52b7e1855c5be82f4c369ad6c-01000000-17896.err",
+      "line": "INFO:2026-09-30 19:57:33,923:[Rank 1] Loaded lr_scheduler from /workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4/actor/extra_state_world_size_2_rank_1.pt"
+    }
+  },
+  "private_log_snapshots": {
+    "worker-0a86d56579343b93df5de3f82f7e7be4485b32100ad8adadc8c60a8a-01000000-15964.err": {
+      "sha256": "8c3f3344a890952d2ec2223b9c3c2d17c074c17276ce61a177603464d9d2bd5b",
+      "bytes": 5475,
+      "source": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-0a86d56579343b93df5de3f82f7e7be4485b32100ad8adadc8c60a8a-01000000-15964.err",
+      "snapshot": "/root/mimo-private/r20f-acceptance/native-resume-log-snapshots/worker-0a86d56579343b93df5de3f82f7e7be4485b32100ad8adadc8c60a8a-01000000-15964.err"
+    },
+    "worker-9950ca5f29ebfd11523b87eff45c3d74e93e5251323985604e1e8913-01000000-17895.err": {
+      "sha256": "85a7c147d5834b085897ed19addd8b6fbe7b51956a87794aa0cd1e2ff1c5bc2b",
+      "bytes": 5120,
+      "source": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-9950ca5f29ebfd11523b87eff45c3d74e93e5251323985604e1e8913-01000000-17895.err",
+      "snapshot": "/root/mimo-private/r20f-acceptance/native-resume-log-snapshots/worker-9950ca5f29ebfd11523b87eff45c3d74e93e5251323985604e1e8913-01000000-17895.err"
+    },
+    "worker-a9295cc82d67f25a814533d1ede169c52b7e1855c5be82f4c369ad6c-01000000-17896.err": {
+      "sha256": "0144230c930df2765e68fc33b508b3992c7c5b58b2d3667bac0793c82c7e013c",
+      "bytes": 4904,
+      "source": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566/logs/worker-a9295cc82d67f25a814533d1ede169c52b7e1855c5be82f4c369ad6c-01000000-17896.err",
+      "snapshot": "/root/mimo-private/r20f-acceptance/native-resume-log-snapshots/worker-a9295cc82d67f25a814533d1ede169c52b7e1855c5be82f4c369ad6c-01000000-17896.err"
+    }
+  },
+  "native_code_sha256": {
+    "verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py": "72afa38272a99962ae9850afabe5b7353fc558b24cce9aaf77825bbe86bc749e",
+    "verl/verl/trainer/ppo/v1/trainer_base.py": "e2ca9b9af567fbd0c99224475fafec7c881bc3e3ff730fdc6e8825c844b34e58",
+    "verl/verl/trainer/ppo/v1/trainer_colocate_async.py": "efc3fa946cfb24ce4727b5ad92d6ac7ecffd961c5afd0d9d605436c7dbf7a025"
+  },
+  "native_model_optimizer_rng_scheduler_load_verified": true,
+  "initial_global_step": 4,
+  "fit_reached": true,
+  "data_loader_restore": "frozen native control flow loads parent data.pt; current CPU actual dataset probe passed; no independent runtime success-log claim",
+  "transfer_queue_inflight_replay_verified": false,
+  "effective_update_verified": false,
+  "training_acceptance": false
+}

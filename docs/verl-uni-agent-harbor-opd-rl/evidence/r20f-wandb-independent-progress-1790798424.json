@@ -1,0 +1,13 @@
+{
+  "schema": "mimo.r20f-wandb-independent-observation.v1",
+  "observed_unix": 1790798424.1854556,
+  "api_path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20f",
+  "write_operations": 0,
+  "training_acceptance": false,
+  "api_status": "observed",
+  "state": "running",
+  "run_id": "mimo9b002549r20f",
+  "name": "mimo9b-002549-r20f",
+  "history_rows": [],
+  "history_row_count": 0
+}

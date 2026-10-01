@@ -1,0 +1,211 @@
+{
+  "schema": "mimo.r20f-native-sampling-observation.v1",
+  "observed_unix": 1790799073.812552,
+  "pod_id": "vo6u0t8x398bnm",
+  "run_id": "mimo9b-002549-r20f",
+  "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+  "deadline_unix": 1790813073,
+  "native_log": {
+    "path": "/root/mimo-private/launch-r20f/train.log",
+    "bytes_read": 200165,
+    "snapshot_read_sha256": "ed146290ce53ad8c48bff0ab244a48a9cf3c79fc71fe4606f8aa647e4b71de38",
+    "mutable": true,
+    "training_progress_displays": [
+      "Training Progress:  80%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588  | 4/5 [00:00<?, ?it/s]"
+    ],
+    "traceback_count": 1,
+    "nested_error_classes": [
+      "HarborDshClientError"
+    ],
+    "current_wandb_id_in_log": true,
+    "step5_save_marker_in_log": false
+  },
+  "job_database": {
+    "path": "/root/mimo-private/controller-r20f/jobs.sqlite",
+    "readonly": true,
+    "status_counts": [
+      [
+        "cancelled",
+        2
+      ],
+      [
+        "running",
+        2
+      ],
+      [
+        "succeeded",
+        2
+      ]
+    ],
+    "terminal_manifest_statuses": [
+      {
+        "job_id": "job-5ae3c164d8114e33b4e9881a30cbece9",
+        "db_status": "cancelled",
+        "manifest_status": "cancelled"
+      },
+      {
+        "job_id": "job-a45fe7115a4d4e11991868327a29dcd7",
+        "db_status": "cancelled",
+        "manifest_status": "cancelled"
+      },
+      {
+        "job_id": "job-a1f6e7a908914268a39f9fbe0079b893",
+        "db_status": "succeeded",
+        "manifest_status": "succeeded"
+      },
+      {
+        "job_id": "job-c7b190eb28be448a8b660f4bce3e14bb",
+        "db_status": "succeeded",
+        "manifest_status": "succeeded"
+      }
+    ]
+  },
+  "tempo_receipt": {
+    "request": {
+      "tags": "project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\" experiment_name=\"mimo9b-002549-r20f\"",
+      "start": 1790796645,
+      "end": 1790799073,
+      "limit": 500
+    },
+    "returned_trace_count": 64,
+    "limit_reached": false,
+    "root_name_counts": {
+      "gateway_generation": 56,
+      "agent_task": 4,
+      "agent_session": 4
+    },
+    "response": {
+      "metrics": {
+        "inspectedTraces": 120,
+        "inspectedBytes": "644689",
+        "completedJobs": 1,
+        "totalJobs": 1
+      },
+      "returned_trace_ids_sha256": "1d125f103964ae8c9a833fc60e50e167e0f02fb232a4990f5e687f4811d1cb6e",
+      "returned_trace_ids_hash_encoding": "UTF8 JSON sorted trace ID strings with compact separators"
+    },
+    "independent_trace_readbacks": [
+      {
+        "trace_id": "dfc3717b1defdd4b7fc13b821d6075ad",
+        "root_trace_name": "gateway_generation",
+        "start_time_unix_nano": "1790799054647582028",
+        "selected_attributes": [
+          {
+            "key": "project",
+            "value": {
+              "stringValue": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            }
+          },
+          {
+            "key": "experiment_name",
+            "value": {
+              "stringValue": "mimo9b-002549-r20f"
+            }
+          },
+          {
+            "key": "sample",
+            "value": {
+              "stringValue": "0"
+            }
+          },
+          {
+            "key": "session",
+            "value": {
+              "stringValue": "0"
+            }
+          },
+          {
+            "key": "traj",
+            "value": {
+              "stringValue": "0"
+            }
+          },
+          {
+            "key": "global_steps",
+            "value": {
+              "intValue": "5"
+            }
+          }
+        ]
+      },
+      {
+        "trace_id": "b20d5358f28ba72c6c0608d199e9cc8b",
+        "root_trace_name": "gateway_generation",
+        "start_time_unix_nano": "1790799052187987525",
+        "selected_attributes": [
+          {
+            "key": "project",
+            "value": {
+              "stringValue": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            }
+          },
+          {
+            "key": "experiment_name",
+            "value": {
+              "stringValue": "mimo9b-002549-r20f"
+            }
+          },
+          {
+            "key": "sample",
+            "value": {
+              "stringValue": "0"
+            }
+          },
+          {
+            "key": "session",
+            "value": {
+              "stringValue": "0"
+            }
+          },
+          {
+            "key": "traj",
+            "value": {
+              "stringValue": "0"
+            }
+          },
+          {
+            "key": "global_steps",
+            "value": {
+              "intValue": "5"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "prometheus_receipt": {
+    "query": "{__name__=~\"rl_insight_monitor_training_global_step|rl_insight_monitor_actor_grad_norm|rl_insight_monitor_critic_rewards_mean\",project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-002549-r20f\"}",
+    "response": {
+      "status": "success",
+      "data": {
+        "resultType": "vector",
+        "result": []
+      }
+    }
+  },
+  "training_acceptance": false,
+  "claims": {
+    "current_native_fit_started": true,
+    "current_exact_scope_traces_observed": true,
+    "consumed_sample_count_verified": false,
+    "prefetch_or_retry_classification_verified": false,
+    "independent_rewards_verified": false,
+    "policy_version_verified_by_this_report": false,
+    "current_step5_completed": false,
+    "nonzero_update_verified": false
+  },
+  "boundaries": [
+    "Current exact r20f tags and launch-start-to-current timestamp, no old run or synthetic traces queried",
+    "Controller status counts are job ledger observations, not training consumption or Modal termination",
+    "Cancelled jobs may be prefetch or retry; classification requires actual consumed batch UID proof",
+    "HarborDshClientError traceback observed without printing private body; no native exit inferred",
+    "Trace evidence proves current scope transport, not successful grading or effective training update",
+    "Read-only only; no GPU/model requests, resource creation/stop or configuration edits"
+  ],
+  "raw_artifact_ref": {
+    "private_path": "/root/mimo-private/observability-r21/r20f-native-sampling-observation.json",
+    "sha256": "f2bb5012b45a1a92d87dede7a01b49faabb5fa14486657d3bcbd8bcaa5ebe215",
+    "bytes": 22513,
+    "public_sanitization": "Full returned trace list omitted; exact counts, query bounds, two independent trace GET receipts and raw SHA retained"
+  }
+}

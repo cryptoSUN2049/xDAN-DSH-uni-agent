@@ -1,0 +1,330 @@
+{
+  "schema": "mimo.r20f-owned-modal-terminal-api.v1",
+  "run_id": "mimo9b-002549-r20f",
+  "observed_unix": 1790800549.6142807,
+  "passed": true,
+  "job_count": 12,
+  "jobs": [
+    {
+      "job_id": "job-5ae3c164d8114e33b4e9881a30cbece9",
+      "status": "cancelled",
+      "manifest_error_code": "evidence-rejected-after-cleanup",
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-FEw7GE0B5rG9nV9gf2b3vS",
+        "sb-O9WdGvb8otsckmKHexvDc2"
+      ],
+      "cleanup_receipt_sha256": "7c653172aaad27657c6d5fb00a079f68bfed1518fa8ef47805f4ab8c82c5b36f"
+    },
+    {
+      "job_id": "job-a45fe7115a4d4e11991868327a29dcd7",
+      "status": "cancelled",
+      "manifest_error_code": "evidence-rejected-after-cleanup",
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-Hk4nGjipLGfFpga0w1aeHw",
+        "sb-6ifmOorgBa5P1BRskIesHm"
+      ],
+      "cleanup_receipt_sha256": "2ce4cb33276d0a27dd9a2f4e7ee42959c06cae6399123b17f3cbb10cb2082377"
+    },
+    {
+      "job_id": "job-a1f6e7a908914268a39f9fbe0079b893",
+      "status": "succeeded",
+      "manifest_error_code": null,
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-q07mbNWngH4U5dvkiITF4z",
+        "sb-BZnztAmBIpciaTp20DNw0M"
+      ],
+      "cleanup_receipt_sha256": "9d9bcb802fa555dba3635cbffa8ea39b35581dbabb70c95501eefa2af74ab1c6"
+    },
+    {
+      "job_id": "job-c7b190eb28be448a8b660f4bce3e14bb",
+      "status": "succeeded",
+      "manifest_error_code": null,
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-5kiDjNO4xnWfc6YYEMKSeL",
+        "sb-LDsvCF6ri57s01ELGeB8cT"
+      ],
+      "cleanup_receipt_sha256": "24ab83065d9a5393d6c1c3bf3be1b73f2999da93e53c7e8f516d45633903a0b6"
+    },
+    {
+      "job_id": "job-c9917e2d84014b9c9dcaac3fc8d45c4d",
+      "status": "succeeded",
+      "manifest_error_code": null,
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-dmnpaBXxrGjqcCIDt5z2cf",
+        "sb-ojIkVbYxcjaUBu4eyOX4ET"
+      ],
+      "cleanup_receipt_sha256": "7cc9dd375c80e476299aa4b4fac3015fb079ab2e1aa395395857610c727b7dce"
+    },
+    {
+      "job_id": "job-48c8c4a275194cd4aeb454158f3a1a23",
+      "status": "succeeded",
+      "manifest_error_code": null,
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-YjlCNDmvtbqurJ1E2Dd6dQ",
+        "sb-Uqm7aoumPt4JkAWxvvLBYb"
+      ],
+      "cleanup_receipt_sha256": "f7578fd35e1ca1463c2c31783cb36b03e18242049fbabf584b06e2c4d361536c"
+    },
+    {
+      "job_id": "job-20cfbc8bd4c7433891cee8ee8d0a9caa",
+      "status": "succeeded",
+      "manifest_error_code": null,
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-piUk0Ifv5uYTJIQStej311",
+        "sb-lMOOfdRfRWOpDX1cScocAH"
+      ],
+      "cleanup_receipt_sha256": "e76083b5b735d7438f94e3032da47e710f521cbd75aaa246479df9e4d9b006b2"
+    },
+    {
+      "job_id": "job-2ba8bc34b70b448396338a239b3b136d",
+      "status": "succeeded",
+      "manifest_error_code": null,
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-7U7Mu0igiLx7x8j7XDeaaO",
+        "sb-jm0bswvUSlxMKEMerJdXOg"
+      ],
+      "cleanup_receipt_sha256": "1cffc3ac70c74bcad87fb6d66305934d2d9c99e15b471c1e39683998efe91835"
+    },
+    {
+      "job_id": "job-110c142a9ee84fe9ac43d234fd2c3025",
+      "status": "succeeded",
+      "manifest_error_code": null,
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-UGCywxulr1AsfgwLfyE51O",
+        "sb-z3sGPXvOPSV5jMrFSVBjfG"
+      ],
+      "cleanup_receipt_sha256": "e851f3c81f0f349bf1efa8b08f5543e4bb1e95ebda90218ba035689243784b0b"
+    },
+    {
+      "job_id": "job-e0c28e98c94b412da7aeaabfa3446735",
+      "status": "cancelled",
+      "manifest_error_code": "evidence-rejected-after-cleanup",
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-9mYQpVxAUZxzAHm06uOFNk",
+        "sb-2nKpy9t4f2uMhRd4g5Q9wn"
+      ],
+      "cleanup_receipt_sha256": "4dfe8bec17f7afb968e6b3d200619d4c3731883a498afd2c25bc7bfe6b091222"
+    },
+    {
+      "job_id": "job-2ac50fb2127c4cb1942952d2e5c3e584",
+      "status": "cancelled",
+      "manifest_error_code": "evidence-rejected-after-cleanup",
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-Q7xh77TqHQzcT4Anz9bTsn",
+        "sb-5g8KQ0B8mjHUGaaM9zd6kc"
+      ],
+      "cleanup_receipt_sha256": "1f9ab2dbd3a5b8590e1a3c6e00d4b72a11eee08f0bd53ded17a6009e24d6e934"
+    },
+    {
+      "job_id": "job-318f3743ddcf4f18a33489826aedfe0a",
+      "status": "cancelled",
+      "manifest_error_code": "evidence-rejected-after-cleanup",
+      "cleanup_receipt_exists": true,
+      "resources": [
+        "sb-l20XvqRQXI7q44giv58BVj"
+      ],
+      "cleanup_receipt_sha256": "f4e061fe408bef87cc713756e83f82b7e2d45a09392991af9728a05cf46a8c9f"
+    }
+  ],
+  "resources": [
+    {
+      "sandbox_id": "sb-FEw7GE0B5rG9nV9gf2b3vS",
+      "job_id": "job-5ae3c164d8114e33b4e9881a30cbece9",
+      "session_id": "dsh-1226006717dc9386d4d43828584ae727__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800543.6065247
+    },
+    {
+      "sandbox_id": "sb-O9WdGvb8otsckmKHexvDc2",
+      "job_id": "job-5ae3c164d8114e33b4e9881a30cbece9",
+      "session_id": "dsh-1226006717dc9386d4d43828584ae727__verifier__trial",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800543.8774383
+    },
+    {
+      "sandbox_id": "sb-Hk4nGjipLGfFpga0w1aeHw",
+      "job_id": "job-a45fe7115a4d4e11991868327a29dcd7",
+      "session_id": "dsh-1b0003e2dcf2bdcc71fe3c92de6aa2b8__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800544.151676
+    },
+    {
+      "sandbox_id": "sb-6ifmOorgBa5P1BRskIesHm",
+      "job_id": "job-a45fe7115a4d4e11991868327a29dcd7",
+      "session_id": "dsh-1b0003e2dcf2bdcc71fe3c92de6aa2b8__verifier__trial",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800544.4274728
+    },
+    {
+      "sandbox_id": "sb-q07mbNWngH4U5dvkiITF4z",
+      "job_id": "job-a1f6e7a908914268a39f9fbe0079b893",
+      "session_id": "dsh-c814470044b55f806a589f30f2db5f8c__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800544.69811
+    },
+    {
+      "sandbox_id": "sb-BZnztAmBIpciaTp20DNw0M",
+      "job_id": "job-a1f6e7a908914268a39f9fbe0079b893",
+      "session_id": "dsh-c814470044b55f806a589f30f2db5f8c__verifier__trial",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800544.9701338
+    },
+    {
+      "sandbox_id": "sb-5kiDjNO4xnWfc6YYEMKSeL",
+      "job_id": "job-c7b190eb28be448a8b660f4bce3e14bb",
+      "session_id": "dsh-13f130081a1741630c132bd90064c98a__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800545.2417455
+    },
+    {
+      "sandbox_id": "sb-LDsvCF6ri57s01ELGeB8cT",
+      "job_id": "job-c7b190eb28be448a8b660f4bce3e14bb",
+      "session_id": "dsh-13f130081a1741630c132bd90064c98a__verifier__trial",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800545.5198634
+    },
+    {
+      "sandbox_id": "sb-dmnpaBXxrGjqcCIDt5z2cf",
+      "job_id": "job-c9917e2d84014b9c9dcaac3fc8d45c4d",
+      "session_id": "dsh-38ab59934c27766a47ecd7882487916f__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800545.7908967
+    },
+    {
+      "sandbox_id": "sb-ojIkVbYxcjaUBu4eyOX4ET",
+      "job_id": "job-c9917e2d84014b9c9dcaac3fc8d45c4d",
+      "session_id": "dsh-38ab59934c27766a47ecd7882487916f__verifier__trial",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800546.0715833
+    },
+    {
+      "sandbox_id": "sb-YjlCNDmvtbqurJ1E2Dd6dQ",
+      "job_id": "job-48c8c4a275194cd4aeb454158f3a1a23",
+      "session_id": "dsh-b9a5c1cf9caf9486e851cee344cc4eae__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800546.3432114
+    },
+    {
+      "sandbox_id": "sb-Uqm7aoumPt4JkAWxvvLBYb",
+      "job_id": "job-48c8c4a275194cd4aeb454158f3a1a23",
+      "session_id": "dsh-b9a5c1cf9caf9486e851cee344cc4eae__verifier__trial",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800546.6132197
+    },
+    {
+      "sandbox_id": "sb-piUk0Ifv5uYTJIQStej311",
+      "job_id": "job-20cfbc8bd4c7433891cee8ee8d0a9caa",
+      "session_id": "dsh-4e9c28f78f019892c404bb98aa78b17e__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800546.8845172
+    },
+    {
+      "sandbox_id": "sb-lMOOfdRfRWOpDX1cScocAH",
+      "job_id": "job-20cfbc8bd4c7433891cee8ee8d0a9caa",
+      "session_id": "dsh-4e9c28f78f019892c404bb98aa78b17e__verifier__trial",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800547.1545904
+    },
+    {
+      "sandbox_id": "sb-7U7Mu0igiLx7x8j7XDeaaO",
+      "job_id": "job-2ba8bc34b70b448396338a239b3b136d",
+      "session_id": "dsh-9868043ce79f5f148efb09d146e63692__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800547.4295294
+    },
+    {
+      "sandbox_id": "sb-jm0bswvUSlxMKEMerJdXOg",
+      "job_id": "job-2ba8bc34b70b448396338a239b3b136d",
+      "session_id": "dsh-9868043ce79f5f148efb09d146e63692__verifier__trial",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800547.7038257
+    },
+    {
+      "sandbox_id": "sb-UGCywxulr1AsfgwLfyE51O",
+      "job_id": "job-110c142a9ee84fe9ac43d234fd2c3025",
+      "session_id": "dsh-5dc22540c0968f1a307bc441a5c43ff3__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800547.9737883
+    },
+    {
+      "sandbox_id": "sb-z3sGPXvOPSV5jMrFSVBjfG",
+      "job_id": "job-110c142a9ee84fe9ac43d234fd2c3025",
+      "session_id": "dsh-5dc22540c0968f1a307bc441a5c43ff3__verifier__trial",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800548.247414
+    },
+    {
+      "sandbox_id": "sb-9mYQpVxAUZxzAHm06uOFNk",
+      "job_id": "job-e0c28e98c94b412da7aeaabfa3446735",
+      "session_id": "dsh-76127dab4b9c2fe5fdb4c0a46581adb6__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800548.517192
+    },
+    {
+      "sandbox_id": "sb-2nKpy9t4f2uMhRd4g5Q9wn",
+      "job_id": "job-e0c28e98c94b412da7aeaabfa3446735",
+      "session_id": "dsh-76127dab4b9c2fe5fdb4c0a46581adb6__verifier__trial",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800548.7858503
+    },
+    {
+      "sandbox_id": "sb-Q7xh77TqHQzcT4Anz9bTsn",
+      "job_id": "job-2ac50fb2127c4cb1942952d2e5c3e584",
+      "session_id": "dsh-7e6fe376699ec0a57e1f5678adf8b9a5__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800549.0733244
+    },
+    {
+      "sandbox_id": "sb-5g8KQ0B8mjHUGaaM9zd6kc",
+      "job_id": "job-2ac50fb2127c4cb1942952d2e5c3e584",
+      "session_id": "dsh-7e6fe376699ec0a57e1f5678adf8b9a5__verifier__trial",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800549.3426888
+    },
+    {
+      "sandbox_id": "sb-l20XvqRQXI7q44giv58BVj",
+      "job_id": "job-318f3743ddcf4f18a33489826aedfe0a",
+      "session_id": "dsh-9f697cc63add68d807c05fc37fec48b1__env",
+      "returncode": 137,
+      "terminated": true,
+      "observed_unix": 1790800549.6142743
+    }
+  ],
+  "resource_count": 23,
+  "active_resource_count": 0,
+  "operations": "read-only fresh from_id/poll; no global list or termination",
+  "ledger_terminal_state_not_substituted_for_api_poll": true
+}

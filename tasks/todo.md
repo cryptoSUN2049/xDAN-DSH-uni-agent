@@ -1,3 +1,15 @@
+## R21 最终真实验收（2026-10-01）
+
+- [x] 当前任务002549：C4原生双rank恢复→四唯一TQ消费→有效GRPO→原生C5/exit0。
+- [x] 奖励0/1/1/0、正负优势与有限非零梯度、496个LoRA改变、双rank optimizer4→5。
+- [x] 四消费session token语义审计、C5十五文件完整SHA、当前W&B77/77、Prom/Tempo原生证据。
+- [x] 独立父SHA表示兼容审计仅一行变化；181项云CPU回归、98.68%覆盖，同实物重审PASS；旧FAIL保留。
+- [x] 23所属Modal sandbox API终止、controller/Ray/key/端口清理；2026-10-01 01:45UTC实时Runpod API EXITED。
+- [x] root重新读取W&B finished/step5/config/summary；本地20引用SHA及审计source/test相同测试字节核验。
+- [ ] 最终精确commit/全Ruff/push（当前进行）。
+
+Review：本轮1独立任务、4消费轨迹、1新增更新，监督50分16秒；6h是资源窗口，完成后未接续更多任务，不宣称全量/五域/能力提升。
+
 ## R21 当前执行状态（2026-10-01 03:31 SGT）
 
 - [x] 当前b053bde控制代码 full Ruff691双门/push及cloud exact freeze。

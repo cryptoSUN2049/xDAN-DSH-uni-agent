@@ -1,0 +1,578 @@
+{
+  "schema": "mimo.r20f-wandb-native-final.v1",
+  "passed": true,
+  "observed_unix": 1790800240.4896383,
+  "api_path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20f",
+  "run_id": "mimo9b002549r20f",
+  "name": "mimo9b-002549-r20f",
+  "state": "finished",
+  "native_history_rows": [
+    {
+      "training/off_policy/trajectory_spans/max": 1,
+      "response_length_non_aborted/mean": 18305.75,
+      "training/rollout_failure/evicted_samples": 1,
+      "training/num_turns/min": 10,
+      "global_seqlen/min": 33582,
+      "timing_s/step": 1420.3161559728906,
+      "training/off_policy/trajectory_staleness_worst/min": 0,
+      "rollout_corr/log_ppl_diff_min": 8.404254913330078e-05,
+      "critic/rewards/mean": 0.5,
+      "rollout_corr/chi2_token": 0.004192709922790527,
+      "training/off_policy/trajectory_staleness/mean": 0,
+      "actor/pg_clipfrac": 0,
+      "training/off_policy/trajectory_spans/mean": 1,
+      "perf/mfu/actor": 0,
+      "timing_s/gen": 1244.5989907351322,
+      "critic/returns/max": 0.8660238981246948,
+      "response/aborted_ratio": 0,
+      "actor/perf/max_memory_allocated_gb": 66.01693964004517,
+      "timing_per_token_ms/update_actor": 0.9601239298632214,
+      "response_length/max": 26796,
+      "_timestamp": 1790799783.7812572,
+      "_step": 5,
+      "perf/total_num_tokens": 79047,
+      "response_length_non_aborted/max": 26796,
+      "training/off_policy/trajectory_staleness/min": 0,
+      "rollout_corr/rollout_log_ppl": 0.5689425468444824,
+      "training/rollout_probs_diff_mean": 0.006190287880599499,
+      "training/epoch": 4,
+      "training/off_policy/trajectory_spans/min": 1,
+      "response_length/min": 6995,
+      "perf/time_per_step": 1420.3161559728906,
+      "rollout_corr/log_ppl_diff": 0.0008514896035194397,
+      "critic/score/min": 0,
+      "timing_per_token_ms/adv": 0.0017904536822749245,
+      "perf/throughput": 27.827255103584402,
+      "critic/score/max": 1,
+      "critic/returns/min": -0.8660238981246948,
+      "timing_s/update_weights": 10.086812802124768,
+      "critic/rewards/min": 0,
+      "response_length_non_aborted/min": 6995,
+      "global_seqlen/mean": 39523.5,
+      "actor/perf/max_memory_reserved_gb": 83.92578125,
+      "timing_per_token_ms/gen": 16.997377746543194,
+      "rollout_corr/chi2_seq": -0.9512047171592712,
+      "rollout_corr/kl": 0.0009222108637914062,
+      "response_length/mean": 18305.75,
+      "training/rollout_actor_probs_pearson_corr": 0.9989935755729675,
+      "training/num_turns/mean": 27,
+      "critic/score/mean": 0.5,
+      "rollout_corr/k3_kl": 0.0014774089213460684,
+      "global_seqlen/balanced_min": 36703,
+      "response_length/clip_ratio": 0.25,
+      "training/off_policy/trajectory_staleness/max": 0,
+      "rollout_corr/log_ppl_diff_max": 0.0016426146030426025,
+      "timing_s/adv": 0.14152999222278595,
+      "global_seqlen/minmax_diff": 11883,
+      "critic/returns/mean": 0.2480442076921463,
+      "training/off_policy/trajectory_staleness_worst/max": 0,
+      "global_seqlen/balanced_max": 42344,
+      "actor/ppo_kl": 0,
+      "training/rollout_probs_diff_std": 0.013318519107997417,
+      "global_seqlen/max": 45465,
+      "actor/perf/cpu_memory_used_gb": 282.2912712097168,
+      "rollout_corr/training_ppl": 1.785491704940796,
+      "critic/advantages/min": -0.8660238981246948,
+      "prompt_length/max": 1456,
+      "rollout_corr/training_log_ppl": 0.5697940587997437,
+      "timing_s/save_checkpoint": 31.26236795913428,
+      "training/rollout_probs_diff_max": 0.3252491056919098,
+      "training/global_step": 5,
+      "response_length_non_aborted/clip_ratio": 0.25,
+      "training/rollout_probs_diff_valid": 1,
+      "rollout_corr/log_ppl_abs_diff": 0.0008514896035194397,
+      "actor/entropy": 0.5250561833381653,
+      "rollout_corr/rollout_ppl": 1.784022569656372,
+      "training/num_turns/max": 38,
+      "prompt_length/clip_ratio": 1,
+      "actor/lr": 1e-06,
+      "actor/loss": -0.2480442225933075,
+      "critic/rewards/max": 1,
+      "critic/advantages/mean": 0.2480442076921463,
+      "timing_s/old_log_prob": 58.26799848116934,
+      "actor/pg_clipfrac_lower": 0,
+      "actor/grad_norm": 0.1611328125,
+      "prompt_length/min": 1456,
+      "rollout_corr/ppl_ratio": 1.000852108001709,
+      "prompt_length/mean": 1456,
+      "_runtime": 1422.635604822,
+      "timing_s/update_actor": 75.89491628389806,
+      "actor/pg_loss": -0.2480442225933075,
+      "training/off_policy/trajectory_staleness_worst/mean": 0,
+      "critic/advantages/max": 0.8660238981246948
+    }
+  ],
+  "native_history_row_count": 1,
+  "total_history_row_count": 1,
+  "console_sha256": "63ff882776bff75c0cb3af5e77a2183b00f12d6b811823b03abf5a5e583d8add",
+  "console_metrics_count": 77,
+  "compared_metrics_count": 77,
+  "matching_metrics_count": 77,
+  "comparisons": {
+    "training/rollout_failure/evicted_samples": {
+      "console": 1.0,
+      "wandb": 1,
+      "finite": true,
+      "matches": true
+    },
+    "global_seqlen/min": {
+      "console": 33582.0,
+      "wandb": 33582,
+      "finite": true,
+      "matches": true
+    },
+    "global_seqlen/max": {
+      "console": 45465.0,
+      "wandb": 45465,
+      "finite": true,
+      "matches": true
+    },
+    "global_seqlen/minmax_diff": {
+      "console": 11883.0,
+      "wandb": 11883,
+      "finite": true,
+      "matches": true
+    },
+    "global_seqlen/balanced_min": {
+      "console": 36703.0,
+      "wandb": 36703,
+      "finite": true,
+      "matches": true
+    },
+    "global_seqlen/balanced_max": {
+      "console": 42344.0,
+      "wandb": 42344,
+      "finite": true,
+      "matches": true
+    },
+    "global_seqlen/mean": {
+      "console": 39523.5,
+      "wandb": 39523.5,
+      "finite": true,
+      "matches": true
+    },
+    "actor/entropy": {
+      "console": 0.5250561833381653,
+      "wandb": 0.5250561833381653,
+      "finite": true,
+      "matches": true
+    },
+    "training/rollout_probs_diff_valid": {
+      "console": 1.0,
+      "wandb": 1,
+      "finite": true,
+      "matches": true
+    },
+    "training/rollout_probs_diff_max": {
+      "console": 0.3252491056919098,
+      "wandb": 0.3252491056919098,
+      "finite": true,
+      "matches": true
+    },
+    "training/rollout_probs_diff_mean": {
+      "console": 0.006190287880599499,
+      "wandb": 0.006190287880599499,
+      "finite": true,
+      "matches": true
+    },
+    "training/rollout_probs_diff_std": {
+      "console": 0.013318519107997417,
+      "wandb": 0.013318519107997417,
+      "finite": true,
+      "matches": true
+    },
+    "training/rollout_actor_probs_pearson_corr": {
+      "console": 0.9989935755729675,
+      "wandb": 0.9989935755729675,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/training_ppl": {
+      "console": 1.785491704940796,
+      "wandb": 1.785491704940796,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/training_log_ppl": {
+      "console": 0.5697940587997437,
+      "wandb": 0.5697940587997437,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/kl": {
+      "console": 0.0009222108637914062,
+      "wandb": 0.0009222108637914062,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/k3_kl": {
+      "console": 0.0014774089213460684,
+      "wandb": 0.0014774089213460684,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/rollout_ppl": {
+      "console": 1.784022569656372,
+      "wandb": 1.784022569656372,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/rollout_log_ppl": {
+      "console": 0.5689425468444824,
+      "wandb": 0.5689425468444824,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/log_ppl_diff": {
+      "console": 0.0008514896035194397,
+      "wandb": 0.0008514896035194397,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/log_ppl_abs_diff": {
+      "console": 0.0008514896035194397,
+      "wandb": 0.0008514896035194397,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/log_ppl_diff_max": {
+      "console": 0.0016426146030426025,
+      "wandb": 0.0016426146030426025,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/log_ppl_diff_min": {
+      "console": 8.404254913330078e-05,
+      "wandb": 8.404254913330078e-05,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/ppl_ratio": {
+      "console": 1.000852108001709,
+      "wandb": 1.000852108001709,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/chi2_token": {
+      "console": 0.004192709922790527,
+      "wandb": 0.004192709922790527,
+      "finite": true,
+      "matches": true
+    },
+    "rollout_corr/chi2_seq": {
+      "console": -0.9512047171592712,
+      "wandb": -0.9512047171592712,
+      "finite": true,
+      "matches": true
+    },
+    "actor/pg_clipfrac": {
+      "console": 0.0,
+      "wandb": 0,
+      "finite": true,
+      "matches": true
+    },
+    "actor/ppo_kl": {
+      "console": 0.0,
+      "wandb": 0,
+      "finite": true,
+      "matches": true
+    },
+    "actor/pg_clipfrac_lower": {
+      "console": 0.0,
+      "wandb": 0,
+      "finite": true,
+      "matches": true
+    },
+    "actor/pg_loss": {
+      "console": -0.2480442225933075,
+      "wandb": -0.2480442225933075,
+      "finite": true,
+      "matches": true
+    },
+    "actor/loss": {
+      "console": -0.2480442225933075,
+      "wandb": -0.2480442225933075,
+      "finite": true,
+      "matches": true
+    },
+    "actor/grad_norm": {
+      "console": 0.1611328125,
+      "wandb": 0.1611328125,
+      "finite": true,
+      "matches": true
+    },
+    "actor/lr": {
+      "console": 1e-06,
+      "wandb": 1e-06,
+      "finite": true,
+      "matches": true
+    },
+    "actor/perf/max_memory_allocated_gb": {
+      "console": 66.01693964004517,
+      "wandb": 66.01693964004517,
+      "finite": true,
+      "matches": true
+    },
+    "actor/perf/max_memory_reserved_gb": {
+      "console": 83.92578125,
+      "wandb": 83.92578125,
+      "finite": true,
+      "matches": true
+    },
+    "actor/perf/cpu_memory_used_gb": {
+      "console": 282.2912712097168,
+      "wandb": 282.2912712097168,
+      "finite": true,
+      "matches": true
+    },
+    "perf/mfu/actor": {
+      "console": 0.0,
+      "wandb": 0,
+      "finite": true,
+      "matches": true
+    },
+    "training/global_step": {
+      "console": 5,
+      "wandb": 5,
+      "finite": true,
+      "matches": true
+    },
+    "training/epoch": {
+      "console": 4,
+      "wandb": 4,
+      "finite": true,
+      "matches": true
+    },
+    "critic/score/mean": {
+      "console": 0.5,
+      "wandb": 0.5,
+      "finite": true,
+      "matches": true
+    },
+    "critic/score/max": {
+      "console": 1.0,
+      "wandb": 1,
+      "finite": true,
+      "matches": true
+    },
+    "critic/score/min": {
+      "console": 0.0,
+      "wandb": 0,
+      "finite": true,
+      "matches": true
+    },
+    "critic/rewards/mean": {
+      "console": 0.5,
+      "wandb": 0.5,
+      "finite": true,
+      "matches": true
+    },
+    "critic/rewards/max": {
+      "console": 1.0,
+      "wandb": 1,
+      "finite": true,
+      "matches": true
+    },
+    "critic/rewards/min": {
+      "console": 0.0,
+      "wandb": 0,
+      "finite": true,
+      "matches": true
+    },
+    "critic/advantages/mean": {
+      "console": 0.2480442076921463,
+      "wandb": 0.2480442076921463,
+      "finite": true,
+      "matches": true
+    },
+    "critic/advantages/max": {
+      "console": 0.8660238981246948,
+      "wandb": 0.8660238981246948,
+      "finite": true,
+      "matches": true
+    },
+    "critic/advantages/min": {
+      "console": -0.8660238981246948,
+      "wandb": -0.8660238981246948,
+      "finite": true,
+      "matches": true
+    },
+    "critic/returns/mean": {
+      "console": 0.2480442076921463,
+      "wandb": 0.2480442076921463,
+      "finite": true,
+      "matches": true
+    },
+    "critic/returns/max": {
+      "console": 0.8660238981246948,
+      "wandb": 0.8660238981246948,
+      "finite": true,
+      "matches": true
+    },
+    "critic/returns/min": {
+      "console": -0.8660238981246948,
+      "wandb": -0.8660238981246948,
+      "finite": true,
+      "matches": true
+    },
+    "response_length/mean": {
+      "console": 18305.75,
+      "wandb": 18305.75,
+      "finite": true,
+      "matches": true
+    },
+    "response_length/max": {
+      "console": 26796.0,
+      "wandb": 26796,
+      "finite": true,
+      "matches": true
+    },
+    "response_length/min": {
+      "console": 6995.0,
+      "wandb": 6995,
+      "finite": true,
+      "matches": true
+    },
+    "response_length/clip_ratio": {
+      "console": 0.25,
+      "wandb": 0.25,
+      "finite": true,
+      "matches": true
+    },
+    "response_length_non_aborted/mean": {
+      "console": 18305.75,
+      "wandb": 18305.75,
+      "finite": true,
+      "matches": true
+    },
+    "response_length_non_aborted/max": {
+      "console": 26796.0,
+      "wandb": 26796,
+      "finite": true,
+      "matches": true
+    },
+    "response_length_non_aborted/min": {
+      "console": 6995.0,
+      "wandb": 6995,
+      "finite": true,
+      "matches": true
+    },
+    "response_length_non_aborted/clip_ratio": {
+      "console": 0.25,
+      "wandb": 0.25,
+      "finite": true,
+      "matches": true
+    },
+    "response/aborted_ratio": {
+      "console": 0.0,
+      "wandb": 0,
+      "finite": true,
+      "matches": true
+    },
+    "prompt_length/mean": {
+      "console": 1456.0,
+      "wandb": 1456,
+      "finite": true,
+      "matches": true
+    },
+    "prompt_length/max": {
+      "console": 1456.0,
+      "wandb": 1456,
+      "finite": true,
+      "matches": true
+    },
+    "prompt_length/min": {
+      "console": 1456.0,
+      "wandb": 1456,
+      "finite": true,
+      "matches": true
+    },
+    "prompt_length/clip_ratio": {
+      "console": 1.0,
+      "wandb": 1,
+      "finite": true,
+      "matches": true
+    },
+    "timing_s/gen": {
+      "console": 1244.5989907351322,
+      "wandb": 1244.5989907351322,
+      "finite": true,
+      "matches": true
+    },
+    "timing_s/old_log_prob": {
+      "console": 58.26799848116934,
+      "wandb": 58.26799848116934,
+      "finite": true,
+      "matches": true
+    },
+    "timing_s/adv": {
+      "console": 0.14152999222278595,
+      "wandb": 0.14152999222278595,
+      "finite": true,
+      "matches": true
+    },
+    "timing_s/update_actor": {
+      "console": 75.89491628389806,
+      "wandb": 75.89491628389806,
+      "finite": true,
+      "matches": true
+    },
+    "timing_s/save_checkpoint": {
+      "console": 31.26236795913428,
+      "wandb": 31.26236795913428,
+      "finite": true,
+      "matches": true
+    },
+    "timing_s/update_weights": {
+      "console": 10.086812802124768,
+      "wandb": 10.086812802124768,
+      "finite": true,
+      "matches": true
+    },
+    "timing_s/step": {
+      "console": 1420.3161559728906,
+      "wandb": 1420.3161559728906,
+      "finite": true,
+      "matches": true
+    },
+    "timing_per_token_ms/adv": {
+      "console": 0.0017904536822749245,
+      "wandb": 0.0017904536822749245,
+      "finite": true,
+      "matches": true
+    },
+    "timing_per_token_ms/gen": {
+      "console": 16.997377746543194,
+      "wandb": 16.997377746543194,
+      "finite": true,
+      "matches": true
+    },
+    "timing_per_token_ms/update_actor": {
+      "console": 0.9601239298632214,
+      "wandb": 0.9601239298632214,
+      "finite": true,
+      "matches": true
+    },
+    "perf/total_num_tokens": {
+      "console": 79047,
+      "wandb": 79047,
+      "finite": true,
+      "matches": true
+    },
+    "perf/time_per_step": {
+      "console": 1420.3161559728906,
+      "wandb": 1420.3161559728906,
+      "finite": true,
+      "matches": true
+    },
+    "perf/throughput": {
+      "console": 27.827255103584402,
+      "wandb": 27.827255103584402,
+      "finite": true,
+      "matches": true
+    }
+  },
+  "write_operations": 0,
+  "wandb_finish_written_by_this_audit": false,
+  "training_step": 5
+}

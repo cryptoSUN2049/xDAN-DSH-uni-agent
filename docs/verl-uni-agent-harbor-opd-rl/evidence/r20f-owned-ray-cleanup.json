@@ -1,0 +1,12 @@
+{
+  "schema": "mimo.r20f-owned-ray-cleanup.v1",
+  "status": "passed",
+  "run_id": "mimo9b-002549-r20f",
+  "observed_unix": 1790800958.9209359,
+  "native_pid_was_already_exited": true,
+  "exact_session_path": "/root/mimo-private/ray-r20f/ray/session_2026-09-30_19-36-07_435026_11566",
+  "owned_processes": [],
+  "global_ray_stop_called": false,
+  "other_ray_processes_signalled": false,
+  "pod_stop_called": false
+}

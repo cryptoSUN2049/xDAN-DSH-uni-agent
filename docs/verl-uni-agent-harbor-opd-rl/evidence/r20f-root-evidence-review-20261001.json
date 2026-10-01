@@ -1,0 +1,118 @@
+{
+  "schema": "mimo.root-local-evidence-review.v1",
+  "observed_at_utc": "2026-10-01T01:53:49.999737+00:00",
+  "run_id": "mimo9b-002549-r20f",
+  "joint_passed": true,
+  "gate_count": 19,
+  "all_gates_true": true,
+  "verified_references": [
+    {
+      "name": "native_restore",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-native-resume-proof.json",
+      "sha256": "c3b12538871c6def8622be8344fb4548c7701c57f1d0f7b7c542e274c9c67ddf"
+    },
+    {
+      "name": "batch",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-final-batch-audit.json",
+      "sha256": "c7b2244d2ea44d01e8b756ee2dd224a0eec43483eef1bc0e8caa9f342e88f851"
+    },
+    {
+      "name": "token",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-consumed-token-audit.json",
+      "sha256": "d1d422346386d8463bb24902510da79bbf13f40615c9a024b865994ff8473155"
+    },
+    {
+      "name": "checkpoint_delta",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-native-checkpoint-summary.json",
+      "sha256": "2000f67bcbec62e478cad719b6485fa72bddf4eec172eb18c37d4d4326ed1ac9"
+    },
+    {
+      "name": "checkpoint_files",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-native-checkpoint-files.json",
+      "sha256": "b4399b1171d0ef796d78e270b4a765457e35d449616a952be8992fa0e8f4ffe4"
+    },
+    {
+      "name": "wandb",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-wandb-final.json",
+      "sha256": "eb8aa042b7dbfc4a543f278b231eb1956bf6beeb232400e114d2cbbdf78df014"
+    },
+    {
+      "name": "observability",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-native-observability-final.json",
+      "sha256": "5ebfe333a7ade7dcc8f34c8621751234e72082735d3f4f6ec02c5e66aad5a245"
+    },
+    {
+      "name": "modal",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-modal-terminal-api.json",
+      "sha256": "f04d65852341f2865e95b493a5dba654bf581cf946742ffb66b601b71c9748ce"
+    },
+    {
+      "name": "controller_cleanup",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-owned-control-cleanup.json",
+      "sha256": "831a76312a7439de50045b7a83ef3b506c4b20f7704d7911daeb214c61584f11"
+    },
+    {
+      "name": "ray_cleanup",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-owned-ray-cleanup.json",
+      "sha256": "f043ea9ba29fab51cfada04647010829c0d0dbefbe6c0f5ea42c74213b0ba903"
+    },
+    {
+      "name": "legacy_world2",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-world2-acceptance.json",
+      "sha256": "871130d649604bc998e1b745169a3d64cc27e7be2ec3063bb5fd98efbfc379a1"
+    },
+    {
+      "name": "initial_transport_errors",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-http524-terminal-failure.json",
+      "sha256": "ecb73f417777ddee74d278d99cf5a10067bbf954738174b4d6d3a99f80f9dcfc"
+    },
+    {
+      "name": "native_exit",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-supervisor-result.json",
+      "sha256": "7aec7cc309fb87166233badf5aeb8c63e9da5b13b62786e66f4ce269999c6746"
+    },
+    {
+      "name": "world2_current",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-world2-acceptance-r21.json",
+      "sha256": "ac82943ebc59464329bc3822efed914e6b1ee095c01a5f535f91cf6ef839fee0"
+    },
+    {
+      "name": "consumed_task_binding",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-actual-consumed-task-binding.json",
+      "sha256": "e39dc0214afb92ebc520920e6a11f3536769d4cd4191fd9d5481bbada10f9ae6"
+    },
+    {
+      "name": "independent_audit_tests",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r21-world2-parent-sha-compat-test-report.json",
+      "sha256": "e0da0d978abeae984a38ee7f5fc84021eb8981d2a25b20f8bbd20471b166ead6"
+    },
+    {
+      "name": "cpu_prepare",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r21-r20f-prepare.json",
+      "sha256": "c1aba583f64f44f23e3005d65bb4e3467443ad93403b118d25fd4ef04aa1d57e"
+    },
+    {
+      "name": "cpu_preflight",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r21-r20f-preflight.json",
+      "sha256": "c8aa4b6a14f8c82b8ca94ec9adb77368f11a496d3ad8bac12de2a7d8e563f59f"
+    },
+    {
+      "name": "prior_pending_report",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-current-joint-evidence-pending-format.json",
+      "sha256": "2e83d5db306705bff0dece9913b13582af7357fe9ebfc3956b72ae8a68372140"
+    },
+    {
+      "name": "independent_audit_source",
+      "local_path": "docs/verl-uni-agent-harbor-opd-rl/mimo_world2_acceptance_r21.py",
+      "sha256": "c7c12a1d7226d54e9cf1342ac2b1920c7150f90b53a84de0a622b1f58009b3db"
+    }
+  ],
+  "cloud_only_references": [
+    "parent_manifest",
+    "runtime_manifest"
+  ],
+  "current_wandb_api_finished": true,
+  "source_test_bytes_match": true,
+  "legacy_auditor_one_line_only_difference": true,
+  "no_tensor_or_model_loaded_on_mac": true
+}

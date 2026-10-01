@@ -1,0 +1,143 @@
+{
+  "schema": "mimo.r20f-native-observability-final.v1",
+  "run_id": "mimo9b-002549-r20f",
+  "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+  "status": "passed",
+  "observed_unix": 1790800482.2229989,
+  "native_ack": {
+    "path": "/workspace/mimo-dsh-rl-20260928/runs/r20f/rl-training/observability-ack.json",
+    "sha256": "7263544a8852fd45670a6a5615dc8f1e251cb58358234e9d25afb6920960e3c8",
+    "status": "passed",
+    "values": {
+      "actor_grad_norm": 0.1611328125,
+      "training_global_step": 5.0,
+      "critic_rewards_mean": 0.5
+    },
+    "training_started_at": 1790797080.2028685,
+    "finished_at": 1790799789.672888,
+    "deadline_unix": 1790813073
+  },
+  "prometheus": {
+    "query": "{__name__=~\"rl_insight_monitor_(training_global_step|actor_grad_norm|critic_rewards_mean)\",project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-002549-r20f\"}[2712s]",
+    "query_time": 1790799789.672888,
+    "passed": true,
+    "metrics": {
+      "actor_grad_norm": {
+        "labels": {
+          "__name__": "rl_insight_monitor_actor_grad_norm",
+          "experiment_name": "mimo9b-002549-r20f",
+          "instance": "172.25.0.2:9092",
+          "job": "trainer_metrics",
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+        },
+        "actual_scrape_samples": [
+          [
+            1790799789.601,
+            "0.1611328125"
+          ]
+        ],
+        "actual_scrape_count": 1,
+        "passed": true
+      },
+      "critic_rewards_mean": {
+        "labels": {
+          "__name__": "rl_insight_monitor_critic_rewards_mean",
+          "experiment_name": "mimo9b-002549-r20f",
+          "instance": "172.25.0.2:9092",
+          "job": "trainer_metrics",
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+        },
+        "actual_scrape_samples": [
+          [
+            1790799789.601,
+            "0.5"
+          ]
+        ],
+        "actual_scrape_count": 1,
+        "passed": true
+      },
+      "training_global_step": {
+        "labels": {
+          "__name__": "rl_insight_monitor_training_global_step",
+          "experiment_name": "mimo9b-002549-r20f",
+          "instance": "172.25.0.2:9092",
+          "job": "trainer_metrics",
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+        },
+        "actual_scrape_samples": [
+          [
+            1790799789.601,
+            "5"
+          ]
+        ],
+        "actual_scrape_count": 1,
+        "passed": true
+      }
+    },
+    "note": "range-vector API contains actual scrape timestamps; repeated query evaluations are not counted as extra scrapes"
+  },
+  "tempo": {
+    "passed": true,
+    "arguments": {
+      "tags": "project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\" experiment_name=\"mimo9b-002549-r20f\"",
+      "start": 1790797080,
+      "end": 1790799790,
+      "limit": 1000
+    },
+    "trace_count": 154,
+    "root_names": {
+      "agent_task": 11,
+      "agent_session": 11,
+      "gateway_generation": 132
+    },
+    "search_limit_hit": false,
+    "readback_by_root_type": [
+      {
+        "trace_id": "11481f17a400e4411d4bdd8bab388878",
+        "root_name": "gateway_generation",
+        "passed": true,
+        "verified_tags": {
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+          "experiment_name": "mimo9b-002549-r20f"
+        }
+      },
+      {
+        "trace_id": "e86c9f0e74259f3c7145e58729fc4b19",
+        "root_name": "agent_task",
+        "passed": true,
+        "verified_tags": {
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+          "experiment_name": "mimo9b-002549-r20f"
+        }
+      },
+      {
+        "trace_id": "dc85262016444a06fc6bce71929dfe5c",
+        "root_name": "agent_session",
+        "passed": true,
+        "verified_tags": {
+          "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+          "experiment_name": "mimo9b-002549-r20f"
+        }
+      }
+    ],
+    "private_payload_reference": {
+      "path": "/root/mimo-private/r20f-acceptance/tempo-trace-samples.json",
+      "sha256": "61dc02718a7fbef394e35bb432d3849a3a1e307f3883732e3a59a1dec1016831",
+      "bytes": 17141
+    },
+    "search_metrics": {
+      "inspectedTraces": 296,
+      "inspectedBytes": "81693",
+      "totalBlocks": 1,
+      "completedJobs": 2,
+      "totalJobs": 2,
+      "totalBlockBytes": "29472"
+    }
+  },
+  "limits": [
+    "Three root payloads sampled, not all traces individually audited",
+    "No CPU preflight traces or other experiments reused",
+    "No model-forward logprob recomputation",
+    "No observability writes from this audit"
+  ]
+}

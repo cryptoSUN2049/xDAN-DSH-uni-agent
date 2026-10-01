@@ -1,0 +1,41 @@
+{
+  "schema": "mimo.r20f-owned-control-cleanup.v1",
+  "run_id": "mimo9b-002549-r20f",
+  "started_at_unix": 1790800874.8245249,
+  "pod_stop_called": false,
+  "global_ray_stop_called": false,
+  "controller": {
+    "pid": 10217,
+    "expected_start_ticks": "355574636",
+    "signal": "SIGINT",
+    "terminated": true
+  },
+  "ports": {
+    "38880": "closed",
+    "38881": "closed",
+    "38882": "closed",
+    "38883": "closed",
+    "38780": "closed",
+    "38781": "closed"
+  },
+  "scoped_ssh_key": {
+    "authorized_entry_sha256": "47bbb38ef6d1c721a0adc956ad248d84b3dc096f408bffa43bddb636b8ccdced",
+    "before_sha256": "6448d4134415e52e5203ed2972780095713d2f8b7b5e3deec8585b4d0e875072",
+    "after_sha256": "a1593ee454728e7171eedf7ee13bcc5c2d1066f66c75ceafcae08aff4f838626",
+    "exact_owned_entry_removed": true,
+    "other_bytes_preserved": true,
+    "private_key_file_retained_no_content_output": true
+  },
+  "cost_guard": {
+    "pid": 5571,
+    "identity_matches": true,
+    "running": true
+  },
+  "encrypted_backup": {
+    "pid": 8370,
+    "identity_matches": true,
+    "running": true
+  },
+  "status": "passed",
+  "finished_at_unix": 1790800875.3303518
+}

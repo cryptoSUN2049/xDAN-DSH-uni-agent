@@ -1,0 +1,12 @@
+{
+  "schema": "mimo.current-pod-status.v1",
+  "observed_at_utc": "2026-10-01T01:45:49Z",
+  "id": "vo6u0t8x398bnm",
+  "name": "mimo-dsh-9b-r21-dual-20261001",
+  "status": "EXITED",
+  "gpu_count": 2,
+  "allocated_rate_usd_per_hour": 4.18,
+  "started_at": "2026-09-30T18:04:33.284Z",
+  "budget_deadline_unix": 1790813073,
+  "ssh_read_failed": true
+}

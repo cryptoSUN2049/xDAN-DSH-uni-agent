@@ -1,0 +1,268 @@
+{
+  "schema": "mimo.r20f-wandb-current-api-observation.v1",
+  "observed_unix": 1790798532.7707818,
+  "pod_id": "vo6u0t8x398bnm",
+  "deadline_unix": 1790813073,
+  "api_path": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20f",
+  "exists": true,
+  "state": "running",
+  "created_at": "2026-09-30T19:59:20Z",
+  "last_history_step": null,
+  "history_rows_selected": [],
+  "history_read_cap": 32,
+  "config_allowlist": [
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "agent_runners",
+        "task",
+        "runner_kwargs",
+        "harbor_route_registration",
+        "run_spec_sha256"
+      ],
+      "value": "sha256:06d4bed5e29dc6a8a9da77f2184c8ca304fd7d9954264fb55687e4fbfc97ca12"
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "agent_runners",
+        "task",
+        "runner_kwargs",
+        "model_name"
+      ],
+      "value": "mimo-9b-dsh-rl"
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "termination_policy"
+      ],
+      "value": "budget-terminal-v1"
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "budget_limits"
+      ],
+      "value": {
+        "max_generated_tokens": 20480,
+        "trajectory_capacity": 32768
+      }
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "policy_template",
+        "budget_limits"
+      ],
+      "value": {
+        "max_generated_tokens": 20480,
+        "trajectory_capacity": 32768
+      }
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "policy_template",
+        "dsh_release"
+      ],
+      "value": {
+        "image_digest": "sha256:951f488e9e4d8e4218a2c29e20b18a80ce4e509be0d39a88b0c887961ea360bf",
+        "patch_sha256s": [],
+        "platform": "linux/amd64",
+        "profile": "sdk-minimal",
+        "runtime_sha256": "sha256:59cc8ec59946afa572bfd0b9e6268d7380a4d00d1157d7dce6d2b2df86cf51ad",
+        "sdk_sha256": "sha256:6c6a1a8f26b9030326447a8ed41c3ae6261a6b78e7fe61d72c7bf3ae21f03d6e",
+        "source_sha": "b2369692ea530007075ebcd18d39fdba0bbd3982"
+      }
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "policy_template",
+        "max_artifact_bytes"
+      ],
+      "value": 16777216
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "policy_template",
+        "max_cpus"
+      ],
+      "value": 2
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "policy_template",
+        "max_memory_mb"
+      ],
+      "value": 4096
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "policy_template",
+        "max_tokens"
+      ],
+      "value": 4096
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "policy_template",
+        "max_wall_time_seconds"
+      ],
+      "value": 1800
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "policy_template",
+        "model_name"
+      ],
+      "value": "mimo-9b-dsh-rl"
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "policy_template",
+        "task_refs"
+      ],
+      "value": [
+        {
+          "sha256": "sha256:d0ae13a84e57d3f616a1cef5f17bd76819bba5c4f4a6faa58706e710be106979",
+          "id": "mimo-code-format-code-task-002549",
+          "version": "v1"
+        }
+      ]
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "policy_template",
+        "termination_policy"
+      ],
+      "value": "budget-terminal-v1"
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "policy_template",
+        "tunnel_alias"
+      ],
+      "value": "mimo-cloud-r20f"
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "run_spec_sha256"
+      ],
+      "value": "sha256:06d4bed5e29dc6a8a9da77f2184c8ca304fd7d9954264fb55687e4fbfc97ca12"
+    },
+    {
+      "path": [
+        "actor_rollout_ref",
+        "rollout",
+        "custom",
+        "agent_framework",
+        "trajectory_postprocessor_kwargs",
+        "termination_policy"
+      ],
+      "value": "budget-terminal-v1"
+    }
+  ],
+  "trainer_allowlist": {
+    "project_name": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+    "experiment_name": "mimo9b-002549-r20f",
+    "n_gpus_per_node": 2,
+    "nnodes": 1,
+    "total_training_steps": 5,
+    "resume_mode": "resume_path",
+    "resume_from_path": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4"
+  },
+  "summary_allowlist": {},
+  "cross_field_checks": {
+    "current_exact_run": true,
+    "dual_gpu_single_node": true,
+    "target_step5": true,
+    "runner_policy_model_alias_equal": true,
+    "current_tunnel_alias": true,
+    "budget32k_20480": true,
+    "framework_policy_termination_equal": true
+  },
+  "native_actor_env_proof": {
+    "public_path": "docs/verl-uni-agent-harbor-opd-rl/evidence/r20f-native-runtime-observation-20261001.json",
+    "sha256": "332950231d8bc5a636f118805f9572504a9b05d84ab8652984d605ec12dda7a5",
+    "source_scope": "actual current training actors, not synthetic preflight"
+  },
+  "training_acceptance": false,
+  "boundaries": [
+    "Fresh exact r20f API read and allowlisted config/metrics only; no full config or credentials dumped",
+    "Read-only SDK API; no init/log/finish/config update",
+    "Running/config/empty-history does not prove current step5 or effective update",
+    "No historical R19/R20e data inserted"
+  ]
+}

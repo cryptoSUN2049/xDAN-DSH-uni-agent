@@ -1,0 +1,61 @@
+{
+  "schema": "mimo.r20f-current-http524-terminal-failure.v1",
+  "status": "two_initial_jobs_rejected",
+  "observed_unix": 1790800086.6245856,
+  "run_id": "mimo9b-002549-r20f",
+  "run_spec_sha256": "06d4bed5e29dc6a8a9da77f2184c8ca304fd7d9954264fb55687e4fbfc97ca12",
+  "source_manifest_sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "failed_jobs": [
+    {
+      "job_id": "job-5ae3c164d8114e33b4e9881a30cbece9",
+      "gateway_session_id": "session-sample-0-rollout-1-466e90accc2c44f78dec71a0da837647",
+      "manifest_status": "cancelled",
+      "manifest_error_code": "evidence-rejected-after-cleanup",
+      "sealed_at_unix": 1790798641.250211,
+      "helper_finish_reason": "error",
+      "terminal_reason_kind": "error",
+      "server_error_status": 524,
+      "server_error_code": "SERVER",
+      "provider_retry_after_ms": 120000,
+      "safe_server_message": "DeepSeek API error (HTTP 524)",
+      "trace_event_count": 11,
+      "helper_sha256": "628173a0efb4f870562c297288879c25e62d1d386cec7cbcb630968765c5ac1c",
+      "trace_sha256": "d19b48ab28a8d8b5381e4edf501af07a008d9ea89c15c985325b244d71d9b30b",
+      "harbor_result_sha256": "cf6c93660bd8122f8c3c7aea46328ad577589462c37bb52c74d7e167056e4569",
+      "harbor_trial_exception_info_is_none": true,
+      "artifacts_admitted": 0
+    },
+    {
+      "job_id": "job-a45fe7115a4d4e11991868327a29dcd7",
+      "gateway_session_id": "session-sample-0-rollout-0-911c6af48a53414cb6c8bfd8713432ac",
+      "manifest_status": "cancelled",
+      "manifest_error_code": "evidence-rejected-after-cleanup",
+      "sealed_at_unix": 1790798641.0924182,
+      "helper_finish_reason": "error",
+      "terminal_reason_kind": "error",
+      "server_error_status": 524,
+      "server_error_code": "SERVER",
+      "provider_retry_after_ms": 120000,
+      "safe_server_message": "DeepSeek API error (HTTP 524)",
+      "trace_event_count": 11,
+      "helper_sha256": "9eaa4c0bcf5dabd73b8717dbb27700b7b070e22802287588c4bc098ac1ab70bf",
+      "trace_sha256": "3a5f19656a7baa77d737ccc7c9aca46268a00eb85df0877206c490bd7ae3575b",
+      "harbor_result_sha256": "848a5b710d37086b090cbb453f4b3d4204ceeb5f0243b1b9121d24e2fab67a6e",
+      "harbor_trial_exception_info_is_none": true,
+      "artifacts_admitted": 0
+    }
+  ],
+  "termination_policy": "budget-terminal-v1",
+  "accepted_terminal_kinds": [
+    "completed",
+    "max-tokens"
+  ],
+  "error_terminal_not_converted_to_reward": true,
+  "model_provider_message_is_generic_dsh_label_not_actual_model_identity": true,
+  "current_actual_model_name": "mimo-9b-dsh-rl",
+  "causal_inference": "HTTP524 on the Cloudflare public path is consistent with origin response timeout; backend timing was not independently measured",
+  "native_run_finished_after_sampling_later_groups": true,
+  "whole_run_effective_update_acceptance_pending": true,
+  "hidden_test_output_printed": false,
+  "production_code_changed": false
+}

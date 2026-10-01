@@ -1,0 +1,63 @@
+{
+  "schema": "mimo.token-semantic-audit.v1",
+  "passed": true,
+  "sessions": [
+    {
+      "passed": true,
+      "session_id": "session-sample-0-rollout-0-a714e3e7f4e44100aadaded9d3d8aa2b",
+      "commits": 25,
+      "backend_tokens": 9130,
+      "context_tokens": 6627,
+      "events": 76,
+      "journal_sha256": "a77db9c8828fa4f1af5e5477c2147ac843244fd76d67529ac112f08f33c0ec83",
+      "metadata_sha256": "8037842d603e10e722acefa00e3b5871b66425f755882b3d45987d1bd54afa8d",
+      "npz_sha256": "f0f30856182e1ebe46ecb6c59bc59ddf54357bc28ff209fa373568572641d480",
+      "session_index": 0
+    },
+    {
+      "passed": true,
+      "session_id": "session-sample-0-rollout-1-93979f9702f54a9ba0c03b53d2a1accb",
+      "commits": 36,
+      "backend_tokens": 13219,
+      "context_tokens": 13577,
+      "events": 109,
+      "journal_sha256": "dcd6d641cb2dc2e07e75c50d78e33b61e596fc62a1366081ce6ab81beb5d95e8",
+      "metadata_sha256": "9bc6b93b495072b8c70841a2bf35811f2d1386e7bdf0a25cc0590a14f9c4e29b",
+      "npz_sha256": "bb2c4735c0c44a488668049cae0734d254a22d784e9375b6f9158de2b7e510a5",
+      "session_index": 1
+    },
+    {
+      "passed": true,
+      "session_id": "session-sample-0-rollout-2-a6425a3f852c47118eb78cef9984875b",
+      "commits": 31,
+      "backend_tokens": 11093,
+      "context_tokens": 12582,
+      "events": 94,
+      "journal_sha256": "a017e3c9d4f9e02a71a0cd626dbf68b53d14d441f214d364680f85666c90b2a9",
+      "metadata_sha256": "829709097cd9cc730993a146d181f80e9cdce675f36f8a656b66ad5b866c895d",
+      "npz_sha256": "1deaecff0f0fe5a834b2cf516139d4b0c2b264d84f737c46435f456410247eb2",
+      "session_index": 2
+    },
+    {
+      "passed": true,
+      "session_id": "session-sample-0-rollout-3-33678fecd566434aa5423b2745962bf7",
+      "commits": 8,
+      "backend_tokens": 4356,
+      "context_tokens": 2639,
+      "events": 25,
+      "journal_sha256": "95551381756bf21b8b3ce590f772622ddc7a8bf4480eeca2bcfeec8dc8c13921",
+      "metadata_sha256": "be5f712eaa16bc349443f6cf8d40db453f547a6faefc18479f9de6fbc81573be",
+      "npz_sha256": "ff5eb93f891b9909e68793c978dabad5a6ef377f3014684b2b25dbff5081b163",
+      "session_index": 3
+    }
+  ],
+  "selection": "explicit_session_ids",
+  "training_consumption_proven_by_this_audit": false,
+  "scope": "backend output transport and MiMo/Qwen merge semantics; not model forward recomputation",
+  "run_id": "mimo9b-002549-r20f",
+  "consumer_step": 5,
+  "consumed_group_uid": "185df2c8-e8d0-4dc8-8445-750474fed4a6",
+  "batch_audit_sha256": "c7b2244d2ea44d01e8b756ee2dd224a0eec43483eef1bc0e8caa9f342e88f851",
+  "checker_sha256": "e59c1b64aea81fcc8ac3541ee874d7bff758803442fe064ea0387820993507c9",
+  "observed_unix": 1790800163.6860628
+}

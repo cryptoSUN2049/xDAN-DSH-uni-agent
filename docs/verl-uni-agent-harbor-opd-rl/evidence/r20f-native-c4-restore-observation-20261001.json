@@ -1,0 +1,100 @@
+{
+  "schema": "mimo.r20f-native-c4-restore-observation.v1",
+  "observed_unix": 1790798340.7289412,
+  "pod_id": "vo6u0t8x398bnm",
+  "run_id": "mimo9b-002549-r20f",
+  "status": "two-rank-native-c4-restore-observed",
+  "runtime_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+  "source_manifest_sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "run_spec_sha256": "06d4bed5e29dc6a8a9da77f2184c8ca304fd7d9954264fb55687e4fbfc97ca12",
+  "launch_sha256": "e28f38e852fbfd909d5135cd00a10dbce7c05b5d49014658b74ff0df2569d442",
+  "deadline_unix": 1790813073,
+  "parent_checkpoint": "/workspace/mimo-dsh-rl-20260928/runs/r19/rl-training/checkpoints/global_step_4",
+  "parent_step": 4,
+  "target_step": 5,
+  "resume_runner_markers": [
+    {
+      "pid": 15964,
+      "exact_parent_path": true
+    }
+  ],
+  "ranks": [
+    {
+      "rank": 0,
+      "pid": 17895,
+      "model_loaded_utc": "2026-09-30 19:57:33,022",
+      "optimizer_loaded_utc": "2026-09-30 19:57:33,903",
+      "rng_loaded_utc": "2026-09-30 19:57:33,933",
+      "lr_scheduler_loaded_utc": "2026-09-30 19:57:33,933"
+    },
+    {
+      "rank": 1,
+      "pid": 17896,
+      "model_loaded_utc": "2026-09-30 19:57:33,022",
+      "optimizer_loaded_utc": "2026-09-30 19:57:33,894",
+      "rng_loaded_utc": "2026-09-30 19:57:33,922",
+      "lr_scheduler_loaded_utc": "2026-09-30 19:57:33,923"
+    }
+  ],
+  "native_log": {
+    "private_path": "/root/mimo-private/launch-r20f/train.log",
+    "bytes_read": 186366,
+    "snapshot_read_sha256": "d0b8c341e4046cb6c375795a22d3f7bb4e5fcf1f29654cb33b04d424c2b738c6",
+    "mutable": true,
+    "changed_during_read": false
+  },
+  "training_progress_displays": [],
+  "wandb_current_id_in_log": false,
+  "traceback_present": false,
+  "services_and_guards": [
+    {
+      "name": "prometheus",
+      "pid": 5401,
+      "start_ticks": "355265361",
+      "matches_expected_identity": true,
+      "state": "S"
+    },
+    {
+      "name": "tempo",
+      "pid": 5425,
+      "start_ticks": "355265391",
+      "matches_expected_identity": true,
+      "state": "S"
+    },
+    {
+      "name": "rl_insight",
+      "pid": 5499,
+      "start_ticks": "355265421",
+      "matches_expected_identity": true,
+      "state": "S"
+    },
+    {
+      "name": "cost_guard",
+      "pid": 5571,
+      "start_ticks": "355278877",
+      "matches_expected_identity": true,
+      "state": "S"
+    },
+    {
+      "name": "encrypted_backup",
+      "pid": 8370,
+      "start_ticks": "355382868",
+      "matches_expected_identity": true,
+      "state": "S"
+    }
+  ],
+  "claims": {
+    "two_rank_native_parent_restore": true,
+    "parent_checkpoint_rehashed_by_this_report": false,
+    "current_run_step5_completed": false,
+    "nonzero_update_verified": false,
+    "new_wandb_verified": false,
+    "native_training_observability_verified": false
+  },
+  "boundaries": [
+    "Current r20f log eight exact parent model/optimizer/rng/lr_scheduler markers; no historical markers reused",
+    "Restore markers prove restored state, not current-run sampling or step5",
+    "No GPU/model work or process cleanup performed by this observation",
+    "Live log SHA describes bytes read at observed time, not sealed terminal log"
+  ]
+}

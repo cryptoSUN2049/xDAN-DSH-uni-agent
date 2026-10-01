@@ -1,0 +1,45 @@
+{
+  "schema": "mimo.world2-effective-update.v1",
+  "world_size": 2,
+  "passed": false,
+  "effective_update_verified": false,
+  "resume_verified": false,
+  "exact_inflight_replay_verified": false,
+  "capability_improvement_verified": false,
+  "restore_evidence": "not-tested; checkpoint comparison is not independent restore",
+  "errors": [
+    "ValueError: Parent source/spec identity malformed"
+  ],
+  "inputs": {
+    "launch": {
+      "path": "/root/mimo-private/launch-r20f/launch.json",
+      "sha256": "e28f38e852fbfd909d5135cd00a10dbce7c05b5d49014658b74ff0df2569d442",
+      "bytes": 5089
+    },
+    "batch_audit": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20f-final-batch-audit.json",
+      "sha256": "c7b2244d2ea44d01e8b756ee2dd224a0eec43483eef1bc0e8caa9f342e88f851",
+      "bytes": 5675
+    },
+    "console_metrics": {
+      "path": "/root/mimo-private/launch-r20f/train.log",
+      "sha256": "63ff882776bff75c0cb3af5e77a2183b00f12d6b811823b03abf5a5e583d8add",
+      "bytes": 228829
+    },
+    "sharded_delta": {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20f-c4-c5-checkpoint-audit.json",
+      "sha256": "941259e1f1bec908beb9481b14dae62a8878dfcc07bcbd2c135c5597bf4355d6",
+      "bytes": 4894375
+    },
+    "checkpoint_checker": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r20/deployment/checks/sharded_checkpoint_delta.py",
+      "sha256": "ea9055884d8474bb511f0e8593dcee3fd9769714244deacd4d9c1c3017ff05a6",
+      "bytes": 14769
+    },
+    "optimizer_checker": {
+      "path": "/workspace/mimo-dsh-rl-20260928/run-src-r20/deployment/checks/optimizer_delta.py",
+      "sha256": "037d220fdd280d5ca07989554031db99c82ca6b450aef6327b47a6910cc0ccee",
+      "bytes": 6573
+    }
+  }
+}

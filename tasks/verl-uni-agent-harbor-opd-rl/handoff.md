@@ -1,3 +1,55 @@
+## R21 最终交接：新Code任务C4→C5已真实通过
+
+### TL;DR
+
+- 新run mimo9b-002549-r20f 原生exit0、C5、19项联合门PASS；2026-10-01 01:45UTC再次实查W&B finished/step5。
+- 本轮只有1独立任务、4消费轨迹、1次新更新；监督03:33:02→04:23:18 SGT共50分16秒，fit约25分44秒。
+- GPU Pod vo6u0t8x398bnm实时API EXITED，SSH关闭；固定六小时分配窗口已过，不自动重启/重计。原卷72jdno5cuk保留挂载记录。
+- 先读docs/verl-uni-agent-harbor-opd-rl/r21-training-run-report-20261001.md，再读当前联合证据；下面旧状态段仅历史。
+
+### 本轮交付物
+
+- docs同目录 r21-native-training-acceptance.md、r21-training-run-report-20261001.md：实际范围、数据量/时间、参数、native入口和验收。
+- mimo_world2_acceptance_r21.py与tests/uni_agent/deployment/test_mimo_world2_acceptance_r21.py：仅独立父spec裸/前缀SHA兼容，181云CPUtests、覆盖98.68%，旧33cd工具不改。
+- evidence/r20f-current-joint-acceptance.json SHAe02da337：19项门和逐文件SHA引用；其余r20f公开证据包括失败、batch/token、C5/参数、W&B/Insight、资源清理。
+- evidence/r20f-live-wandb-{status,config}-20261001.json、r20f-current-pod-status-20261001.json与root-evidence-review：当前独立API及20本地引用SHA复核。
+- tasks同目录notes-r21.md保留真实全过程；本轮逐文件行数见最终git diff --stat，不含其他会话dirty。
+
+### 设计约束
+
+- 固定MiMo数据639865fd/模型2367e865/DSH b236969与0.1.3a2，原273uv，32K/20480，world2/FSDP1/colocate_async。
+- 训练runtime仍独立run-src-r20/1ccc164/1003文件manifest99ac；控制bundle b053bde/6c2d。不得把最新GitHEAD当完整训练树。
+- Mac仅轻量操作，tensor/模型/测试全部云端。父40f、旧审计33cd/旧FAIL、所有checkpoint字节不修改。
+- 不触用户A100或213.192.2.76，不private JSON glob/明文secret；MFS不保障chmod，私有备份仅AES密文，key在Mac私有目录。
+
+### 已踩坑/真实行为
+
+- 002549起始两HTTP524失败严格排除，后来有效组0/1/1/0；3条准入prefetch不计训练消费，12job/23sandbox不等于12训练题。
+- step5/total_epochs5包含parent4；本轮新增1步，不是五步。6h资源窗口不是6h训练，结束后未自动接续。
+- 旧world2汇总只接受父spec sha256前缀，原bare SHA合法；独立新版c7c12a1仅一行格式兼容，当前同C4/C5实物重审ac82943e通过。
+- 原生日志证明两rankmodel/optim/RNG/scheduler加载；data restore只声明冻结控制流+native新数据probe，不造运行成功日志。
+- W&B77指标一次history与console对账；token审计不是model-forward概率重算；Tempo154trace只三类root抽样回读。
+
+### 下一里程碑任务清单
+
+- [ ] 若新预算批准，先实查原卷C5/hash/凭据备份与新绝对窗口，禁止直接执行过期run/spec命令。
+- [ ] 明确多任务train/heldout、更新数及结束后续训/回收策略，执行真实课程；当前其他四域未训练验收。
+- [ ] 新run可再验证C5恢复；独立heldout证明效果。当前只证明C4恢复和C5新有效更新。
+
+### 分支/部署状态
+
+- worktree/branch verl-uni-agent-harbor-opd-rl，9227b5d已push；当前最终证据与独立审计提交中，最后Git结果为准。
+- Pod EXITED，本轮23sandbox fresh API active0，owned controller/Ray/端口/key清理已过；不宣称独立确认实际stop时间或实际总账单。
+- C5共享路径/workspace/mimo-dsh-rl-20260928/runs/r20f/rl-training/checkpoints/global_step_5；15文件19,151,369,958B/fullSHA。
+
+### 冷启动 checklist
+
+1. 优先读本段、r21-training-run-report和联合PASS，不以旧paused/initializing段判断当前。
+2. 查Git/保留其他会话dirty，读notes-r21；新预算未授权不重启收费Pod。
+3. 需恢复时先查Pod/卷/当前新窗口和加密备份；不要用旧SSH、PID或expired1790813073授权。
+4. 核C5/fullSHA、固定uv/overlay/实际import路径、新独立run/spec/W&B身份；不要重装。
+5. 对后续任务仍执行真实评分/消费/token/有效GRPO/物理checkpoint/当前API，不复用本轮PASS冒充新run。
+
 ## R21 当前原生运行与交接入口（03:40 SGT）
 
 - 原生训练链已实际启动：sup11436 → launcher11494 → native11566；Ray actor ObservedTaskRunner15385、MonitorHub15961实际继承Insight双变量。

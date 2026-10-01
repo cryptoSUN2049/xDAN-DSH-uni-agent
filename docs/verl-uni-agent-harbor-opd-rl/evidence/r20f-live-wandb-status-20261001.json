@@ -1,0 +1,16 @@
+{
+  "schema": "mimo.current-wandb-read.v1",
+  "observed_at_utc": "2026-10-01T01:45:49.102244+00:00",
+  "run": "xdan-ai/xDAN-Verl-Uni-agent-Harbor-rl-opd/mimo9b002549r20f",
+  "state": "finished",
+  "summary_selected": {
+    "_step": 5,
+    "actor/grad_norm": 0.1611328125,
+    "actor/pg_loss": -0.2480442225933075,
+    "critic/advantages/max": 0.8660238981246948,
+    "critic/advantages/min": -0.8660238981246948,
+    "critic/rewards/mean": 0.5,
+    "critic/score/mean": 0.5
+  },
+  "api_write_performed": false
+}

@@ -1,0 +1,511 @@
+{
+  "schema": "mimo.r20f-native-observability-final.v1",
+  "observed_unix": 1790800234.041639,
+  "pod_id": "vo6u0t8x398bnm",
+  "run_id": "mimo9b-002549-r20f",
+  "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+  "deadline_unix": 1790813073,
+  "runtime_commit": "1ccc1640c0f34ba5f515d3613fac6a278bd38f4c",
+  "source_manifest_sha256": "99ac03f55d4eaeebc63d2ba466452fef2af7a51af289fc135d5051dadca0591f",
+  "native_exit": {
+    "status": "exited",
+    "exit_code": 0,
+    "started_at": 1790796782.500448,
+    "finished_at": 1790799798.8806953,
+    "owned_supervisor_launch_native_pids_present": {
+      "11436": false,
+      "11494": false,
+      "11566": false
+    },
+    "natural_exit_verified": true
+  },
+  "native_ack": {
+    "schema": "mimo.native-observability-ack.v1",
+    "status": "passed",
+    "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd",
+    "experiment_name": "mimo9b-002549-r20f",
+    "step": 5,
+    "training_started_at": 1790797080.2028685,
+    "budget_seconds": 45,
+    "deadline_unix": 1790813073,
+    "query": "{__name__=~\"rl_insight_monitor_training_global_step|rl_insight_monitor_actor_grad_norm|rl_insight_monitor_critic_rewards_mean\",project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-002549-r20f\"}",
+    "backend_response": {
+      "status": "success",
+      "data": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_actor_grad_norm",
+              "experiment_name": "mimo9b-002549-r20f",
+              "instance": "172.25.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790799789.672,
+              "0.1611328125"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_training_global_step",
+              "experiment_name": "mimo9b-002549-r20f",
+              "instance": "172.25.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790799789.672,
+              "5"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_critic_rewards_mean",
+              "experiment_name": "mimo9b-002549-r20f",
+              "instance": "172.25.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790799789.672,
+              "0.5"
+            ]
+          }
+        ]
+      }
+    },
+    "values": {
+      "actor_grad_norm": 0.1611328125,
+      "training_global_step": 5.0,
+      "critic_rewards_mean": 0.5
+    },
+    "finished_at": 1790799789.672888
+  },
+  "independent_prometheus": {
+    "query": "{__name__=~\"rl_insight_monitor_training_global_step|rl_insight_monitor_actor_grad_norm|rl_insight_monitor_critic_rewards_mean\",project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-002549-r20f\"}",
+    "query_time": 1790799789.672888,
+    "instant_at_native_ack": {
+      "status": "success",
+      "data": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_actor_grad_norm",
+              "experiment_name": "mimo9b-002549-r20f",
+              "instance": "172.25.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790799789.673,
+              "0.1611328125"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_training_global_step",
+              "experiment_name": "mimo9b-002549-r20f",
+              "instance": "172.25.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790799789.673,
+              "5"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_critic_rewards_mean",
+              "experiment_name": "mimo9b-002549-r20f",
+              "instance": "172.25.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "value": [
+              1790799789.673,
+              "0.5"
+            ]
+          }
+        ]
+      }
+    },
+    "sample_timestamp_receipts": {
+      "schema": "mimo.r20f-native-prometheus-timestamps.v1",
+      "observed_unix": 1790800166.064584,
+      "query_time": 1790799789.672888,
+      "failed_multi_name_query": {
+        "observed_unix": 1790800166.044597,
+        "operation": "timestamp query over three names with otherwise identical labels",
+        "query": "timestamp({__name__=~\"rl_insight_monitor_training_global_step|rl_insight_monitor_actor_grad_norm|rl_insight_monitor_critic_rewards_mean\",project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-002549-r20f\"})",
+        "http_status": 422,
+        "response": {
+          "status": "error",
+          "errorType": "execution",
+          "error": "vector cannot contain metrics with the same labelset"
+        }
+      },
+      "individual_metric_timestamp_receipts": [
+        {
+          "metric_name": "rl_insight_monitor_training_global_step",
+          "query": "timestamp(rl_insight_monitor_training_global_step{project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-002549-r20f\"})",
+          "response": {
+            "status": "success",
+            "data": {
+              "resultType": "vector",
+              "result": [
+                {
+                  "metric": {
+                    "experiment_name": "mimo9b-002549-r20f",
+                    "instance": "172.25.0.2:9092",
+                    "job": "trainer_metrics",
+                    "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+                  },
+                  "value": [
+                    1790799789.673,
+                    "1790799789.601"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "metric_name": "rl_insight_monitor_actor_grad_norm",
+          "query": "timestamp(rl_insight_monitor_actor_grad_norm{project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-002549-r20f\"})",
+          "response": {
+            "status": "success",
+            "data": {
+              "resultType": "vector",
+              "result": [
+                {
+                  "metric": {
+                    "experiment_name": "mimo9b-002549-r20f",
+                    "instance": "172.25.0.2:9092",
+                    "job": "trainer_metrics",
+                    "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+                  },
+                  "value": [
+                    1790799789.673,
+                    "1790799789.601"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "metric_name": "rl_insight_monitor_critic_rewards_mean",
+          "query": "timestamp(rl_insight_monitor_critic_rewards_mean{project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-002549-r20f\"})",
+          "response": {
+            "status": "success",
+            "data": {
+              "resultType": "vector",
+              "result": [
+                {
+                  "metric": {
+                    "experiment_name": "mimo9b-002549-r20f",
+                    "instance": "172.25.0.2:9092",
+                    "job": "trainer_metrics",
+                    "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+                  },
+                  "value": [
+                    1790799789.673,
+                    "1790799789.601"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "historical_range_request": {
+      "query": "{__name__=~\"rl_insight_monitor_training_global_step|rl_insight_monitor_actor_grad_norm|rl_insight_monitor_critic_rewards_mean\",project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\",experiment_name=\"mimo9b-002549-r20f\"}",
+      "start": 1790797080,
+      "end": 1790799799,
+      "step": 10
+    },
+    "historical_range_response": {
+      "status": "success",
+      "data": {
+        "resultType": "matrix",
+        "result": [
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_actor_grad_norm",
+              "experiment_name": "mimo9b-002549-r20f",
+              "instance": "172.25.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "values": [
+              [
+                1790799790,
+                "0.1611328125"
+              ]
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_critic_rewards_mean",
+              "experiment_name": "mimo9b-002549-r20f",
+              "instance": "172.25.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "values": [
+              [
+                1790799790,
+                "0.5"
+              ]
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "rl_insight_monitor_training_global_step",
+              "experiment_name": "mimo9b-002549-r20f",
+              "instance": "172.25.0.2:9092",
+              "job": "trainer_metrics",
+              "project": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            },
+            "values": [
+              [
+                1790799790,
+                "5"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    "values": {
+      "rl_insight_monitor_actor_grad_norm": 0.1611328125,
+      "rl_insight_monitor_training_global_step": 5.0,
+      "rl_insight_monitor_critic_rewards_mean": 0.5
+    },
+    "timestamp_boundary": "Range points are evaluation timestamps, not distinct training steps or scrapes; individual timestamp(metric) receipts prove actual native scrape at1790799789.601"
+  },
+  "tempo": {
+    "request": {
+      "tags": "project=\"xDAN-Verl-Uni-agent-Harbor-rl-opd\" experiment_name=\"mimo9b-002549-r20f\"",
+      "start": 1790796782,
+      "end": 1790799799,
+      "limit": 1000
+    },
+    "response": {
+      "metrics": {
+        "inspectedTraces": 296,
+        "inspectedBytes": "1747365",
+        "totalBlocks": 1,
+        "completedJobs": 2,
+        "totalJobs": 2,
+        "totalBlockBytes": "29472"
+      },
+      "returned_trace_ids_sha256": "e22fb7f3ab433f96279571cf45207abf4e829f65b769b54c14e5ef4af6a89770",
+      "returned_trace_ids_hash_encoding": "UTF8 JSON sorted trace ID strings with compact separators"
+    },
+    "returned_trace_count": 161,
+    "limit_reached": false,
+    "root_name_counts": {
+      "agent_task": 11,
+      "agent_session": 11,
+      "gateway_generation": 139
+    },
+    "independent_trace_get_receipts": [
+      {
+        "trace_id": "11481f17a400e4411d4bdd8bab388878",
+        "root_trace_name": "gateway_generation",
+        "start_time_unix_nano": "1790799605632538419",
+        "selected_attributes": [
+          {
+            "key": "project",
+            "value": {
+              "stringValue": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            }
+          },
+          {
+            "key": "experiment_name",
+            "value": {
+              "stringValue": "mimo9b-002549-r20f"
+            }
+          },
+          {
+            "key": "sample",
+            "value": {
+              "stringValue": "0"
+            }
+          },
+          {
+            "key": "session",
+            "value": {
+              "stringValue": "1"
+            }
+          },
+          {
+            "key": "traj",
+            "value": {
+              "stringValue": ""
+            }
+          },
+          {
+            "key": "global_steps",
+            "value": {
+              "intValue": "5"
+            }
+          }
+        ]
+      },
+      {
+        "trace_id": "e86c9f0e74259f3c7145e58729fc4b19",
+        "root_trace_name": "agent_task",
+        "start_time_unix_nano": "1790799606843982865",
+        "selected_attributes": [
+          {
+            "key": "project",
+            "value": {
+              "stringValue": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            }
+          },
+          {
+            "key": "experiment_name",
+            "value": {
+              "stringValue": "mimo9b-002549-r20f"
+            }
+          },
+          {
+            "key": "sample",
+            "value": {
+              "stringValue": "0"
+            }
+          },
+          {
+            "key": "session",
+            "value": {
+              "stringValue": "2"
+            }
+          },
+          {
+            "key": "traj",
+            "value": {
+              "stringValue": "0"
+            }
+          },
+          {
+            "key": "global_steps",
+            "value": {
+              "intValue": "5"
+            }
+          }
+        ]
+      },
+      {
+        "trace_id": "dc85262016444a06fc6bce71929dfe5c",
+        "root_trace_name": "agent_session",
+        "start_time_unix_nano": "1790799606741720475",
+        "selected_attributes": [
+          {
+            "key": "project",
+            "value": {
+              "stringValue": "xDAN-Verl-Uni-agent-Harbor-rl-opd"
+            }
+          },
+          {
+            "key": "experiment_name",
+            "value": {
+              "stringValue": "mimo9b-002549-r20f"
+            }
+          },
+          {
+            "key": "sample",
+            "value": {
+              "stringValue": "0"
+            }
+          },
+          {
+            "key": "session",
+            "value": {
+              "stringValue": "2"
+            }
+          },
+          {
+            "key": "traj",
+            "value": {
+              "stringValue": "0"
+            }
+          },
+          {
+            "key": "global_steps",
+            "value": {
+              "intValue": "5"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "native_terminal_log": {
+    "path": "/root/mimo-private/launch-r20f/train.log",
+    "bytes_read": 228829,
+    "sha256": "63ff882776bff75c0cb3af5e77a2183b00f12d6b811823b03abf5a5e583d8add",
+    "stable_during_read": true,
+    "training_progress_displays": [
+      "Training Progress: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 5/5 [23:40<00:00, 1420.77s/it]",
+      "Training Progress: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 5/5 [23:40<00:00, 1420.77s/it]"
+    ],
+    "traceback_count": 7,
+    "error_class_name_tokens": [
+      "ray.exceptions.RayTaskError",
+      "HarborDshClientError",
+      "RuntimeError",
+      "RayTaskError",
+      "uni_agent.tasks.harbor_dsh.client.HarborDshClientError",
+      "ValueError"
+    ],
+    "error_boundary": "Cancelled worker/prefetch and vLLM parser errors remain in real log; consumed-sample mapping requires independent batch audit"
+  },
+  "artifact_refs": [
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/integration-check/r20f-supervisor-result.json",
+      "sha256": "7aec7cc309fb87166233badf5aeb8c63e9da5b13b62786e66f4ce269999c6746",
+      "bytes": 804
+    },
+    {
+      "path": "/workspace/mimo-dsh-rl-20260928/runs/r20f/rl-training/observability-ack.json",
+      "sha256": "7263544a8852fd45670a6a5615dc8f1e251cb58358234e9d25afb6920960e3c8",
+      "bytes": 1979
+    },
+    {
+      "path": "/root/mimo-private/observability-r21/r20f-prometheus-native-sample-timestamp-receipts.json",
+      "sha256": "0033e72be34b3da3986f0312c5d3c5a25e750494d2c8c293e59c3bc7d15ceeda",
+      "bytes": 3060
+    }
+  ],
+  "claims": {
+    "current_native_exit0": true,
+    "current_step5_scalar": true,
+    "current_nonzero_grad_scalar": true,
+    "exact_current_tempo_trace_transport": true,
+    "effective_parameter_delta_verified_by_this_report": false,
+    "four_consumed_samples_verified_by_this_report": false,
+    "capability_or_heldout_improvement_verified": false,
+    "modal_cleanup_verified_by_this_report": false
+  },
+  "operation_boundaries": {
+    "read_only": true,
+    "no_synthetic_or_historical_run_evidence_merged": true,
+    "resources_created_or_stopped": false,
+    "controller_or_authorized_key_cleanup": false,
+    "gpu_operations": false,
+    "credentials_in_report": false
+  },
+  "raw_artifact_ref": {
+    "private_path": "/root/mimo-private/observability-r21/r20f-native-observability-final.json",
+    "sha256": "c8fb95cf8e5697b04adcffb05b1a13adb7b07a27eb29fbf71f6d089ff0527a35",
+    "bytes": 58241,
+    "public_sanitization": "Full returned trace list omitted; exact counts, query bounds, three independent trace GET receipts and raw SHA retained"
+  }
+}

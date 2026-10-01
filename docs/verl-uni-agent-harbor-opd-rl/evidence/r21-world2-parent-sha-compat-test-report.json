@@ -1,0 +1,26 @@
+{
+  "schema": "mimo.r21-world2-parent-sha-tests.v1",
+  "exit_code": 0,
+  "started_at": 1790802096.6941245,
+  "finished_at": 1790802111.3505833,
+  "cuda_visible": "",
+  "source_sha256": "c7c12a1d7226d54e9cf1342ac2b1920c7150f90b53a84de0a622b1f58009b3db",
+  "legacy_source_sha256": "33cd6593eb0982a232db49bc8889e28047f691c314994d000508895e160f9558",
+  "test_sha256": "fc8fd87db3844a10d518851505cc9e6aca8aa43f6a6e7286b4ef7f1dd3cb94a8",
+  "coverage": {
+    "covered_lines": 250,
+    "num_statements": 251,
+    "percent_covered": 98.67986798679868,
+    "percent_covered_display": "99",
+    "missing_lines": 1,
+    "excluded_lines": 0,
+    "percent_statements_covered": 99.60159362549801,
+    "percent_statements_covered_display": "99",
+    "num_branches": 52,
+    "num_partial_branches": 3,
+    "covered_branches": 49,
+    "missing_branches": 3,
+    "percent_branches_covered": 94.23076923076923,
+    "percent_branches_covered_display": "94"
+  }
+}
