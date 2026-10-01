@@ -1,0 +1,8 @@
+........................                                                 [100%]
+=============================== warnings summary ===============================
+tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_worker_boundary_single_sample_correct_or_strided_is_idempotent[1-layout1]
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/__init__.py:120: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. We recommend specifying layout=torch.jagged when constructing a nested tensor, as this layout receives active development, has better operator coverage, and works with torch.compile. (Triggered internally at /pytorch/aten/src/ATen/NestedTensorImpl.cpp:178.)
+    return torch._nested_tensor_from_tensor_list(ts, dtype, None, device, None)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+24 passed, 1 warning in 48.44s

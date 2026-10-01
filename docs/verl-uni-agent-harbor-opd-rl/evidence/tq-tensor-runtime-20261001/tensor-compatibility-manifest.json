@@ -1,0 +1,17 @@
+{
+  "schema": "mimo.torch211-runtime.v2",
+  "scope": "tensor representation compatibility; no training acceptance",
+  "source": "/workspace/mimo-dsh-rl-20260928/r22/reference-a2ad9f6",
+  "runtime": "/root/mimo-r22/runtime-torch211-v2-final",
+  "changed_files": {
+    "verl/utils/tensordict_utils.py": {
+      "before_sha256": "4dc4c321a51e256232751ddb5cb2a2be129076e7f02f36a685fcad6d0d98f5f1",
+      "after_sha256": "9c840b97cda41c3cbdbd34b681b18b4ba6fa1aedb2260e3d274334aad35da568"
+    },
+    "verl/workers/utils/padding.py": {
+      "before_sha256": "f3cc823e6ef2099075406f6fe1244498f15a775f0fac90010c0babf1c82cbe7b",
+      "after_sha256": "650ee0e59968c2666f327fbfb7dfffc2cc345805a9c13aae0a1f2bb5c73005e7"
+    }
+  },
+  "source_unchanged": true
+}

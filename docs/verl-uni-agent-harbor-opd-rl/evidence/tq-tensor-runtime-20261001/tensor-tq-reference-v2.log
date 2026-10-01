@@ -1,0 +1,347 @@
+.FF....FF..FFFFFFFF.F.FF                                                 [100%]
+=================================== FAILURES ===================================
+_ test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-3] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:75: in test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1173: in unbind_int
+    return torch.split(values, lengths_scalars, dim=(ragged_idx - 1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/functional.py:173: in split
+    return tensor.split(split_size_or_sections, dim)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/_tensor.py:1067: in split
+    return torch._VF.split_with_sizes(
+E   RuntimeError: split_with_sizes expects split_sizes to sum exactly to 9 (input tensor's size at dimension 1), but got split_sizes=[3, 3]
+----------------------------- Captured stderr call -----------------------------
+W1001 13:59:27.096000 48609 torch/fx/_symbolic_trace.py:53] is_fx_tracing will return true for both fx.symbolic_trace and torch.export. Please use is_fx_tracing_symbolic_tracing() for specifically fx.symbolic_trace or torch.compiler.is_compiling() for specifically torch.export/compile.
+------------------------------ Captured log call -------------------------------
+WARNING  torch.fx._symbolic_trace:_symbolic_trace.py:53 is_fx_tracing will return true for both fx.symbolic_trace and torch.export. Please use is_fx_tracing_symbolic_tracing() for specifically fx.symbolic_trace or torch.compiler.is_compiling() for specifically torch.export/compile.
+_ test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-4] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:75: in test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1173: in unbind_int
+    return torch.split(values, lengths_scalars, dim=(ragged_idx - 1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/functional.py:173: in split
+    return tensor.split(split_size_or_sections, dim)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/_tensor.py:1067: in split
+    return torch._VF.split_with_sizes(
+E   RuntimeError: split_with_sizes expects split_sizes to sum exactly to 9 (input tensor's size at dimension 1), but got split_sizes=[4, 4]
+_ test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths0-simple] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:158: in test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1173: in unbind_int
+    return torch.split(values, lengths_scalars, dim=(ragged_idx - 1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/functional.py:173: in split
+    return tensor.split(split_size_or_sections, dim)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/_tensor.py:1067: in split
+    return torch._VF.split_with_sizes(
+E   RuntimeError: split_with_sizes expects split_sizes to sum exactly to 8298 (input tensor's size at dimension 1), but got split_sizes=[4, 4]
+_ test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths0-kv] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:158: in test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1173: in unbind_int
+    return torch.split(values, lengths_scalars, dim=(ragged_idx - 1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/functional.py:173: in split
+    return tensor.split(split_size_or_sections, dim)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/_tensor.py:1067: in split
+    return torch._VF.split_with_sizes(
+E   RuntimeError: split_with_sizes expects split_sizes to sum exactly to 8298 (input tensor's size at dimension 1), but got split_sizes=[4, 4]
+_ test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths2-simple] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:158: in test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1173: in unbind_int
+    return torch.split(values, lengths_scalars, dim=(ragged_idx - 1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/functional.py:173: in split
+    return tensor.split(split_size_or_sections, dim)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/_tensor.py:1067: in split
+    return torch._VF.split_with_sizes(
+E   RuntimeError: split_with_sizes expects split_sizes to sum exactly to 9 (input tensor's size at dimension 1), but got split_sizes=[3, 3]
+_ test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths2-kv] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:158: in test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1173: in unbind_int
+    return torch.split(values, lengths_scalars, dim=(ragged_idx - 1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/functional.py:173: in split
+    return tensor.split(split_size_or_sections, dim)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/_tensor.py:1067: in split
+    return torch._VF.split_with_sizes(
+E   RuntimeError: split_with_sizes expects split_sizes to sum exactly to 9 (input tensor's size at dimension 1), but got split_sizes=[3, 3]
+_ test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths3-simple] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:158: in test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1173: in unbind_int
+    return torch.split(values, lengths_scalars, dim=(ragged_idx - 1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/functional.py:173: in split
+    return tensor.split(split_size_or_sections, dim)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/_tensor.py:1067: in split
+    return torch._VF.split_with_sizes(
+E   RuntimeError: split_with_sizes expects split_sizes to sum exactly to 16 (input tensor's size at dimension 1), but got split_sizes=[4, 4]
+_ test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths3-kv] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:158: in test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1173: in unbind_int
+    return torch.split(values, lengths_scalars, dim=(ragged_idx - 1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/functional.py:173: in split
+    return tensor.split(split_size_or_sections, dim)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/_tensor.py:1067: in split
+    return torch._VF.split_with_sizes(
+E   RuntimeError: split_with_sizes expects split_sizes to sum exactly to 16 (input tensor's size at dimension 1), but got split_sizes=[4, 4]
+_ test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths4-simple] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:158: in test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1171: in unbind_int
+    _torch_check(lengths_scalars)
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1162: in _torch_check
+    torch._check(lengths_sum <= ragged_dim_size)
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/__init__.py:1753: in _check
+    _check_with(RuntimeError, cond, message)  # pyrefly: ignore [bad-argument-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/__init__.py:1735: in _check_with
+    raise error_type(message_evaluated)
+E   RuntimeError: Expected cond to be True, but got False. (Could this error message be improved? If so, please report an enhancement request to PyTorch.)
+_ test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths4-kv] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:158: in test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1171: in unbind_int
+    _torch_check(lengths_scalars)
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1162: in _torch_check
+    torch._check(lengths_sum <= ragged_dim_size)
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/__init__.py:1753: in _check
+    _check_with(RuntimeError, cond, message)  # pyrefly: ignore [bad-argument-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/__init__.py:1735: in _check_with
+    raise error_type(message_evaluated)
+E   RuntimeError: Expected cond to be True, but got False. (Could this error message be improved? If so, please report an enhancement request to PyTorch.)
+_ test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths5-simple] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:158: in test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1171: in unbind_int
+    _torch_check(lengths_scalars)
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1154: in _torch_check
+    torch._check(_lengths[i] <= ragged_dim_size)
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/__init__.py:1753: in _check
+    _check_with(RuntimeError, cond, message)  # pyrefly: ignore [bad-argument-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/__init__.py:1735: in _check_with
+    raise error_type(message_evaluated)
+E   RuntimeError: Expected cond to be True, but got False. (Could this error message be improved? If so, please report an enhancement request to PyTorch.)
+_ test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths5-kv] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:158: in test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions
+    selected = tu.index_select_tensor_dict(chunk, [1, 0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../reference-a2ad9f6/verl/utils/tensordict_utils.py:495: in index_select_tensor_dict
+    tensor_lst = tensor.unbind()  # for performance
+                 ^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:393: in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/nested_tensor.py:358: in __torch_dispatch__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:233: in inner
+    return func(aten_op, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1171: in unbind_int
+    _torch_check(lengths_scalars)
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/_internal/ops.py:1154: in _torch_check
+    torch._check(_lengths[i] <= ragged_dim_size)
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/__init__.py:1753: in _check
+    _check_with(RuntimeError, cond, message)  # pyrefly: ignore [bad-argument-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/__init__.py:1735: in _check_with
+    raise error_type(message_evaluated)
+E   RuntimeError: Expected cond to be True, but got False. (Could this error message be improved? If so, please report an enhancement request to PyTorch.)
+_ test_worker_boundary_single_sample_correct_or_strided_is_idempotent[1-layout1] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:185: in test_worker_boundary_single_sample_correct_or_strided_is_idempotent
+    assert data["position_ids"].offsets().diff().tolist() == [length]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'Tensor' object has no attribute 'offsets'
+_ test_worker_boundary_single_sample_correct_or_strided_is_idempotent[4-layout1] _
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:185: in test_worker_boundary_single_sample_correct_or_strided_is_idempotent
+    assert data["position_ids"].offsets().diff().tolist() == [length]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'Tensor' object has no attribute 'offsets'
+_________ test_worker_boundary_rejects_position_token_length_mismatch __________
+tests/uni_agent/examples/test_mimo_tensor_runtime.py:196: in test_worker_boundary_rejects_position_token_length_mismatch
+    with pytest.raises(ValueError, match="input token lengths"):
+E   Failed: DID NOT RAISE ValueError
+=============================== warnings summary ===============================
+tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_worker_boundary_single_sample_correct_or_strided_is_idempotent[1-layout1]
+  /workspace/verl-uni-agent-harbor-opd-rl/envs/ua-verl-py312-vllm023-ws1/lib/python3.12/site-packages/torch/nested/__init__.py:120: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. We recommend specifying layout=torch.jagged when constructing a nested tensor, as this layout receives active development, has better operator coverage, and works with torch.compile. (Triggered internally at /pytorch/aten/src/ATen/NestedTensorImpl.cpp:178.)
+    return torch._nested_tensor_from_tensor_list(ts, dtype, None, device, None)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-3]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-4]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths0-simple]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths0-kv]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths2-simple]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths2-kv]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths3-simple]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths3-kv]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths4-simple]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths4-kv]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths5-simple]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths5-kv]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_worker_boundary_single_sample_correct_or_strided_is_idempotent[1-layout1]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_worker_boundary_single_sample_correct_or_strided_is_idempotent[4-layout1]
+FAILED tests/uni_agent/examples/test_mimo_tensor_runtime.py::test_worker_boundary_rejects_position_token_length_mismatch
+15 failed, 9 passed, 1 warning in 56.71s

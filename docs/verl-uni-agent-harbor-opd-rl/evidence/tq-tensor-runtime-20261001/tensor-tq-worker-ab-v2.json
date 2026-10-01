@@ -1,0 +1,168 @@
+{
+  "schema": "mimo.tq-worker-boundary-ab.v2",
+  "observed_utc": "2026-10-01T14:05:06Z",
+  "scope": "actual installed TQ producer/retrieve assembly/Msgpack -> DP/worker/index; excludes remote ZMQ network and GPU training acceptance",
+  "runtime": "/root/mimo-r22/runtime-torch211-v2-final",
+  "runtime_manifest_sha256": "938a370c2dc15f6f643b8afb2c21a945c8d73b701a56f4ad8a788dec3a46219c",
+  "changed_files": {
+    "verl/utils/tensordict_utils.py": {
+      "before_sha256": "4dc4c321a51e256232751ddb5cb2a2be129076e7f02f36a685fcad6d0d98f5f1",
+      "after_sha256": "9c840b97cda41c3cbdbd34b681b18b4ba6fa1aedb2260e3d274334aad35da568"
+    },
+    "verl/workers/utils/padding.py": {
+      "before_sha256": "f3cc823e6ef2099075406f6fe1244498f15a775f0fac90010c0babf1c82cbe7b",
+      "after_sha256": "650ee0e59968c2666f327fbfb7dfffc2cc345805a9c13aae0a1f2bb5c73005e7"
+    }
+  },
+  "source_unchanged": true,
+  "versions": {
+    "torch": "2.11.0",
+    "tensordict": "0.10.0",
+    "transferqueue": "0.1.9.dev0"
+  },
+  "installed_tq_sha256": {
+    "storage/managers/base.py": "5e69026f6cb70e706a9fa056bf215d6eabae2e735f3f3f2e11df0efc60338a9b",
+    "storage/managers/simple_storage_manager.py": "3b6ad323f1df97bed9427d8764d40a9bd14c25267ff28dd276a0223b9d2eb685",
+    "utils/serial_utils.py": "a094c8a384f5900706282f5a0c2ed79e6b56a777d45a9a9be0c1936c9c8810d0"
+  },
+  "test_source_sha256": "9caac9b03621e659edb6f4ba049655a155541c7fa2ce0a5ba1cd61a20962b83d",
+  "prepare_source_sha256": "e1675b3068e46ffb92fed596e12bfd87d3a9b9e5ea61c48d75240f69937ba106",
+  "baseline": {
+    "tests": 24,
+    "failures": 15,
+    "errors": 0,
+    "seconds": "51.347",
+    "xml_sha256": "9fa8739bbed7d260dbc40f9a7c0eb78c2c2c1eea76b447df9670c39c1aaf34e8",
+    "log_sha256": "dd31b9cee85aa490f68a2e148728c692094c00bc9f58f4affa2056a02ced0c87",
+    "failed_cases": [
+      {
+        "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-3]",
+        "message": "RuntimeError: split_with_sizes expects split_sizes to sum exactly to 9 (input tensor's size at dimension 1), but got split_sizes=[3, 3]"
+      },
+      {
+        "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-4]",
+        "message": "RuntimeError: split_with_sizes expects split_sizes to sum exactly to 9 (input tensor's size at dimension 1), but got split_sizes=[4, 4]"
+      },
+      {
+        "name": "test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths0-simple]",
+        "message": "RuntimeError: split_with_sizes expects split_sizes to sum exactly to 8298 (input tensor's size at dimension 1), but got split_sizes=[4, 4]"
+      },
+      {
+        "name": "test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths0-kv]",
+        "message": "RuntimeError: split_with_sizes expects split_sizes to sum exactly to 8298 (input tensor's size at dimension 1), but got split_sizes=[4, 4]"
+      },
+      {
+        "name": "test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths2-simple]",
+        "message": "RuntimeError: split_with_sizes expects split_sizes to sum exactly to 9 (input tensor's size at dimension 1), but got split_sizes=[3, 3]"
+      },
+      {
+        "name": "test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths2-kv]",
+        "message": "RuntimeError: split_with_sizes expects split_sizes to sum exactly to 9 (input tensor's size at dimension 1), but got split_sizes=[3, 3]"
+      },
+      {
+        "name": "test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths3-simple]",
+        "message": "RuntimeError: split_with_sizes expects split_sizes to sum exactly to 16 (input tensor's size at dimension 1), but got split_sizes=[4, 4]"
+      },
+      {
+        "name": "test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths3-kv]",
+        "message": "RuntimeError: split_with_sizes expects split_sizes to sum exactly to 16 (input tensor's size at dimension 1), but got split_sizes=[4, 4]"
+      },
+      {
+        "name": "test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths4-simple]",
+        "message": "RuntimeError: Expected cond to be True, but got False. (Could this error message be improved? If so, please report an enhancement request to PyTorch.)"
+      },
+      {
+        "name": "test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[4-lengths4-kv]",
+        "message": "RuntimeError: Expected cond to be True, but got False. (Could this error message be improved? If so, please report an enhancement request to PyTorch.)"
+      },
+      {
+        "name": "test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths5-simple]",
+        "message": "RuntimeError: Expected cond to be True, but got False. (Could this error message be improved? If so, please report an enhancement request to PyTorch.)"
+      },
+      {
+        "name": "test_installed_tq_retrieve_wire_worker_dp_index_preserves_positions[3-lengths5-kv]",
+        "message": "RuntimeError: Expected cond to be True, but got False. (Could this error message be improved? If so, please report an enhancement request to PyTorch.)"
+      },
+      {
+        "name": "test_worker_boundary_single_sample_correct_or_strided_is_idempotent[1-layout1]",
+        "message": "AttributeError: 'Tensor' object has no attribute 'offsets'"
+      },
+      {
+        "name": "test_worker_boundary_single_sample_correct_or_strided_is_idempotent[4-layout1]",
+        "message": "AttributeError: 'Tensor' object has no attribute 'offsets'"
+      },
+      {
+        "name": "test_worker_boundary_rejects_position_token_length_mismatch",
+        "message": "Failed: DID NOT RAISE ValueError"
+      }
+    ]
+  },
+  "fixed": {
+    "tests": 24,
+    "failures": 0,
+    "errors": 0,
+    "seconds": "48.405",
+    "xml_sha256": "b2792ab3a47da9d9d9d0d69275a26b3ac64cf5332791225a74f08031b3c4c0f7",
+    "log_sha256": "5f17dc43da8dc44b94a1a3e847d2a88e44bc88f3306643e749de7ed95da8017a",
+    "failed_cases": []
+  },
+  "actual_calls": [
+    "verl.utils.tensordict_utils.list_of_dict_to_tensordict",
+    "transfer_queue.storage.managers.simple_storage_manager.AsyncSimpleStorageManager._pack_field_values",
+    "transfer_queue.storage.managers.base.KVStorageManager._merge_tensors_to_tensordict",
+    "transfer_queue.utils.serial_utils.MsgpackEncoder.encode",
+    "transfer_queue.utils.serial_utils.MsgpackDecoder.decode",
+    "TensorDict.consolidate/pickle",
+    "verl.utils.tensordict_utils.chunk_tensordict",
+    "verl.utils.tensordict_utils.maybe_fix_3d_position_ids",
+    "verl.utils.tensordict_utils.index_select_tensor_dict"
+  ],
+  "worker_call_sites": {
+    "verl/workers/engine_workers.py": [
+      251,
+      289
+    ],
+    "verl/workers/engine/base.py": [
+      124,
+      145
+    ],
+    "verl/workers/engine_workers_tinker.py": [
+      151
+    ]
+  },
+  "covered": {
+    "mrope_axes": [
+      3,
+      4
+    ],
+    "equal_four_axis_tokens": 8298,
+    "unequal_tokens": [
+      8298,
+      8217,
+      7300,
+      8298
+    ],
+    "square_backing_values": true,
+    "single_sample_tokens": [
+      1,
+      4
+    ],
+    "existing_correct_jagged_and_strided": true,
+    "boundary_repeated": true,
+    "every_token_and_position_value_preserved": true,
+    "dtype_and_device_preserved": true,
+    "invalid_token_length_rejected": true
+  },
+  "limitations": [
+    "No full remote ZMQ network allocation or trainer started by this agent",
+    "Input token lengths come from current TQ jagged input_ids; ambiguous square buffers without this contract fail closed",
+    "Empty minibatch selection was not added; original API requires nonempty nested constructor inputs"
+  ],
+  "preserved_prior_attempts": [
+    "tensor-tq-reference-invalid-import-v2.log",
+    "tensor-tq-fixed-invalid-import-v2.log",
+    "tensor-tq-reference-v2.log",
+    "tensor-tq-fixed-v2.log"
+  ],
+  "training_gate": "pending root review and actual update_actor/checkpoint/API evidence"
+}
