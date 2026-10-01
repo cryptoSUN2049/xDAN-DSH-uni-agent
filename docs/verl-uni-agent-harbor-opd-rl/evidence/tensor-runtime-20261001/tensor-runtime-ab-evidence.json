@@ -1,0 +1,126 @@
+{
+  "schema": "mimo.music-tensor-runtime-regression.v1",
+  "created_at_utc": "2026-10-01T13:04:34.884438+00:00",
+  "scope": "actual production padding-constructor expression, DP chunk, worker mRoPE fix, index, torch serialization, and model-visible padding; excludes unpad integration and training acceptance",
+  "test_source_sha256": "f86d317b83ecf68c48d05231bc6a8c8495a9fbdf75a6d89629bab8447d2defd6",
+  "environment": {
+    "python": "3.12.3",
+    "torch": "2.11.0",
+    "tensordict": "0.10.0"
+  },
+  "lanes": {
+    "reference": {
+      "pythonpath": "/workspace/mimo-dsh-rl-20260928/r22/reference-a2ad9f6",
+      "exit_code": 1,
+      "tests": 7,
+      "failures": 2,
+      "errors": 0,
+      "elapsed_seconds": 48.098,
+      "junit_sha256": "120fdb5e2051b703d7a9998b805bb2afaf9f91a3e2157e3096d7414d648a84c1",
+      "log_sha256": "0032c025fc99e16eb8dc20562acae509941c78d159eef63546073f94f2954821",
+      "cases": [
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-None]",
+          "status": "passed",
+          "failure": null
+        },
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-3]",
+          "status": "failed",
+          "failure": "RuntimeError: split_with_sizes expects split_sizes to sum exactly to 9 (input tensor's size at dimension 1), but got split_sizes=[3, 3]"
+        },
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-4]",
+          "status": "failed",
+          "failure": "RuntimeError: split_with_sizes expects split_sizes to sum exactly to 9 (input tensor's size at dimension 1), but got split_sizes=[4, 4]"
+        },
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths1-None]",
+          "status": "passed",
+          "failure": null
+        },
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths1-3]",
+          "status": "passed",
+          "failure": null
+        },
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths1-4]",
+          "status": "passed",
+          "failure": null
+        },
+        {
+          "name": "test_model_visible_padding_preserves_four_axes",
+          "status": "passed",
+          "failure": null
+        }
+      ],
+      "source_files": {
+        "verl/utils/tensordict_utils.py": "4dc4c321a51e256232751ddb5cb2a2be129076e7f02f36a685fcad6d0d98f5f1",
+        "verl/workers/utils/padding.py": "f3cc823e6ef2099075406f6fe1244498f15a775f0fac90010c0babf1c82cbe7b"
+      }
+    },
+    "fixed": {
+      "pythonpath": "/root/mimo-r22/runtime-torch211",
+      "exit_code": 0,
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "elapsed_seconds": 46.047,
+      "junit_sha256": "84b994f641472552e2954dde8c97147f114577c970f322b6d30467ce35f8a3a6",
+      "log_sha256": "fd76409c8349440ff86b70b203e628908a9e7608a260497e665540e489aa4700",
+      "cases": [
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-None]",
+          "status": "passed",
+          "failure": null
+        },
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-3]",
+          "status": "passed",
+          "failure": null
+        },
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths0-4]",
+          "status": "passed",
+          "failure": null
+        },
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths1-None]",
+          "status": "passed",
+          "failure": null
+        },
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths1-3]",
+          "status": "passed",
+          "failure": null
+        },
+        {
+          "name": "test_nested_ctor_dp_minibatch_and_serialization_preserve_every_position[lengths1-4]",
+          "status": "passed",
+          "failure": null
+        },
+        {
+          "name": "test_model_visible_padding_preserves_four_axes",
+          "status": "passed",
+          "failure": null
+        }
+      ],
+      "source_files": {
+        "verl/utils/tensordict_utils.py": "b47eb777061ba004a1ab390f0088bd33f372590b90571611bc568e96ddf823c2",
+        "verl/workers/utils/padding.py": "650ee0e59968c2666f327fbfb7dfffc2cc345805a9c13aae0a1f2bb5c73005e7"
+      }
+    }
+  },
+  "full_padding_integration": "pending: real production unpad initialization not verified; no mock or replacement backend",
+  "gpu_used": false,
+  "trainer_started": false,
+  "dependency_environment_modified": false,
+  "invalid_prior_results": {
+    "missing_flash_attn": "not reproduction evidence",
+    "chunk_tensor_dict_AttributeError": "not reproduction evidence; preserved invalid-api-name logs"
+  },
+  "reference_source_unchanged": true,
+  "fixed_runtime_manifest_sha256": "5ec30346687cb5de1517a54e5e8bfecde409d53bdf5473b45c97fd2e5048af10",
+  "status": "tensor-representation-ab-passed-not-full-padding-or-training"
+}
