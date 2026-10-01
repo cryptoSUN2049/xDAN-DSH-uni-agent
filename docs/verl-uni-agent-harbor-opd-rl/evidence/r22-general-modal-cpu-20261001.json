@@ -1,0 +1,31 @@
+{
+  "run_id": "r22-general-cpu-ccb10cd21d",
+  "scope": "ordinary CPU transport only; no task acceptance or judge",
+  "checks": [
+    "student workspace write",
+    "main cannot read sidecar state",
+    "sidecar reads own state",
+    "sidecar cannot write mirror",
+    "latest student snapshot visible",
+    "both actual network blocked"
+  ],
+  "transport_pass": true,
+  "environments": {
+    "main": {
+      "run_id": "r22-general-cpu-ccb10cd21d",
+      "session_id": "e4e01b2e491844b19fd84cf969644822-main",
+      "sandbox_id": "sb-Xz3adidSBgHtqtOi7rmmMn",
+      "allocation_attempted": true,
+      "cleanup_confirmed": true,
+      "returncode": 137
+    },
+    "sidecar": {
+      "run_id": "r22-general-cpu-ccb10cd21d",
+      "session_id": "e4e01b2e491844b19fd84cf969644822-sidecar",
+      "sandbox_id": "sb-olAsZSiUcVhwZxeHBrIAud",
+      "allocation_attempted": true,
+      "cleanup_confirmed": true,
+      "returncode": 137
+    }
+  }
+}

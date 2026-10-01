@@ -1,0 +1,74 @@
+{
+  "pytest_exit_code": 0,
+  "coverage_kind": "stdlib trace executable line coverage; not branch coverage",
+  "files": {
+    "uni_agent/tasks/mimo_reference/general_environment.py": {
+      "sha256": "c3239b2a6e7d75daad158ab14c2cd1a1bd6ca3f0b2692183d9f91e1dc2f0bd24",
+      "lines": 374,
+      "executable_lines": 286,
+      "covered_lines": 259,
+      "line_coverage_percent": 90.56,
+      "missing_lines": [
+        0,
+        63,
+        89,
+        102,
+        126,
+        134,
+        136,
+        155,
+        157,
+        166,
+        175,
+        181,
+        187,
+        192,
+        203,
+        211,
+        214,
+        277,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        316,
+        319
+      ]
+    },
+    "uni_agent/tasks/mimo_reference/terminal_bench_environment.py": {
+      "sha256": "cde3d667fe8af132d759a2fa4cbf13aabde5b85c5c8c1a847c622cc03f9699b4",
+      "lines": 197,
+      "executable_lines": 149,
+      "covered_lines": 140,
+      "line_coverage_percent": 93.96,
+      "missing_lines": [
+        0,
+        30,
+        70,
+        71,
+        72,
+        138,
+        142,
+        150,
+        160
+      ]
+    },
+    "tests/uni_agent/tasks/test_mimo_reference_general.py": {
+      "sha256": "7a84ba737522b4beffd9ece180c53d38423509e8b7840d112e4aa327365a5cef",
+      "lines": 539,
+      "executable_lines": 429,
+      "covered_lines": 424,
+      "line_coverage_percent": 98.83,
+      "missing_lines": [
+        0,
+        17,
+        91,
+        225,
+        525
+      ]
+    }
+  }
+}
